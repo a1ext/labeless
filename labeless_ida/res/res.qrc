@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>run.png</file>
+        <file>clear.png</file>
+        <file>settings.png</file>
+        <file>dump.png</file>
+        <file>sync.png</file>
+        <file>python.png</file>
+        <file>stub.exe.bin</file>
+    </qresource>
+</RCC>

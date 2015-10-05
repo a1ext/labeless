@@ -1,0 +1,686 @@
+;QT_DEBUG_START
+; Nokia Qt 4.x visualizers -----------------------------------------[ start ]--
+;------------------------------------------------------------------------------
+; Feel free to modify these visualizers to suit yours needs! But please let us
+; know about the changes you make, so we continuously improve the visualizers.
+
+QString{
+    preview         ([$e.d->data,su])
+    stringview      ([$e.d->data,sub])
+    children
+    (
+        #(
+            d: $c.d,
+            [size]: $c.d->size,
+            [referenced]: $c.d->ref._q_value
+        )
+    )
+}
+
+QByteArray{
+    preview         ([$e.d->data,s])
+    stringview      ([$e.d->data,sb])
+    children
+    (
+        #(
+            d: $c.d,
+            [size]: $c.d->size,
+            [referenced]: $c.d->ref._q_value
+        )
+    )
+
+}
+
+QUrl{
+	preview
+	(
+		#if ($e.d.stateFlags == 0) (
+			$e.d
+		) #else (
+			#( $e.d->scheme, $e.d->host, $e.d->path )
+		)
+	)
+	children
+	(
+		#(
+			scheme: $c.d->scheme,
+			host: $c.d->host,
+			path: $c.d->path,
+			username: $c.d->userName,
+			password: $c.d->password,
+			encodedOriginal: $c.d->encodedOriginal,
+			query: $c.d->query,
+			fragment: $c.d->fragment
+		)
+	)
+}
+
+QFileInfo{
+    preview
+    (
+        #(
+            "private=", $c.d_ptr
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QStringList
+;------------------------------------------------------------------------------
+QStringList{
+    preview
+    (
+        #if (($c.d->end - $c.d->begin) <= 10) (
+            #(
+                "[", $c.d->end - $c.d->begin, "](",
+                #array
+                (
+                    expr: (QString)(($c.d->array + $c.d->begin)[$i]),
+                    size: $c.d->end-$c.d->begin
+                ), ")"
+            )
+        ) #else (
+            #(
+                "[", $c.d->end - $c.d->begin, "](",
+                #array
+                (
+                    expr: (QString)(($c.d->array + $c.d->begin)[$i]),
+                    size: 10
+                ), ", ...)"
+            )
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QList, QQueue
+;------------------------------------------------------------------------------
+QList<*>|QQueue<*>{
+    preview
+    (
+        #if (($c.d->end - $c.d->begin) <= 10) (
+            #(
+                "[", $c.d->end - $c.d->begin, "](",
+                #array
+                (
+                    expr: ($T1)(($c.d->array + $c.d->begin)[$i]),
+                    size: $c.d->end-$c.d->begin
+                ), ")"
+            )
+        ) #else (
+            #(
+                "[", $c.d->end - $c.d->begin, "](",
+                #array
+                (
+                    expr: ($T1)(($c.d->array + $c.d->begin)[$i]),
+                    size: 10
+                ), ", ...)"
+            )
+        )
+    )
+
+    children
+    (
+        #array (
+            expr: ($T1)(($c.d->array + $c.d->begin)[$i]),
+            size: $c.d->end - $c.d->begin
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QList::iterator, QQueue::iterator
+;------------------------------------------------------------------------------
+QList<*>::iterator|QList<*>::const_iterator|QQueue<*>::iterator|QQueue<*>::const_iterator{
+    preview
+    (
+        #(
+            ($T1)$c.i->v
+        )
+    )
+
+    children
+    (
+        #(
+            ptr: ($T1)$c.i->v
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QListIterator
+;------------------------------------------------------------------------------
+QListIterator<*>|QMutableListIterator<*> {
+    preview
+    (
+        #(
+            ($T1)$c.i.i->v
+        )
+    )
+
+    children
+    (
+        #(
+            ptr: ($T1)$c.i.i->v
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QLinkedList
+;------------------------------------------------------------------------------
+QLinkedList<*>{
+    preview
+    (
+        #if ($e.d->size >= 10) (
+            #(
+                "[", $e.d->size, "](",
+                #list
+                (
+                    head: $c.d->n,
+                    size: 10,
+                    next: n
+                ) : ( (*(QLinkedListNode<$T1>*)&$e).t ), ", ...)"
+            )
+        ) #else (
+            #(
+                "[", $e.d->size, "](",
+                #list
+                (
+                    head: $c.d->n,
+                    size: $c.d->size,
+                    next: n
+                ) : ( (*(QLinkedListNode<$T1>*)&$e).t ), ")"
+            )
+        )
+    )
+
+    children
+    (
+        #(
+            #list
+            (
+                head: $c.d->n,
+                size: $c.d->size,
+                next: n
+            ) : (*(QLinkedListNode<$T1>*)&$e).t
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QLinkedList::iterator
+;------------------------------------------------------------------------------
+QLinkedList<*>::iterator|QLinkedList<*>::const_iterator{
+    preview
+    (
+        #(
+            $e.i->t
+        )
+    )
+
+    children
+    (
+        #(
+            ptr: $e.i->t
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QVector, QStack
+;
+; By default, this visualizer supports only Qt 4.6.x. If you're going to use
+; Qt 4.5.x code, then you may want to replace all expr lines with this:
+;    expr: (((size_t)($c.d) + (size_t)(sizeof(QVectorData)) ))[$i],
+;
+; This will allow this visualizer to display Qt 4.5.x and Qt 4.6.x QVector
+; objects. But be aware of some limitations. For example enum types can't be
+; displayed properly this way.
+;
+; Qt 4.5.x:
+;     QVector::d is QVectorTypedData<T>
+;     QVector::p is QVectorData
+;     expr: $c.d->array[$i]
+;
+; Qt 4.6.x:
+;     QVector::d is QVectorData
+;     QVector::p is QVectorTypedData<T>
+;     expr: $c.p->array[$i]
+;
+;------------------------------------------------------------------------------
+QVector<*>|*::QVector<*>|QStack<*>|*::QStack<*>{
+    preview
+    (
+        #if ($c.d->size <= 10) (
+            #(
+                "[", $c.d->size, "](",
+                #array
+                (
+                    expr: $c.p->array[$i],
+                    size: $c.d->size
+                ), ")"
+            )
+        ) #else (
+            #(
+                "[", $c.d->size, "](",
+                #array
+                (
+                    expr: $c.p->array[$i],
+                    size: 10
+                ), ", ...)"
+            )
+        )
+    )
+    children
+    (
+        #array
+        (
+            expr: $c.p->array[$i],
+            size: $c.d->size
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QMap
+;------------------------------------------------------------------------------
+QMapNode<*,*>{
+    preview
+    (
+        #(
+            "(",
+            $e.key,
+            "; ",
+            $e.value,
+            ")"
+        )
+    )
+
+    children
+    (
+        #(
+            key: $e.key,
+            value: $e.value
+        )
+    )
+}
+
+QMap<*>{
+    children
+    (
+        #(
+            raw data: [$c,!],
+            #tree
+            (
+                head : $c.d->forward[0],
+                skip : $c.d,
+                size : $c.d->size,
+                left : backward,
+                right : forward
+            ) : ( (QMapNode<$T1>*)((char*)&$e - (sizeof(QMapPayloadNode<$T1>) - sizeof(QMapData::Node*))) )
+        )
+    )
+
+    preview
+    (
+        #(
+            "[",
+            $e.d->size,
+            "](",
+                #tree
+                (
+                    head : $c.d->forward[0],
+                    size : $c.d->size,
+                    left : backward,
+                    right : forward
+                ) : $e,
+            ")"
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QHash
+;------------------------------------------------------------------------------
+QHash<*>{
+    preview
+    (
+        #(
+            "[", $e.d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #if ($e.d->size <= 255) (
+            #(
+                #array (
+                    expr: (QHashNode<$T1>*)$c.d->buckets[$i],
+                    size: $c.d->numBuckets
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e
+                )
+            )
+        ) #else (
+            #(
+                #array (
+                    expr: (QHashNode<$T1>*)$c.d->buckets[$i],
+                    size: 255
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e
+                )
+            )
+        )
+    )
+}
+
+*::QHash<*>{
+    preview
+    (
+        #(
+             "[", $e.d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #if ($e.d->size <= 255) (
+            #(
+                #array (
+                    expr: ($T1::QHashNode<$T2> *)$c.d->buckets[$i],
+                    size: $c.d->numBuckets
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e
+                )
+            )
+        ) #else (
+            #(
+                #array (
+                    expr: ($T1::QHashNode<$T2> *)$c.d->buckets[$i],
+                    size: 255
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e
+                )
+            )
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QMultiHash
+;------------------------------------------------------------------------------
+QMultiHash<*>{
+    preview
+    (
+        (*(QHash<$T1>*)(&$c))
+    )
+}
+
+*::QMultiHash<*>{
+    preview
+    (
+        (*($T1::QHash<$T2>*)(&$c))
+    )
+}
+
+;------------------------------------------------------------------------------
+; QHash::iterator
+;------------------------------------------------------------------------------
+QHash<*>::iterator{
+    preview
+    (
+        #(
+            "(", ((QHashNode<$T1>*)($c.i))->key, ", ", ((QHashNode<$T1>*)($c.i))->value, ")"
+        )
+    )
+    children
+    (
+        #(
+            key: ((QHashNode<$T1>*)($c.i))->key,
+            value: ((QHashNode<$T1>*)($c.i))->value
+        )
+    )
+}
+
+*::QHash<*>::iterator{
+    preview
+    (
+        #(
+            "(", (($T1::QHashNode<$T2>*)($c.i))->key, ", ", (($T1::QHashNode<$T2>*)($c.i))->key, ")"
+        )
+    )
+    children
+    (
+        #(
+            key: (($T1::QHashNode<$T2>*)($c.i))->key,
+            value: (($T1::QHashNode<$T2>*)($c.i))->value
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QHashIterator
+;------------------------------------------------------------------------------
+QHashIterator<*>{
+    preview
+    (
+        #(
+            "(", ((QHashNode<$T1>*)((($c).i).i))->key, ", ", ((QHashNode<$T1>*)((($c).i).i))->key, ")"
+        )
+    )
+    children
+    (
+        #(
+            key: ((QHashNode<$T1>*)((($c).i).i))->key,
+            value: ((QHashNode<$T1>*)((($c).i).i))->value
+        )
+    )
+}
+
+*::QHashIterator<*>{
+    preview
+    (
+        #(
+            "(", (($T1::QHashNode<$T2>*)((($c).i).i))->key, ", ", (($T1::QHashNode<$T2>*)((($c).i).i))->key, ")"
+        )
+    )
+    children
+    (
+        #(
+            key: (($T1::QHashNode<$T2>*)((($c).i).i))->key,
+            value: (($T1::QHashNode<$T2>*)((($c).i).i))->value
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QHashNode
+;------------------------------------------------------------------------------
+QHashNode<*>|*::QHashNode<*>{
+    preview
+    (
+        #(
+            "(key = ", $c.key,"; value = ", $c.value, ")"
+        )
+    )
+    children
+    (
+        #(
+            key: $c.key,
+            value: $c.value
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QSet
+;------------------------------------------------------------------------------
+QSet<*>{
+    preview
+    (
+        #(
+             "[", $e.q_hash.d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #if ($e.q_hash.d->size <= 255) (
+            #(
+                #array (
+                    expr: (QHashNode<$T1,QHashDummyValue> *)$c.q_hash.d->buckets[$i],
+                    size: $c.q_hash.d->numBuckets
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e.key
+                )
+            )
+        ) #else (
+            #(
+                #array (
+                    expr: (QHashNode<$T1,QHashDummyValue> *)$c.q_hash.d->buckets[$i],
+                    size: 255
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e.key
+                )
+            )
+        )
+    )
+}
+
+*::QSet<*>{
+    preview
+    (
+        #(
+             "[", $e.q_hash.d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #if ($e.q_hash.d->size <= 255) (
+            #(
+                #array (
+                    expr: ($T1::QHashNode<$T2,QHashDummyValue> *)$c.q_hash.d->buckets[$i],
+                    size: $c.q_hash.d->numBuckets
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e.key
+                )
+            )
+        ) #else (
+            #(
+                #array (
+                    expr: ($T1::QHashNode<$T2,QHashDummyValue> *)$c.q_hash.d->buckets[$i],
+                    size: 255
+                ) : #list (
+                    head: $e,
+                    next: next
+                ) : #switch ($e.next != 0) #case 1 (
+                    $e.key
+                )
+            )
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QPolygon
+;------------------------------------------------------------------------------
+QPolygon{
+    preview
+    (
+        #(
+             "[", ((QVector<QPoint>*)(&$c))->d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #(
+            #array
+            (
+                expr: ((QPoint*)(((void*)$c.d) + sizeof(QVectorData)))[$i],
+                size: ((QVector<QPoint>*)(&$c))->d->size
+            )
+        )
+    )
+}
+*::QPolygon{
+    preview
+    (
+        #(
+             "[", (($T1::QVector<$T1::QPoint>*)(&$c))->d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #(
+            #array
+            (
+                expr: (($T1::QPoint*)(((void*)$c.d) + sizeof(QVectorData)))[$i],
+                size: (($T1::QVector<$T1::QPoint>*)(&$c))->d->size
+            )
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; QPolygonF
+;------------------------------------------------------------------------------
+QPolygonF{
+    preview
+    (
+        #(
+             "[", ((QVector<QPointF>*)(&$c))->d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #(
+            #array
+            (
+                expr: ((QVector<QPointF>*)(&$c))->p->array[$i],
+                size: ((QVector<QPointF>*)(&$c))->d->size
+            )
+        )
+    )
+}
+
+*::QPolygonF{
+    preview
+    (
+        #(
+             "[", (($T1::QVector<$T1::QPointF>*)(&$c))->d->size, "] (...)"
+        )
+    )
+    children
+    (
+        #(
+            #array
+            (
+                expr: (($T1::QVector<$T1::QPointF>*)(&$c))->p->array[$i],
+                size: (($T1::QVector<$T1::QPointF>*)(&$c))->d->size
+            )
+        )
+    )
+}
+
+;------------------------------------------------------------------------------
+; Nokia Qt 4.x visualizers -------------------------------------------[ end ]--
+;QT_DEBUG_END

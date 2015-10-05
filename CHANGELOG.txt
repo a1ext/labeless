@@ -1,0 +1,37 @@
+# v 1.0.0.7
+ + Added loading dummy database functionality
+
+# v 1.0.0.6
+ + Added warning settings for conditions, when overwriting of existing code occurs
+
+# v 1.0.0.5
+ + Added protobuf logging
+ * Fixed: google::protobuf::Message limit increased to 1GB. Dumping big memory regions should work fine now
+
+# v 1.0.0.4
+ + Implemented non-code names (non auto-generated data names) synchronizations
+ * Fixed functions and local names syncronization for chunks of code outside of functions
+
+# v 1.0.0.3
+ + Added custom "ChooseMemoryDialog" to allow user to select regions or to specify region to dump manually
+ * Auto-set "remote image base" to begin of first dumped memory region if 'wipe' is requested
+ * Fixed wrong memory size of returned buffer in safe_read_chunked_memory_region_as_one
+
+# v 1.0.0.2
+ + Version information for both DLL's (shown in explorer)
+ + Added automatic port selection functionality in Olly
+ + Olly on/off functionality fixed {IF IT IS A FIX, THEN IT SHOULD BE * ?)
+
+# v 1.0.0.1
+ + Added "Sync labels now" item in the main menu
+
+# v 1.0.0.0
+ + Added versioning of plugins. IDA version is displayed in the "Settings" dialog. Olly version is displayed in the "About" dialog
+ + Added version checks
+ + Added tooltip for remote module base in IDA settings
+
+
+## Legend
+[+] Addition
+[-] Removal
+[*] Change

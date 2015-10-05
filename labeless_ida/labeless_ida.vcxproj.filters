@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{64bd8c6b-3ec8-4aab-afd5-3c30cdf467e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{f30f6e74-9116-489b-b1d3-4368707b6782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release_DeFixed">
+      <UniqueIdentifier>{d82c3d81-956e-4572-8ae9-03c0679a7199}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sync\sync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hlp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\cpp\rpc.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="pythonpalettemanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFiles\Release\ui_pyollyview.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_settingsdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="globalsettingsmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_choosememorydialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="labeless_ida.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sync\sync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hlp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\cpp\rpc.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="rpcdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rpcthreadworker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pyollyview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="textedit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="highlighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pythonpalettemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_res.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="settingsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globalsettingsmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="idadump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="choosememorydialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_rpcthreadworker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_rpcthreadworker.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_rpcdata.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_rpcdata.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_pyollyview.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_pyollyview.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_labeless_ida.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_labeless_ida.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_textedit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_textedit.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_highlighter.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_highlighter.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_choosememorydialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_choosememorydialog.cpp">
+      <Filter>Generated Files\Release_DeFixed</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="labeless_ida.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="rpcdata.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="rpcthreadworker.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\pyollyview.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="pyollyview.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="textedit.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="highlighter.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\res.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\settingsdialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="settingsdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="idadump.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="choosememorydialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\choosememorydialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\run.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\clear.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\settings.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\dump.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\stub.exe.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\wres.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

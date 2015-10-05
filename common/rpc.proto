@@ -1,0 +1,162 @@
+syntax = "proto2";
+package rpc;
+
+message RpcRequest {
+	enum RequestType {
+		RPCT_UNKNOWN					= 0;
+		RPCT_MAKE_NAMES					= 1;
+		RPCT_MAKE_COMMENTS				= 2;
+		RPCT_GET_MEMORY_MAP				= 3;
+		RPCT_READ_MEMORY_REGIONS		= 4;
+		RPCT_ANALYZE_EXTERNAL_REFS		= 5;
+		RPCT_CHECK_PE_HEADERS			= 6;
+	}
+
+	required RequestType request_type								= 1;
+	optional MakeNamesRequest make_names_req						= 2;
+	optional MakeCommentsRequest make_comments_req					= 3;
+	optional ReadMemoryRegionsRequest read_memory_regions_req		= 4;
+	optional AnalyzeExternalRefsRequest analyze_external_refs_req	= 5;
+	optional CheckPEHeadersRequest check_pe_headers_req				= 6;
+}
+
+message Execute {
+	optional string script				= 1;
+	optional string script_extern_obj	= 2;
+	optional bytes rpc_request			= 3;
+	optional bool background			= 4 [default = false];
+	optional uint64 job_id				= 5;
+}
+
+message Response {
+	enum JobStatus {
+		JS_FINISHED	= 1;
+		JS_PENDING	= 2;
+	}
+
+	required uint64 job_id			= 1;
+	optional string std_out			= 2;
+	optional string std_err			= 3;
+	optional string error			= 4;
+	optional bytes rpc_result		= 5;
+	optional JobStatus job_status	= 6;
+}
+
+message MakeNamesRequest {
+	message Name {
+		required uint32 ea		= 1;
+		required string name	= 2;
+	}
+	repeated Name names			= 1;
+	required uint32 base		= 2;
+	required uint32 remote_base	= 3;
+}
+
+message MakeCommentsRequest {
+	message Name {
+		required uint32 ea		= 1;
+		required string name	= 2;
+	}
+	repeated Name names			= 1;
+	required uint32 base		= 2;
+	required uint32 remote_base	= 3;
+}
+
+message GetMemoryMapResult {
+	message Memory {
+		required uint32 base	= 1;
+		required uint32 size	= 2;
+		required uint32 access	= 3;
+		required string name	= 4;
+	}
+	repeated Memory memories	= 1;
+}
+
+message ReadMemoryRegionsRequest {
+	message Region {
+		required uint32 addr	= 1;
+		required uint32 size	= 2;
+	}
+	repeated Region regions		= 1;
+}
+
+message ReadMemoryRegionsResult {
+	message Memory {
+		required uint32 addr	= 1;
+		required uint32 size	= 2;
+		required bytes mem		= 3;
+		required uint32 protect	= 4;
+	}
+	repeated Memory memories	= 1;
+}
+
+message AnalyzeExternalRefsRequest {
+	required uint32 ea_from			= 1;
+	required uint32 ea_to			= 2;
+	required uint32 increment		= 3;
+	required uint32 analysing_base	= 4;
+	required uint32 analysing_size	= 5;
+}
+
+message AnalyzeExternalRefsResult {
+	message PointerData {
+		required uint32 ea							= 1;
+		required string module						= 2;
+		required string proc						= 3;
+		optional string ordinal_collision_dll_path	= 4;
+	}
+	message RefData {
+		enum RefType {
+			REFT_JMPCONST	= 1;
+			REFT_IMMCONST	= 2;
+			REFT_ADDRCONST 	= 3;
+		}
+
+		required uint32 ea							= 1;
+		required uint32 len							= 2;
+		required string dis							= 3;
+		required uint32 v							= 4;
+		required RefType ref_type					= 5;
+		required string module						= 6;
+		required string proc						= 7;
+		optional string ordinal_collision_dll_path	= 8;
+	}
+	message reg_t {
+		required uint32 eax = 1;
+		required uint32 ecx = 2;
+		required uint32 edx = 3;
+		required uint32 ebx = 4;
+		required uint32 esp = 5;
+		required uint32 ebp = 6;
+		required uint32 esi = 7;
+		required uint32 edi = 8;
+		required uint32 eip = 9;
+	}
+	repeated PointerData api_constants	= 1;
+	repeated RefData refs				= 2;
+	required reg_t context				= 3;
+}
+
+message CheckPEHeadersRequest {
+	required uint32 base = 1;
+	required uint32 size = 2;
+}
+
+message CheckPEHeadersResult {
+	message Exports {
+		required uint32 ea		= 1;
+		required uint32 ord		= 2;
+		optional string name	= 3;
+	}
+	message Section {
+		optional string name			= 1;
+		optional uint32 va				= 2;
+		optional uint32 v_size			= 3;
+		optional uint32 raw				= 4;
+		optional uint32 raw_size		= 5;
+		optional uint32 characteristics	= 6;
+	}
+	required bool pe_valid		= 1;
+	repeated Exports exps		= 2;
+	repeated Section sections	= 3;
+}
