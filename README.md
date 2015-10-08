@@ -25,6 +25,12 @@ We can take that memory region and put it in the IDB, fixing imports 'on-the-fly
 
 As a result we have a lot of memory regions that may represent even different modules (if the unpacking process if multistage) with valid references between them, which gives us a possibility to build a full control flow graph of the executable. Basically, we will end up with one big IDB, containing all the info on the specific case.
 
+## Virus Bulletin 2015
+* [Slides](https://github.com/a1ext/labeless/blob/master/vb2015_presentation/vb2015_labeless.pptx)
+* Dumping multiple injections video on [YouTube](https://youtu.be/M5K5Ldaq284)
+* Python scripting video on [YouTube](https://youtu.be/SkcM8Hz2dT4)
+* Basic labels sync video on [YouTube](https://youtu.be/iqipmqE2Znk)
+
 
 Installation
 ===========
