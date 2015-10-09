@@ -299,7 +299,6 @@ def _get_helper(ll):
 #             print >> sys.stderr, traceback.format_exc()
 
 
-
 class Labeless(object):
     __metaclass__ = Singleton
 

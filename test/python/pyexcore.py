@@ -3,8 +3,8 @@
 # by Aliaksandr Trafimchuk
 #
 # Source code released under
-# Creative Commons CC BY-NC-ND 3.0
-# http://creativecommons.org/licenses/by-nc-nd/3.0/
+# Creative Commons BY-NC 4.0
+# http://creativecommons.org/licenses/by-nc/4.0
 
 __author__ = 'a1ex_t'
 
