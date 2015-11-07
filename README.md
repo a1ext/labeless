@@ -71,4 +71,4 @@ Installation
  * If you enabled '_Enable labels & comments sync_' option, then Labeless will automatically synchronize all the data on any rename operation in IDA
 
 # Download
-[Download Labeless 1.0.0.7](https://github.com/a1ext/labeless/releases/download/v_1_0_0_7/Labeless.v.1.0.0.7.zip)
+[Download Labeless 1.0.0.7 (include IDA 6.6 build)](https://github.com/a1ext/labeless/releases/download/v_1_0_0_7/Labeless.v.1.0.0.7_with_IDA66_build.zip)
