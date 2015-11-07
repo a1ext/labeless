@@ -88,6 +88,7 @@ public:
 	static int idaapi ui_callback(void* /*user_data*/, int notification_code, va_list va);
 	static int idaapi idp_callback(void* /*user_data*/, int notification_code, va_list va);
 
+	bool initIDAPython();
 private slots:
 	void onRunPythonScriptFinished();
 	void onGetMemoryMapFinished();
@@ -130,7 +131,7 @@ private:
 	void updateImportsNode();
 	qstring getNewNameOfEntry() const;
 
-	bool initIDAPython();
+	
 	bool runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error);
 
 	Settings loadSettings();

@@ -38,7 +38,8 @@ static int idaapi init()
 		msg("%s: hook_to_notification_point(HT_UI) failed.", __FUNCTION__);
 		return PLUGIN_SKIP;
 	}
-	Labeless::instance().firstInit();
+	if (!Labeless::instance().initIDAPython() || !Labeless::instance().firstInit())
+		return PLUGIN_SKIP;
 	return PLUGIN_KEEP;
 }
 

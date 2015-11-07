@@ -47,6 +47,7 @@
     <TargetExt>.plw</TargetExt>
     <IncludePath>C:\Qt\qt-4.8.4-vc2010\include;C:\Qt\qt-4.8.4-vc2010\include\QtCore;C:\Qt\qt-4.8.4-vc2010\include\QtGui;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Qt\qt-4.8.4-vc2010\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>z66_$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,6 +56,7 @@
     <TargetExt>.plw</TargetExt>
     <IncludePath>C:\Qt\qt-4.8.4-vc2010\include;C:\Qt\qt-4.8.4-vc2010\include\QtCore;C:\Qt\qt-4.8.4-vc2010\include\QtGui;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Qt\qt-4.8.4-vc2010\lib;$(LibraryPath)</LibraryPath>
+    <TargetName>z66_$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -77,7 +79,7 @@
       <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" C:\IDA68\plugins\$(ProjectName)$(TargetExt)</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" C:\IDA66\plugins\$(TargetFileName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
@@ -101,7 +103,7 @@
       <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" C:\IDA68\plugins\$(ProjectName)$(TargetExt)</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" C:\IDA66\plugins\$(TargetFileName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

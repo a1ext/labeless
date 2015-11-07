@@ -282,12 +282,19 @@ void Labeless::onSyncronizeAllRequested()
 	FuncNameSync::DataList labelPoints;
 	LocalLabelsSync::DataList commentPoints;
 
-	qstring name;
-	int flags = 0;
+	//qstring name;
+	char nameBuff[MAXSTR] = {};
+	/*int flags = 0;
 	if (m_Settings.localLabels)
 		flags |= GN_LOCAL;
 	if (m_Settings.demangle)
-		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;
+		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;*/
+
+	auto get_name = [this](ea_t ea, char* buf, size_t buffsize) -> char* {
+		if (m_Settings.demangle)
+			return get_short_name(BADADDR, ea, buf, buffsize);
+		return get_true_name(BADADDR, ea, buf, buffsize);
+	};
 
 	segment_t* s = static_cast<segment_t*>(segs.first_area_ptr());
 	for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
@@ -298,13 +305,13 @@ void Labeless::onSyncronizeAllRequested()
 
 		while (true)
 		{
-			if (get_true_name(&name, ea, flags) > 0 && is_uname(name.c_str()))
+			if (get_name(ea, nameBuff, _countof(nameBuff)) > 0 && is_uname(nameBuff))
 			{
-				std::string s = name.c_str();
+				std::string s = nameBuff;
 				if (s.length() >= OLLY_TEXTLEN)
 					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
 				labelPoints.push_back(FuncNameSync::Data(ea, s));
-				msg("%08X: %s\n", ea, name.c_str());
+				msg("%08X: %s\n", ea, nameBuff);
 			}
 			
 			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
@@ -416,7 +423,8 @@ void Labeless::onAutoanalysisFinished()
 				if (is_uname(name.toStdString().c_str()))
 					continue;
 				msg("%s: found TODO for fix at: 0x%08X, opnd:%s\n", __FUNCTION__, ea, disasm);
-				if (do_unknown(target, 0) && create_insn(target))
+				do_unknown(target, 0);
+				if (create_insn(target))
 					msg("%s: ea: 0x%08X fixed\n", __FUNCTION__, ea);
 			}
 			else if (reShortOpnd.exactMatch(sDisasm))
@@ -1364,7 +1372,11 @@ void Labeless::onAnalyzeExternalRefsFinished()
 		}
 
 		qstring qnamee;
-		get_ea_name(&qnamee, pd.ea);
+		do {
+			char nameeBuff[MAXSTR] = {};
+			get_true_name(BADADDR, pd.ea, nameeBuff, _countof(nameeBuff));
+			qnamee = nameeBuff;
+		} while (0);
 
 		qstring addrStr;
 		addrStr.sprnt("dword ptr [0%08Xh]", addr);
@@ -1780,8 +1792,8 @@ void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 		return;
 	}
 	const std::string& procName = it->second.substr(p + 1);
-	qstring name;
-	if (get_ea_name(&name, ea) && name == procName.c_str())
+	char name[MAXSTR] = {};
+	if (get_true_name(BADADDR, ea, name, _countof(name)) && ::qstrncmp(name, procName.c_str(), _countof(name) == 0))
 		return;
 	if (ASKBTN_YES != askyn_c(ASKBTN_NO, "Seems like address to API: \"%s\"\nMake it external now?", it->second.c_str()))
 		return;
@@ -1844,7 +1856,7 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 		}
 		return 0;
 	}
-	if (notification_code == ui_plugin_loaded)
+	/*if (notification_code == ui_plugin_loaded)
 	{
 		::plugin_info_t* info = va_arg(va, ::plugin_info_t *);
 		std::string name = info->name;
@@ -1852,7 +1864,7 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 			Labeless::instance().initIDAPython();
 		
 		return 0;
-	}
+	}*/
 	if (notification_code == ui_tform_invisible)
 	{
 		TForm *form = va_arg(va, TForm *);
@@ -1986,7 +1998,7 @@ bool Labeless::initIDAPython()
 	const extlang_t* elng = find_extlang_by_name("python");
 	if (!elng)
 	{
-		msg("%s: python extlang not found\n", __FUNCTION__);
+		msg("%s: \"python\" extlang not found\n", __FUNCTION__);
 		return false;
 	}
 	char errbuff[1024] = {};
