@@ -18,6 +18,7 @@ from pehelper import PEHelper
 import re
 from logs import make_logger
 import pehelper_decl as D
+from utils import Disasm_
 
 logger = make_logger()
 
@@ -34,6 +35,8 @@ except ImportError as e:
 modules_meta = dict()
 modules_exports = dict()  # will hold pairs <ea, 'module_name.api_name'>
 
+__MINUS_ONE_32BIT = struct.unpack('<I', '\xFF\xFF\xFF\xFF')[0]
+
 
 def make_names(names, base, remote_base):
     if not names:
@@ -42,7 +45,8 @@ def make_names(names, base, remote_base):
     if base != remote_base:
         ptrdiff = remote_base - base
     for n in names:
-        oa.InsertnameW(n.ea + ptrdiff, oa.NM_LABEL, str(n.name).decode('utf8'))
+        oa.QuickinsertnameW(n.ea + ptrdiff, oa.NM_LABEL, str(n.name).decode('utf8'))
+    oa.Mergequickdata()
     oa.Redrawcpudisasm()
 
 
@@ -51,20 +55,21 @@ def make_comments(comments, base, remote_base):
         return
     ptrdiff = remote_base - base
     for cmt in comments:
-        oa.InsertnameW(cmt.ea + ptrdiff, oa.NM_COMMENT, str(cmt.name).decode('utf8'))
+        oa.QuickinsertnameW(cmt.ea + ptrdiff, oa.NM_COMMENT, str(cmt.name).decode('utf8'))
+    oa.Mergequickdata()
     oa.Redrawcpudisasm()
 
 
 def get_memory_map():
     oa.Listmemory()
-    t = oa.pluginvalue_to_t_table(oa.Plugingetvalue(oa.VAL_MEMORY))
+    t = oa.cvar.memory
     rv = rpc.GetMemoryMapResult()
 
-    for i in xrange(t.data.n):
+    for i in xrange(t.sorted.n):
         mi = rv.memories.add()
-        m = oa.void_to_t_memory(oa.Getsortedbyselection(t.data, i))
+        m = oa.void_to_t_memory(oa.Getsortedbyselection(t.sorted, i))
         module = oa.Findmodule(m.base)
-        module_name = ("'%s'" % module.name) if module else ''
+        module_name = ("'%s'" % module.modname) if module else ''
         mi.access = m.access
         mi.base = m.base
         mi.name = str(module_name)
@@ -75,7 +80,7 @@ def get_memory_map():
 
 def unsafe_read_process_memory(addr, size):
     b = bytearray(size)
-    n = oa.Readmemory(b, addr, size, oa.MM_RESTORE | oa.MM_SILENT)
+    n = oa.Readmemory(b, addr, size, oa.MM_SILENT)
     return None if n < size else (n, b)
 
 
@@ -85,7 +90,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
     VirtualProtectEx = C.windll.kernel32.VirtualProtectEx
     GRANULARITY = 0x1000
 
-    h_process = wintypes.HANDLE(oa.Plugingetvalue(oa.VAL_HPROCESS))
+    h_process = oa.cvar.process
     rv = bytearray(size)
 
     guarded = list()
@@ -167,6 +172,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
         rv = rv[:size]
     return size, rv, protect
 
+
 def disasm(ea, mem=None, size=oa.MAXCMDSIZE):
     if mem is None:
         mem = safe_read_chunked_memory_region_as_one(ea, size)
@@ -176,10 +182,11 @@ def disasm(ea, mem=None, size=oa.MAXCMDSIZE):
         mem = buffer(mem[1])
     cmd = bytearray(mem[:min(oa.MAXCMDSIZE, len(mem))])
     dis = oa.t_disasm()
-    n = oa.Disasm(cmd, len(cmd), ea, None, dis, oa.DISASM_CODE, 0)
-    if n <= 0 or dis.error:
-        return None, None
+    n = oa.Disasm(cmd, len(cmd), ea, None, dis, oa.DA_TEXT | oa.DA_OPCOMM | oa.DA_DUMP | oa.DA_MEMORY, oa.t_reg(), oa.t_predict())
+    if n <= 0 or dis.errors != oa.DAE_NOERR:
+        return 0, None
     return n, dis
+
 
 def read_memory_regions(regions):
     oa.Listmemory()
@@ -219,8 +226,8 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
     else:
         main_module_name = path.splitext(path.basename(main_module_name.path))[0].lower()
 
-    th = oa.Findthread(oa.Getcputhreadid())
-    r = oa.ulongArray.frompointer(th.reg.r)
+    p_reg = oa.Threadregisters(oa.Getcputhreadid())
+    r = oa.ulongArray.frompointer(p_reg.r)
     rv.context.eax = r[oa.REG_EAX]
     rv.context.ecx = r[oa.REG_ECX]
     rv.context.edx = r[oa.REG_EDX]
@@ -229,7 +236,7 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
     rv.context.ebp = r[oa.REG_EBP]
     rv.context.esi = r[oa.REG_ESI]
     rv.context.edi = r[oa.REG_EDI]
-    rv.context.eip = th.reg.ip
+    rv.context.eip = p_reg.ip
 
     global modules_exports
 
@@ -296,44 +303,45 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
             offs = ea - ea_from
             cmd = bytearray(mem[offs: offs + min(oa.MAXCMDSIZE, l)])
             dis = oa.t_disasm()
-            n = oa.Disasm(cmd, len(cmd), ea, None, dis, oa.DISASM_CODE, 0)
-            if n <= 0 or dis.error:
+            n = oa.Disasm(cmd, len(cmd), ea, None, dis, oa.DA_TEXT | oa.DA_OPCOMM | oa.DA_DUMP | oa.DA_MEMORY,
+                          oa.t_reg(), oa.t_predict())
+            if n <= 0 or dis.errors != oa.DAE_NOERR:
                 continue
-            if dis.immconst:
-                v = isPointsToExternalDll(dis.immconst)
+            if dis.immfixup != __MINUS_ONE_32BIT:  # TODO: check this
+                v = isPointsToExternalDll(dis.immfixup)
                 if v:
                     ref = rv.refs.add()
                     ref.ref_type = rpc.AnalyzeExternalRefsResult.RefData.REFT_IMMCONST
                     ref.module, ref.proc = v.split('.')
-                    ref.v = dis.immconst
+                    ref.v = dis.immfixup
                     ref.ea = ea
                     ref.len = n
                     ref.dis = dis.result
-                    print 'dis.immconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
+                    print 'dis.immfixup points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
                 continue
-            if dis.adrconst:
-                v = isPointsToExternalDll(dis.adrconst)
+            if dis.memconst:
+                v = isPointsToExternalDll(dis.memconst)
                 if v:
                     ref = rv.refs.add()
                     ref.ref_type = rpc.AnalyzeExternalRefsResult.RefData.REFT_ADDRCONST
                     ref.module, ref.proc = v.split('.')
-                    ref.v = dis.adrconst
+                    ref.v = dis.memconst
                     ref.ea = ea
                     ref.len = n
                     ref.dis = dis.result
-                    print 'dis.adrconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
+                    print 'dis.memconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
                 continue
-            if dis.jmpconst:
-                v = isPointsToExternalDll(dis.jmpconst)
+            if dis.jmpaddr:
+                v = isPointsToExternalDll(dis.jmpaddr)
                 if v:
                     ref = rv.refs.add()
                     ref.ref_type = rpc.AnalyzeExternalRefsResult.RefData.REFT_JMPCONST
                     ref.module, ref.proc = v.split('.')
-                    ref.v = dis.jmpconst
+                    ref.v = dis.jmpaddr
                     ref.ea = ea
                     ref.len = n
                     ref.dis = dis.result
-                    print 'dis.jmpconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
+                    print 'dis.jmpaddr points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
                 continue
 
                 #for k, v in inspect.getmembers(dis):
@@ -352,7 +360,7 @@ def update_modules_meta():
 
     me32 = D.MODULEENTRY32()
     me32.dwSize = C.sizeof(D.MODULEENTRY32)
-    pid = oa.Plugingetvalue(oa.VAL_PROCESSID)
+    pid = oa.cvar.processid
     h_snap = C.windll.kernel32.CreateToolhelp32Snapshot(D.TH32CS_SNAPMODULE, pid)
     if h_snap == 0xFFFFFFFF:
         print >> sys.stderr, 'get_modules_meta(): Unable to open Toolhelp32 snapshot'
@@ -397,8 +405,8 @@ def update_modules_meta():
 
     # t = oa.pluginvalue_to_t_table(oa.Plugingetvalue(oa.VAL_MODULES))
     #
-    # for i in xrange(t.data.n):
-    #     m = oa.void_to_t_module(oa.Getsortedbyselection(t.data, i))
+    # for i in xrange(t.sorted.n):
+    #     m = oa.void_to_t_module(oa.Getsortedbyselection(t.sorted, i))
     #     modname = path.splitext(path.basename(m.path))[0].lower()
     #     if modname in modules_meta and modules_meta[modname]['base'] == m.base:
     #         continue

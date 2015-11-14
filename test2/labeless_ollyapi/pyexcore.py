@@ -58,7 +58,7 @@ class PyExCore(object):
             r = rpc.RpcRequest()
             r.ParseFromString(raw_command)
 
-            if ollyapi2.Getstatus() != ollyapi2.STAT_STOPPED:
+            if ollyapi2.cvar.run.status != ollyapi2.STAT_PAUSED:
                 print >> sys.stderr, 'Warn! calling RPC on non-paused debuggee may cause an unpredictable results'
 
             if r.request_type not in cls.ROUTES:

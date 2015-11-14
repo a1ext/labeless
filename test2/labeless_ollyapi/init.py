@@ -49,6 +49,7 @@ sys.argv = [""]
 
 # Have to make sure Python finds our modules
 
+# import rdebug
 from ollyapi2 import *
 from ollyutils import *
 
@@ -60,7 +61,7 @@ from ollyutils import *
 #        watchdog.activate(10) # Use 10-second timeout
 #
 # Note: The watchdog only works for code running inside
-#       functions, not in global/module namespace.         
+#       functions, not in global/module namespace.
 #-------------------------------------------------------------
 class WatchDog():
     """
@@ -107,4 +108,3 @@ class WatchDog():
         return self.tracer
 
 #watchdog = WatchDog(10)
-
