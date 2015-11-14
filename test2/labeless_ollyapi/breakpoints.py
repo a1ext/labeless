@@ -20,7 +20,8 @@
 #
 from ollyapi2 import *
 
-def SetInt3Breakpoint(address, type_bp = 0, fnindex = 0, limit = 0, count = 0, actions = 0, condition = '', expression = '', exprtype = ''):
+
+def SetInt3Breakpoint(address, type_bp=0, fnindex=0, limit=0, count=0, actions=0, condition='', expression='', exprtype=''):
     """
     Python wrapper for the Setint3breakpoint function
     """
@@ -36,7 +37,8 @@ def SetInt3Breakpoint(address, type_bp = 0, fnindex = 0, limit = 0, count = 0, a
         exprtype
     )
 
-def SetHardBreakpoint(address, index = 0, size = 0, type_ = 0, fnindex = 0, limit = 0, count = 0, actions = 0, condition = '', expression = '', exprtype = ''):
+
+def SetHardBreakpoint(address, index=0, size=0, type_=0, fnindex=0, limit=0, count=0, actions=0, condition='', expression='', exprtype=''):
     """
     Set a hardware breakpoint
     """
@@ -54,6 +56,7 @@ def SetHardBreakpoint(address, index = 0, size = 0, type_ = 0, fnindex = 0, limi
         exprtype
     )
 
+
 def RemoveInt3Breakpoint(address, type_bp):
     """
     Remove software breakpoint
@@ -63,11 +66,13 @@ def RemoveInt3Breakpoint(address, type_bp):
         type_bp
     )
 
+
 def RemoveHardbreapoint(slot):
     """
     Remove hardware breakpoint
     """
     return Removehardbreakpoint(slot)
+
 
 def FindFreeHardbreakSlot(type_):
     """
@@ -75,7 +80,8 @@ def FindFreeHardbreakSlot(type_):
     """
     return Findfreehardbreakslot(type_)
 
-def SetMemoryBreakpoint(address, size = 1, type_ = 0, limit = 0, count = 0, condition = '', expression = '', exprtype = ''):
+
+def SetMemoryBreakpoint(address, size=1, type_=0, limit=0, count=0, condition='', expression='', exprtype=''):
     """
     Set a memory breakpoint
     """
@@ -90,6 +96,7 @@ def SetMemoryBreakpoint(address, size = 1, type_ = 0, limit = 0, count = 0, cond
         exprtype
     )
 
+
 def RemoveMemoryBreakpoint(addr):
     """
     Remove a memory breakpoint
@@ -102,12 +109,12 @@ def RemoveMemoryBreakpoint(addr):
 class Breakpoint(object):
     """
     """
-    def __init__(self, address, type_bp, condition = None):
+    def __init__(self, address, type_bp, condition=None):
         self.address = address
         self.state = 'Disabled'
         self.type = type_bp
-        self.is_conditional_bp = condition != None
-        self.condition = '' if condition == None else condition
+        self.is_conditional_bp = condition is not None
+        self.condition = '' if condition is None else condition
 
     def get_address(self):
         """Get the address of the breakpoint"""
@@ -150,7 +157,7 @@ class Breakpoint(object):
         pass
 
     @staticmethod
-    def flags_to_bp_type(flags, is_conditional_bp = False):
+    def flags_to_bp_type(flags, is_conditional_bp=False):
         """
         Translate the 'rwx' in stuff that olly understands
         """
@@ -188,9 +195,9 @@ class SoftwareBreakpoint(Breakpoint):
         - disable
         - .continue(x) -> let the breakpoint be hit x times
     """
-    def __init__(self, address, condition = None):
+    def __init__(self, address, condition=None):
         # if this is a classic breakpoint we need to set different flag
-        t = BP_MANUAL | ((BP_COND | BP_CONDBREAK) if condition != None else BP_BREAK)
+        t = BP_MANUAL | ((BP_COND | BP_CONDBREAK) if condition is not None else BP_BREAK)
 
         # init internal state of the breakpoint
         super(SoftwareBreakpoint, self).__init__(address, t, condition)
@@ -216,6 +223,7 @@ class SoftwareBreakpoint(Breakpoint):
             RemoveInt3Breakpoint(self.address, self.type)
             self.state = 'Disabled'
 
+
 class HardwareBreakpoint(Breakpoint):
     """
     A class to manipulate, play with hardware breakpoint
@@ -224,7 +232,7 @@ class HardwareBreakpoint(Breakpoint):
         - do not use .goto() if you have a read/write bp, because you don't know where
         the breakpoint is going to be hit
     """
-    def __init__(self, address, flags = 'x', size = 1, condition = None, slot = None):
+    def __init__(self, address, flags='x', size=1, condition=None, slot=None):
         # init internal state of the breakpoint
         super(HardwareBreakpoint, self).__init__(address, flags, condition)
 
@@ -246,7 +254,7 @@ class HardwareBreakpoint(Breakpoint):
         # ollydbg understands
         self.internal_type = Breakpoint.flags_to_bp_type(self.type, self.is_conditional_bp)
 
-        self.slot = slot if slot != None else FindFreeHardbreakSlot(self.internal_type)
+        self.slot = slot if slot is not None else FindFreeHardbreakSlot(self.internal_type)
         if self.slot == -1:
             raise Exception('You have used all the available slot')
         
@@ -270,11 +278,12 @@ class HardwareBreakpoint(Breakpoint):
             RemoveHardbreapoint(self.slot)
             self.state = 'Disabled'
 
+
 class MemoryBreakpoint(Breakpoint):
     """
     A class to manipulate memory breakpoints
     """
-    def __init__(self, address, flags = 'x', size = 1, condition = ''):
+    def __init__(self, address, flags='x', size=1, condition=''):
         super(MemoryBreakpoint, self).__init__(address, flags, condition)
         self.internal_type = Breakpoint.flags_to_bp_type(self.type, self.is_conditional_bp)
         self.size = size

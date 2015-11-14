@@ -27,19 +27,21 @@ from binascii import unhexlify
 
 # Wrappers
 
+
 def FlushMemoryCache():
     """
     Flush the intern memory cache of OllyDBG2
     """
     Flushmemorycache()
 
-def WriteMemory(buff, addr = None, mode = 0):
+
+def WriteMemory(buff, addr=None, mode=0):
     """
     Write directly in the memory of the process
     """
 
     # XXX: check if memory exists
-    if addr == None:
+    if addr is None:
         addr = threads.GetEip()
         
     n = Writememory(
@@ -54,12 +56,13 @@ def WriteMemory(buff, addr = None, mode = 0):
 
     return n
 
-def ReadMemory(size, addr = None, mode = 0):
+
+def ReadMemory(size, addr=None, mode=0):
     """
     Read the memory of the process at a specific address
     """
     # XXX: test if the address exists
-    if addr == None:
+    if addr is None:
         addr = threads.GetEip()
 
     b = bytearray(size)
@@ -72,6 +75,7 @@ def ReadMemory(size, addr = None, mode = 0):
 
     # XXX: Hmm, don't care about n right ?
     return str(b)
+
 
 def Expression_(result, expression, data, base, size, threadid, a, b, mode):
     """
@@ -94,6 +98,7 @@ def Expression_(result, expression, data, base, size, threadid, a, b, mode):
         return None
 
     return r
+
 
 def FindMemory(addr):
     """
@@ -129,28 +134,31 @@ def ResolveApiAddress(module, function):
 
     return None
 
-def ReadDwordMemory(address = None):
+
+def ReadDwordMemory(address=None):
     """
     Read a dword in memory
     """
-    if address == None:
+    if address is None:
         address = threads.GetEip()
 
     data = ReadMemory(4, address)
     return u('<I', data)[0]
 
+
 def IsMemoryExists(address):
     """
     Is the memory page exists in the process ?
     """
-    return FindMemory(address) != None
+    return FindMemory(address) is not None
 
-def PatchCodeWithHex(s, address = None):
+
+def PatchCodeWithHex(s, address=None):
     """
     Patch the code at address with unhexlify(s)
     """
     # XXX: test if the memory exists
-    if address == None:
+    if address is None:
         address = threads.GetEip()
 
     bin = ''
@@ -162,20 +170,21 @@ def PatchCodeWithHex(s, address = None):
     # patch the code
     WriteMemory(address, bin)
 
-def PatchCode(s, address = None):
+
+def PatchCode(s, address=None):
     """
     Assemble s and patch address
     """
 
     # XXX: test if the memory exists
-    if address == None:
+    if address is None:
         address = threads.GetEip()
 
     bin = ''
     try:
         bin, s = utils.Assemble__(s)
     except Exception, e:
-        raise(e)
+        raise e
 
     # patch the code
     WriteMemory(bin, address)

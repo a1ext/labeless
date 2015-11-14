@@ -22,8 +22,10 @@ from ollyapi2 import *
 
 # Wrappers
 
+
 def ResumeAllThreads():
     Resumeallthreads()
+
 
 def ThreadRegisters(threadid):
     """
@@ -31,19 +33,22 @@ def ThreadRegisters(threadid):
     """
     return Threadregisters(threadid)
 
+
 def GetCpuThreadId():
     """
     Get the TID of the current thread
     """
     return Getcputhreadid()
 
+
 # The metaprogramming trick doesn't work because the ip field isn't in the t_reg.r array :(
-def SetEip(eip = 0):
+def SetEip(eip=0):
     """
     Modify the EIP register
     """
     p_reg = Threadregisters(GetCpuThreadId())
     p_reg.ip = eip
+
 
 def GetEip():
     """
@@ -52,6 +57,7 @@ def GetEip():
     p_reg = Threadregisters(GetCpuThreadId())
     return p_reg.ip
 
+
 def GetEflags():
     """
     Get the EFLAGS register
@@ -59,12 +65,14 @@ def GetEflags():
     p_reg = Threadregisters(GetCpuThreadId())
     return p_reg.flags
 
+
 def GetProcessId():
     """
     Get the PID of the debuggee
     """
     # oddata (ulong)   processid;            // Process ID of Debuggee or 0
     return cvar.processid
+
 
 def GetProcessHandle():
     """
@@ -89,7 +97,8 @@ def CreateRegisterSetter(reg_id, reg_name):
     f.__name__ = 'Set%s' % reg_name.capitalize()
     f.__doc__  = 'Set the %s register' % reg_name.upper()
 
-    return (f.__name__, f)
+    return f.__name__, f
+
 
 def CreateRegisterGetter(reg_id, reg_name):
     """
@@ -105,7 +114,8 @@ def CreateRegisterGetter(reg_id, reg_name):
     f.__name__ = 'Get%s' % reg_name.capitalize()
     f.__doc__  = 'Get the %s register' % reg_name.upper()
 
-    return (f.__name__, f)
+    return f.__name__, f
+
 
 def CreateSegRegisterGetter(seg_id, seg_name):
     """
@@ -121,7 +131,7 @@ def CreateSegRegisterGetter(seg_id, seg_name):
     f.__name__ = 'Get%s' % seg_name.capitalize()
     f.__doc__  = 'Get the %s segment selector' % seg_name.upper()
 
-    return (f.__name__, f)
+    return f.__name__, f
 
 
 def BuildSettersGetters():
@@ -168,6 +178,7 @@ BuildSettersGetters()
 
 # Abstraction
 
+
 def GetCurrentThreadRegisters():
     """
     Retrieve the register for the current thread debugged
@@ -205,6 +216,7 @@ def GetCurrentTEB():
     base = ulongArray.frompointer(r.base)
     return base[SEG_FS]
 
+
 def display_global_registers():
     """
     Display only the global registers
@@ -217,6 +229,7 @@ def display_global_registers():
     print 'ESI: %#.8x, EDI: %#.8x' % (p_reg[REG_ESI], p_reg[REG_EDI])
     print 'EIP: %#.8x' % r.ip
 
+
 def display_segment_selectors():
     """
     Display the segment selectors with their bases/limits
@@ -228,6 +241,7 @@ def display_segment_selectors():
     print 'ES: %#.2x (%#.8x - %#.8x), CS: %#.2x (%#.8x - %#.8x)' % (s[SEG_ES], base[SEG_ES], (base[SEG_ES] + limit[SEG_ES]), s[SEG_CS], base[SEG_CS], (base[SEG_CS] + limit[SEG_CS]))
     print 'SS: %#.2x (%#.8x - %#.8x), DS: %#.2x (%#.8x - %#.8x)' % (s[SEG_SS], base[SEG_SS], (base[SEG_SS] + limit[SEG_SS]), s[SEG_DS], base[SEG_DS], (base[SEG_DS] + limit[SEG_DS]))
     print 'FS: %#.2x (%#.8x - %#.8x), GS: %#.2x (%#.8x - %#.8x)' % (s[SEG_FS], base[SEG_FS], (base[SEG_FS] + limit[SEG_FS]), s[SEG_GS], base[SEG_GS], (base[SEG_GS] + limit[SEG_GS]))
+
 
 def display_eflags():
     """
@@ -244,6 +258,7 @@ def display_eflags():
     print 'Single-step trap flag: %d' % ((r.flags & FLAG_T) != 0)
     print 'Direction flag       : %d' % ((r.flags & FLAG_D) != 0)
     print 'Overflow flag        : %d' % ((r.flags & FLAG_O) != 0)
+
 
 def display_all_registers():
     """

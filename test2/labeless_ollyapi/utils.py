@@ -25,6 +25,7 @@ import sym
 
 # Wrappers
 
+
 def InsertNameW(addr, type_, s):
     """
     That function is used to add label and comment directly on the disassembly
@@ -36,6 +37,7 @@ def InsertNameW(addr, type_, s):
         s
     )
 
+
 def CheckForDebugEvent():
     """
     Hum, this method seems to be very important, one of its purpose
@@ -43,11 +45,13 @@ def CheckForDebugEvent():
     """
     return Checkfordebugevent()
 
-def CloseProcess(confirm = 0):
+
+def CloseProcess(confirm=0):
     """
     Close the process being debugged
     """
     return Closeprocess(confirm)
+
 
 def SetArguments(s):
     """
@@ -55,8 +59,9 @@ def SetArguments(s):
     """
     assert(len(s) * 2 < ARGLEN)
     cvar.arguments = unicode(s)
-    
-def Disasm_(c, address = 0):
+
+
+def Disasm_(c, address=0):
     """
     Disassemble some x86 code (only one instruction though) thanks to the OllyDbg2 engine
     """
@@ -75,7 +80,8 @@ def Disasm_(c, address = 0):
 
     return size_instr, str(di.result)
 
-def Assemble_(s, address = 0):
+
+def Assemble_(s, address=0):
     """
     Assemble some x86 stuff
     """
@@ -98,11 +104,12 @@ def Assemble_(s, address = 0):
     # you submit invalid x86 assembly
     # XXX: doesn't it exist a proper way to do that ??
     if error_msg.startswith('U\x00n\x00k\x00n\x00o\x00w\x00n'):
-        return (0, 0, str(error_msg.replace('\x00', '')))
+        return 0, 0, str(error_msg.replace('\x00', ''))
 
     return str(code[:sizeof_assembled]), sizeof_assembled
 
-def AssembleAllForms(s, ip = 0):
+
+def AssembleAllForms(s, ip=0):
     """
     Actually, I only use this function to obtain a t_asmod structure, to pass it
     at CompareCommand()
@@ -127,6 +134,7 @@ def AssembleAllForms(s, ip = 0):
 
     return asmod, r
 
+
 def CompareCommand(cmd, cmdsize, cmdip, model, nmodel):
     """
     Compare command, used to search instruction accross the memory
@@ -143,6 +151,7 @@ def CompareCommand(cmd, cmdsize, cmdip, model, nmodel):
         b,
         t_disasm()
     )
+
 
 def GetAnalyserComment(addr):
     """
@@ -161,7 +170,8 @@ def GetAnalyserComment(addr):
 
     return str(buf.replace('\x00', ''))
 
-def GetProcComment(addr, acall = 0, argonly = 0):
+
+def GetProcComment(addr, acall=0, argonly=0):
     """
     Get comment generated for a specific Procedure
 
@@ -179,12 +189,14 @@ def GetProcComment(addr, acall = 0, argonly = 0):
 
     return str(buf.replace('\x00', ''))
 
+
 def IsDebuggeeFinished():
     """Is the debugee is finished ?"""
     return cvar.run.status == STAT_FINISHED
 
 
 # Abstraction
+
 
 def Run__(status = STAT_RUNNING, pass_exception = 0):
     """
@@ -193,9 +205,11 @@ def Run__(status = STAT_RUNNING, pass_exception = 0):
     Run(status, pass_exception)
 
     # required in order to update the state of the thread registers (retrieved with Threadregisters for example)
-    # BTW, not sure it's supposed to be done this way though, I've found that in an OllyDBG2 reverse-engineering session.
+    # BTW, not sure it's supposed to be done this way though, I've found that in an OllyDBG2 reverse-engineering
+    #  session.
     while CheckForDebugEvent() == 1:
         memory.FlushMemoryCache()
+
 
 def FindMainModule():
     """
@@ -210,6 +224,7 @@ def FindMainModule():
 
     return r
 
+
 def AddUserComment(address, s):
     """
     Add a user comment at a specific address ; it's like using the shortcut ';'
@@ -220,6 +235,7 @@ def AddUserComment(address, s):
         s
     )
 
+
 def AddUserLabel(address, s):
     """
     Add a user label at a specific address ; it's like using the shortcut ':'
@@ -229,6 +245,7 @@ def AddUserLabel(address, s):
         NM_LABEL,
         s
     )
+
 
 def GetPESections():
     """
@@ -242,6 +259,7 @@ def GetPESections():
         sections.append(sects[i])
     return sections
 
+
 def GetEntryPoint():
     """
     Get the address of the entry point of your executable
@@ -249,11 +267,13 @@ def GetEntryPoint():
     mod = FindMainModule()
     return mod.entry
 
+
 def StepInto():
     """
     Step-into, exactly the same when you hit F7
     """
     Run__(STAT_STEPIN)
+
 
 def StepOver():
     """
@@ -261,11 +281,13 @@ def StepOver():
     """
     Run__(STAT_STEPOVER)
 
+
 def ExecuteUntilRet():
     """
     Execute until RET instruction, exactly the same when you hit ctrl+F9
     """
     Run__(STAT_TILLRET)
+
 
 def Disass(c, address = 0):
     """
@@ -288,8 +310,8 @@ def Disass(c, address = 0):
 
         # In the other case, we have valid assembly code
         complete_disass.append({
-            'text' : disass,
-            'size' : size_current_instruction    
+            'text': disass,
+            'size': size_current_instruction
         })
 
         sizeof_disassembled_stuff += size_current_instruction
@@ -297,7 +319,8 @@ def Disass(c, address = 0):
 
     return complete_disass
 
-def Assemble__(s, address = 0):
+
+def Assemble__(s, address=0):
     """
     A high level version of the assemble version ; you can assemble several instructions
     each instruction must be separated by a ';'
@@ -320,11 +343,12 @@ def Assemble__(s, address = 0):
 
     return (code, total_size)
 
-def FindInstr(instr, address_start = None):
+
+def FindInstr(instr, address_start=None):
     """
     Find the address of a specific instruction
     """
-    if address_start == None:
+    if address_start is None:
         address_start = threads.GetEip()
 
     if memory.IsMemoryExists(address_start) == False:
@@ -333,7 +357,7 @@ def FindInstr(instr, address_start = None):
     # now assembleallforms to get the t_asmmod required to call comparecommand
     asmmod, nmodel = '', 0
     try:
-        #XXX: fix the ip parameter to be able of finding eip-dependent instruction
+        # XXX: fix the ip parameter to be able of finding eip-dependent instruction
         asmmod, nmodel = AssembleAllForms(instr, 0)
     except Exception, e:
         raise(e)
@@ -374,7 +398,8 @@ def FindInstr(instr, address_start = None):
 
     return 0
 
-def FindHexInPage(s, address_start = None):
+
+def FindHexInPage(s, address_start=None):
     """
     Find hexadecimal values like E9??FF?A??
     The '?' is a wildcard for one nibbles ; that idea comes from the excellent ODBG scripting language
@@ -391,7 +416,7 @@ def FindHexInPage(s, address_start = None):
         idx_data = 0
 
         for idx in range(0, len(s), 2):
-            b_str = s[idx : idx+2]
+            b_str = s[idx: idx+2]
             byte_to_compare = ord(data[idx_data])
 
             # have we a wildcard ?
@@ -430,7 +455,7 @@ def FindHexInPage(s, address_start = None):
     # we only accept hexa digits and the wildcard '?'
     assert(filter(lambda c: c in '0123456789abcdef?', s) == s)
 
-    if address_start == None:
+    if address_start is None:
         address_start = threads.GetEip()
 
     # some memory must be mapped at this address
@@ -456,7 +481,8 @@ def FindHexInPage(s, address_start = None):
 
     return 0
 
-def display_call_stack(nb_max_frame = 100):
+
+def display_call_stack(nb_max_frame=100):
     """
     Walk on the stack & generate a call stack
     """
@@ -479,9 +505,9 @@ def display_call_stack(nb_max_frame = 100):
 
         symbol = sym.GetSymbolFromAddress(seip)
         frames_info.append({
-            'return-address' : seip,
-            'address' : sebp + 4,
-            'symbol' : symbol if symbol != None else 'no symbol found',
+            'return-address': seip,
+            'address': sebp + 4,
+            'symbol': symbol if symbol is not None else 'no symbol found',
         })
 
         ebp = sebp
@@ -493,6 +519,7 @@ def display_call_stack(nb_max_frame = 100):
         c = frames_info[i]
         ri = len(frames_info) - i - 1
         print '#%.2d %#.8x : %s (found @%#.8x)' % (ri, c['return-address'], c['symbol'], c['address'])
+
 
 def display_seh_chain():
     """
@@ -513,9 +540,9 @@ def display_seh_chain():
         seh_next, seh_handler = memory.ReadDwordMemory(seh_addr), memory.ReadDwordMemory(seh_addr + 4)
 
         seh_entries.append({
-            'handler' : seh_handler,
-            'symbol' : sym.GetSymbolFromAddress(seh_handler),
-            'next' : seh_next
+            'handler': seh_handler,
+            'symbol': sym.GetSymbolFromAddress(seh_handler),
+            'next': seh_next
         })
 
         seh_addr = seh_next

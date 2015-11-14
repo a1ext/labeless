@@ -27,6 +27,7 @@ import threads
 MAX_SYM_NAME = 2000
 MAX_PATH = 260
 
+
 class symbol_info_t(Structure):
     """
     Contains symbol information.
@@ -36,22 +37,27 @@ class symbol_info_t(Structure):
     _fields_ = [
         # The size of the structure, in bytes. This member must be set to sizeof(SYMBOL_INFO).
         # Note that the total size of the data is the SizeOfStruct + (MaxNameLen - 1) * sizeof(TCHAR).
-        # The reason to subtract one is that the first character in the name is accounted for in the size of the structure.
+        # The reason to subtract one is that the first character in the name is accounted for in the
+        # size of the structure.
         ('SizeOfStruct', c_ulong),
 
-        # A unique value that identifies the type data that describes the symbol. This value does not persist between sessions.
+        # A unique value that identifies the type data that describes the symbol. This value does not persist
+        #  between sessions.
         ('TypeIndex', c_ulong),
 
         # This member is reserved for system use.
         ('Reserved', c_longlong * 2),
 
-        # The unique value for the symbol. The value associated with a symbol is not guaranteed to be the same each time you run the process.
-        # For PDB symbols, the index value for a symbol is not generated until the symbol is enumerated or retrieved through a search by name or address.
+        # The unique value for the symbol. The value associated with a symbol is not guaranteed to be the
+        # same each time you run the process.
+        # For PDB symbols, the index value for a symbol is not generated until the symbol is enumerated or
+        # retrieved through a search by name or address.
         # The index values for all CodeView and COFF symbols are generated when the symbols are loaded.
         ('Index', c_ulong),
 
         # The symbol size, in bytes.
-        # This value is meaningful only if the module symbols are from a pdb file; otherwise, this value is typically zero and should be ignored.
+        # This value is meaningful only if the module symbols are from a pdb file; otherwise, this value
+        # is typically zero and should be ignored.
         ('Size', c_ulong),
 
         # The base address of the module that contains the symbol.
@@ -93,6 +99,7 @@ class symbol_info_t(Structure):
 
 symbol_info_p = POINTER(symbol_info_t)
 
+
 class guid_t(Structure):
     """
     GUIDs identify objects such as interfaces, manager entry-point vectors (EPVs), and class objects.
@@ -109,6 +116,7 @@ class guid_t(Structure):
         ('Data3', c_ushort),
         ('Data4', c_char * 8)
     ]
+
 
 class imagehlp_module64_t(Structure):
     """
@@ -199,6 +207,7 @@ c_longlong_p = POINTER(c_longlong)
 
 # Wrapper
 
+
 def resolve_api(n, mod):
     """
     Retrieve dynamically the function address exported
@@ -245,7 +254,8 @@ Symfromaddr = Symfromaddr_TYPE(resolve_api('SymFromAddr', 'dbghelp.dll'))
 Symgetmoduleinfo64_TYPE = WINFUNCTYPE(c_bool, c_void_p, c_longlong, imagehlp_module64_p)
 Symgetmoduleinfo64 = Symgetmoduleinfo64_TYPE(resolve_api('SymGetModuleInfo64', 'dbghelp.dll'))
 
-def SymInitialize(hProcess, UserSearchPath = None, fInvadeProcess = True):
+
+def SymInitialize(hProcess, UserSearchPath=None, fInvadeProcess=True):
     """
     Initializes the symbol handler for a process.
 
@@ -257,6 +267,7 @@ def SymInitialize(hProcess, UserSearchPath = None, fInvadeProcess = True):
         fInvadeProcess
     )
 
+
 def SymFromAddr(hProcess, address):
     """
     Retrieves symbol information for the specified address.
@@ -264,7 +275,8 @@ def SymFromAddr(hProcess, address):
     displacement = c_longlong(0)
 
     # A pointer to a SYMBOL_INFO structure that provides information about the symbol.
-    # The symbol name is variable in length; therefore this buffer must be large enough to hold the name stored at the end of the SYMBOL_INFO structure.
+    # The symbol name is variable in length; therefore this buffer must be large enough to hold
+    # the name stored at the end of the SYMBOL_INFO structure.
     # Be sure to set the MaxNameLen member to the number of bytes reserved for the name.
     buf = create_string_buffer(sizeof(symbol_info_t) + (MAX_SYM_NAME * sizeof(c_char)))
     p_symbol = cast(buf, symbol_info_p)
@@ -286,10 +298,11 @@ def SymFromAddr(hProcess, address):
     s = string_at(addr_s)
 
     return {
-        'struct' : p_symbol.contents,
-        's' : s,
-        'displacement' : displacement
+        'struct': p_symbol.contents,
+        's': s,
+        'displacement': displacement
     }
+
 
 def SymGetModuleInfo64(hProcess, address):
     """
@@ -309,6 +322,7 @@ def SymGetModuleInfo64(hProcess, address):
         return None
     
     return img
+
 
 def DecodeAddress(addr):
     """
@@ -335,6 +349,7 @@ def DecodeAddress(addr):
         return None
 
     return str(buf.replace('\x00', ''))
+
 
 def DecodeRelativeOffset(addr):
     """
@@ -366,7 +381,7 @@ def GetSymbolFromAddressMS(address):
     address_info = SymFromAddr(handle_process, address)
     s = None
     
-    if address_info != None:
+    if address_info is not None:
         symbol_name, offset = address_info['s'], address_info['displacement'].value
         module_info = SymGetModuleInfo64(handle_process, address)
 
@@ -377,6 +392,7 @@ def GetSymbolFromAddressMS(address):
 
     return s
 
+
 def GetSymbolFromAddressOlly(address):
     """
     Retrieve symbol information from an address via the OllyDBG API
@@ -385,10 +401,11 @@ def GetSymbolFromAddressOlly(address):
     GetSymbolFromAddressOlly(0x778de752) =
     """
     s = DecodeRelativeOffset(address)
-    if s == None:
+    if s is None:
         s = DecodeAddress(address)
 
     return s
+
 
 def GetSymbolFromAddress(address):
     """
@@ -396,7 +413,7 @@ def GetSymbolFromAddress(address):
     and if it didn't succeed via the OllyDBG API
     """
     s = GetSymbolFromAddressMS(address)
-    if s == None:
+    if s is None:
         s = GetSymbolFromAddressOlly(address)
 
     return s

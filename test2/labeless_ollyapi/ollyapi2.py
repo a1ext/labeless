@@ -224,248 +224,257 @@ DS_ASM = _ollyapi2.DS_ASM
 DS_C = _ollyapi2.DS_C
 
 def Error(*args):
+  """Error(wchar_t * format)"""
   return _ollyapi2.Error(*args)
-Error = _ollyapi2.Error
 
 def Conderror(*args):
+  """Conderror(int * cond, wchar_t * title, wchar_t * format)"""
   return _ollyapi2.Conderror(*args)
-Conderror = _ollyapi2.Conderror
 
 def Condyesno(*args):
+  """Condyesno(int * cond, wchar_t * title, wchar_t * format) -> int"""
   return _ollyapi2.Condyesno(*args)
-Condyesno = _ollyapi2.Condyesno
 
 def Stringfromini(*args):
+  """Stringfromini(wchar_t * section, wchar_t * key, wchar_t * s, int length) -> int"""
   return _ollyapi2.Stringfromini(*args)
-Stringfromini = _ollyapi2.Stringfromini
 
 def Filefromini(*args):
+  """Filefromini(wchar_t * key, wchar_t * name, wchar_t * defname) -> int"""
   return _ollyapi2.Filefromini(*args)
-Filefromini = _ollyapi2.Filefromini
 
 def Getfromini(*args):
+  """Getfromini(wchar_t * file, wchar_t * section, wchar_t * key, wchar_t * format) -> int"""
   return _ollyapi2.Getfromini(*args)
-Getfromini = _ollyapi2.Getfromini
 
 def Writetoini(*args):
+  """Writetoini(wchar_t * file, wchar_t * section, wchar_t * key, wchar_t * format) -> int"""
   return _ollyapi2.Writetoini(*args)
-Writetoini = _ollyapi2.Writetoini
 
 def Filetoini(*args):
+  """Filetoini(wchar_t * key, wchar_t * name) -> int"""
   return _ollyapi2.Filetoini(*args)
-Filetoini = _ollyapi2.Filetoini
 
 def Deleteinisection(*args):
+  """Deleteinisection(wchar_t * file, wchar_t * section)"""
   return _ollyapi2.Deleteinisection(*args)
-Deleteinisection = _ollyapi2.Deleteinisection
 
 def Getfromsettings(*args):
+  """Getfromsettings(wchar_t * key, int defvalue) -> int"""
   return _ollyapi2.Getfromsettings(*args)
-Getfromsettings = _ollyapi2.Getfromsettings
 
 def Addtosettings(*args):
+  """Addtosettings(wchar_t * key, int value)"""
   return _ollyapi2.Addtosettings(*args)
-Addtosettings = _ollyapi2.Addtosettings
 
 def Replacegraphs(*args):
+  """Replacegraphs(int mode, wchar_t * s, uchar * mask, int select, int n)"""
   return _ollyapi2.Replacegraphs(*args)
-Replacegraphs = _ollyapi2.Replacegraphs
 
 def Unicodetoascii(*args):
+  """Unicodetoascii(wchar_t const * w, int nw, char * s, int ns) -> int"""
   return _ollyapi2.Unicodetoascii(*args)
-Unicodetoascii = _ollyapi2.Unicodetoascii
 
 def Asciitounicode(*args):
+  """Asciitounicode(char const * s, int ns, wchar_t * w, int nw) -> int"""
   return _ollyapi2.Asciitounicode(*args)
-Asciitounicode = _ollyapi2.Asciitounicode
 
 def Unicodetoutf(*args):
+  """Unicodetoutf(wchar_t const * w, int nw, char * t, int nt) -> int"""
   return _ollyapi2.Unicodetoutf(*args)
-Unicodetoutf = _ollyapi2.Unicodetoutf
 
 def Utftounicode(*args):
+  """Utftounicode(char const * t, int nt, wchar_t * w, int nw) -> int"""
   return _ollyapi2.Utftounicode(*args)
-Utftounicode = _ollyapi2.Utftounicode
 
 def Unicodebuffertoascii(*args):
+  """Unicodebuffertoascii(HGLOBAL hunicode) -> HGLOBAL"""
   return _ollyapi2.Unicodebuffertoascii(*args)
-Unicodebuffertoascii = _ollyapi2.Unicodebuffertoascii
 
 def Iszero(*args):
+  """Iszero(void * data, int n) -> int"""
   return _ollyapi2.Iszero(*args)
-Iszero = _ollyapi2.Iszero
 
 def Guidtotext(*args):
+  """Guidtotext(uchar * guid, wchar_t * s) -> int"""
   return _ollyapi2.Guidtotext(*args)
-Guidtotext = _ollyapi2.Guidtotext
 
 def Swprintf(*args):
+  """Swprintf(wchar_t * s, wchar_t * format) -> int"""
   return _ollyapi2.Swprintf(*args)
-Swprintf = _ollyapi2.Swprintf
 
 def Memalloc(*args):
+  """Memalloc(ulong size, int flags) -> void *"""
   return _ollyapi2.Memalloc(*args)
-Memalloc = _ollyapi2.Memalloc
 
 def Memfree(*args):
+  """Memfree(void * data)"""
   return _ollyapi2.Memfree(*args)
-Memfree = _ollyapi2.Memfree
 
 def Mempurge(*args):
+  """Mempurge(void * data, int count, ulong itemsize, int * newcount) -> void *"""
   return _ollyapi2.Mempurge(*args)
-Mempurge = _ollyapi2.Mempurge
 
 def Memdouble(*args):
+  """Memdouble(void * data, int * pcount, ulong itemsize, int * failed, int flags) -> void *"""
   return _ollyapi2.Memdouble(*args)
-Memdouble = _ollyapi2.Memdouble
 
 def Virtalloc(*args):
+  """Virtalloc(ulong size, int flags) -> void *"""
   return _ollyapi2.Virtalloc(*args)
-Virtalloc = _ollyapi2.Virtalloc
 
 def Virtfree(*args):
+  """Virtfree(void * data)"""
   return _ollyapi2.Virtfree(*args)
-Virtfree = _ollyapi2.Virtfree
 
 def Broadcast(*args):
+  """Broadcast(UINT msg, WPARAM wp, LPARAM lp) -> int"""
   return _ollyapi2.Broadcast(*args)
-Broadcast = _ollyapi2.Broadcast
 
 def Browsefilename(*args):
+  """
+    Browsefilename(wchar_t * title, wchar_t * name, wchar_t * args, wchar_t * currdir, wchar_t * defext, 
+        HWND hwnd, int mode) -> int
+    """
   return _ollyapi2.Browsefilename(*args)
-Browsefilename = _ollyapi2.Browsefilename
 
 def Browsedirectory(*args):
+  """Browsedirectory(HWND hw, wchar_t * comment, wchar_t * dir) -> int"""
   return _ollyapi2.Browsedirectory(*args)
-Browsedirectory = _ollyapi2.Browsedirectory
 
 def Relativizepath(*args):
+  """Relativizepath(wchar_t * path)"""
   return _ollyapi2.Relativizepath(*args)
-Relativizepath = _ollyapi2.Relativizepath
 
 def Absolutizepath(*args):
+  """Absolutizepath(wchar_t * path)"""
   return _ollyapi2.Absolutizepath(*args)
-Absolutizepath = _ollyapi2.Absolutizepath
 
 def Confirmoverwrite(*args):
+  """Confirmoverwrite(wchar_t * path) -> int"""
   return _ollyapi2.Confirmoverwrite(*args)
-Confirmoverwrite = _ollyapi2.Confirmoverwrite
 
 def Labeladdress(*args):
+  """
+    Labeladdress(wchar_t * text, ulong addr, ulong reladdr, int relreg, int index, uchar * mask, int * select, 
+        ulong mode) -> int
+    """
   return _ollyapi2.Labeladdress(*args)
-Labeladdress = _ollyapi2.Labeladdress
 
 def Simpleaddress(*args):
+  """Simpleaddress(wchar_t * text, ulong addr, uchar * mask, int * select) -> int"""
   return _ollyapi2.Simpleaddress(*args)
-Simpleaddress = _ollyapi2.Simpleaddress
 
 def Heapsort(*args):
+  """Heapsort(void * data, int const count, int const size, int (*)(__cdecl *)(void const *,void const *) arg4)"""
   return _ollyapi2.Heapsort(*args)
-Heapsort = _ollyapi2.Heapsort
 
 def Heapsortex(*args):
+  """
+    Heapsortex(void * data, int const count, int const size, int (*)(__cdecl *)(void const *,void const *,ulong) arg4, 
+        ulong lp)
+    """
   return _ollyapi2.Heapsortex(*args)
-Heapsortex = _ollyapi2.Heapsortex
 
 def Readfile(*args):
+  """Readfile(wchar_t * path, ulong fixsize, ulong * psize) -> uchar *"""
   return _ollyapi2.Readfile(*args)
-Readfile = _ollyapi2.Readfile
 
 def Devicenametodosname(*args):
+  """Devicenametodosname(wchar_t * devname, wchar_t * dosname) -> int"""
   return _ollyapi2.Devicenametodosname(*args)
-Devicenametodosname = _ollyapi2.Devicenametodosname
 
 def Filenamefromhandle(*args):
+  """Filenamefromhandle(ulong hfile, wchar_t * path) -> int"""
   return _ollyapi2.Filenamefromhandle(*args)
-Filenamefromhandle = _ollyapi2.Filenamefromhandle
 
 def Quicktimerstart(*args):
+  """Quicktimerstart(int timer)"""
   return _ollyapi2.Quicktimerstart(*args)
-Quicktimerstart = _ollyapi2.Quicktimerstart
 
 def Quicktimerstop(*args):
+  """Quicktimerstop(int timer)"""
   return _ollyapi2.Quicktimerstop(*args)
-Quicktimerstop = _ollyapi2.Quicktimerstop
 
 def Quicktimerflush(*args):
+  """Quicktimerflush(int timer)"""
   return _ollyapi2.Quicktimerflush(*args)
-Quicktimerflush = _ollyapi2.Quicktimerflush
 
 def StrcopyA(*args):
+  """StrcopyA(char * dest, int n, char const * src) -> int"""
   return _ollyapi2.StrcopyA(*args)
-StrcopyA = _ollyapi2.StrcopyA
 
 def StrcopyW(*args):
+  """StrcopyW(wchar_t * dest, int n, wchar_t const * src) -> int"""
   return _ollyapi2.StrcopyW(*args)
-StrcopyW = _ollyapi2.StrcopyW
 
 def StrlenA(*args):
+  """StrlenA(char const * src, int n) -> int"""
   return _ollyapi2.StrlenA(*args)
-StrlenA = _ollyapi2.StrlenA
 
 def StrlenW(*args):
+  """StrlenW(wchar_t const * src, int n) -> int"""
   return _ollyapi2.StrlenW(*args)
-StrlenW = _ollyapi2.StrlenW
 
 def HexprintA(*args):
+  """HexprintA(char * s, ulong u) -> int"""
   return _ollyapi2.HexprintA(*args)
-HexprintA = _ollyapi2.HexprintA
 
 def HexprintW(*args):
+  """HexprintW(wchar_t * s, ulong u) -> int"""
   return _ollyapi2.HexprintW(*args)
-HexprintW = _ollyapi2.HexprintW
 
 def Hexprint4A(*args):
+  """Hexprint4A(char * s, ulong u) -> int"""
   return _ollyapi2.Hexprint4A(*args)
-Hexprint4A = _ollyapi2.Hexprint4A
 
 def Hexprint4W(*args):
+  """Hexprint4W(wchar_t * s, ulong u) -> int"""
   return _ollyapi2.Hexprint4W(*args)
-Hexprint4W = _ollyapi2.Hexprint4W
 
 def Hexprint8A(*args):
+  """Hexprint8A(char * s, ulong u) -> int"""
   return _ollyapi2.Hexprint8A(*args)
-Hexprint8A = _ollyapi2.Hexprint8A
 
 def Hexprint8W(*args):
+  """Hexprint8W(wchar_t * s, ulong u) -> int"""
   return _ollyapi2.Hexprint8W(*args)
-Hexprint8W = _ollyapi2.Hexprint8W
 
 def SignedhexA(*args):
+  """SignedhexA(char * s, ulong u) -> int"""
   return _ollyapi2.SignedhexA(*args)
-SignedhexA = _ollyapi2.SignedhexA
 
 def SignedhexW(*args):
+  """SignedhexW(wchar_t * s, ulong u) -> int"""
   return _ollyapi2.SignedhexW(*args)
-SignedhexW = _ollyapi2.SignedhexW
 
 def Swapmem(*args):
+  """Swapmem(void * base, int size, int i1, int i2)"""
   return _ollyapi2.Swapmem(*args)
-Swapmem = _ollyapi2.Swapmem
 
 def HexdumpA(*args):
+  """HexdumpA(char * s, uchar * code, int n) -> int"""
   return _ollyapi2.HexdumpA(*args)
-HexdumpA = _ollyapi2.HexdumpA
 
 def HexdumpW(*args):
+  """HexdumpW(wchar_t * s, uchar * code, int n) -> int"""
   return _ollyapi2.HexdumpW(*args)
-HexdumpW = _ollyapi2.HexdumpW
 
 def Bitcount(*args):
+  """Bitcount(ulong u) -> int"""
   return _ollyapi2.Bitcount(*args)
-Bitcount = _ollyapi2.Bitcount
 
 def Compress(*args):
+  """Compress(uchar * bufin, ulong nbufin, uchar * bufout, ulong nbufout) -> ulong"""
   return _ollyapi2.Compress(*args)
-Compress = _ollyapi2.Compress
 
 def Getoriginaldatasize(*args):
+  """Getoriginaldatasize(uchar * bufin, ulong nbufin) -> ulong"""
   return _ollyapi2.Getoriginaldatasize(*args)
-Getoriginaldatasize = _ollyapi2.Getoriginaldatasize
 
 def Decompress(*args):
+  """Decompress(uchar * bufin, ulong nbufin, uchar * bufout, ulong nbufout) -> ulong"""
   return _ollyapi2.Decompress(*args)
-Decompress = _ollyapi2.Decompress
 MI_SIGNATURE = _ollyapi2.MI_SIGNATURE
 MI_VERSION = _ollyapi2.MI_VERSION
 MI_FILENAME = _ollyapi2.MI_FILENAME
@@ -497,11 +506,13 @@ MI_PATCH = _ollyapi2.MI_PATCH
 MI_PLUGIN = _ollyapi2.MI_PLUGIN
 MI_END = _ollyapi2.MI_END
 class t_nameinfo(object):
+    """Proxy of C t_nameinfo struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     offs = _swig_property(_ollyapi2.t_nameinfo_offs_get, _ollyapi2.t_nameinfo_offs_set)
     type = _swig_property(_ollyapi2.t_nameinfo_type_get, _ollyapi2.t_nameinfo_type_set)
     def __init__(self): 
+        """__init__(t_nameinfo self) -> t_nameinfo"""
         this = _ollyapi2.new_t_nameinfo()
         try: self.this.append(this)
         except: self.this = this
@@ -511,11 +522,13 @@ t_nameinfo_swigregister = _ollyapi2.t_nameinfo_swigregister
 t_nameinfo_swigregister(t_nameinfo)
 
 class t_uddsave(object):
+    """Proxy of C t_uddsave struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     file = _swig_property(_ollyapi2.t_uddsave_file_get, _ollyapi2.t_uddsave_file_set)
     uddprefix = _swig_property(_ollyapi2.t_uddsave_uddprefix_get, _ollyapi2.t_uddsave_uddprefix_set)
     def __init__(self): 
+        """__init__(t_uddsave self) -> t_uddsave"""
         this = _ollyapi2.new_t_uddsave()
         try: self.this.append(this)
         except: self.this = this
@@ -526,28 +539,28 @@ t_uddsave_swigregister(t_uddsave)
 
 
 def Pluginsaverecord(*args):
+  """Pluginsaverecord(t_uddsave psave, ulong tag, ulong size, void * data) -> int"""
   return _ollyapi2.Pluginsaverecord(*args)
-Pluginsaverecord = _ollyapi2.Pluginsaverecord
 
 def Pluginpackedrecord(*args):
+  """Pluginpackedrecord(t_uddsave psave, ulong tag, ulong size, void * data) -> int"""
   return _ollyapi2.Pluginpackedrecord(*args)
-Pluginpackedrecord = _ollyapi2.Pluginpackedrecord
 
 def Pluginmodulechanged(*args):
+  """Pluginmodulechanged(ulong addr)"""
   return _ollyapi2.Pluginmodulechanged(*args)
-Pluginmodulechanged = _ollyapi2.Pluginmodulechanged
 
 def Plugingetuniquedatatype():
+  """Plugingetuniquedatatype() -> int"""
   return _ollyapi2.Plugingetuniquedatatype()
-Plugingetuniquedatatype = _ollyapi2.Plugingetuniquedatatype
 
 def Plugintempbreakpoint(*args):
+  """Plugintempbreakpoint(ulong addr, ulong type, int forceint3) -> int"""
   return _ollyapi2.Plugintempbreakpoint(*args)
-Plugintempbreakpoint = _ollyapi2.Plugintempbreakpoint
 
 def Pluginshowoptions(*args):
+  """Pluginshowoptions(t_control options)"""
   return _ollyapi2.Pluginshowoptions(*args)
-Pluginshowoptions = _ollyapi2.Pluginshowoptions
 SMODE_UPCASE = _ollyapi2.SMODE_UPCASE
 SMODE_NOEOL = _ollyapi2.SMODE_NOEOL
 SMODE_NOSPEC = _ollyapi2.SMODE_NOSPEC
@@ -569,6 +582,7 @@ SCAN_INVALID = _ollyapi2.SCAN_INVALID
 SCAN_SYNTAX = _ollyapi2.SCAN_SYNTAX
 SCAN_USER = _ollyapi2.SCAN_USER
 class t_scan(object):
+    """Proxy of C t_scan struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     mode = _swig_property(_ollyapi2.t_scan_mode_get, _ollyapi2.t_scan_mode_set)
@@ -585,6 +599,7 @@ class t_scan(object):
     errmsg = _swig_property(_ollyapi2.t_scan_errmsg_get, _ollyapi2.t_scan_errmsg_set)
     type = _swig_property(_ollyapi2.t_scan_type_get, _ollyapi2.t_scan_type_set)
     def __init__(self): 
+        """__init__(t_scan self) -> t_scan"""
         this = _ollyapi2.new_t_scan()
         try: self.this.append(this)
         except: self.this = this
@@ -595,16 +610,16 @@ t_scan_swigregister(t_scan)
 
 
 def Skipspaces(*args):
+  """Skipspaces(t_scan ps) -> int"""
   return _ollyapi2.Skipspaces(*args)
-Skipspaces = _ollyapi2.Skipspaces
 
 def Scan(*args):
+  """Scan(t_scan ps)"""
   return _ollyapi2.Scan(*args)
-Scan = _ollyapi2.Scan
 
 def Optostring(*args):
+  """Optostring(wchar_t * s, int op) -> int"""
   return _ollyapi2.Optostring(*args)
-Optostring = _ollyapi2.Optostring
 MENU_VERIFY = _ollyapi2.MENU_VERIFY
 MENU_EXECUTE = _ollyapi2.MENU_EXECUTE
 MENU_ABSENT = _ollyapi2.MENU_ABSENT
@@ -950,6 +965,7 @@ PWM_TRACE = _ollyapi2.PWM_TRACE
 PWM_WATCH = _ollyapi2.PWM_WATCH
 PWM_WINDOWS = _ollyapi2.PWM_WINDOWS
 class t_menu(object):
+    """Proxy of C t_menu struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_menu_name_get, _ollyapi2.t_menu_name_set)
@@ -960,6 +976,7 @@ class t_menu(object):
     index = _swig_property(_ollyapi2.t_menu_index_get, _ollyapi2.t_menu_index_set)
     hsubmenu = _swig_property(_ollyapi2.t_menu_hsubmenu_get, _ollyapi2.t_menu_hsubmenu_set)
     def __init__(self): 
+        """__init__(t_menu self) -> t_menu"""
         this = _ollyapi2.new_t_menu()
         try: self.this.append(this)
         except: self.this = this
@@ -970,8 +987,8 @@ t_menu_swigregister(t_menu)
 
 
 def Callmenufunction(*args):
+  """Callmenufunction(t_table pt, t_menu pm, MENUFUNC * menufunc, ulong index) -> int"""
   return _ollyapi2.Callmenufunction(*args)
-Callmenufunction = _ollyapi2.Callmenufunction
 STAT_IDLE = _ollyapi2.STAT_IDLE
 STAT_LOADING = _ollyapi2.STAT_LOADING
 STAT_ATTACHING = _ollyapi2.STAT_ATTACHING
@@ -995,32 +1012,32 @@ STAT_FINISHED = _ollyapi2.STAT_FINISHED
 STAT_CLOSING = _ollyapi2.STAT_CLOSING
 
 def Info(*args):
+  """Info(wchar_t * format)"""
   return _ollyapi2.Info(*args)
-Info = _ollyapi2.Info
 
 def Message(*args):
+  """Message(ulong addr, wchar_t * format)"""
   return _ollyapi2.Message(*args)
-Message = _ollyapi2.Message
 
 def Tempinfo(*args):
+  """Tempinfo(wchar_t * format)"""
   return _ollyapi2.Tempinfo(*args)
-Tempinfo = _ollyapi2.Tempinfo
 
 def Flash(*args):
+  """Flash(wchar_t * format)"""
   return _ollyapi2.Flash(*args)
-Flash = _ollyapi2.Flash
 
 def Progress(*args):
+  """Progress(int promille, wchar_t * format)"""
   return _ollyapi2.Progress(*args)
-Progress = _ollyapi2.Progress
 
 def Moveprogress(*args):
+  """Moveprogress(int promille)"""
   return _ollyapi2.Moveprogress(*args)
-Moveprogress = _ollyapi2.Moveprogress
 
 def Setstatus(*args):
+  """Setstatus(t_status newstatus)"""
   return _ollyapi2.Setstatus(*args)
-Setstatus = _ollyapi2.Setstatus
 NM_NONAME = _ollyapi2.NM_NONAME
 DT_NONE = _ollyapi2.DT_NONE
 NM_LABEL = _ollyapi2.NM_LABEL
@@ -1086,11 +1103,13 @@ NMOFS_COND = _ollyapi2.NMOFS_COND
 NMOFS_EXPR = _ollyapi2.NMOFS_EXPR
 NMOFS_TYPE = _ollyapi2.NMOFS_TYPE
 class dt_iord(object):
+    """Proxy of C dt_iord struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     ord = _swig_property(_ollyapi2.dt_iord_ord_get, _ollyapi2.dt_iord_ord_set)
     modname = _swig_property(_ollyapi2.dt_iord_modname_get, _ollyapi2.dt_iord_modname_set)
     def __init__(self): 
+        """__init__(dt_iord self) -> dt_iord"""
         this = _ollyapi2.new_dt_iord()
         try: self.this.append(this)
         except: self.this = this
@@ -1110,6 +1129,7 @@ CASE_MSG = _ollyapi2.CASE_MSG
 CASE_EXCPTN = _ollyapi2.CASE_EXCPTN
 CASE_SIGNED = _ollyapi2.CASE_SIGNED
 class dt_switch(object):
+    """Proxy of C dt_switch struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     casemin = _swig_property(_ollyapi2.dt_switch_casemin_get, _ollyapi2.dt_switch_casemin_set)
@@ -1118,6 +1138,7 @@ class dt_switch(object):
     nexit = _swig_property(_ollyapi2.dt_switch_nexit_get, _ollyapi2.dt_switch_nexit_set)
     exitaddr = _swig_property(_ollyapi2.dt_switch_exitaddr_get, _ollyapi2.dt_switch_exitaddr_set)
     def __init__(self): 
+        """__init__(dt_switch self) -> dt_switch"""
         this = _ollyapi2.new_dt_switch()
         try: self.this.append(this)
         except: self.this = this
@@ -1127,6 +1148,7 @@ dt_switch_swigregister = _ollyapi2.dt_switch_swigregister
 dt_switch_swigregister(dt_switch)
 
 class dt_case(object):
+    """Proxy of C dt_case struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     swbase = _swig_property(_ollyapi2.dt_case_swbase_get, _ollyapi2.dt_case_swbase_set)
@@ -1134,6 +1156,7 @@ class dt_case(object):
     ncase = _swig_property(_ollyapi2.dt_case_ncase_get, _ollyapi2.dt_case_ncase_set)
     value = _swig_property(_ollyapi2.dt_case_value_get, _ollyapi2.dt_case_value_set)
     def __init__(self): 
+        """__init__(dt_case self) -> dt_case"""
         this = _ollyapi2.new_dt_case()
         try: self.this.append(this)
         except: self.this = this
@@ -1145,10 +1168,12 @@ dt_case_swigregister(dt_case)
 MF_JZ = _ollyapi2.MF_JZ
 MF_JC = _ollyapi2.MF_JC
 class dt_mnemo(object):
+    """Proxy of C dt_mnemo struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     flags = _swig_property(_ollyapi2.dt_mnemo_flags_get, _ollyapi2.dt_mnemo_flags_set)
     def __init__(self): 
+        """__init__(dt_mnemo self) -> dt_mnemo"""
         this = _ollyapi2.new_dt_mnemo()
         try: self.this.append(this)
         except: self.this = this
@@ -1159,93 +1184,94 @@ dt_mnemo_swigregister(dt_mnemo)
 
 
 def Insertdata(*args):
+  """Insertdata(ulong addr, int type, void * data, ulong datasize) -> int"""
   return _ollyapi2.Insertdata(*args)
-Insertdata = _ollyapi2.Insertdata
 
 def Finddata(*args):
+  """Finddata(ulong addr, int type, void * data, ulong datasize) -> ulong"""
   return _ollyapi2.Finddata(*args)
-Finddata = _ollyapi2.Finddata
 
 def Finddataptr(*args):
+  """Finddataptr(ulong addr, int type, ulong * datasize) -> void *"""
   return _ollyapi2.Finddataptr(*args)
-Finddataptr = _ollyapi2.Finddataptr
 
 def Startnextdata(*args):
+  """Startnextdata(ulong addr0, ulong addr1, int type)"""
   return _ollyapi2.Startnextdata(*args)
-Startnextdata = _ollyapi2.Startnextdata
 
 def Findnextdata(*args):
+  """Findnextdata(ulong * addr, void * data, ulong datasize) -> ulong"""
   return _ollyapi2.Findnextdata(*args)
-Findnextdata = _ollyapi2.Findnextdata
 
 def Startnextdatalist(*args):
+  """Startnextdatalist(ulong addr0, ulong addr1, int * list, int n)"""
   return _ollyapi2.Startnextdatalist(*args)
-Startnextdatalist = _ollyapi2.Startnextdatalist
 
 def Findnextdatalist(*args):
+  """Findnextdatalist(ulong * addr, int * type, void * data, ulong datasize) -> int"""
   return _ollyapi2.Findnextdatalist(*args)
-Findnextdatalist = _ollyapi2.Findnextdatalist
 
 def Isdataavailable(*args):
+  """Isdataavailable(ulong addr, int type1, int type2, int type3) -> int"""
   return _ollyapi2.Isdataavailable(*args)
-Isdataavailable = _ollyapi2.Isdataavailable
 
 def Isdatainrange(*args):
+  """Isdatainrange(ulong addr0, ulong addr1, int type1, int type2, int type3) -> int"""
   return _ollyapi2.Isdatainrange(*args)
-Isdatainrange = _ollyapi2.Isdatainrange
 
 def Deletedatarange(*args):
+  """Deletedatarange(ulong addr0, ulong addr1, int type1, int type2, int type3)"""
   return _ollyapi2.Deletedatarange(*args)
-Deletedatarange = _ollyapi2.Deletedatarange
 
 def Deletedatarangelist(*args):
+  """Deletedatarangelist(ulong addr0, ulong addr1, int * list, int n)"""
   return _ollyapi2.Deletedatarangelist(*args)
-Deletedatarangelist = _ollyapi2.Deletedatarangelist
 
 def Quickinsertdata(*args):
+  """Quickinsertdata(ulong addr, int type, void * data, ulong datasize) -> int"""
   return _ollyapi2.Quickinsertdata(*args)
-Quickinsertdata = _ollyapi2.Quickinsertdata
 
 def Mergequickdata():
+  """Mergequickdata()"""
   return _ollyapi2.Mergequickdata()
-Mergequickdata = _ollyapi2.Mergequickdata
 
 def DemanglenameW(*args):
+  """DemanglenameW(wchar_t * name, wchar_t * undecorated, int recurs) -> int"""
   return _ollyapi2.DemanglenameW(*args)
-DemanglenameW = _ollyapi2.DemanglenameW
 
 def InsertnameW(*args):
+  """InsertnameW(ulong addr, int type, wchar_t * s) -> int"""
   return _ollyapi2.InsertnameW(*args)
-InsertnameW = _ollyapi2.InsertnameW
 
 def QuickinsertnameW(*args):
+  """QuickinsertnameW(ulong addr, int type, wchar_t * s) -> int"""
   return _ollyapi2.QuickinsertnameW(*args)
-QuickinsertnameW = _ollyapi2.QuickinsertnameW
 
 def FindnameW(*args):
+  """FindnameW(ulong addr, int type, wchar_t * name, int nname) -> int"""
   return _ollyapi2.FindnameW(*args)
-FindnameW = _ollyapi2.FindnameW
 
 def FindnextnameW(*args):
+  """FindnextnameW(ulong * addr, wchar_t * name, int nname) -> int"""
   return _ollyapi2.FindnextnameW(*args)
-FindnextnameW = _ollyapi2.FindnextnameW
 
 def Startnextnamelist(*args):
+  """Startnextnamelist(ulong addr0, ulong addr1, int * list, int n)"""
   return _ollyapi2.Startnextnamelist(*args)
-Startnextnamelist = _ollyapi2.Startnextnamelist
 
 def FindnextnamelistW(*args):
+  """FindnextnamelistW(ulong * addr, int * type, wchar_t * name, int nname) -> int"""
   return _ollyapi2.FindnextnamelistW(*args)
-FindnextnamelistW = _ollyapi2.FindnextnamelistW
 
 def Findlabel(*args):
+  """Findlabel(ulong addr, wchar_t * name, int firsttype) -> int"""
   return _ollyapi2.Findlabel(*args)
-Findlabel = _ollyapi2.Findlabel
 
 def FindaddressW(*args):
+  """FindaddressW(wchar_t * name, t_module pmod, ulong * addr, wchar_t * errtxt) -> int"""
   return _ollyapi2.FindaddressW(*args)
-FindaddressW = _ollyapi2.FindaddressW
 class t_simple(object):
+    """Proxy of C t_simple struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     heap = _swig_property(_ollyapi2.t_simple_heap_get, _ollyapi2.t_simple_heap_set)
@@ -1254,6 +1280,7 @@ class t_simple(object):
     nitem = _swig_property(_ollyapi2.t_simple_nitem_get, _ollyapi2.t_simple_nitem_set)
     sorted = _swig_property(_ollyapi2.t_simple_sorted_get, _ollyapi2.t_simple_sorted_set)
     def __init__(self): 
+        """__init__(t_simple self) -> t_simple"""
         this = _ollyapi2.new_t_simple()
         try: self.this.append(this)
         except: self.this = this
@@ -1264,36 +1291,36 @@ t_simple_swigregister(t_simple)
 
 
 def Destroysimpledata(*args):
+  """Destroysimpledata(t_simple pdat)"""
   return _ollyapi2.Destroysimpledata(*args)
-Destroysimpledata = _ollyapi2.Destroysimpledata
 
 def Createsimpledata(*args):
+  """Createsimpledata(t_simple pdat, ulong itemsize) -> int"""
   return _ollyapi2.Createsimpledata(*args)
-Createsimpledata = _ollyapi2.Createsimpledata
 
 def Addsimpledata(*args):
+  """Addsimpledata(t_simple pdat, void * data) -> int"""
   return _ollyapi2.Addsimpledata(*args)
-Addsimpledata = _ollyapi2.Addsimpledata
 
 def Sortsimpledata(*args):
+  """Sortsimpledata(t_simple pdat)"""
   return _ollyapi2.Sortsimpledata(*args)
-Sortsimpledata = _ollyapi2.Sortsimpledata
 
 def Findsimpledata(*args):
+  """Findsimpledata(t_simple pdat, ulong addr) -> void *"""
   return _ollyapi2.Findsimpledata(*args)
-Findsimpledata = _ollyapi2.Findsimpledata
 
 def Getsimpledataindexbyaddr(*args):
+  """Getsimpledataindexbyaddr(t_simple pdat, ulong addr) -> int"""
   return _ollyapi2.Getsimpledataindexbyaddr(*args)
-Getsimpledataindexbyaddr = _ollyapi2.Getsimpledataindexbyaddr
 
 def Getsimpledatabyindex(*args):
+  """Getsimpledatabyindex(t_simple pdat, int index) -> void *"""
   return _ollyapi2.Getsimpledatabyindex(*args)
-Getsimpledatabyindex = _ollyapi2.Getsimpledatabyindex
 
 def Deletesimpledatarange(*args):
+  """Deletesimpledatarange(t_simple pdat, ulong addr0, ulong addr1)"""
   return _ollyapi2.Deletesimpledatarange(*args)
-Deletesimpledatarange = _ollyapi2.Deletesimpledatarange
 PRED_SHORTSP = _ollyapi2.PRED_SHORTSP
 PRED_SHORTBP = _ollyapi2.PRED_SHORTBP
 PRED_ESPRET = _ollyapi2.PRED_ESPRET
@@ -1307,6 +1334,7 @@ PRED_ORIG = _ollyapi2.PRED_ORIG
 PRED_OMASK = _ollyapi2.PRED_OMASK
 PRED_ESPKNOWN = _ollyapi2.PRED_ESPKNOWN
 class sd_pred(object):
+    """Proxy of C sd_pred struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.sd_pred_addr_get, _ollyapi2.sd_pred_addr_set)
@@ -1315,6 +1343,7 @@ class sd_pred(object):
     ebpconst = _swig_property(_ollyapi2.sd_pred_ebpconst_get, _ollyapi2.sd_pred_ebpconst_set)
     resconst = _swig_property(_ollyapi2.sd_pred_resconst_get, _ollyapi2.sd_pred_resconst_set)
     def __init__(self): 
+        """__init__(sd_pred self) -> sd_pred"""
         this = _ollyapi2.new_sd_pred()
         try: self.this.append(this)
         except: self.this = this
@@ -1435,12 +1464,14 @@ SRC_ABSENT = _ollyapi2.SRC_ABSENT
 NL_EORD = _ollyapi2.NL_EORD
 NL_IORD = _ollyapi2.NL_IORD
 class t_sorthdr(object):
+    """Proxy of C t_sorthdr struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_sorthdr_addr_get, _ollyapi2.t_sorthdr_addr_set)
     size = _swig_property(_ollyapi2.t_sorthdr_size_get, _ollyapi2.t_sorthdr_size_set)
     type = _swig_property(_ollyapi2.t_sorthdr_type_get, _ollyapi2.t_sorthdr_type_set)
     def __init__(self): 
+        """__init__(t_sorthdr self) -> t_sorthdr"""
         this = _ollyapi2.new_t_sorthdr()
         try: self.this.append(this)
         except: self.this = this
@@ -1450,10 +1481,12 @@ t_sorthdr_swigregister = _ollyapi2.t_sorthdr_swigregister
 t_sorthdr_swigregister(t_sorthdr)
 
 class t_sorthdr_nosize(object):
+    """Proxy of C t_sorthdr_nosize struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_sorthdr_nosize_addr_get, _ollyapi2.t_sorthdr_nosize_addr_set)
     def __init__(self): 
+        """__init__(t_sorthdr_nosize self) -> t_sorthdr_nosize"""
         this = _ollyapi2.new_t_sorthdr_nosize()
         try: self.this.append(this)
         except: self.this = this
@@ -1465,6 +1498,7 @@ t_sorthdr_nosize_swigregister(t_sorthdr_nosize)
 NBLOCK = _ollyapi2.NBLOCK
 BLOCKSIZE = _ollyapi2.BLOCKSIZE
 class t_sorted(object):
+    """Proxy of C t_sorted struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     n = _swig_property(_ollyapi2.t_sorted_n_get, _ollyapi2.t_sorted_n_set)
@@ -1485,6 +1519,7 @@ class t_sorted(object):
     sorted = _swig_property(_ollyapi2.t_sorted_sorted_get, _ollyapi2.t_sorted_sorted_set)
     sortindex = _swig_property(_ollyapi2.t_sorted_sortindex_get, _ollyapi2.t_sorted_sortindex_set)
     def __init__(self): 
+        """__init__(t_sorted self) -> t_sorted"""
         this = _ollyapi2.new_t_sorted()
         try: self.this.append(this)
         except: self.this = this
@@ -1495,72 +1530,75 @@ t_sorted_swigregister(t_sorted)
 
 
 def Destroysorteddata(*args):
+  """Destroysorteddata(t_sorted sd)"""
   return _ollyapi2.Destroysorteddata(*args)
-Destroysorteddata = _ollyapi2.Destroysorteddata
 
 def Createsorteddata(*args):
+  """
+    Createsorteddata(t_sorted sd, ulong itemsize, int nexp, SORTFUNC * sortfunc, DESTFUNC * destfunc, 
+        int mode) -> int
+    """
   return _ollyapi2.Createsorteddata(*args)
-Createsorteddata = _ollyapi2.Createsorteddata
 
 def Deletesorteddata(*args):
+  """Deletesorteddata(t_sorted sd, ulong addr, ulong subaddr)"""
   return _ollyapi2.Deletesorteddata(*args)
-Deletesorteddata = _ollyapi2.Deletesorteddata
 
 def Deletesorteddatarange(*args):
+  """Deletesorteddatarange(t_sorted sd, ulong addr0, ulong addr1) -> int"""
   return _ollyapi2.Deletesorteddatarange(*args)
-Deletesorteddatarange = _ollyapi2.Deletesorteddatarange
 
 def Addsorteddata(*args):
+  """Addsorteddata(t_sorted sd, void * item) -> void *"""
   return _ollyapi2.Addsorteddata(*args)
-Addsorteddata = _ollyapi2.Addsorteddata
 
 def Replacesorteddatarange(*args):
+  """Replacesorteddatarange(t_sorted sd, void * data, int n, ulong addr0, ulong addr1) -> int"""
   return _ollyapi2.Replacesorteddatarange(*args)
-Replacesorteddatarange = _ollyapi2.Replacesorteddatarange
 
 def Renumeratesorteddata(*args):
+  """Renumeratesorteddata(t_sorted sd)"""
   return _ollyapi2.Renumeratesorteddata(*args)
-Renumeratesorteddata = _ollyapi2.Renumeratesorteddata
 
 def Confirmsorteddata(*args):
+  """Confirmsorteddata(t_sorted sd, int confirm) -> int"""
   return _ollyapi2.Confirmsorteddata(*args)
-Confirmsorteddata = _ollyapi2.Confirmsorteddata
 
 def Deletenonconfirmedsorteddata(*args):
+  """Deletenonconfirmedsorteddata(t_sorted sd) -> int"""
   return _ollyapi2.Deletenonconfirmedsorteddata(*args)
-Deletenonconfirmedsorteddata = _ollyapi2.Deletenonconfirmedsorteddata
 
 def Unmarknewsorteddata(*args):
+  """Unmarknewsorteddata(t_sorted sd)"""
   return _ollyapi2.Unmarknewsorteddata(*args)
-Unmarknewsorteddata = _ollyapi2.Unmarknewsorteddata
 
 def Findsorteddata(*args):
+  """Findsorteddata(t_sorted sd, ulong addr, ulong subaddr) -> void *"""
   return _ollyapi2.Findsorteddata(*args)
-Findsorteddata = _ollyapi2.Findsorteddata
 
 def Findsorteddatarange(*args):
+  """Findsorteddatarange(t_sorted sd, ulong addr0, ulong addr1) -> void *"""
   return _ollyapi2.Findsorteddatarange(*args)
-Findsorteddatarange = _ollyapi2.Findsorteddatarange
 
 def Findsortedindexrange(*args):
+  """Findsortedindexrange(t_sorted sd, ulong addr0, ulong addr1) -> int"""
   return _ollyapi2.Findsortedindexrange(*args)
-Findsortedindexrange = _ollyapi2.Findsortedindexrange
 
 def Getsortedbyindex(*args):
+  """Getsortedbyindex(t_sorted sd, int index) -> void *"""
   return _ollyapi2.Getsortedbyindex(*args)
-Getsortedbyindex = _ollyapi2.Getsortedbyindex
 
 def Sortsorteddata(*args):
+  """Sortsorteddata(t_sorted sd, int sort) -> int"""
   return _ollyapi2.Sortsorteddata(*args)
-Sortsorteddata = _ollyapi2.Sortsorteddata
 
 def Getsortedbyselection(*args):
+  """Getsortedbyselection(t_sorted sd, int index) -> void *"""
   return _ollyapi2.Getsortedbyselection(*args)
-Getsortedbyselection = _ollyapi2.Getsortedbyselection
 
 def Issortedinit(*args):
+  """Issortedinit(t_sorted sd) -> int"""
   return _ollyapi2.Issortedinit(*args)
-Issortedinit = _ollyapi2.Issortedinit
 NBAR = _ollyapi2.NBAR
 BAR_FLAT = _ollyapi2.BAR_FLAT
 BAR_BUTTON = _ollyapi2.BAR_BUTTON
@@ -1581,6 +1619,7 @@ BAR_SPELL = _ollyapi2.BAR_SPELL
 BAR_SPHEX = _ollyapi2.BAR_SPHEX
 BAR_SPNONE = _ollyapi2.BAR_SPNONE
 class t_bar(object):
+    """Proxy of C t_bar struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     nbar = _swig_property(_ollyapi2.t_bar_nbar_get, _ollyapi2.t_bar_nbar_set)
@@ -1597,6 +1636,7 @@ class t_bar(object):
     prevx = _swig_property(_ollyapi2.t_bar_prevx_get, _ollyapi2.t_bar_prevx_set)
     prevy = _swig_property(_ollyapi2.t_bar_prevy_get, _ollyapi2.t_bar_prevy_set)
     def __init__(self): 
+        """__init__(t_bar self) -> t_bar"""
         this = _ollyapi2.new_t_bar()
         try: self.this.append(this)
         except: self.this = this
@@ -1679,6 +1719,7 @@ DRAW_INACTIVE = _ollyapi2.DRAW_INACTIVE
 DRAW_RAWDATA = _ollyapi2.DRAW_RAWDATA
 DRAW_NEW = _ollyapi2.DRAW_NEW
 class t_drawheader(object):
+    """Proxy of C t_drawheader struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     line = _swig_property(_ollyapi2.t_drawheader_line_get, _ollyapi2.t_drawheader_line_set)
@@ -1687,6 +1728,7 @@ class t_drawheader(object):
     addr = _swig_property(_ollyapi2.t_drawheader_addr_get, _ollyapi2.t_drawheader_addr_set)
     s = _swig_property(_ollyapi2.t_drawheader_s_get, _ollyapi2.t_drawheader_s_set)
     def __init__(self): 
+        """__init__(t_drawheader self) -> t_drawheader"""
         this = _ollyapi2.new_t_drawheader()
         try: self.this.append(this)
         except: self.this = this
@@ -1705,6 +1747,7 @@ TSC_KEY = _ollyapi2.TSC_KEY
 TSC_MOUSE = _ollyapi2.TSC_MOUSE
 TSC_CALL = _ollyapi2.TSC_CALL
 class t_table(object):
+    """Proxy of C t_table struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_table_name_get, _ollyapi2.t_table_name_set)
@@ -1737,6 +1780,7 @@ class t_table(object):
     rcprev = _swig_property(_ollyapi2.t_table_rcprev_get, _ollyapi2.t_table_rcprev_set)
     rtback = _swig_property(_ollyapi2.t_table_rtback_get, _ollyapi2.t_table_rtback_set)
     def __init__(self): 
+        """__init__(t_table self) -> t_table"""
         this = _ollyapi2.new_t_table()
         try: self.this.append(this)
         except: self.this = this
@@ -1756,85 +1800,89 @@ ALIGN_WIDTH = _ollyapi2.ALIGN_WIDTH
 ALIGN_IDMASK = _ollyapi2.ALIGN_IDMASK
 
 def Processwmmousewheel(*args):
+  """Processwmmousewheel(HWND hw, WPARAM wp)"""
   return _ollyapi2.Processwmmousewheel(*args)
-Processwmmousewheel = _ollyapi2.Processwmmousewheel
 
 def Getcharacterwidth(*args):
+  """Getcharacterwidth(t_table pt, int column) -> int"""
   return _ollyapi2.Getcharacterwidth(*args)
-Getcharacterwidth = _ollyapi2.Getcharacterwidth
 
 def Defaultbar(*args):
+  """Defaultbar(t_table pt)"""
   return _ollyapi2.Defaultbar(*args)
-Defaultbar = _ollyapi2.Defaultbar
 
 def Linecount(*args):
+  """Linecount(t_table pt) -> int"""
   return _ollyapi2.Linecount(*args)
-Linecount = _ollyapi2.Linecount
 
 def Gettabletext(*args):
+  """Gettabletext(t_table pt, int row, int column, wchar_t * text, uchar * tmask, int * tselect) -> int"""
   return _ollyapi2.Gettabletext(*args)
-Gettabletext = _ollyapi2.Gettabletext
 
 def Gettableselectionxy(*args):
+  """Gettableselectionxy(t_table pt, int column, POINT * coord) -> int"""
   return _ollyapi2.Gettableselectionxy(*args)
-Gettableselectionxy = _ollyapi2.Gettableselectionxy
 
 def Maketableareavisible(*args):
+  """Maketableareavisible(t_table pt, int column, int x0, int y0, int x1, int y1) -> int"""
   return _ollyapi2.Maketableareavisible(*args)
-Maketableareavisible = _ollyapi2.Maketableareavisible
 
 def Movetableselection(*args):
+  """Movetableselection(t_table pt, int n) -> int"""
   return _ollyapi2.Movetableselection(*args)
-Movetableselection = _ollyapi2.Movetableselection
 
 def Settableselection(*args):
+  """Settableselection(t_table pt, int selected) -> int"""
   return _ollyapi2.Settableselection(*args)
-Settableselection = _ollyapi2.Settableselection
 
 def Removetableselection(*args):
+  """Removetableselection(t_table pt) -> int"""
   return _ollyapi2.Removetableselection(*args)
-Removetableselection = _ollyapi2.Removetableselection
 
 def Updatetable(*args):
+  """Updatetable(t_table pt, int force)"""
   return _ollyapi2.Updatetable(*args)
-Updatetable = _ollyapi2.Updatetable
 
 def Delayedtableredraw(*args):
+  """Delayedtableredraw(t_table pt)"""
   return _ollyapi2.Delayedtableredraw(*args)
-Delayedtableredraw = _ollyapi2.Delayedtableredraw
 
 def Setautoupdate(*args):
+  """Setautoupdate(t_table pt, int autoupdate)"""
   return _ollyapi2.Setautoupdate(*args)
-Setautoupdate = _ollyapi2.Setautoupdate
 
 def Copytableselection(*args):
+  """Copytableselection(t_table pt, int column) -> HGLOBAL"""
   return _ollyapi2.Copytableselection(*args)
-Copytableselection = _ollyapi2.Copytableselection
 
 def Copywholetable(*args):
+  """Copywholetable(t_table pt, int compatible) -> HGLOBAL"""
   return _ollyapi2.Copywholetable(*args)
-Copywholetable = _ollyapi2.Copywholetable
 
 def Createottablewindow(*args):
+  """Createottablewindow(HWND hparent, t_table pt, RECT * rpos) -> HWND"""
   return _ollyapi2.Createottablewindow(*args)
-Createottablewindow = _ollyapi2.Createottablewindow
 
 def Createtablewindow(*args):
+  """Createtablewindow(t_table pt, int nrow, int ncolumn, HINSTANCE hi, wchar_t * icon, wchar_t * title) -> HWND"""
   return _ollyapi2.Createtablewindow(*args)
-Createtablewindow = _ollyapi2.Createtablewindow
 
 def Activatetablewindow(*args):
+  """Activatetablewindow(t_table pt) -> HWND"""
   return _ollyapi2.Activatetablewindow(*args)
-Activatetablewindow = _ollyapi2.Activatetablewindow
 
 def Createtablechild(*args):
+  """
+    Createtablechild(t_table pt, wchar_t * classname, wchar_t * name, wchar_t * help, ulong style, int x, 
+        int y, int dx, int dy, int idalign) -> HWND
+    """
   return _ollyapi2.Createtablechild(*args)
-Createtablechild = _ollyapi2.Createtablechild
 BLK_NONE = _ollyapi2.BLK_NONE
 BLK_HDIV = _ollyapi2.BLK_HDIV
 BLK_VDIV = _ollyapi2.BLK_VDIV
 BLK_TABLE = _ollyapi2.BLK_TABLE
 class t_block(object):
+    """Proxy of C t_block struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     index = _swig_property(_ollyapi2.t_block_index_get, _ollyapi2.t_block_index_set)
@@ -1852,6 +1900,7 @@ class t_block(object):
     title = _swig_property(_ollyapi2.t_block_title_get, _ollyapi2.t_block_title_set)
     status = _swig_property(_ollyapi2.t_block_status_get, _ollyapi2.t_block_status_set)
     def __init__(self): 
+        """__init__(t_block self) -> t_block"""
         this = _ollyapi2.new_t_block()
         try: self.this.append(this)
         except: self.this = this
@@ -1861,6 +1910,7 @@ t_block_swigregister = _ollyapi2.t_block_swigregister
 t_block_swigregister(t_block)
 
 class t_frame(object):
+    """Proxy of C t_frame struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_frame_name_get, _ollyapi2.t_frame_name_set)
@@ -1881,6 +1931,7 @@ class t_frame(object):
     capturey = _swig_property(_ollyapi2.t_frame_capturey_get, _ollyapi2.t_frame_capturey_set)
     title = _swig_property(_ollyapi2.t_frame_title_get, _ollyapi2.t_frame_title_set)
     def __init__(self): 
+        """__init__(t_frame self) -> t_frame"""
         this = _ollyapi2.new_t_frame()
         try: self.this.append(this)
         except: self.this = this
@@ -1891,36 +1942,36 @@ t_frame_swigregister(t_frame)
 
 
 def Createframewindow(*args):
+  """Createframewindow(t_frame pf, wchar_t * icon, wchar_t * title) -> HWND"""
   return _ollyapi2.Createframewindow(*args)
-Createframewindow = _ollyapi2.Createframewindow
 
 def Updateframe(*args):
+  """Updateframe(t_frame pf, int redrawnow)"""
   return _ollyapi2.Updateframe(*args)
-Updateframe = _ollyapi2.Updateframe
 
 def Getactiveframe(*args):
+  """Getactiveframe(t_frame pf) -> t_table"""
   return _ollyapi2.Getactiveframe(*args)
-Getactiveframe = _ollyapi2.Getactiveframe
 
 def Updatetabs(*args):
+  """Updatetabs(t_frame pf) -> int"""
   return _ollyapi2.Updatetabs(*args)
-Updatetabs = _ollyapi2.Updatetabs
 
 def Createtabwindow(*args):
+  """Createtabwindow(t_frame pf, wchar_t * icon, wchar_t * title) -> HWND"""
   return _ollyapi2.Createtabwindow(*args)
-Createtabwindow = _ollyapi2.Createtabwindow
 
 def Getactivetab(*args):
+  """Getactivetab(t_frame pf) -> t_table"""
   return _ollyapi2.Getactivetab(*args)
-Getactivetab = _ollyapi2.Getactivetab
 
 def Gettabcount(*args):
+  """Gettabcount(t_frame pf, int * index) -> int"""
   return _ollyapi2.Gettabcount(*args)
-Gettabcount = _ollyapi2.Gettabcount
 
 def Setactivetab(*args):
+  """Setactivetab(t_frame pf, int index) -> int"""
   return _ollyapi2.Setactivetab(*args)
-Setactivetab = _ollyapi2.Setactivetab
 FIXEDFONT = _ollyapi2.FIXEDFONT
 TERMINAL6 = _ollyapi2.TERMINAL6
 FIXEDSYS = _ollyapi2.FIXEDSYS
@@ -2018,6 +2069,7 @@ G_LA = _ollyapi2.G_LA
 G_RA = _ollyapi2.G_RA
 G_DA = _ollyapi2.G_DA
 class t_font(object):
+    """Proxy of C t_font struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     logfont = _swig_property(_ollyapi2.t_font_logfont_get, _ollyapi2.t_font_logfont_set)
@@ -2031,6 +2083,7 @@ class t_font(object):
     width = _swig_property(_ollyapi2.t_font_width_get, _ollyapi2.t_font_width_set)
     height = _swig_property(_ollyapi2.t_font_height_get, _ollyapi2.t_font_height_set)
     def __init__(self): 
+        """__init__(t_font self) -> t_font"""
         this = _ollyapi2.new_t_font()
         try: self.this.append(this)
         except: self.this = this
@@ -2040,6 +2093,7 @@ t_font_swigregister = _ollyapi2.t_font_swigregister
 t_font_swigregister(t_font)
 
 class t_scheme(object):
+    """Proxy of C t_scheme struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_scheme_name_get, _ollyapi2.t_scheme_name_set)
@@ -2056,6 +2110,7 @@ class t_scheme(object):
     auxpen = _swig_property(_ollyapi2.t_scheme_auxpen_get, _ollyapi2.t_scheme_auxpen_set)
     ulpen = _swig_property(_ollyapi2.t_scheme_ulpen_get, _ollyapi2.t_scheme_ulpen_set)
     def __init__(self): 
+        """__init__(t_scheme self) -> t_scheme"""
         this = _ollyapi2.new_t_scheme()
         try: self.this.append(this)
         except: self.this = this
@@ -2066,16 +2121,16 @@ t_scheme_swigregister(t_scheme)
 
 
 def Getmonitorrect(*args):
+  """Getmonitorrect(int x, int y, RECT * rc) -> int"""
   return _ollyapi2.Getmonitorrect(*args)
-Getmonitorrect = _ollyapi2.Getmonitorrect
 
 def Sunkenframe(*args):
+  """Sunkenframe(HDC dc, RECT * rc, int flags)"""
   return _ollyapi2.Sunkenframe(*args)
-Sunkenframe = _ollyapi2.Sunkenframe
 
 def Findstockobject(*args):
+  """Findstockobject(ulong gdihandle, wchar_t * name, int nname) -> int"""
   return _ollyapi2.Findstockobject(*args)
-Findstockobject = _ollyapi2.Findstockobject
 MM_REPORT = _ollyapi2.MM_REPORT
 MM_SILENT = _ollyapi2.MM_SILENT
 MM_NORESTORE = _ollyapi2.MM_NORESTORE
@@ -2094,6 +2149,7 @@ MSP_SHDATA = _ollyapi2.MSP_SHDATA
 MSP_PROCPAR = _ollyapi2.MSP_PROCPAR
 MSP_ENV = _ollyapi2.MSP_ENV
 class t_memory(object):
+    """Proxy of C t_memory struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_memory_base_get, _ollyapi2.t_memory_base_set)
@@ -2108,6 +2164,7 @@ class t_memory(object):
     copy = _swig_property(_ollyapi2.t_memory_copy_get, _ollyapi2.t_memory_copy_set)
     decode = _swig_property(_ollyapi2.t_memory_decode_get, _ollyapi2.t_memory_decode_set)
     def __init__(self): 
+        """__init__(t_memory self) -> t_memory"""
         this = _ollyapi2.new_t_memory()
         try: self.this.append(this)
         except: self.this = this
@@ -2118,48 +2175,51 @@ t_memory_swigregister(t_memory)
 
 
 def Flushmemorycache():
+  """Flushmemorycache()"""
   return _ollyapi2.Flushmemorycache()
-Flushmemorycache = _ollyapi2.Flushmemorycache
 
 def Readmemory(*args):
+  """Readmemory(char * buf, ulong addr, ulong size, int mode) -> ulong"""
   return _ollyapi2.Readmemory(*args)
-Readmemory = _ollyapi2.Readmemory
 
 def Readmemoryex(*args):
+  """Readmemoryex(void * buf, ulong addr, ulong size, int mode, ulong threadid) -> ulong"""
   return _ollyapi2.Readmemoryex(*args)
-Readmemoryex = _ollyapi2.Readmemoryex
 
 def Writememory(*args):
+  """Writememory(void const * buf, ulong addr, ulong size, int mode) -> ulong"""
   return _ollyapi2.Writememory(*args)
-Writememory = _ollyapi2.Writememory
 
 def Findmemory(*args):
+  """Findmemory(ulong addr) -> t_memory"""
   return _ollyapi2.Findmemory(*args)
-Findmemory = _ollyapi2.Findmemory
 
 def Finddecode(*args):
+  """Finddecode(ulong addr, ulong * psize) -> uchar *"""
   return _ollyapi2.Finddecode(*args)
-Finddecode = _ollyapi2.Finddecode
 
 def Guardmemory(*args):
+  """Guardmemory(ulong base, ulong size, int guard) -> int"""
   return _ollyapi2.Guardmemory(*args)
-Guardmemory = _ollyapi2.Guardmemory
 
 def Listmemory():
+  """Listmemory() -> int"""
   return _ollyapi2.Listmemory()
-Listmemory = _ollyapi2.Listmemory
 
 def Copymemoryhex(*args):
+  """Copymemoryhex(ulong addr, ulong size) -> HGLOBAL"""
   return _ollyapi2.Copymemoryhex(*args)
-Copymemoryhex = _ollyapi2.Copymemoryhex
 
 def Pastememoryhex(*args):
+  """Pastememoryhex(ulong addr, ulong size, int ensurebackup, int removeanalysis) -> int"""
   return _ollyapi2.Pastememoryhex(*args)
-Pastememoryhex = _ollyapi2.Pastememoryhex
 
 def Editmemory(*args):
+  """
+    Editmemory(HWND hparent, ulong addr, ulong size, int ensurebackup, int removeanalysis, int x, 
+        int y, int font) -> int
+    """
   return _ollyapi2.Editmemory(*args)
-Editmemory = _ollyapi2.Editmemory
 JT_TYPE = _ollyapi2.JT_TYPE
 JT_UNDEF = _ollyapi2.JT_UNDEF
 JT_JUMP = _ollyapi2.JT_JUMP
@@ -2173,12 +2233,14 @@ JT_NETCOND = _ollyapi2.JT_NETCOND
 JT_NETSW = _ollyapi2.JT_NETSW
 JT_NOSORT = _ollyapi2.JT_NOSORT
 class t_jmp(object):
+    """Proxy of C t_jmp struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     _from = _swig_property(_ollyapi2.t_jmp__from_get, _ollyapi2.t_jmp__from_set)
     dest = _swig_property(_ollyapi2.t_jmp_dest_get, _ollyapi2.t_jmp_dest_set)
     type = _swig_property(_ollyapi2.t_jmp_type_get, _ollyapi2.t_jmp_type_set)
     def __init__(self): 
+        """__init__(t_jmp self) -> t_jmp"""
         this = _ollyapi2.new_t_jmp()
         try: self.this.append(this)
         except: self.this = this
@@ -2188,6 +2250,7 @@ t_jmp_swigregister = _ollyapi2.t_jmp_swigregister
 t_jmp_swigregister(t_jmp)
 
 class t_exe(object):
+    """Proxy of C t_exe struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_exe_base_get, _ollyapi2.t_exe_base_set)
@@ -2195,6 +2258,7 @@ class t_exe(object):
     adjusted = _swig_property(_ollyapi2.t_exe_adjusted_get, _ollyapi2.t_exe_adjusted_set)
     path = _swig_property(_ollyapi2.t_exe_path_get, _ollyapi2.t_exe_path_set)
     def __init__(self): 
+        """__init__(t_exe self) -> t_exe"""
         this = _ollyapi2.new_t_exe()
         try: self.this.append(this)
         except: self.this = this
@@ -2204,6 +2268,7 @@ t_exe_swigregister = _ollyapi2.t_exe_swigregister
 t_exe_swigregister(t_exe)
 
 class t_jmpdata(object):
+    """Proxy of C t_jmpdata struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     modbase = _swig_property(_ollyapi2.t_jmpdata_modbase_get, _ollyapi2.t_jmpdata_modbase_set)
@@ -2218,6 +2283,7 @@ class t_jmpdata(object):
     maxexe = _swig_property(_ollyapi2.t_jmpdata_maxexe_get, _ollyapi2.t_jmpdata_maxexe_set)
     nexe = _swig_property(_ollyapi2.t_jmpdata_nexe_get, _ollyapi2.t_jmpdata_nexe_set)
     def __init__(self): 
+        """__init__(t_jmpdata self) -> t_jmpdata"""
         this = _ollyapi2.new_t_jmpdata()
         try: self.this.append(this)
         except: self.this = this
@@ -2227,12 +2293,14 @@ t_jmpdata_swigregister = _ollyapi2.t_jmpdata_swigregister
 t_jmpdata_swigregister(t_jmpdata)
 
 class t_jmpcall(object):
+    """Proxy of C t_jmpcall struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_jmpcall_addr_get, _ollyapi2.t_jmpcall_addr_set)
     type = _swig_property(_ollyapi2.t_jmpcall_type_get, _ollyapi2.t_jmpcall_type_set)
     swcase = _swig_property(_ollyapi2.t_jmpcall_swcase_get, _ollyapi2.t_jmpcall_swcase_set)
     def __init__(self): 
+        """__init__(t_jmpcall self) -> t_jmpcall"""
         this = _ollyapi2.new_t_jmpcall()
         try: self.this.append(this)
         except: self.this = this
@@ -2243,42 +2311,44 @@ t_jmpcall_swigregister(t_jmpcall)
 
 
 def Addjump(*args):
+  """Addjump(t_jmpdata pdat, ulong _from, ulong dest, int type) -> int"""
   return _ollyapi2.Addjump(*args)
-Addjump = _ollyapi2.Addjump
 
 def Sortjumpdata(*args):
+  """Sortjumpdata(t_jmpdata pdat)"""
   return _ollyapi2.Sortjumpdata(*args)
-Sortjumpdata = _ollyapi2.Sortjumpdata
 
 def Findjumpfrom(*args):
+  """Findjumpfrom(ulong _from) -> t_jmp"""
   return _ollyapi2.Findjumpfrom(*args)
-Findjumpfrom = _ollyapi2.Findjumpfrom
 
 def Findlocaljumpsto(*args):
+  """Findlocaljumpsto(ulong dest, ulong * buf, int nbuf) -> int"""
   return _ollyapi2.Findlocaljumpsto(*args)
-Findlocaljumpsto = _ollyapi2.Findlocaljumpsto
 
 def Findlocaljumpscallsto(*args):
+  """Findlocaljumpscallsto(ulong dest, t_jmpcall jmpcall, int njmpcall) -> int"""
   return _ollyapi2.Findlocaljumpscallsto(*args)
-Findlocaljumpscallsto = _ollyapi2.Findlocaljumpscallsto
 
 def Arelocaljumpscallstorange(*args):
+  """Arelocaljumpscallstorange(ulong addr0, ulong addr1) -> int"""
   return _ollyapi2.Arelocaljumpscallstorange(*args)
-Arelocaljumpscallstorange = _ollyapi2.Arelocaljumpscallstorange
 
 def Findglobalcallsto(*args):
+  """Findglobalcallsto(ulong dest, ulong * buf, int nbuf) -> int"""
   return _ollyapi2.Findglobalcallsto(*args)
-Findglobalcallsto = _ollyapi2.Findglobalcallsto
 
 def Findglobaljumpscallsto(*args):
+  """Findglobaljumpscallsto(ulong dest, t_jmpcall jmpcall, int njmpcall) -> int"""
   return _ollyapi2.Findglobaljumpscallsto(*args)
-Findglobaljumpscallsto = _ollyapi2.Findglobaljumpscallsto
 class t_range(object):
+    """Proxy of C t_range struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     rmin = _swig_property(_ollyapi2.t_range_rmin_get, _ollyapi2.t_range_rmin_set)
     rmax = _swig_property(_ollyapi2.t_range_rmax_get, _ollyapi2.t_range_rmax_set)
     def __init__(self): 
+        """__init__(t_range self) -> t_range"""
         this = _ollyapi2.new_t_range()
         try: self.this.append(this)
         except: self.this = this
@@ -2289,44 +2359,44 @@ t_range_swigregister(t_range)
 
 
 def Initset(*args):
+  """Initset(t_range set, ulong nmax) -> int"""
   return _ollyapi2.Initset(*args)
-Initset = _ollyapi2.Initset
 
 def Fullrange(*args):
+  """Fullrange(t_range set) -> int"""
   return _ollyapi2.Fullrange(*args)
-Fullrange = _ollyapi2.Fullrange
 
 def Emptyrange(*args):
+  """Emptyrange(t_range set) -> int"""
   return _ollyapi2.Emptyrange(*args)
-Emptyrange = _ollyapi2.Emptyrange
 
 def Getsetcount(*args):
+  """Getsetcount(t_range set) -> ulong"""
   return _ollyapi2.Getsetcount(*args)
-Getsetcount = _ollyapi2.Getsetcount
 
 def Getrangecount(*args):
+  """Getrangecount(t_range set) -> int"""
   return _ollyapi2.Getrangecount(*args)
-Getrangecount = _ollyapi2.Getrangecount
 
 def Isinset(*args):
+  """Isinset(t_range set, ulong value) -> int"""
   return _ollyapi2.Isinset(*args)
-Isinset = _ollyapi2.Isinset
 
 def Getrangebymember(*args):
+  """Getrangebymember(t_range set, ulong value, ulong * rmin, ulong * rmax) -> int"""
   return _ollyapi2.Getrangebymember(*args)
-Getrangebymember = _ollyapi2.Getrangebymember
 
 def Getrangebyindex(*args):
+  """Getrangebyindex(t_range set, int index, ulong * rmin, ulong * rmax) -> int"""
   return _ollyapi2.Getrangebyindex(*args)
-Getrangebyindex = _ollyapi2.Getrangebyindex
 
 def Addrange(*args):
+  """Addrange(t_range set, ulong rmin, ulong rmax) -> int"""
   return _ollyapi2.Addrange(*args)
-Addrange = _ollyapi2.Addrange
 
 def Removerange(*args):
+  """Removerange(t_range set, ulong rmin, ulong rmax) -> int"""
   return _ollyapi2.Removerange(*args)
-Removerange = _ollyapi2.Removerange
 ND_LEVELMASK = _ollyapi2.ND_LEVELMASK
 ND_OPENTOP = _ollyapi2.ND_OPENTOP
 ND_OPENBOTTOM = _ollyapi2.ND_OPENBOTTOM
@@ -2335,6 +2405,7 @@ ND_NESTGRAY = _ollyapi2.ND_NESTGRAY
 ND_MOREVARS = _ollyapi2.ND_MOREVARS
 MAXNEST = _ollyapi2.MAXNEST
 class t_nesthdr(object):
+    """Proxy of C t_nesthdr struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr0 = _swig_property(_ollyapi2.t_nesthdr_addr0_get, _ollyapi2.t_nesthdr_addr0_set)
@@ -2342,6 +2413,7 @@ class t_nesthdr(object):
     type = _swig_property(_ollyapi2.t_nesthdr_type_get, _ollyapi2.t_nesthdr_type_set)
     aprev = _swig_property(_ollyapi2.t_nesthdr_aprev_get, _ollyapi2.t_nesthdr_aprev_set)
     def __init__(self): 
+        """__init__(t_nesthdr self) -> t_nesthdr"""
         this = _ollyapi2.new_t_nesthdr()
         try: self.this.append(this)
         except: self.this = this
@@ -2351,6 +2423,7 @@ t_nesthdr_swigregister = _ollyapi2.t_nesthdr_swigregister
 t_nesthdr_swigregister(t_nesthdr)
 
 class t_nested(object):
+    """Proxy of C t_nested struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     n = _swig_property(_ollyapi2.t_nested_n_get, _ollyapi2.t_nested_n_set)
@@ -2360,6 +2433,7 @@ class t_nested(object):
     version = _swig_property(_ollyapi2.t_nested_version_get, _ollyapi2.t_nested_version_set)
     destfunc = _swig_property(_ollyapi2.t_nested_destfunc_get, _ollyapi2.t_nested_destfunc_set)
     def __init__(self): 
+        """__init__(t_nested self) -> t_nested"""
         this = _ollyapi2.new_t_nested()
         try: self.this.append(this)
         except: self.this = this
@@ -2370,40 +2444,40 @@ t_nested_swigregister(t_nested)
 
 
 def Destroynesteddata(*args):
+  """Destroynesteddata(t_nested nd)"""
   return _ollyapi2.Destroynesteddata(*args)
-Destroynesteddata = _ollyapi2.Destroynesteddata
 
 def Createnesteddata(*args):
+  """Createnesteddata(t_nested nd, ulong itemsize, int nexp, NDDEST * destfunc) -> int"""
   return _ollyapi2.Createnesteddata(*args)
-Createnesteddata = _ollyapi2.Createnesteddata
 
 def Addnesteddata(*args):
+  """Addnesteddata(t_nested nd, void * item) -> void *"""
   return _ollyapi2.Addnesteddata(*args)
-Addnesteddata = _ollyapi2.Addnesteddata
 
 def Deletenestedrange(*args):
+  """Deletenestedrange(t_nested nd, ulong addr0, ulong addr1)"""
   return _ollyapi2.Deletenestedrange(*args)
-Deletenestedrange = _ollyapi2.Deletenestedrange
 
 def Getnestingpattern(*args):
+  """Getnestingpattern(t_nested nd, ulong addr, wchar_t * pat, int npat, uchar * mask, int showentry, int * isend) -> int"""
   return _ollyapi2.Getnestingpattern(*args)
-Getnestingpattern = _ollyapi2.Getnestingpattern
 
 def Getnestingdepth(*args):
+  """Getnestingdepth(t_nested nd, ulong addr) -> int"""
   return _ollyapi2.Getnestingdepth(*args)
-Getnestingdepth = _ollyapi2.Getnestingdepth
 
 def Findnesteddata(*args):
+  """Findnesteddata(t_nested nd, ulong addr, int level) -> void *"""
   return _ollyapi2.Findnesteddata(*args)
-Findnesteddata = _ollyapi2.Findnesteddata
 
 def Nesteddatatoudd(*args):
+  """Nesteddatatoudd(t_nested nd, ulong base, ulong * datasize) -> void *"""
   return _ollyapi2.Nesteddatatoudd(*args)
-Nesteddatatoudd = _ollyapi2.Nesteddatatoudd
 
 def Uddtonesteddata(*args):
+  """Uddtonesteddata(t_nested nd, void * data, ulong base, ulong size) -> int"""
   return _ollyapi2.Uddtonesteddata(*args)
-Uddtonesteddata = _ollyapi2.Uddtonesteddata
 SHT_MERGENEXT = _ollyapi2.SHT_MERGENEXT
 NCALLMOD = _ollyapi2.NCALLMOD
 NS_STRINGS = _ollyapi2.NS_STRINGS
@@ -2460,6 +2534,7 @@ MDT_CONSTR = _ollyapi2.MDT_CONSTR
 MDT_UNUSED = _ollyapi2.MDT_UNUSED
 MDTCOUNT = _ollyapi2.MDTCOUNT
 class t_secthdr(object):
+    """Proxy of C t_secthdr struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     sectname = _swig_property(_ollyapi2.t_secthdr_sectname_get, _ollyapi2.t_secthdr_sectname_set)
@@ -2470,6 +2545,7 @@ class t_secthdr(object):
     rawsize = _swig_property(_ollyapi2.t_secthdr_rawsize_get, _ollyapi2.t_secthdr_rawsize_set)
     characteristics = _swig_property(_ollyapi2.t_secthdr_characteristics_get, _ollyapi2.t_secthdr_characteristics_set)
     def __init__(self): 
+        """__init__(t_secthdr self) -> t_secthdr"""
         this = _ollyapi2.new_t_secthdr()
         try: self.this.append(this)
         except: self.this = this
@@ -2479,6 +2555,7 @@ t_secthdr_swigregister = _ollyapi2.t_secthdr_swigregister
 t_secthdr_swigregister(t_secthdr)
 
 class t_premod(object):
+    """Proxy of C t_premod struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_premod_base_get, _ollyapi2.t_premod_base_set)
@@ -2487,6 +2564,7 @@ class t_premod(object):
     entry = _swig_property(_ollyapi2.t_premod_entry_get, _ollyapi2.t_premod_entry_set)
     path = _swig_property(_ollyapi2.t_premod_path_get, _ollyapi2.t_premod_path_set)
     def __init__(self): 
+        """__init__(t_premod self) -> t_premod"""
         this = _ollyapi2.new_t_premod()
         try: self.this.append(this)
         except: self.this = this
@@ -2496,11 +2574,13 @@ t_premod_swigregister = _ollyapi2.t_premod_swigregister
 t_premod_swigregister(t_premod)
 
 class t_netstream(object):
+    """Proxy of C t_netstream struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_netstream_base_get, _ollyapi2.t_netstream_base_set)
     size = _swig_property(_ollyapi2.t_netstream_size_get, _ollyapi2.t_netstream_size_set)
     def __init__(self): 
+        """__init__(t_netstream self) -> t_netstream"""
         this = _ollyapi2.new_t_netstream()
         try: self.this.append(this)
         except: self.this = this
@@ -2510,6 +2590,7 @@ t_netstream_swigregister = _ollyapi2.t_netstream_swigregister
 t_netstream_swigregister(t_netstream)
 
 class t_metadata(object):
+    """Proxy of C t_metadata struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_metadata_base_get, _ollyapi2.t_metadata_base_set)
@@ -2518,6 +2599,7 @@ class t_metadata(object):
     nameoffs = _swig_property(_ollyapi2.t_metadata_nameoffs_get, _ollyapi2.t_metadata_nameoffs_set)
     namesize = _swig_property(_ollyapi2.t_metadata_namesize_get, _ollyapi2.t_metadata_namesize_set)
     def __init__(self): 
+        """__init__(t_metadata self) -> t_metadata"""
         this = _ollyapi2.new_t_metadata()
         try: self.this.append(this)
         except: self.this = this
@@ -2527,6 +2609,7 @@ t_metadata_swigregister = _ollyapi2.t_metadata_swigregister
 t_metadata_swigregister(t_metadata)
 
 class t_module(object):
+    """Proxy of C t_module struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_module_base_get, _ollyapi2.t_module_base_set)
@@ -2576,6 +2659,7 @@ class t_module(object):
     ncallmod = _swig_property(_ollyapi2.t_module_ncallmod_get, _ollyapi2.t_module_ncallmod_set)
     callmod = _swig_property(_ollyapi2.t_module_callmod_get, _ollyapi2.t_module_callmod_set)
     def __init__(self): 
+        """__init__(t_module self) -> t_module"""
         this = _ollyapi2.new_t_module()
         try: self.this.append(this)
         except: self.this = this
@@ -2585,12 +2669,14 @@ t_module_swigregister = _ollyapi2.t_module_swigregister
 t_module_swigregister(t_module)
 
 class t_aqueue(object):
+    """Proxy of C t_aqueue struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_aqueue_base_get, _ollyapi2.t_aqueue_base_set)
     size = _swig_property(_ollyapi2.t_aqueue_size_get, _ollyapi2.t_aqueue_size_set)
     type = _swig_property(_ollyapi2.t_aqueue_type_get, _ollyapi2.t_aqueue_type_set)
     def __init__(self): 
+        """__init__(t_aqueue self) -> t_aqueue"""
         this = _ollyapi2.new_t_aqueue()
         try: self.this.append(this)
         except: self.this = this
@@ -2601,41 +2687,42 @@ t_aqueue_swigregister(t_aqueue)
 
 
 def Findmodule(*args):
+  """Findmodule(ulong addr) -> t_module"""
   return _ollyapi2.Findmodule(*args)
-Findmodule = _ollyapi2.Findmodule
 
 def Findmodulebyname(*args):
+  """Findmodulebyname(wchar_t * shortname) -> t_module"""
   return _ollyapi2.Findmodulebyname(*args)
-Findmodulebyname = _ollyapi2.Findmodulebyname
 
 def Findmainmodule():
+  """Findmainmodule() -> t_module"""
   return _ollyapi2.Findmainmodule()
-Findmainmodule = _ollyapi2.Findmainmodule
 
 def Issystem(*args):
+  """Issystem(ulong addr) -> int"""
   return _ollyapi2.Issystem(*args)
-Issystem = _ollyapi2.Issystem
 
 def Findfixup(*args):
+  """Findfixup(t_module pmod, ulong addr) -> ulong *"""
   return _ollyapi2.Findfixup(*args)
-Findfixup = _ollyapi2.Findfixup
 
 def Findfileoffset(*args):
+  """Findfileoffset(t_module pmod, ulong addr) -> ulong"""
   return _ollyapi2.Findfileoffset(*args)
-Findfileoffset = _ollyapi2.Findfileoffset
 
 def Decoderange(*args):
+  """Decoderange(wchar_t * s, ulong addr, ulong size) -> int"""
   return _ollyapi2.Decoderange(*args)
-Decoderange = _ollyapi2.Decoderange
 
 def Getexeversion(*args):
+  """Getexeversion(wchar_t * path, wchar_t * version) -> int"""
   return _ollyapi2.Getexeversion(*args)
-Getexeversion = _ollyapi2.Getexeversion
 
 def Getexportfrommemory(*args):
+  """Getexportfrommemory(ulong addr, wchar_t * s) -> int"""
   return _ollyapi2.Getexportfrommemory(*args)
-Getexportfrommemory = _ollyapi2.Getexportfrommemory
 class t_window(object):
+    """Proxy of C t_window struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     hwnd = _swig_property(_ollyapi2.t_window_hwnd_get, _ollyapi2.t_window_hwnd_set)
@@ -2658,6 +2745,7 @@ class t_window(object):
     classname = _swig_property(_ollyapi2.t_window_classname_get, _ollyapi2.t_window_classname_set)
     tree = _swig_property(_ollyapi2.t_window_tree_get, _ollyapi2.t_window_tree_set)
     def __init__(self): 
+        """__init__(t_window self) -> t_window"""
         this = _ollyapi2.new_t_window()
         try: self.this.append(this)
         except: self.this = this
@@ -2671,11 +2759,13 @@ NA_UPDATE = _ollyapi2.NA_UPDATE
 NA_CLOSE = _ollyapi2.NA_CLOSE
 NA_CLOSEALL = _ollyapi2.NA_CLOSEALL
 class t_namecast(object):
+    """Proxy of C t_namecast struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_namecast_base_get, _ollyapi2.t_namecast_base_set)
     table = _swig_property(_ollyapi2.t_namecast_table_get, _ollyapi2.t_namecast_table_set)
     def __init__(self): 
+        """__init__(t_namecast self) -> t_namecast"""
         this = _ollyapi2.new_t_namecast()
         try: self.this.append(this)
         except: self.this = this
@@ -2685,12 +2775,14 @@ t_namecast_swigregister = _ollyapi2.t_namecast_swigregister
 t_namecast_swigregister(t_namecast)
 
 class t_namelist(object):
+    """Proxy of C t_namelist struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_namelist_addr_get, _ollyapi2.t_namelist_addr_set)
     size = _swig_property(_ollyapi2.t_namelist_size_get, _ollyapi2.t_namelist_size_set)
     type = _swig_property(_ollyapi2.t_namelist_type_get, _ollyapi2.t_namelist_type_set)
     def __init__(self): 
+        """__init__(t_namelist self) -> t_namelist"""
         this = _ollyapi2.new_t_namelist()
         try: self.this.append(this)
         except: self.this = this
@@ -2700,6 +2792,7 @@ t_namelist_swigregister = _ollyapi2.t_namelist_swigregister
 t_namelist_swigregister(t_namelist)
 
 class t_string(object):
+    """Proxy of C t_string struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     id = _swig_property(_ollyapi2.t_string_id_get, _ollyapi2.t_string_id_set)
@@ -2708,6 +2801,7 @@ class t_string(object):
     count = _swig_property(_ollyapi2.t_string_count_get, _ollyapi2.t_string_count_set)
     language = _swig_property(_ollyapi2.t_string_language_get, _ollyapi2.t_string_language_set)
     def __init__(self): 
+        """__init__(t_string self) -> t_string"""
         this = _ollyapi2.new_t_string()
         try: self.this.append(this)
         except: self.this = this
@@ -2718,15 +2812,17 @@ t_string_swigregister(t_string)
 
 
 def Getmodulestring(*args):
+  """Getmodulestring(t_module pm, ulong id, wchar_t * s) -> int"""
   return _ollyapi2.Getmodulestring(*args)
-Getmodulestring = _ollyapi2.Getmodulestring
 SAVEMAGIC = _ollyapi2.SAVEMAGIC
 class t_savearea(object):
+    """Proxy of C t_savearea struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     magic = _swig_property(_ollyapi2.t_savearea_magic_get, _ollyapi2.t_savearea_magic_set)
     dumpstr = _swig_property(_ollyapi2.t_savearea_dumpstr_get, _ollyapi2.t_savearea_dumpstr_set)
     def __init__(self): 
+        """__init__(t_savearea self) -> t_savearea"""
         this = _ollyapi2.new_t_savearea()
         try: self.this.append(this)
         except: self.this = this
@@ -2768,12 +2864,14 @@ FLAG_D = _ollyapi2.FLAG_D
 FLAG_O = _ollyapi2.FLAG_O
 NMEMFIELD = _ollyapi2.NMEMFIELD
 class t_memfield(object):
+    """Proxy of C t_memfield struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_memfield_addr_get, _ollyapi2.t_memfield_addr_set)
     size = _swig_property(_ollyapi2.t_memfield_size_get, _ollyapi2.t_memfield_size_set)
     data = _swig_property(_ollyapi2.t_memfield_data_get, _ollyapi2.t_memfield_data_set)
     def __init__(self): 
+        """__init__(t_memfield self) -> t_memfield"""
         this = _ollyapi2.new_t_memfield()
         try: self.this.append(this)
         except: self.this = this
@@ -2783,6 +2881,7 @@ t_memfield_swigregister = _ollyapi2.t_memfield_swigregister
 t_memfield_swigregister(t_memfield)
 
 class t_reg(object):
+    """Proxy of C t_reg struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     status = _swig_property(_ollyapi2.t_reg_status_get, _ollyapi2.t_reg_status_set)
@@ -2808,6 +2907,7 @@ class t_reg(object):
     mxcsr = _swig_property(_ollyapi2.t_reg_mxcsr_get, _ollyapi2.t_reg_mxcsr_set)
     mem = _swig_property(_ollyapi2.t_reg_mem_get, _ollyapi2.t_reg_mem_set)
     def __init__(self): 
+        """__init__(t_reg self) -> t_reg"""
         this = _ollyapi2.new_t_reg()
         try: self.this.append(this)
         except: self.this = this
@@ -2817,6 +2917,7 @@ t_reg_swigregister = _ollyapi2.t_reg_swigregister
 t_reg_swigregister(t_reg)
 
 class t_thread(object):
+    """Proxy of C t_thread struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     threadid = _swig_property(_ollyapi2.t_thread_threadid_get, _ollyapi2.t_thread_threadid_set)
@@ -2849,6 +2950,7 @@ class t_thread(object):
     stacktop = _swig_property(_ollyapi2.t_thread_stacktop_get, _ollyapi2.t_thread_stacktop_set)
     stackbottom = _swig_property(_ollyapi2.t_thread_stackbottom_get, _ollyapi2.t_thread_stackbottom_set)
     def __init__(self): 
+        """__init__(t_thread self) -> t_thread"""
         this = _ollyapi2.new_t_thread()
         try: self.this.append(this)
         except: self.this = this
@@ -2859,24 +2961,24 @@ t_thread_swigregister(t_thread)
 
 
 def Findthread(*args):
+  """Findthread(ulong threadid) -> t_thread"""
   return _ollyapi2.Findthread(*args)
-Findthread = _ollyapi2.Findthread
 
 def Findthreadbyordinal(*args):
+  """Findthreadbyordinal(int ordinal) -> t_thread"""
   return _ollyapi2.Findthreadbyordinal(*args)
-Findthreadbyordinal = _ollyapi2.Findthreadbyordinal
 
 def Threadregisters(*args):
+  """Threadregisters(ulong threadid) -> t_reg"""
   return _ollyapi2.Threadregisters(*args)
-Threadregisters = _ollyapi2.Threadregisters
 
 def Decodethreadname(*args):
+  """Decodethreadname(wchar_t * s, ulong threadid, int mode) -> int"""
   return _ollyapi2.Decodethreadname(*args)
-Decodethreadname = _ollyapi2.Decodethreadname
 
 def Registermodifiedbyuser(*args):
+  """Registermodifiedbyuser(t_thread pthr)"""
   return _ollyapi2.Registermodifiedbyuser(*args)
-Registermodifiedbyuser = _ollyapi2.Registermodifiedbyuser
 MAXCMDSIZE = _ollyapi2.MAXCMDSIZE
 MAXSEQSIZE = _ollyapi2.MAXSEQSIZE
 INT3 = _ollyapi2.INT3
@@ -3194,6 +3296,7 @@ NSTACK = _ollyapi2.NSTACK
 NSTKMOD = _ollyapi2.NSTKMOD
 NMEM = _ollyapi2.NMEM
 class t_modrm(object):
+    """Proxy of C t_modrm struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     size = _swig_property(_ollyapi2.t_modrm_size_get, _ollyapi2.t_modrm_size_set)
@@ -3208,6 +3311,7 @@ class t_modrm(object):
     ardec = _swig_property(_ollyapi2.t_modrm_ardec_get, _ollyapi2.t_modrm_ardec_set)
     aratt = _swig_property(_ollyapi2.t_modrm_aratt_get, _ollyapi2.t_modrm_aratt_set)
     def __init__(self): 
+        """__init__(t_modrm self) -> t_modrm"""
         this = _ollyapi2.new_t_modrm()
         try: self.this.append(this)
         except: self.this = this
@@ -3217,6 +3321,7 @@ t_modrm_swigregister = _ollyapi2.t_modrm_swigregister
 t_modrm_swigregister(t_modrm)
 
 class t_predict(object):
+    """Proxy of C t_predict struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_predict_addr_get, _ollyapi2.t_predict_addr_set)
@@ -3237,6 +3342,7 @@ class t_predict(object):
     resstate = _swig_property(_ollyapi2.t_predict_resstate_get, _ollyapi2.t_predict_resstate_set)
     resconst = _swig_property(_ollyapi2.t_predict_resconst_get, _ollyapi2.t_predict_resconst_set)
     def __init__(self): 
+        """__init__(t_predict self) -> t_predict"""
         this = _ollyapi2.new_t_predict()
         try: self.this.append(this)
         except: self.this = this
@@ -3246,12 +3352,14 @@ t_predict_swigregister = _ollyapi2.t_predict_swigregister
 t_predict_swigregister(t_predict)
 
 class t_predict_mem(object):
+    """Proxy of C t_predict_mem struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     maddr = _swig_property(_ollyapi2.t_predict_mem_maddr_get, _ollyapi2.t_predict_mem_maddr_set)
     mstate = _swig_property(_ollyapi2.t_predict_mem_mstate_get, _ollyapi2.t_predict_mem_mstate_set)
     mconst = _swig_property(_ollyapi2.t_predict_mem_mconst_get, _ollyapi2.t_predict_mem_mconst_set)
     def __init__(self): 
+        """__init__(t_predict_mem self) -> t_predict_mem"""
         this = _ollyapi2.new_t_predict_mem()
         try: self.this.append(this)
         except: self.this = this
@@ -3261,12 +3369,14 @@ t_predict_mem_swigregister = _ollyapi2.t_predict_mem_swigregister
 t_predict_mem_swigregister(t_predict_mem)
 
 class t_predict_stack(object):
+    """Proxy of C t_predict_stack struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     soffset = _swig_property(_ollyapi2.t_predict_stack_soffset_get, _ollyapi2.t_predict_stack_soffset_set)
     sstate = _swig_property(_ollyapi2.t_predict_stack_sstate_get, _ollyapi2.t_predict_stack_sstate_set)
     sconst = _swig_property(_ollyapi2.t_predict_stack_sconst_get, _ollyapi2.t_predict_stack_sconst_set)
     def __init__(self): 
+        """__init__(t_predict_stack self) -> t_predict_stack"""
         this = _ollyapi2.new_t_predict_stack()
         try: self.this.append(this)
         except: self.this = this
@@ -3276,6 +3386,7 @@ t_predict_stack_swigregister = _ollyapi2.t_predict_stack_swigregister
 t_predict_stack_swigregister(t_predict_stack)
 
 class t_callpredict(object):
+    """Proxy of C t_callpredict struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_callpredict_addr_get, _ollyapi2.t_callpredict_addr_set)
@@ -3288,6 +3399,7 @@ class t_callpredict(object):
     resstate = _swig_property(_ollyapi2.t_callpredict_resstate_get, _ollyapi2.t_callpredict_resstate_set)
     resconst = _swig_property(_ollyapi2.t_callpredict_resconst_get, _ollyapi2.t_callpredict_resconst_set)
     def __init__(self): 
+        """__init__(t_callpredict self) -> t_callpredict"""
         this = _ollyapi2.new_t_callpredict()
         try: self.this.append(this)
         except: self.this = this
@@ -3329,6 +3441,7 @@ OP_ACTVALID = _ollyapi2.OP_ACTVALID
 OP_ANYMEM = _ollyapi2.OP_ANYMEM
 OP_ANY = _ollyapi2.OP_ANY
 class t_operand(object):
+    """Proxy of C t_operand struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_operand_features_get, _ollyapi2.t_operand_features_set)
@@ -3353,6 +3466,7 @@ class t_operand(object):
     text = _swig_property(_ollyapi2.t_operand_text_get, _ollyapi2.t_operand_text_set)
     comment = _swig_property(_ollyapi2.t_operand_comment_get, _ollyapi2.t_operand_comment_set)
     def __init__(self): 
+        """__init__(t_operand self) -> t_operand"""
         this = _ollyapi2.new_t_operand()
         try: self.this.append(this)
         except: self.this = this
@@ -3415,6 +3529,7 @@ DAF_TRUE = _ollyapi2.DAF_TRUE
 DAF_FALSE = _ollyapi2.DAF_FALSE
 DAF_ANYCOND = _ollyapi2.DAF_ANYCOND
 class t_disasm(object):
+    """Proxy of C t_disasm struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     hilitereg = _swig_property(_ollyapi2.t_disasm_hilitereg_get, _ollyapi2.t_disasm_hilitereg_set)
@@ -3443,6 +3558,7 @@ class t_disasm(object):
     maskvalid = _swig_property(_ollyapi2.t_disasm_maskvalid_get, _ollyapi2.t_disasm_maskvalid_set)
     comment = _swig_property(_ollyapi2.t_disasm_comment_get, _ollyapi2.t_disasm_comment_set)
     def __init__(self): 
+        """__init__(t_disasm self) -> t_disasm"""
         this = _ollyapi2.new_t_disasm()
         try: self.this.append(this)
         except: self.this = this
@@ -3452,6 +3568,7 @@ t_disasm_swigregister = _ollyapi2.t_disasm_swigregister
 t_disasm_swigregister(t_disasm)
 
 class t_opinfo(object):
+    """Proxy of C t_opinfo struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_opinfo_features_get, _ollyapi2.t_opinfo_features_set)
@@ -3462,6 +3579,7 @@ class t_opinfo(object):
     scale = _swig_property(_ollyapi2.t_opinfo_scale_get, _ollyapi2.t_opinfo_scale_set)
     opconst = _swig_property(_ollyapi2.t_opinfo_opconst_get, _ollyapi2.t_opinfo_opconst_set)
     def __init__(self): 
+        """__init__(t_opinfo self) -> t_opinfo"""
         this = _ollyapi2.new_t_opinfo()
         try: self.this.append(this)
         except: self.this = this
@@ -3471,6 +3589,7 @@ t_opinfo_swigregister = _ollyapi2.t_opinfo_swigregister
 t_opinfo_swigregister(t_opinfo)
 
 class t_cmdinfo(object):
+    """Proxy of C t_cmdinfo struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     ip = _swig_property(_ollyapi2.t_cmdinfo_ip_get, _ollyapi2.t_cmdinfo_ip_set)
@@ -3485,6 +3604,7 @@ class t_cmdinfo(object):
     stackinc = _swig_property(_ollyapi2.t_cmdinfo_stackinc_get, _ollyapi2.t_cmdinfo_stackinc_set)
     op = _swig_property(_ollyapi2.t_cmdinfo_op_get, _ollyapi2.t_cmdinfo_op_set)
     def __init__(self): 
+        """__init__(t_cmdinfo self) -> t_cmdinfo"""
         this = _ollyapi2.new_t_cmdinfo()
         try: self.this.append(this)
         except: self.this = this
@@ -3494,6 +3614,7 @@ t_cmdinfo_swigregister = _ollyapi2.t_cmdinfo_swigregister
 t_cmdinfo_swigregister(t_cmdinfo)
 
 class t_emu(object):
+    """Proxy of C t_emu struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     operand = _swig_property(_ollyapi2.t_emu_operand_get, _ollyapi2.t_emu_operand_set)
@@ -3502,6 +3623,7 @@ class t_emu(object):
     memsize = _swig_property(_ollyapi2.t_emu_memsize_get, _ollyapi2.t_emu_memsize_set)
     memdata = _swig_property(_ollyapi2.t_emu_memdata_get, _ollyapi2.t_emu_memdata_set)
     def __init__(self): 
+        """__init__(t_emu self) -> t_emu"""
         this = _ollyapi2.new_t_emu()
         try: self.this.append(this)
         except: self.this = this
@@ -3511,6 +3633,7 @@ t_emu_swigregister = _ollyapi2.t_emu_swigregister
 t_emu_swigregister(t_emu)
 
 class t_bincmd(object):
+    """Proxy of C t_bincmd struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_bincmd_name_get, _ollyapi2.t_bincmd_name_set)
@@ -3524,6 +3647,7 @@ class t_bincmd(object):
     trace = _swig_property(_ollyapi2.t_bincmd_trace_get, _ollyapi2.t_bincmd_trace_set)
     emu = _swig_property(_ollyapi2.t_bincmd_emu_get, _ollyapi2.t_bincmd_emu_set)
     def __init__(self): 
+        """__init__(t_bincmd self) -> t_bincmd"""
         this = _ollyapi2.new_t_bincmd()
         try: self.this.append(this)
         except: self.this = this
@@ -3547,6 +3671,7 @@ AMP_IMPRECISE = _ollyapi2.AMP_IMPRECISE
 AMP_ANYMEM = _ollyapi2.AMP_ANYMEM
 AMP_ANYOP = _ollyapi2.AMP_ANYOP
 class t_modop(object):
+    """Proxy of C t_modop struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_modop_features_get, _ollyapi2.t_modop_features_set)
@@ -3554,6 +3679,7 @@ class t_modop(object):
     scale = _swig_property(_ollyapi2.t_modop_scale_get, _ollyapi2.t_modop_scale_set)
     opconst = _swig_property(_ollyapi2.t_modop_opconst_get, _ollyapi2.t_modop_opconst_set)
     def __init__(self): 
+        """__init__(t_modop self) -> t_modop"""
         this = _ollyapi2.new_t_modop()
         try: self.this.append(this)
         except: self.this = this
@@ -3563,6 +3689,7 @@ t_modop_swigregister = _ollyapi2.t_modop_swigregister
 t_modop_swigregister(t_modop)
 
 class t_asmmod(object):
+    """Proxy of C t_asmmod struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     code = _swig_property(_ollyapi2.t_asmmod_code_get, _ollyapi2.t_asmmod_code_set)
@@ -3574,6 +3701,7 @@ class t_asmmod(object):
     noperand = _swig_property(_ollyapi2.t_asmmod_noperand_get, _ollyapi2.t_asmmod_noperand_set)
     op = _swig_property(_ollyapi2.t_asmmod_op_get, _ollyapi2.t_asmmod_op_set)
     def __init__(self): 
+        """__init__(t_asmmod self) -> t_asmmod"""
         this = _ollyapi2.new_t_asmmod()
         try: self.this.append(this)
         except: self.this = this
@@ -3583,12 +3711,14 @@ t_asmmod_swigregister = _ollyapi2.t_asmmod_swigregister
 t_asmmod_swigregister(t_asmmod)
 
 class t_asmlist(object):
+    """Proxy of C t_asmlist struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     pasm = _swig_property(_ollyapi2.t_asmlist_pasm_get, _ollyapi2.t_asmlist_pasm_set)
     length = _swig_property(_ollyapi2.t_asmlist_length_get, _ollyapi2.t_asmlist_length_set)
     comment = _swig_property(_ollyapi2.t_asmlist_comment_get, _ollyapi2.t_asmlist_comment_set)
     def __init__(self): 
+        """__init__(t_asmlist self) -> t_asmlist"""
         this = _ollyapi2.new_t_asmlist()
         try: self.this.append(this)
         except: self.this = this
@@ -3611,68 +3741,71 @@ DA_NOPSEUDO = _ollyapi2.DA_NOPSEUDO
 DA_FORHELP = _ollyapi2.DA_FORHELP
 
 def Byteregtodwordreg(*args):
+  """Byteregtodwordreg(int bytereg) -> int"""
   return _ollyapi2.Byteregtodwordreg(*args)
-Byteregtodwordreg = _ollyapi2.Byteregtodwordreg
 
 def Printfloat4(*args):
+  """Printfloat4(wchar_t * s, float f) -> int"""
   return _ollyapi2.Printfloat4(*args)
-Printfloat4 = _ollyapi2.Printfloat4
 
 def Printfloat8(*args):
+  """Printfloat8(wchar_t * s, double d) -> int"""
   return _ollyapi2.Printfloat8(*args)
-Printfloat8 = _ollyapi2.Printfloat8
 
 def Printfloat10(*args):
+  """Printfloat10(wchar_t * s, long double ext) -> int"""
   return _ollyapi2.Printfloat10(*args)
-Printfloat10 = _ollyapi2.Printfloat10
 
 def Printmmx(*args):
+  """Printmmx(wchar_t * s, uchar * data) -> int"""
   return _ollyapi2.Printmmx(*args)
-Printmmx = _ollyapi2.Printmmx
 
 def Commentcharacter(*args):
+  """Commentcharacter(wchar_t * s, int c, int mode) -> int"""
   return _ollyapi2.Commentcharacter(*args)
-Commentcharacter = _ollyapi2.Commentcharacter
 
 def Nameoffloat(*args):
+  """Nameoffloat(wchar_t * s, uchar * data, ulong size) -> int"""
   return _ollyapi2.Nameoffloat(*args)
-Nameoffloat = _ollyapi2.Nameoffloat
 
 def Disasm(*args):
+  """
+    Disasm(uchar * cmd, ulong cmdsize, ulong ip, uchar * dec, t_disasm da, int mode, t_reg reg, 
+        t_predict predict) -> ulong
+    """
   return _ollyapi2.Disasm(*args)
-Disasm = _ollyapi2.Disasm
 
 def Cmdinfo(*args):
+  """Cmdinfo(uchar * cmd, ulong cmdsize, ulong cmdip, t_cmdinfo ci, int cmdmode, t_reg cmdreg) -> ulong"""
   return _ollyapi2.Cmdinfo(*args)
-Cmdinfo = _ollyapi2.Cmdinfo
 
 def Disassembleforward(*args):
+  """Disassembleforward(uchar * copy, ulong base, ulong size, ulong ip, ulong n, uchar * decode) -> ulong"""
   return _ollyapi2.Disassembleforward(*args)
-Disassembleforward = _ollyapi2.Disassembleforward
 
 def Disassembleback(*args):
+  """Disassembleback(uchar * copy, ulong base, ulong size, ulong ip, ulong n, uchar * decode) -> ulong"""
   return _ollyapi2.Disassembleback(*args)
-Disassembleback = _ollyapi2.Disassembleback
 
 def Checkcondition(*args):
+  """Checkcondition(int code, ulong flags) -> int"""
   return _ollyapi2.Checkcondition(*args)
-Checkcondition = _ollyapi2.Checkcondition
 
 def Setcondition(*args):
+  """Setcondition(int code, ulong flags) -> ulong"""
   return _ollyapi2.Setcondition(*args)
-Setcondition = _ollyapi2.Setcondition
 AM_ALLOWBAD = _ollyapi2.AM_ALLOWBAD
 AM_IMPRECISE = _ollyapi2.AM_IMPRECISE
 AM_MULTI = _ollyapi2.AM_MULTI
 AM_SEARCH = _ollyapi2.AM_SEARCH
 
 def Assembleallforms(*args):
+  """Assembleallforms(wchar_t * src, ulong ip, t_asmmod model, int maxmodel, int mode, wchar_t * errtxt) -> int"""
   return _ollyapi2.Assembleallforms(*args)
-Assembleallforms = _ollyapi2.Assembleallforms
 
 def Assemble(*args):
+  """Assemble(wchar_t * src, ulong ip, uchar * buf, ulong nbuf, int mode, wchar_t * errtxt) -> ulong"""
   return _ollyapi2.Assemble(*args)
-Assemble = _ollyapi2.Assemble
 N_CMDTYPE = _ollyapi2.N_CMDTYPE
 N_CMD = _ollyapi2.N_CMD
 N_JMP = _ollyapi2.N_JMP
@@ -3715,6 +3848,7 @@ A_FLOAT8 = _ollyapi2.A_FLOAT8
 A_NOLIST = _ollyapi2.A_NOLIST
 A_ALIGN = _ollyapi2.A_ALIGN
 class t_netasm(object):
+    """Proxy of C t_netasm struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     ip = _swig_property(_ollyapi2.t_netasm_ip_get, _ollyapi2.t_netasm_ip_set)
@@ -3733,6 +3867,7 @@ class t_netasm(object):
     result = _swig_property(_ollyapi2.t_netasm_result_get, _ollyapi2.t_netasm_result_set)
     comment = _swig_property(_ollyapi2.t_netasm_comment_get, _ollyapi2.t_netasm_comment_set)
     def __init__(self): 
+        """__init__(t_netasm self) -> t_netasm"""
         this = _ollyapi2.new_t_netasm()
         try: self.this.append(this)
         except: self.this = this
@@ -3743,8 +3878,8 @@ t_netasm_swigregister(t_netasm)
 
 
 def Ndisasm(*args):
+  """Ndisasm(uchar * cmd, ulong size, ulong ip, t_netasm da, int mode, t_module pmod) -> ulong"""
   return _ollyapi2.Ndisasm(*args)
-Ndisasm = _ollyapi2.Ndisasm
 MAXARG = _ollyapi2.MAXARG
 NGUESS = _ollyapi2.NGUESS
 AA_MANUAL = _ollyapi2.AA_MANUAL
@@ -3759,6 +3894,7 @@ AO_NOTFORMAT = _ollyapi2.AO_NOTFORMAT
 AO_ISCOUNT = _ollyapi2.AO_ISCOUNT
 AO_NOTCOUNT = _ollyapi2.AO_NOTCOUNT
 class t_procdata(object):
+    """Proxy of C t_procdata struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_procdata_addr_get, _ollyapi2.t_procdata_addr_set)
@@ -3776,6 +3912,7 @@ class t_procdata(object):
     preserved = _swig_property(_ollyapi2.t_procdata_preserved_get, _ollyapi2.t_procdata_preserved_set)
     argopt = _swig_property(_ollyapi2.t_procdata_argopt_get, _ollyapi2.t_procdata_argopt_set)
     def __init__(self): 
+        """__init__(t_procdata self) -> t_procdata"""
         this = _ollyapi2.new_t_procdata()
         try: self.this.append(this)
         except: self.this = this
@@ -3785,6 +3922,7 @@ t_procdata_swigregister = _ollyapi2.t_procdata_swigregister
 t_procdata_swigregister(t_procdata)
 
 class t_argnest(object):
+    """Proxy of C t_argnest struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr0 = _swig_property(_ollyapi2.t_argnest_addr0_get, _ollyapi2.t_argnest_addr0_set)
@@ -3792,6 +3930,7 @@ class t_argnest(object):
     type = _swig_property(_ollyapi2.t_argnest_type_get, _ollyapi2.t_argnest_type_set)
     aprev = _swig_property(_ollyapi2.t_argnest_aprev_get, _ollyapi2.t_argnest_aprev_set)
     def __init__(self): 
+        """__init__(t_argnest self) -> t_argnest"""
         this = _ollyapi2.new_t_argnest()
         try: self.this.append(this)
         except: self.this = this
@@ -3802,6 +3941,7 @@ t_argnest_swigregister(t_argnest)
 
 NLOOPVAR = _ollyapi2.NLOOPVAR
 class t_loopnest(object):
+    """Proxy of C t_loopnest struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr0 = _swig_property(_ollyapi2.t_loopnest_addr0_get, _ollyapi2.t_loopnest_addr0_set)
@@ -3811,6 +3951,7 @@ class t_loopnest(object):
     eoffs = _swig_property(_ollyapi2.t_loopnest_eoffs_get, _ollyapi2.t_loopnest_eoffs_set)
     loopvar = _swig_property(_ollyapi2.t_loopnest_loopvar_get)
     def __init__(self): 
+        """__init__(t_loopnest self) -> t_loopnest"""
         this = _ollyapi2.new_t_loopnest()
         try: self.this.append(this)
         except: self.this = this
@@ -3820,12 +3961,14 @@ t_loopnest_swigregister = _ollyapi2.t_loopnest_swigregister
 t_loopnest_swigregister(t_loopnest)
 
 class t_loopnest_loopvar(object):
+    """Proxy of C t_loopnest_loopvar struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     type = _swig_property(_ollyapi2.t_loopnest_loopvar_type_get, _ollyapi2.t_loopnest_loopvar_type_set)
     espoffset = _swig_property(_ollyapi2.t_loopnest_loopvar_espoffset_get, _ollyapi2.t_loopnest_loopvar_espoffset_set)
     increment = _swig_property(_ollyapi2.t_loopnest_loopvar_increment_get, _ollyapi2.t_loopnest_loopvar_increment_set)
     def __init__(self): 
+        """__init__(t_loopnest_loopvar self) -> t_loopnest_loopvar"""
         this = _ollyapi2.new_t_loopnest_loopvar()
         try: self.this.append(this)
         except: self.this = this
@@ -3836,20 +3979,21 @@ t_loopnest_loopvar_swigregister(t_loopnest_loopvar)
 
 
 def Getpackednetint(*args):
+  """Getpackednetint(uchar * code, ulong size, ulong * value) -> ulong"""
   return _ollyapi2.Getpackednetint(*args)
-Getpackednetint = _ollyapi2.Getpackednetint
 
 def Removeanalysis(*args):
+  """Removeanalysis(ulong base, ulong size, int keephittrace)"""
   return _ollyapi2.Removeanalysis(*args)
-Removeanalysis = _ollyapi2.Removeanalysis
 
 def Maybecommand(*args):
+  """Maybecommand(ulong addr, int requireanalysis) -> int"""
   return _ollyapi2.Maybecommand(*args)
-Maybecommand = _ollyapi2.Maybecommand
 SF_FMUNREL = _ollyapi2.SF_FMUNREL
 SF_BPUNREL = _ollyapi2.SF_BPUNREL
 SF_VIRTUAL = _ollyapi2.SF_VIRTUAL
 class t_sframe(object):
+    """Proxy of C t_sframe struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     eip = _swig_property(_ollyapi2.t_sframe_eip_get, _ollyapi2.t_sframe_eip_set)
@@ -3867,6 +4011,7 @@ class t_sframe(object):
     procaddr = _swig_property(_ollyapi2.t_sframe_procaddr_get, _ollyapi2.t_sframe_procaddr_set)
     dummy = _swig_property(_ollyapi2.t_sframe_dummy_get, _ollyapi2.t_sframe_dummy_set)
     def __init__(self): 
+        """__init__(t_sframe self) -> t_sframe"""
         this = _ollyapi2.new_t_sframe()
         try: self.this.append(this)
         except: self.this = this
@@ -3877,12 +4022,12 @@ t_sframe_swigregister(t_sframe)
 
 
 def Isretaddr(*args):
+  """Isretaddr(ulong retaddr, ulong * procaddr) -> ulong"""
   return _ollyapi2.Isretaddr(*args)
-Isretaddr = _ollyapi2.Isretaddr
 
 def Findretaddrdata(*args):
+  """Findretaddrdata(t_sframe pf, ulong base, ulong size) -> int"""
   return _ollyapi2.Findretaddrdata(*args)
-Findretaddrdata = _ollyapi2.Findretaddrdata
 NARG = _ollyapi2.NARG
 ADEC_VALID = _ollyapi2.ADEC_VALID
 ADEC_PREDICTED = _ollyapi2.ADEC_PREDICTED
@@ -3924,6 +4069,7 @@ FN_FUNCTION = _ollyapi2.FN_FUNCTION
 FN_STDFUNC = _ollyapi2.FN_STDFUNC
 FN_STDC = _ollyapi2.FN_STDC
 class t_argdec(object):
+    """Proxy of C t_argdec struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     mode = _swig_property(_ollyapi2.t_argdec_mode_get, _ollyapi2.t_argdec_mode_set)
@@ -3933,6 +4079,7 @@ class t_argdec(object):
     name = _swig_property(_ollyapi2.t_argdec_name_get, _ollyapi2.t_argdec_name_set)
     text = _swig_property(_ollyapi2.t_argdec_text_get, _ollyapi2.t_argdec_text_set)
     def __init__(self): 
+        """__init__(t_argdec self) -> t_argdec"""
         this = _ollyapi2.new_t_argdec()
         try: self.this.append(this)
         except: self.this = this
@@ -3942,6 +4089,7 @@ t_argdec_swigregister = _ollyapi2.t_argdec_swigregister
 t_argdec_swigregister(t_argdec)
 
 class t_strdec(object):
+    """Proxy of C t_strdec struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     size = _swig_property(_ollyapi2.t_strdec_size_get, _ollyapi2.t_strdec_size_set)
@@ -3955,6 +4103,7 @@ class t_strdec(object):
     name = _swig_property(_ollyapi2.t_strdec_name_get, _ollyapi2.t_strdec_name_set)
     text = _swig_property(_ollyapi2.t_strdec_text_get, _ollyapi2.t_strdec_text_set)
     def __init__(self): 
+        """__init__(t_strdec self) -> t_strdec"""
         this = _ollyapi2.new_t_strdec()
         try: self.this.append(this)
         except: self.this = this
@@ -3964,12 +4113,14 @@ t_strdec_swigregister = _ollyapi2.t_strdec_swigregister
 t_strdec_swigregister(t_strdec)
 
 class t_rawdata(object):
+    """Proxy of C t_rawdata struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     size = _swig_property(_ollyapi2.t_rawdata_size_get, _ollyapi2.t_rawdata_size_set)
     hasmask = _swig_property(_ollyapi2.t_rawdata_hasmask_get, _ollyapi2.t_rawdata_hasmask_set)
     features = _swig_property(_ollyapi2.t_rawdata_features_get, _ollyapi2.t_rawdata_features_set)
     def __init__(self): 
+        """__init__(t_rawdata self) -> t_rawdata"""
         this = _ollyapi2.new_t_rawdata()
         try: self.this.append(this)
         except: self.this = this
@@ -3979,6 +4130,7 @@ t_rawdata_swigregister = _ollyapi2.t_rawdata_swigregister
 t_rawdata_swigregister(t_rawdata)
 
 class t_argloc(object):
+    """Proxy of C t_argloc struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     fntype = _swig_property(_ollyapi2.t_argloc_fntype_get, _ollyapi2.t_argloc_fntype_set)
@@ -3988,6 +4140,7 @@ class t_argloc(object):
     argvalid = _swig_property(_ollyapi2.t_argloc_argvalid_get, _ollyapi2.t_argloc_argvalid_set)
     arg = _swig_property(_ollyapi2.t_argloc_arg_get)
     def __init__(self): 
+        """__init__(t_argloc self) -> t_argloc"""
         this = _ollyapi2.new_t_argloc()
         try: self.this.append(this)
         except: self.this = this
@@ -3997,6 +4150,7 @@ t_argloc_swigregister = _ollyapi2.t_argloc_swigregister
 t_argloc_swigregister(t_argloc)
 
 class t_argloc_arg(object):
+    """Proxy of C t_argloc_arg struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_argloc_arg_features_get, _ollyapi2.t_argloc_arg_features_set)
@@ -4004,6 +4158,7 @@ class t_argloc_arg(object):
     name = _swig_property(_ollyapi2.t_argloc_arg_name_get, _ollyapi2.t_argloc_arg_name_set)
     type = _swig_property(_ollyapi2.t_argloc_arg_type_get, _ollyapi2.t_argloc_arg_type_set)
     def __init__(self): 
+        """__init__(t_argloc_arg self) -> t_argloc_arg"""
         this = _ollyapi2.new_t_argloc_arg()
         try: self.this.append(this)
         except: self.this = this
@@ -4014,64 +4169,70 @@ t_argloc_arg_swigregister(t_argloc_arg)
 
 
 def Getconstantbyname(*args):
+  """Getconstantbyname(wchar_t * name, ulong * value) -> int"""
   return _ollyapi2.Getconstantbyname(*args)
-Getconstantbyname = _ollyapi2.Getconstantbyname
 
 def Getconstantbyvalue(*args):
+  """Getconstantbyvalue(wchar_t * groupname, ulong value, wchar_t * name) -> int"""
   return _ollyapi2.Getconstantbyvalue(*args)
-Getconstantbyvalue = _ollyapi2.Getconstantbyvalue
 
 def Decodetype(*args):
+  """Decodetype(ulong data, wchar_t * type, wchar_t * text, int ntext) -> int"""
   return _ollyapi2.Decodetype(*args)
-Decodetype = _ollyapi2.Decodetype
 
 def Fillcombowithgroup(*args):
+  """Fillcombowithgroup(HWND hw, wchar_t * groupname, int sortbyname, ulong select) -> int"""
   return _ollyapi2.Fillcombowithgroup(*args)
-Fillcombowithgroup = _ollyapi2.Fillcombowithgroup
 
 def Fillcombowithstruct(*args):
+  """Fillcombowithstruct(HWND hw, wchar_t * prefix, wchar_t * select) -> int"""
   return _ollyapi2.Fillcombowithstruct(*args)
-Fillcombowithstruct = _ollyapi2.Fillcombowithstruct
 
 def Getrawdata(*args):
+  """Getrawdata(wchar_t * name) -> t_rawdata"""
   return _ollyapi2.Getrawdata(*args)
-Getrawdata = _ollyapi2.Getrawdata
 
 def Substitutehkeyprefix(*args):
+  """Substitutehkeyprefix(wchar_t * key) -> int"""
   return _ollyapi2.Substitutehkeyprefix(*args)
-Substitutehkeyprefix = _ollyapi2.Substitutehkeyprefix
 
 def Decodeknownbyname(*args):
+  """Decodeknownbyname(wchar_t * name, t_procdata pd, t_argdec adec, wchar_t * rettype, int nexp) -> int"""
   return _ollyapi2.Decodeknownbyname(*args)
-Decodeknownbyname = _ollyapi2.Decodeknownbyname
 
 def Decodeknownbyaddr(*args):
+  """
+    Decodeknownbyaddr(ulong addr, t_procdata pd, t_argdec adec, wchar_t * rettype, wchar_t * name, int nexp, 
+        int follow) -> int
+    """
   return _ollyapi2.Decodeknownbyaddr(*args)
-Decodeknownbyaddr = _ollyapi2.Decodeknownbyaddr
 
 def Isnoreturn(*args):
+  """Isnoreturn(ulong addr) -> int"""
   return _ollyapi2.Isnoreturn(*args)
-Isnoreturn = _ollyapi2.Isnoreturn
 
 def Decodeargument(*args):
+  """
+    Decodeargument(t_module pmod, wchar_t * prtype, void * data, int ndata, wchar_t * text, int ntext, 
+        int * nontriv) -> int
+    """
   return _ollyapi2.Decodeargument(*args)
-Decodeargument = _ollyapi2.Decodeargument
 
 def Getstructureitemcount(*args):
+  """Getstructureitemcount(wchar_t * name, ulong * size) -> int"""
   return _ollyapi2.Getstructureitemcount(*args)
-Getstructureitemcount = _ollyapi2.Getstructureitemcount
 
 def Findstructureitembyoffset(*args):
+  """Findstructureitembyoffset(wchar_t * name, ulong offset) -> int"""
   return _ollyapi2.Findstructureitembyoffset(*args)
-Findstructureitembyoffset = _ollyapi2.Findstructureitembyoffset
 
 def Decodestructure(*args):
+  """Decodestructure(wchar_t * name, ulong addr, int item0, t_strdec str, int nstr) -> int"""
   return _ollyapi2.Decodestructure(*args)
-Decodestructure = _ollyapi2.Decodestructure
 
 def Getstructureitemvalue(*args):
+  """Getstructureitemvalue(uchar * code, ulong ncode, wchar_t * name, wchar_t * itemname, void * value, ulong nvalue) -> ulong"""
   return _ollyapi2.Getstructureitemvalue(*args)
-Getstructureitemvalue = _ollyapi2.Getstructureitemvalue
 NEXPR = _ollyapi2.NEXPR
 EMOD_CHKEXTRA = _ollyapi2.EMOD_CHKEXTRA
 EMOD_NOVALUE = _ollyapi2.EMOD_NOVALUE
@@ -4093,6 +4254,7 @@ EXPR_REG = _ollyapi2.EXPR_REG
 EXPR_SIGNED = _ollyapi2.EXPR_SIGNED
 EXPR_SIGDWORD = _ollyapi2.EXPR_SIGDWORD
 class t_result(object):
+    """Proxy of C t_result struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     lvaltype = _swig_property(_ollyapi2.t_result_lvaltype_get, _ollyapi2.t_result_lvaltype_set)
@@ -4102,6 +4264,7 @@ class t_result(object):
     u = _swig_property(_ollyapi2.t_result_u_get)
     value = _swig_property(_ollyapi2.t_result_value_get, _ollyapi2.t_result_value_set)
     def __init__(self): 
+        """__init__(t_result self) -> t_result"""
         this = _ollyapi2.new_t_result()
         try: self.this.append(this)
         except: self.this = this
@@ -4111,6 +4274,7 @@ t_result_swigregister = _ollyapi2.t_result_swigregister
 t_result_swigregister(t_result)
 
 class t_result_u(object):
+    """Proxy of C t_result_u struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     data = _swig_property(_ollyapi2.t_result_u_data_get, _ollyapi2.t_result_u_data_set)
@@ -4118,6 +4282,7 @@ class t_result_u(object):
     l = _swig_property(_ollyapi2.t_result_u_l_get, _ollyapi2.t_result_u_l_set)
     f = _swig_property(_ollyapi2.t_result_u_f_get, _ollyapi2.t_result_u_f_set)
     def __init__(self): 
+        """__init__(t_result_u self) -> t_result_u"""
         this = _ollyapi2.new_t_result_u()
         try: self.this.append(this)
         except: self.this = this
@@ -4127,6 +4292,7 @@ t_result_u_swigregister = _ollyapi2.t_result_u_swigregister
 t_result_u_swigregister(t_result_u)
 
 class t_watch(object):
+    """Proxy of C t_watch struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_watch_addr_get, _ollyapi2.t_watch_addr_set)
@@ -4134,6 +4300,7 @@ class t_watch(object):
     type = _swig_property(_ollyapi2.t_watch_type_get, _ollyapi2.t_watch_type_set)
     expr = _swig_property(_ollyapi2.t_watch_expr_get, _ollyapi2.t_watch_expr_set)
     def __init__(self): 
+        """__init__(t_watch self) -> t_watch"""
         this = _ollyapi2.new_t_watch()
         try: self.this.append(this)
         except: self.this = this
@@ -4144,24 +4311,30 @@ t_watch_swigregister(t_watch)
 
 
 def Cexpression(*args):
+  """Cexpression(wchar_t * expression, uchar * cexpr, int nexpr, int * explen, wchar_t * err, ulong mode) -> int"""
   return _ollyapi2.Cexpression(*args)
-Cexpression = _ollyapi2.Cexpression
 
 def Exprcount(*args):
+  """Exprcount(uchar * cexpr) -> int"""
   return _ollyapi2.Exprcount(*args)
-Exprcount = _ollyapi2.Exprcount
 
 def Eexpression(*args):
+  """
+    Eexpression(t_result result, wchar_t * expl, uchar * cexpr, int index, uchar * data, ulong base, 
+        ulong size, ulong threadid, ulong a, ulong b, ulong mode) -> int
+    """
   return _ollyapi2.Eexpression(*args)
-Eexpression = _ollyapi2.Eexpression
 
 def Expression(*args):
+  """
+    Expression(t_result result, wchar_t * expression, uchar * data, ulong base, ulong size, ulong threadid, 
+        ulong a, ulong b, ulong mode) -> int
+    """
   return _ollyapi2.Expression(*args)
-Expression = _ollyapi2.Expression
 
 def Fastexpression(*args):
+  """Fastexpression(t_result result, ulong addr, int type, ulong threadid) -> int"""
   return _ollyapi2.Fastexpression(*args)
-Fastexpression = _ollyapi2.Fastexpression
 DIA_SIZEMASK = _ollyapi2.DIA_SIZEMASK
 DIA_BYTE = _ollyapi2.DIA_BYTE
 DIA_WORD = _ollyapi2.DIA_WORD
@@ -4300,6 +4473,7 @@ DFM_FIXALL = _ollyapi2.DFM_FIXALL
 HEXLEN = _ollyapi2.HEXLEN
 NSEARCHCMD = _ollyapi2.NSEARCHCMD
 class t_control(object):
+    """Proxy of C t_control struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     type = _swig_property(_ollyapi2.t_control_type_get, _ollyapi2.t_control_type_set)
@@ -4313,6 +4487,7 @@ class t_control(object):
     help = _swig_property(_ollyapi2.t_control_help_get, _ollyapi2.t_control_help_set)
     oldvar = _swig_property(_ollyapi2.t_control_oldvar_get, _ollyapi2.t_control_oldvar_set)
     def __init__(self): 
+        """__init__(t_control self) -> t_control"""
         this = _ollyapi2.new_t_control()
         try: self.this.append(this)
         except: self.this = this
@@ -4322,6 +4497,7 @@ t_control_swigregister = _ollyapi2.t_control_swigregister
 t_control_swigregister(t_control)
 
 class t_dialog(object):
+    """Proxy of C t_dialog struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     controls = _swig_property(_ollyapi2.t_dialog_controls_get, _ollyapi2.t_dialog_controls_set)
@@ -4346,6 +4522,7 @@ class t_dialog(object):
     hwwarn = _swig_property(_ollyapi2.t_dialog_hwwarn_get, _ollyapi2.t_dialog_hwwarn_set)
     initdone = _swig_property(_ollyapi2.t_dialog_initdone_get, _ollyapi2.t_dialog_initdone_set)
     def __init__(self): 
+        """__init__(t_dialog self) -> t_dialog"""
         this = _ollyapi2.new_t_dialog()
         try: self.this.append(this)
         except: self.this = this
@@ -4355,6 +4532,7 @@ t_dialog_swigregister = _ollyapi2.t_dialog_swigregister
 t_dialog_swigregister(t_dialog)
 
 class t_hexstr(object):
+    """Proxy of C t_hexstr struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     n = _swig_property(_ollyapi2.t_hexstr_n_get, _ollyapi2.t_hexstr_n_set)
@@ -4362,6 +4540,7 @@ class t_hexstr(object):
     data = _swig_property(_ollyapi2.t_hexstr_data_get, _ollyapi2.t_hexstr_data_set)
     mask = _swig_property(_ollyapi2.t_hexstr_mask_get, _ollyapi2.t_hexstr_mask_set)
     def __init__(self): 
+        """__init__(t_hexstr self) -> t_hexstr"""
         this = _ollyapi2.new_t_hexstr()
         try: self.this.append(this)
         except: self.this = this
@@ -4372,144 +4551,165 @@ t_hexstr_swigregister(t_hexstr)
 
 
 def Findcontrol(*args):
+  """Findcontrol(HWND hw) -> t_control"""
   return _ollyapi2.Findcontrol(*args)
-Findcontrol = _ollyapi2.Findcontrol
 
 def Defaultactions(*args):
+  """Defaultactions(HWND hparent, t_control pctr, WPARAM wp, LPARAM lp) -> int"""
   return _ollyapi2.Defaultactions(*args)
-Defaultactions = _ollyapi2.Defaultactions
 
 def Addstringtocombolist(*args):
+  """Addstringtocombolist(HWND hc, wchar_t * s)"""
   return _ollyapi2.Addstringtocombolist(*args)
-Addstringtocombolist = _ollyapi2.Addstringtocombolist
 
 def Preparedialog(*args):
+  """Preparedialog(HWND hw, t_dialog pdlg) -> int"""
   return _ollyapi2.Preparedialog(*args)
-Preparedialog = _ollyapi2.Preparedialog
 
 def Endotdialog(*args):
+  """Endotdialog(HWND hw, int result) -> int"""
   return _ollyapi2.Endotdialog(*args)
-Endotdialog = _ollyapi2.Endotdialog
 
 def Getregister(*args):
+  """Getregister(HWND hparent, int reg, ulong * data, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Getregister(*args)
-Getregister = _ollyapi2.Getregister
 
 def Getinteger(*args):
+  """Getinteger(HWND hparent, wchar_t * title, ulong * data, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Getinteger(*args)
-Getinteger = _ollyapi2.Getinteger
 
 def Getdword(*args):
+  """Getdword(HWND hparent, wchar_t * title, ulong * data, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Getdword(*args)
-Getdword = _ollyapi2.Getdword
 
 def Getlasterrorcode(*args):
+  """Getlasterrorcode(HWND hparent, wchar_t * title, ulong * data, int letter, int x, int y, int fi) -> int"""
   return _ollyapi2.Getlasterrorcode(*args)
-Getlasterrorcode = _ollyapi2.Getlasterrorcode
 
 def Getaddressrange(*args):
+  """
+    Getaddressrange(HWND hparent, wchar_t * title, ulong * rmin, ulong * rmax, int x, int y, int fi, 
+        int mode) -> int
+    """
   return _ollyapi2.Getaddressrange(*args)
-Getaddressrange = _ollyapi2.Getaddressrange
 
 def Getexceptionrange(*args):
+  """Getexceptionrange(HWND hparent, wchar_t * title, ulong * rmin, ulong * rmax, int x, int y, int fi) -> int"""
   return _ollyapi2.Getexceptionrange(*args)
-Getexceptionrange = _ollyapi2.Getexceptionrange
 
 def Getstructuretype(*args):
+  """Getstructuretype(HWND hparent, wchar_t * title, wchar_t * text, wchar_t * strname, int x, int y, int fi) -> int"""
   return _ollyapi2.Getstructuretype(*args)
-Getstructuretype = _ollyapi2.Getstructuretype
 
 def Getfpureg(*args):
+  """Getfpureg(HWND hparent, int reg, void * data, int letter, int x, int y, int fi) -> int"""
   return _ollyapi2.Getfpureg(*args)
-Getfpureg = _ollyapi2.Getfpureg
 
 def Get3dnow(*args):
+  """Get3dnow(HWND hparent, wchar_t * title, void * data, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Get3dnow(*args)
-Get3dnow = _ollyapi2.Get3dnow
 
 def Getfloat(*args):
+  """Getfloat(HWND hparent, wchar_t * title, void * data, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Getfloat(*args)
-Getfloat = _ollyapi2.Getfloat
 
 def Getmmx(*args):
+  """Getmmx(HWND hparent, wchar_t * title, void * data, int letter, int x, int y, int fi) -> int"""
   return _ollyapi2.Getmmx(*args)
-Getmmx = _ollyapi2.Getmmx
 
 def Getsse(*args):
+  """Getsse(HWND hparent, wchar_t * title, void * data, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Getsse(*args)
-Getsse = _ollyapi2.Getsse
 
 def Getstring(*args):
+  """
+    Getstring(HWND hparent, wchar_t * title, wchar_t * s, int length, int savetype, int letter, 
+        int x, int y, int fi, int mode) -> int
+    """
   return _ollyapi2.Getstring(*args)
-Getstring = _ollyapi2.Getstring
 
 def Getdwordexpression(*args):
+  """
+    Getdwordexpression(HWND hparent, wchar_t * title, ulong * u, ulong threadid, int savetype, int x, int y, 
+        int fi, int mode) -> int
+    """
   return _ollyapi2.Getdwordexpression(*args)
-Getdwordexpression = _ollyapi2.Getdwordexpression
 
 def Getgotoexpression(*args):
+  """
+    Getgotoexpression(HWND hparent, wchar_t * title, ulong * u, ulong threadid, int savetype, int x, int y, 
+        int fi, int mode) -> int
+    """
   return _ollyapi2.Getgotoexpression(*args)
-Getgotoexpression = _ollyapi2.Getgotoexpression
 
 def Asmindump(*args):
+  """Asmindump(HWND hparent, wchar_t * title, t_dump pd, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Asmindump(*args)
-Asmindump = _ollyapi2.Asmindump
 
 def Getasmsearchmodel(*args):
+  """
+    Getasmsearchmodel(HWND hparent, wchar_t * title, t_asmmod model, int nmodel, int x, int y, int fi, 
+        int mode) -> int
+    """
   return _ollyapi2.Getasmsearchmodel(*args)
-Getasmsearchmodel = _ollyapi2.Getasmsearchmodel
 
 def Getseqsearchmodel(*args):
+  """
+    Getseqsearchmodel(HWND hparent, wchar_t * title, t_asmmod model, int nmodel, int x, int y, int fi, 
+        int mode) -> int
+    """
   return _ollyapi2.Getseqsearchmodel(*args)
-Getseqsearchmodel = _ollyapi2.Getseqsearchmodel
 
 def Binaryedit(*args):
+  """Binaryedit(HWND hparent, wchar_t * title, t_hexstr hstr, int letter, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Binaryedit(*args)
-Binaryedit = _ollyapi2.Binaryedit
 
 def Getpredefinedtypebyindex(*args):
+  """Getpredefinedtypebyindex(int fnindex, wchar_t * type) -> int"""
   return _ollyapi2.Getpredefinedtypebyindex(*args)
-Getpredefinedtypebyindex = _ollyapi2.Getpredefinedtypebyindex
 
 def Getindexbypredefinedtype(*args):
+  """Getindexbypredefinedtype(wchar_t * type) -> int"""
   return _ollyapi2.Getindexbypredefinedtype(*args)
-Getindexbypredefinedtype = _ollyapi2.Getindexbypredefinedtype
 
 def Condbreakpoint(*args):
+  """Condbreakpoint(HWND hparent, ulong * addr, int naddr, wchar_t * title, int x, int y, int fi) -> int"""
   return _ollyapi2.Condbreakpoint(*args)
-Condbreakpoint = _ollyapi2.Condbreakpoint
 
 def Condlogbreakpoint(*args):
+  """
+    Condlogbreakpoint(HWND hparent, ulong * addr, int naddr, int fnindex, wchar_t * title, int x, int y, 
+        int fi) -> int
+    """
   return _ollyapi2.Condlogbreakpoint(*args)
-Condlogbreakpoint = _ollyapi2.Condlogbreakpoint
 
 def Membreakpoint(*args):
+  """Membreakpoint(HWND hparent, ulong addr, ulong size, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Membreakpoint(*args)
-Membreakpoint = _ollyapi2.Membreakpoint
 
 def Memlogbreakpoint(*args):
+  """Memlogbreakpoint(HWND hparent, ulong addr, ulong size, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Memlogbreakpoint(*args)
-Memlogbreakpoint = _ollyapi2.Memlogbreakpoint
 
 def Hardbreakpoint(*args):
+  """Hardbreakpoint(HWND hparent, ulong addr, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Hardbreakpoint(*args)
-Hardbreakpoint = _ollyapi2.Hardbreakpoint
 
 def Hardlogbreakpoint(*args):
+  """Hardlogbreakpoint(HWND hparent, ulong addr, int fnindex, int x, int y, int fi, int mode) -> int"""
   return _ollyapi2.Hardlogbreakpoint(*args)
-Hardlogbreakpoint = _ollyapi2.Hardlogbreakpoint
 
 def Setrtcond(*args):
+  """Setrtcond(HWND hparent, int x, int y, int fi)"""
   return _ollyapi2.Setrtcond(*args)
-Setrtcond = _ollyapi2.Setrtcond
 
 def Setrtprot(*args):
+  """Setrtprot(HWND hparent, int x, int y, int fi)"""
   return _ollyapi2.Setrtprot(*args)
-Setrtprot = _ollyapi2.Setrtprot
 
 def Browsecodelocations(*args):
+  """Browsecodelocations(HWND hparent, wchar_t * title, BROWSECODEFUNC * bccallback, void * data) -> ulong"""
   return _ollyapi2.Browsecodelocations(*args)
-Browsecodelocations = _ollyapi2.Browsecodelocations
 OPT_TITLE = _ollyapi2.OPT_TITLE
 OPT_1 = _ollyapi2.OPT_1
 OPT_2 = _ollyapi2.OPT_2
@@ -4579,60 +4779,60 @@ COMM_PROC = _ollyapi2.COMM_PROC
 COMM_ALL = _ollyapi2.COMM_ALL
 
 def Stringtotext(*args):
+  """Stringtotext(wchar_t * data, int ndata, wchar_t * text, int ntext, int stopatzero) -> int"""
   return _ollyapi2.Stringtotext(*args)
-Stringtotext = _ollyapi2.Stringtotext
 
 def Isstring(*args):
+  """Isstring(ulong addr, int isstatic, wchar_t * symb, int nsymb) -> int"""
   return _ollyapi2.Isstring(*args)
-Isstring = _ollyapi2.Isstring
 
 def Squeezename(*args):
+  """Squeezename(wchar_t * dest, int ndest, wchar_t * src, int nsrc) -> int"""
   return _ollyapi2.Squeezename(*args)
-Squeezename = _ollyapi2.Squeezename
 
 def Uncapitalize(*args):
+  """Uncapitalize(wchar_t * s)"""
   return _ollyapi2.Uncapitalize(*args)
-Uncapitalize = _ollyapi2.Uncapitalize
 
 def Decoderelativeoffset(*args):
+  """Decoderelativeoffset(ulong addr, int addrmode, wchar_t * symb, int nsymb) -> int"""
   return _ollyapi2.Decoderelativeoffset(*args)
-Decoderelativeoffset = _ollyapi2.Decoderelativeoffset
 
 def Decodeaddress(*args):
+  """Decodeaddress(ulong addr, ulong amod, int mode, wchar_t * symb, int nsymb, wchar_t * comment) -> int"""
   return _ollyapi2.Decodeaddress(*args)
-Decodeaddress = _ollyapi2.Decodeaddress
 
 def Decodearglocal(*args):
+  """Decodearglocal(ulong ip, ulong offs, ulong datasize, wchar_t * name, int len) -> int"""
   return _ollyapi2.Decodearglocal(*args)
-Decodearglocal = _ollyapi2.Decodearglocal
 
 def Getanalysercomment(*args):
+  """Getanalysercomment(t_module pmod, ulong addr, wchar_t * comment, int len) -> int"""
   return _ollyapi2.Getanalysercomment(*args)
-Getanalysercomment = _ollyapi2.Getanalysercomment
 
 def Getswitchcomment(*args):
+  """Getswitchcomment(ulong addr, wchar_t * comment, int len) -> int"""
   return _ollyapi2.Getswitchcomment(*args)
-Getswitchcomment = _ollyapi2.Getswitchcomment
 
 def Getloopcomment(*args):
+  """Getloopcomment(t_module pmod, ulong addr, int level, wchar_t * comment, int len) -> int"""
   return _ollyapi2.Getloopcomment(*args)
-Getloopcomment = _ollyapi2.Getloopcomment
 
 def Getproccomment(*args):
+  """Getproccomment(ulong addr, ulong acall, wchar_t * comment, int len, int argonly) -> int"""
   return _ollyapi2.Getproccomment(*args)
-Getproccomment = _ollyapi2.Getproccomment
 
 def Commentaddress(*args):
+  """Commentaddress(ulong addr, int typelist, wchar_t * comment, int len) -> int"""
   return _ollyapi2.Commentaddress(*args)
-Commentaddress = _ollyapi2.Commentaddress
 
 def Redrawlist():
+  """Redrawlist()"""
   return _ollyapi2.Redrawlist()
-Redrawlist = _ollyapi2.Redrawlist
 
 def Addtolist(*args):
+  """Addtolist(ulong addr, int color, wchar_t * format)"""
   return _ollyapi2.Addtolist(*args)
-Addtolist = _ollyapi2.Addtolist
 DU_STACK = _ollyapi2.DU_STACK
 DU_NOSMALL = _ollyapi2.DU_NOSMALL
 DU_MODEMASK = _ollyapi2.DU_MODEMASK
@@ -4706,6 +4906,7 @@ SCH_SEL1 = _ollyapi2.SCH_SEL1
 CDS_TITLES = _ollyapi2.CDS_TITLES
 CDS_NOGRAPH = _ollyapi2.CDS_NOGRAPH
 class t_dump(object):
+    """Proxy of C t_dump struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_dump_base_get, _ollyapi2.t_dump_base_set)
@@ -4733,6 +4934,7 @@ class t_dump(object):
     graylimit = _swig_property(_ollyapi2.t_dump_graylimit_get, _ollyapi2.t_dump_graylimit_set)
     dumpselfunc = _swig_property(_ollyapi2.t_dump_dumpselfunc_get, _ollyapi2.t_dump_dumpselfunc_set)
     def __init__(self): 
+        """__init__(t_dump self) -> t_dump"""
         this = _ollyapi2.new_t_dump()
         try: self.this.append(this)
         except: self.this = this
@@ -4743,60 +4945,63 @@ t_dump_swigregister(t_dump)
 
 
 def Setdumptype(*args):
+  """Setdumptype(t_dump pd, ulong dumptype)"""
   return _ollyapi2.Setdumptype(*args)
-Setdumptype = _ollyapi2.Setdumptype
 
 def Ensurememorybackup(*args):
+  """Ensurememorybackup(t_memory pmem, int makebackup) -> int"""
   return _ollyapi2.Ensurememorybackup(*args)
-Ensurememorybackup = _ollyapi2.Ensurememorybackup
 
 def Backupusercode(*args):
+  """Backupusercode(t_module pm, int force)"""
   return _ollyapi2.Backupusercode(*args)
-Backupusercode = _ollyapi2.Backupusercode
 
 def Copydumpselection(*args):
+  """Copydumpselection(t_dump pd, int mode) -> HGLOBAL"""
   return _ollyapi2.Copydumpselection(*args)
-Copydumpselection = _ollyapi2.Copydumpselection
 
 def Dumpback(*args):
+  """Dumpback(t_dump pd, ulong addr, int n) -> ulong"""
   return _ollyapi2.Dumpback(*args)
-Dumpback = _ollyapi2.Dumpback
 
 def Dumpforward(*args):
+  """Dumpforward(t_dump pd, ulong addr, int n) -> ulong"""
   return _ollyapi2.Dumpforward(*args)
-Dumpforward = _ollyapi2.Dumpforward
 
 def Scrolldumpwindow(*args):
+  """Scrolldumpwindow(t_dump pd, ulong addr, int mode) -> ulong"""
   return _ollyapi2.Scrolldumpwindow(*args)
-Scrolldumpwindow = _ollyapi2.Scrolldumpwindow
 
 def Alignselection(*args):
+  """Alignselection(t_dump pd, ulong * sel0, ulong * sel1) -> int"""
   return _ollyapi2.Alignselection(*args)
-Alignselection = _ollyapi2.Alignselection
 
 def Getproclimits(*args):
+  """Getproclimits(ulong addr, ulong * amin, ulong * amax) -> int"""
   return _ollyapi2.Getproclimits(*args)
-Getproclimits = _ollyapi2.Getproclimits
 
 def Getextproclimits(*args):
+  """Getextproclimits(ulong addr, ulong * amin, ulong * amax) -> int"""
   return _ollyapi2.Getextproclimits(*args)
-Getextproclimits = _ollyapi2.Getextproclimits
 
 def Newdumpselection(*args):
+  """Newdumpselection(t_dump pd, ulong addr, ulong size) -> int"""
   return _ollyapi2.Newdumpselection(*args)
-Newdumpselection = _ollyapi2.Newdumpselection
 
 def Findfiledump(*args):
+  """Findfiledump(wchar_t * path) -> t_dump"""
   return _ollyapi2.Findfiledump(*args)
-Findfiledump = _ollyapi2.Findfiledump
 
 def Createdumpwindow(*args):
+  """
+    Createdumpwindow(wchar_t * title, ulong base, ulong size, wchar_t * path, ulong dumptype, ulong sel0, 
+        ulong sel1, wchar_t * strname) -> HWND
+    """
   return _ollyapi2.Createdumpwindow(*args)
-Createdumpwindow = _ollyapi2.Createdumpwindow
 
 def Embeddumpwindow(*args):
+  """Embeddumpwindow(HWND hw, t_dump pd, ulong dumptype) -> HWND"""
   return _ollyapi2.Embeddumpwindow(*args)
-Embeddumpwindow = _ollyapi2.Embeddumpwindow
 SL_UNDEF = _ollyapi2.SL_UNDEF
 SL_DISASM = _ollyapi2.SL_DISASM
 SL_SEQASM = _ollyapi2.SL_SEQASM
@@ -4824,11 +5029,13 @@ SRCH_MEM = _ollyapi2.SRCH_MEM
 CSEQ_IGNORECMD = _ollyapi2.CSEQ_IGNORECMD
 CSEQ_ALLOWJMP = _ollyapi2.CSEQ_ALLOWJMP
 class t_found(object):
+    """Proxy of C t_found struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_found_addr_get, _ollyapi2.t_found_addr_set)
     size = _swig_property(_ollyapi2.t_found_size_get, _ollyapi2.t_found_size_set)
     def __init__(self): 
+        """__init__(t_found self) -> t_found"""
         this = _ollyapi2.new_t_found()
         try: self.this.append(this)
         except: self.this = this
@@ -4838,6 +5045,7 @@ t_found_swigregister = _ollyapi2.t_found_swigregister
 t_found_swigregister(t_found)
 
 class t_search(object):
+    """Proxy of C t_search struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_search_addr_get, _ollyapi2.t_search_addr_set)
@@ -4846,6 +5054,7 @@ class t_search(object):
     data = _swig_property(_ollyapi2.t_search_data_get, _ollyapi2.t_search_data_set)
     seqlen = _swig_property(_ollyapi2.t_search_seqlen_get, _ollyapi2.t_search_seqlen_set)
     def __init__(self): 
+        """__init__(t_search self) -> t_search"""
         this = _ollyapi2.new_t_search()
         try: self.this.append(this)
         except: self.this = this
@@ -4856,14 +5065,21 @@ t_search_swigregister(t_search)
 
 
 def Comparecommand(*args):
+  """
+    Comparecommand(uchar * cmd, ulong cmdsize, ulong cmdip, t_asmmod model, int nmodel, int * INPUT, 
+        int * INPUT, t_disasm da) -> ulong
+    """
   return _ollyapi2.Comparecommand(*args)
-Comparecommand = _ollyapi2.Comparecommand
 
 def Comparesequence(*args):
+  """
+    Comparesequence(uchar * cmd, ulong cmdsize, ulong cmdip, uchar * decode, t_asmmod model, int nmodel, 
+        int mode, int * pa, int * pb, t_disasm da, ulong * amatch, int namatch) -> ulong
+    """
   return _ollyapi2.Comparesequence(*args)
-Comparesequence = _ollyapi2.Comparesequence
 PATCHSIZE = _ollyapi2.PATCHSIZE
 class t_patch(object):
+    """Proxy of C t_patch struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_patch_addr_get, _ollyapi2.t_patch_addr_set)
@@ -4872,6 +5088,7 @@ class t_patch(object):
     orig = _swig_property(_ollyapi2.t_patch_orig_get, _ollyapi2.t_patch_orig_set)
     mod = _swig_property(_ollyapi2.t_patch_mod_get, _ollyapi2.t_patch_mod_set)
     def __init__(self): 
+        """__init__(t_patch self) -> t_patch"""
         this = _ollyapi2.new_t_patch()
         try: self.this.append(this)
         except: self.this = this
@@ -4883,6 +5100,7 @@ t_patch_swigregister(t_patch)
 BA_PERMANENT = _ollyapi2.BA_PERMANENT
 BA_PLUGIN = _ollyapi2.BA_PLUGIN
 class t_bpoint(object):
+    """Proxy of C t_bpoint struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_bpoint_addr_get, _ollyapi2.t_bpoint_addr_set)
@@ -4895,6 +5113,7 @@ class t_bpoint(object):
     count = _swig_property(_ollyapi2.t_bpoint_count_get, _ollyapi2.t_bpoint_count_set)
     actions = _swig_property(_ollyapi2.t_bpoint_actions_get, _ollyapi2.t_bpoint_actions_set)
     def __init__(self): 
+        """__init__(t_bpoint self) -> t_bpoint"""
         this = _ollyapi2.new_t_bpoint()
         try: self.this.append(this)
         except: self.this = this
@@ -4904,6 +5123,7 @@ t_bpoint_swigregister = _ollyapi2.t_bpoint_swigregister
 t_bpoint_swigregister(t_bpoint)
 
 class t_bpmem(object):
+    """Proxy of C t_bpmem struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_bpmem_addr_get, _ollyapi2.t_bpmem_addr_set)
@@ -4912,6 +5132,7 @@ class t_bpmem(object):
     limit = _swig_property(_ollyapi2.t_bpmem_limit_get, _ollyapi2.t_bpmem_limit_set)
     count = _swig_property(_ollyapi2.t_bpmem_count_get, _ollyapi2.t_bpmem_count_set)
     def __init__(self): 
+        """__init__(t_bpmem self) -> t_bpmem"""
         this = _ollyapi2.new_t_bpmem()
         try: self.this.append(this)
         except: self.this = this
@@ -4921,6 +5142,7 @@ t_bpmem_swigregister = _ollyapi2.t_bpmem_swigregister
 t_bpmem_swigregister(t_bpmem)
 
 class t_bppage(object):
+    """Proxy of C t_bppage struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_bppage_base_get, _ollyapi2.t_bppage_base_set)
@@ -4929,6 +5151,7 @@ class t_bppage(object):
     oldaccess = _swig_property(_ollyapi2.t_bppage_oldaccess_get, _ollyapi2.t_bppage_oldaccess_set)
     newaccess = _swig_property(_ollyapi2.t_bppage_newaccess_get, _ollyapi2.t_bppage_newaccess_set)
     def __init__(self): 
+        """__init__(t_bppage self) -> t_bppage"""
         this = _ollyapi2.new_t_bppage()
         try: self.this.append(this)
         except: self.this = this
@@ -4938,6 +5161,7 @@ t_bppage_swigregister = _ollyapi2.t_bppage_swigregister
 t_bppage_swigregister(t_bppage)
 
 class t_bphard(object):
+    """Proxy of C t_bphard struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     index = _swig_property(_ollyapi2.t_bphard_index_get, _ollyapi2.t_bphard_index_set)
@@ -4952,6 +5176,7 @@ class t_bphard(object):
     modbase = _swig_property(_ollyapi2.t_bphard_modbase_get, _ollyapi2.t_bphard_modbase_set)
     path = _swig_property(_ollyapi2.t_bphard_path_get, _ollyapi2.t_bphard_path_set)
     def __init__(self): 
+        """__init__(t_bphard self) -> t_bphard"""
         this = _ollyapi2.new_t_bphard()
         try: self.this.append(this)
         except: self.this = this
@@ -4962,60 +5187,69 @@ t_bphard_swigregister(t_bphard)
 
 
 def Removeint3breakpoint(*args):
+  """Removeint3breakpoint(ulong addr, ulong type) -> int"""
   return _ollyapi2.Removeint3breakpoint(*args)
-Removeint3breakpoint = _ollyapi2.Removeint3breakpoint
 
 def Setint3breakpoint(*args):
+  """
+    Setint3breakpoint(ulong addr, ulong type, int fnindex, int limit, int count, ulong actions, wchar_t * condition, 
+        wchar_t * expression, wchar_t * exprtype) -> int
+    """
   return _ollyapi2.Setint3breakpoint(*args)
-Setint3breakpoint = _ollyapi2.Setint3breakpoint
 
 def Enableint3breakpoint(*args):
+  """Enableint3breakpoint(ulong addr, int enable) -> int"""
   return _ollyapi2.Enableint3breakpoint(*args)
-Enableint3breakpoint = _ollyapi2.Enableint3breakpoint
 
 def Confirmint3breakpoint(*args):
+  """Confirmint3breakpoint(ulong addr) -> int"""
   return _ollyapi2.Confirmint3breakpoint(*args)
-Confirmint3breakpoint = _ollyapi2.Confirmint3breakpoint
 
 def Confirmhardwarebreakpoint(*args):
+  """Confirmhardwarebreakpoint(ulong addr) -> int"""
   return _ollyapi2.Confirmhardwarebreakpoint(*args)
-Confirmhardwarebreakpoint = _ollyapi2.Confirmhardwarebreakpoint
 
 def Confirmint3breakpointlist(*args):
+  """Confirmint3breakpointlist(ulong * addr, int naddr) -> int"""
   return _ollyapi2.Confirmint3breakpointlist(*args)
-Confirmint3breakpointlist = _ollyapi2.Confirmint3breakpointlist
 
 def Wipebreakpointrange(*args):
+  """Wipebreakpointrange(ulong addr0, ulong addr1)"""
   return _ollyapi2.Wipebreakpointrange(*args)
-Wipebreakpointrange = _ollyapi2.Wipebreakpointrange
 
 def Removemembreakpoint(*args):
+  """Removemembreakpoint(ulong addr) -> int"""
   return _ollyapi2.Removemembreakpoint(*args)
-Removemembreakpoint = _ollyapi2.Removemembreakpoint
 
 def Setmembreakpoint(*args):
+  """
+    Setmembreakpoint(ulong addr, ulong size, ulong type, int limit, int count, wchar_t * condition, wchar_t * expression, 
+        wchar_t * exprtype) -> int
+    """
   return _ollyapi2.Setmembreakpoint(*args)
-Setmembreakpoint = _ollyapi2.Setmembreakpoint
 
 def Enablemembreakpoint(*args):
+  """Enablemembreakpoint(ulong addr, int enable) -> int"""
   return _ollyapi2.Enablemembreakpoint(*args)
-Enablemembreakpoint = _ollyapi2.Enablemembreakpoint
 
 def Removehardbreakpoint(*args):
+  """Removehardbreakpoint(int index) -> int"""
   return _ollyapi2.Removehardbreakpoint(*args)
-Removehardbreakpoint = _ollyapi2.Removehardbreakpoint
 
 def Sethardbreakpoint(*args):
+  """
+    Sethardbreakpoint(int index, ulong size, ulong type, int fnindex, ulong addr, int limit, int count, 
+        ulong actions, wchar_t * condition, wchar_t * expression, wchar_t * exprtype) -> int
+    """
   return _ollyapi2.Sethardbreakpoint(*args)
-Sethardbreakpoint = _ollyapi2.Sethardbreakpoint
 
 def Enablehardbreakpoint(*args):
+  """Enablehardbreakpoint(int index, int enable) -> int"""
   return _ollyapi2.Enablehardbreakpoint(*args)
-Enablehardbreakpoint = _ollyapi2.Enablehardbreakpoint
 
 def Findfreehardbreakslot(*args):
+  """Findfreehardbreakslot(ulong type) -> int"""
   return _ollyapi2.Findfreehardbreakslot(*args)
-Findfreehardbreakslot = _ollyapi2.Findfreehardbreakslot
 CPU_ASMHIST = _ollyapi2.CPU_ASMHIST
 CPU_ASMCENTER = _ollyapi2.CPU_ASMCENTER
 CPU_ASMFOCUS = _ollyapi2.CPU_ASMFOCUS
@@ -5035,6 +5269,7 @@ ASR_EVENT = _ollyapi2.ASR_EVENT
 ASR_ALWAYS = _ollyapi2.ASR_ALWAYS
 NHISTORY = _ollyapi2.NHISTORY
 class t_histrec(object):
+    """Proxy of C t_histrec struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     threadid = _swig_property(_ollyapi2.t_histrec_threadid_get, _ollyapi2.t_histrec_threadid_set)
@@ -5043,6 +5278,7 @@ class t_histrec(object):
     sel0 = _swig_property(_ollyapi2.t_histrec_sel0_get, _ollyapi2.t_histrec_sel0_set)
     sel1 = _swig_property(_ollyapi2.t_histrec_sel1_get, _ollyapi2.t_histrec_sel1_set)
     def __init__(self): 
+        """__init__(t_histrec self) -> t_histrec"""
         this = _ollyapi2.new_t_histrec()
         try: self.this.append(this)
         except: self.this = this
@@ -5052,6 +5288,7 @@ t_histrec_swigregister = _ollyapi2.t_histrec_swigregister
 t_histrec_swigregister(t_histrec)
 
 class t_history(object):
+    """Proxy of C t_history struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     h = _swig_property(_ollyapi2.t_history_h_get, _ollyapi2.t_history_h_set)
@@ -5059,6 +5296,7 @@ class t_history(object):
     hnext = _swig_property(_ollyapi2.t_history_hnext_get, _ollyapi2.t_history_hnext_set)
     hcurr = _swig_property(_ollyapi2.t_history_hcurr_get, _ollyapi2.t_history_hcurr_set)
     def __init__(self): 
+        """__init__(t_history self) -> t_history"""
         this = _ollyapi2.new_t_history()
         try: self.this.append(this)
         except: self.this = this
@@ -5069,48 +5307,51 @@ t_history_swigregister(t_history)
 
 
 def Redrawcpudisasm():
+  """Redrawcpudisasm()"""
   return _ollyapi2.Redrawcpudisasm()
-Redrawcpudisasm = _ollyapi2.Redrawcpudisasm
 
 def Redrawcpureg():
+  """Redrawcpureg()"""
   return _ollyapi2.Redrawcpureg()
-Redrawcpureg = _ollyapi2.Redrawcpureg
 
 def Getcputhreadid():
+  """Getcputhreadid() -> ulong"""
   return _ollyapi2.Getcputhreadid()
-Getcputhreadid = _ollyapi2.Getcputhreadid
 
 def Getcpuruntracebackstep():
+  """Getcpuruntracebackstep() -> int"""
   return _ollyapi2.Getcpuruntracebackstep()
-Getcpuruntracebackstep = _ollyapi2.Getcpuruntracebackstep
 
 def Getcpudisasmdump():
+  """Getcpudisasmdump() -> t_dump"""
   return _ollyapi2.Getcpudisasmdump()
-Getcpudisasmdump = _ollyapi2.Getcpudisasmdump
 
 def Getcpudisasmselection():
+  """Getcpudisasmselection() -> ulong"""
   return _ollyapi2.Getcpudisasmselection()
-Getcpudisasmselection = _ollyapi2.Getcpudisasmselection
 
 def Getcpudisasmtable():
+  """Getcpudisasmtable() -> t_table"""
   return _ollyapi2.Getcpudisasmtable()
-Getcpudisasmtable = _ollyapi2.Getcpudisasmtable
 
 def Addtohistory(*args):
+  """Addtohistory(t_history ph, ulong threadid, ulong dumptype, ulong addr, ulong sel0, ulong sel1)"""
   return _ollyapi2.Addtohistory(*args)
-Addtohistory = _ollyapi2.Addtohistory
 
 def Walkhistory(*args):
+  """
+    Walkhistory(t_history ph, int dir, ulong * threadid, ulong * dumptype, ulong * addr, ulong * sel0, 
+        ulong * sel1) -> int
+    """
   return _ollyapi2.Walkhistory(*args)
-Walkhistory = _ollyapi2.Walkhistory
 
 def Checkhistory(*args):
+  """Checkhistory(t_history ph, int dir, int * isnewest) -> int"""
   return _ollyapi2.Checkhistory(*args)
-Checkhistory = _ollyapi2.Checkhistory
 
 def Setcpu(*args):
+  """Setcpu(ulong threadid, ulong asmaddr, ulong dumpaddr, ulong selsize, ulong stackaddr, int mode)"""
   return _ollyapi2.Setcpu(*args)
-Setcpu = _ollyapi2.Setcpu
 NIGNORE = _ollyapi2.NIGNORE
 NRTPROT = _ollyapi2.NRTPROT
 FP_SYSBP = _ollyapi2.FP_SYSBP
@@ -5171,6 +5412,7 @@ HTNC_TRACE = _ollyapi2.HTNC_TRACE
 SFM_RUNTRACE = _ollyapi2.SFM_RUNTRACE
 SFM_HITTRACE = _ollyapi2.SFM_HITTRACE
 class t_rtcond(object):
+    """Proxy of C t_rtcond struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     options = _swig_property(_ollyapi2.t_rtcond_options_get, _ollyapi2.t_rtcond_options_set)
@@ -5190,6 +5432,7 @@ class t_rtcond(object):
     model = _swig_property(_ollyapi2.t_rtcond_model_get, _ollyapi2.t_rtcond_model_set)
     nmodel = _swig_property(_ollyapi2.t_rtcond_nmodel_get, _ollyapi2.t_rtcond_nmodel_set)
     def __init__(self): 
+        """__init__(t_rtcond self) -> t_rtcond"""
         this = _ollyapi2.new_t_rtcond()
         try: self.this.append(this)
         except: self.this = this
@@ -5199,6 +5442,7 @@ t_rtcond_swigregister = _ollyapi2.t_rtcond_swigregister
 t_rtcond_swigregister(t_rtcond)
 
 class t_rtprot(object):
+    """Proxy of C t_rtprot struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     tracelogtype = _swig_property(_ollyapi2.t_rtprot_tracelogtype_get, _ollyapi2.t_rtprot_tracelogtype_set)
@@ -5209,6 +5453,7 @@ class t_rtprot(object):
     rangeactive = _swig_property(_ollyapi2.t_rtprot_rangeactive_get, _ollyapi2.t_rtprot_rangeactive_set)
     range = _swig_property(_ollyapi2.t_rtprot_range_get, _ollyapi2.t_rtprot_range_set)
     def __init__(self): 
+        """__init__(t_rtprot self) -> t_rtprot"""
         this = _ollyapi2.new_t_rtprot()
         try: self.this.append(this)
         except: self.this = this
@@ -5219,68 +5464,70 @@ t_rtprot_swigregister(t_rtprot)
 
 
 def Suspendallthreads():
+  """Suspendallthreads()"""
   return _ollyapi2.Suspendallthreads()
-Suspendallthreads = _ollyapi2.Suspendallthreads
 
 def Resumeallthreads():
+  """Resumeallthreads()"""
   return _ollyapi2.Resumeallthreads()
-Resumeallthreads = _ollyapi2.Resumeallthreads
 
 def Pauseprocess():
+  """Pauseprocess() -> int"""
   return _ollyapi2.Pauseprocess()
-Pauseprocess = _ollyapi2.Pauseprocess
 
 def Closeprocess(*args):
+  """Closeprocess(int confirm) -> int"""
   return _ollyapi2.Closeprocess(*args)
-Closeprocess = _ollyapi2.Closeprocess
 
 def Detachprocess():
+  """Detachprocess() -> int"""
   return _ollyapi2.Detachprocess()
-Detachprocess = _ollyapi2.Detachprocess
 
 def Getlasterror(*args):
+  """Getlasterror(t_thread pthr, ulong * error, wchar_t * s) -> int"""
   return _ollyapi2.Getlasterror(*args)
-Getlasterror = _ollyapi2.Getlasterror
 
 def Followcall(*args):
+  """Followcall(ulong addr) -> ulong"""
   return _ollyapi2.Followcall(*args)
-Followcall = _ollyapi2.Followcall
 
 def Run(*args):
+  """Run(t_status status, int _pass) -> int"""
   return _ollyapi2.Run(*args)
-Run = _ollyapi2.Run
 
 def Checkfordebugevent():
+  """Checkfordebugevent() -> int"""
   return _ollyapi2.Checkfordebugevent()
-Checkfordebugevent = _ollyapi2.Checkfordebugevent
 
 def Addprotocolrange(*args):
+  """Addprotocolrange(ulong addr0, ulong addr1) -> int"""
   return _ollyapi2.Addprotocolrange(*args)
-Addprotocolrange = _ollyapi2.Addprotocolrange
 
 def Getruntrace(*args):
+  """Getruntrace(int nback, t_reg preg, uchar * cmd) -> int"""
   return _ollyapi2.Getruntrace(*args)
-Getruntrace = _ollyapi2.Getruntrace
 
 def Findruntracerecord(*args):
+  """Findruntracerecord(ulong addr0, ulong addr1) -> int"""
   return _ollyapi2.Findruntracerecord(*args)
-Findruntracerecord = _ollyapi2.Findruntracerecord
 GUIDSIZE = _ollyapi2.GUIDSIZE
 
 def Getguidname(*args):
+  """Getguidname(uchar * data, ulong ndata, wchar_t * name) -> int"""
   return _ollyapi2.Getguidname(*args)
-Getguidname = _ollyapi2.Getguidname
 
 def Isguid(*args):
+  """Isguid(ulong addr, wchar_t * name, int nname) -> int"""
   return _ollyapi2.Isguid(*args)
-Isguid = _ollyapi2.Isguid
 class t_srcline(object):
+    """Proxy of C t_srcline struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     offset = _swig_property(_ollyapi2.t_srcline_offset_get, _ollyapi2.t_srcline_offset_set)
     nextent = _swig_property(_ollyapi2.t_srcline_nextent_get, _ollyapi2.t_srcline_nextent_set)
     extent = _swig_property(_ollyapi2.t_srcline_extent_get, _ollyapi2.t_srcline_extent_set)
     def __init__(self): 
+        """__init__(t_srcline self) -> t_srcline"""
         this = _ollyapi2.new_t_srcline()
         try: self.this.append(this)
         except: self.this = this
@@ -5290,11 +5537,13 @@ t_srcline_swigregister = _ollyapi2.t_srcline_swigregister
 t_srcline_swigregister(t_srcline)
 
 class t_srcext(object):
+    """Proxy of C t_srcext struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     amin = _swig_property(_ollyapi2.t_srcext_amin_get, _ollyapi2.t_srcext_amin_set)
     amax = _swig_property(_ollyapi2.t_srcext_amax_get, _ollyapi2.t_srcext_amax_set)
     def __init__(self): 
+        """__init__(t_srcext self) -> t_srcext"""
         this = _ollyapi2.new_t_srcext()
         try: self.this.append(this)
         except: self.this = this
@@ -5304,6 +5553,7 @@ t_srcext_swigregister = _ollyapi2.t_srcext_swigregister
 t_srcext_swigregister(t_srcext)
 
 class t_source(object):
+    """Proxy of C t_source struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_source_addr_get, _ollyapi2.t_source_addr_set)
@@ -5320,6 +5570,7 @@ class t_source(object):
     lastline = _swig_property(_ollyapi2.t_source_lastline_get, _ollyapi2.t_source_lastline_set)
     lastoffset = _swig_property(_ollyapi2.t_source_lastoffset_get, _ollyapi2.t_source_lastoffset_set)
     def __init__(self): 
+        """__init__(t_source self) -> t_source"""
         this = _ollyapi2.new_t_source()
         try: self.this.append(this)
         except: self.this = this
@@ -5330,20 +5581,24 @@ t_source_swigregister(t_source)
 
 
 def Findsource(*args):
+  """Findsource(ulong base, wchar_t * path) -> t_source"""
   return _ollyapi2.Findsource(*args)
-Findsource = _ollyapi2.Findsource
 
 def Getsourceline(*args):
+  """
+    Getsourceline(ulong base, wchar_t * path, int line, int skipspaces, wchar_t * text, wchar_t * fname, 
+        t_srcext ** extent, int * nextent) -> int
+    """
   return _ollyapi2.Getsourceline(*args)
-Getsourceline = _ollyapi2.Getsourceline
 
 def Showsourcecode(*args):
+  """Showsourcecode(ulong base, wchar_t * path, int line) -> int"""
   return _ollyapi2.Showsourcecode(*args)
-Showsourcecode = _ollyapi2.Showsourcecode
 AE_NONE = _ollyapi2.AE_NONE
 AE_APP = _ollyapi2.AE_APP
 AE_SYS = _ollyapi2.AE_SYS
 class t_run(object):
+    """Proxy of C t_run struct"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     status = _swig_property(_ollyapi2.t_run_status_get, _ollyapi2.t_run_status_set)
@@ -5365,6 +5620,7 @@ class t_run(object):
     updatedebugreg = _swig_property(_ollyapi2.t_run_updatedebugreg_get, _ollyapi2.t_run_updatedebugreg_set)
     dregmodified = _swig_property(_ollyapi2.t_run_dregmodified_get, _ollyapi2.t_run_dregmodified_set)
     def __init__(self): 
+        """__init__(t_run self) -> t_run"""
         this = _ollyapi2.new_t_run()
         try: self.this.append(this)
         except: self.this = this
@@ -5373,6 +5629,46 @@ class t_run(object):
 t_run_swigregister = _ollyapi2.t_run_swigregister
 t_run_swigregister(t_run)
 
+
+def pluginvalue_to_t_table(*args):
+  """pluginvalue_to_t_table(int x) -> t_table"""
+  return _ollyapi2.pluginvalue_to_t_table(*args)
+
+def pluginvalue_to_t_dump(*args):
+  """pluginvalue_to_t_dump(int x) -> t_dump"""
+  return _ollyapi2.pluginvalue_to_t_dump(*args)
+
+def pluginvalue_to_t_sorted(*args):
+  """pluginvalue_to_t_sorted(int x) -> t_sorted"""
+  return _ollyapi2.pluginvalue_to_t_sorted(*args)
+
+def void_to_t_memory(*args):
+  """void_to_t_memory(void * x) -> t_memory"""
+  return _ollyapi2.void_to_t_memory(*args)
+
+def void_to_t_module(*args):
+  """void_to_t_module(void * x) -> t_module"""
+  return _ollyapi2.void_to_t_module(*args)
+
+def void_to_t_thread(*args):
+  """void_to_t_thread(void * x) -> t_thread"""
+  return _ollyapi2.void_to_t_thread(*args)
+
+def void_to_t_bpoint(*args):
+  """void_to_t_bpoint(void * x) -> t_bpoint"""
+  return _ollyapi2.void_to_t_bpoint(*args)
+
+def void_to_t_patch(*args):
+  """void_to_t_patch(void * x) -> t_patch"""
+  return _ollyapi2.void_to_t_patch(*args)
+
+def void_to_t_rtcond(*args):
+  """void_to_t_rtcond(void * x) -> t_rtcond"""
+  return _ollyapi2.void_to_t_rtcond(*args)
+
+def void_to_t_rtprot(*args):
+  """void_to_t_rtprot(void * x) -> t_rtprot"""
+  return _ollyapi2.void_to_t_rtprot(*args)
 
 cvar = _ollyapi2.cvar
 
