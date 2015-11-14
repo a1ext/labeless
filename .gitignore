@@ -23,3 +23,7 @@
 /test/UDD
 /labeless_ida/sdk_67
 /3rdparty/thrift-0.9.2
+/labeless_olly2/*.aps
+/test2/errorlog.txt
+/test2/OLLYDBG.plt
+/test2/labeless_ollyapi/.idea
