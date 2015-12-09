@@ -505,7 +505,6 @@ std::atomic_bool Labeless::m_ServerEnabled;
 Labeless::Labeless()
 	: m_hInst(nullptr)
 	, m_Port(defaultPort())
-	//, m_HelperWnd(nullptr)
 	, m_LogList(nullptr)
 {
 	__asm __volatile finit; // Stupid Olly's bug fix
@@ -1143,7 +1142,7 @@ bool Labeless::onClientSockBufferReceived(ClientData& cd, const std::string& raw
 			break;
 		if (!req.script.empty())
 		{
-			errorStr = "RPC request can't have 'script' value";
+			errorStr = "RPC request shouldn't have 'script' value";
 			break;
 		}
 

@@ -42,7 +42,8 @@ Settings::Settings(const std::string host_,
 	bool analysePEHeader_,
 	bool postProcessFixCallJumps_,
 	uint32_t defaultExternSegSize_,
-	OverwriteWarning overwriteWarning_)
+	OverwriteWarning overwriteWarning_,
+	CommentsSync commentsSync_)
 	: host(host_)
 	, port(port_)
 	, enabled(enabled_)
@@ -53,5 +54,6 @@ Settings::Settings(const std::string host_,
 	, postProcessFixCallJumps(postProcessFixCallJumps_)
 	, defaultExternSegSize(defaultExternSegSize_)
 	, overwriteWarning(overwriteWarning_)
+	, commentsSync(commentsSync_)
 {
 }
