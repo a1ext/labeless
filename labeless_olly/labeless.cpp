@@ -477,6 +477,35 @@ bool sendAll(SOCKET s, const std::string& buff, std::string& error)
 	return rv;
 }
 
+void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename, int line, const std::string& message)
+{
+	static const std::string kPrefix = "protobuf: ";
+	if (level < ::google::protobuf::LOGLEVEL_WARNING)
+		return;
+
+	std::string levelStr;
+	switch (level)
+	{
+	case google::protobuf::LOGLEVEL_INFO:
+		levelStr = "[INFO] ";
+		break;
+	case google::protobuf::LOGLEVEL_WARNING:
+		levelStr = "[WARN] ";
+		break;
+	case google::protobuf::LOGLEVEL_ERROR:
+		levelStr = "[ERRO] ";
+		break;
+	case google::protobuf::LOGLEVEL_FATAL:
+		levelStr = "[FATA] ";
+		break;
+	default:
+		break;
+	}
+	const auto msg = util::sformat("%s %s:%u %s", levelStr.c_str(), filename, line, message.c_str());
+	server_log(msg.c_str());
+}
+
+
 } // anonymous
 
 Request* ClientData::find(uint64_t jobId)
@@ -500,7 +529,7 @@ bool ClientData::remove(uint64_t jobId)
 	return false;
 }
 
-std::atomic_bool Labeless::m_ServerEnabled;
+std::atomic_bool Labeless::m_ServerEnabled{ false };
 
 Labeless::Labeless()
 	: m_hInst(nullptr)
@@ -508,6 +537,7 @@ Labeless::Labeless()
 	, m_LogList(nullptr)
 {
 	__asm __volatile finit; // Stupid Olly's bug fix
+	::google::protobuf::SetLogHandler(protobufLogHandler);
 }
 
 Labeless& Labeless::instance()
