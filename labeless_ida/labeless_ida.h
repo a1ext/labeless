@@ -138,6 +138,7 @@ private:
 	void storeSettings();
 
 	bool isUtf8StringValid(const char* const s, size_t len) const;
+	char* getName(ea_t ea, char* buf, size_t buffsize) const;
 
 	QMainWindow* findIDAMainWindow() const;
 private:

@@ -197,3 +197,4 @@ typedef std::unordered_map<uval_t, std::string> ExternRefDataMap;
 	} while (0)
 
 #define OLLY_TEXTLEN 256
+#define IDA_66_SDK_VERSION 660

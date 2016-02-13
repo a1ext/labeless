@@ -274,6 +274,28 @@ bool Labeless::isUtf8StringValid(const char* const s, size_t len) const
 	return state.invalidChars == 0;
 }
 
+char* Labeless::getName(ea_t ea, char* buf, size_t buffsize) const
+{
+#if (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
+	if (m_Settings.demangle)
+		return get_short_name(BADADDR, ea, buf, buffsize);
+	return get_true_name(BADADDR, ea, buf, buffsize);
+#else // (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
+	qstring name;
+	int flags = 0;
+	if (m_Settings.localLabels)
+		flags |= GN_LOCAL;
+	if (m_Settings.demangle)
+		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;
+	if (get_true_name(&name, ea, flags) > 0)
+	{
+		::qstrncpy(buf, name.c_str(), buffsize);
+		return buf;
+	}
+#endif // (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
+	return nullptr;
+}
+
 void Labeless::setTargetHostAddr(const std::string& ip, WORD port)
 {
 	QMutexLocker lock(&m_ConfigLock);
@@ -295,20 +317,8 @@ void Labeless::onSyncronizeAllRequested()
 	LabelsSync::DataList labelPoints;
 	CommentsSync::DataList commentPoints;
 
-	//qstring name;
 	char nameBuff[MAXSTR] = {};
-	/*int flags = 0;
-	if (m_Settings.localLabels)
-		flags |= GN_LOCAL;
-	if (m_Settings.demangle)
-		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;*/
-
-	auto get_name = [this](ea_t ea, char* buf, size_t buffsize) -> char* {
-		if (m_Settings.demangle)
-			return get_short_name(BADADDR, ea, buf, buffsize);
-		return get_true_name(BADADDR, ea, buf, buffsize);
-	};
-	char segBuff[MAXSTR];
+	char segBuff[MAXSTR] = {};
 
 	segment_t* s = static_cast<segment_t*>(segs.first_area_ptr());
 	for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
@@ -322,7 +332,7 @@ void Labeless::onSyncronizeAllRequested()
 
 		while (true)
 		{
-			if (!has_dummy_name(getFlags(ea)) && get_name(ea, nameBuff, _countof(nameBuff)) > 0 && is_uname(nameBuff))
+			if (!has_dummy_name(getFlags(ea)) && getName(ea, nameBuff, _countof(nameBuff)) > 0 && is_uname(nameBuff))
 			{
 				std::string s = nameBuff;
 				if (s.length() >= OLLY_TEXTLEN)
@@ -1427,11 +1437,15 @@ void Labeless::onAnalyzeExternalRefsFinished()
 		}
 
 		qstring qnamee;
+#if (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
 		do {
 			char nameeBuff[MAXSTR] = {};
 			get_true_name(BADADDR, pd.ea, nameeBuff, _countof(nameeBuff));
 			qnamee = nameeBuff;
 		} while (0);
+#else // (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
+		get_ea_name(&qnamee, pd.ea);
+#endif // (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
 
 		qstring addrStr;
 		addrStr.sprnt("dword ptr [0%08Xh]", addr);
@@ -1850,9 +1864,17 @@ void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 		return;
 	}
 	const std::string& procName = it->second.substr(p + 1);
+
+#if (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
 	char name[MAXSTR] = {};
 	if (get_true_name(BADADDR, ea, name, _countof(name)) && ::qstrncmp(name, procName.c_str(), _countof(name) == 0))
 		return;
+#else // (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
+	qstring name;
+	if (get_ea_name(&name, ea) && name == procName.c_str())
+		return;
+#endif // (IDA_SDK_VERSION == IDA_66_SDK_VERSION)
+
 	if (ASKBTN_YES != askyn_c(ASKBTN_NO, "Seems like address to API: \"%s\"\nMake it external now?", it->second.c_str()))
 		return;
 
@@ -1914,7 +1936,8 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 		}
 		return 0;
 	}
-	/*if (notification_code == ui_plugin_loaded)
+#if (IDA_SDK_VERSION > IDA_66_SDK_VERSION)
+	if (notification_code == ui_plugin_loaded)
 	{
 		static const std::string kIDAPython = "IDAPython";
 		::plugin_info_t* info = va_arg(va, ::plugin_info_t *);
@@ -1923,7 +1946,9 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 			Labeless::instance().initIDAPython();
 		
 		return 0;
-	}*/
+	}
+#endif // (IDA_SDK_VERSION > IDA_66_SDK_VERSION)
+
 	if (notification_code == ui_tform_invisible)
 	{
 		TForm *form = va_arg(va, TForm *);
