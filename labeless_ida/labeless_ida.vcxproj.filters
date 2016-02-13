@@ -59,9 +59,6 @@
     <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_settingsdialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="globalsettingsmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="res\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -169,6 +166,9 @@
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_choosememorydialog.cpp">
       <Filter>Generated Files\Release_DeFixed</Filter>
     </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_globalsettingsmanager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="labeless_ida.h">
@@ -209,6 +209,9 @@
     </CustomBuild>
     <CustomBuild Include="ui\choosememorydialog.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="globalsettingsmanager.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

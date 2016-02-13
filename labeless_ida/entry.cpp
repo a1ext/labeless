@@ -46,6 +46,7 @@ void idaapi term()
 {
 	unhook_from_notification_point(HT_IDP, Labeless::idp_callback);
 	unhook_from_notification_point(HT_UI, Labeless::ui_callback);
+	Labeless::instance().shutdown();
 }
 
 plugin_t PLUGIN =

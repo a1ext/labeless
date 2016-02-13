@@ -8,8 +8,14 @@
 
 #pragma once
 
+#include <QtGlobal>
 #include <QMap>
-#include <QWidget>
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#   include <QtWidgets/QWidget>
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#   include <QWidget>
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 
 QT_FORWARD_DECLARE_CLASS(QCloseEvent)
 

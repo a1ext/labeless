@@ -136,6 +136,8 @@ private:
 	Settings loadSettings();
 	void storeSettings();
 
+	bool isUtf8StringValid(const char* const s, size_t len) const;
+
 	QMainWindow* findIDAMainWindow() const;
 private:
 	bool addAPIEnumValue(const std::string& name, uval_t value);

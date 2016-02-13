@@ -54,6 +54,7 @@
 #include <QProcess>
 #include <QRegExp>
 #include <QSettings>
+#include <QTextCodec>
 #include <QVariant>
 
 #include <google/protobuf/stubs/common.h>
@@ -190,9 +191,6 @@ Labeless::Labeless()
 
 Labeless::~Labeless()
 {
-	msg("%s\n", __FUNCTION__);
-
-	shutdown();
 }
 
 
@@ -263,6 +261,19 @@ void Labeless::storeSettings()
 	PythonPaletteManager::instance().storeSettings();
 }
 
+bool Labeless::isUtf8StringValid(const char* const s, size_t len) const
+{
+	static const std::string kUTF8 = "UTF-8";
+	QTextCodec* codec = QTextCodec::codecForName(kUTF8.c_str()); // TODO: may be cached?
+	if (!codec)
+		return false;
+
+	QTextCodec::ConverterState state;
+	codec->toUnicode(s, static_cast<int>(len), &state);
+
+	return state.invalidChars == 0;
+}
+
 void Labeless::setTargetHostAddr(const std::string& ip, WORD port)
 {
 	QMutexLocker lock(&m_ConfigLock);
@@ -310,7 +321,8 @@ void Labeless::onSyncronizeAllRequested()
 				std::string s = name.c_str();
 				if (s.length() >= OLLY_TEXTLEN)
 					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
-				labelPoints.push_back(LabelsSync::Data(ea, s));
+				if (isUtf8StringValid(s.c_str(), s.length()))
+					labelPoints.push_back(LabelsSync::Data(ea, s));
 				//msg("%08X: %s\n", ea, name.c_str());
 			}
 			
@@ -339,12 +351,16 @@ void Labeless::onSyncronizeAllRequested()
 				if (!has_cmt(getFlags(ea)))
 					continue;
 
-				if (nonRptCmt && (len = get_cmt(ea, false, buff, OLLY_TEXTLEN)) > 0 && ::qstrlen(buff))
+				if (nonRptCmt &&
+					(len = get_cmt(ea, false, buff, OLLY_TEXTLEN)) > 0 &&
+					isUtf8StringValid(buff, len))
 				{
 					commentPoints.append(CommentsSync::Data(ea, std::string(buff, static_cast<size_t>(len))));
 					continue;
 				}
-				if (rptCmt && (len = get_cmt(ea, true, buff, OLLY_TEXTLEN)) > 0 && ::qstrlen(buff))
+				if (rptCmt &&
+					(len = get_cmt(ea, true, buff, OLLY_TEXTLEN)) > 0 &&
+					isUtf8StringValid(buff, len))
 					commentPoints.append(CommentsSync::Data(ea, std::string(buff, static_cast<size_t>(len))));
 			}
 		}
@@ -445,7 +461,7 @@ void Labeless::onAutoanalysisFinished()
 			{
 				continue;
 			}
-			const QString sDisasm = QString::fromAscii(disasm);
+			const QString sDisasm = QString::fromLatin1(disasm);
 			if (reOpnd.exactMatch(sDisasm))
 			{
 				const QString name = reOpnd.cap(2);
@@ -541,6 +557,10 @@ void Labeless::terminate()
 
 void Labeless::shutdown()
 {
+	static bool shutdownCalled = false;
+	if (shutdownCalled)
+		return;
+	shutdownCalled = true;
 	terminate();
 	WSACleanup();
 	GlobalSettingsManger::instance().detach();
@@ -1432,6 +1452,7 @@ void Labeless::onAnalyzeExternalRefsFinished()
 
 					do {
 						ScopedEnabler enabler(m_SuppressMessageBoxesFromIDA);
+						Q_UNUSED(enabler);
 						size = ph.notify(ph.assemble, drefEA, ::cmd.cs, drefEA, true, disasmClean, ass);
 					} while (0);
 
@@ -1787,6 +1808,8 @@ bool Labeless::addAPIEnumValue(const std::string& name, uval_t value)
 
 void Labeless::onMakeCode(ea_t ea, ::asize_t size)
 {
+	Q_UNUSED(ea);
+	Q_UNUSED(size);
 	if (m_IgnoreMakeCode)
 		return;
 	/*char disasm[MAXSTR] = {};
@@ -1901,9 +1924,10 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 	}
 	if (notification_code == ui_mbox)
 	{
-		::mbox_kind_t kind = va_arg(va, ::mbox_kind_t);
+		//::mbox_kind_t kind = va_arg(va, ::mbox_kind_t);
 		if (instance().m_SuppressMessageBoxesFromIDA)
 			return -1;
+		return 0;
 	}
 	return 0;
 }
@@ -2066,7 +2090,7 @@ bool Labeless::runIDAPythonScript(const std::string& script, std::string& extern
 		externObj = rv.c_str();
 		VarFree(&rv);
 	}
-	else if (::qstrlen(errbuff) && !QString::fromAscii(errbuff).contains("NameError"))
+	else if (::qstrlen(errbuff) && !QString::fromLatin1(errbuff).contains("NameError"))
 	{
 		error = errbuff;
 		return false;

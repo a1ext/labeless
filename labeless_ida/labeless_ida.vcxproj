@@ -114,6 +114,7 @@
     <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_choosememorydialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_globalsettingsmanager.cpp" />
     <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_highlighter.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -191,7 +192,16 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
-    <ClInclude Include="globalsettingsmanager.h" />
+    <CustomBuild Include="globalsettingsmanager.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+    </CustomBuild>
     <ClInclude Include="hlp.h" />
     <CustomBuild Include="labeless_ida.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing labeless_ida.h...</Message>

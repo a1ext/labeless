@@ -12,6 +12,8 @@
 #include <QSharedMemory>
 #include <QMutex>
 
+#include "labeless_ida.h"
+
 namespace {
 
 static const QString kGlobalSettingsLockName = "labeless-settings-lock";
@@ -21,7 +23,8 @@ static const QString kSettingsAppName = "Labeless";
 } // anonymous
 
 GlobalSettingsManger::GlobalSettingsManger()
-	: m_Memory(std::make_shared<QSharedMemory>(kGlobalSettingsLockName))
+	: QObject(&Labeless::instance())
+	, m_Memory(std::make_shared<QSharedMemory>(kGlobalSettingsLockName))
 	, m_Settings(std::make_shared<QSettings>(kSettingsOrg, kSettingsAppName))
 {
 	if (!m_Memory->attach() && !m_Memory->create(10))
@@ -42,6 +45,9 @@ QVariant GlobalSettingsManger::value(GlobalSettingsKey key, const QVariant& defa
 		return defaultValue;
 
 	auto ss = get();
+	if (!ss)
+		return defaultValue;
+
 	if (!group.isEmpty())
 		ss->settings->beginGroup(group);
 
@@ -58,6 +64,9 @@ bool GlobalSettingsManger::setValue(GlobalSettingsKey key, const QVariant& value
 	if (name.isEmpty())
 		return false;
 	auto ss = get();
+	if (!ss)
+		return false;
+
 	if (!group.isEmpty())
 		ss->settings->beginGroup(group);
 
@@ -70,24 +79,27 @@ bool GlobalSettingsManger::setValue(GlobalSettingsKey key, const QVariant& value
 
 GlobalSettingsManger& GlobalSettingsManger::instance()
 {
-	static GlobalSettingsManger self;
-	return self;
+	static QPointer<GlobalSettingsManger> self = new GlobalSettingsManger;
+	return *self;
 }
 
 void GlobalSettingsManger::lock()
 {
-	m_Memory->lock();
+	if (m_Memory)
+		m_Memory->lock();
 }
 
 void GlobalSettingsManger::unlock()
 {
-	if (m_Memory->isAttached())
+	if (m_Memory && m_Memory->isAttached())
 		m_Memory->unlock();
 }
 
 std::shared_ptr<ScopedSettings> GlobalSettingsManger::get()
 {
-	return std::make_shared<ScopedSettings>(this, m_Settings);
+	if (m_Settings)
+		return std::make_shared<ScopedSettings>(this, m_Settings);
+	return std::shared_ptr<ScopedSettings>();
 }
 
 QString GlobalSettingsManger::keyToString(GlobalSettingsKey key)
@@ -121,9 +133,11 @@ QString GlobalSettingsManger::keyToString(GlobalSettingsKey key)
 void GlobalSettingsManger::detach()
 {
 	static bool detached = false;
-	if (!detached && m_Memory->isAttached())
+	if (!detached && m_Memory && m_Memory->isAttached())
 		m_Memory->detach();
 	detached = true;
+	m_Memory.reset();
+	m_Settings.reset();
 }
 
 ScopedSettings::ScopedSettings(GlobalSettingsManger* manager, QSettingsPtr pSettings)
