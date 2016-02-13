@@ -18,7 +18,6 @@ namespace {
 
 std::string trimToOllyLimitsString(const std::string& s)
 {
-#define OLLY_TEXTLEN 256
 	std::string rv(s);
 	if (rv.length() >= OLLY_TEXTLEN)
 		rv.erase(rv.begin() + (OLLY_TEXTLEN - 1), rv.end());
@@ -105,7 +104,7 @@ bool ExecPyScript::parseResponse(QPointer<RpcData> rd)
 	return ICommand::parseResponse(rd);
 }
 
-bool FuncNameSync::serialize(QPointer<RpcData> rd) const
+bool LabelsSync::serialize(QPointer<RpcData> rd) const
 {
 	try
 	{
@@ -134,12 +133,12 @@ bool FuncNameSync::serialize(QPointer<RpcData> rd) const
 	return false;
 }
 
-bool FuncNameSync::parseResponse(QPointer<RpcData> rd)
+bool LabelsSync::parseResponse(QPointer<RpcData> rd)
 {
 	return ICommand::parseResponse(rd);
 }
 
-bool LocalLabelsSync::serialize(QPointer<RpcData> rd) const
+bool CommentsSync::serialize(QPointer<RpcData> rd) const
 {
 	try
 	{
@@ -155,7 +154,7 @@ bool LocalLabelsSync::serialize(QPointer<RpcData> rd) const
 			const Data& sd = *it;
 			auto v = request->add_names();
 			v->set_ea(sd.ea);
-			v->set_name(trimToOllyLimitsString(sd.label));
+			v->set_name(trimToOllyLimitsString(sd.comment));
 		}
 		rd->script.clear();
 		rd->params = rpcRequest.SerializeAsString();
@@ -168,7 +167,7 @@ bool LocalLabelsSync::serialize(QPointer<RpcData> rd) const
 	return false;
 }
 
-bool LocalLabelsSync::parseResponse(QPointer<RpcData> rd)
+bool CommentsSync::parseResponse(QPointer<RpcData> rd)
 {
 	return ICommand::parseResponse(rd);
 }

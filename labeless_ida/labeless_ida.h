@@ -69,8 +69,8 @@ public:
 	void onAddDref(ea_t from, ea_t to, dref_t type);
 	/**< hook processor_t::idp_notify - end */
 
-	void addFuncNameSyncData(const FuncNameSync::DataList& sds);
-	void addLocLabelSyncData(const LocalLabelsSync::DataList& dl);
+	void addLabelsSyncData(const LabelsSync::DataList& sds);
+	void addCommentsSyncData(const CommentsSync::DataList& dl);
 	RpcDataPtr addRpcData(ICommandPtr cmd,
 		RpcReadyToSendHandler ready = [](RpcDataPtr){ return true; },
 		const QObject* receiver = nullptr, const char* member = nullptr,
@@ -136,6 +136,8 @@ private:
 
 	Settings loadSettings();
 	void storeSettings();
+
+	bool isUtf8StringValid(const char* const s, size_t len) const;
 
 	QMainWindow* findIDAMainWindow() const;
 private:

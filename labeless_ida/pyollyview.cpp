@@ -13,10 +13,17 @@
 
 #include <QEvent>
 #include <QFontMetrics>
-#include <QInputDialog>
-#include <QMenu>
 #include <QMouseEvent>
 #include <QSettings>
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#   include <QtWidgets/QInputDialog>
+#   include <QtWidgets/QMenu>
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#   include <QInputDialog>
+#   include <QMenu>
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+
 #include "globalsettingsmanager.h"
 
 namespace {
@@ -136,10 +143,8 @@ void PyOllyView::setUpGUI()
 		const int num = pb->property(kPropNumber.c_str()).toInt();
 
 		QVariantMap vm;
-		do {
-			auto ss = GlobalSettingsManger::instance().get();
+		if (auto ss = GlobalSettingsManger::instance().get())
 			vm = ss->settings->value(kFastActionN.arg(num)).toMap();
-		} while (0);
 
 		if (vm.contains(kFastActionIDAScript) && vm.contains(kFastActionOllyScript))
 		{
@@ -379,11 +384,8 @@ void PyOllyView::onFastActionRequested()
 	const int number = btn->property(kPropNumber.c_str()).toInt();
 
 	QVariantMap vm;
-	do {
-		auto ss = GlobalSettingsManger::instance().get();
-		vm =ss->settings->value(kFastActionN.arg(number)).toMap();
-	} while (0);
-
+	if (auto ss = GlobalSettingsManger::instance().get())
+		vm = ss->settings->value(kFastActionN.arg(number)).toMap();
 
 	if (!vm.contains(kFastActionIDAScript) || !vm.contains(kFastActionOllyScript))
 	{
@@ -425,10 +427,8 @@ void PyOllyView::onBindScriptsToFastActionRequested()
 	vm[kFastActionIDAScript] = idaScript;
 	vm[kFastActionOllyScript] = ollyScript;
 
-	do {
-		auto ss = GlobalSettingsManger::instance().get();
+	if (auto ss = GlobalSettingsManger::instance().get())
 		ss->settings->setValue(kFastActionN.arg(num), vm);
-	} while (0);
 
 	if (QPushButton* pb = findChild<QPushButton*>(QString("bFastAction%1").arg(num + 1)))
 	{
@@ -447,10 +447,8 @@ void PyOllyView::onClearBindingScriptsOfFastAction()
 		return;
 	const int num = action->property(kPropNumber.c_str()).toInt();
 
-	do {
-		auto ss = GlobalSettingsManger::instance().get();
+	if (auto ss = GlobalSettingsManger::instance().get())
 		ss->settings->remove(kFastActionN.arg(num));
-	} while (0);
 
 	if (QPushButton* pb = findChild<QPushButton*>(QString("bFastAction%1").arg(num + 1)))
 	{

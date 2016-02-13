@@ -9,7 +9,11 @@
 #include "choosememorydialog.h"
 #include "ui_choosememorydialog.h"
 
-#include <QMessageBox>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#   include <QtWidgets/QMessageBox>
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#   include <QMessageBox>
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 
 #include "hlp.h"
 

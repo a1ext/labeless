@@ -8,11 +8,13 @@
 
 #pragma once
 
+#include <memory>
+
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QMap>
 
-QT_FORWARD_DECLARE_CLASS(QTextDocument);
+QT_FORWARD_DECLARE_CLASS(QTextDocument)
 
 struct HighlightingRule;
 struct PythonPalette;

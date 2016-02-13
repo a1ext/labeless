@@ -131,6 +131,14 @@ struct Settings
 		OW_WarnAndCancel
 	};
 
+	enum CommentsSync
+	{
+		CS_Disabled = 0,
+		CS_NonRepeatable,
+		CS_Repeatable,
+		CS_All
+	};
+
 	std::string host;
 	uint16_t port;
 	uint32_t remoteModBase;
@@ -142,6 +150,7 @@ struct Settings
 	bool postProcessFixCallJumps;
 	uint32_t defaultExternSegSize;
 	OverwriteWarning overwriteWarning;
+	CommentsSync commentsSync;
 
 	Settings(const std::string host_ = std::string(),
 		uint16_t port = 0,
@@ -153,7 +162,8 @@ struct Settings
 		bool analysePEHeader = false,
 		bool postProcessFixCallJumps = false,
 		uint32_t defaultExternSegSize = 0,
-		OverwriteWarning ow = OW_AlwaysAsk);
+		OverwriteWarning overwriteWarning_ = OW_AlwaysAsk,
+		CommentsSync commentsSync_ = CS_Disabled);
 };
 
 struct LogItem
@@ -185,3 +195,5 @@ typedef std::unordered_map<uval_t, std::string> ExternRefDataMap;
 	if (!(X)) do {													\
 		msg(__FUNCTION__ ": connect() failed: " #X "\n");			\
 	} while (0)
+
+#define OLLY_TEXTLEN 256

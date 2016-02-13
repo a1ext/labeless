@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <memory>
 #include <QSettings>
 
 QT_FORWARD_DECLARE_CLASS(QSharedMemory)
@@ -33,7 +34,7 @@ class GlobalSettingsManger;
 
 class ScopedSettings
 {
-	Q_DISABLE_COPY(ScopedSettings);
+	Q_DISABLE_COPY(ScopedSettings)
 public:
 	QSettingsPtr settings;
 
@@ -44,9 +45,10 @@ private:
 	GlobalSettingsManger* const pManager;
 };
 
-class GlobalSettingsManger
+class GlobalSettingsManger : public QObject
 {
-	Q_DISABLE_COPY(GlobalSettingsManger);
+	Q_OBJECT
+
 	GlobalSettingsManger();
 public:
 	~GlobalSettingsManger();

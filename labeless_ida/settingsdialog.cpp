@@ -66,6 +66,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, quint32 currModBase, QW
 	m_UI->leExternSegDefSize->setText("0x" + QString("%1").arg(settings.defaultExternSegSize, 8, 16, QChar('0')).toUpper());
 	m_UI->chNonCodeNames->setChecked(settings.nonCodeNames);
 	m_UI->cbOverwriteWarning->setCurrentIndex(settings.overwriteWarning);
+	m_UI->cbCommentsSync->setCurrentIndex(settings.commentsSync);
 
 	QLabel* const lVer = new QLabel(m_UI->tabWidget);
 	lVer->setText(QString("v %1").arg(LABELESS_VER_STR));
@@ -160,6 +161,7 @@ void SettingsDialog::getSettings(Settings& result)
 	result.defaultExternSegSize = m_UI->leExternSegDefSize->text().toUInt(nullptr, 16);
 	result.postProcessFixCallJumps = m_UI->chPostProcessFixCallJumps->isChecked();
 	result.overwriteWarning = static_cast<Settings::OverwriteWarning>(m_UI->cbOverwriteWarning->currentIndex());
+	result.commentsSync = static_cast<Settings::CommentsSync>(m_UI->cbCommentsSync->currentIndex());
 }
 
 void SettingsDialog::changeEvent(QEvent *e)

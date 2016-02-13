@@ -59,7 +59,7 @@ struct ExecPyScript : public ICommand
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
 
-struct FuncNameSync : public ICommand
+struct LabelsSync : public ICommand
 {
 	struct Data
 	{
@@ -78,15 +78,15 @@ struct FuncNameSync : public ICommand
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
 
-struct LocalLabelsSync : public ICommand
+struct CommentsSync : public ICommand
 {
 	struct Data
 	{
 		uint32_t	ea;
-		std::string label;
-		Data(uint32_t ea_, const std::string& label_)
+		std::string comment;
+		Data(uint32_t ea_, const std::string& comment_)
 			: ea(ea_)
-			, label(label_)
+			, comment(comment_)
 		{}
 	};
 	typedef QList<Data> DataList;
