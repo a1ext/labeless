@@ -316,7 +316,7 @@ void Labeless::onSyncronizeAllRequested()
 
 		while (true)
 		{
-			if (get_true_name(&name, ea, flags) > 0 && is_uname(name.c_str()))
+			if (!has_dummy_name(getFlags(ea)) && get_true_name(&name, ea, flags) > 0 && is_uname(name.c_str()))
 			{
 				std::string s = name.c_str();
 				if (s.length() >= OLLY_TEXTLEN)
