@@ -62,7 +62,7 @@ struct ImportEntry
 {
 	std::string module;
 	std::string proc;
-	uint32_t ordinal;
+	uint64_t ordinal;
 	//intptr_t val;
 	uint32_t index;
 
@@ -73,8 +73,8 @@ struct ExternSegData
 {
 	typedef std::unordered_map<std::string, ImportEntry> ImportsMap;
 
-	ea_t		start;
-	uint32_t	len;
+	uint64_t	start;
+	uint64_t	len;
 	ImportsMap	imports;
 
 	ExternSegData();
@@ -83,18 +83,18 @@ struct ExternSegData
 
 struct ExportItem
 {
-	ea_t ea;
-	uint32_t ordinal;
+	uint64_t ea;
+	uint64_t ordinal;
 	std::string name;
 };
 
 struct Section
 {
 	std::string name;
-	ea_t va;
-	uint32_t va_size;
-	ea_t raw;
-	uint32_t raw_size;
+	uint64_t va;
+	uint64_t va_size;
+	uint64_t raw;
+	uint64_t raw_size;
 	uint32_t characteristics;
 };
 
@@ -103,14 +103,14 @@ typedef QList<Section> SectionList;
 
 struct MemoryRegion
 {
-	ea_t base;
-	uint32 size;
+	uint64_t base;
+	uint64_t size;
 	uint32 protect;
 	std::string name;
 
-	MemoryRegion(ea_t base_, uint32 size_, uint32 protect_);
+	MemoryRegion(uint64_t base_, uint64_t size_, uint32 protect_);
 
-	inline ea_t end() const {
+	inline uint64_t end() const {
 		return base + size;
 	}
 	bool isIntersects(const MemoryRegion& r) const;
@@ -141,27 +141,27 @@ struct Settings
 
 	std::string host;
 	uint16_t port;
-	uint32_t remoteModBase;
+	uint64_t remoteModBase;
 	bool enabled;
 	bool demangle;
 	bool localLabels;
 	bool nonCodeNames;
 	bool analysePEHeader;
 	bool postProcessFixCallJumps;
-	uint32_t defaultExternSegSize;
+	uint64_t defaultExternSegSize;
 	OverwriteWarning overwriteWarning;
 	CommentsSync commentsSync;
 
 	Settings(const std::string host_ = std::string(),
 		uint16_t port = 0,
-		uint32_t remoteModBase = 0,
+		uint64_t remoteModBase = 0,
 		bool enabled = false,
 		bool demangle = false,
 		bool localLabels = false,
 		bool nonCodeNames = false,
 		bool analysePEHeader = false,
 		bool postProcessFixCallJumps = false,
-		uint32_t defaultExternSegSize = 0,
+		uint64_t defaultExternSegSize = 0,
 		OverwriteWarning overwriteWarning_ = OW_AlwaysAsk,
 		CommentsSync commentsSync_ = CS_Disabled);
 };

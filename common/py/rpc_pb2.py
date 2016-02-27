@@ -18,7 +18,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='rpc.proto',
   package='rpc',
-  serialized_pb=_b('\n\trpc.proto\x12\x03rpc\"\xa2\x04\n\nRpcRequest\x12\x31\n\x0crequest_type\x18\x01 \x02(\x0e\x32\x1b.rpc.RpcRequest.RequestType\x12-\n\x0emake_names_req\x18\x02 \x01(\x0b\x32\x15.rpc.MakeNamesRequest\x12\x33\n\x11make_comments_req\x18\x03 \x01(\x0b\x32\x18.rpc.MakeCommentsRequest\x12>\n\x17read_memory_regions_req\x18\x04 \x01(\x0b\x32\x1d.rpc.ReadMemoryRegionsRequest\x12\x42\n\x19\x61nalyze_external_refs_req\x18\x05 \x01(\x0b\x32\x1f.rpc.AnalyzeExternalRefsRequest\x12\x38\n\x14\x63heck_pe_headers_req\x18\x06 \x01(\x0b\x32\x1a.rpc.CheckPEHeadersRequest\"\xbe\x01\n\x0bRequestType\x12\x10\n\x0cRPCT_UNKNOWN\x10\x00\x12\x13\n\x0fRPCT_MAKE_NAMES\x10\x01\x12\x16\n\x12RPCT_MAKE_COMMENTS\x10\x02\x12\x17\n\x13RPCT_GET_MEMORY_MAP\x10\x03\x12\x1c\n\x18RPCT_READ_MEMORY_REGIONS\x10\x04\x12\x1e\n\x1aRPCT_ANALYZE_EXTERNAL_REFS\x10\x05\x12\x19\n\x15RPCT_CHECK_PE_HEADERS\x10\x06\"t\n\x07\x45xecute\x12\x0e\n\x06script\x18\x01 \x01(\t\x12\x19\n\x11script_extern_obj\x18\x02 \x01(\t\x12\x13\n\x0brpc_request\x18\x03 \x01(\x0c\x12\x19\n\nbackground\x18\x04 \x01(\x08:\x05\x66\x61lse\x12\x0e\n\x06job_id\x18\x05 \x01(\x04\"\xba\x01\n\x08Response\x12\x0e\n\x06job_id\x18\x01 \x02(\x04\x12\x0f\n\x07std_out\x18\x02 \x01(\t\x12\x0f\n\x07std_err\x18\x03 \x01(\t\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12\x12\n\nrpc_result\x18\x05 \x01(\x0c\x12+\n\njob_status\x18\x06 \x01(\x0e\x32\x17.rpc.Response.JobStatus\",\n\tJobStatus\x12\x0f\n\x0bJS_FINISHED\x10\x01\x12\x0e\n\nJS_PENDING\x10\x02\"\x82\x01\n\x10MakeNamesRequest\x12)\n\x05names\x18\x01 \x03(\x0b\x32\x1a.rpc.MakeNamesRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\r\x12\x13\n\x0bremote_base\x18\x03 \x02(\r\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\r\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x88\x01\n\x13MakeCommentsRequest\x12,\n\x05names\x18\x01 \x03(\x0b\x32\x1d.rpc.MakeCommentsRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\r\x12\x13\n\x0bremote_base\x18\x03 \x02(\r\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\r\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x8a\x01\n\x12GetMemoryMapResult\x12\x30\n\x08memories\x18\x01 \x03(\x0b\x32\x1e.rpc.GetMemoryMapResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\r\x12\x0c\n\x04size\x18\x02 \x02(\r\x12\x0e\n\x06\x61\x63\x63\x65ss\x18\x03 \x02(\r\x12\x0c\n\x04name\x18\x04 \x02(\t\"w\n\x18ReadMemoryRegionsRequest\x12\x35\n\x07regions\x18\x01 \x03(\x0b\x32$.rpc.ReadMemoryRegionsRequest.Region\x1a$\n\x06Region\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\r\x12\x0c\n\x04size\x18\x02 \x02(\r\"\x94\x01\n\x17ReadMemoryRegionsResult\x12\x35\n\x08memories\x18\x01 \x03(\x0b\x32#.rpc.ReadMemoryRegionsResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\r\x12\x0c\n\x04size\x18\x02 \x02(\r\x12\x0b\n\x03mem\x18\x03 \x02(\x0c\x12\x0f\n\x07protect\x18\x04 \x02(\r\"\x7f\n\x1a\x41nalyzeExternalRefsRequest\x12\x0f\n\x07\x65\x61_from\x18\x01 \x02(\r\x12\r\n\x05\x65\x61_to\x18\x02 \x02(\r\x12\x11\n\tincrement\x18\x03 \x02(\r\x12\x16\n\x0e\x61nalysing_base\x18\x04 \x02(\r\x12\x16\n\x0e\x61nalysing_size\x18\x05 \x02(\r\"\xac\x05\n\x19\x41nalyzeExternalRefsResult\x12\x41\n\rapi_constants\x18\x01 \x03(\x0b\x32*.rpc.AnalyzeExternalRefsResult.PointerData\x12\x34\n\x04refs\x18\x02 \x03(\x0b\x32&.rpc.AnalyzeExternalRefsResult.RefData\x12\x35\n\x07\x63ontext\x18\x03 \x02(\x0b\x32$.rpc.AnalyzeExternalRefsResult.reg_t\x1a[\n\x0bPointerData\x12\n\n\x02\x65\x61\x18\x01 \x02(\r\x12\x0e\n\x06module\x18\x02 \x02(\t\x12\x0c\n\x04proc\x18\x03 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x04 \x01(\t\x1a\x83\x02\n\x07RefData\x12\n\n\x02\x65\x61\x18\x01 \x02(\r\x12\x0b\n\x03len\x18\x02 \x02(\r\x12\x0b\n\x03\x64is\x18\x03 \x02(\t\x12\t\n\x01v\x18\x04 \x02(\r\x12@\n\x08ref_type\x18\x05 \x02(\x0e\x32..rpc.AnalyzeExternalRefsResult.RefData.RefType\x12\x0e\n\x06module\x18\x06 \x02(\t\x12\x0c\n\x04proc\x18\x07 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x08 \x01(\t\"C\n\x07RefType\x12\x11\n\rREFT_JMPCONST\x10\x01\x12\x11\n\rREFT_IMMCONST\x10\x02\x12\x12\n\x0eREFT_ADDRCONST\x10\x03\x1a|\n\x05reg_t\x12\x0b\n\x03\x65\x61x\x18\x01 \x02(\r\x12\x0b\n\x03\x65\x63x\x18\x02 \x02(\r\x12\x0b\n\x03\x65\x64x\x18\x03 \x02(\r\x12\x0b\n\x03\x65\x62x\x18\x04 \x02(\r\x12\x0b\n\x03\x65sp\x18\x05 \x02(\r\x12\x0b\n\x03\x65\x62p\x18\x06 \x02(\r\x12\x0b\n\x03\x65si\x18\x07 \x02(\r\x12\x0b\n\x03\x65\x64i\x18\x08 \x02(\r\x12\x0b\n\x03\x65ip\x18\t \x02(\r\"3\n\x15\x43heckPEHeadersRequest\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\r\x12\x0c\n\x04size\x18\x02 \x02(\r\"\xad\x02\n\x14\x43heckPEHeadersResult\x12\x10\n\x08pe_valid\x18\x01 \x02(\x08\x12/\n\x04\x65xps\x18\x02 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Exports\x12\x33\n\x08sections\x18\x03 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Section\x1a\x30\n\x07\x45xports\x12\n\n\x02\x65\x61\x18\x01 \x02(\r\x12\x0b\n\x03ord\x18\x02 \x02(\r\x12\x0c\n\x04name\x18\x03 \x01(\t\x1ak\n\x07Section\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02va\x18\x02 \x01(\r\x12\x0e\n\x06v_size\x18\x03 \x01(\r\x12\x0b\n\x03raw\x18\x04 \x01(\r\x12\x10\n\x08raw_size\x18\x05 \x01(\r\x12\x17\n\x0f\x63haracteristics\x18\x06 \x01(\r')
+  serialized_pb=_b('\n\trpc.proto\x12\x03rpc\"\xa2\x04\n\nRpcRequest\x12\x31\n\x0crequest_type\x18\x01 \x02(\x0e\x32\x1b.rpc.RpcRequest.RequestType\x12-\n\x0emake_names_req\x18\x02 \x01(\x0b\x32\x15.rpc.MakeNamesRequest\x12\x33\n\x11make_comments_req\x18\x03 \x01(\x0b\x32\x18.rpc.MakeCommentsRequest\x12>\n\x17read_memory_regions_req\x18\x04 \x01(\x0b\x32\x1d.rpc.ReadMemoryRegionsRequest\x12\x42\n\x19\x61nalyze_external_refs_req\x18\x05 \x01(\x0b\x32\x1f.rpc.AnalyzeExternalRefsRequest\x12\x38\n\x14\x63heck_pe_headers_req\x18\x06 \x01(\x0b\x32\x1a.rpc.CheckPEHeadersRequest\"\xbe\x01\n\x0bRequestType\x12\x10\n\x0cRPCT_UNKNOWN\x10\x00\x12\x13\n\x0fRPCT_MAKE_NAMES\x10\x01\x12\x16\n\x12RPCT_MAKE_COMMENTS\x10\x02\x12\x17\n\x13RPCT_GET_MEMORY_MAP\x10\x03\x12\x1c\n\x18RPCT_READ_MEMORY_REGIONS\x10\x04\x12\x1e\n\x1aRPCT_ANALYZE_EXTERNAL_REFS\x10\x05\x12\x19\n\x15RPCT_CHECK_PE_HEADERS\x10\x06\"t\n\x07\x45xecute\x12\x0e\n\x06script\x18\x01 \x01(\t\x12\x19\n\x11script_extern_obj\x18\x02 \x01(\t\x12\x13\n\x0brpc_request\x18\x03 \x01(\x0c\x12\x19\n\nbackground\x18\x04 \x01(\x08:\x05\x66\x61lse\x12\x0e\n\x06job_id\x18\x05 \x01(\x04\"\xba\x01\n\x08Response\x12\x0e\n\x06job_id\x18\x01 \x02(\x04\x12\x0f\n\x07std_out\x18\x02 \x01(\t\x12\x0f\n\x07std_err\x18\x03 \x01(\t\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12\x12\n\nrpc_result\x18\x05 \x01(\x0c\x12+\n\njob_status\x18\x06 \x01(\x0e\x32\x17.rpc.Response.JobStatus\",\n\tJobStatus\x12\x0f\n\x0bJS_FINISHED\x10\x01\x12\x0e\n\nJS_PENDING\x10\x02\"\x82\x01\n\x10MakeNamesRequest\x12)\n\x05names\x18\x01 \x03(\x0b\x32\x1a.rpc.MakeNamesRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\x04\x12\x13\n\x0bremote_base\x18\x03 \x02(\x04\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x88\x01\n\x13MakeCommentsRequest\x12,\n\x05names\x18\x01 \x03(\x0b\x32\x1d.rpc.MakeCommentsRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\x04\x12\x13\n\x0bremote_base\x18\x03 \x02(\x04\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x8a\x01\n\x12GetMemoryMapResult\x12\x30\n\x08memories\x18\x01 \x03(\x0b\x32\x1e.rpc.GetMemoryMapResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\x12\x0e\n\x06\x61\x63\x63\x65ss\x18\x03 \x02(\r\x12\x0c\n\x04name\x18\x04 \x02(\t\"w\n\x18ReadMemoryRegionsRequest\x12\x35\n\x07regions\x18\x01 \x03(\x0b\x32$.rpc.ReadMemoryRegionsRequest.Region\x1a$\n\x06Region\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\"\x94\x01\n\x17ReadMemoryRegionsResult\x12\x35\n\x08memories\x18\x01 \x03(\x0b\x32#.rpc.ReadMemoryRegionsResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\x12\x0b\n\x03mem\x18\x03 \x02(\x0c\x12\x0f\n\x07protect\x18\x04 \x02(\r\"\x7f\n\x1a\x41nalyzeExternalRefsRequest\x12\x0f\n\x07\x65\x61_from\x18\x01 \x02(\x04\x12\r\n\x05\x65\x61_to\x18\x02 \x02(\x04\x12\x11\n\tincrement\x18\x03 \x02(\r\x12\x16\n\x0e\x61nalysing_base\x18\x04 \x02(\x04\x12\x16\n\x0e\x61nalysing_size\x18\x05 \x02(\x04\"\x95\x06\n\x19\x41nalyzeExternalRefsResult\x12\x41\n\rapi_constants\x18\x01 \x03(\x0b\x32*.rpc.AnalyzeExternalRefsResult.PointerData\x12\x34\n\x04refs\x18\x02 \x03(\x0b\x32&.rpc.AnalyzeExternalRefsResult.RefData\x12\x35\n\x07\x63ontext\x18\x03 \x02(\x0b\x32$.rpc.AnalyzeExternalRefsResult.reg_t\x1a[\n\x0bPointerData\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0e\n\x06module\x18\x02 \x02(\t\x12\x0c\n\x04proc\x18\x03 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x04 \x01(\t\x1a\x83\x02\n\x07RefData\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0b\n\x03len\x18\x02 \x02(\x04\x12\x0b\n\x03\x64is\x18\x03 \x02(\t\x12\t\n\x01v\x18\x04 \x02(\x04\x12@\n\x08ref_type\x18\x05 \x02(\x0e\x32..rpc.AnalyzeExternalRefsResult.RefData.RefType\x12\x0e\n\x06module\x18\x06 \x02(\t\x12\x0c\n\x04proc\x18\x07 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x08 \x01(\t\"C\n\x07RefType\x12\x11\n\rREFT_JMPCONST\x10\x01\x12\x11\n\rREFT_IMMCONST\x10\x02\x12\x12\n\x0eREFT_ADDRCONST\x10\x03\x1a\xe4\x01\n\x05reg_t\x12\x0b\n\x03\x65\x61x\x18\x01 \x02(\r\x12\x0b\n\x03\x65\x63x\x18\x02 \x02(\r\x12\x0b\n\x03\x65\x64x\x18\x03 \x02(\r\x12\x0b\n\x03\x65\x62x\x18\x04 \x02(\r\x12\x0b\n\x03\x65sp\x18\x05 \x02(\r\x12\x0b\n\x03\x65\x62p\x18\x06 \x02(\r\x12\x0b\n\x03\x65si\x18\x07 \x02(\r\x12\x0b\n\x03\x65\x64i\x18\x08 \x02(\r\x12\x0b\n\x03rip\x18\t \x02(\x04\x12\x0b\n\x03rax\x18\n \x01(\x04\x12\x0b\n\x03rbx\x18\x0b \x01(\x04\x12\x0b\n\x03rcx\x18\x0c \x01(\x04\x12\x0b\n\x03rdx\x18\r \x01(\x04\x12\x0b\n\x03rsi\x18\x0e \x01(\x04\x12\x0b\n\x03rdi\x18\x0f \x01(\x04\x12\x0b\n\x03rbp\x18\x10 \x01(\x04\x12\x0b\n\x03rsp\x18\x11 \x01(\x04\"3\n\x15\x43heckPEHeadersRequest\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\"\xad\x02\n\x14\x43heckPEHeadersResult\x12\x10\n\x08pe_valid\x18\x01 \x02(\x08\x12/\n\x04\x65xps\x18\x02 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Exports\x12\x33\n\x08sections\x18\x03 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Section\x1a\x30\n\x07\x45xports\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0b\n\x03ord\x18\x02 \x02(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x1ak\n\x07Section\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02va\x18\x02 \x01(\x04\x12\x0e\n\x06v_size\x18\x03 \x01(\x04\x12\x0b\n\x03raw\x18\x04 \x01(\x04\x12\x10\n\x08raw_size\x18\x05 \x01(\x04\x12\x17\n\x0f\x63haracteristics\x18\x06 \x01(\r')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -314,7 +314,7 @@ _MAKENAMESREQUEST_NAME = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='ea', full_name='rpc.MakeNamesRequest.Name.ea', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -357,14 +357,14 @@ _MAKENAMESREQUEST = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='base', full_name='rpc.MakeNamesRequest.base', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='remote_base', full_name='rpc.MakeNamesRequest.remote_base', index=2,
-      number=3, type=13, cpp_type=3, label=2,
+      number=3, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -394,7 +394,7 @@ _MAKECOMMENTSREQUEST_NAME = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='ea', full_name='rpc.MakeCommentsRequest.Name.ea', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -437,14 +437,14 @@ _MAKECOMMENTSREQUEST = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='base', full_name='rpc.MakeCommentsRequest.base', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='remote_base', full_name='rpc.MakeCommentsRequest.remote_base', index=2,
-      number=3, type=13, cpp_type=3, label=2,
+      number=3, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -474,14 +474,14 @@ _GETMEMORYMAPRESULT_MEMORY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='base', full_name='rpc.GetMemoryMapResult.Memory.base', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='size', full_name='rpc.GetMemoryMapResult.Memory.size', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -554,14 +554,14 @@ _READMEMORYREGIONSREQUEST_REGION = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='addr', full_name='rpc.ReadMemoryRegionsRequest.Region.addr', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='size', full_name='rpc.ReadMemoryRegionsRequest.Region.size', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -620,14 +620,14 @@ _READMEMORYREGIONSRESULT_MEMORY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='addr', full_name='rpc.ReadMemoryRegionsResult.Memory.addr', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='size', full_name='rpc.ReadMemoryRegionsResult.Memory.size', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -700,14 +700,14 @@ _ANALYZEEXTERNALREFSREQUEST = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='ea_from', full_name='rpc.AnalyzeExternalRefsRequest.ea_from', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='ea_to', full_name='rpc.AnalyzeExternalRefsRequest.ea_to', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -721,14 +721,14 @@ _ANALYZEEXTERNALREFSREQUEST = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='analysing_base', full_name='rpc.AnalyzeExternalRefsRequest.analysing_base', index=3,
-      number=4, type=13, cpp_type=3, label=2,
+      number=4, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='analysing_size', full_name='rpc.AnalyzeExternalRefsRequest.analysing_size', index=4,
-      number=5, type=13, cpp_type=3, label=2,
+      number=5, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -758,7 +758,7 @@ _ANALYZEEXTERNALREFSRESULT_POINTERDATA = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='ea', full_name='rpc.AnalyzeExternalRefsResult.PointerData.ea', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -808,14 +808,14 @@ _ANALYZEEXTERNALREFSRESULT_REFDATA = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='ea', full_name='rpc.AnalyzeExternalRefsResult.RefData.ea', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='len', full_name='rpc.AnalyzeExternalRefsResult.RefData.len', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -829,7 +829,7 @@ _ANALYZEEXTERNALREFSRESULT_REFDATA = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='v', full_name='rpc.AnalyzeExternalRefsResult.RefData.v', index=3,
-      number=4, type=13, cpp_type=3, label=2,
+      number=4, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -942,8 +942,64 @@ _ANALYZEEXTERNALREFSRESULT_REG_T = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='eip', full_name='rpc.AnalyzeExternalRefsResult.reg_t.eip', index=8,
-      number=9, type=13, cpp_type=3, label=2,
+      name='rip', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rip', index=8,
+      number=9, type=4, cpp_type=4, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rax', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rax', index=9,
+      number=10, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rbx', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rbx', index=10,
+      number=11, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rcx', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rcx', index=11,
+      number=12, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rdx', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rdx', index=12,
+      number=13, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rsi', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rsi', index=13,
+      number=14, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rdi', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rdi', index=14,
+      number=15, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rbp', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rbp', index=15,
+      number=16, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rsp', full_name='rpc.AnalyzeExternalRefsResult.reg_t.rsp', index=16,
+      number=17, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -959,8 +1015,8 @@ _ANALYZEEXTERNALREFSRESULT_REG_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2249,
-  serialized_end=2373,
+  serialized_start=2250,
+  serialized_end=2478,
 )
 
 _ANALYZEEXTERNALREFSRESULT = _descriptor.Descriptor(
@@ -1003,7 +1059,7 @@ _ANALYZEEXTERNALREFSRESULT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1689,
-  serialized_end=2373,
+  serialized_end=2478,
 )
 
 
@@ -1016,14 +1072,14 @@ _CHECKPEHEADERSREQUEST = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='base', full_name='rpc.CheckPEHeadersRequest.base', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='size', full_name='rpc.CheckPEHeadersRequest.size', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1039,8 +1095,8 @@ _CHECKPEHEADERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2375,
-  serialized_end=2426,
+  serialized_start=2480,
+  serialized_end=2531,
 )
 
 
@@ -1053,14 +1109,14 @@ _CHECKPEHEADERSRESULT_EXPORTS = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='ea', full_name='rpc.CheckPEHeadersResult.Exports.ea', index=0,
-      number=1, type=13, cpp_type=3, label=2,
+      number=1, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='ord', full_name='rpc.CheckPEHeadersResult.Exports.ord', index=1,
-      number=2, type=13, cpp_type=3, label=2,
+      number=2, type=4, cpp_type=4, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1083,8 +1139,8 @@ _CHECKPEHEADERSRESULT_EXPORTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2573,
-  serialized_end=2621,
+  serialized_start=2678,
+  serialized_end=2726,
 )
 
 _CHECKPEHEADERSRESULT_SECTION = _descriptor.Descriptor(
@@ -1103,28 +1159,28 @@ _CHECKPEHEADERSRESULT_SECTION = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='va', full_name='rpc.CheckPEHeadersResult.Section.va', index=1,
-      number=2, type=13, cpp_type=3, label=1,
+      number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='v_size', full_name='rpc.CheckPEHeadersResult.Section.v_size', index=2,
-      number=3, type=13, cpp_type=3, label=1,
+      number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='raw', full_name='rpc.CheckPEHeadersResult.Section.raw', index=3,
-      number=4, type=13, cpp_type=3, label=1,
+      number=4, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
       name='raw_size', full_name='rpc.CheckPEHeadersResult.Section.raw_size', index=4,
-      number=5, type=13, cpp_type=3, label=1,
+      number=5, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -1147,8 +1203,8 @@ _CHECKPEHEADERSRESULT_SECTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2623,
-  serialized_end=2730,
+  serialized_start=2728,
+  serialized_end=2835,
 )
 
 _CHECKPEHEADERSRESULT = _descriptor.Descriptor(
@@ -1190,8 +1246,8 @@ _CHECKPEHEADERSRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2429,
-  serialized_end=2730,
+  serialized_start=2534,
+  serialized_end=2835,
 )
 
 _RPCREQUEST.fields_by_name['request_type'].enum_type = _RPCREQUEST_REQUESTTYPE

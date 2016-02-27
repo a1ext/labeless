@@ -22,8 +22,8 @@ class RpcData;
 
 struct ICommand
 {
-	ea_t		base;
-	ea_t		remoteBase;
+	uint64_t	base;
+	uint64_t	remoteBase;
 	uint64_t	jobId;
 	bool		pending;
 
@@ -63,9 +63,9 @@ struct LabelsSync : public ICommand
 {
 	struct Data
 	{
-		uint32_t	ea;
+		uint64_t	ea;
 		std::string label;
-		Data(uint32_t ea_, const std::string& label_)
+		Data(uint64_t ea_, const std::string& label_)
 			: ea(ea_)
 			, label(label_)
 		{}
@@ -82,9 +82,9 @@ struct CommentsSync : public ICommand
 {
 	struct Data
 	{
-		uint32_t	ea;
+		uint64_t	ea;
 		std::string comment;
-		Data(uint32_t ea_, const std::string& comment_)
+		Data(uint64_t ea_, const std::string& comment_)
 			: ea(ea_)
 			, comment(comment_)
 		{}
@@ -110,7 +110,7 @@ struct ReadMemoryRegions : public ICommand
 	struct t_memory : public MemoryRegion
 	{
 		std::string raw;
-		t_memory(ea_t base_, uint32_t size_, uint32_t protect_, const std::string& raw_)
+		t_memory(uint64_t base_, uint64_t size_, uint32_t protect_, const std::string& raw_)
 			: MemoryRegion(base_, size_, protect_)
 			, raw(raw_)
 		{}
@@ -127,11 +127,11 @@ struct AnalyzeExternalRefs : public ICommand
 {
 	struct Req
 	{
-		ea_t		eaFrom;
-		ea_t		eaTo;
+		uint64_t	eaFrom;
+		uint64_t	eaTo;
 		int32_t		increment;
-		ea_t		base;
-		uint32_t	size;
+		uint64_t	base;
+		uint64_t	size;
 
 		Req()
 			: eaFrom(0)
@@ -143,7 +143,7 @@ struct AnalyzeExternalRefs : public ICommand
 	};
 	struct PointerData
 	{
-		ea_t ea;
+		uint64_t ea;
 		std::string module;
 		std::string procName;
 
@@ -163,10 +163,10 @@ struct AnalyzeExternalRefs : public ICommand
 
 	struct RefData
 	{
-		ea_t instrEA;
-		uint32_t len;
+		uint64_t instrEA;
+		uint64_t len;
 		RefType type;
-		uint32_t val;
+		uint64_t val;
 		std::string dis;
 		std::string module;
 		std::string proc;
@@ -183,10 +183,10 @@ struct AnalyzeExternalRefs : public ICommand
 	Req req;
 	Pointers ptrs;
 	RefDataList rdl;
-	ea_t eip;
+	uint64_t rip;
 
 	AnalyzeExternalRefs()
-		: eip(0)
+		: rip(0)
 	{}
 
 	virtual bool serialize(QPointer<RpcData> rd) const override;
@@ -196,8 +196,8 @@ struct AnalyzeExternalRefs : public ICommand
 struct CheckPEHeaders : public ICommand
 {
 	// params
-	ea_t base;
-	uint32_t size;
+	uint64_t base;
+	uint64_t size;
 
 	// result
 	bool peValid;

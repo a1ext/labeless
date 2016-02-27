@@ -258,8 +258,8 @@ bool ReadMemoryRegions::parseResponse(QPointer<RpcData> rd)
 		for (int i = 0, e = result.memories_size(); i < e; ++i)
 		{
 			const auto& memory = result.memories().Get(i);
-			ea_t addr = memory.addr();
-			uint32_t size = memory.size();
+			uint64_t addr = memory.addr();
+			uint64_t size = memory.size();
 
 			if (data.size() < i)
 				continue;
@@ -325,7 +325,7 @@ bool AnalyzeExternalRefs::parseResponse(QPointer<RpcData> rd)
 			return false;
 		}
 
-		eip = result.context().eip();
+		rip = result.context().rip();
 
 		const auto& api_constants = result.api_constants();
 		for (auto it = api_constants.begin(), end = api_constants.end(); it != end; ++it)

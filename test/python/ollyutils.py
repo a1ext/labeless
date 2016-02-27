@@ -234,7 +234,7 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
     rv.context.ebp = r[oa.REG_EBP]
     rv.context.esi = r[oa.REG_ESI]
     rv.context.edi = r[oa.REG_EDI]
-    rv.context.eip = th.reg.ip
+    rv.context.rip = th.reg.ip
 
     global modules_exports
 

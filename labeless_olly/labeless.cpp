@@ -42,6 +42,8 @@ static struct StaticConfig
 	UINT		hlpPortChanged = 0;
 } gConfig;
 
+static const char kBackendName[] {"ollydbg11"};
+
 
 #ifdef ENABLE_PYTHON_PROFILING
 int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
@@ -352,6 +354,35 @@ static PyObject* olly_get_ver(PyObject*, PyObject* arg)
 	return rv;
 }
 
+static PyObject* olly_get_hprocess(PyObject*, PyObject*)
+{
+	const t_status status = Getstatus();
+	if (status == STAT_EVENT || status == STAT_RUNNING || status == STAT_CLOSING)
+		return PyInt_FromSize_t(static_cast<size_t>(Plugingetvalue(VAL_HPROCESS)));
+	Py_RETURN_NONE;
+}
+
+static PyObject* olly_get_pid(PyObject*, PyObject*)
+{
+	const t_status status = Getstatus();
+	if (status == STAT_EVENT || status == STAT_RUNNING || status == STAT_CLOSING)
+		return PyInt_FromLong(Plugingetvalue(VAL_PROCESSID));
+	Py_RETURN_NONE;
+}
+
+static PyObject* olly_get_backend_name(PyObject*, PyObject*)
+{
+	return PyString_FromString(kBackendName);
+}
+
+static PyObject* olly_get_backend_info(PyObject*, PyObject*)
+{
+	PyObject* const rv = PyDict_New();
+	PyDict_SetItemString(rv, "bitness", PyString_FromString("32")); // FIXME
+	PyDict_SetItemString(rv, "name", PyString_FromString(kBackendName));
+	return rv;
+}
+
 // Register the wrapped functions.
 static PyMethodDef PyOllyMethods [] =
 {
@@ -362,6 +393,9 @@ static PyMethodDef PyOllyMethods [] =
 	{ "olly_log", olly_log, METH_O, "Olly log output" },
 	{ "set_error", olly_set_error, METH_VARARGS, NULL },
 	{ "labeless_ver", olly_get_ver, METH_NOARGS, "get Labeless version" },
+	{ "get_hprocess", olly_get_hprocess, METH_NOARGS, "get hProcess of debuggee" },
+	{ "get_pid", olly_get_pid, METH_NOARGS, "get PID of debuggee" },
+	{ "get_backend_info", olly_get_backend_info, METH_NOARGS, "get backend info\n:return: {'name': '', 'bitness' : ''}" },
 	{ NULL, NULL, 0, NULL }
 };
 

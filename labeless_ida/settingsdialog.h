@@ -27,7 +27,7 @@ class SettingsDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit SettingsDialog(const Settings& settings, quint32 currModBase, QWidget* parent = nullptr);
+	explicit SettingsDialog(const Settings& settings, qulonglong currModBase, QWidget* parent = nullptr);
 	~SettingsDialog();
 
 	void getSettings(Settings& result);

@@ -99,7 +99,7 @@ enum SettingsCtrl
 };
 
 
-static const uint32_t kDefaultExternSegLen = 0xF000;
+static const uint64_t kDefaultExternSegLen = 0xF000UL;
 static const Settings kDefaultSettings(
 	"127.0.0.1",
 	3852,
@@ -1341,14 +1341,14 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 	IDADump& icInfo = m_DumpList.back();
 
-	if (gdp->eip >= gdp->req.eaFrom && gdp->eip <= gdp->req.eaTo - sizeof(DWORD_PTR))
+	if (gdp->rip >= gdp->req.eaFrom && gdp->rip <= gdp->req.eaTo - sizeof(DWORD_PTR))
 	{
 		const auto& entryName = getNewNameOfEntry();
-		add_entry(gdp->eip, gdp->eip, entryName.c_str(), true);
+		add_entry(gdp->rip, gdp->rip, entryName.c_str(), true);
 		msg("Entry created %s, waiting for finish anto-analysis\n", entryName.c_str());
 		autoWait();
 	}
-	std::set<ea_t> exportEntries;
+	std::set<uint64_t> exportEntries;
 	for (int i = 0, e = icInfo.exports.size(); i < e; ++i)
 	{
 		auto ea = icInfo.exports.at(i).ea;
@@ -1575,12 +1575,6 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 		return false;
 	}
 
-	/*if (SOCKET_ERROR == shutdown(s, SD_SEND))
-	{
-		msg("shutdown() failed. Error: %s\n", hlp::net::wsaErrorToString());
-		return false;
-	}*/
-
 	std::string rawResponse;
 	if (!hlp::net::sockRecvAll(s, rawResponse) || rawResponse.empty())
 	{
@@ -1607,7 +1601,7 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	else if (err.substr(0, kVer.length()) != kVer)
 		errorMsg = QString::fromStdString("version mismatch. Labeless IDA: " + kVer + ". But Labeless Olly: " + err);
 	
-	return rv;
+	return rv && errorMsg.isEmpty();
 }
 
 uint32_t Labeless::loadImportTable()

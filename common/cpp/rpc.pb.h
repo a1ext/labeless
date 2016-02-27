@@ -650,12 +650,12 @@ class MakeNamesRequest_Name : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   inline bool has_ea() const;
   inline void clear_ea();
   static const int kEaFieldNumber = 1;
-  inline ::google::protobuf::uint32 ea() const;
-  inline void set_ea(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea() const;
+  inline void set_ea(::google::protobuf::uint64 value);
 
   // required string name = 2;
   inline bool has_name() const;
@@ -680,8 +680,8 @@ class MakeNamesRequest_Name : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint64 ea_;
   ::std::string* name_;
-  ::google::protobuf::uint32 ea_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -758,19 +758,19 @@ class MakeNamesRequest : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::rpc::MakeNamesRequest_Name >*
       mutable_names();
 
-  // required uint32 base = 2;
+  // required uint64 base = 2;
   inline bool has_base() const;
   inline void clear_base();
   static const int kBaseFieldNumber = 2;
-  inline ::google::protobuf::uint32 base() const;
-  inline void set_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 base() const;
+  inline void set_base(::google::protobuf::uint64 value);
 
-  // required uint32 remote_base = 3;
+  // required uint64 remote_base = 3;
   inline bool has_remote_base() const;
   inline void clear_remote_base();
   static const int kRemoteBaseFieldNumber = 3;
-  inline ::google::protobuf::uint32 remote_base() const;
-  inline void set_remote_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 remote_base() const;
+  inline void set_remote_base(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:rpc.MakeNamesRequest)
  private:
@@ -784,8 +784,8 @@ class MakeNamesRequest : public ::google::protobuf::Message {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::RepeatedPtrField< ::rpc::MakeNamesRequest_Name > names_;
-  ::google::protobuf::uint32 base_;
-  ::google::protobuf::uint32 remote_base_;
+  ::google::protobuf::uint64 base_;
+  ::google::protobuf::uint64 remote_base_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -848,12 +848,12 @@ class MakeCommentsRequest_Name : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   inline bool has_ea() const;
   inline void clear_ea();
   static const int kEaFieldNumber = 1;
-  inline ::google::protobuf::uint32 ea() const;
-  inline void set_ea(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea() const;
+  inline void set_ea(::google::protobuf::uint64 value);
 
   // required string name = 2;
   inline bool has_name() const;
@@ -878,8 +878,8 @@ class MakeCommentsRequest_Name : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint64 ea_;
   ::std::string* name_;
-  ::google::protobuf::uint32 ea_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -956,19 +956,19 @@ class MakeCommentsRequest : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::rpc::MakeCommentsRequest_Name >*
       mutable_names();
 
-  // required uint32 base = 2;
+  // required uint64 base = 2;
   inline bool has_base() const;
   inline void clear_base();
   static const int kBaseFieldNumber = 2;
-  inline ::google::protobuf::uint32 base() const;
-  inline void set_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 base() const;
+  inline void set_base(::google::protobuf::uint64 value);
 
-  // required uint32 remote_base = 3;
+  // required uint64 remote_base = 3;
   inline bool has_remote_base() const;
   inline void clear_remote_base();
   static const int kRemoteBaseFieldNumber = 3;
-  inline ::google::protobuf::uint32 remote_base() const;
-  inline void set_remote_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 remote_base() const;
+  inline void set_remote_base(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:rpc.MakeCommentsRequest)
  private:
@@ -982,8 +982,8 @@ class MakeCommentsRequest : public ::google::protobuf::Message {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::RepeatedPtrField< ::rpc::MakeCommentsRequest_Name > names_;
-  ::google::protobuf::uint32 base_;
-  ::google::protobuf::uint32 remote_base_;
+  ::google::protobuf::uint64 base_;
+  ::google::protobuf::uint64 remote_base_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -1046,19 +1046,19 @@ class GetMemoryMapResult_Memory : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 base = 1;
+  // required uint64 base = 1;
   inline bool has_base() const;
   inline void clear_base();
   static const int kBaseFieldNumber = 1;
-  inline ::google::protobuf::uint32 base() const;
-  inline void set_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 base() const;
+  inline void set_base(::google::protobuf::uint64 value);
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   inline bool has_size() const;
   inline void clear_size();
   static const int kSizeFieldNumber = 2;
-  inline ::google::protobuf::uint32 size() const;
-  inline void set_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 size() const;
+  inline void set_size(::google::protobuf::uint64 value);
 
   // required uint32 access = 3;
   inline bool has_access() const;
@@ -1094,8 +1094,8 @@ class GetMemoryMapResult_Memory : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 base_;
-  ::google::protobuf::uint32 size_;
+  ::google::protobuf::uint64 base_;
+  ::google::protobuf::uint64 size_;
   ::std::string* name_;
   ::google::protobuf::uint32 access_;
   friend void  protobuf_AddDesc_rpc_2eproto();
@@ -1244,19 +1244,19 @@ class ReadMemoryRegionsRequest_Region : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 addr = 1;
+  // required uint64 addr = 1;
   inline bool has_addr() const;
   inline void clear_addr();
   static const int kAddrFieldNumber = 1;
-  inline ::google::protobuf::uint32 addr() const;
-  inline void set_addr(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 addr() const;
+  inline void set_addr(::google::protobuf::uint64 value);
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   inline bool has_size() const;
   inline void clear_size();
   static const int kSizeFieldNumber = 2;
-  inline ::google::protobuf::uint32 size() const;
-  inline void set_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 size() const;
+  inline void set_size(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:rpc.ReadMemoryRegionsRequest.Region)
  private:
@@ -1269,8 +1269,8 @@ class ReadMemoryRegionsRequest_Region : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 addr_;
-  ::google::protobuf::uint32 size_;
+  ::google::protobuf::uint64 addr_;
+  ::google::protobuf::uint64 size_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -1417,19 +1417,19 @@ class ReadMemoryRegionsResult_Memory : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 addr = 1;
+  // required uint64 addr = 1;
   inline bool has_addr() const;
   inline void clear_addr();
   static const int kAddrFieldNumber = 1;
-  inline ::google::protobuf::uint32 addr() const;
-  inline void set_addr(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 addr() const;
+  inline void set_addr(::google::protobuf::uint64 value);
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   inline bool has_size() const;
   inline void clear_size();
   static const int kSizeFieldNumber = 2;
-  inline ::google::protobuf::uint32 size() const;
-  inline void set_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 size() const;
+  inline void set_size(::google::protobuf::uint64 value);
 
   // required bytes mem = 3;
   inline bool has_mem() const;
@@ -1465,8 +1465,8 @@ class ReadMemoryRegionsResult_Memory : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 addr_;
-  ::google::protobuf::uint32 size_;
+  ::google::protobuf::uint64 addr_;
+  ::google::protobuf::uint64 size_;
   ::std::string* mem_;
   ::google::protobuf::uint32 protect_;
   friend void  protobuf_AddDesc_rpc_2eproto();
@@ -1615,19 +1615,19 @@ class AnalyzeExternalRefsRequest : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 ea_from = 1;
+  // required uint64 ea_from = 1;
   inline bool has_ea_from() const;
   inline void clear_ea_from();
   static const int kEaFromFieldNumber = 1;
-  inline ::google::protobuf::uint32 ea_from() const;
-  inline void set_ea_from(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea_from() const;
+  inline void set_ea_from(::google::protobuf::uint64 value);
 
-  // required uint32 ea_to = 2;
+  // required uint64 ea_to = 2;
   inline bool has_ea_to() const;
   inline void clear_ea_to();
   static const int kEaToFieldNumber = 2;
-  inline ::google::protobuf::uint32 ea_to() const;
-  inline void set_ea_to(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea_to() const;
+  inline void set_ea_to(::google::protobuf::uint64 value);
 
   // required uint32 increment = 3;
   inline bool has_increment() const;
@@ -1636,19 +1636,19 @@ class AnalyzeExternalRefsRequest : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 increment() const;
   inline void set_increment(::google::protobuf::uint32 value);
 
-  // required uint32 analysing_base = 4;
+  // required uint64 analysing_base = 4;
   inline bool has_analysing_base() const;
   inline void clear_analysing_base();
   static const int kAnalysingBaseFieldNumber = 4;
-  inline ::google::protobuf::uint32 analysing_base() const;
-  inline void set_analysing_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 analysing_base() const;
+  inline void set_analysing_base(::google::protobuf::uint64 value);
 
-  // required uint32 analysing_size = 5;
+  // required uint64 analysing_size = 5;
   inline bool has_analysing_size() const;
   inline void clear_analysing_size();
   static const int kAnalysingSizeFieldNumber = 5;
-  inline ::google::protobuf::uint32 analysing_size() const;
-  inline void set_analysing_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 analysing_size() const;
+  inline void set_analysing_size(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:rpc.AnalyzeExternalRefsRequest)
  private:
@@ -1667,11 +1667,11 @@ class AnalyzeExternalRefsRequest : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 ea_from_;
-  ::google::protobuf::uint32 ea_to_;
+  ::google::protobuf::uint64 ea_from_;
+  ::google::protobuf::uint64 ea_to_;
+  ::google::protobuf::uint64 analysing_base_;
+  ::google::protobuf::uint64 analysing_size_;
   ::google::protobuf::uint32 increment_;
-  ::google::protobuf::uint32 analysing_base_;
-  ::google::protobuf::uint32 analysing_size_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -1734,12 +1734,12 @@ class AnalyzeExternalRefsResult_PointerData : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
 
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   inline bool has_ea() const;
   inline void clear_ea();
   static const int kEaFieldNumber = 1;
-  inline ::google::protobuf::uint32 ea() const;
-  inline void set_ea(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea() const;
+  inline void set_ea(::google::protobuf::uint64 value);
 
   // required string module = 2;
   inline bool has_module() const;
@@ -1792,10 +1792,10 @@ class AnalyzeExternalRefsResult_PointerData : public ::google::protobuf::Message
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::google::protobuf::uint64 ea_;
   ::std::string* module_;
   ::std::string* proc_;
   ::std::string* ordinal_collision_dll_path_;
-  ::google::protobuf::uint32 ea_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -1883,19 +1883,19 @@ class AnalyzeExternalRefsResult_RefData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   inline bool has_ea() const;
   inline void clear_ea();
   static const int kEaFieldNumber = 1;
-  inline ::google::protobuf::uint32 ea() const;
-  inline void set_ea(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea() const;
+  inline void set_ea(::google::protobuf::uint64 value);
 
-  // required uint32 len = 2;
+  // required uint64 len = 2;
   inline bool has_len() const;
   inline void clear_len();
   static const int kLenFieldNumber = 2;
-  inline ::google::protobuf::uint32 len() const;
-  inline void set_len(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 len() const;
+  inline void set_len(::google::protobuf::uint64 value);
 
   // required string dis = 3;
   inline bool has_dis() const;
@@ -1909,12 +1909,12 @@ class AnalyzeExternalRefsResult_RefData : public ::google::protobuf::Message {
   inline ::std::string* release_dis();
   inline void set_allocated_dis(::std::string* dis);
 
-  // required uint32 v = 4;
+  // required uint64 v = 4;
   inline bool has_v() const;
   inline void clear_v();
   static const int kVFieldNumber = 4;
-  inline ::google::protobuf::uint32 v() const;
-  inline void set_v(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 v() const;
+  inline void set_v(::google::protobuf::uint64 value);
 
   // required .rpc.AnalyzeExternalRefsResult.RefData.RefType ref_type = 5;
   inline bool has_ref_type() const;
@@ -1982,14 +1982,14 @@ class AnalyzeExternalRefsResult_RefData : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 ea_;
-  ::google::protobuf::uint32 len_;
+  ::google::protobuf::uint64 ea_;
+  ::google::protobuf::uint64 len_;
   ::std::string* dis_;
-  ::google::protobuf::uint32 v_;
-  int ref_type_;
+  ::google::protobuf::uint64 v_;
   ::std::string* module_;
   ::std::string* proc_;
   ::std::string* ordinal_collision_dll_path_;
+  int ref_type_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -2108,12 +2108,68 @@ class AnalyzeExternalRefsResult_reg_t : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 edi() const;
   inline void set_edi(::google::protobuf::uint32 value);
 
-  // required uint32 eip = 9;
-  inline bool has_eip() const;
-  inline void clear_eip();
-  static const int kEipFieldNumber = 9;
-  inline ::google::protobuf::uint32 eip() const;
-  inline void set_eip(::google::protobuf::uint32 value);
+  // required uint64 rip = 9;
+  inline bool has_rip() const;
+  inline void clear_rip();
+  static const int kRipFieldNumber = 9;
+  inline ::google::protobuf::uint64 rip() const;
+  inline void set_rip(::google::protobuf::uint64 value);
+
+  // optional uint64 rax = 10;
+  inline bool has_rax() const;
+  inline void clear_rax();
+  static const int kRaxFieldNumber = 10;
+  inline ::google::protobuf::uint64 rax() const;
+  inline void set_rax(::google::protobuf::uint64 value);
+
+  // optional uint64 rbx = 11;
+  inline bool has_rbx() const;
+  inline void clear_rbx();
+  static const int kRbxFieldNumber = 11;
+  inline ::google::protobuf::uint64 rbx() const;
+  inline void set_rbx(::google::protobuf::uint64 value);
+
+  // optional uint64 rcx = 12;
+  inline bool has_rcx() const;
+  inline void clear_rcx();
+  static const int kRcxFieldNumber = 12;
+  inline ::google::protobuf::uint64 rcx() const;
+  inline void set_rcx(::google::protobuf::uint64 value);
+
+  // optional uint64 rdx = 13;
+  inline bool has_rdx() const;
+  inline void clear_rdx();
+  static const int kRdxFieldNumber = 13;
+  inline ::google::protobuf::uint64 rdx() const;
+  inline void set_rdx(::google::protobuf::uint64 value);
+
+  // optional uint64 rsi = 14;
+  inline bool has_rsi() const;
+  inline void clear_rsi();
+  static const int kRsiFieldNumber = 14;
+  inline ::google::protobuf::uint64 rsi() const;
+  inline void set_rsi(::google::protobuf::uint64 value);
+
+  // optional uint64 rdi = 15;
+  inline bool has_rdi() const;
+  inline void clear_rdi();
+  static const int kRdiFieldNumber = 15;
+  inline ::google::protobuf::uint64 rdi() const;
+  inline void set_rdi(::google::protobuf::uint64 value);
+
+  // optional uint64 rbp = 16;
+  inline bool has_rbp() const;
+  inline void clear_rbp();
+  static const int kRbpFieldNumber = 16;
+  inline ::google::protobuf::uint64 rbp() const;
+  inline void set_rbp(::google::protobuf::uint64 value);
+
+  // optional uint64 rsp = 17;
+  inline bool has_rsp() const;
+  inline void clear_rsp();
+  static const int kRspFieldNumber = 17;
+  inline ::google::protobuf::uint64 rsp() const;
+  inline void set_rsp(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:rpc.AnalyzeExternalRefsResult.reg_t)
  private:
@@ -2133,8 +2189,24 @@ class AnalyzeExternalRefsResult_reg_t : public ::google::protobuf::Message {
   inline void clear_has_esi();
   inline void set_has_edi();
   inline void clear_has_edi();
-  inline void set_has_eip();
-  inline void clear_has_eip();
+  inline void set_has_rip();
+  inline void clear_has_rip();
+  inline void set_has_rax();
+  inline void clear_has_rax();
+  inline void set_has_rbx();
+  inline void clear_has_rbx();
+  inline void set_has_rcx();
+  inline void clear_has_rcx();
+  inline void set_has_rdx();
+  inline void clear_has_rdx();
+  inline void set_has_rsi();
+  inline void clear_has_rsi();
+  inline void set_has_rdi();
+  inline void clear_has_rdi();
+  inline void set_has_rbp();
+  inline void clear_has_rbp();
+  inline void set_has_rsp();
+  inline void clear_has_rsp();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -2148,7 +2220,15 @@ class AnalyzeExternalRefsResult_reg_t : public ::google::protobuf::Message {
   ::google::protobuf::uint32 ebp_;
   ::google::protobuf::uint32 esi_;
   ::google::protobuf::uint32 edi_;
-  ::google::protobuf::uint32 eip_;
+  ::google::protobuf::uint64 rip_;
+  ::google::protobuf::uint64 rax_;
+  ::google::protobuf::uint64 rbx_;
+  ::google::protobuf::uint64 rcx_;
+  ::google::protobuf::uint64 rdx_;
+  ::google::protobuf::uint64 rsi_;
+  ::google::protobuf::uint64 rdi_;
+  ::google::protobuf::uint64 rbp_;
+  ::google::protobuf::uint64 rsp_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -2322,19 +2402,19 @@ class CheckPEHeadersRequest : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 base = 1;
+  // required uint64 base = 1;
   inline bool has_base() const;
   inline void clear_base();
   static const int kBaseFieldNumber = 1;
-  inline ::google::protobuf::uint32 base() const;
-  inline void set_base(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 base() const;
+  inline void set_base(::google::protobuf::uint64 value);
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   inline bool has_size() const;
   inline void clear_size();
   static const int kSizeFieldNumber = 2;
-  inline ::google::protobuf::uint32 size() const;
-  inline void set_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 size() const;
+  inline void set_size(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:rpc.CheckPEHeadersRequest)
  private:
@@ -2347,8 +2427,8 @@ class CheckPEHeadersRequest : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 base_;
-  ::google::protobuf::uint32 size_;
+  ::google::protobuf::uint64 base_;
+  ::google::protobuf::uint64 size_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -2411,19 +2491,19 @@ class CheckPEHeadersResult_Exports : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   inline bool has_ea() const;
   inline void clear_ea();
   static const int kEaFieldNumber = 1;
-  inline ::google::protobuf::uint32 ea() const;
-  inline void set_ea(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ea() const;
+  inline void set_ea(::google::protobuf::uint64 value);
 
-  // required uint32 ord = 2;
+  // required uint64 ord = 2;
   inline bool has_ord() const;
   inline void clear_ord();
   static const int kOrdFieldNumber = 2;
-  inline ::google::protobuf::uint32 ord() const;
-  inline void set_ord(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 ord() const;
+  inline void set_ord(::google::protobuf::uint64 value);
 
   // optional string name = 3;
   inline bool has_name() const;
@@ -2450,8 +2530,8 @@ class CheckPEHeadersResult_Exports : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::uint32 ea_;
-  ::google::protobuf::uint32 ord_;
+  ::google::protobuf::uint64 ea_;
+  ::google::protobuf::uint64 ord_;
   ::std::string* name_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
@@ -2527,33 +2607,33 @@ class CheckPEHeadersResult_Section : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // optional uint32 va = 2;
+  // optional uint64 va = 2;
   inline bool has_va() const;
   inline void clear_va();
   static const int kVaFieldNumber = 2;
-  inline ::google::protobuf::uint32 va() const;
-  inline void set_va(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 va() const;
+  inline void set_va(::google::protobuf::uint64 value);
 
-  // optional uint32 v_size = 3;
+  // optional uint64 v_size = 3;
   inline bool has_v_size() const;
   inline void clear_v_size();
   static const int kVSizeFieldNumber = 3;
-  inline ::google::protobuf::uint32 v_size() const;
-  inline void set_v_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 v_size() const;
+  inline void set_v_size(::google::protobuf::uint64 value);
 
-  // optional uint32 raw = 4;
+  // optional uint64 raw = 4;
   inline bool has_raw() const;
   inline void clear_raw();
   static const int kRawFieldNumber = 4;
-  inline ::google::protobuf::uint32 raw() const;
-  inline void set_raw(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 raw() const;
+  inline void set_raw(::google::protobuf::uint64 value);
 
-  // optional uint32 raw_size = 5;
+  // optional uint64 raw_size = 5;
   inline bool has_raw_size() const;
   inline void clear_raw_size();
   static const int kRawSizeFieldNumber = 5;
-  inline ::google::protobuf::uint32 raw_size() const;
-  inline void set_raw_size(::google::protobuf::uint32 value);
+  inline ::google::protobuf::uint64 raw_size() const;
+  inline void set_raw_size(::google::protobuf::uint64 value);
 
   // optional uint32 characteristics = 6;
   inline bool has_characteristics() const;
@@ -2582,10 +2662,10 @@ class CheckPEHeadersResult_Section : public ::google::protobuf::Message {
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* name_;
-  ::google::protobuf::uint32 va_;
-  ::google::protobuf::uint32 v_size_;
-  ::google::protobuf::uint32 raw_;
-  ::google::protobuf::uint32 raw_size_;
+  ::google::protobuf::uint64 va_;
+  ::google::protobuf::uint64 v_size_;
+  ::google::protobuf::uint64 raw_;
+  ::google::protobuf::uint64 raw_size_;
   ::google::protobuf::uint32 characteristics_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
@@ -3580,7 +3660,7 @@ inline void Response::set_job_status(::rpc::Response_JobStatus value) {
 
 // MakeNamesRequest_Name
 
-// required uint32 ea = 1;
+// required uint64 ea = 1;
 inline bool MakeNamesRequest_Name::has_ea() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3591,14 +3671,14 @@ inline void MakeNamesRequest_Name::clear_has_ea() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MakeNamesRequest_Name::clear_ea() {
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   clear_has_ea();
 }
-inline ::google::protobuf::uint32 MakeNamesRequest_Name::ea() const {
+inline ::google::protobuf::uint64 MakeNamesRequest_Name::ea() const {
   // @@protoc_insertion_point(field_get:rpc.MakeNamesRequest.Name.ea)
   return ea_;
 }
-inline void MakeNamesRequest_Name::set_ea(::google::protobuf::uint32 value) {
+inline void MakeNamesRequest_Name::set_ea(::google::protobuf::uint64 value) {
   set_has_ea();
   ea_ = value;
   // @@protoc_insertion_point(field_set:rpc.MakeNamesRequest.Name.ea)
@@ -3714,7 +3794,7 @@ MakeNamesRequest::mutable_names() {
   return &names_;
 }
 
-// required uint32 base = 2;
+// required uint64 base = 2;
 inline bool MakeNamesRequest::has_base() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3725,20 +3805,20 @@ inline void MakeNamesRequest::clear_has_base() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void MakeNamesRequest::clear_base() {
-  base_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
   clear_has_base();
 }
-inline ::google::protobuf::uint32 MakeNamesRequest::base() const {
+inline ::google::protobuf::uint64 MakeNamesRequest::base() const {
   // @@protoc_insertion_point(field_get:rpc.MakeNamesRequest.base)
   return base_;
 }
-inline void MakeNamesRequest::set_base(::google::protobuf::uint32 value) {
+inline void MakeNamesRequest::set_base(::google::protobuf::uint64 value) {
   set_has_base();
   base_ = value;
   // @@protoc_insertion_point(field_set:rpc.MakeNamesRequest.base)
 }
 
-// required uint32 remote_base = 3;
+// required uint64 remote_base = 3;
 inline bool MakeNamesRequest::has_remote_base() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3749,14 +3829,14 @@ inline void MakeNamesRequest::clear_has_remote_base() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void MakeNamesRequest::clear_remote_base() {
-  remote_base_ = 0u;
+  remote_base_ = GOOGLE_ULONGLONG(0);
   clear_has_remote_base();
 }
-inline ::google::protobuf::uint32 MakeNamesRequest::remote_base() const {
+inline ::google::protobuf::uint64 MakeNamesRequest::remote_base() const {
   // @@protoc_insertion_point(field_get:rpc.MakeNamesRequest.remote_base)
   return remote_base_;
 }
-inline void MakeNamesRequest::set_remote_base(::google::protobuf::uint32 value) {
+inline void MakeNamesRequest::set_remote_base(::google::protobuf::uint64 value) {
   set_has_remote_base();
   remote_base_ = value;
   // @@protoc_insertion_point(field_set:rpc.MakeNamesRequest.remote_base)
@@ -3766,7 +3846,7 @@ inline void MakeNamesRequest::set_remote_base(::google::protobuf::uint32 value) 
 
 // MakeCommentsRequest_Name
 
-// required uint32 ea = 1;
+// required uint64 ea = 1;
 inline bool MakeCommentsRequest_Name::has_ea() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3777,14 +3857,14 @@ inline void MakeCommentsRequest_Name::clear_has_ea() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MakeCommentsRequest_Name::clear_ea() {
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   clear_has_ea();
 }
-inline ::google::protobuf::uint32 MakeCommentsRequest_Name::ea() const {
+inline ::google::protobuf::uint64 MakeCommentsRequest_Name::ea() const {
   // @@protoc_insertion_point(field_get:rpc.MakeCommentsRequest.Name.ea)
   return ea_;
 }
-inline void MakeCommentsRequest_Name::set_ea(::google::protobuf::uint32 value) {
+inline void MakeCommentsRequest_Name::set_ea(::google::protobuf::uint64 value) {
   set_has_ea();
   ea_ = value;
   // @@protoc_insertion_point(field_set:rpc.MakeCommentsRequest.Name.ea)
@@ -3900,7 +3980,7 @@ MakeCommentsRequest::mutable_names() {
   return &names_;
 }
 
-// required uint32 base = 2;
+// required uint64 base = 2;
 inline bool MakeCommentsRequest::has_base() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3911,20 +3991,20 @@ inline void MakeCommentsRequest::clear_has_base() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void MakeCommentsRequest::clear_base() {
-  base_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
   clear_has_base();
 }
-inline ::google::protobuf::uint32 MakeCommentsRequest::base() const {
+inline ::google::protobuf::uint64 MakeCommentsRequest::base() const {
   // @@protoc_insertion_point(field_get:rpc.MakeCommentsRequest.base)
   return base_;
 }
-inline void MakeCommentsRequest::set_base(::google::protobuf::uint32 value) {
+inline void MakeCommentsRequest::set_base(::google::protobuf::uint64 value) {
   set_has_base();
   base_ = value;
   // @@protoc_insertion_point(field_set:rpc.MakeCommentsRequest.base)
 }
 
-// required uint32 remote_base = 3;
+// required uint64 remote_base = 3;
 inline bool MakeCommentsRequest::has_remote_base() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3935,14 +4015,14 @@ inline void MakeCommentsRequest::clear_has_remote_base() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void MakeCommentsRequest::clear_remote_base() {
-  remote_base_ = 0u;
+  remote_base_ = GOOGLE_ULONGLONG(0);
   clear_has_remote_base();
 }
-inline ::google::protobuf::uint32 MakeCommentsRequest::remote_base() const {
+inline ::google::protobuf::uint64 MakeCommentsRequest::remote_base() const {
   // @@protoc_insertion_point(field_get:rpc.MakeCommentsRequest.remote_base)
   return remote_base_;
 }
-inline void MakeCommentsRequest::set_remote_base(::google::protobuf::uint32 value) {
+inline void MakeCommentsRequest::set_remote_base(::google::protobuf::uint64 value) {
   set_has_remote_base();
   remote_base_ = value;
   // @@protoc_insertion_point(field_set:rpc.MakeCommentsRequest.remote_base)
@@ -3952,7 +4032,7 @@ inline void MakeCommentsRequest::set_remote_base(::google::protobuf::uint32 valu
 
 // GetMemoryMapResult_Memory
 
-// required uint32 base = 1;
+// required uint64 base = 1;
 inline bool GetMemoryMapResult_Memory::has_base() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -3963,20 +4043,20 @@ inline void GetMemoryMapResult_Memory::clear_has_base() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void GetMemoryMapResult_Memory::clear_base() {
-  base_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
   clear_has_base();
 }
-inline ::google::protobuf::uint32 GetMemoryMapResult_Memory::base() const {
+inline ::google::protobuf::uint64 GetMemoryMapResult_Memory::base() const {
   // @@protoc_insertion_point(field_get:rpc.GetMemoryMapResult.Memory.base)
   return base_;
 }
-inline void GetMemoryMapResult_Memory::set_base(::google::protobuf::uint32 value) {
+inline void GetMemoryMapResult_Memory::set_base(::google::protobuf::uint64 value) {
   set_has_base();
   base_ = value;
   // @@protoc_insertion_point(field_set:rpc.GetMemoryMapResult.Memory.base)
 }
 
-// required uint32 size = 2;
+// required uint64 size = 2;
 inline bool GetMemoryMapResult_Memory::has_size() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3987,14 +4067,14 @@ inline void GetMemoryMapResult_Memory::clear_has_size() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void GetMemoryMapResult_Memory::clear_size() {
-  size_ = 0u;
+  size_ = GOOGLE_ULONGLONG(0);
   clear_has_size();
 }
-inline ::google::protobuf::uint32 GetMemoryMapResult_Memory::size() const {
+inline ::google::protobuf::uint64 GetMemoryMapResult_Memory::size() const {
   // @@protoc_insertion_point(field_get:rpc.GetMemoryMapResult.Memory.size)
   return size_;
 }
-inline void GetMemoryMapResult_Memory::set_size(::google::protobuf::uint32 value) {
+inline void GetMemoryMapResult_Memory::set_size(::google::protobuf::uint64 value) {
   set_has_size();
   size_ = value;
   // @@protoc_insertion_point(field_set:rpc.GetMemoryMapResult.Memory.size)
@@ -4138,7 +4218,7 @@ GetMemoryMapResult::mutable_memories() {
 
 // ReadMemoryRegionsRequest_Region
 
-// required uint32 addr = 1;
+// required uint64 addr = 1;
 inline bool ReadMemoryRegionsRequest_Region::has_addr() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4149,20 +4229,20 @@ inline void ReadMemoryRegionsRequest_Region::clear_has_addr() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void ReadMemoryRegionsRequest_Region::clear_addr() {
-  addr_ = 0u;
+  addr_ = GOOGLE_ULONGLONG(0);
   clear_has_addr();
 }
-inline ::google::protobuf::uint32 ReadMemoryRegionsRequest_Region::addr() const {
+inline ::google::protobuf::uint64 ReadMemoryRegionsRequest_Region::addr() const {
   // @@protoc_insertion_point(field_get:rpc.ReadMemoryRegionsRequest.Region.addr)
   return addr_;
 }
-inline void ReadMemoryRegionsRequest_Region::set_addr(::google::protobuf::uint32 value) {
+inline void ReadMemoryRegionsRequest_Region::set_addr(::google::protobuf::uint64 value) {
   set_has_addr();
   addr_ = value;
   // @@protoc_insertion_point(field_set:rpc.ReadMemoryRegionsRequest.Region.addr)
 }
 
-// required uint32 size = 2;
+// required uint64 size = 2;
 inline bool ReadMemoryRegionsRequest_Region::has_size() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4173,14 +4253,14 @@ inline void ReadMemoryRegionsRequest_Region::clear_has_size() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void ReadMemoryRegionsRequest_Region::clear_size() {
-  size_ = 0u;
+  size_ = GOOGLE_ULONGLONG(0);
   clear_has_size();
 }
-inline ::google::protobuf::uint32 ReadMemoryRegionsRequest_Region::size() const {
+inline ::google::protobuf::uint64 ReadMemoryRegionsRequest_Region::size() const {
   // @@protoc_insertion_point(field_get:rpc.ReadMemoryRegionsRequest.Region.size)
   return size_;
 }
-inline void ReadMemoryRegionsRequest_Region::set_size(::google::protobuf::uint32 value) {
+inline void ReadMemoryRegionsRequest_Region::set_size(::google::protobuf::uint64 value) {
   set_has_size();
   size_ = value;
   // @@protoc_insertion_point(field_set:rpc.ReadMemoryRegionsRequest.Region.size)
@@ -4224,7 +4304,7 @@ ReadMemoryRegionsRequest::mutable_regions() {
 
 // ReadMemoryRegionsResult_Memory
 
-// required uint32 addr = 1;
+// required uint64 addr = 1;
 inline bool ReadMemoryRegionsResult_Memory::has_addr() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4235,20 +4315,20 @@ inline void ReadMemoryRegionsResult_Memory::clear_has_addr() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void ReadMemoryRegionsResult_Memory::clear_addr() {
-  addr_ = 0u;
+  addr_ = GOOGLE_ULONGLONG(0);
   clear_has_addr();
 }
-inline ::google::protobuf::uint32 ReadMemoryRegionsResult_Memory::addr() const {
+inline ::google::protobuf::uint64 ReadMemoryRegionsResult_Memory::addr() const {
   // @@protoc_insertion_point(field_get:rpc.ReadMemoryRegionsResult.Memory.addr)
   return addr_;
 }
-inline void ReadMemoryRegionsResult_Memory::set_addr(::google::protobuf::uint32 value) {
+inline void ReadMemoryRegionsResult_Memory::set_addr(::google::protobuf::uint64 value) {
   set_has_addr();
   addr_ = value;
   // @@protoc_insertion_point(field_set:rpc.ReadMemoryRegionsResult.Memory.addr)
 }
 
-// required uint32 size = 2;
+// required uint64 size = 2;
 inline bool ReadMemoryRegionsResult_Memory::has_size() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4259,14 +4339,14 @@ inline void ReadMemoryRegionsResult_Memory::clear_has_size() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void ReadMemoryRegionsResult_Memory::clear_size() {
-  size_ = 0u;
+  size_ = GOOGLE_ULONGLONG(0);
   clear_has_size();
 }
-inline ::google::protobuf::uint32 ReadMemoryRegionsResult_Memory::size() const {
+inline ::google::protobuf::uint64 ReadMemoryRegionsResult_Memory::size() const {
   // @@protoc_insertion_point(field_get:rpc.ReadMemoryRegionsResult.Memory.size)
   return size_;
 }
-inline void ReadMemoryRegionsResult_Memory::set_size(::google::protobuf::uint32 value) {
+inline void ReadMemoryRegionsResult_Memory::set_size(::google::protobuf::uint64 value) {
   set_has_size();
   size_ = value;
   // @@protoc_insertion_point(field_set:rpc.ReadMemoryRegionsResult.Memory.size)
@@ -4410,7 +4490,7 @@ ReadMemoryRegionsResult::mutable_memories() {
 
 // AnalyzeExternalRefsRequest
 
-// required uint32 ea_from = 1;
+// required uint64 ea_from = 1;
 inline bool AnalyzeExternalRefsRequest::has_ea_from() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4421,20 +4501,20 @@ inline void AnalyzeExternalRefsRequest::clear_has_ea_from() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void AnalyzeExternalRefsRequest::clear_ea_from() {
-  ea_from_ = 0u;
+  ea_from_ = GOOGLE_ULONGLONG(0);
   clear_has_ea_from();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsRequest::ea_from() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsRequest::ea_from() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsRequest.ea_from)
   return ea_from_;
 }
-inline void AnalyzeExternalRefsRequest::set_ea_from(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsRequest::set_ea_from(::google::protobuf::uint64 value) {
   set_has_ea_from();
   ea_from_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsRequest.ea_from)
 }
 
-// required uint32 ea_to = 2;
+// required uint64 ea_to = 2;
 inline bool AnalyzeExternalRefsRequest::has_ea_to() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4445,14 +4525,14 @@ inline void AnalyzeExternalRefsRequest::clear_has_ea_to() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void AnalyzeExternalRefsRequest::clear_ea_to() {
-  ea_to_ = 0u;
+  ea_to_ = GOOGLE_ULONGLONG(0);
   clear_has_ea_to();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsRequest::ea_to() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsRequest::ea_to() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsRequest.ea_to)
   return ea_to_;
 }
-inline void AnalyzeExternalRefsRequest::set_ea_to(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsRequest::set_ea_to(::google::protobuf::uint64 value) {
   set_has_ea_to();
   ea_to_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsRequest.ea_to)
@@ -4482,7 +4562,7 @@ inline void AnalyzeExternalRefsRequest::set_increment(::google::protobuf::uint32
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsRequest.increment)
 }
 
-// required uint32 analysing_base = 4;
+// required uint64 analysing_base = 4;
 inline bool AnalyzeExternalRefsRequest::has_analysing_base() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -4493,20 +4573,20 @@ inline void AnalyzeExternalRefsRequest::clear_has_analysing_base() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void AnalyzeExternalRefsRequest::clear_analysing_base() {
-  analysing_base_ = 0u;
+  analysing_base_ = GOOGLE_ULONGLONG(0);
   clear_has_analysing_base();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsRequest::analysing_base() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsRequest::analysing_base() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsRequest.analysing_base)
   return analysing_base_;
 }
-inline void AnalyzeExternalRefsRequest::set_analysing_base(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsRequest::set_analysing_base(::google::protobuf::uint64 value) {
   set_has_analysing_base();
   analysing_base_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsRequest.analysing_base)
 }
 
-// required uint32 analysing_size = 5;
+// required uint64 analysing_size = 5;
 inline bool AnalyzeExternalRefsRequest::has_analysing_size() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -4517,14 +4597,14 @@ inline void AnalyzeExternalRefsRequest::clear_has_analysing_size() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void AnalyzeExternalRefsRequest::clear_analysing_size() {
-  analysing_size_ = 0u;
+  analysing_size_ = GOOGLE_ULONGLONG(0);
   clear_has_analysing_size();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsRequest::analysing_size() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsRequest::analysing_size() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsRequest.analysing_size)
   return analysing_size_;
 }
-inline void AnalyzeExternalRefsRequest::set_analysing_size(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsRequest::set_analysing_size(::google::protobuf::uint64 value) {
   set_has_analysing_size();
   analysing_size_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsRequest.analysing_size)
@@ -4534,7 +4614,7 @@ inline void AnalyzeExternalRefsRequest::set_analysing_size(::google::protobuf::u
 
 // AnalyzeExternalRefsResult_PointerData
 
-// required uint32 ea = 1;
+// required uint64 ea = 1;
 inline bool AnalyzeExternalRefsResult_PointerData::has_ea() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4545,14 +4625,14 @@ inline void AnalyzeExternalRefsResult_PointerData::clear_has_ea() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void AnalyzeExternalRefsResult_PointerData::clear_ea() {
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   clear_has_ea();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsResult_PointerData::ea() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_PointerData::ea() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.PointerData.ea)
   return ea_;
 }
-inline void AnalyzeExternalRefsResult_PointerData::set_ea(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsResult_PointerData::set_ea(::google::protobuf::uint64 value) {
   set_has_ea();
   ea_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.PointerData.ea)
@@ -4790,7 +4870,7 @@ inline void AnalyzeExternalRefsResult_PointerData::set_allocated_ordinal_collisi
 
 // AnalyzeExternalRefsResult_RefData
 
-// required uint32 ea = 1;
+// required uint64 ea = 1;
 inline bool AnalyzeExternalRefsResult_RefData::has_ea() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -4801,20 +4881,20 @@ inline void AnalyzeExternalRefsResult_RefData::clear_has_ea() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void AnalyzeExternalRefsResult_RefData::clear_ea() {
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   clear_has_ea();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsResult_RefData::ea() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_RefData::ea() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.RefData.ea)
   return ea_;
 }
-inline void AnalyzeExternalRefsResult_RefData::set_ea(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsResult_RefData::set_ea(::google::protobuf::uint64 value) {
   set_has_ea();
   ea_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.RefData.ea)
 }
 
-// required uint32 len = 2;
+// required uint64 len = 2;
 inline bool AnalyzeExternalRefsResult_RefData::has_len() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -4825,14 +4905,14 @@ inline void AnalyzeExternalRefsResult_RefData::clear_has_len() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void AnalyzeExternalRefsResult_RefData::clear_len() {
-  len_ = 0u;
+  len_ = GOOGLE_ULONGLONG(0);
   clear_has_len();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsResult_RefData::len() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_RefData::len() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.RefData.len)
   return len_;
 }
-inline void AnalyzeExternalRefsResult_RefData::set_len(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsResult_RefData::set_len(::google::protobuf::uint64 value) {
   set_has_len();
   len_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.RefData.len)
@@ -4914,7 +4994,7 @@ inline void AnalyzeExternalRefsResult_RefData::set_allocated_dis(::std::string* 
   // @@protoc_insertion_point(field_set_allocated:rpc.AnalyzeExternalRefsResult.RefData.dis)
 }
 
-// required uint32 v = 4;
+// required uint64 v = 4;
 inline bool AnalyzeExternalRefsResult_RefData::has_v() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -4925,14 +5005,14 @@ inline void AnalyzeExternalRefsResult_RefData::clear_has_v() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void AnalyzeExternalRefsResult_RefData::clear_v() {
-  v_ = 0u;
+  v_ = GOOGLE_ULONGLONG(0);
   clear_has_v();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsResult_RefData::v() const {
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_RefData::v() const {
   // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.RefData.v)
   return v_;
 }
-inline void AnalyzeExternalRefsResult_RefData::set_v(::google::protobuf::uint32 value) {
+inline void AnalyzeExternalRefsResult_RefData::set_v(::google::protobuf::uint64 value) {
   set_has_v();
   v_ = value;
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.RefData.v)
@@ -5387,28 +5467,220 @@ inline void AnalyzeExternalRefsResult_reg_t::set_edi(::google::protobuf::uint32 
   // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.edi)
 }
 
-// required uint32 eip = 9;
-inline bool AnalyzeExternalRefsResult_reg_t::has_eip() const {
+// required uint64 rip = 9;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rip() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
-inline void AnalyzeExternalRefsResult_reg_t::set_has_eip() {
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rip() {
   _has_bits_[0] |= 0x00000100u;
 }
-inline void AnalyzeExternalRefsResult_reg_t::clear_has_eip() {
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rip() {
   _has_bits_[0] &= ~0x00000100u;
 }
-inline void AnalyzeExternalRefsResult_reg_t::clear_eip() {
-  eip_ = 0u;
-  clear_has_eip();
+inline void AnalyzeExternalRefsResult_reg_t::clear_rip() {
+  rip_ = GOOGLE_ULONGLONG(0);
+  clear_has_rip();
 }
-inline ::google::protobuf::uint32 AnalyzeExternalRefsResult_reg_t::eip() const {
-  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.eip)
-  return eip_;
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rip() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rip)
+  return rip_;
 }
-inline void AnalyzeExternalRefsResult_reg_t::set_eip(::google::protobuf::uint32 value) {
-  set_has_eip();
-  eip_ = value;
-  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.eip)
+inline void AnalyzeExternalRefsResult_reg_t::set_rip(::google::protobuf::uint64 value) {
+  set_has_rip();
+  rip_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rip)
+}
+
+// optional uint64 rax = 10;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rax() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rax() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rax() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rax() {
+  rax_ = GOOGLE_ULONGLONG(0);
+  clear_has_rax();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rax() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rax)
+  return rax_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rax(::google::protobuf::uint64 value) {
+  set_has_rax();
+  rax_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rax)
+}
+
+// optional uint64 rbx = 11;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rbx() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rbx() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rbx() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rbx() {
+  rbx_ = GOOGLE_ULONGLONG(0);
+  clear_has_rbx();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rbx() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rbx)
+  return rbx_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rbx(::google::protobuf::uint64 value) {
+  set_has_rbx();
+  rbx_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rbx)
+}
+
+// optional uint64 rcx = 12;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rcx() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rcx() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rcx() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rcx() {
+  rcx_ = GOOGLE_ULONGLONG(0);
+  clear_has_rcx();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rcx() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rcx)
+  return rcx_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rcx(::google::protobuf::uint64 value) {
+  set_has_rcx();
+  rcx_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rcx)
+}
+
+// optional uint64 rdx = 13;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rdx() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rdx() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rdx() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rdx() {
+  rdx_ = GOOGLE_ULONGLONG(0);
+  clear_has_rdx();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rdx() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rdx)
+  return rdx_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rdx(::google::protobuf::uint64 value) {
+  set_has_rdx();
+  rdx_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rdx)
+}
+
+// optional uint64 rsi = 14;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rsi() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rsi() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rsi() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rsi() {
+  rsi_ = GOOGLE_ULONGLONG(0);
+  clear_has_rsi();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rsi() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rsi)
+  return rsi_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rsi(::google::protobuf::uint64 value) {
+  set_has_rsi();
+  rsi_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rsi)
+}
+
+// optional uint64 rdi = 15;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rdi() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rdi() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rdi() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rdi() {
+  rdi_ = GOOGLE_ULONGLONG(0);
+  clear_has_rdi();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rdi() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rdi)
+  return rdi_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rdi(::google::protobuf::uint64 value) {
+  set_has_rdi();
+  rdi_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rdi)
+}
+
+// optional uint64 rbp = 16;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rbp() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rbp() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rbp() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rbp() {
+  rbp_ = GOOGLE_ULONGLONG(0);
+  clear_has_rbp();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rbp() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rbp)
+  return rbp_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rbp(::google::protobuf::uint64 value) {
+  set_has_rbp();
+  rbp_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rbp)
+}
+
+// optional uint64 rsp = 17;
+inline bool AnalyzeExternalRefsResult_reg_t::has_rsp() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_has_rsp() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_has_rsp() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void AnalyzeExternalRefsResult_reg_t::clear_rsp() {
+  rsp_ = GOOGLE_ULONGLONG(0);
+  clear_has_rsp();
+}
+inline ::google::protobuf::uint64 AnalyzeExternalRefsResult_reg_t::rsp() const {
+  // @@protoc_insertion_point(field_get:rpc.AnalyzeExternalRefsResult.reg_t.rsp)
+  return rsp_;
+}
+inline void AnalyzeExternalRefsResult_reg_t::set_rsp(::google::protobuf::uint64 value) {
+  set_has_rsp();
+  rsp_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AnalyzeExternalRefsResult.reg_t.rsp)
 }
 
 // -------------------------------------------------------------------
@@ -5520,7 +5792,7 @@ inline void AnalyzeExternalRefsResult::set_allocated_context(::rpc::AnalyzeExter
 
 // CheckPEHeadersRequest
 
-// required uint32 base = 1;
+// required uint64 base = 1;
 inline bool CheckPEHeadersRequest::has_base() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -5531,20 +5803,20 @@ inline void CheckPEHeadersRequest::clear_has_base() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CheckPEHeadersRequest::clear_base() {
-  base_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
   clear_has_base();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersRequest::base() const {
+inline ::google::protobuf::uint64 CheckPEHeadersRequest::base() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersRequest.base)
   return base_;
 }
-inline void CheckPEHeadersRequest::set_base(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersRequest::set_base(::google::protobuf::uint64 value) {
   set_has_base();
   base_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersRequest.base)
 }
 
-// required uint32 size = 2;
+// required uint64 size = 2;
 inline bool CheckPEHeadersRequest::has_size() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -5555,14 +5827,14 @@ inline void CheckPEHeadersRequest::clear_has_size() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void CheckPEHeadersRequest::clear_size() {
-  size_ = 0u;
+  size_ = GOOGLE_ULONGLONG(0);
   clear_has_size();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersRequest::size() const {
+inline ::google::protobuf::uint64 CheckPEHeadersRequest::size() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersRequest.size)
   return size_;
 }
-inline void CheckPEHeadersRequest::set_size(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersRequest::set_size(::google::protobuf::uint64 value) {
   set_has_size();
   size_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersRequest.size)
@@ -5572,7 +5844,7 @@ inline void CheckPEHeadersRequest::set_size(::google::protobuf::uint32 value) {
 
 // CheckPEHeadersResult_Exports
 
-// required uint32 ea = 1;
+// required uint64 ea = 1;
 inline bool CheckPEHeadersResult_Exports::has_ea() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -5583,20 +5855,20 @@ inline void CheckPEHeadersResult_Exports::clear_has_ea() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void CheckPEHeadersResult_Exports::clear_ea() {
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   clear_has_ea();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersResult_Exports::ea() const {
+inline ::google::protobuf::uint64 CheckPEHeadersResult_Exports::ea() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersResult.Exports.ea)
   return ea_;
 }
-inline void CheckPEHeadersResult_Exports::set_ea(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersResult_Exports::set_ea(::google::protobuf::uint64 value) {
   set_has_ea();
   ea_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersResult.Exports.ea)
 }
 
-// required uint32 ord = 2;
+// required uint64 ord = 2;
 inline bool CheckPEHeadersResult_Exports::has_ord() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -5607,14 +5879,14 @@ inline void CheckPEHeadersResult_Exports::clear_has_ord() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void CheckPEHeadersResult_Exports::clear_ord() {
-  ord_ = 0u;
+  ord_ = GOOGLE_ULONGLONG(0);
   clear_has_ord();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersResult_Exports::ord() const {
+inline ::google::protobuf::uint64 CheckPEHeadersResult_Exports::ord() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersResult.Exports.ord)
   return ord_;
 }
-inline void CheckPEHeadersResult_Exports::set_ord(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersResult_Exports::set_ord(::google::protobuf::uint64 value) {
   set_has_ord();
   ord_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersResult.Exports.ord)
@@ -5776,7 +6048,7 @@ inline void CheckPEHeadersResult_Section::set_allocated_name(::std::string* name
   // @@protoc_insertion_point(field_set_allocated:rpc.CheckPEHeadersResult.Section.name)
 }
 
-// optional uint32 va = 2;
+// optional uint64 va = 2;
 inline bool CheckPEHeadersResult_Section::has_va() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -5787,20 +6059,20 @@ inline void CheckPEHeadersResult_Section::clear_has_va() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void CheckPEHeadersResult_Section::clear_va() {
-  va_ = 0u;
+  va_ = GOOGLE_ULONGLONG(0);
   clear_has_va();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersResult_Section::va() const {
+inline ::google::protobuf::uint64 CheckPEHeadersResult_Section::va() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersResult.Section.va)
   return va_;
 }
-inline void CheckPEHeadersResult_Section::set_va(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersResult_Section::set_va(::google::protobuf::uint64 value) {
   set_has_va();
   va_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersResult.Section.va)
 }
 
-// optional uint32 v_size = 3;
+// optional uint64 v_size = 3;
 inline bool CheckPEHeadersResult_Section::has_v_size() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -5811,20 +6083,20 @@ inline void CheckPEHeadersResult_Section::clear_has_v_size() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void CheckPEHeadersResult_Section::clear_v_size() {
-  v_size_ = 0u;
+  v_size_ = GOOGLE_ULONGLONG(0);
   clear_has_v_size();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersResult_Section::v_size() const {
+inline ::google::protobuf::uint64 CheckPEHeadersResult_Section::v_size() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersResult.Section.v_size)
   return v_size_;
 }
-inline void CheckPEHeadersResult_Section::set_v_size(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersResult_Section::set_v_size(::google::protobuf::uint64 value) {
   set_has_v_size();
   v_size_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersResult.Section.v_size)
 }
 
-// optional uint32 raw = 4;
+// optional uint64 raw = 4;
 inline bool CheckPEHeadersResult_Section::has_raw() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -5835,20 +6107,20 @@ inline void CheckPEHeadersResult_Section::clear_has_raw() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void CheckPEHeadersResult_Section::clear_raw() {
-  raw_ = 0u;
+  raw_ = GOOGLE_ULONGLONG(0);
   clear_has_raw();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersResult_Section::raw() const {
+inline ::google::protobuf::uint64 CheckPEHeadersResult_Section::raw() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersResult.Section.raw)
   return raw_;
 }
-inline void CheckPEHeadersResult_Section::set_raw(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersResult_Section::set_raw(::google::protobuf::uint64 value) {
   set_has_raw();
   raw_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersResult.Section.raw)
 }
 
-// optional uint32 raw_size = 5;
+// optional uint64 raw_size = 5;
 inline bool CheckPEHeadersResult_Section::has_raw_size() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -5859,14 +6131,14 @@ inline void CheckPEHeadersResult_Section::clear_has_raw_size() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void CheckPEHeadersResult_Section::clear_raw_size() {
-  raw_size_ = 0u;
+  raw_size_ = GOOGLE_ULONGLONG(0);
   clear_has_raw_size();
 }
-inline ::google::protobuf::uint32 CheckPEHeadersResult_Section::raw_size() const {
+inline ::google::protobuf::uint64 CheckPEHeadersResult_Section::raw_size() const {
   // @@protoc_insertion_point(field_get:rpc.CheckPEHeadersResult.Section.raw_size)
   return raw_size_;
 }
-inline void CheckPEHeadersResult_Section::set_raw_size(::google::protobuf::uint32 value) {
+inline void CheckPEHeadersResult_Section::set_raw_size(::google::protobuf::uint64 value) {
   set_has_raw_size();
   raw_size_ = value;
   // @@protoc_insertion_point(field_set:rpc.CheckPEHeadersResult.Section.raw_size)
