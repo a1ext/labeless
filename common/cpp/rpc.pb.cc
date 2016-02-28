@@ -401,7 +401,7 @@ void protobuf_AssignDesc_rpc_2eproto() {
       sizeof(AnalyzeExternalRefsResult_RefData));
   AnalyzeExternalRefsResult_RefData_RefType_descriptor_ = AnalyzeExternalRefsResult_RefData_descriptor_->enum_type(0);
   AnalyzeExternalRefsResult_reg_t_descriptor_ = AnalyzeExternalRefsResult_descriptor_->nested_type(2);
-  static const int AnalyzeExternalRefsResult_reg_t_offsets_[9] = {
+  static const int AnalyzeExternalRefsResult_reg_t_offsets_[17] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, eax_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, ecx_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, edx_),
@@ -410,7 +410,15 @@ void protobuf_AssignDesc_rpc_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, ebp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, esi_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, edi_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, eip_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rip_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rax_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rbx_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rcx_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rdx_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rsi_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rdi_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rbp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnalyzeExternalRefsResult_reg_t, rsp_),
   };
   AnalyzeExternalRefsResult_reg_t_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -630,52 +638,54 @@ void protobuf_AddDesc_rpc_2eproto() {
     "\0162\027.rpc.Response.JobStatus\",\n\tJobStatus\022"
     "\017\n\013JS_FINISHED\020\001\022\016\n\nJS_PENDING\020\002\"\202\001\n\020Mak"
     "eNamesRequest\022)\n\005names\030\001 \003(\0132\032.rpc.MakeN"
-    "amesRequest.Name\022\014\n\004base\030\002 \002(\r\022\023\n\013remote"
-    "_base\030\003 \002(\r\032 \n\004Name\022\n\n\002ea\030\001 \002(\r\022\014\n\004name\030"
+    "amesRequest.Name\022\014\n\004base\030\002 \002(\004\022\023\n\013remote"
+    "_base\030\003 \002(\004\032 \n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n\004name\030"
     "\002 \002(\t\"\210\001\n\023MakeCommentsRequest\022,\n\005names\030\001"
     " \003(\0132\035.rpc.MakeCommentsRequest.Name\022\014\n\004b"
-    "ase\030\002 \002(\r\022\023\n\013remote_base\030\003 \002(\r\032 \n\004Name\022\n"
-    "\n\002ea\030\001 \002(\r\022\014\n\004name\030\002 \002(\t\"\212\001\n\022GetMemoryMa"
+    "ase\030\002 \002(\004\022\023\n\013remote_base\030\003 \002(\004\032 \n\004Name\022\n"
+    "\n\002ea\030\001 \002(\004\022\014\n\004name\030\002 \002(\t\"\212\001\n\022GetMemoryMa"
     "pResult\0220\n\010memories\030\001 \003(\0132\036.rpc.GetMemor"
     "yMapResult.Memory\032B\n\006Memory\022\014\n\004base\030\001 \002("
-    "\r\022\014\n\004size\030\002 \002(\r\022\016\n\006access\030\003 \002(\r\022\014\n\004name\030"
+    "\004\022\014\n\004size\030\002 \002(\004\022\016\n\006access\030\003 \002(\r\022\014\n\004name\030"
     "\004 \002(\t\"w\n\030ReadMemoryRegionsRequest\0225\n\007reg"
     "ions\030\001 \003(\0132$.rpc.ReadMemoryRegionsReques"
-    "t.Region\032$\n\006Region\022\014\n\004addr\030\001 \002(\r\022\014\n\004size"
-    "\030\002 \002(\r\"\224\001\n\027ReadMemoryRegionsResult\0225\n\010me"
+    "t.Region\032$\n\006Region\022\014\n\004addr\030\001 \002(\004\022\014\n\004size"
+    "\030\002 \002(\004\"\224\001\n\027ReadMemoryRegionsResult\0225\n\010me"
     "mories\030\001 \003(\0132#.rpc.ReadMemoryRegionsResu"
-    "lt.Memory\032B\n\006Memory\022\014\n\004addr\030\001 \002(\r\022\014\n\004siz"
-    "e\030\002 \002(\r\022\013\n\003mem\030\003 \002(\014\022\017\n\007protect\030\004 \002(\r\"\177\n"
+    "lt.Memory\032B\n\006Memory\022\014\n\004addr\030\001 \002(\004\022\014\n\004siz"
+    "e\030\002 \002(\004\022\013\n\003mem\030\003 \002(\014\022\017\n\007protect\030\004 \002(\r\"\177\n"
     "\032AnalyzeExternalRefsRequest\022\017\n\007ea_from\030\001"
-    " \002(\r\022\r\n\005ea_to\030\002 \002(\r\022\021\n\tincrement\030\003 \002(\r\022\026"
-    "\n\016analysing_base\030\004 \002(\r\022\026\n\016analysing_size"
-    "\030\005 \002(\r\"\254\005\n\031AnalyzeExternalRefsResult\022A\n\r"
+    " \002(\004\022\r\n\005ea_to\030\002 \002(\004\022\021\n\tincrement\030\003 \002(\r\022\026"
+    "\n\016analysing_base\030\004 \002(\004\022\026\n\016analysing_size"
+    "\030\005 \002(\004\"\225\006\n\031AnalyzeExternalRefsResult\022A\n\r"
     "api_constants\030\001 \003(\0132*.rpc.AnalyzeExterna"
     "lRefsResult.PointerData\0224\n\004refs\030\002 \003(\0132&."
     "rpc.AnalyzeExternalRefsResult.RefData\0225\n"
     "\007context\030\003 \002(\0132$.rpc.AnalyzeExternalRefs"
-    "Result.reg_t\032[\n\013PointerData\022\n\n\002ea\030\001 \002(\r\022"
+    "Result.reg_t\032[\n\013PointerData\022\n\n\002ea\030\001 \002(\004\022"
     "\016\n\006module\030\002 \002(\t\022\014\n\004proc\030\003 \002(\t\022\"\n\032ordinal"
     "_collision_dll_path\030\004 \001(\t\032\203\002\n\007RefData\022\n\n"
-    "\002ea\030\001 \002(\r\022\013\n\003len\030\002 \002(\r\022\013\n\003dis\030\003 \002(\t\022\t\n\001v"
-    "\030\004 \002(\r\022@\n\010ref_type\030\005 \002(\0162..rpc.AnalyzeEx"
+    "\002ea\030\001 \002(\004\022\013\n\003len\030\002 \002(\004\022\013\n\003dis\030\003 \002(\t\022\t\n\001v"
+    "\030\004 \002(\004\022@\n\010ref_type\030\005 \002(\0162..rpc.AnalyzeEx"
     "ternalRefsResult.RefData.RefType\022\016\n\006modu"
     "le\030\006 \002(\t\022\014\n\004proc\030\007 \002(\t\022\"\n\032ordinal_collis"
     "ion_dll_path\030\010 \001(\t\"C\n\007RefType\022\021\n\rREFT_JM"
     "PCONST\020\001\022\021\n\rREFT_IMMCONST\020\002\022\022\n\016REFT_ADDR"
-    "CONST\020\003\032|\n\005reg_t\022\013\n\003eax\030\001 \002(\r\022\013\n\003ecx\030\002 \002"
-    "(\r\022\013\n\003edx\030\003 \002(\r\022\013\n\003ebx\030\004 \002(\r\022\013\n\003esp\030\005 \002("
-    "\r\022\013\n\003ebp\030\006 \002(\r\022\013\n\003esi\030\007 \002(\r\022\013\n\003edi\030\010 \002(\r"
-    "\022\013\n\003eip\030\t \002(\r\"3\n\025CheckPEHeadersRequest\022\014"
-    "\n\004base\030\001 \002(\r\022\014\n\004size\030\002 \002(\r\"\255\002\n\024CheckPEHe"
-    "adersResult\022\020\n\010pe_valid\030\001 \002(\010\022/\n\004exps\030\002 "
-    "\003(\0132!.rpc.CheckPEHeadersResult.Exports\0223"
-    "\n\010sections\030\003 \003(\0132!.rpc.CheckPEHeadersRes"
-    "ult.Section\0320\n\007Exports\022\n\n\002ea\030\001 \002(\r\022\013\n\003or"
-    "d\030\002 \002(\r\022\014\n\004name\030\003 \001(\t\032k\n\007Section\022\014\n\004name"
-    "\030\001 \001(\t\022\n\n\002va\030\002 \001(\r\022\016\n\006v_size\030\003 \001(\r\022\013\n\003ra"
-    "w\030\004 \001(\r\022\020\n\010raw_size\030\005 \001(\r\022\027\n\017characteris"
-    "tics\030\006 \001(\r", 2730);
+    "CONST\020\003\032\344\001\n\005reg_t\022\013\n\003eax\030\001 \002(\r\022\013\n\003ecx\030\002 "
+    "\002(\r\022\013\n\003edx\030\003 \002(\r\022\013\n\003ebx\030\004 \002(\r\022\013\n\003esp\030\005 \002"
+    "(\r\022\013\n\003ebp\030\006 \002(\r\022\013\n\003esi\030\007 \002(\r\022\013\n\003edi\030\010 \002("
+    "\r\022\013\n\003rip\030\t \002(\004\022\013\n\003rax\030\n \001(\004\022\013\n\003rbx\030\013 \001(\004"
+    "\022\013\n\003rcx\030\014 \001(\004\022\013\n\003rdx\030\r \001(\004\022\013\n\003rsi\030\016 \001(\004\022"
+    "\013\n\003rdi\030\017 \001(\004\022\013\n\003rbp\030\020 \001(\004\022\013\n\003rsp\030\021 \001(\004\"3"
+    "\n\025CheckPEHeadersRequest\022\014\n\004base\030\001 \002(\004\022\014\n"
+    "\004size\030\002 \002(\004\"\255\002\n\024CheckPEHeadersResult\022\020\n\010"
+    "pe_valid\030\001 \002(\010\022/\n\004exps\030\002 \003(\0132!.rpc.Check"
+    "PEHeadersResult.Exports\0223\n\010sections\030\003 \003("
+    "\0132!.rpc.CheckPEHeadersResult.Section\0320\n\007"
+    "Exports\022\n\n\002ea\030\001 \002(\004\022\013\n\003ord\030\002 \002(\004\022\014\n\004name"
+    "\030\003 \001(\t\032k\n\007Section\022\014\n\004name\030\001 \001(\t\022\n\n\002va\030\002 "
+    "\001(\004\022\016\n\006v_size\030\003 \001(\004\022\013\n\003raw\030\004 \001(\004\022\020\n\010raw_"
+    "size\030\005 \001(\004\022\027\n\017characteristics\030\006 \001(\r", 2835);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rpc.proto", &protobuf_RegisterTypes);
   RpcRequest::default_instance_ = new RpcRequest();
@@ -2211,7 +2221,7 @@ MakeNamesRequest_Name::MakeNamesRequest_Name(const MakeNamesRequest_Name& from)
 void MakeNamesRequest_Name::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2252,7 +2262,7 @@ MakeNamesRequest_Name* MakeNamesRequest_Name::New() const {
 
 void MakeNamesRequest_Name::Clear() {
   if (_has_bits_[0 / 32] & 3) {
-    ea_ = 0u;
+    ea_ = GOOGLE_ULONGLONG(0);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
@@ -2273,11 +2283,11 @@ bool MakeNamesRequest_Name::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 ea = 1;
+      // required uint64 ea = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_)));
           set_has_ea();
         } else {
@@ -2329,9 +2339,9 @@ failure:
 void MakeNamesRequest_Name::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.MakeNamesRequest.Name)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ea(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->ea(), output);
   }
 
   // required string name = 2;
@@ -2354,9 +2364,9 @@ void MakeNamesRequest_Name::SerializeWithCachedSizes(
 ::google::protobuf::uint8* MakeNamesRequest_Name::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.MakeNamesRequest.Name)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->ea(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->ea(), target);
   }
 
   // required string name = 2;
@@ -2382,10 +2392,10 @@ int MakeNamesRequest_Name::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 ea = 1;
+    // required uint64 ea = 1;
     if (has_ea()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea());
     }
 
@@ -2496,8 +2506,8 @@ MakeNamesRequest::MakeNamesRequest(const MakeNamesRequest& from)
 
 void MakeNamesRequest::SharedCtor() {
   _cached_size_ = 0;
-  base_ = 0u;
-  remote_base_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
+  remote_base_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2577,12 +2587,12 @@ bool MakeNamesRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 base = 2;
+      // required uint64 base = 2;
       case 2: {
         if (tag == 16) {
          parse_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &base_)));
           set_has_base();
         } else {
@@ -2592,12 +2602,12 @@ bool MakeNamesRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 remote_base = 3;
+      // required uint64 remote_base = 3;
       case 3: {
         if (tag == 24) {
          parse_remote_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &remote_base_)));
           set_has_remote_base();
         } else {
@@ -2638,14 +2648,14 @@ void MakeNamesRequest::SerializeWithCachedSizes(
       1, this->names(i), output);
   }
 
-  // required uint32 base = 2;
+  // required uint64 base = 2;
   if (has_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->base(), output);
   }
 
-  // required uint32 remote_base = 3;
+  // required uint64 remote_base = 3;
   if (has_remote_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->remote_base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->remote_base(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2665,14 +2675,14 @@ void MakeNamesRequest::SerializeWithCachedSizes(
         1, this->names(i), target);
   }
 
-  // required uint32 base = 2;
+  // required uint64 base = 2;
   if (has_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->base(), target);
   }
 
-  // required uint32 remote_base = 3;
+  // required uint64 remote_base = 3;
   if (has_remote_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->remote_base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->remote_base(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2687,17 +2697,17 @@ int MakeNamesRequest::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // required uint32 base = 2;
+    // required uint64 base = 2;
     if (has_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->base());
     }
 
-    // required uint32 remote_base = 3;
+    // required uint64 remote_base = 3;
     if (has_remote_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->remote_base());
     }
 
@@ -2812,7 +2822,7 @@ MakeCommentsRequest_Name::MakeCommentsRequest_Name(const MakeCommentsRequest_Nam
 void MakeCommentsRequest_Name::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2853,7 +2863,7 @@ MakeCommentsRequest_Name* MakeCommentsRequest_Name::New() const {
 
 void MakeCommentsRequest_Name::Clear() {
   if (_has_bits_[0 / 32] & 3) {
-    ea_ = 0u;
+    ea_ = GOOGLE_ULONGLONG(0);
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
@@ -2874,11 +2884,11 @@ bool MakeCommentsRequest_Name::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 ea = 1;
+      // required uint64 ea = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_)));
           set_has_ea();
         } else {
@@ -2930,9 +2940,9 @@ failure:
 void MakeCommentsRequest_Name::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.MakeCommentsRequest.Name)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ea(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->ea(), output);
   }
 
   // required string name = 2;
@@ -2955,9 +2965,9 @@ void MakeCommentsRequest_Name::SerializeWithCachedSizes(
 ::google::protobuf::uint8* MakeCommentsRequest_Name::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.MakeCommentsRequest.Name)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->ea(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->ea(), target);
   }
 
   // required string name = 2;
@@ -2983,10 +2993,10 @@ int MakeCommentsRequest_Name::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 ea = 1;
+    // required uint64 ea = 1;
     if (has_ea()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea());
     }
 
@@ -3097,8 +3107,8 @@ MakeCommentsRequest::MakeCommentsRequest(const MakeCommentsRequest& from)
 
 void MakeCommentsRequest::SharedCtor() {
   _cached_size_ = 0;
-  base_ = 0u;
-  remote_base_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
+  remote_base_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3178,12 +3188,12 @@ bool MakeCommentsRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 base = 2;
+      // required uint64 base = 2;
       case 2: {
         if (tag == 16) {
          parse_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &base_)));
           set_has_base();
         } else {
@@ -3193,12 +3203,12 @@ bool MakeCommentsRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 remote_base = 3;
+      // required uint64 remote_base = 3;
       case 3: {
         if (tag == 24) {
          parse_remote_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &remote_base_)));
           set_has_remote_base();
         } else {
@@ -3239,14 +3249,14 @@ void MakeCommentsRequest::SerializeWithCachedSizes(
       1, this->names(i), output);
   }
 
-  // required uint32 base = 2;
+  // required uint64 base = 2;
   if (has_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->base(), output);
   }
 
-  // required uint32 remote_base = 3;
+  // required uint64 remote_base = 3;
   if (has_remote_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->remote_base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->remote_base(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3266,14 +3276,14 @@ void MakeCommentsRequest::SerializeWithCachedSizes(
         1, this->names(i), target);
   }
 
-  // required uint32 base = 2;
+  // required uint64 base = 2;
   if (has_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->base(), target);
   }
 
-  // required uint32 remote_base = 3;
+  // required uint64 remote_base = 3;
   if (has_remote_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->remote_base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->remote_base(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3288,17 +3298,17 @@ int MakeCommentsRequest::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // required uint32 base = 2;
+    // required uint64 base = 2;
     if (has_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->base());
     }
 
-    // required uint32 remote_base = 3;
+    // required uint64 remote_base = 3;
     if (has_remote_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->remote_base());
     }
 
@@ -3415,8 +3425,8 @@ GetMemoryMapResult_Memory::GetMemoryMapResult_Memory(const GetMemoryMapResult_Me
 void GetMemoryMapResult_Memory::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  base_ = 0u;
-  size_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
+  size_ = GOOGLE_ULONGLONG(0);
   access_ = 0u;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3494,11 +3504,11 @@ bool GetMemoryMapResult_Memory::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 base = 1;
+      // required uint64 base = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &base_)));
           set_has_base();
         } else {
@@ -3508,12 +3518,12 @@ bool GetMemoryMapResult_Memory::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 size = 2;
+      // required uint64 size = 2;
       case 2: {
         if (tag == 16) {
          parse_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &size_)));
           set_has_size();
         } else {
@@ -3580,14 +3590,14 @@ failure:
 void GetMemoryMapResult_Memory::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.GetMemoryMapResult.Memory)
-  // required uint32 base = 1;
+  // required uint64 base = 1;
   if (has_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->base(), output);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->size(), output);
   }
 
   // required uint32 access = 3;
@@ -3615,14 +3625,14 @@ void GetMemoryMapResult_Memory::SerializeWithCachedSizes(
 ::google::protobuf::uint8* GetMemoryMapResult_Memory::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.GetMemoryMapResult.Memory)
-  // required uint32 base = 1;
+  // required uint64 base = 1;
   if (has_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->base(), target);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->size(), target);
   }
 
   // required uint32 access = 3;
@@ -3653,17 +3663,17 @@ int GetMemoryMapResult_Memory::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 base = 1;
+    // required uint64 base = 1;
     if (has_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->base());
     }
 
-    // required uint32 size = 2;
+    // required uint64 size = 2;
     if (has_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->size());
     }
 
@@ -4008,8 +4018,8 @@ ReadMemoryRegionsRequest_Region::ReadMemoryRegionsRequest_Region(const ReadMemor
 
 void ReadMemoryRegionsRequest_Region::SharedCtor() {
   _cached_size_ = 0;
-  addr_ = 0u;
-  size_ = 0u;
+  addr_ = GOOGLE_ULONGLONG(0);
+  size_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4074,11 +4084,11 @@ bool ReadMemoryRegionsRequest_Region::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 addr = 1;
+      // required uint64 addr = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &addr_)));
           set_has_addr();
         } else {
@@ -4088,12 +4098,12 @@ bool ReadMemoryRegionsRequest_Region::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 size = 2;
+      // required uint64 size = 2;
       case 2: {
         if (tag == 16) {
          parse_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &size_)));
           set_has_size();
         } else {
@@ -4128,14 +4138,14 @@ failure:
 void ReadMemoryRegionsRequest_Region::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.ReadMemoryRegionsRequest.Region)
-  // required uint32 addr = 1;
+  // required uint64 addr = 1;
   if (has_addr()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->addr(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->addr(), output);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->size(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4148,14 +4158,14 @@ void ReadMemoryRegionsRequest_Region::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ReadMemoryRegionsRequest_Region::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.ReadMemoryRegionsRequest.Region)
-  // required uint32 addr = 1;
+  // required uint64 addr = 1;
   if (has_addr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->addr(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->addr(), target);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->size(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4170,17 +4180,17 @@ int ReadMemoryRegionsRequest_Region::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 addr = 1;
+    // required uint64 addr = 1;
     if (has_addr()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->addr());
     }
 
-    // required uint32 size = 2;
+    // required uint64 size = 2;
     if (has_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->size());
     }
 
@@ -4506,8 +4516,8 @@ ReadMemoryRegionsResult_Memory::ReadMemoryRegionsResult_Memory(const ReadMemoryR
 void ReadMemoryRegionsResult_Memory::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  addr_ = 0u;
-  size_ = 0u;
+  addr_ = GOOGLE_ULONGLONG(0);
+  size_ = GOOGLE_ULONGLONG(0);
   mem_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   protect_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -4585,11 +4595,11 @@ bool ReadMemoryRegionsResult_Memory::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 addr = 1;
+      // required uint64 addr = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &addr_)));
           set_has_addr();
         } else {
@@ -4599,12 +4609,12 @@ bool ReadMemoryRegionsResult_Memory::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 size = 2;
+      // required uint64 size = 2;
       case 2: {
         if (tag == 16) {
          parse_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &size_)));
           set_has_size();
         } else {
@@ -4667,14 +4677,14 @@ failure:
 void ReadMemoryRegionsResult_Memory::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.ReadMemoryRegionsResult.Memory)
-  // required uint32 addr = 1;
+  // required uint64 addr = 1;
   if (has_addr()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->addr(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->addr(), output);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->size(), output);
   }
 
   // required bytes mem = 3;
@@ -4698,14 +4708,14 @@ void ReadMemoryRegionsResult_Memory::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ReadMemoryRegionsResult_Memory::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.ReadMemoryRegionsResult.Memory)
-  // required uint32 addr = 1;
+  // required uint64 addr = 1;
   if (has_addr()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->addr(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->addr(), target);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->size(), target);
   }
 
   // required bytes mem = 3;
@@ -4732,17 +4742,17 @@ int ReadMemoryRegionsResult_Memory::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 addr = 1;
+    // required uint64 addr = 1;
     if (has_addr()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->addr());
     }
 
-    // required uint32 size = 2;
+    // required uint64 size = 2;
     if (has_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->size());
     }
 
@@ -5090,11 +5100,11 @@ AnalyzeExternalRefsRequest::AnalyzeExternalRefsRequest(const AnalyzeExternalRefs
 
 void AnalyzeExternalRefsRequest::SharedCtor() {
   _cached_size_ = 0;
-  ea_from_ = 0u;
-  ea_to_ = 0u;
+  ea_from_ = GOOGLE_ULONGLONG(0);
+  ea_to_ = GOOGLE_ULONGLONG(0);
   increment_ = 0u;
-  analysing_base_ = 0u;
-  analysing_size_ = 0u;
+  analysing_base_ = GOOGLE_ULONGLONG(0);
+  analysing_size_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5141,7 +5151,7 @@ void AnalyzeExternalRefsRequest::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 31) {
-    ZR_(ea_from_, analysing_size_);
+    ZR_(ea_from_, increment_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -5161,11 +5171,11 @@ bool AnalyzeExternalRefsRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 ea_from = 1;
+      // required uint64 ea_from = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_from_)));
           set_has_ea_from();
         } else {
@@ -5175,12 +5185,12 @@ bool AnalyzeExternalRefsRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 ea_to = 2;
+      // required uint64 ea_to = 2;
       case 2: {
         if (tag == 16) {
          parse_ea_to:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_to_)));
           set_has_ea_to();
         } else {
@@ -5205,12 +5215,12 @@ bool AnalyzeExternalRefsRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 analysing_base = 4;
+      // required uint64 analysing_base = 4;
       case 4: {
         if (tag == 32) {
          parse_analysing_base:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &analysing_base_)));
           set_has_analysing_base();
         } else {
@@ -5220,12 +5230,12 @@ bool AnalyzeExternalRefsRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 analysing_size = 5;
+      // required uint64 analysing_size = 5;
       case 5: {
         if (tag == 40) {
          parse_analysing_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &analysing_size_)));
           set_has_analysing_size();
         } else {
@@ -5260,14 +5270,14 @@ failure:
 void AnalyzeExternalRefsRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.AnalyzeExternalRefsRequest)
-  // required uint32 ea_from = 1;
+  // required uint64 ea_from = 1;
   if (has_ea_from()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ea_from(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->ea_from(), output);
   }
 
-  // required uint32 ea_to = 2;
+  // required uint64 ea_to = 2;
   if (has_ea_to()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->ea_to(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->ea_to(), output);
   }
 
   // required uint32 increment = 3;
@@ -5275,14 +5285,14 @@ void AnalyzeExternalRefsRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->increment(), output);
   }
 
-  // required uint32 analysing_base = 4;
+  // required uint64 analysing_base = 4;
   if (has_analysing_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->analysing_base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->analysing_base(), output);
   }
 
-  // required uint32 analysing_size = 5;
+  // required uint64 analysing_size = 5;
   if (has_analysing_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->analysing_size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->analysing_size(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -5295,14 +5305,14 @@ void AnalyzeExternalRefsRequest::SerializeWithCachedSizes(
 ::google::protobuf::uint8* AnalyzeExternalRefsRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.AnalyzeExternalRefsRequest)
-  // required uint32 ea_from = 1;
+  // required uint64 ea_from = 1;
   if (has_ea_from()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->ea_from(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->ea_from(), target);
   }
 
-  // required uint32 ea_to = 2;
+  // required uint64 ea_to = 2;
   if (has_ea_to()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->ea_to(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->ea_to(), target);
   }
 
   // required uint32 increment = 3;
@@ -5310,14 +5320,14 @@ void AnalyzeExternalRefsRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->increment(), target);
   }
 
-  // required uint32 analysing_base = 4;
+  // required uint64 analysing_base = 4;
   if (has_analysing_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->analysing_base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(4, this->analysing_base(), target);
   }
 
-  // required uint32 analysing_size = 5;
+  // required uint64 analysing_size = 5;
   if (has_analysing_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->analysing_size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(5, this->analysing_size(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -5332,17 +5342,17 @@ int AnalyzeExternalRefsRequest::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 ea_from = 1;
+    // required uint64 ea_from = 1;
     if (has_ea_from()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea_from());
     }
 
-    // required uint32 ea_to = 2;
+    // required uint64 ea_to = 2;
     if (has_ea_to()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea_to());
     }
 
@@ -5353,17 +5363,17 @@ int AnalyzeExternalRefsRequest::ByteSize() const {
           this->increment());
     }
 
-    // required uint32 analysing_base = 4;
+    // required uint64 analysing_base = 4;
     if (has_analysing_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->analysing_base());
     }
 
-    // required uint32 analysing_size = 5;
+    // required uint64 analysing_size = 5;
     if (has_analysing_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->analysing_size());
     }
 
@@ -5481,7 +5491,7 @@ AnalyzeExternalRefsResult_PointerData::AnalyzeExternalRefsResult_PointerData(con
 void AnalyzeExternalRefsResult_PointerData::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ea_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
   module_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   proc_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ordinal_collision_dll_path_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -5530,7 +5540,7 @@ AnalyzeExternalRefsResult_PointerData* AnalyzeExternalRefsResult_PointerData::Ne
 
 void AnalyzeExternalRefsResult_PointerData::Clear() {
   if (_has_bits_[0 / 32] & 15) {
-    ea_ = 0u;
+    ea_ = GOOGLE_ULONGLONG(0);
     if (has_module()) {
       if (module_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         module_->clear();
@@ -5561,11 +5571,11 @@ bool AnalyzeExternalRefsResult_PointerData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 ea = 1;
+      // required uint64 ea = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_)));
           set_has_ea();
         } else {
@@ -5651,9 +5661,9 @@ failure:
 void AnalyzeExternalRefsResult_PointerData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.AnalyzeExternalRefsResult.PointerData)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ea(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->ea(), output);
   }
 
   // required string module = 2;
@@ -5696,9 +5706,9 @@ void AnalyzeExternalRefsResult_PointerData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* AnalyzeExternalRefsResult_PointerData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.AnalyzeExternalRefsResult.PointerData)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->ea(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->ea(), target);
   }
 
   // required string module = 2;
@@ -5746,10 +5756,10 @@ int AnalyzeExternalRefsResult_PointerData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 ea = 1;
+    // required uint64 ea = 1;
     if (has_ea()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea());
     }
 
@@ -5911,10 +5921,10 @@ AnalyzeExternalRefsResult_RefData::AnalyzeExternalRefsResult_RefData(const Analy
 void AnalyzeExternalRefsResult_RefData::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ea_ = 0u;
-  len_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
+  len_ = GOOGLE_ULONGLONG(0);
   dis_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  v_ = 0u;
+  v_ = GOOGLE_ULONGLONG(0);
   ref_type_ = 1;
   module_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   proc_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -5983,7 +5993,7 @@ void AnalyzeExternalRefsResult_RefData::Clear() {
         dis_->clear();
       }
     }
-    v_ = 0u;
+    v_ = GOOGLE_ULONGLONG(0);
     ref_type_ = 1;
     if (has_module()) {
       if (module_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -6019,11 +6029,11 @@ bool AnalyzeExternalRefsResult_RefData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 ea = 1;
+      // required uint64 ea = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_)));
           set_has_ea();
         } else {
@@ -6033,12 +6043,12 @@ bool AnalyzeExternalRefsResult_RefData::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 len = 2;
+      // required uint64 len = 2;
       case 2: {
         if (tag == 16) {
          parse_len:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &len_)));
           set_has_len();
         } else {
@@ -6065,12 +6075,12 @@ bool AnalyzeExternalRefsResult_RefData::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 v = 4;
+      // required uint64 v = 4;
       case 4: {
         if (tag == 32) {
          parse_v:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &v_)));
           set_has_v();
         } else {
@@ -6176,14 +6186,14 @@ failure:
 void AnalyzeExternalRefsResult_RefData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.AnalyzeExternalRefsResult.RefData)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ea(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->ea(), output);
   }
 
-  // required uint32 len = 2;
+  // required uint64 len = 2;
   if (has_len()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->len(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->len(), output);
   }
 
   // required string dis = 3;
@@ -6196,9 +6206,9 @@ void AnalyzeExternalRefsResult_RefData::SerializeWithCachedSizes(
       3, this->dis(), output);
   }
 
-  // required uint32 v = 4;
+  // required uint64 v = 4;
   if (has_v()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->v(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->v(), output);
   }
 
   // required .rpc.AnalyzeExternalRefsResult.RefData.RefType ref_type = 5;
@@ -6247,14 +6257,14 @@ void AnalyzeExternalRefsResult_RefData::SerializeWithCachedSizes(
 ::google::protobuf::uint8* AnalyzeExternalRefsResult_RefData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.AnalyzeExternalRefsResult.RefData)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->ea(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->ea(), target);
   }
 
-  // required uint32 len = 2;
+  // required uint64 len = 2;
   if (has_len()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->len(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->len(), target);
   }
 
   // required string dis = 3;
@@ -6268,9 +6278,9 @@ void AnalyzeExternalRefsResult_RefData::SerializeWithCachedSizes(
         3, this->dis(), target);
   }
 
-  // required uint32 v = 4;
+  // required uint64 v = 4;
   if (has_v()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->v(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(4, this->v(), target);
   }
 
   // required .rpc.AnalyzeExternalRefsResult.RefData.RefType ref_type = 5;
@@ -6324,17 +6334,17 @@ int AnalyzeExternalRefsResult_RefData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 ea = 1;
+    // required uint64 ea = 1;
     if (has_ea()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea());
     }
 
-    // required uint32 len = 2;
+    // required uint64 len = 2;
     if (has_len()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->len());
     }
 
@@ -6345,10 +6355,10 @@ int AnalyzeExternalRefsResult_RefData::ByteSize() const {
           this->dis());
     }
 
-    // required uint32 v = 4;
+    // required uint64 v = 4;
     if (has_v()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->v());
     }
 
@@ -6488,7 +6498,15 @@ const int AnalyzeExternalRefsResult_reg_t::kEspFieldNumber;
 const int AnalyzeExternalRefsResult_reg_t::kEbpFieldNumber;
 const int AnalyzeExternalRefsResult_reg_t::kEsiFieldNumber;
 const int AnalyzeExternalRefsResult_reg_t::kEdiFieldNumber;
-const int AnalyzeExternalRefsResult_reg_t::kEipFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRipFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRaxFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRbxFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRcxFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRdxFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRsiFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRdiFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRbpFieldNumber;
+const int AnalyzeExternalRefsResult_reg_t::kRspFieldNumber;
 #endif  // !_MSC_VER
 
 AnalyzeExternalRefsResult_reg_t::AnalyzeExternalRefsResult_reg_t()
@@ -6517,7 +6535,15 @@ void AnalyzeExternalRefsResult_reg_t::SharedCtor() {
   ebp_ = 0u;
   esi_ = 0u;
   edi_ = 0u;
-  eip_ = 0u;
+  rip_ = GOOGLE_ULONGLONG(0);
+  rax_ = GOOGLE_ULONGLONG(0);
+  rbx_ = GOOGLE_ULONGLONG(0);
+  rcx_ = GOOGLE_ULONGLONG(0);
+  rdx_ = GOOGLE_ULONGLONG(0);
+  rsi_ = GOOGLE_ULONGLONG(0);
+  rdi_ = GOOGLE_ULONGLONG(0);
+  rbp_ = GOOGLE_ULONGLONG(0);
+  rsp_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6566,7 +6592,10 @@ void AnalyzeExternalRefsResult_reg_t::Clear() {
   if (_has_bits_[0 / 32] & 255) {
     ZR_(eax_, edi_);
   }
-  eip_ = 0u;
+  if (_has_bits_[8 / 32] & 65280) {
+    ZR_(rip_, rbp_);
+  }
+  rsp_ = GOOGLE_ULONGLONG(0);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -6581,7 +6610,7 @@ bool AnalyzeExternalRefsResult_reg_t::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:rpc.AnalyzeExternalRefsResult.reg_t)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -6700,18 +6729,138 @@ bool AnalyzeExternalRefsResult_reg_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_eip;
+        if (input->ExpectTag(72)) goto parse_rip;
         break;
       }
 
-      // required uint32 eip = 9;
+      // required uint64 rip = 9;
       case 9: {
         if (tag == 72) {
-         parse_eip:
+         parse_rip:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &eip_)));
-          set_has_eip();
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rip_)));
+          set_has_rip();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(80)) goto parse_rax;
+        break;
+      }
+
+      // optional uint64 rax = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_rax:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rax_)));
+          set_has_rax();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(88)) goto parse_rbx;
+        break;
+      }
+
+      // optional uint64 rbx = 11;
+      case 11: {
+        if (tag == 88) {
+         parse_rbx:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rbx_)));
+          set_has_rbx();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(96)) goto parse_rcx;
+        break;
+      }
+
+      // optional uint64 rcx = 12;
+      case 12: {
+        if (tag == 96) {
+         parse_rcx:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rcx_)));
+          set_has_rcx();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(104)) goto parse_rdx;
+        break;
+      }
+
+      // optional uint64 rdx = 13;
+      case 13: {
+        if (tag == 104) {
+         parse_rdx:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rdx_)));
+          set_has_rdx();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(112)) goto parse_rsi;
+        break;
+      }
+
+      // optional uint64 rsi = 14;
+      case 14: {
+        if (tag == 112) {
+         parse_rsi:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rsi_)));
+          set_has_rsi();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(120)) goto parse_rdi;
+        break;
+      }
+
+      // optional uint64 rdi = 15;
+      case 15: {
+        if (tag == 120) {
+         parse_rdi:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rdi_)));
+          set_has_rdi();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(128)) goto parse_rbp;
+        break;
+      }
+
+      // optional uint64 rbp = 16;
+      case 16: {
+        if (tag == 128) {
+         parse_rbp:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rbp_)));
+          set_has_rbp();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(136)) goto parse_rsp;
+        break;
+      }
+
+      // optional uint64 rsp = 17;
+      case 17: {
+        if (tag == 136) {
+         parse_rsp:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &rsp_)));
+          set_has_rsp();
         } else {
           goto handle_unusual;
         }
@@ -6784,9 +6933,49 @@ void AnalyzeExternalRefsResult_reg_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->edi(), output);
   }
 
-  // required uint32 eip = 9;
-  if (has_eip()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->eip(), output);
+  // required uint64 rip = 9;
+  if (has_rip()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(9, this->rip(), output);
+  }
+
+  // optional uint64 rax = 10;
+  if (has_rax()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(10, this->rax(), output);
+  }
+
+  // optional uint64 rbx = 11;
+  if (has_rbx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(11, this->rbx(), output);
+  }
+
+  // optional uint64 rcx = 12;
+  if (has_rcx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(12, this->rcx(), output);
+  }
+
+  // optional uint64 rdx = 13;
+  if (has_rdx()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(13, this->rdx(), output);
+  }
+
+  // optional uint64 rsi = 14;
+  if (has_rsi()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(14, this->rsi(), output);
+  }
+
+  // optional uint64 rdi = 15;
+  if (has_rdi()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(15, this->rdi(), output);
+  }
+
+  // optional uint64 rbp = 16;
+  if (has_rbp()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(16, this->rbp(), output);
+  }
+
+  // optional uint64 rsp = 17;
+  if (has_rsp()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(17, this->rsp(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -6839,9 +7028,49 @@ void AnalyzeExternalRefsResult_reg_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->edi(), target);
   }
 
-  // required uint32 eip = 9;
-  if (has_eip()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->eip(), target);
+  // required uint64 rip = 9;
+  if (has_rip()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(9, this->rip(), target);
+  }
+
+  // optional uint64 rax = 10;
+  if (has_rax()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(10, this->rax(), target);
+  }
+
+  // optional uint64 rbx = 11;
+  if (has_rbx()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(11, this->rbx(), target);
+  }
+
+  // optional uint64 rcx = 12;
+  if (has_rcx()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(12, this->rcx(), target);
+  }
+
+  // optional uint64 rdx = 13;
+  if (has_rdx()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(13, this->rdx(), target);
+  }
+
+  // optional uint64 rsi = 14;
+  if (has_rsi()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(14, this->rsi(), target);
+  }
+
+  // optional uint64 rdi = 15;
+  if (has_rdi()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(15, this->rdi(), target);
+  }
+
+  // optional uint64 rbp = 16;
+  if (has_rbp()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(16, this->rbp(), target);
+  }
+
+  // optional uint64 rsp = 17;
+  if (has_rsp()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(17, this->rsp(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -6914,11 +7143,69 @@ int AnalyzeExternalRefsResult_reg_t::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // required uint32 eip = 9;
-    if (has_eip()) {
+    // required uint64 rip = 9;
+    if (has_rip()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->eip());
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rip());
+    }
+
+    // optional uint64 rax = 10;
+    if (has_rax()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rax());
+    }
+
+    // optional uint64 rbx = 11;
+    if (has_rbx()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rbx());
+    }
+
+    // optional uint64 rcx = 12;
+    if (has_rcx()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rcx());
+    }
+
+    // optional uint64 rdx = 13;
+    if (has_rdx()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rdx());
+    }
+
+    // optional uint64 rsi = 14;
+    if (has_rsi()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rsi());
+    }
+
+    // optional uint64 rdi = 15;
+    if (has_rdi()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rdi());
+    }
+
+    // optional uint64 rbp = 16;
+    if (has_rbp()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rbp());
+    }
+
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional uint64 rsp = 17;
+    if (has_rsp()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->rsp());
     }
 
   }
@@ -6974,8 +7261,34 @@ void AnalyzeExternalRefsResult_reg_t::MergeFrom(const AnalyzeExternalRefsResult_
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_eip()) {
-      set_eip(from.eip());
+    if (from.has_rip()) {
+      set_rip(from.rip());
+    }
+    if (from.has_rax()) {
+      set_rax(from.rax());
+    }
+    if (from.has_rbx()) {
+      set_rbx(from.rbx());
+    }
+    if (from.has_rcx()) {
+      set_rcx(from.rcx());
+    }
+    if (from.has_rdx()) {
+      set_rdx(from.rdx());
+    }
+    if (from.has_rsi()) {
+      set_rsi(from.rsi());
+    }
+    if (from.has_rdi()) {
+      set_rdi(from.rdi());
+    }
+    if (from.has_rbp()) {
+      set_rbp(from.rbp());
+    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (from.has_rsp()) {
+      set_rsp(from.rsp());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -7009,7 +7322,15 @@ void AnalyzeExternalRefsResult_reg_t::Swap(AnalyzeExternalRefsResult_reg_t* othe
     std::swap(ebp_, other->ebp_);
     std::swap(esi_, other->esi_);
     std::swap(edi_, other->edi_);
-    std::swap(eip_, other->eip_);
+    std::swap(rip_, other->rip_);
+    std::swap(rax_, other->rax_);
+    std::swap(rbx_, other->rbx_);
+    std::swap(rcx_, other->rcx_);
+    std::swap(rdx_, other->rdx_);
+    std::swap(rsi_, other->rsi_);
+    std::swap(rdi_, other->rdi_);
+    std::swap(rbp_, other->rbp_);
+    std::swap(rsp_, other->rsp_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -7362,8 +7683,8 @@ CheckPEHeadersRequest::CheckPEHeadersRequest(const CheckPEHeadersRequest& from)
 
 void CheckPEHeadersRequest::SharedCtor() {
   _cached_size_ = 0;
-  base_ = 0u;
-  size_ = 0u;
+  base_ = GOOGLE_ULONGLONG(0);
+  size_ = GOOGLE_ULONGLONG(0);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7428,11 +7749,11 @@ bool CheckPEHeadersRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 base = 1;
+      // required uint64 base = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &base_)));
           set_has_base();
         } else {
@@ -7442,12 +7763,12 @@ bool CheckPEHeadersRequest::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 size = 2;
+      // required uint64 size = 2;
       case 2: {
         if (tag == 16) {
          parse_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &size_)));
           set_has_size();
         } else {
@@ -7482,14 +7803,14 @@ failure:
 void CheckPEHeadersRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.CheckPEHeadersRequest)
-  // required uint32 base = 1;
+  // required uint64 base = 1;
   if (has_base()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->base(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->base(), output);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->size(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -7502,14 +7823,14 @@ void CheckPEHeadersRequest::SerializeWithCachedSizes(
 ::google::protobuf::uint8* CheckPEHeadersRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.CheckPEHeadersRequest)
-  // required uint32 base = 1;
+  // required uint64 base = 1;
   if (has_base()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->base(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->base(), target);
   }
 
-  // required uint32 size = 2;
+  // required uint64 size = 2;
   if (has_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->size(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -7524,17 +7845,17 @@ int CheckPEHeadersRequest::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 base = 1;
+    // required uint64 base = 1;
     if (has_base()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->base());
     }
 
-    // required uint32 size = 2;
+    // required uint64 size = 2;
     if (has_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->size());
     }
 
@@ -7639,8 +7960,8 @@ CheckPEHeadersResult_Exports::CheckPEHeadersResult_Exports(const CheckPEHeadersR
 void CheckPEHeadersResult_Exports::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  ea_ = 0u;
-  ord_ = 0u;
+  ea_ = GOOGLE_ULONGLONG(0);
+  ord_ = GOOGLE_ULONGLONG(0);
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -7716,11 +8037,11 @@ bool CheckPEHeadersResult_Exports::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 ea = 1;
+      // required uint64 ea = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ea_)));
           set_has_ea();
         } else {
@@ -7730,12 +8051,12 @@ bool CheckPEHeadersResult_Exports::MergePartialFromCodedStream(
         break;
       }
 
-      // required uint32 ord = 2;
+      // required uint64 ord = 2;
       case 2: {
         if (tag == 16) {
          parse_ord:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &ord_)));
           set_has_ord();
         } else {
@@ -7787,14 +8108,14 @@ failure:
 void CheckPEHeadersResult_Exports::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:rpc.CheckPEHeadersResult.Exports)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ea(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->ea(), output);
   }
 
-  // required uint32 ord = 2;
+  // required uint64 ord = 2;
   if (has_ord()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->ord(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->ord(), output);
   }
 
   // optional string name = 3;
@@ -7817,14 +8138,14 @@ void CheckPEHeadersResult_Exports::SerializeWithCachedSizes(
 ::google::protobuf::uint8* CheckPEHeadersResult_Exports::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc.CheckPEHeadersResult.Exports)
-  // required uint32 ea = 1;
+  // required uint64 ea = 1;
   if (has_ea()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->ea(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->ea(), target);
   }
 
-  // required uint32 ord = 2;
+  // required uint64 ord = 2;
   if (has_ord()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->ord(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->ord(), target);
   }
 
   // optional string name = 3;
@@ -7850,17 +8171,17 @@ int CheckPEHeadersResult_Exports::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 ea = 1;
+    // required uint64 ea = 1;
     if (has_ea()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ea());
     }
 
-    // required uint32 ord = 2;
+    // required uint64 ord = 2;
     if (has_ord()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->ord());
     }
 
@@ -7980,10 +8301,10 @@ void CheckPEHeadersResult_Section::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  va_ = 0u;
-  v_size_ = 0u;
-  raw_ = 0u;
-  raw_size_ = 0u;
+  va_ = GOOGLE_ULONGLONG(0);
+  v_size_ = GOOGLE_ULONGLONG(0);
+  raw_ = GOOGLE_ULONGLONG(0);
+  raw_size_ = GOOGLE_ULONGLONG(0);
   characteristics_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -8075,12 +8396,12 @@ bool CheckPEHeadersResult_Section::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 va = 2;
+      // optional uint64 va = 2;
       case 2: {
         if (tag == 16) {
          parse_va:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &va_)));
           set_has_va();
         } else {
@@ -8090,12 +8411,12 @@ bool CheckPEHeadersResult_Section::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 v_size = 3;
+      // optional uint64 v_size = 3;
       case 3: {
         if (tag == 24) {
          parse_v_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &v_size_)));
           set_has_v_size();
         } else {
@@ -8105,12 +8426,12 @@ bool CheckPEHeadersResult_Section::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 raw = 4;
+      // optional uint64 raw = 4;
       case 4: {
         if (tag == 32) {
          parse_raw:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &raw_)));
           set_has_raw();
         } else {
@@ -8120,12 +8441,12 @@ bool CheckPEHeadersResult_Section::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 raw_size = 5;
+      // optional uint64 raw_size = 5;
       case 5: {
         if (tag == 40) {
          parse_raw_size:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &raw_size_)));
           set_has_raw_size();
         } else {
@@ -8185,24 +8506,24 @@ void CheckPEHeadersResult_Section::SerializeWithCachedSizes(
       1, this->name(), output);
   }
 
-  // optional uint32 va = 2;
+  // optional uint64 va = 2;
   if (has_va()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->va(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->va(), output);
   }
 
-  // optional uint32 v_size = 3;
+  // optional uint64 v_size = 3;
   if (has_v_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->v_size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->v_size(), output);
   }
 
-  // optional uint32 raw = 4;
+  // optional uint64 raw = 4;
   if (has_raw()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->raw(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->raw(), output);
   }
 
-  // optional uint32 raw_size = 5;
+  // optional uint64 raw_size = 5;
   if (has_raw_size()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->raw_size(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->raw_size(), output);
   }
 
   // optional uint32 characteristics = 6;
@@ -8231,24 +8552,24 @@ void CheckPEHeadersResult_Section::SerializeWithCachedSizes(
         1, this->name(), target);
   }
 
-  // optional uint32 va = 2;
+  // optional uint64 va = 2;
   if (has_va()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->va(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->va(), target);
   }
 
-  // optional uint32 v_size = 3;
+  // optional uint64 v_size = 3;
   if (has_v_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->v_size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->v_size(), target);
   }
 
-  // optional uint32 raw = 4;
+  // optional uint64 raw = 4;
   if (has_raw()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->raw(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(4, this->raw(), target);
   }
 
-  // optional uint32 raw_size = 5;
+  // optional uint64 raw_size = 5;
   if (has_raw_size()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->raw_size(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(5, this->raw_size(), target);
   }
 
   // optional uint32 characteristics = 6;
@@ -8275,31 +8596,31 @@ int CheckPEHeadersResult_Section::ByteSize() const {
           this->name());
     }
 
-    // optional uint32 va = 2;
+    // optional uint64 va = 2;
     if (has_va()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->va());
     }
 
-    // optional uint32 v_size = 3;
+    // optional uint64 v_size = 3;
     if (has_v_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->v_size());
     }
 
-    // optional uint32 raw = 4;
+    // optional uint64 raw = 4;
     if (has_raw()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->raw());
     }
 
-    // optional uint32 raw_size = 5;
+    // optional uint64 raw_size = 5;
     if (has_raw_size()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
           this->raw_size());
     }
 

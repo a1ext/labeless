@@ -54,6 +54,7 @@
 #include <QProcess>
 #include <QRegExp>
 #include <QSettings>
+#include <QTextCodec>
 #include <QVariant>
 
 #include <google/protobuf/stubs/common.h>
@@ -98,7 +99,7 @@ enum SettingsCtrl
 };
 
 
-static const uint32_t kDefaultExternSegLen = 0xF000;
+static const uint64_t kDefaultExternSegLen = 0xF000UL;
 static const Settings kDefaultSettings(
 	"127.0.0.1",
 	3852,
@@ -110,7 +111,8 @@ static const Settings kDefaultSettings(
 	true,
 	true,
 	kDefaultExternSegLen,
-	Settings::OW_AlwaysAsk
+	Settings::OW_AlwaysAsk,
+	Settings::CS_Disabled
 );
 
 enum LabelessNodeAltType
@@ -118,7 +120,8 @@ enum LabelessNodeAltType
 	LNAT_Port = 0,
 	LNAT_RmoteModBase,
 	LNAT_Demangle,
-	LNAT_LocalLabels
+	LNAT_LocalLabels,
+	LNAT_CommentsSync
 };
 
 void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename, int line,	const std::string& message)
@@ -188,9 +191,6 @@ Labeless::Labeless()
 
 Labeless::~Labeless()
 {
-	msg("%s\n", __FUNCTION__);
-
-	shutdown();
 }
 
 
@@ -216,6 +216,7 @@ Settings Labeless::loadSettings()
 			m_Settings.remoteModBase = n.altval(LNAT_RmoteModBase);
 			m_Settings.demangle = n.altval(LNAT_Demangle) != 0;
 			m_Settings.localLabels = n.altval(LNAT_LocalLabels) != 0;
+			m_Settings.commentsSync = static_cast<Settings::CommentsSync>(n.altval(LNAT_CommentsSync));
 		}
 		else
 		{
@@ -245,6 +246,7 @@ void Labeless::storeSettings()
 	n.altset(LNAT_RmoteModBase, m_Settings.remoteModBase);
 	n.altset(LNAT_Demangle, m_Settings.demangle ? 1 : 0);
 	n.altset(LNAT_LocalLabels, m_Settings.localLabels ? 1 : 0);
+	n.altset(LNAT_CommentsSync, m_Settings.commentsSync);
 
 	// global settings
 	do {
@@ -259,6 +261,19 @@ void Labeless::storeSettings()
 	PythonPaletteManager::instance().storeSettings();
 }
 
+bool Labeless::isUtf8StringValid(const char* const s, size_t len) const
+{
+	static const std::string kUTF8 = "UTF-8";
+	QTextCodec* codec = QTextCodec::codecForName(kUTF8.c_str()); // TODO: may be cached?
+	if (!codec)
+		return false;
+
+	QTextCodec::ConverterState state;
+	codec->toUnicode(s, static_cast<int>(len), &state);
+
+	return state.invalidChars == 0;
+}
+
 void Labeless::setTargetHostAddr(const std::string& ip, WORD port)
 {
 	QMutexLocker lock(&m_ConfigLock);
@@ -269,8 +284,6 @@ void Labeless::setTargetHostAddr(const std::string& ip, WORD port)
 
 void Labeless::onSyncronizeAllRequested()
 {
-#define OLLY_TEXTLEN 256 // TEXTLEN from Olly's SDK
-
 	if (!m_Settings.remoteModBase && QMessageBox::No == QMessageBox::question(findIDAMainWindow(), tr("?"),
 			tr("The \"Remote module base\" is zero.\nDo you want to continue?"),
 			QMessageBox::Yes, QMessageBox::No))
@@ -279,8 +292,8 @@ void Labeless::onSyncronizeAllRequested()
 	m_SynchronizeAllNow = true;
 	msg("Labeless: do sync all now...\n");
 
-	FuncNameSync::DataList labelPoints;
-	LocalLabelsSync::DataList commentPoints;
+	LabelsSync::DataList labelPoints;
+	CommentsSync::DataList commentPoints;
 
 	qstring name;
 	int flags = 0;
@@ -289,22 +302,28 @@ void Labeless::onSyncronizeAllRequested()
 	if (m_Settings.demangle)
 		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;
 
+	char segBuff[MAXSTR];
+
 	segment_t* s = static_cast<segment_t*>(segs.first_area_ptr());
 	for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
 	{
 		if (is_spec_segm(s->type))
 			continue;
+		const bool isExternSeg = (s->type & SEG_XTRN) == SEG_XTRN && get_segm_name(s, segBuff, MAXSTR) > 0 && std::string(segBuff) == NAME_EXTERN;
+		if (isExternSeg)
+			continue;
 		ea_t ea = s->startEA;
 
 		while (true)
 		{
-			if (get_true_name(&name, ea, flags) > 0 && is_uname(name.c_str()))
+			if (!has_dummy_name(getFlags(ea)) && get_true_name(&name, ea, flags) > 0 && is_uname(name.c_str()))
 			{
 				std::string s = name.c_str();
 				if (s.length() >= OLLY_TEXTLEN)
 					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
-				labelPoints.push_back(FuncNameSync::Data(ea, s));
-				msg("%08X: %s\n", ea, name.c_str());
+				if (isUtf8StringValid(s.c_str(), s.length()))
+					labelPoints.push_back(LabelsSync::Data(ea, s));
+				//msg("%08X: %s\n", ea, name.c_str());
 			}
 			
 			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
@@ -315,7 +334,40 @@ void Labeless::onSyncronizeAllRequested()
 	}
 
 	if (!labelPoints.empty())
-		addFuncNameSyncData(labelPoints);
+		addLabelsSyncData(labelPoints);
+
+	if (m_Settings.commentsSync != Settings::CS_Disabled)
+	{
+		char buff[OLLY_TEXTLEN];
+		const bool nonRptCmt = m_Settings.commentsSync == Settings::CS_NonRepeatable || m_Settings.commentsSync == Settings::CS_All;
+		const bool rptCmt = m_Settings.commentsSync == Settings::CS_Repeatable || m_Settings.commentsSync == Settings::CS_All;
+		ssize_t len;
+
+		s = static_cast<segment_t*>(segs.first_area_ptr());
+		for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
+		{
+			for (ea_t ea = s->startEA, endEa = s->endEA; ea < endEa; ++ea)
+			{
+				if (!has_cmt(getFlags(ea)))
+					continue;
+
+				if (nonRptCmt &&
+					(len = get_cmt(ea, false, buff, OLLY_TEXTLEN)) > 0 &&
+					isUtf8StringValid(buff, len))
+				{
+					commentPoints.append(CommentsSync::Data(ea, std::string(buff, static_cast<size_t>(len))));
+					continue;
+				}
+				if (rptCmt &&
+					(len = get_cmt(ea, true, buff, OLLY_TEXTLEN)) > 0 &&
+					isUtf8StringValid(buff, len))
+					commentPoints.append(CommentsSync::Data(ea, std::string(buff, static_cast<size_t>(len))));
+			}
+		}
+		if (!commentPoints.isEmpty())
+			addCommentsSyncData(commentPoints);
+	}
+	msg("Labels: %d, comments: %d\n", labelPoints.count(), commentPoints.count());
 	m_SynchronizeAllNow = false;
 }
 
@@ -357,9 +409,9 @@ void Labeless::onRename(uint32_t ea, const std::string& newName)
 	if (!m_DumpList.isEmpty() && m_DumpList.last().state != IDADump::ST_Done)
 		return;
 	msg("%s: rename addr %08X to %s\n", __FUNCTION__, ea, newName.c_str());
-	FuncNameSync::DataList fncdl;
-	fncdl.push_back(FuncNameSync::Data(ea, newName));
-	addFuncNameSyncData(fncdl);
+	LabelsSync::DataList fncdl;
+	fncdl.push_back(LabelsSync::Data(ea, newName));
+	addLabelsSyncData(fncdl);
 }
 
 void Labeless::onAutoanalysisFinished()
@@ -409,7 +461,7 @@ void Labeless::onAutoanalysisFinished()
 			{
 				continue;
 			}
-			const QString sDisasm = QString::fromAscii(disasm);
+			const QString sDisasm = QString::fromLatin1(disasm);
 			if (reOpnd.exactMatch(sDisasm))
 			{
 				const QString name = reOpnd.cap(2);
@@ -505,21 +557,25 @@ void Labeless::terminate()
 
 void Labeless::shutdown()
 {
+	static bool shutdownCalled = false;
+	if (shutdownCalled)
+		return;
+	shutdownCalled = true;
 	terminate();
 	WSACleanup();
 	GlobalSettingsManger::instance().detach();
 }
 
-void Labeless::addFuncNameSyncData(const FuncNameSync::DataList& sds)
+void Labeless::addLabelsSyncData(const LabelsSync::DataList& sds)
 {
-	auto sync = std::make_shared<FuncNameSync>();
+	auto sync = std::make_shared<LabelsSync>();
 	sync->data = sds;
 	addRpcData(sync);
 }
 
-void Labeless::addLocLabelSyncData(const LocalLabelsSync::DataList& dl)
+void Labeless::addCommentsSyncData(const CommentsSync::DataList& dl)
 {
-	auto sync = std::make_shared<LocalLabelsSync>();
+	auto sync = std::make_shared<CommentsSync>();
 	sync->data = dl;
 	addRpcData(sync);
 }
@@ -1285,14 +1341,14 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 	IDADump& icInfo = m_DumpList.back();
 
-	if (gdp->eip >= gdp->req.eaFrom && gdp->eip <= gdp->req.eaTo - sizeof(DWORD_PTR))
+	if (gdp->rip >= gdp->req.eaFrom && gdp->rip <= gdp->req.eaTo - sizeof(DWORD_PTR))
 	{
 		const auto& entryName = getNewNameOfEntry();
-		add_entry(gdp->eip, gdp->eip, entryName.c_str(), true);
+		add_entry(gdp->rip, gdp->rip, entryName.c_str(), true);
 		msg("Entry created %s, waiting for finish anto-analysis\n", entryName.c_str());
 		autoWait();
 	}
-	std::set<ea_t> exportEntries;
+	std::set<uint64_t> exportEntries;
 	for (int i = 0, e = icInfo.exports.size(); i < e; ++i)
 	{
 		auto ea = icInfo.exports.at(i).ea;
@@ -1396,6 +1452,7 @@ void Labeless::onAnalyzeExternalRefsFinished()
 
 					do {
 						ScopedEnabler enabler(m_SuppressMessageBoxesFromIDA);
+						Q_UNUSED(enabler);
 						size = ph.notify(ph.assemble, drefEA, ::cmd.cs, drefEA, true, disasmClean, ass);
 					} while (0);
 
@@ -1518,12 +1575,6 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 		return false;
 	}
 
-	/*if (SOCKET_ERROR == shutdown(s, SD_SEND))
-	{
-		msg("shutdown() failed. Error: %s\n", hlp::net::wsaErrorToString());
-		return false;
-	}*/
-
 	std::string rawResponse;
 	if (!hlp::net::sockRecvAll(s, rawResponse) || rawResponse.empty())
 	{
@@ -1550,7 +1601,7 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	else if (err.substr(0, kVer.length()) != kVer)
 		errorMsg = QString::fromStdString("version mismatch. Labeless IDA: " + kVer + ". But Labeless Olly: " + err);
 	
-	return rv;
+	return rv && errorMsg.isEmpty();
 }
 
 uint32_t Labeless::loadImportTable()
@@ -1751,6 +1802,8 @@ bool Labeless::addAPIEnumValue(const std::string& name, uval_t value)
 
 void Labeless::onMakeCode(ea_t ea, ::asize_t size)
 {
+	Q_UNUSED(ea);
+	Q_UNUSED(size);
 	if (m_IgnoreMakeCode)
 		return;
 	/*char disasm[MAXSTR] = {};
@@ -1846,9 +1899,10 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 	}
 	if (notification_code == ui_plugin_loaded)
 	{
+		static const std::string kIDAPython = "IDAPython";
 		::plugin_info_t* info = va_arg(va, ::plugin_info_t *);
 		std::string name = info->name;
-		if (name == "IDAPython")
+		if (name == kIDAPython)
 			Labeless::instance().initIDAPython();
 		
 		return 0;
@@ -1864,9 +1918,10 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 	}
 	if (notification_code == ui_mbox)
 	{
-		::mbox_kind_t kind = va_arg(va, ::mbox_kind_t);
+		//::mbox_kind_t kind = va_arg(va, ::mbox_kind_t);
 		if (instance().m_SuppressMessageBoxesFromIDA)
 			return -1;
+		return 0;
 	}
 	return 0;
 }
@@ -2029,7 +2084,7 @@ bool Labeless::runIDAPythonScript(const std::string& script, std::string& extern
 		externObj = rv.c_str();
 		VarFree(&rv);
 	}
-	else if (::qstrlen(errbuff) && !QString::fromAscii(errbuff).contains("NameError"))
+	else if (::qstrlen(errbuff) && !QString::fromLatin1(errbuff).contains("NameError"))
 	{
 		error = errbuff;
 		return false;

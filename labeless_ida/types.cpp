@@ -20,7 +20,7 @@ ExternSegData::ExternSegData()
 {
 }
 
-MemoryRegion::MemoryRegion(ea_t base_, uint32 size_, uint32 protect_)
+MemoryRegion::MemoryRegion(uint64_t base_, uint64_t size_, uint32 protect_)
 	: base(base_)
 	, size(size_)
 	, protect(protect_)
@@ -34,15 +34,16 @@ bool MemoryRegion::isIntersects(const MemoryRegion& r) const
 
 Settings::Settings(const std::string host_,
 	uint16_t port_,
-	uint32_t remoteModBase_,
+	uint64_t remoteModBase_,
 	bool enabled_,
 	bool demangle_,
 	bool localLabels_,
 	bool nonCodeNames_,
 	bool analysePEHeader_,
 	bool postProcessFixCallJumps_,
-	uint32_t defaultExternSegSize_,
-	OverwriteWarning overwriteWarning_)
+	uint64_t defaultExternSegSize_,
+	OverwriteWarning overwriteWarning_,
+	CommentsSync commentsSync_)
 	: host(host_)
 	, port(port_)
 	, enabled(enabled_)
@@ -53,5 +54,6 @@ Settings::Settings(const std::string host_,
 	, postProcessFixCallJumps(postProcessFixCallJumps_)
 	, defaultExternSegSize(defaultExternSegSize_)
 	, overwriteWarning(overwriteWarning_)
+	, commentsSync(commentsSync_)
 {
 }

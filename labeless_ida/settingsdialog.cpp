@@ -26,7 +26,7 @@ static const std::string kPropColor = "p_color";
 
 } // anonymous
 
-SettingsDialog::SettingsDialog(const Settings& settings, quint32 currModBase, QWidget* parent)
+SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase, QWidget* parent)
 	: QDialog(parent)
 	, m_UI(new Ui::SettingsDialog)
 	, m_PaletteChanged(false)
@@ -63,9 +63,10 @@ SettingsDialog::SettingsDialog(const Settings& settings, quint32 currModBase, QW
 	m_UI->chLocalLabels->setChecked(settings.localLabels);
 	m_UI->chPerformPEAnalysis->setChecked(settings.analysePEHeader);
 	m_UI->chPostProcessFixCallJumps->setChecked(settings.postProcessFixCallJumps);
-	m_UI->leExternSegDefSize->setText("0x" + QString("%1").arg(settings.defaultExternSegSize, 8, 16, QChar('0')).toUpper());
+	m_UI->leExternSegDefSize->setText(QString("0x%1").arg(settings.defaultExternSegSize, 8, 16, QChar('0')).toUpper());
 	m_UI->chNonCodeNames->setChecked(settings.nonCodeNames);
 	m_UI->cbOverwriteWarning->setCurrentIndex(settings.overwriteWarning);
+	m_UI->cbCommentsSync->setCurrentIndex(settings.commentsSync);
 
 	QLabel* const lVer = new QLabel(m_UI->tabWidget);
 	lVer->setText(QString("v %1").arg(LABELESS_VER_STR));
@@ -113,7 +114,7 @@ void SettingsDialog::setUpPalette()
 		{ tr("Brace"),											PPET_Brace },
 		{ tr("Def/Class"),										PPET_Defclass },
 		{ tr("String between ' and \""),						PPET_String },
-		{ tr("String between triple quetes '''' and \"\"\""),	PPET_String2 },
+		{ tr("String between triple quotes '''' and \"\"\""),	PPET_String2 },
 		{ tr("Comment"),										PPET_Comment },
 		{ tr("Self"),											PPET_Self },
 		{ tr("Number"),											PPET_Number }
@@ -147,19 +148,17 @@ void SettingsDialog::getSettings(Settings& result)
 	result.port = static_cast<short>(m_UI->sbOllyPort->value());
 	bool ok = false;
 	QString remoteModBase = m_UI->leRemoteModuleBase->text().trimmed();
-	result.remoteModBase = remoteModBase.toUInt(&ok, 10);
-
-	if (!ok)
-		result.remoteModBase = remoteModBase.toUInt(&ok, 16);
+	result.remoteModBase = remoteModBase.toULongLong(&ok, 16);
 	
 	result.enabled = m_UI->gbEnabledSync->isChecked();
 	result.demangle = m_UI->chDemangleNames->isChecked();
 	result.localLabels = m_UI->chLocalLabels->isChecked();
 	result.nonCodeNames = m_UI->chNonCodeNames->isChecked();
 	result.analysePEHeader = m_UI->chPerformPEAnalysis->isChecked();
-	result.defaultExternSegSize = m_UI->leExternSegDefSize->text().toUInt(nullptr, 16);
+	result.defaultExternSegSize = m_UI->leExternSegDefSize->text().toULongLong(nullptr, 16);
 	result.postProcessFixCallJumps = m_UI->chPostProcessFixCallJumps->isChecked();
 	result.overwriteWarning = static_cast<Settings::OverwriteWarning>(m_UI->cbOverwriteWarning->currentIndex());
+	result.commentsSync = static_cast<Settings::CommentsSync>(m_UI->cbCommentsSync->currentIndex());
 }
 
 void SettingsDialog::changeEvent(QEvent *e)

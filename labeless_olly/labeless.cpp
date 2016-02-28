@@ -42,6 +42,8 @@ static struct StaticConfig
 	UINT		hlpPortChanged = 0;
 } gConfig;
 
+static const char kBackendName[] {"ollydbg11"};
+
 
 #ifdef ENABLE_PYTHON_PROFILING
 int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
@@ -352,6 +354,35 @@ static PyObject* olly_get_ver(PyObject*, PyObject* arg)
 	return rv;
 }
 
+static PyObject* olly_get_hprocess(PyObject*, PyObject*)
+{
+	const t_status status = Getstatus();
+	if (status == STAT_EVENT || status == STAT_RUNNING || status == STAT_CLOSING)
+		return PyInt_FromSize_t(static_cast<size_t>(Plugingetvalue(VAL_HPROCESS)));
+	Py_RETURN_NONE;
+}
+
+static PyObject* olly_get_pid(PyObject*, PyObject*)
+{
+	const t_status status = Getstatus();
+	if (status == STAT_EVENT || status == STAT_RUNNING || status == STAT_CLOSING)
+		return PyInt_FromLong(Plugingetvalue(VAL_PROCESSID));
+	Py_RETURN_NONE;
+}
+
+static PyObject* olly_get_backend_name(PyObject*, PyObject*)
+{
+	return PyString_FromString(kBackendName);
+}
+
+static PyObject* olly_get_backend_info(PyObject*, PyObject*)
+{
+	PyObject* const rv = PyDict_New();
+	PyDict_SetItemString(rv, "bitness", PyString_FromString("32")); // FIXME
+	PyDict_SetItemString(rv, "name", PyString_FromString(kBackendName));
+	return rv;
+}
+
 // Register the wrapped functions.
 static PyMethodDef PyOllyMethods [] =
 {
@@ -362,6 +393,9 @@ static PyMethodDef PyOllyMethods [] =
 	{ "olly_log", olly_log, METH_O, "Olly log output" },
 	{ "set_error", olly_set_error, METH_VARARGS, NULL },
 	{ "labeless_ver", olly_get_ver, METH_NOARGS, "get Labeless version" },
+	{ "get_hprocess", olly_get_hprocess, METH_NOARGS, "get hProcess of debuggee" },
+	{ "get_pid", olly_get_pid, METH_NOARGS, "get PID of debuggee" },
+	{ "get_backend_info", olly_get_backend_info, METH_NOARGS, "get backend info\n:return: {'name': '', 'bitness' : ''}" },
 	{ NULL, NULL, 0, NULL }
 };
 
@@ -477,6 +511,35 @@ bool sendAll(SOCKET s, const std::string& buff, std::string& error)
 	return rv;
 }
 
+void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename, int line, const std::string& message)
+{
+	static const std::string kPrefix = "protobuf: ";
+	if (level < ::google::protobuf::LOGLEVEL_WARNING)
+		return;
+
+	std::string levelStr;
+	switch (level)
+	{
+	case google::protobuf::LOGLEVEL_INFO:
+		levelStr = "[INFO] ";
+		break;
+	case google::protobuf::LOGLEVEL_WARNING:
+		levelStr = "[WARN] ";
+		break;
+	case google::protobuf::LOGLEVEL_ERROR:
+		levelStr = "[ERRO] ";
+		break;
+	case google::protobuf::LOGLEVEL_FATAL:
+		levelStr = "[FATA] ";
+		break;
+	default:
+		break;
+	}
+	const auto msg = util::sformat("%s %s:%u %s", levelStr.c_str(), filename, line, message.c_str());
+	server_log(msg.c_str());
+}
+
+
 } // anonymous
 
 Request* ClientData::find(uint64_t jobId)
@@ -500,15 +563,15 @@ bool ClientData::remove(uint64_t jobId)
 	return false;
 }
 
-std::atomic_bool Labeless::m_ServerEnabled;
+std::atomic_bool Labeless::m_ServerEnabled{ false };
 
 Labeless::Labeless()
 	: m_hInst(nullptr)
 	, m_Port(defaultPort())
-	//, m_HelperWnd(nullptr)
 	, m_LogList(nullptr)
 {
 	__asm __volatile finit; // Stupid Olly's bug fix
+	::google::protobuf::SetLogHandler(protobufLogHandler);
 }
 
 Labeless& Labeless::instance()
@@ -1143,7 +1206,7 @@ bool Labeless::onClientSockBufferReceived(ClientData& cd, const std::string& raw
 			break;
 		if (!req.script.empty())
 		{
-			errorStr = "RPC request can't have 'script' value";
+			errorStr = "RPC request shouldn't have 'script' value";
 			break;
 		}
 

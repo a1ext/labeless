@@ -64,6 +64,25 @@ set_error = _py_olly.set_error
 
 
 def labeless_ver():
-	""" Gets Labeless version"""
-	return _py_olly.labeless_ver()
+    """ Gets Labeless version"""
+    return _py_olly.labeless_ver()
 labeless_ver = _py_olly.labeless_ver
+
+
+def get_hprocess():
+    """get hProcess of debuggee"""
+    return _py_olly.get_hprocess()
+get_hprocess = _py_olly.get_hprocess
+
+
+def get_pid():
+    """get PID of debuggee"""
+    return _py_olly.get_pid()
+get_pid = _py_olly.get_pid
+
+
+def get_backend_info():
+    """get backend info
+    :return: {'name': '', 'bitness': ''}"""
+    return _py_olly.get_backend_info()
+get_backend_info = _py_olly.get_backend_info

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>389</width>
-    <height>328</height>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -237,6 +237,47 @@
                 <property name="text">
                  <string>Non-code names</string>
                 </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2">
+              <item>
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>Comments:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cbCommentsSync">
+                <property name="sizeAdjustPolicy">
+                 <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+                </property>
+                <property name="duplicatesEnabled">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>&lt;Disabled&gt;</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Non-repeatable</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Repeatable</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>All</string>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>

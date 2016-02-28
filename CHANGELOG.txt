@@ -1,3 +1,13 @@
+# v 1.0.0.8
+ + Comments syncronization implemented (has configuration)
+ + PyCharm remote debug script added
+ * Preparing for x64-bit support
+ * Preparing for Qt5 (IDA6.9>)
+ * Optimized skipping of dummy names
+ * Olly1.1: protobuf message logging implemented
+ * Useful links were added to README.md
+ + Slides added
+
 # v 1.0.0.7
  + Added loading dummy database functionality
 
