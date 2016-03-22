@@ -27,3 +27,11 @@
 /test2/errorlog.txt
 /test2/OLLYDBG.plt
 /test2/labeless_ollyapi/.idea
+/test2/*.udd
+/py/MANIFEST
+/py/build
+/py/.idea
+/py/dist
+/py/labeless.log
+/.vs
+/deploy/.idea
