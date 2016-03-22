@@ -56,14 +56,14 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->cbOllyIP->setCurrentIndex(m_UI->cbOllyIP->findText(currHostVal));
 
 	m_UI->sbOllyPort->setValue(settings.port);
-	m_UI->leRemoteModuleBase->setText(QString("0x%1").arg(settings.remoteModBase, 8, 16, QChar('0')));
-	m_UI->leRemoteModuleBase->setToolTip(QString("Current IDA DB's module base is 0x%1.").arg(currModBase, 8, 16, QChar('0')));
+	m_UI->leRemoteModuleBase->setText(QString("0x%1").arg(settings.remoteModBase, sizeof(ea_t) * 2, 16, QChar('0')));
+	m_UI->leRemoteModuleBase->setToolTip(QString("Current IDA DB's module base is 0x%1.").arg(currModBase, sizeof(ea_t) * 2, 16, QChar('0')));
 	m_UI->gbEnabledSync->setChecked(settings.enabled);
 	m_UI->chDemangleNames->setChecked(settings.demangle);
 	m_UI->chLocalLabels->setChecked(settings.localLabels);
 	m_UI->chPerformPEAnalysis->setChecked(settings.analysePEHeader);
 	m_UI->chPostProcessFixCallJumps->setChecked(settings.postProcessFixCallJumps);
-	m_UI->leExternSegDefSize->setText(QString("0x%1").arg(settings.defaultExternSegSize, 8, 16, QChar('0')).toUpper());
+	m_UI->leExternSegDefSize->setText(QString("0x%1").arg(settings.defaultExternSegSize, sizeof(ea_t) * 2, 16, QChar('0')).toUpper());
 	m_UI->chNonCodeNames->setChecked(settings.nonCodeNames);
 	m_UI->cbOverwriteWarning->setCurrentIndex(settings.overwriteWarning);
 	m_UI->cbCommentsSync->setCurrentIndex(settings.commentsSync);
@@ -235,10 +235,10 @@ bool SettingsDialog::validate() const
 		return false;
 	}
 	bool ok = false;
-	const uint32_t defaultExternSegSize = m_UI->leExternSegDefSize->text().toUInt(&ok, 16);
-	if (!ok || defaultExternSegSize < 0x1000 || (defaultExternSegSize % sizeof(DWORD_PTR)))
+	const uint64_t defaultExternSegSize = m_UI->leExternSegDefSize->text().toULongLong(&ok, 16);
+	if (!ok || defaultExternSegSize < 0x1000 || (defaultExternSegSize % sizeof(ea_t)))
 	{
-		info(tr("Size of \"extern\" segment in hex is <b>invalid</b>.<br>Should be multiple by DWORD_PTR size(for i686 arch = 4) and not less than 0x1000.").toStdString().c_str());
+		info(tr("Size of \"extern\" segment in hex is <b>invalid</b>.<br>Should be multiple by ea_t size(for i686 arch = 4) and not less than 0x1000.").toStdString().c_str());
 		return false;
 	}
 

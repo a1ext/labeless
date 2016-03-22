@@ -61,7 +61,7 @@ public:
 	ea_t remoteModuleBase();
 
 	/**< hook processor_t::idp_notify - begin */
-	void onRename(uint32_t ea, const std::string& newName);
+	void onRename(uint64_t ea, const std::string& newName);
 	void onAutoanalysisFinished();
 	void onMakeCode(ea_t ea, ::asize_t size);
 	void onMakeData(ea_t ea, ::flags_t flags, ::tid_t tid, ::asize_t len);
@@ -90,6 +90,7 @@ public:
 
 private slots:
 	void onRunPythonScriptFinished();
+	void onGetBackendInfoFinished();
 	void onGetMemoryMapFinished();
 	void onCheckPEHeadersFinished();
 	void onReadMemoryRegionsFinished();
@@ -141,12 +142,13 @@ private:
 	QMainWindow* findIDAMainWindow() const;
 private:
 	bool addAPIEnumValue(const std::string& name, uval_t value);
-	bool mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint32_t region_size);
+	bool mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size);
 	segment_t* getFirstOverlappedSegment(const area_t& area, segment_t* exceptThisSegment);
 	bool createSegment(const area_t& area, uchar perm, uchar type, const std::string& data, segment_t& result);
 	void getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemoryRegions::t_memory& m, uchar& perm, uchar& type) const;
+	bool askForSnapshotBeforeOverwrite(const area_t* area, const segment_t* seg, bool& snapshotTaken);
 
-	bool make_dword(ea_t ea, asize_t size);
+	bool make_dword_ptr(ea_t ea, asize_t size);
 public:
 	QAtomicInt						m_Enabled;
 	bool							m_Initialized;

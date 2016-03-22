@@ -197,3 +197,24 @@ typedef std::unordered_map<uval_t, std::string> ExternRefDataMap;
 	} while (0)
 
 #define OLLY_TEXTLEN 256
+
+#ifndef PRIXPTR
+#	ifdef _WIN64
+#		define _PFX_PTR  "ll"
+#	else
+#		define _PFX_PTR  "l"
+#	endif
+#	define PRIXPTR      _PFX_PTR "X"
+#endif // PRIXPTR
+
+#if defined(_MSC_VER) || defined(__MINGW32__)
+#	ifdef __X64__
+#		define LL_FMT_EA_T  "llX"
+#	else
+#		define LL_FMT_EA_T  "ulX"
+#	endif
+#endif // defined(_MSC_VER) || defined(__MINGW32__)
+
+#ifndef __NT__
+#error "Only Win32 platform is supported"
+#endif // __NT__

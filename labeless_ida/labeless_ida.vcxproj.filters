@@ -18,9 +18,6 @@
       <SourceControlFiles>False</SourceControlFiles>
       <ParseFiles>true</ParseFiles>
     </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{f30f6e74-9116-489b-b1d3-4368707b6782}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Form Files">
       <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
       <Extensions>ui</Extensions>
@@ -31,8 +28,17 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Generated Files\Release_DeFixed">
-      <UniqueIdentifier>{d82c3d81-956e-4572-8ae9-03c0679a7199}</UniqueIdentifier>
+    <Filter Include="Generated Files\Release_vc140">
+      <UniqueIdentifier>{505c3970-e163-4945-aee6-354abb54af97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\Release_vc140_x64">
+      <UniqueIdentifier>{a93eb3af-d21b-400c-8577-4e499ad00eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\Release_vc120">
+      <UniqueIdentifier>{f30f6e74-9116-489b-b1d3-4368707b6782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\Release_vc120_x64">
+      <UniqueIdentifier>{550d3e79-c318-4dc5-a61c-67a36048457f}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
@@ -118,56 +124,113 @@
     <ClCompile Include="choosememorydialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_choosememorydialog.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_globalsettingsmanager.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_rpcdata.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_highlighter.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_rpcdata.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_labeless_ida.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_pyollyview.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_pyollyview.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_pyollyview.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_rpcdata.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_labeless_ida.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_rpcthreadworker.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_labeless_ida.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_textedit.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_textedit.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_textedit.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_choosememorydialog.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_settingsdialog.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_globalsettingsmanager.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_settingsdialog.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_highlighter.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_highlighter.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_labeless_ida.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_highlighter.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pyollyview.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcdata.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\Release_DeFixed</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcthreadworker.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_globalsettingsmanager.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_textedit.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_choosememorydialog.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_globalsettingsmanager.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_highlighter.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_labeless_ida.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_pyollyview.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_rpcdata.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_rpcthreadworker.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_textedit.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_choosememorydialog.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_globalsettingsmanager.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_highlighter.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_labeless_ida.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_pyollyview.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_rpcdata.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_rpcthreadworker.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_textedit.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +291,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\stub.exe.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\stub64.exe.bin">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
