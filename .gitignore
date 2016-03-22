@@ -35,3 +35,10 @@
 /py/labeless.log
 /.vs
 /deploy/.idea
+/test_x64dbg/x32/db
+/test_x64dbg/x32/plugins/labeless_x64dbg.dp32
+/test_x64dbg/x32/snowman.ini
+/test_x64dbg/x64/plugins/labeless_x64dbg.dp64
+/test_x64dbg/x64/db
+/test_x64dbg/x64/minidump
+/test_x64dbg/x64/symbols
