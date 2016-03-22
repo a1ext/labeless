@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
+    <LocalDebuggerCommand>$(SolutionDir)..\IDA68\idaq.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)..\IDA68\</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <QTDIR>E:\Qt\4.8.4_msvc2010</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
+    <LocalDebuggerCommand>$(SolutionDir)..\IDA69\idaq.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)..\IDA69\</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <QTDIR>E:\Qt\4.8.4_msvc2010</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+    <LocalDebuggerCommand>$(SolutionDir)..\IDA68\idaq64.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)..\IDA68\</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <QTDIR>E:\Qt\4.8.4_msvc2010</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
+    <LocalDebuggerCommand>$(SolutionDir)..\IDA69\idaq64.exe</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(SolutionDir)..\IDA69\</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <QTDIR>E:\Qt\4.8.4_msvc2010</QTDIR>
+    <LocalDebuggerEnvironment>PATH=$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(QTDIR)\bin%3b"$(QTDIR)\bin%3b$(PATH)</LocalDebuggerEnvironment>
+  </PropertyGroup>
+</Project>
