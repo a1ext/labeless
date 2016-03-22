@@ -43,7 +43,7 @@ private slots:
 
 private:
 	void fillView();
-	bool isRangeBelongsToExistingRegions(ea_t base, uint32 size) const;
+	bool isRangeBelongsToExistingRegions(uint64_t base, uint64_t size) const;
 
 private:
 	Ui::ChooseMemoryDialog* m_UI;
