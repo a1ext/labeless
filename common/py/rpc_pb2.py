@@ -18,7 +18,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='rpc.proto',
   package='rpc',
-  serialized_pb=_b('\n\trpc.proto\x12\x03rpc\"\xa2\x04\n\nRpcRequest\x12\x31\n\x0crequest_type\x18\x01 \x02(\x0e\x32\x1b.rpc.RpcRequest.RequestType\x12-\n\x0emake_names_req\x18\x02 \x01(\x0b\x32\x15.rpc.MakeNamesRequest\x12\x33\n\x11make_comments_req\x18\x03 \x01(\x0b\x32\x18.rpc.MakeCommentsRequest\x12>\n\x17read_memory_regions_req\x18\x04 \x01(\x0b\x32\x1d.rpc.ReadMemoryRegionsRequest\x12\x42\n\x19\x61nalyze_external_refs_req\x18\x05 \x01(\x0b\x32\x1f.rpc.AnalyzeExternalRefsRequest\x12\x38\n\x14\x63heck_pe_headers_req\x18\x06 \x01(\x0b\x32\x1a.rpc.CheckPEHeadersRequest\"\xbe\x01\n\x0bRequestType\x12\x10\n\x0cRPCT_UNKNOWN\x10\x00\x12\x13\n\x0fRPCT_MAKE_NAMES\x10\x01\x12\x16\n\x12RPCT_MAKE_COMMENTS\x10\x02\x12\x17\n\x13RPCT_GET_MEMORY_MAP\x10\x03\x12\x1c\n\x18RPCT_READ_MEMORY_REGIONS\x10\x04\x12\x1e\n\x1aRPCT_ANALYZE_EXTERNAL_REFS\x10\x05\x12\x19\n\x15RPCT_CHECK_PE_HEADERS\x10\x06\"t\n\x07\x45xecute\x12\x0e\n\x06script\x18\x01 \x01(\t\x12\x19\n\x11script_extern_obj\x18\x02 \x01(\t\x12\x13\n\x0brpc_request\x18\x03 \x01(\x0c\x12\x19\n\nbackground\x18\x04 \x01(\x08:\x05\x66\x61lse\x12\x0e\n\x06job_id\x18\x05 \x01(\x04\"\xba\x01\n\x08Response\x12\x0e\n\x06job_id\x18\x01 \x02(\x04\x12\x0f\n\x07std_out\x18\x02 \x01(\t\x12\x0f\n\x07std_err\x18\x03 \x01(\t\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12\x12\n\nrpc_result\x18\x05 \x01(\x0c\x12+\n\njob_status\x18\x06 \x01(\x0e\x32\x17.rpc.Response.JobStatus\",\n\tJobStatus\x12\x0f\n\x0bJS_FINISHED\x10\x01\x12\x0e\n\nJS_PENDING\x10\x02\"\x82\x01\n\x10MakeNamesRequest\x12)\n\x05names\x18\x01 \x03(\x0b\x32\x1a.rpc.MakeNamesRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\x04\x12\x13\n\x0bremote_base\x18\x03 \x02(\x04\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x88\x01\n\x13MakeCommentsRequest\x12,\n\x05names\x18\x01 \x03(\x0b\x32\x1d.rpc.MakeCommentsRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\x04\x12\x13\n\x0bremote_base\x18\x03 \x02(\x04\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x8a\x01\n\x12GetMemoryMapResult\x12\x30\n\x08memories\x18\x01 \x03(\x0b\x32\x1e.rpc.GetMemoryMapResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\x12\x0e\n\x06\x61\x63\x63\x65ss\x18\x03 \x02(\r\x12\x0c\n\x04name\x18\x04 \x02(\t\"w\n\x18ReadMemoryRegionsRequest\x12\x35\n\x07regions\x18\x01 \x03(\x0b\x32$.rpc.ReadMemoryRegionsRequest.Region\x1a$\n\x06Region\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\"\x94\x01\n\x17ReadMemoryRegionsResult\x12\x35\n\x08memories\x18\x01 \x03(\x0b\x32#.rpc.ReadMemoryRegionsResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\x12\x0b\n\x03mem\x18\x03 \x02(\x0c\x12\x0f\n\x07protect\x18\x04 \x02(\r\"\x7f\n\x1a\x41nalyzeExternalRefsRequest\x12\x0f\n\x07\x65\x61_from\x18\x01 \x02(\x04\x12\r\n\x05\x65\x61_to\x18\x02 \x02(\x04\x12\x11\n\tincrement\x18\x03 \x02(\r\x12\x16\n\x0e\x61nalysing_base\x18\x04 \x02(\x04\x12\x16\n\x0e\x61nalysing_size\x18\x05 \x02(\x04\"\x95\x06\n\x19\x41nalyzeExternalRefsResult\x12\x41\n\rapi_constants\x18\x01 \x03(\x0b\x32*.rpc.AnalyzeExternalRefsResult.PointerData\x12\x34\n\x04refs\x18\x02 \x03(\x0b\x32&.rpc.AnalyzeExternalRefsResult.RefData\x12\x35\n\x07\x63ontext\x18\x03 \x02(\x0b\x32$.rpc.AnalyzeExternalRefsResult.reg_t\x1a[\n\x0bPointerData\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0e\n\x06module\x18\x02 \x02(\t\x12\x0c\n\x04proc\x18\x03 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x04 \x01(\t\x1a\x83\x02\n\x07RefData\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0b\n\x03len\x18\x02 \x02(\x04\x12\x0b\n\x03\x64is\x18\x03 \x02(\t\x12\t\n\x01v\x18\x04 \x02(\x04\x12@\n\x08ref_type\x18\x05 \x02(\x0e\x32..rpc.AnalyzeExternalRefsResult.RefData.RefType\x12\x0e\n\x06module\x18\x06 \x02(\t\x12\x0c\n\x04proc\x18\x07 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x08 \x01(\t\"C\n\x07RefType\x12\x11\n\rREFT_JMPCONST\x10\x01\x12\x11\n\rREFT_IMMCONST\x10\x02\x12\x12\n\x0eREFT_ADDRCONST\x10\x03\x1a\xe4\x01\n\x05reg_t\x12\x0b\n\x03\x65\x61x\x18\x01 \x02(\r\x12\x0b\n\x03\x65\x63x\x18\x02 \x02(\r\x12\x0b\n\x03\x65\x64x\x18\x03 \x02(\r\x12\x0b\n\x03\x65\x62x\x18\x04 \x02(\r\x12\x0b\n\x03\x65sp\x18\x05 \x02(\r\x12\x0b\n\x03\x65\x62p\x18\x06 \x02(\r\x12\x0b\n\x03\x65si\x18\x07 \x02(\r\x12\x0b\n\x03\x65\x64i\x18\x08 \x02(\r\x12\x0b\n\x03rip\x18\t \x02(\x04\x12\x0b\n\x03rax\x18\n \x01(\x04\x12\x0b\n\x03rbx\x18\x0b \x01(\x04\x12\x0b\n\x03rcx\x18\x0c \x01(\x04\x12\x0b\n\x03rdx\x18\r \x01(\x04\x12\x0b\n\x03rsi\x18\x0e \x01(\x04\x12\x0b\n\x03rdi\x18\x0f \x01(\x04\x12\x0b\n\x03rbp\x18\x10 \x01(\x04\x12\x0b\n\x03rsp\x18\x11 \x01(\x04\"3\n\x15\x43heckPEHeadersRequest\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\"\xad\x02\n\x14\x43heckPEHeadersResult\x12\x10\n\x08pe_valid\x18\x01 \x02(\x08\x12/\n\x04\x65xps\x18\x02 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Exports\x12\x33\n\x08sections\x18\x03 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Section\x1a\x30\n\x07\x45xports\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0b\n\x03ord\x18\x02 \x02(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x1ak\n\x07Section\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02va\x18\x02 \x01(\x04\x12\x0e\n\x06v_size\x18\x03 \x01(\x04\x12\x0b\n\x03raw\x18\x04 \x01(\x04\x12\x10\n\x08raw_size\x18\x05 \x01(\x04\x12\x17\n\x0f\x63haracteristics\x18\x06 \x01(\r')
+  serialized_pb=_b('\n\trpc.proto\x12\x03rpc\"\xbd\x04\n\nRpcRequest\x12\x31\n\x0crequest_type\x18\x01 \x02(\x0e\x32\x1b.rpc.RpcRequest.RequestType\x12-\n\x0emake_names_req\x18\x02 \x01(\x0b\x32\x15.rpc.MakeNamesRequest\x12\x33\n\x11make_comments_req\x18\x03 \x01(\x0b\x32\x18.rpc.MakeCommentsRequest\x12>\n\x17read_memory_regions_req\x18\x04 \x01(\x0b\x32\x1d.rpc.ReadMemoryRegionsRequest\x12\x42\n\x19\x61nalyze_external_refs_req\x18\x05 \x01(\x0b\x32\x1f.rpc.AnalyzeExternalRefsRequest\x12\x38\n\x14\x63heck_pe_headers_req\x18\x06 \x01(\x0b\x32\x1a.rpc.CheckPEHeadersRequest\"\xd9\x01\n\x0bRequestType\x12\x10\n\x0cRPCT_UNKNOWN\x10\x00\x12\x13\n\x0fRPCT_MAKE_NAMES\x10\x01\x12\x16\n\x12RPCT_MAKE_COMMENTS\x10\x02\x12\x17\n\x13RPCT_GET_MEMORY_MAP\x10\x03\x12\x1c\n\x18RPCT_READ_MEMORY_REGIONS\x10\x04\x12\x1e\n\x1aRPCT_ANALYZE_EXTERNAL_REFS\x10\x05\x12\x19\n\x15RPCT_CHECK_PE_HEADERS\x10\x06\x12\x19\n\x15RPCT_GET_BACKEND_INFO\x10\x07\"t\n\x07\x45xecute\x12\x0e\n\x06script\x18\x01 \x01(\t\x12\x19\n\x11script_extern_obj\x18\x02 \x01(\t\x12\x13\n\x0brpc_request\x18\x03 \x01(\x0c\x12\x19\n\nbackground\x18\x04 \x01(\x08:\x05\x66\x61lse\x12\x0e\n\x06job_id\x18\x05 \x01(\x04\"\xba\x01\n\x08Response\x12\x0e\n\x06job_id\x18\x01 \x02(\x04\x12\x0f\n\x07std_out\x18\x02 \x01(\t\x12\x0f\n\x07std_err\x18\x03 \x01(\t\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12\x12\n\nrpc_result\x18\x05 \x01(\x0c\x12+\n\njob_status\x18\x06 \x01(\x0e\x32\x17.rpc.Response.JobStatus\",\n\tJobStatus\x12\x0f\n\x0bJS_FINISHED\x10\x01\x12\x0e\n\nJS_PENDING\x10\x02\"\x82\x01\n\x10MakeNamesRequest\x12)\n\x05names\x18\x01 \x03(\x0b\x32\x1a.rpc.MakeNamesRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\x04\x12\x13\n\x0bremote_base\x18\x03 \x02(\x04\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x88\x01\n\x13MakeCommentsRequest\x12,\n\x05names\x18\x01 \x03(\x0b\x32\x1d.rpc.MakeCommentsRequest.Name\x12\x0c\n\x04\x62\x61se\x18\x02 \x02(\x04\x12\x13\n\x0bremote_base\x18\x03 \x02(\x04\x1a \n\x04Name\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0c\n\x04name\x18\x02 \x02(\t\"\x8a\x01\n\x12GetMemoryMapResult\x12\x30\n\x08memories\x18\x01 \x03(\x0b\x32\x1e.rpc.GetMemoryMapResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\x12\x0e\n\x06\x61\x63\x63\x65ss\x18\x03 \x02(\r\x12\x0c\n\x04name\x18\x04 \x02(\t\"w\n\x18ReadMemoryRegionsRequest\x12\x35\n\x07regions\x18\x01 \x03(\x0b\x32$.rpc.ReadMemoryRegionsRequest.Region\x1a$\n\x06Region\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\"\x94\x01\n\x17ReadMemoryRegionsResult\x12\x35\n\x08memories\x18\x01 \x03(\x0b\x32#.rpc.ReadMemoryRegionsResult.Memory\x1a\x42\n\x06Memory\x12\x0c\n\x04\x61\x64\x64r\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\x12\x0b\n\x03mem\x18\x03 \x02(\x0c\x12\x0f\n\x07protect\x18\x04 \x02(\r\"\x7f\n\x1a\x41nalyzeExternalRefsRequest\x12\x0f\n\x07\x65\x61_from\x18\x01 \x02(\x04\x12\r\n\x05\x65\x61_to\x18\x02 \x02(\x04\x12\x11\n\tincrement\x18\x03 \x02(\r\x12\x16\n\x0e\x61nalysing_base\x18\x04 \x02(\x04\x12\x16\n\x0e\x61nalysing_size\x18\x05 \x02(\x04\"\x95\x06\n\x19\x41nalyzeExternalRefsResult\x12\x41\n\rapi_constants\x18\x01 \x03(\x0b\x32*.rpc.AnalyzeExternalRefsResult.PointerData\x12\x34\n\x04refs\x18\x02 \x03(\x0b\x32&.rpc.AnalyzeExternalRefsResult.RefData\x12\x35\n\x07\x63ontext\x18\x03 \x02(\x0b\x32$.rpc.AnalyzeExternalRefsResult.reg_t\x1a[\n\x0bPointerData\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0e\n\x06module\x18\x02 \x02(\t\x12\x0c\n\x04proc\x18\x03 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x04 \x01(\t\x1a\x83\x02\n\x07RefData\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0b\n\x03len\x18\x02 \x02(\x04\x12\x0b\n\x03\x64is\x18\x03 \x02(\t\x12\t\n\x01v\x18\x04 \x02(\x04\x12@\n\x08ref_type\x18\x05 \x02(\x0e\x32..rpc.AnalyzeExternalRefsResult.RefData.RefType\x12\x0e\n\x06module\x18\x06 \x02(\t\x12\x0c\n\x04proc\x18\x07 \x02(\t\x12\"\n\x1aordinal_collision_dll_path\x18\x08 \x01(\t\"C\n\x07RefType\x12\x11\n\rREFT_JMPCONST\x10\x01\x12\x11\n\rREFT_IMMCONST\x10\x02\x12\x12\n\x0eREFT_ADDRCONST\x10\x03\x1a\xe4\x01\n\x05reg_t\x12\x0b\n\x03\x65\x61x\x18\x01 \x02(\r\x12\x0b\n\x03\x65\x63x\x18\x02 \x02(\r\x12\x0b\n\x03\x65\x64x\x18\x03 \x02(\r\x12\x0b\n\x03\x65\x62x\x18\x04 \x02(\r\x12\x0b\n\x03\x65sp\x18\x05 \x02(\r\x12\x0b\n\x03\x65\x62p\x18\x06 \x02(\r\x12\x0b\n\x03\x65si\x18\x07 \x02(\r\x12\x0b\n\x03\x65\x64i\x18\x08 \x02(\r\x12\x0b\n\x03rip\x18\t \x02(\x04\x12\x0b\n\x03rax\x18\n \x01(\x04\x12\x0b\n\x03rbx\x18\x0b \x01(\x04\x12\x0b\n\x03rcx\x18\x0c \x01(\x04\x12\x0b\n\x03rdx\x18\r \x01(\x04\x12\x0b\n\x03rsi\x18\x0e \x01(\x04\x12\x0b\n\x03rdi\x18\x0f \x01(\x04\x12\x0b\n\x03rbp\x18\x10 \x01(\x04\x12\x0b\n\x03rsp\x18\x11 \x01(\x04\"3\n\x15\x43heckPEHeadersRequest\x12\x0c\n\x04\x62\x61se\x18\x01 \x02(\x04\x12\x0c\n\x04size\x18\x02 \x02(\x04\"\xad\x02\n\x14\x43heckPEHeadersResult\x12\x10\n\x08pe_valid\x18\x01 \x02(\x08\x12/\n\x04\x65xps\x18\x02 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Exports\x12\x33\n\x08sections\x18\x03 \x03(\x0b\x32!.rpc.CheckPEHeadersResult.Section\x1a\x30\n\x07\x45xports\x12\n\n\x02\x65\x61\x18\x01 \x02(\x04\x12\x0b\n\x03ord\x18\x02 \x02(\x04\x12\x0c\n\x04name\x18\x03 \x01(\t\x1ak\n\x07Section\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02va\x18\x02 \x01(\x04\x12\x0e\n\x06v_size\x18\x03 \x01(\x04\x12\x0b\n\x03raw\x18\x04 \x01(\x04\x12\x10\n\x08raw_size\x18\x05 \x01(\x04\x12\x17\n\x0f\x63haracteristics\x18\x06 \x01(\r\"`\n\x14GetBackendInfoResult\x12\x0f\n\x07\x62itness\x18\x01 \x02(\r\x12\x10\n\x08\x64\x62g_name\x18\x02 \x02(\t\x12\x0f\n\x07\x64\x62g_ver\x18\x03 \x01(\t\x12\x14\n\x0clabeless_ver\x18\x04 \x02(\t')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -58,11 +58,15 @@ _RPCREQUEST_REQUESTTYPE = _descriptor.EnumDescriptor(
       name='RPCT_CHECK_PE_HEADERS', index=6, number=6,
       options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='RPCT_GET_BACKEND_INFO', index=7, number=7,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
   serialized_start=375,
-  serialized_end=565,
+  serialized_end=592,
 )
 _sym_db.RegisterEnumDescriptor(_RPCREQUEST_REQUESTTYPE)
 
@@ -83,8 +87,8 @@ _RESPONSE_JOBSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=828,
-  serialized_end=872,
+  serialized_start=855,
+  serialized_end=899,
 )
 _sym_db.RegisterEnumDescriptor(_RESPONSE_JOBSTATUS)
 
@@ -109,8 +113,8 @@ _ANALYZEEXTERNALREFSRESULT_REFDATA_REFTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=2180,
-  serialized_end=2247,
+  serialized_start=2207,
+  serialized_end=2274,
 )
 _sym_db.RegisterEnumDescriptor(_ANALYZEEXTERNALREFSRESULT_REFDATA_REFTYPE)
 
@@ -177,7 +181,7 @@ _RPCREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=19,
-  serialized_end=565,
+  serialized_end=592,
 )
 
 
@@ -234,8 +238,8 @@ _EXECUTE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=567,
-  serialized_end=683,
+  serialized_start=594,
+  serialized_end=710,
 )
 
 
@@ -300,8 +304,8 @@ _RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=686,
-  serialized_end=872,
+  serialized_start=713,
+  serialized_end=899,
 )
 
 
@@ -337,8 +341,8 @@ _MAKENAMESREQUEST_NAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=973,
-  serialized_end=1005,
+  serialized_start=1000,
+  serialized_end=1032,
 )
 
 _MAKENAMESREQUEST = _descriptor.Descriptor(
@@ -380,8 +384,8 @@ _MAKENAMESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=875,
-  serialized_end=1005,
+  serialized_start=902,
+  serialized_end=1032,
 )
 
 
@@ -417,8 +421,8 @@ _MAKECOMMENTSREQUEST_NAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=973,
-  serialized_end=1005,
+  serialized_start=1000,
+  serialized_end=1032,
 )
 
 _MAKECOMMENTSREQUEST = _descriptor.Descriptor(
@@ -460,8 +464,8 @@ _MAKECOMMENTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1008,
-  serialized_end=1144,
+  serialized_start=1035,
+  serialized_end=1171,
 )
 
 
@@ -511,8 +515,8 @@ _GETMEMORYMAPRESULT_MEMORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1219,
-  serialized_end=1285,
+  serialized_start=1246,
+  serialized_end=1312,
 )
 
 _GETMEMORYMAPRESULT = _descriptor.Descriptor(
@@ -540,8 +544,8 @@ _GETMEMORYMAPRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1147,
-  serialized_end=1285,
+  serialized_start=1174,
+  serialized_end=1312,
 )
 
 
@@ -577,8 +581,8 @@ _READMEMORYREGIONSREQUEST_REGION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1370,
-  serialized_end=1406,
+  serialized_start=1397,
+  serialized_end=1433,
 )
 
 _READMEMORYREGIONSREQUEST = _descriptor.Descriptor(
@@ -606,8 +610,8 @@ _READMEMORYREGIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1287,
-  serialized_end=1406,
+  serialized_start=1314,
+  serialized_end=1433,
 )
 
 
@@ -657,8 +661,8 @@ _READMEMORYREGIONSRESULT_MEMORY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1491,
-  serialized_end=1557,
+  serialized_start=1518,
+  serialized_end=1584,
 )
 
 _READMEMORYREGIONSRESULT = _descriptor.Descriptor(
@@ -686,8 +690,8 @@ _READMEMORYREGIONSRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1409,
-  serialized_end=1557,
+  serialized_start=1436,
+  serialized_end=1584,
 )
 
 
@@ -744,8 +748,8 @@ _ANALYZEEXTERNALREFSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1559,
-  serialized_end=1686,
+  serialized_start=1586,
+  serialized_end=1713,
 )
 
 
@@ -795,8 +799,8 @@ _ANALYZEEXTERNALREFSRESULT_POINTERDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1894,
-  serialized_end=1985,
+  serialized_start=1921,
+  serialized_end=2012,
 )
 
 _ANALYZEEXTERNALREFSRESULT_REFDATA = _descriptor.Descriptor(
@@ -874,8 +878,8 @@ _ANALYZEEXTERNALREFSRESULT_REFDATA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1988,
-  serialized_end=2247,
+  serialized_start=2015,
+  serialized_end=2274,
 )
 
 _ANALYZEEXTERNALREFSRESULT_REG_T = _descriptor.Descriptor(
@@ -1015,8 +1019,8 @@ _ANALYZEEXTERNALREFSRESULT_REG_T = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2250,
-  serialized_end=2478,
+  serialized_start=2277,
+  serialized_end=2505,
 )
 
 _ANALYZEEXTERNALREFSRESULT = _descriptor.Descriptor(
@@ -1058,8 +1062,8 @@ _ANALYZEEXTERNALREFSRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1689,
-  serialized_end=2478,
+  serialized_start=1716,
+  serialized_end=2505,
 )
 
 
@@ -1095,8 +1099,8 @@ _CHECKPEHEADERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2480,
-  serialized_end=2531,
+  serialized_start=2507,
+  serialized_end=2558,
 )
 
 
@@ -1139,8 +1143,8 @@ _CHECKPEHEADERSRESULT_EXPORTS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2678,
-  serialized_end=2726,
+  serialized_start=2705,
+  serialized_end=2753,
 )
 
 _CHECKPEHEADERSRESULT_SECTION = _descriptor.Descriptor(
@@ -1203,8 +1207,8 @@ _CHECKPEHEADERSRESULT_SECTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2728,
-  serialized_end=2835,
+  serialized_start=2755,
+  serialized_end=2862,
 )
 
 _CHECKPEHEADERSRESULT = _descriptor.Descriptor(
@@ -1246,8 +1250,59 @@ _CHECKPEHEADERSRESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2534,
-  serialized_end=2835,
+  serialized_start=2561,
+  serialized_end=2862,
+)
+
+
+_GETBACKENDINFORESULT = _descriptor.Descriptor(
+  name='GetBackendInfoResult',
+  full_name='rpc.GetBackendInfoResult',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='bitness', full_name='rpc.GetBackendInfoResult.bitness', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='dbg_name', full_name='rpc.GetBackendInfoResult.dbg_name', index=1,
+      number=2, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='dbg_ver', full_name='rpc.GetBackendInfoResult.dbg_ver', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='labeless_ver', full_name='rpc.GetBackendInfoResult.labeless_ver', index=3,
+      number=4, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2864,
+  serialized_end=2960,
 )
 
 _RPCREQUEST.fields_by_name['request_type'].enum_type = _RPCREQUEST_REQUESTTYPE
@@ -1293,6 +1348,7 @@ DESCRIPTOR.message_types_by_name['AnalyzeExternalRefsRequest'] = _ANALYZEEXTERNA
 DESCRIPTOR.message_types_by_name['AnalyzeExternalRefsResult'] = _ANALYZEEXTERNALREFSRESULT
 DESCRIPTOR.message_types_by_name['CheckPEHeadersRequest'] = _CHECKPEHEADERSREQUEST
 DESCRIPTOR.message_types_by_name['CheckPEHeadersResult'] = _CHECKPEHEADERSRESULT
+DESCRIPTOR.message_types_by_name['GetBackendInfoResult'] = _GETBACKENDINFORESULT
 
 RpcRequest = _reflection.GeneratedProtocolMessageType('RpcRequest', (_message.Message,), dict(
   DESCRIPTOR = _RPCREQUEST,
@@ -1457,6 +1513,13 @@ CheckPEHeadersResult = _reflection.GeneratedProtocolMessageType('CheckPEHeadersR
 _sym_db.RegisterMessage(CheckPEHeadersResult)
 _sym_db.RegisterMessage(CheckPEHeadersResult.Exports)
 _sym_db.RegisterMessage(CheckPEHeadersResult.Section)
+
+GetBackendInfoResult = _reflection.GeneratedProtocolMessageType('GetBackendInfoResult', (_message.Message,), dict(
+  DESCRIPTOR = _GETBACKENDINFORESULT,
+  __module__ = 'rpc_pb2'
+  # @@protoc_insertion_point(class_scope:rpc.GetBackendInfoResult)
+  ))
+_sym_db.RegisterMessage(GetBackendInfoResult)
 
 
 # @@protoc_insertion_point(module_scope)

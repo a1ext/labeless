@@ -89,6 +89,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CheckPEHeadersResult_Section_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CheckPEHeadersResult_Section_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GetBackendInfoResult_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GetBackendInfoResult_reflection_ = NULL;
 
 }  // namespace
 
@@ -501,6 +504,24 @@ void protobuf_AssignDesc_rpc_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(CheckPEHeadersResult_Section));
+  GetBackendInfoResult_descriptor_ = file->message_type(12);
+  static const int GetBackendInfoResult_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetBackendInfoResult, bitness_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetBackendInfoResult, dbg_name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetBackendInfoResult, dbg_ver_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetBackendInfoResult, labeless_ver_),
+  };
+  GetBackendInfoResult_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GetBackendInfoResult_descriptor_,
+      GetBackendInfoResult::default_instance_,
+      GetBackendInfoResult_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetBackendInfoResult, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetBackendInfoResult, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GetBackendInfoResult));
 }
 
 namespace {
@@ -557,6 +578,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     CheckPEHeadersResult_Exports_descriptor_, &CheckPEHeadersResult_Exports::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     CheckPEHeadersResult_Section_descriptor_, &CheckPEHeadersResult_Section::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GetBackendInfoResult_descriptor_, &GetBackendInfoResult::default_instance());
 }
 
 }  // namespace
@@ -606,6 +629,8 @@ void protobuf_ShutdownFile_rpc_2eproto() {
   delete CheckPEHeadersResult_Exports_reflection_;
   delete CheckPEHeadersResult_Section::default_instance_;
   delete CheckPEHeadersResult_Section_reflection_;
+  delete GetBackendInfoResult::default_instance_;
+  delete GetBackendInfoResult_reflection_;
 }
 
 void protobuf_AddDesc_rpc_2eproto() {
@@ -615,7 +640,7 @@ void protobuf_AddDesc_rpc_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\trpc.proto\022\003rpc\"\242\004\n\nRpcRequest\0221\n\014reque"
+    "\n\trpc.proto\022\003rpc\"\275\004\n\nRpcRequest\0221\n\014reque"
     "st_type\030\001 \002(\0162\033.rpc.RpcRequest.RequestTy"
     "pe\022-\n\016make_names_req\030\002 \001(\0132\025.rpc.MakeNam"
     "esRequest\0223\n\021make_comments_req\030\003 \001(\0132\030.r"
@@ -624,68 +649,71 @@ void protobuf_AddDesc_rpc_2eproto() {
     "equest\022B\n\031analyze_external_refs_req\030\005 \001("
     "\0132\037.rpc.AnalyzeExternalRefsRequest\0228\n\024ch"
     "eck_pe_headers_req\030\006 \001(\0132\032.rpc.CheckPEHe"
-    "adersRequest\"\276\001\n\013RequestType\022\020\n\014RPCT_UNK"
+    "adersRequest\"\331\001\n\013RequestType\022\020\n\014RPCT_UNK"
     "NOWN\020\000\022\023\n\017RPCT_MAKE_NAMES\020\001\022\026\n\022RPCT_MAKE"
     "_COMMENTS\020\002\022\027\n\023RPCT_GET_MEMORY_MAP\020\003\022\034\n\030"
     "RPCT_READ_MEMORY_REGIONS\020\004\022\036\n\032RPCT_ANALY"
     "ZE_EXTERNAL_REFS\020\005\022\031\n\025RPCT_CHECK_PE_HEAD"
-    "ERS\020\006\"t\n\007Execute\022\016\n\006script\030\001 \001(\t\022\031\n\021scri"
-    "pt_extern_obj\030\002 \001(\t\022\023\n\013rpc_request\030\003 \001(\014"
-    "\022\031\n\nbackground\030\004 \001(\010:\005false\022\016\n\006job_id\030\005 "
-    "\001(\004\"\272\001\n\010Response\022\016\n\006job_id\030\001 \002(\004\022\017\n\007std_"
-    "out\030\002 \001(\t\022\017\n\007std_err\030\003 \001(\t\022\r\n\005error\030\004 \001("
-    "\t\022\022\n\nrpc_result\030\005 \001(\014\022+\n\njob_status\030\006 \001("
-    "\0162\027.rpc.Response.JobStatus\",\n\tJobStatus\022"
-    "\017\n\013JS_FINISHED\020\001\022\016\n\nJS_PENDING\020\002\"\202\001\n\020Mak"
-    "eNamesRequest\022)\n\005names\030\001 \003(\0132\032.rpc.MakeN"
-    "amesRequest.Name\022\014\n\004base\030\002 \002(\004\022\023\n\013remote"
-    "_base\030\003 \002(\004\032 \n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n\004name\030"
-    "\002 \002(\t\"\210\001\n\023MakeCommentsRequest\022,\n\005names\030\001"
-    " \003(\0132\035.rpc.MakeCommentsRequest.Name\022\014\n\004b"
-    "ase\030\002 \002(\004\022\023\n\013remote_base\030\003 \002(\004\032 \n\004Name\022\n"
-    "\n\002ea\030\001 \002(\004\022\014\n\004name\030\002 \002(\t\"\212\001\n\022GetMemoryMa"
-    "pResult\0220\n\010memories\030\001 \003(\0132\036.rpc.GetMemor"
-    "yMapResult.Memory\032B\n\006Memory\022\014\n\004base\030\001 \002("
-    "\004\022\014\n\004size\030\002 \002(\004\022\016\n\006access\030\003 \002(\r\022\014\n\004name\030"
-    "\004 \002(\t\"w\n\030ReadMemoryRegionsRequest\0225\n\007reg"
-    "ions\030\001 \003(\0132$.rpc.ReadMemoryRegionsReques"
-    "t.Region\032$\n\006Region\022\014\n\004addr\030\001 \002(\004\022\014\n\004size"
-    "\030\002 \002(\004\"\224\001\n\027ReadMemoryRegionsResult\0225\n\010me"
-    "mories\030\001 \003(\0132#.rpc.ReadMemoryRegionsResu"
-    "lt.Memory\032B\n\006Memory\022\014\n\004addr\030\001 \002(\004\022\014\n\004siz"
-    "e\030\002 \002(\004\022\013\n\003mem\030\003 \002(\014\022\017\n\007protect\030\004 \002(\r\"\177\n"
-    "\032AnalyzeExternalRefsRequest\022\017\n\007ea_from\030\001"
-    " \002(\004\022\r\n\005ea_to\030\002 \002(\004\022\021\n\tincrement\030\003 \002(\r\022\026"
-    "\n\016analysing_base\030\004 \002(\004\022\026\n\016analysing_size"
-    "\030\005 \002(\004\"\225\006\n\031AnalyzeExternalRefsResult\022A\n\r"
-    "api_constants\030\001 \003(\0132*.rpc.AnalyzeExterna"
-    "lRefsResult.PointerData\0224\n\004refs\030\002 \003(\0132&."
-    "rpc.AnalyzeExternalRefsResult.RefData\0225\n"
-    "\007context\030\003 \002(\0132$.rpc.AnalyzeExternalRefs"
-    "Result.reg_t\032[\n\013PointerData\022\n\n\002ea\030\001 \002(\004\022"
-    "\016\n\006module\030\002 \002(\t\022\014\n\004proc\030\003 \002(\t\022\"\n\032ordinal"
-    "_collision_dll_path\030\004 \001(\t\032\203\002\n\007RefData\022\n\n"
-    "\002ea\030\001 \002(\004\022\013\n\003len\030\002 \002(\004\022\013\n\003dis\030\003 \002(\t\022\t\n\001v"
-    "\030\004 \002(\004\022@\n\010ref_type\030\005 \002(\0162..rpc.AnalyzeEx"
-    "ternalRefsResult.RefData.RefType\022\016\n\006modu"
-    "le\030\006 \002(\t\022\014\n\004proc\030\007 \002(\t\022\"\n\032ordinal_collis"
-    "ion_dll_path\030\010 \001(\t\"C\n\007RefType\022\021\n\rREFT_JM"
-    "PCONST\020\001\022\021\n\rREFT_IMMCONST\020\002\022\022\n\016REFT_ADDR"
-    "CONST\020\003\032\344\001\n\005reg_t\022\013\n\003eax\030\001 \002(\r\022\013\n\003ecx\030\002 "
-    "\002(\r\022\013\n\003edx\030\003 \002(\r\022\013\n\003ebx\030\004 \002(\r\022\013\n\003esp\030\005 \002"
-    "(\r\022\013\n\003ebp\030\006 \002(\r\022\013\n\003esi\030\007 \002(\r\022\013\n\003edi\030\010 \002("
-    "\r\022\013\n\003rip\030\t \002(\004\022\013\n\003rax\030\n \001(\004\022\013\n\003rbx\030\013 \001(\004"
-    "\022\013\n\003rcx\030\014 \001(\004\022\013\n\003rdx\030\r \001(\004\022\013\n\003rsi\030\016 \001(\004\022"
-    "\013\n\003rdi\030\017 \001(\004\022\013\n\003rbp\030\020 \001(\004\022\013\n\003rsp\030\021 \001(\004\"3"
-    "\n\025CheckPEHeadersRequest\022\014\n\004base\030\001 \002(\004\022\014\n"
-    "\004size\030\002 \002(\004\"\255\002\n\024CheckPEHeadersResult\022\020\n\010"
-    "pe_valid\030\001 \002(\010\022/\n\004exps\030\002 \003(\0132!.rpc.Check"
-    "PEHeadersResult.Exports\0223\n\010sections\030\003 \003("
-    "\0132!.rpc.CheckPEHeadersResult.Section\0320\n\007"
-    "Exports\022\n\n\002ea\030\001 \002(\004\022\013\n\003ord\030\002 \002(\004\022\014\n\004name"
-    "\030\003 \001(\t\032k\n\007Section\022\014\n\004name\030\001 \001(\t\022\n\n\002va\030\002 "
-    "\001(\004\022\016\n\006v_size\030\003 \001(\004\022\013\n\003raw\030\004 \001(\004\022\020\n\010raw_"
-    "size\030\005 \001(\004\022\027\n\017characteristics\030\006 \001(\r", 2835);
+    "ERS\020\006\022\031\n\025RPCT_GET_BACKEND_INFO\020\007\"t\n\007Exec"
+    "ute\022\016\n\006script\030\001 \001(\t\022\031\n\021script_extern_obj"
+    "\030\002 \001(\t\022\023\n\013rpc_request\030\003 \001(\014\022\031\n\nbackgroun"
+    "d\030\004 \001(\010:\005false\022\016\n\006job_id\030\005 \001(\004\"\272\001\n\010Respo"
+    "nse\022\016\n\006job_id\030\001 \002(\004\022\017\n\007std_out\030\002 \001(\t\022\017\n\007"
+    "std_err\030\003 \001(\t\022\r\n\005error\030\004 \001(\t\022\022\n\nrpc_resu"
+    "lt\030\005 \001(\014\022+\n\njob_status\030\006 \001(\0162\027.rpc.Respo"
+    "nse.JobStatus\",\n\tJobStatus\022\017\n\013JS_FINISHE"
+    "D\020\001\022\016\n\nJS_PENDING\020\002\"\202\001\n\020MakeNamesRequest"
+    "\022)\n\005names\030\001 \003(\0132\032.rpc.MakeNamesRequest.N"
+    "ame\022\014\n\004base\030\002 \002(\004\022\023\n\013remote_base\030\003 \002(\004\032 "
+    "\n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n\004name\030\002 \002(\t\"\210\001\n\023Mak"
+    "eCommentsRequest\022,\n\005names\030\001 \003(\0132\035.rpc.Ma"
+    "keCommentsRequest.Name\022\014\n\004base\030\002 \002(\004\022\023\n\013"
+    "remote_base\030\003 \002(\004\032 \n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n"
+    "\004name\030\002 \002(\t\"\212\001\n\022GetMemoryMapResult\0220\n\010me"
+    "mories\030\001 \003(\0132\036.rpc.GetMemoryMapResult.Me"
+    "mory\032B\n\006Memory\022\014\n\004base\030\001 \002(\004\022\014\n\004size\030\002 \002"
+    "(\004\022\016\n\006access\030\003 \002(\r\022\014\n\004name\030\004 \002(\t\"w\n\030Read"
+    "MemoryRegionsRequest\0225\n\007regions\030\001 \003(\0132$."
+    "rpc.ReadMemoryRegionsRequest.Region\032$\n\006R"
+    "egion\022\014\n\004addr\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\"\224\001\n\027Re"
+    "adMemoryRegionsResult\0225\n\010memories\030\001 \003(\0132"
+    "#.rpc.ReadMemoryRegionsResult.Memory\032B\n\006"
+    "Memory\022\014\n\004addr\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\022\013\n\003me"
+    "m\030\003 \002(\014\022\017\n\007protect\030\004 \002(\r\"\177\n\032AnalyzeExter"
+    "nalRefsRequest\022\017\n\007ea_from\030\001 \002(\004\022\r\n\005ea_to"
+    "\030\002 \002(\004\022\021\n\tincrement\030\003 \002(\r\022\026\n\016analysing_b"
+    "ase\030\004 \002(\004\022\026\n\016analysing_size\030\005 \002(\004\"\225\006\n\031An"
+    "alyzeExternalRefsResult\022A\n\rapi_constants"
+    "\030\001 \003(\0132*.rpc.AnalyzeExternalRefsResult.P"
+    "ointerData\0224\n\004refs\030\002 \003(\0132&.rpc.AnalyzeEx"
+    "ternalRefsResult.RefData\0225\n\007context\030\003 \002("
+    "\0132$.rpc.AnalyzeExternalRefsResult.reg_t\032"
+    "[\n\013PointerData\022\n\n\002ea\030\001 \002(\004\022\016\n\006module\030\002 \002"
+    "(\t\022\014\n\004proc\030\003 \002(\t\022\"\n\032ordinal_collision_dl"
+    "l_path\030\004 \001(\t\032\203\002\n\007RefData\022\n\n\002ea\030\001 \002(\004\022\013\n\003"
+    "len\030\002 \002(\004\022\013\n\003dis\030\003 \002(\t\022\t\n\001v\030\004 \002(\004\022@\n\010ref"
+    "_type\030\005 \002(\0162..rpc.AnalyzeExternalRefsRes"
+    "ult.RefData.RefType\022\016\n\006module\030\006 \002(\t\022\014\n\004p"
+    "roc\030\007 \002(\t\022\"\n\032ordinal_collision_dll_path\030"
+    "\010 \001(\t\"C\n\007RefType\022\021\n\rREFT_JMPCONST\020\001\022\021\n\rR"
+    "EFT_IMMCONST\020\002\022\022\n\016REFT_ADDRCONST\020\003\032\344\001\n\005r"
+    "eg_t\022\013\n\003eax\030\001 \002(\r\022\013\n\003ecx\030\002 \002(\r\022\013\n\003edx\030\003 "
+    "\002(\r\022\013\n\003ebx\030\004 \002(\r\022\013\n\003esp\030\005 \002(\r\022\013\n\003ebp\030\006 \002"
+    "(\r\022\013\n\003esi\030\007 \002(\r\022\013\n\003edi\030\010 \002(\r\022\013\n\003rip\030\t \002("
+    "\004\022\013\n\003rax\030\n \001(\004\022\013\n\003rbx\030\013 \001(\004\022\013\n\003rcx\030\014 \001(\004"
+    "\022\013\n\003rdx\030\r \001(\004\022\013\n\003rsi\030\016 \001(\004\022\013\n\003rdi\030\017 \001(\004\022"
+    "\013\n\003rbp\030\020 \001(\004\022\013\n\003rsp\030\021 \001(\004\"3\n\025CheckPEHead"
+    "ersRequest\022\014\n\004base\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\"\255"
+    "\002\n\024CheckPEHeadersResult\022\020\n\010pe_valid\030\001 \002("
+    "\010\022/\n\004exps\030\002 \003(\0132!.rpc.CheckPEHeadersResu"
+    "lt.Exports\0223\n\010sections\030\003 \003(\0132!.rpc.Check"
+    "PEHeadersResult.Section\0320\n\007Exports\022\n\n\002ea"
+    "\030\001 \002(\004\022\013\n\003ord\030\002 \002(\004\022\014\n\004name\030\003 \001(\t\032k\n\007Sec"
+    "tion\022\014\n\004name\030\001 \001(\t\022\n\n\002va\030\002 \001(\004\022\016\n\006v_size"
+    "\030\003 \001(\004\022\013\n\003raw\030\004 \001(\004\022\020\n\010raw_size\030\005 \001(\004\022\027\n"
+    "\017characteristics\030\006 \001(\r\"`\n\024GetBackendInfo"
+    "Result\022\017\n\007bitness\030\001 \002(\r\022\020\n\010dbg_name\030\002 \002("
+    "\t\022\017\n\007dbg_ver\030\003 \001(\t\022\024\n\014labeless_ver\030\004 \002(\t", 2960);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rpc.proto", &protobuf_RegisterTypes);
   RpcRequest::default_instance_ = new RpcRequest();
@@ -710,6 +738,7 @@ void protobuf_AddDesc_rpc_2eproto() {
   CheckPEHeadersResult::default_instance_ = new CheckPEHeadersResult();
   CheckPEHeadersResult_Exports::default_instance_ = new CheckPEHeadersResult_Exports();
   CheckPEHeadersResult_Section::default_instance_ = new CheckPEHeadersResult_Section();
+  GetBackendInfoResult::default_instance_ = new GetBackendInfoResult();
   RpcRequest::default_instance_->InitAsDefaultInstance();
   Execute::default_instance_->InitAsDefaultInstance();
   Response::default_instance_->InitAsDefaultInstance();
@@ -732,6 +761,7 @@ void protobuf_AddDesc_rpc_2eproto() {
   CheckPEHeadersResult::default_instance_->InitAsDefaultInstance();
   CheckPEHeadersResult_Exports::default_instance_->InitAsDefaultInstance();
   CheckPEHeadersResult_Section::default_instance_->InitAsDefaultInstance();
+  GetBackendInfoResult::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_rpc_2eproto);
 }
 
@@ -757,6 +787,7 @@ bool RpcRequest_RequestType_IsValid(int value) {
     case 4:
     case 5:
     case 6:
+    case 7:
       return true;
     default:
       return false;
@@ -771,6 +802,7 @@ const RpcRequest_RequestType RpcRequest::RPCT_GET_MEMORY_MAP;
 const RpcRequest_RequestType RpcRequest::RPCT_READ_MEMORY_REGIONS;
 const RpcRequest_RequestType RpcRequest::RPCT_ANALYZE_EXTERNAL_REFS;
 const RpcRequest_RequestType RpcRequest::RPCT_CHECK_PE_HEADERS;
+const RpcRequest_RequestType RpcRequest::RPCT_GET_BACKEND_INFO;
 const RpcRequest_RequestType RpcRequest::RequestType_MIN;
 const RpcRequest_RequestType RpcRequest::RequestType_MAX;
 const int RpcRequest::RequestType_ARRAYSIZE;
@@ -9016,6 +9048,409 @@ void CheckPEHeadersResult::Swap(CheckPEHeadersResult* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = CheckPEHeadersResult_descriptor_;
   metadata.reflection = CheckPEHeadersResult_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int GetBackendInfoResult::kBitnessFieldNumber;
+const int GetBackendInfoResult::kDbgNameFieldNumber;
+const int GetBackendInfoResult::kDbgVerFieldNumber;
+const int GetBackendInfoResult::kLabelessVerFieldNumber;
+#endif  // !_MSC_VER
+
+GetBackendInfoResult::GetBackendInfoResult()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:rpc.GetBackendInfoResult)
+}
+
+void GetBackendInfoResult::InitAsDefaultInstance() {
+}
+
+GetBackendInfoResult::GetBackendInfoResult(const GetBackendInfoResult& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:rpc.GetBackendInfoResult)
+}
+
+void GetBackendInfoResult::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  bitness_ = 0u;
+  dbg_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  dbg_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  labeless_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GetBackendInfoResult::~GetBackendInfoResult() {
+  // @@protoc_insertion_point(destructor:rpc.GetBackendInfoResult)
+  SharedDtor();
+}
+
+void GetBackendInfoResult::SharedDtor() {
+  if (dbg_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dbg_name_;
+  }
+  if (dbg_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dbg_ver_;
+  }
+  if (labeless_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete labeless_ver_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void GetBackendInfoResult::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetBackendInfoResult::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GetBackendInfoResult_descriptor_;
+}
+
+const GetBackendInfoResult& GetBackendInfoResult::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_rpc_2eproto();
+  return *default_instance_;
+}
+
+GetBackendInfoResult* GetBackendInfoResult::default_instance_ = NULL;
+
+GetBackendInfoResult* GetBackendInfoResult::New() const {
+  return new GetBackendInfoResult;
+}
+
+void GetBackendInfoResult::Clear() {
+  if (_has_bits_[0 / 32] & 15) {
+    bitness_ = 0u;
+    if (has_dbg_name()) {
+      if (dbg_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        dbg_name_->clear();
+      }
+    }
+    if (has_dbg_ver()) {
+      if (dbg_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        dbg_ver_->clear();
+      }
+    }
+    if (has_labeless_ver()) {
+      if (labeless_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        labeless_ver_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GetBackendInfoResult::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:rpc.GetBackendInfoResult)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 bitness = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &bitness_)));
+          set_has_bitness();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_dbg_name;
+        break;
+      }
+
+      // required string dbg_name = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_dbg_name:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_dbg_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->dbg_name().data(), this->dbg_name().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "dbg_name");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_dbg_ver;
+        break;
+      }
+
+      // optional string dbg_ver = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_dbg_ver:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_dbg_ver()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->dbg_ver().data(), this->dbg_ver().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "dbg_ver");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_labeless_ver;
+        break;
+      }
+
+      // required string labeless_ver = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_labeless_ver:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_labeless_ver()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->labeless_ver().data(), this->labeless_ver().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "labeless_ver");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:rpc.GetBackendInfoResult)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:rpc.GetBackendInfoResult)
+  return false;
+#undef DO_
+}
+
+void GetBackendInfoResult::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:rpc.GetBackendInfoResult)
+  // required uint32 bitness = 1;
+  if (has_bitness()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->bitness(), output);
+  }
+
+  // required string dbg_name = 2;
+  if (has_dbg_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dbg_name().data(), this->dbg_name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "dbg_name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->dbg_name(), output);
+  }
+
+  // optional string dbg_ver = 3;
+  if (has_dbg_ver()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dbg_ver().data(), this->dbg_ver().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "dbg_ver");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->dbg_ver(), output);
+  }
+
+  // required string labeless_ver = 4;
+  if (has_labeless_ver()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->labeless_ver().data(), this->labeless_ver().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "labeless_ver");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->labeless_ver(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:rpc.GetBackendInfoResult)
+}
+
+::google::protobuf::uint8* GetBackendInfoResult::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rpc.GetBackendInfoResult)
+  // required uint32 bitness = 1;
+  if (has_bitness()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->bitness(), target);
+  }
+
+  // required string dbg_name = 2;
+  if (has_dbg_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dbg_name().data(), this->dbg_name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "dbg_name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->dbg_name(), target);
+  }
+
+  // optional string dbg_ver = 3;
+  if (has_dbg_ver()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->dbg_ver().data(), this->dbg_ver().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "dbg_ver");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->dbg_ver(), target);
+  }
+
+  // required string labeless_ver = 4;
+  if (has_labeless_ver()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->labeless_ver().data(), this->labeless_ver().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "labeless_ver");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->labeless_ver(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rpc.GetBackendInfoResult)
+  return target;
+}
+
+int GetBackendInfoResult::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 bitness = 1;
+    if (has_bitness()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->bitness());
+    }
+
+    // required string dbg_name = 2;
+    if (has_dbg_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->dbg_name());
+    }
+
+    // optional string dbg_ver = 3;
+    if (has_dbg_ver()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->dbg_ver());
+    }
+
+    // required string labeless_ver = 4;
+    if (has_labeless_ver()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->labeless_ver());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetBackendInfoResult::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GetBackendInfoResult* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GetBackendInfoResult*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GetBackendInfoResult::MergeFrom(const GetBackendInfoResult& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_bitness()) {
+      set_bitness(from.bitness());
+    }
+    if (from.has_dbg_name()) {
+      set_dbg_name(from.dbg_name());
+    }
+    if (from.has_dbg_ver()) {
+      set_dbg_ver(from.dbg_ver());
+    }
+    if (from.has_labeless_ver()) {
+      set_labeless_ver(from.labeless_ver());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GetBackendInfoResult::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetBackendInfoResult::CopyFrom(const GetBackendInfoResult& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetBackendInfoResult::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000000b) != 0x0000000b) return false;
+
+  return true;
+}
+
+void GetBackendInfoResult::Swap(GetBackendInfoResult* other) {
+  if (other != this) {
+    std::swap(bitness_, other->bitness_);
+    std::swap(dbg_name_, other->dbg_name_);
+    std::swap(dbg_ver_, other->dbg_ver_);
+    std::swap(labeless_ver_, other->labeless_ver_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GetBackendInfoResult::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GetBackendInfoResult_descriptor_;
+  metadata.reflection = GetBackendInfoResult_reflection_;
   return metadata;
 }
 

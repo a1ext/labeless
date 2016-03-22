@@ -3,6 +3,7 @@
 if %ERRORLEVEL% == 0 (
     echo [OK] generated.
     copy /Y .\py\rpc_pb2.py ..\test\python\
+    copy /Y .\py\rpc_pb2.py ..\deploy\labeless\
     echo Done
 ) else (
     echo Error occurred! check the output
