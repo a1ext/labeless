@@ -91,7 +91,10 @@ def safe_read_chunked_memory_region_as_one(base, size):
     GRANULARITY = 0x1000
 
     h_process = api.cvar.process
-    rv = bytearray(size)
+    try:
+        rv = bytearray(size)
+    except MemoryError:
+        return
 
     guarded = list()
     gpoints = dict()
