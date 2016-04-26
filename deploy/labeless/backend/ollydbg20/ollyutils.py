@@ -36,6 +36,8 @@ modules_exports = dict()  # will hold pairs <ea, 'module_name.api_name'>
 
 __MINUS_ONE_32BIT = struct.unpack('<I', '\xFF\xFF\xFF\xFF')[0]
 
+def is_valid_addr(ea):
+   return ea >= 0 and ea <= sys.maxsize
 
 def make_names(names, base, remote_base):
     if not names:
@@ -44,6 +46,8 @@ def make_names(names, base, remote_base):
     if base != remote_base:
         ptrdiff = remote_base - base
     for n in names:
+        if not is_valid_addr(n.ea + ptrdiff):
+            continue
         api.QuickinsertnameW(n.ea + ptrdiff, api.NM_LABEL, str(n.name).decode('utf8'))
     api.Mergequickdata()
     api.Redrawcpudisasm()
@@ -54,6 +58,8 @@ def make_comments(comments, base, remote_base):
         return
     ptrdiff = remote_base - base
     for cmt in comments:
+        if not is_valid_addr(cmt.ea + ptrdiff):
+            continue
         api.QuickinsertnameW(cmt.ea + ptrdiff, api.NM_COMMENT, str(cmt.name).decode('utf8'))
     api.Mergequickdata()
     api.Redrawcpudisasm()

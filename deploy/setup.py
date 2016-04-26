@@ -9,9 +9,11 @@
 __author__ = 'a1ex_t'
 
 import os
-from os import path
+from os import path, chdir
 from distutils.core import setup
 import sys
+
+os.chdir(path.dirname(path.realpath(__file__)))
 
 VERSION = None
 try:
