@@ -151,3 +151,4 @@ if __name__ == '__main__':
     vmx = sys.argv[1]
     deploy_to_vm = DeployLabelessToVM(vmx)
     deploy_to_vm.deploy()
+    raw_input()

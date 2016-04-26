@@ -36,6 +36,10 @@ modules_meta = dict()
 modules_exports = dict()  # will hold pairs <ea, 'module_name.api_name'>
 
 
+def is_valid_addr(ea):
+   return ea >= 0 and ea <= sys.maxsize
+
+
 def make_names(names, base, remote_base):
     if not names:
         return
@@ -43,6 +47,8 @@ def make_names(names, base, remote_base):
     if base != remote_base:
         ptrdiff = remote_base - base
     for n in names:
+        if not is_valid_addr(n.ea + ptrdiff):
+            continue
         api.Insertname(n.ea + ptrdiff, api.NM_LABEL, str(n.name))
     api.Redrawdisassembler()
 
@@ -52,6 +58,8 @@ def make_comments(comments, base, remote_base):
         return
     ptrdiff = remote_base - base
     for cmt in comments:
+        if not is_valid_addr(cmt.ea + ptrdiff):
+            continue
         api.Insertname(cmt.ea + ptrdiff, api.NM_COMMENT, str(cmt.name))
     api.Redrawdisassembler()
 

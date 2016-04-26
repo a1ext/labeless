@@ -41,6 +41,10 @@ modules_meta = dict()
 modules_exports = dict()  # will hold pairs <ea, 'module_name.api_name'>
 
 
+def is_valid_addr(ea):
+   return ea >= 0 and ea <= sys.maxsize
+
+
 def long_xrange(start, stop=None, inc=1):
     start = long(start)
     if stop is None:
@@ -70,6 +74,8 @@ def make_names(names, base, remote_base):
     if base != remote_base:
         ptrdiff = remote_base - base
     for n in names:
+        if not is_valid_addr(n.ea + ptrdiff):
+            continue
         api.Label_Set(n.ea + ptrdiff, str(n.name))
 
     api.GuiUpdateAllViews()
@@ -80,6 +86,8 @@ def make_comments(comments, base, remote_base):
         return
     ptrdiff = remote_base - base
     for cmt in comments:
+        if not is_valid_addr(cmt.ea + ptrdiff):
+            continue
         api.Comment_Set(cmt.ea + ptrdiff, str(cmt.name), False)
 
     api.GuiUpdateAllViews()
