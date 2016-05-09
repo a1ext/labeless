@@ -36,8 +36,10 @@ modules_exports = dict()  # will hold pairs <ea, 'module_name.api_name'>
 
 __MINUS_ONE_32BIT = struct.unpack('<I', '\xFF\xFF\xFF\xFF')[0]
 
+
 def is_valid_addr(ea):
-   return ea >= 0 and ea <= sys.maxsize
+    return 0 <= ea <= sys.maxsize
+
 
 def make_names(names, base, remote_base):
     if not names:

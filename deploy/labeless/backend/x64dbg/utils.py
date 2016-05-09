@@ -42,7 +42,7 @@ modules_exports = dict()  # will hold pairs <ea, 'module_name.api_name'>
 
 
 def is_valid_addr(ea):
-   return ea >= 0 and ea <= sys.maxsize
+    return 0 <= ea <= sys.maxsize
 
 
 def long_xrange(start, stop=None, inc=1):
