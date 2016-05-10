@@ -10,6 +10,7 @@
 
 #include <WinSock2.h>
 #include <cstdlib>
+#include <ShlObj.h>
 #include <vector>
 
 namespace util {
@@ -28,6 +29,17 @@ std::string getPluginDir(HINSTANCE hPlugin)
 	GetModuleFileName(hPlugin, buff, MAX_PATH);
 	PathRemoveFileSpec(buff);
 	return std::string(buff);
+}
+
+std::string getErrorDir()
+{
+	std::string rv(MAX_PATH, '\0');
+	if (S_OK != SHGetFolderPath(NULL, CSIDL_COMMON_APPDATA, NULL, 0, &rv[0]))
+		return {};
+	rv.resize(strnlen_s(rv.c_str(), MAX_PATH));
+	rv += "\\Labeless\\errors";
+	SHCreateDirectoryEx(NULL, rv.c_str(), NULL);
+	return rv;
 }
 
 std::string inetAddrToString(sockaddr_in* sin)

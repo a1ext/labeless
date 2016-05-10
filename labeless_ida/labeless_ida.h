@@ -18,7 +18,8 @@
 #include <QThread>
 #include <QWaitCondition>
 
-#include <pro.h>
+#include "types.h"
+#include "externsegdata.h"
 #include "sync/sync.h"
 #include "rpcdata.h"
 #include "idadump.h"
@@ -125,9 +126,9 @@ private:
 	void openPythonEditorForm(int options = 0);
 	void addLogItem(LogItem& logItem);
 
-	uint32_t loadImportTable();
+	size_t loadImportTable();
 	void storeImportTable();
-	bool createImportSegment(ea_t from, ea_t to);
+	bool createImportSegments(const std::map<uint64_t, AnalyzeExternalRefs::PointerData>& impData);
 	void updateImportsNode();
 	qstring getNewNameOfEntry() const;
 
@@ -142,6 +143,7 @@ private:
 	QMainWindow* findIDAMainWindow() const;
 private:
 	bool addAPIEnumValue(const std::string& name, uval_t value);
+	void addAPIConst(const AnalyzeExternalRefs::PointerData& pd);
 	bool mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size);
 	segment_t* getFirstOverlappedSegment(const area_t& area, segment_t* exceptThisSegment);
 	bool createSegment(const area_t& area, uchar perm, uchar type, const std::string& data, segment_t& result);

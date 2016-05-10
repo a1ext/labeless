@@ -22,7 +22,7 @@ enum GlobalSettingsKey
 	GSK_PrevEnteredOllyHosts = 3,
 	GSK_PrevSelectedOllyHost = 4,
 	GSK_AnalyzePEHeader = 5,
-	GSK_DefaultExternSegSize = 6,
+	GSK_DefaultExternSegSize = 6, // Deprecated, don't use it
 	GSK_PostProcessFixCallJumps = 7,
 	GSK_LightPalette = 8,
 	GSK_DarkPalette = 9,

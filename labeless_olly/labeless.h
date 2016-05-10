@@ -110,6 +110,8 @@ private:
 	static bool onClientSockBufferReceived(ClientData& cd, const std::string& rawCommand);
 	static bool onClientSockClose(ClientData& cd);
 
+	static std::string storeBadCommand(const std::string& rawCommand);
+
 private:
 	typedef std::shared_ptr<std::thread> ThreadPtr;
 

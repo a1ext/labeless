@@ -18,6 +18,7 @@ namespace util {
 
 std::string getOllyDir();
 std::string getPluginDir(HINSTANCE hPlugin);
+std::string getErrorDir();
 std::string inetAddrToString(sockaddr_in* sin);
 
 std::string sformat(const char* fmt, ...);

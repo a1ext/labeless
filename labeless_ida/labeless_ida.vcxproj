@@ -74,8 +74,8 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.plw</TargetExt>
-    <IncludePath>C:\Qt\qt-4.8.4-vc2010\include;C:\Qt\qt-4.8.4-vc2010\include\QtCore;C:\Qt\qt-4.8.4-vc2010\include\QtGui;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Qt\qt-4.8.4-vc2010\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>e:\Qt\4.8.4_msvc2010\include;e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;$(IncludePath)</IncludePath>
+    <LibraryPath>e:\Qt\4.8.4_msvc2010\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -91,7 +91,7 @@
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.p64</TargetExt>
-    <IncludePath>C:\Qt\qt-4.8.4-vc2010\include;C:\Qt\qt-4.8.4-vc2010\include\QtCore;C:\Qt\qt-4.8.4-vc2010\include\QtGui;$(IncludePath)</IncludePath>
+    <IncludePath>e:\Qt\4.8.4_msvc2010\include;e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Qt\qt-4.8.4-vc2010\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
@@ -391,9 +391,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="choosememorydialog.cpp" />
+    <ClCompile Include="externsegdata.cpp" />
     <ClCompile Include="globalsettingsmanager.cpp" />
     <ClCompile Include="highlighter.cpp" />
     <ClCompile Include="idadump.cpp" />
+    <ClCompile Include="idastorage.cpp" />
     <ClCompile Include="pythonpalettemanager.cpp" />
     <ClCompile Include="settingsdialog.cpp" />
     <ClCompile Include="textedit.cpp" />
@@ -456,6 +458,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="externsegdata.h" />
     <ClInclude Include="hlp.h" />
     <CustomBuild Include="labeless_ida.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing labeless_ida.h...</Message>
@@ -555,6 +558,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
       </Message>
     </CustomBuild>
+    <ClInclude Include="idastorage.h" />
     <ClInclude Include="pythonpalettemanager.h" />
     <CustomBuild Include="settingsdialog.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing settingsdialog.h...</Message>
@@ -726,7 +730,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" UicDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" RccDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="qt-4.8.4-vc2010" MocOptions="" />
+      <UserProperties MocDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" UicDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" RccDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="4.8.4_msvc2010" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

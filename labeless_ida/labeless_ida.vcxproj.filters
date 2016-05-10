@@ -71,6 +71,12 @@
     <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_choosememorydialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="externsegdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="idastorage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="labeless_ida.cpp">
@@ -231,6 +237,12 @@
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_textedit.cpp">
       <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="externsegdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="idastorage.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

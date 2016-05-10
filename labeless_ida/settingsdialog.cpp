@@ -63,7 +63,6 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->chLocalLabels->setChecked(settings.localLabels);
 	m_UI->chPerformPEAnalysis->setChecked(settings.analysePEHeader);
 	m_UI->chPostProcessFixCallJumps->setChecked(settings.postProcessFixCallJumps);
-	m_UI->leExternSegDefSize->setText(QString("0x%1").arg(settings.defaultExternSegSize, sizeof(ea_t) * 2, 16, QChar('0')).toUpper());
 	m_UI->chNonCodeNames->setChecked(settings.nonCodeNames);
 	m_UI->cbOverwriteWarning->setCurrentIndex(settings.overwriteWarning);
 	m_UI->cbCommentsSync->setCurrentIndex(settings.commentsSync);
@@ -155,7 +154,6 @@ void SettingsDialog::getSettings(Settings& result)
 	result.localLabels = m_UI->chLocalLabels->isChecked();
 	result.nonCodeNames = m_UI->chNonCodeNames->isChecked();
 	result.analysePEHeader = m_UI->chPerformPEAnalysis->isChecked();
-	result.defaultExternSegSize = m_UI->leExternSegDefSize->text().toULongLong(nullptr, 16);
 	result.postProcessFixCallJumps = m_UI->chPostProcessFixCallJumps->isChecked();
 	result.overwriteWarning = static_cast<Settings::OverwriteWarning>(m_UI->cbOverwriteWarning->currentIndex());
 	result.commentsSync = static_cast<Settings::CommentsSync>(m_UI->cbCommentsSync->currentIndex());
@@ -232,13 +230,6 @@ bool SettingsDialog::validate() const
 	if (m_UI->sbOllyPort->value() <= 0 || m_UI->sbOllyPort->value() >= UINT16_MAX)
 	{
 		info(tr("Invalid Olly's Port entered").toStdString().c_str());
-		return false;
-	}
-	bool ok = false;
-	const uint64_t defaultExternSegSize = m_UI->leExternSegDefSize->text().toULongLong(&ok, 16);
-	if (!ok || defaultExternSegSize < 0x1000 || (defaultExternSegSize % sizeof(ea_t)))
-	{
-		info(tr("Size of \"extern\" segment in hex is <b>invalid</b>.<br>Should be multiple by ea_t size(for i686 arch = 4) and not less than 0x1000.").toStdString().c_str());
 		return false;
 	}
 

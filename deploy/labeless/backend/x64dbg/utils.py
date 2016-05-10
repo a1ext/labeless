@@ -144,6 +144,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
     mbi = mbi_ctor()
     VirtualQueryEx = C.windll.kernel32.VirtualQueryEx
     VirtualProtectEx = C.windll.kernel32.VirtualProtectEx
+    GetLastError = C.windll.kernel32.GetLastError
     GRANULARITY = 0x1000
 
     h_process = wintypes.HANDLE(py_olly.get_hprocess())  # oa.Plugingetvalue(oa.VAL_HPROCESS))
@@ -160,7 +161,8 @@ def safe_read_chunked_memory_region_as_one(base, size):
     if queried:
         protect = mbi.Protect
     else:
-        print >> sys.stderr, 'safe_read_chunked_memory_region_as_one: VirtualQueryEx() failed'
+        print >> sys.stderr, 'safe_read_chunked_memory_region_as_one: VirtualQueryEx(ptr 0x%08X, size 0x%08X) failed, error: %u' %\
+                             (base, C.sizeof(mbi), GetLastError())
     if queried and mbi.Protect & D.PAGE_GUARD:
         g = {'ea': base, 'size': GRANULARITY, 'p': mbi.Protect}
         gpoints[base] = 0

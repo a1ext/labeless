@@ -10,13 +10,7 @@
 
 ImportEntry::ImportEntry()
 	: ordinal(0)
-	, index(0)
-{
-}
-
-ExternSegData::ExternSegData()
-	: start(0)
-	, len(0)
+	, ea(BADADDR)
 {
 }
 
@@ -41,7 +35,6 @@ Settings::Settings(const std::string host_,
 	bool nonCodeNames_,
 	bool analysePEHeader_,
 	bool postProcessFixCallJumps_,
-	uint64_t defaultExternSegSize_,
 	OverwriteWarning overwriteWarning_,
 	CommentsSync commentsSync_)
 	: host(host_)
@@ -52,7 +45,6 @@ Settings::Settings(const std::string host_,
 	, nonCodeNames(nonCodeNames_)
 	, analysePEHeader(analysePEHeader_)
 	, postProcessFixCallJumps(postProcessFixCallJumps_)
-	, defaultExternSegSize(defaultExternSegSize_)
 	, overwriteWarning(overwriteWarning_)
 	, commentsSync(commentsSync_)
 {

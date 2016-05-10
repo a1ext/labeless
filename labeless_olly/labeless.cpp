@@ -1184,7 +1184,10 @@ bool Labeless::onClientSockBufferReceived(ClientData& cd, const std::string& raw
 	try
 	{
 		if (!command.ParseFromString(rawCommand))
-			errorStr = "Unable to parse command";
+		{
+			errorStr = "Unable to parse command.\n";
+			errorStr += "bad packet is saved as " + storeBadCommand(rawCommand);
+		}
 	}
 	catch (...)
 	{
@@ -1332,5 +1335,24 @@ bool Labeless::onClientSockClose(ClientData& cd)
 std::string Labeless::lastChangeTimestamp()
 {
 	return __TIMESTAMP__;
+}
+
+std::string Labeless::storeBadCommand(const std::string& rawCommand)
+{
+	static std::string errorDir = util::getErrorDir();
+	SYSTEMTIME st;
+	GetSystemTime(&st);
+
+	std::string name = util::sformat("%s\\%04h%02h%02h_%02h%02h%02h_%h.pkt", errorDir.c_str(),
+		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
+
+	std::ofstream of(name, std::ios_base::binary);
+	if (of)
+	{
+		of.write(rawCommand.c_str(), rawCommand.size());
+		of.close();
+		return name;
+	}
+	return {};
 }
 
