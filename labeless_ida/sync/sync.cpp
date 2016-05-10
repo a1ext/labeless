@@ -445,3 +445,48 @@ bool CheckPEHeaders::parseResponse(QPointer<RpcData> rd)
 	}
 	return false;
 }
+
+bool GetBackendInfo::serialize(QPointer<RpcData> rd) const
+{
+	rd->script.clear();
+	rpc::RpcRequest rpcRequest;
+	rpcRequest.set_request_type(rpc::RpcRequest::RPCT_GET_BACKEND_INFO);
+	rd->params = rpcRequest.SerializeAsString();
+	return true;
+}
+
+bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
+{
+	if (!ICommand::parseResponse(rd))
+		return false;
+	try
+	{
+		rpc::GetBackendInfoResult result;
+		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		{
+			msg("%s: rpc::GetBackendInfo::ParseFromString() failed\n", __FUNCTION__);
+			return false;
+		}
+
+		bitness = result.bitness();
+		if (bitness != 32 && bitness != 64)
+		{
+			msg("%s: invalid \"bitness\" field value\n", __FUNCTION__);
+			return false;
+		}
+		dbg_name = result.dbg_name();
+		dbg_ver = result.dbg_ver();
+		labeless_ver = result.labeless_ver();
+
+		return true;
+	}
+	catch (std::runtime_error e)
+	{
+		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
+	}
+	catch (...)
+	{
+		msg("%s: Unable to parse GetBackendInfo response\n", __FUNCTION__);
+	}
+	return false;
+}

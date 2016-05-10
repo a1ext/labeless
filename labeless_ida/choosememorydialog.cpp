@@ -19,9 +19,9 @@
 
 namespace {
 
-QString ollyStyleFormatHex(DWORD_PTR v)
+QString ollyStyleFormatHex(ea_t v)
 {
-	return QString("%1").arg(v, 8, 16, QChar('0')).replace("0x", "").toUpper();
+	return QString("%1").arg(v, sizeof(ea_t) * 2, 16, QChar('0')).replace("0x", "").toUpper();
 }
 
 } // anonymous
@@ -62,8 +62,8 @@ bool ChooseMemoryDialog::getSelectedMemory(MemoryRegionList& selected) const
 		return true;
 	}
 	MemoryRegion r(
-		m_UI->leManualVaFrom->text().toInt(nullptr, 16),
-		m_UI->leManualSize->text().toUInt(nullptr, 16),
+		m_UI->leManualVaFrom->text().toULongLong(nullptr, 16),
+		m_UI->leManualSize->text().toULongLong(nullptr, 16),
 		0);
 	selected.append(r);
 	return true;
@@ -86,8 +86,8 @@ void ChooseMemoryDialog::accept()
 	if (m_UI->gbManual->isChecked())
 	{
 		bool ok1, ok2;
-		const ea_t base = m_UI->leManualVaFrom->text().toUInt(&ok1, 16);
-		const uint32 size = m_UI->leManualSize->text().toUInt(&ok2, 16);
+		const auto base = m_UI->leManualVaFrom->text().toULongLong(&ok1, 16);
+		const auto size = m_UI->leManualSize->text().toULongLong(&ok2, 16);
 		if (!ok1 || !base)
 		{
 			QMessageBox::warning(this, tr(":("), tr("<b>'VA from'</b> field is invalid"));
@@ -156,7 +156,7 @@ void ChooseMemoryDialog::fillView()
 	m_UI->twMemoryMap->adjustSize();
 }
 
-bool ChooseMemoryDialog::isRangeBelongsToExistingRegions(ea_t base, uint32 size) const
+bool ChooseMemoryDialog::isRangeBelongsToExistingRegions(uint64_t base, uint64_t size) const
 {
 	MemoryRegion rmIn(base, size, 0);
 	for (int i = 0; i < m_MemMap.size(); ++i)

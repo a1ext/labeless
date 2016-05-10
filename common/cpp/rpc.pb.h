@@ -56,6 +56,7 @@ class CheckPEHeadersRequest;
 class CheckPEHeadersResult;
 class CheckPEHeadersResult_Exports;
 class CheckPEHeadersResult_Section;
+class GetBackendInfoResult;
 
 enum RpcRequest_RequestType {
   RpcRequest_RequestType_RPCT_UNKNOWN = 0,
@@ -64,11 +65,12 @@ enum RpcRequest_RequestType {
   RpcRequest_RequestType_RPCT_GET_MEMORY_MAP = 3,
   RpcRequest_RequestType_RPCT_READ_MEMORY_REGIONS = 4,
   RpcRequest_RequestType_RPCT_ANALYZE_EXTERNAL_REFS = 5,
-  RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS = 6
+  RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS = 6,
+  RpcRequest_RequestType_RPCT_GET_BACKEND_INFO = 7
 };
 bool RpcRequest_RequestType_IsValid(int value);
 const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MIN = RpcRequest_RequestType_RPCT_UNKNOWN;
-const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MAX = RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS;
+const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MAX = RpcRequest_RequestType_RPCT_GET_BACKEND_INFO;
 const int RpcRequest_RequestType_RequestType_ARRAYSIZE = RpcRequest_RequestType_RequestType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* RpcRequest_RequestType_descriptor();
@@ -181,6 +183,7 @@ class RpcRequest : public ::google::protobuf::Message {
   static const RequestType RPCT_READ_MEMORY_REGIONS = RpcRequest_RequestType_RPCT_READ_MEMORY_REGIONS;
   static const RequestType RPCT_ANALYZE_EXTERNAL_REFS = RpcRequest_RequestType_RPCT_ANALYZE_EXTERNAL_REFS;
   static const RequestType RPCT_CHECK_PE_HEADERS = RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS;
+  static const RequestType RPCT_GET_BACKEND_INFO = RpcRequest_RequestType_RPCT_GET_BACKEND_INFO;
   static inline bool RequestType_IsValid(int value) {
     return RpcRequest_RequestType_IsValid(value);
   }
@@ -2781,6 +2784,130 @@ class CheckPEHeadersResult : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static CheckPEHeadersResult* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetBackendInfoResult : public ::google::protobuf::Message {
+ public:
+  GetBackendInfoResult();
+  virtual ~GetBackendInfoResult();
+
+  GetBackendInfoResult(const GetBackendInfoResult& from);
+
+  inline GetBackendInfoResult& operator=(const GetBackendInfoResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetBackendInfoResult& default_instance();
+
+  void Swap(GetBackendInfoResult* other);
+
+  // implements Message ----------------------------------------------
+
+  GetBackendInfoResult* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GetBackendInfoResult& from);
+  void MergeFrom(const GetBackendInfoResult& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required uint32 bitness = 1;
+  inline bool has_bitness() const;
+  inline void clear_bitness();
+  static const int kBitnessFieldNumber = 1;
+  inline ::google::protobuf::uint32 bitness() const;
+  inline void set_bitness(::google::protobuf::uint32 value);
+
+  // required string dbg_name = 2;
+  inline bool has_dbg_name() const;
+  inline void clear_dbg_name();
+  static const int kDbgNameFieldNumber = 2;
+  inline const ::std::string& dbg_name() const;
+  inline void set_dbg_name(const ::std::string& value);
+  inline void set_dbg_name(const char* value);
+  inline void set_dbg_name(const char* value, size_t size);
+  inline ::std::string* mutable_dbg_name();
+  inline ::std::string* release_dbg_name();
+  inline void set_allocated_dbg_name(::std::string* dbg_name);
+
+  // optional string dbg_ver = 3;
+  inline bool has_dbg_ver() const;
+  inline void clear_dbg_ver();
+  static const int kDbgVerFieldNumber = 3;
+  inline const ::std::string& dbg_ver() const;
+  inline void set_dbg_ver(const ::std::string& value);
+  inline void set_dbg_ver(const char* value);
+  inline void set_dbg_ver(const char* value, size_t size);
+  inline ::std::string* mutable_dbg_ver();
+  inline ::std::string* release_dbg_ver();
+  inline void set_allocated_dbg_ver(::std::string* dbg_ver);
+
+  // required string labeless_ver = 4;
+  inline bool has_labeless_ver() const;
+  inline void clear_labeless_ver();
+  static const int kLabelessVerFieldNumber = 4;
+  inline const ::std::string& labeless_ver() const;
+  inline void set_labeless_ver(const ::std::string& value);
+  inline void set_labeless_ver(const char* value);
+  inline void set_labeless_ver(const char* value, size_t size);
+  inline ::std::string* mutable_labeless_ver();
+  inline ::std::string* release_labeless_ver();
+  inline void set_allocated_labeless_ver(::std::string* labeless_ver);
+
+  // @@protoc_insertion_point(class_scope:rpc.GetBackendInfoResult)
+ private:
+  inline void set_has_bitness();
+  inline void clear_has_bitness();
+  inline void set_has_dbg_name();
+  inline void clear_has_dbg_name();
+  inline void set_has_dbg_ver();
+  inline void clear_has_dbg_ver();
+  inline void set_has_labeless_ver();
+  inline void clear_has_labeless_ver();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* dbg_name_;
+  ::std::string* dbg_ver_;
+  ::std::string* labeless_ver_;
+  ::google::protobuf::uint32 bitness_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static GetBackendInfoResult* default_instance_;
 };
 // ===================================================================
 
@@ -6254,6 +6381,262 @@ inline ::google::protobuf::RepeatedPtrField< ::rpc::CheckPEHeadersResult_Section
 CheckPEHeadersResult::mutable_sections() {
   // @@protoc_insertion_point(field_mutable_list:rpc.CheckPEHeadersResult.sections)
   return &sections_;
+}
+
+// -------------------------------------------------------------------
+
+// GetBackendInfoResult
+
+// required uint32 bitness = 1;
+inline bool GetBackendInfoResult::has_bitness() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GetBackendInfoResult::set_has_bitness() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GetBackendInfoResult::clear_has_bitness() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GetBackendInfoResult::clear_bitness() {
+  bitness_ = 0u;
+  clear_has_bitness();
+}
+inline ::google::protobuf::uint32 GetBackendInfoResult::bitness() const {
+  // @@protoc_insertion_point(field_get:rpc.GetBackendInfoResult.bitness)
+  return bitness_;
+}
+inline void GetBackendInfoResult::set_bitness(::google::protobuf::uint32 value) {
+  set_has_bitness();
+  bitness_ = value;
+  // @@protoc_insertion_point(field_set:rpc.GetBackendInfoResult.bitness)
+}
+
+// required string dbg_name = 2;
+inline bool GetBackendInfoResult::has_dbg_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void GetBackendInfoResult::set_has_dbg_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GetBackendInfoResult::clear_has_dbg_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GetBackendInfoResult::clear_dbg_name() {
+  if (dbg_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_name_->clear();
+  }
+  clear_has_dbg_name();
+}
+inline const ::std::string& GetBackendInfoResult::dbg_name() const {
+  // @@protoc_insertion_point(field_get:rpc.GetBackendInfoResult.dbg_name)
+  return *dbg_name_;
+}
+inline void GetBackendInfoResult::set_dbg_name(const ::std::string& value) {
+  set_has_dbg_name();
+  if (dbg_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_name_ = new ::std::string;
+  }
+  dbg_name_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.GetBackendInfoResult.dbg_name)
+}
+inline void GetBackendInfoResult::set_dbg_name(const char* value) {
+  set_has_dbg_name();
+  if (dbg_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_name_ = new ::std::string;
+  }
+  dbg_name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.GetBackendInfoResult.dbg_name)
+}
+inline void GetBackendInfoResult::set_dbg_name(const char* value, size_t size) {
+  set_has_dbg_name();
+  if (dbg_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_name_ = new ::std::string;
+  }
+  dbg_name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.GetBackendInfoResult.dbg_name)
+}
+inline ::std::string* GetBackendInfoResult::mutable_dbg_name() {
+  set_has_dbg_name();
+  if (dbg_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.GetBackendInfoResult.dbg_name)
+  return dbg_name_;
+}
+inline ::std::string* GetBackendInfoResult::release_dbg_name() {
+  clear_has_dbg_name();
+  if (dbg_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = dbg_name_;
+    dbg_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetBackendInfoResult::set_allocated_dbg_name(::std::string* dbg_name) {
+  if (dbg_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dbg_name_;
+  }
+  if (dbg_name) {
+    set_has_dbg_name();
+    dbg_name_ = dbg_name;
+  } else {
+    clear_has_dbg_name();
+    dbg_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.GetBackendInfoResult.dbg_name)
+}
+
+// optional string dbg_ver = 3;
+inline bool GetBackendInfoResult::has_dbg_ver() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GetBackendInfoResult::set_has_dbg_ver() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GetBackendInfoResult::clear_has_dbg_ver() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GetBackendInfoResult::clear_dbg_ver() {
+  if (dbg_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_ver_->clear();
+  }
+  clear_has_dbg_ver();
+}
+inline const ::std::string& GetBackendInfoResult::dbg_ver() const {
+  // @@protoc_insertion_point(field_get:rpc.GetBackendInfoResult.dbg_ver)
+  return *dbg_ver_;
+}
+inline void GetBackendInfoResult::set_dbg_ver(const ::std::string& value) {
+  set_has_dbg_ver();
+  if (dbg_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_ver_ = new ::std::string;
+  }
+  dbg_ver_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.GetBackendInfoResult.dbg_ver)
+}
+inline void GetBackendInfoResult::set_dbg_ver(const char* value) {
+  set_has_dbg_ver();
+  if (dbg_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_ver_ = new ::std::string;
+  }
+  dbg_ver_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.GetBackendInfoResult.dbg_ver)
+}
+inline void GetBackendInfoResult::set_dbg_ver(const char* value, size_t size) {
+  set_has_dbg_ver();
+  if (dbg_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_ver_ = new ::std::string;
+  }
+  dbg_ver_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.GetBackendInfoResult.dbg_ver)
+}
+inline ::std::string* GetBackendInfoResult::mutable_dbg_ver() {
+  set_has_dbg_ver();
+  if (dbg_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dbg_ver_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.GetBackendInfoResult.dbg_ver)
+  return dbg_ver_;
+}
+inline ::std::string* GetBackendInfoResult::release_dbg_ver() {
+  clear_has_dbg_ver();
+  if (dbg_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = dbg_ver_;
+    dbg_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetBackendInfoResult::set_allocated_dbg_ver(::std::string* dbg_ver) {
+  if (dbg_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dbg_ver_;
+  }
+  if (dbg_ver) {
+    set_has_dbg_ver();
+    dbg_ver_ = dbg_ver;
+  } else {
+    clear_has_dbg_ver();
+    dbg_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.GetBackendInfoResult.dbg_ver)
+}
+
+// required string labeless_ver = 4;
+inline bool GetBackendInfoResult::has_labeless_ver() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GetBackendInfoResult::set_has_labeless_ver() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GetBackendInfoResult::clear_has_labeless_ver() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GetBackendInfoResult::clear_labeless_ver() {
+  if (labeless_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    labeless_ver_->clear();
+  }
+  clear_has_labeless_ver();
+}
+inline const ::std::string& GetBackendInfoResult::labeless_ver() const {
+  // @@protoc_insertion_point(field_get:rpc.GetBackendInfoResult.labeless_ver)
+  return *labeless_ver_;
+}
+inline void GetBackendInfoResult::set_labeless_ver(const ::std::string& value) {
+  set_has_labeless_ver();
+  if (labeless_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    labeless_ver_ = new ::std::string;
+  }
+  labeless_ver_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.GetBackendInfoResult.labeless_ver)
+}
+inline void GetBackendInfoResult::set_labeless_ver(const char* value) {
+  set_has_labeless_ver();
+  if (labeless_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    labeless_ver_ = new ::std::string;
+  }
+  labeless_ver_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.GetBackendInfoResult.labeless_ver)
+}
+inline void GetBackendInfoResult::set_labeless_ver(const char* value, size_t size) {
+  set_has_labeless_ver();
+  if (labeless_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    labeless_ver_ = new ::std::string;
+  }
+  labeless_ver_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.GetBackendInfoResult.labeless_ver)
+}
+inline ::std::string* GetBackendInfoResult::mutable_labeless_ver() {
+  set_has_labeless_ver();
+  if (labeless_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    labeless_ver_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.GetBackendInfoResult.labeless_ver)
+  return labeless_ver_;
+}
+inline ::std::string* GetBackendInfoResult::release_labeless_ver() {
+  clear_has_labeless_ver();
+  if (labeless_ver_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = labeless_ver_;
+    labeless_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GetBackendInfoResult::set_allocated_labeless_ver(::std::string* labeless_ver) {
+  if (labeless_ver_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete labeless_ver_;
+  }
+  if (labeless_ver) {
+    set_has_labeless_ver();
+    labeless_ver_ = labeless_ver;
+  } else {
+    clear_has_labeless_ver();
+    labeless_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.GetBackendInfoResult.labeless_ver)
 }
 
 

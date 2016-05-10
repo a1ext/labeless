@@ -213,3 +213,19 @@ struct CheckPEHeaders : public ICommand
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
+
+struct GetBackendInfo : public ICommand
+{
+	GetBackendInfo()
+		: bitness(0)
+	{}
+
+	uint32_t bitness;
+	std::string dbg_name;
+	std::string dbg_ver;
+	std::string labeless_ver;
+
+
+	virtual bool serialize(QPointer<RpcData> rd) const override;
+	virtual bool parseResponse(QPointer<RpcData> rd) override;
+};

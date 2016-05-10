@@ -1,12 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Release_DeFixed|Win32">
-      <Configuration>Release_DeFixed</Configuration>
+    <ProjectConfiguration Include="Release_vc120_x64|Win32">
+      <Configuration>Release_vc120_x64</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
+    <ProjectConfiguration Include="Release_vc120|Win32">
+      <Configuration>Release_vc120</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_vc140_x64|Win32">
+      <Configuration>Release_vc140_x64</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_vc140|Win32">
+      <Configuration>Release_vc140</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -14,49 +22,88 @@
     <ProjectGuid>{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
     <RootNamespace>labeless_ida</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v100</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v100</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.plw</TargetExt>
-    <IncludePath>C:\Qt\qt-4.8.4-vc2010\include;C:\Qt\qt-4.8.4-vc2010\include\QtCore;C:\Qt\qt-4.8.4-vc2010\include\QtGui;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Qt\qt-4.8.4-vc2010\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>e:\Qt\4.8.4_msvc2010\include;e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;$(IncludePath)</IncludePath>
+    <LibraryPath>e:\Qt\4.8.4_msvc2010\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetExt>.plw</TargetExt>
-    <IncludePath>C:\Qt\qt-4.8.4-vc2010\include;C:\Qt\qt-4.8.4-vc2010\include\QtCore;C:\Qt\qt-4.8.4-vc2010\include\QtGui;$(IncludePath)</IncludePath>
+    <IncludePath>e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\QtCore;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\QtGui;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\QtWidgets;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\sdk\lib\x86_win_qt;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_690</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetExt>.p64</TargetExt>
+    <IncludePath>e:\Qt\4.8.4_msvc2010\include;e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Qt\qt-4.8.4-vc2010\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetExt>.p64</TargetExt>
+    <IncludePath>e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\QtCore;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\QtGui;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\QtWidgets;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\qtbase\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\sdk\lib\x86_win_qt;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_690</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -65,105 +112,290 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_DLL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\sdk\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\sdk\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)\sdk\lib\x86_win_vc_32;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\sdk\lib\x86_win_vc_32;$(ProjectDir)\sdk\lib\x86_win_qt\;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ida.lib;ws2_32.lib;libprotobuf_v100.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" C:\IDA68\plugins\$(ProjectName)$(TargetExt)</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" $(SolutionDir)..\IDA68\plugins\$(ProjectName)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_DLL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_DLL;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\sdk\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\sdk\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)\sdk\lib\x86_win_vc_32;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\sdk\lib\x86_win_vc_32;$(ProjectDir)\sdk\lib\x86_win_qt;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ida.lib;ws2_32.lib;libprotobuf_v140.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" $(SolutionDir)..\IDA69\plugins\$(TargetFileName)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_DLL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)\sdk\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)\sdk\lib\x86_win_vc_64;$(ProjectDir)\sdk\lib\x86_win_qt\;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ida.lib;ws2_32.lib;libprotobuf_v100.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" C:\IDA68\plugins\$(ProjectName)$(TargetExt)</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" $(SolutionDir)..\IDA68\plugins\$(ProjectName)$(TargetExt)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_DLL;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)\sdk\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets;e:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)\sdk\lib\x86_win_vc_64;$(ProjectDir)\sdk\lib\x86_win_qt\;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ida.lib;ws2_32.lib;libprotobuf_v140.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" $(SolutionDir)..\IDA69\plugins\$(TargetFileName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_res.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_choosememorydialog.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_choosememorydialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_globalsettingsmanager.cpp" />
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_highlighter.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_globalsettingsmanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_labeless_ida.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_highlighter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_pyollyview.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_labeless_ida.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_rpcdata.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_pyollyview.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_rpcthreadworker.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_rpcdata.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_settingsdialog.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_rpcthreadworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release\moc_textedit.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_settingsdialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_choosememorydialog.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_textedit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_highlighter.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_choosememorydialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_labeless_ida.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_globalsettingsmanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_pyollyview.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_highlighter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_rpcdata.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_labeless_ida.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_rpcthreadworker.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_pyollyview.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_settingsdialog.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_rpcdata.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_DeFixed\moc_textedit.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_rpcthreadworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_settingsdialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_textedit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_choosememorydialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_globalsettingsmanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_highlighter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_labeless_ida.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pyollyview.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcdata.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcthreadworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_settingsdialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_textedit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_choosememorydialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_globalsettingsmanager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_highlighter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_labeless_ida.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_pyollyview.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_rpcdata.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_rpcthreadworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_settingsdialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_textedit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="choosememorydialog.cpp" />
+    <ClCompile Include="externsegdata.cpp" />
     <ClCompile Include="globalsettingsmanager.cpp" />
     <ClCompile Include="highlighter.cpp" />
     <ClCompile Include="idadump.cpp" />
+    <ClCompile Include="idastorage.cpp" />
     <ClCompile Include="pythonpalettemanager.cpp" />
     <ClCompile Include="settingsdialog.cpp" />
     <ClCompile Include="textedit.cpp" />
@@ -173,123 +405,215 @@
     <ClInclude Include="..\bin\src\GeneratedFiles\Release\ui_pyollyview.h" />
     <ClInclude Include="..\common\cpp\rpc.pb.h" />
     <CustomBuild Include="highlighter.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing highlighter.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing highlighter.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing highlighter.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing highlighter.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing highlighter.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing highlighter.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="choosememorydialog.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing choosememorydialog.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing choosememorydialog.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing choosememorydialog.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing choosememorydialog.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing choosememorydialog.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing choosememorydialog.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="globalsettingsmanager.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing globalsettingsmanager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="externsegdata.h" />
     <ClInclude Include="hlp.h" />
     <CustomBuild Include="labeless_ida.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing labeless_ida.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing labeless_ida.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing labeless_ida.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing labeless_ida.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing labeless_ida.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing labeless_ida.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="rpcdata.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rpcdata.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing rpcdata.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing rpcdata.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing rpcdata.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing rpcdata.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing rpcdata.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="rpcthreadworker.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing rpcthreadworker.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing rpcthreadworker.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing rpcthreadworker.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing rpcthreadworker.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing rpcthreadworker.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing rpcthreadworker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="pyollyview.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing pyollyview.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing pyollyview.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing pyollyview.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing pyollyview.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing pyollyview.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing pyollyview.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="idadump.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
       </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
       </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
       </Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
       </Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+      </Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
+      </Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
       </Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
       </Message>
     </CustomBuild>
+    <ClInclude Include="idastorage.h" />
     <ClInclude Include="pythonpalettemanager.h" />
     <CustomBuild Include="settingsdialog.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing settingsdialog.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing settingsdialog.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing settingsdialog.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing settingsdialog.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing settingsdialog.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing settingsdialog.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="sync\sync.h" />
     <CustomBuild Include="textedit.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing textedit.h...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Moc%27ing textedit.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\."</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing textedit.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing textedit.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing textedit.h...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing textedit.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(ProjectDir)\sdk\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtCore" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtGui" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include\QtWidgets" "-Ie:\Qt\Qt5.4.1_msvc2015_qt_namespace\msvc2015_32\qtbase\include"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\common\cpp\rpc.pb.cc" />
     <ClCompile Include="entry.cpp">
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
-      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">false</CompileAsManaged>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">
       </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="hlp.cpp" />
@@ -301,63 +625,102 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ui\pyollyview.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="res\res.qrc">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(FullPath);.\res\run.png;.\res\clear.png;.\res\settings.png;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">%(FullPath);.\res\run.png;.\res\clear.png;.\res\settings.png;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Rcc%27ing %(Identity)...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Rcc%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">%(FullPath);.\res\run.png;.\res\clear.png;.\res\settings.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">%(FullPath);.\res\run.png;.\res\clear.png;.\res\settings.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">%(FullPath);.\res\run.png;.\res\clear.png;.\res\settings.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">%(FullPath);.\res\run.png;.\res\clear.png;.\res\settings.png;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Rcc%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_%(Filename).cpp</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\clear.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="res\dump.png" />
     <None Include="res\run.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="res\settings.png">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </None>
     <CustomBuild Include="ui\settingsdialog.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\choosememorydialog.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">Uic%27ing %(Identity)...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Uic%27ing %(Identity)...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
     <None Include="res\stub.exe.bin" />
+    <None Include="res\stub64.exe.bin" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\wres.rc" />
@@ -367,7 +730,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" UicDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" RccDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="qt-4.8.4-vc2010" MocOptions="" />
+      <UserProperties MocDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" UicDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" RccDir=".\..\bin\src\GeneratedFiles\$(ConfigurationName)" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="4.8.4_msvc2010" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

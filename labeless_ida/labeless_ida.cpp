@@ -25,7 +25,6 @@
 #include <frame.hpp>
 #include <kernwin.hpp>
 #include <loader.hpp>
-#include <loader.hpp>
 #include <nalt.hpp>
 #include <name.hpp>
 #include <offset.hpp>
@@ -66,6 +65,7 @@
 #include "choosememorydialog.h"
 #include "globalsettingsmanager.h"
 #include "idadump.h"
+#include "idastorage.h"
 #include "pyollyview.h"
 #include "pythonpalettemanager.h"
 #include "settingsdialog.h"
@@ -98,8 +98,6 @@ enum SettingsCtrl
 	SC_RemotePyConsole		= 7
 };
 
-
-static const uint64_t kDefaultExternSegLen = 0xF000UL;
 static const Settings kDefaultSettings(
 	"127.0.0.1",
 	3852,
@@ -110,7 +108,6 @@ static const Settings kDefaultSettings(
 	true,
 	true,
 	true,
-	kDefaultExternSegLen,
 	Settings::OW_AlwaysAsk,
 	Settings::CS_Disabled
 );
@@ -159,14 +156,11 @@ void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename
 		Q_ARG(QString, kPrefix));
 }
 
-static const std::string kNetNodeLabeless = "$ labeless";
-static const std::string kNetNodeExternSegData = "$ externsegdata";
-static const std::string kNetNodeExternSegImps = "$ externsegimps";
+
 static const std::string kAPIEnumName = "OLD_API_EXTERN_CONSTS";
 static const QString kLabelessMenuObjectName = "labeless_menu";
-static const QString kLabelessMenuLoadStubItemName = "act-load-stub";
-
-
+static const QString kLabelessMenuLoadStubItemName = "act-load-stub-x86";
+static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
 
 } // anonymous
 
@@ -202,30 +196,17 @@ Labeless& Labeless::instance()
 
 Settings Labeless::loadSettings()
 {
-	netnode n;
-	const bool nodeExists = !n.create(kNetNodeLabeless.c_str());
+	const bool nodeExists = storage::loadDbSettings(m_Settings);
 	GlobalSettingsManger& gsm = GlobalSettingsManger::instance();
 
 	do {
-		if (nodeExists)
-		{
-			char buff[MAXSTR] = {};
-			if (n.supstr(0, buff, MAXSTR) >= 2)
-				m_Settings.host = buff;
-			m_Settings.port = n.altval(LNAT_Port);
-			m_Settings.remoteModBase = n.altval(LNAT_RmoteModBase);
-			m_Settings.demangle = n.altval(LNAT_Demangle) != 0;
-			m_Settings.localLabels = n.altval(LNAT_LocalLabels) != 0;
-			m_Settings.commentsSync = static_cast<Settings::CommentsSync>(n.altval(LNAT_CommentsSync));
-		}
-		else
+		if (!nodeExists)
 		{
 			m_Settings.host = gsm.value(GSK_PrevSelectedOllyHost, QString::fromStdString(m_Settings.host)).toString().toStdString();
 			m_Settings.remoteModBase = get_imagebase();
 		}
 
 		m_Settings.analysePEHeader = gsm.value(GSK_AnalyzePEHeader, m_Settings.analysePEHeader).toBool();
-		m_Settings.defaultExternSegSize = gsm.value(GSK_DefaultExternSegSize, m_Settings.defaultExternSegSize).toUInt();
 		m_Settings.postProcessFixCallJumps = gsm.value(GSK_PostProcessFixCallJumps, m_Settings.postProcessFixCallJumps).toBool();
 		m_Settings.overwriteWarning = static_cast<Settings::OverwriteWarning>(gsm.value(GSK_OverwriteWarning, m_Settings.overwriteWarning).toInt());
 	} while (0);
@@ -238,22 +219,13 @@ Settings Labeless::loadSettings()
 
 void Labeless::storeSettings()
 {
-	netnode n;
-	n.create(kNetNodeLabeless.c_str());
-
-	n.supset(0, m_Settings.host.c_str());
-	n.altset(LNAT_Port, m_Settings.port);
-	n.altset(LNAT_RmoteModBase, m_Settings.remoteModBase);
-	n.altset(LNAT_Demangle, m_Settings.demangle ? 1 : 0);
-	n.altset(LNAT_LocalLabels, m_Settings.localLabels ? 1 : 0);
-	n.altset(LNAT_CommentsSync, m_Settings.commentsSync);
+	storage::storeDbSettings(m_Settings);
 
 	// global settings
 	do {
 		auto& gsm = GlobalSettingsManger::instance();
 		gsm.setValue(GSK_PrevSelectedOllyHost, QString::fromStdString(m_Settings.host));
 		gsm.setValue(GSK_AnalyzePEHeader, m_Settings.analysePEHeader);
-		gsm.setValue(GSK_DefaultExternSegSize, m_Settings.defaultExternSegSize);
 		gsm.setValue(GSK_PostProcessFixCallJumps, m_Settings.postProcessFixCallJumps);
 		gsm.setValue(GSK_OverwriteWarning, m_Settings.overwriteWarning);
 	} while (0);
@@ -323,7 +295,7 @@ void Labeless::onSyncronizeAllRequested()
 					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
 				if (isUtf8StringValid(s.c_str(), s.length()))
 					labelPoints.push_back(LabelsSync::Data(ea, s));
-				//msg("%08X: %s\n", ea, name.c_str());
+				//msg("%08" LL_FMT_EA_T ": %s\n", ea, name.c_str());
 			}
 			
 			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
@@ -385,7 +357,11 @@ bool Labeless::setEnabled()
 void Labeless::enableMenuActions(bool enabled)
 {
 	for (int i = 0, e = m_MenuActions.length(); i < e; ++i)
-		m_MenuActions.at(i)->setEnabled(m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemName ? !enabled: enabled);
+	{
+		const bool isLoadStubItem = m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemName ||
+			m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemNameX64;
+		m_MenuActions.at(i)->setEnabled(isLoadStubItem ? !enabled : enabled);
+	}
 }
 
 std::string Labeless::ollyHost() const
@@ -400,7 +376,7 @@ WORD Labeless::ollyPort() const
 	return m_Settings.port;
 }
 
-void Labeless::onRename(uint32_t ea, const std::string& newName)
+void Labeless::onRename(uint64_t ea, const std::string& newName)
 {
 	//if (m_LabelSyncOnRenameIfZero)
 	//	return;
@@ -408,7 +384,7 @@ void Labeless::onRename(uint32_t ea, const std::string& newName)
 		return;
 	if (!m_DumpList.isEmpty() && m_DumpList.last().state != IDADump::ST_Done)
 		return;
-	msg("%s: rename addr %08X to %s\n", __FUNCTION__, ea, newName.c_str());
+	msg("%s: rename addr %08llX to %s\n", __FUNCTION__, ea, newName.c_str());
 	LabelsSync::DataList fncdl;
 	fncdl.push_back(LabelsSync::Data(ea, newName));
 	addLabelsSyncData(fncdl);
@@ -467,13 +443,13 @@ void Labeless::onAutoanalysisFinished()
 				const QString name = reOpnd.cap(2);
 				if (is_uname(name.toStdString().c_str()))
 					continue;
-				msg("%s: found TODO for fix at: 0x%08X, opnd:%s\n", __FUNCTION__, ea, disasm);
+				msg("%s: found TODO for fix at: 0x%08" LL_FMT_EA_T ", opnd:%s\n", __FUNCTION__, ea, disasm);
 				if (do_unknown(target, 0) && create_insn(target))
-					msg("%s: ea: 0x%08X fixed\n", __FUNCTION__, ea);
+					msg("%s: ea: 0x%08" LL_FMT_EA_T " fixed\n", __FUNCTION__, ea);
 			}
 			else if (reShortOpnd.exactMatch(sDisasm))
 			{
-				msg("%s: found TODO for fix 2 at: 0x%08X, opnd: %s\n", __FUNCTION__, ea, disasm);
+				msg("%s: found TODO for fix 2 at: 0x%08" LL_FMT_EA_T ", opnd: %s\n", __FUNCTION__, ea, disasm);
 			}
 		}
 	}
@@ -488,9 +464,18 @@ bool Labeless::firstInit()
 		if (QMenu* m = mw->menuBar()->addMenu("Labeless"))
 		{
 			m->setObjectName(kLabelessMenuObjectName);
+#ifdef __X64__
+			QMenu* loadStubMenu = m->addMenu(tr("Load stub database"));
+			QAction* actLoadStub_x86 = loadStubMenu->addAction(tr("x86"), this, SLOT(onLoadStubDBRequested()));
+			actLoadStub_x86->setObjectName(kLabelessMenuLoadStubItemName);
+			QAction* actLoadStub_x64 = loadStubMenu->addAction(tr("x64"), this, SLOT(onLoadStubDBRequested()));
+			actLoadStub_x64->setObjectName(kLabelessMenuLoadStubItemNameX64);
+			m_MenuActions << actLoadStub_x86 << actLoadStub_x64;
+#else // __X64__
 			QAction* actLoadStub = m->addAction(tr("Load stub database..."), this, SLOT(onLoadStubDBRequested()));
 			actLoadStub->setObjectName(kLabelessMenuLoadStubItemName);
 			m_MenuActions << actLoadStub;
+#endif // __X64__
 			m->addSeparator();
 			m_MenuActions << m->addAction(QIcon(":/run.png"), tr("Remote Python execution"), this, SLOT(onShowRemotePythonExecutionViewRequested()));
 			QMenu* dumpMenu = m->addMenu(QIcon(":/dump.png"), tr("IDADump"));
@@ -728,6 +713,11 @@ void Labeless::onSettingsRequested()
 
 void Labeless::onLoadStubDBRequested()
 {
+	static const QString kStubX86Name = ":/stub.exe.bin";
+	static const QString kStubX64Name = ":/stub64.exe.bin";
+	static const QString kDatabaseExtX86 = ".idb";
+	static const QString kDatabaseExtX64 = ".i64";
+
 	/*if (::is_debugger_on())
 	{
 		QMessageBox::information(findIDAMainWindow(), tr("!"), tr("Stop debugging first"));
@@ -737,6 +727,11 @@ void Labeless::onLoadStubDBRequested()
 	{
 		term_plugins(PLUGIN_DBG);
 	}*/
+	bool isx86 = true;
+	if (QAction* act = qobject_cast<QAction*>(sender()))
+	{
+		isx86 = act->objectName() == kLabelessMenuLoadStubItemName;
+	}
 	if (!::is_temp_database())
 	{
 		const auto rv = QMessageBox::question(findIDAMainWindow(), tr("?"), tr("Do you really want to load sample DB?"),
@@ -744,13 +739,16 @@ void Labeless::onLoadStubDBRequested()
 		if (rv != QMessageBox::Yes)
 			return;
 	}
+	const QString extension = isx86 ? kDatabaseExtX86 : kDatabaseExtX64;
 
-	QString idbFileName = QFileDialog::getSaveFileName(findIDAMainWindow(), tr("Select where to save new DB"), "sample.idb",
-			tr("IDA PRO IDB-file (*.idb)"));
+	QString idbFileName = QFileDialog::getSaveFileName(findIDAMainWindow(),
+		tr("Select where to save new DB"),
+		QString("sample%1").arg(extension),
+		tr("IDA PRO IDB-file (*%1)").arg(extension));
 	if (idbFileName.isEmpty())
 		return;
-	if (!idbFileName.endsWith(".idb", Qt::CaseInsensitive))
-		idbFileName.append(".idb");
+	if (!idbFileName.endsWith(extension, Qt::CaseInsensitive))
+		idbFileName.append(extension);
 	const QString sampleFileName = idbFileName.left(idbFileName.length() - 4) + ".exe";
 
 	const std::string sfn = sampleFileName.toStdString();
@@ -758,7 +756,7 @@ void Labeless::onLoadStubDBRequested()
 	QByteArray raw;
 	do 
 	{
-		QFile fsrc(":/stub.exe.bin");
+		QFile fsrc(isx86 ? kStubX86Name : kStubX64Name);
 		if (!fsrc.open(QIODevice::ReadOnly))
 		{
 			msg("%s: unable to open stub resource file\n", __FUNCTION__);
@@ -923,12 +921,69 @@ void Labeless::onRunPythonScriptFinished()
 	// TODO
 }
 
+void Labeless::onGetBackendInfoFinished()
+{
+	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
+	if (!pRD)
+	{
+		msg("%s: Invalid internal data structure (null)\n", __FUNCTION__);
+		return;
+	}
+	auto req = std::dynamic_pointer_cast<GetBackendInfo>(pRD->iCmd);
+	if (!req)
+	{
+		msg("%s: Invalid type of ICommand\n", __FUNCTION__);
+		return;
+	}
+	const bool wipe = pRD->property("wipe").toBool();
+	QString error;
+#ifndef __X64__
+	if (req->bitness != 32)
+	{
+		error = tr("You are running IDA PRO for 32-bit applications, but debug backend is %1-bit<br>"
+			"Start idaq64.exe to work with non-32-bit applications.<br>")
+			.arg(req->bitness);
+	}
+#endif // __X64__
+	if (LABELESS_VER_STR != req->labeless_ver)
+	{
+		error += tr("The Labeless version mismatch IDA-side: %1, backend: %2<br>")
+			.arg(QString::fromLatin1(LABELESS_VER_STR))
+			.arg(QString::fromStdString(req->labeless_ver));
+	}
+	if ((::inf.is_64bit() && req->bitness != 64) ||
+		(!::inf.is_64bit() && req->bitness != 32))
+	{
+		error += tr("Database bitness mismatch, IDA DB bitness: %1, remote app bitness: %2.<br>"
+			"To dump remote application, you should load stub database.<br>"
+			"Use menu [Labeless] -> [Load stub database] -> [x%3] and then try again.")
+			.arg(::inf.is_64bit() ? 64: 32)
+			.arg(req->bitness)
+			.arg(req->bitness);
+	}
+
+
+	if (!error.isEmpty())
+	{
+		QMessageBox::information(findIDAMainWindow(),
+			tr("Bad backend"),
+			error);
+		return;
+	}
+	
+	// continue working, load memory map
+	auto getMemoryMapReq = std::make_shared<GetMemoryMapReq>();
+
+	RpcDataPtr p = addRpcData(getMemoryMapReq, RpcReadyToSendHandler(), this, SLOT(onGetMemoryMapFinished()));
+	p->setProperty("wipe", QVariant::fromValue(wipe));
+}
+
 bool Labeless::importCode(bool wipe)
 {
-	auto req = std::make_shared<GetMemoryMapReq>();
-
-	RpcDataPtr p = addRpcData(req, RpcReadyToSendHandler(), this, SLOT(onGetMemoryMapFinished()));
+	auto getBackendInfoReq = std::make_shared<GetBackendInfo>();
+	RpcDataPtr p = addRpcData(getBackendInfoReq, RpcReadyToSendHandler(), this, SLOT(onGetBackendInfoFinished()));
 	p->setProperty("wipe", QVariant::fromValue(wipe));
+	
 	return true;
 }
 
@@ -975,7 +1030,7 @@ void Labeless::onGetMemoryMapFinished()
 			base = v.base;
 		if (v.base + v.size > endEa)
 			endEa = v.base + v.size;
-		msg("addr: %08X, size: %08X, protect: %08X\n", v.base, v.size, v.protect);
+		msg("addr: %08llX, size: %08llX, protect: %08X\n", v.base, v.size, v.protect);
 		rmr->data.push_back(ReadMemoryRegions::t_memory(v.base, v.size, v.protect, ""));
 	}
 	if (!rmr->data.empty())
@@ -989,9 +1044,9 @@ void Labeless::onGetMemoryMapFinished()
 		dump.checkPEHeaders->base = base;
 		dump.checkPEHeaders->size = endEa - base;
 
+		bool snapshotTaken = false;
 		if (!wipe)
 		{
-			bool snapshotTaken = false;
 			// check is overlaps
 			area_t area(base, endEa);
 			for (auto it = existingSegs.cbegin(), end = existingSegs.cend(); it != end; ++it)
@@ -999,64 +1054,17 @@ void Labeless::onGetMemoryMapFinished()
 				segment_t* seg = *it;
 				if (seg->overlaps(area))
 				{
-					static const int kOverwrite						= 1 << 0;
-					static const int kTakeSnapAndOverwrite			= 1 << 1;
-					static const int kAlwaysTakeSnapAndOvrDontAsk	= 1 << 2;
-					static const int kAlwaysOvrDontAsk				= 1 << 3;
-					int chTakeSnapshot = 1;
-
-					if (Settings::OW_WarnAndCancel == m_Settings.overwriteWarning)
-					{
-						QMessageBox::warning(findIDAMainWindow(), tr("!"),
-							tr("One of selected regions[%1, %2) overlaps with existing segment[%3, %4)."
-								"Exiting... The default behavior can be changed in Settings view.")
-								.arg(area.startEA, 8, 16, QChar('0')).arg(area.endEA, 8, 16, QChar('0'))
-								.arg(seg->startEA, 8, 16, QChar('0')).arg(seg->endEA, 8, 16, QChar('0')));
+					if (!askForSnapshotBeforeOverwrite(&area, seg, snapshotTaken))
 						return;
-					}
-					if (Settings::OW_AlwaysAsk == m_Settings.overwriteWarning)
-					{
-						const QString fmt = QString("?\n\n\n"
-							"One of selected regions[%1, %2) overlaps with existing segment[%3, %4).\n"
-							"Do you want to overwrite/extend existing segment?"
-							"\n"
-							"<Overwrite :R>\n"
-							"<Take IDB snapshot & overwrite :R>"
-							"<Always take snapshot, don't ask :R>"
-							"<Always overwrite, don't ask :R>>")
-								.arg(area.startEA, 8, 16, QChar('0')).arg(area.endEA, 8, 16, QChar('0'))
-								.arg(seg->startEA, 8, 16, QChar('0')).arg(seg->endEA, 8, 16, QChar('0'));
-
-						if (!AskUsingForm_c(fmt.toStdString().c_str(), &chTakeSnapshot))
-							return;
-
-						if (chTakeSnapshot & kAlwaysOvrDontAsk)
-							GlobalSettingsManger::instance().setValue(GSK_OverwriteWarning, Settings::OW_Overwrite);
-						else if (chTakeSnapshot & kAlwaysTakeSnapAndOvrDontAsk)
-							GlobalSettingsManger::instance().setValue(GSK_OverwriteWarning, Settings::OW_TakeSnapshotAndOverwrite);
-					}
-					else if (Settings::OW_TakeSnapshotAndOverwrite == m_Settings.overwriteWarning)
-					{
-						chTakeSnapshot = kAlwaysTakeSnapAndOvrDontAsk;
-					}
-
-					if (!snapshotTaken && (chTakeSnapshot & (kTakeSnapAndOverwrite | kAlwaysTakeSnapAndOvrDontAsk)))
-					{
-						static const QString kSnapshotDescriptionFmt = "Labeless before dump - %1";
-						qstring errmsg;
-						snapshot_t snap;
-						char ss_date[MAXSTR];
-						qstrftime64(ss_date, sizeof(ss_date), "%Y-%m-%d %H:%M:%S", qtime64());
-
-						::qstrncpy(snap.desc, kSnapshotDescriptionFmt.arg(ss_date).toStdString().c_str(), sizeof(snap.desc));
-						snapshotTaken = take_database_snapshot(&snap, &errmsg);
-						if (!snapshotTaken)
-							msg("%s: Unable to take database snapshot, error: %s\n", __FUNCTION__, errmsg.c_str());
-						else
-							msg("%s: Database snapshot taken (%s)\n", __FUNCTION__, snap.filename);
-					}
+					if (snapshotTaken)
+						break;
 				}
 			}
+		}
+		else
+		{
+			if (!askForSnapshotBeforeOverwrite(nullptr, nullptr, snapshotTaken))
+				return;
 		}
 
 		m_DumpList.append(dump);
@@ -1066,6 +1074,81 @@ void Labeless::onGetMemoryMapFinished()
 			: addRpcData(dump.readMemRegions, RpcReadyToSendHandler(), this, SLOT(onReadMemoryRegionsFinished()));
 		p->setProperty("wipe", dump.wipe);
 	}
+}
+
+bool Labeless::askForSnapshotBeforeOverwrite(const area_t* area, const segment_t* seg, bool& snapshotTaken)
+{
+	static const int kOverwrite = 1 << 0;
+	static const int kTakeSnapAndOverwrite = 1 << 1;
+	static const int kAlwaysTakeSnapAndOvrDontAsk = 1 << 2;
+	static const int kAlwaysOvrDontAsk = 1 << 3;
+	int chTakeSnapshot = 1;
+
+	QString prefix;
+	if (area && seg)
+	{
+		prefix = tr("One of selected regions[%1, %2) overlaps with existing segment[%3, %4).")
+			.arg(area->startEA, 8, 16, QChar('0'))
+			.arg(area->endEA, 8, 16, QChar('0'))
+			.arg(seg->startEA, 8, 16, QChar('0'))
+			.arg(seg->endEA, 8, 16, QChar('0'));
+	}
+	else
+	{
+		prefix = tr("You are going to overwrite data.");
+	}
+
+	if (Settings::OW_WarnAndCancel == m_Settings.overwriteWarning)
+	{
+		const QString msg = tr("%1\nExiting... The default behavior can be changed in Settings view.")
+			.arg(prefix);
+		QMessageBox::warning(findIDAMainWindow(), tr("!"), msg);
+		return false;
+	}
+	if (Settings::OW_AlwaysAsk == m_Settings.overwriteWarning)
+	{
+		const QString fmt = QString("?\n\n\n"
+			"%1\n"
+			"Do you want to overwrite/extend existing segment?"
+			"\n"
+			"<Overwrite :R>\n"
+			"<Take IDB snapshot & overwrite :R>"
+			"<Always take snapshot, don't ask :R>"
+			"<Always overwrite, don't ask :R>>")
+			.arg(prefix);
+
+		if (!AskUsingForm_c(fmt.toStdString().c_str(), &chTakeSnapshot))
+			return false;
+
+		if (chTakeSnapshot & kAlwaysOvrDontAsk)
+			GlobalSettingsManger::instance().setValue(GSK_OverwriteWarning, Settings::OW_Overwrite);
+		else if (chTakeSnapshot & kAlwaysTakeSnapAndOvrDontAsk)
+			GlobalSettingsManger::instance().setValue(GSK_OverwriteWarning, Settings::OW_TakeSnapshotAndOverwrite);
+	}
+	else if (Settings::OW_TakeSnapshotAndOverwrite == m_Settings.overwriteWarning)
+	{
+		chTakeSnapshot = kAlwaysTakeSnapAndOvrDontAsk;
+	}
+
+	if (!snapshotTaken && (chTakeSnapshot & (kTakeSnapAndOverwrite | kAlwaysTakeSnapAndOvrDontAsk)))
+	{
+		static const QString kSnapshotDescriptionFmt = "Labeless before dump - %1";
+		qstring errmsg;
+		snapshot_t snap;
+		const QDateTime dt = QDateTime::currentDateTime();
+		const QString dtStr = dt.toString("yyyy-MM-dd hh_mm_ss");
+		const std::string snapshotName = kSnapshotDescriptionFmt.arg(dtStr).toStdString();
+		//char ss_date[MAXSTR];
+		//qstrftime64(ss_date, sizeof(ss_date), "%Y-%m-%d %H:%M:%S", qtime64());
+
+		::qstrncpy(snap.desc, snapshotName.c_str(), sizeof(snap.desc));
+		snapshotTaken = take_database_snapshot(&snap, &errmsg);
+		if (!snapshotTaken)
+			msg("%s: Unable to take database snapshot, error: %s\n", __FUNCTION__, errmsg.c_str());
+		else
+			msg("%s: Database snapshot taken (%s)\n", __FUNCTION__, snap.filename);
+	}
+	return true;
 }
 
 void Labeless::onCheckPEHeadersFinished()
@@ -1136,9 +1219,9 @@ void Labeless::onReadMemoryRegionsFinished()
 		m_ExternSegData = ExternSegData();
 		if (!rmr->data.empty())
 		{
-			ea_t newBase = rmr->data.front().base;
+			const ea_t newBase = rmr->data.front().base;
 			set_imagebase(newBase);
-			msg("ImageBase automatically changed to %08X because 'wipe' is requested\n", newBase);
+			msg("ImageBase automatically changed to %08" LL_FMT_EA_T " because 'wipe' is requested\n", newBase);
 			m_Settings.remoteModBase = newBase;
 			storeSettings();
 		}
@@ -1146,23 +1229,8 @@ void Labeless::onReadMemoryRegionsFinished()
 
 	m_LabelSyncOnRenameIfZero = rmr->data.size();
 
-	if (!rmr->data.empty())
-	{
-		static const ea_t kReservedFreeSpace = 0x1000;
-		const ea_t impSegFrom = MAXADDR - m_Settings.defaultExternSegSize - kReservedFreeSpace;
-		const ea_t impSegTo = MAXADDR - kReservedFreeSpace;
-
-		if (!createImportSegment(impSegFrom, impSegTo))
-		{
-			msg("%s: Unable to create import segment from: 0x%08X to 0x%08X\n",
-				__FUNCTION__, impSegFrom, impSegTo);
-			// TODO: may be fail
-			return;
-		}
-	}
-
 	const ea_t region_base = rmr->data.front().base;
-	const uint32_t region_size = rmr->data.back().base + rmr->data.back().size - region_base;
+	const uint64_t region_size = rmr->data.back().base + rmr->data.back().size - region_base;
 
 	icInfo.nextState(nullptr);
 
@@ -1171,7 +1239,7 @@ void Labeless::onReadMemoryRegionsFinished()
 		const ReadMemoryRegions::t_memory& m = rmr->data.at(i);
 		if (m.raw.size() != m.size)
 		{
-			msg("%s: Raw data size mismatch (expected %08X, received %08X)\n", __FUNCTION__, m.size, m.raw.size());
+			msg("%s: Raw data size mismatch (expected %08llX, received %08" PRIXPTR ")\n", __FUNCTION__, m.size, m.raw.size());
 			return;
 		}
 		if (!mergeMemoryRegion(icInfo, m, region_base, region_size))
@@ -1208,7 +1276,7 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 
 	if (sectionIt != icInfo.sections.constEnd())
 	{
-		msg("Section found for region{ ea: %08X, size: %08X } is section { name: %s, va: %08X, size: %08X, ch: %08X }\n",
+		msg("Section found for region{ ea: %08" LL_FMT_EA_T ", size: %08" LL_FMT_EA_T " } is section { name: %s, va: %08llX, size: %08llX, ch: %08X }\n",
 			area.startEA, area.size(), sectionIt->name.c_str(), sectionIt->va, sectionIt->va_size, sectionIt->characteristics);
 
 		const uint32_t ch = sectionIt->characteristics;
@@ -1235,7 +1303,7 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 		perm += SEGPERM_READ;
 }
 
-bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint32_t region_size)
+bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size)
 {
 	uchar perm = 0;
 	uchar type = 0;
@@ -1272,7 +1340,11 @@ bool Labeless::createSegment(const area_t& area, uchar perm, uchar type, const s
 	memset(&result, 0, sizeof(result));
 	static_cast<area_t&>(result) = area;
 
-	result.bitness = 1;
+//#ifdef __X64__
+	result.bitness = ::inf.is_64bit() ? 2 : 1;
+//#else // __X64__
+//	result.bitness = 1;
+//#endif // __X64__
 	result.sel = setup_selector(0);
 	result.perm = perm;
 	result.type = type;
@@ -1341,11 +1413,13 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 	IDADump& icInfo = m_DumpList.back();
 
-	if (gdp->rip >= gdp->req.eaFrom && gdp->rip <= gdp->req.eaTo - sizeof(DWORD_PTR))
+	const unsigned targetPtrSize = ::inf.is_64bit() ? sizeof(uint64_t) : sizeof(uint32_t);
+
+	if (gdp->rip >= gdp->req.eaFrom && gdp->rip <= gdp->req.eaTo - targetPtrSize)
 	{
 		const auto& entryName = getNewNameOfEntry();
 		add_entry(gdp->rip, gdp->rip, entryName.c_str(), true);
-		msg("Entry created %s, waiting for finish anto-analysis\n", entryName.c_str());
+		msg("Entry created %s, waiting for finish auto-analysis\n", entryName.c_str());
 		autoWait();
 	}
 	std::set<uint64_t> exportEntries;
@@ -1358,122 +1432,14 @@ void Labeless::onAnalyzeExternalRefsFinished()
 			add_entry(ea, ea, icInfo.exports.at(i).name.c_str(), true);
 		}
 	}
-	char disasm[MAXSTR] = {};
-	char disasmClean[MAXSTR] = {};
+	std::map<uint64_t, AnalyzeExternalRefs::PointerData> constPlaces;
 	for (int i = 0; i < gdp->ptrs.size(); ++i)
+		constPlaces[gdp->ptrs.at(i).ea] = gdp->ptrs.at(i);
+
+	if (!createImportSegments(constPlaces))
 	{
-		const AnalyzeExternalRefs::PointerData& pd = gdp->ptrs.at(i);
-		const std::string joined = pd.module + "." + pd.procName;
-
-		if (exportEntries.find(pd.ea) != exportEntries.end())
-		{
-			msg("entry %s already marked as external\n", joined.c_str());
-			continue;
-		}
-
-		uint32_t indexInImportTable = 0;
-		ea_t addr = 0;
-		auto it = m_ExternSegData.imports.find(joined);
-		if (it != m_ExternSegData.imports.end())
-		{
-			indexInImportTable = it->second.index;
-			addr = m_ExternSegData.start + indexInImportTable * sizeof(DWORD_PTR);
-		}
-		else
-		{
-			indexInImportTable = m_ExternSegData.imports.size();
-			addr = m_ExternSegData.start + indexInImportTable * sizeof(DWORD_PTR);
-			ImportEntry ie;
-			ie.index = indexInImportTable;
-			ie.module = pd.module;
-			ie.proc = pd.procName;
-			if (!pd.procName.empty() && pd.procName[0] == '#')
-				ie.ordinal = atol(pd.procName.substr(1).c_str());
-
-			m_ExternRefsMap[pd.ea] = joined;
-			m_ExternSegData.imports[joined] = ie;
-			uval_t val = get_long(pd.ea);
-			addAPIEnumValue(pd.module + "_" + pd.procName, val);
-
-			do_unknown_range(addr, sizeof(DWORD_PTR), DOUNK_SIMPLE);
-			if (!make_dword(addr, sizeof(DWORD_PTR)))
-				msg("make_dword() failed for ea: %08X\n", addr);
-			if (!set_name(addr, pd.procName.c_str(), SN_CHECK | SN_PUBLIC | SN_AUTO | SN_NOWARN) &&
-				!do_name_anyway(addr, pd.procName.c_str()))
-			{
-				msg("set_name() and do_name_anyway() are failed for ea: %08X\n", addr);
-				set_cmt(addr, pd.procName.c_str(), false);
-			}
-
-			do_unknown_range(pd.ea, sizeof(DWORD_PTR), DOUNK_DELNAMES);
-			if (!make_dword(pd.ea, sizeof(DWORD_PTR)))
-				msg("make_dword() failed for ea: %08X\n", pd.ea);
-
-			if (!do_name_anyway(pd.ea, pd.procName.c_str()))
-			{
-				msg("do_name_anyway() failed for ea: %08X\n", pd.ea);
-				set_cmt(pd.ea, pd.procName.c_str(), false);
-			}
-
-			if (!op_enum(pd.ea, 0, get_enum(kAPIEnumName.c_str()), 0))
-				msg("op_enum() failed for ea: %08X\n", pd.ea);
-		}
-
-		qstring qnamee;
-		get_ea_name(&qnamee, pd.ea);
-
-		qstring addrStr;
-		addrStr.sprnt("dword ptr [0%08Xh]", addr);
-		ea_t drefEA = get_first_dref_to(pd.ea);
-		if (qnamee.empty())
-		{
-			msg("error: qnamee empty: pd.ea: %08X, pd.proc: %s, pd.module: %s, drefEA: %08X\n",
-				pd.ea, pd.procName.c_str(), pd.module.c_str(), drefEA);
-			continue;
-		}
-		while (drefEA != BADADDR)
-		{
-			if (decode_insn(drefEA))
-			{
-				const insn_t c = ::cmd;
-				if (generate_disasm_line(drefEA, disasm, MAXSTR, GENDSM_FORCE_CODE) &&
-					tag_remove(disasm, disasmClean, MAXSTR))
-				{
-					qstring d (disasmClean);
-
-					auto p = d.find(';');
-					if (p != d.npos)
-						d.resize(p);
-					d.replace("dword ptr", "");
-					d.replace(qnamee.c_str(), addrStr.c_str());
-					::qstrncpy(disasmClean, d.c_str(), MAXSTR);
-					char ass[MAXSTR] = {};
-					int size = 0;
-
-					do {
-						ScopedEnabler enabler(m_SuppressMessageBoxesFromIDA);
-						Q_UNUSED(enabler);
-						size = ph.notify(ph.assemble, drefEA, ::cmd.cs, drefEA, true, disasmClean, ass);
-					} while (0);
-
-					if (size > 0 && static_cast<uint32_t>(size) <= ::cmd.size)
-					{
-						patch_many_bytes(drefEA, ass, size);
-						if (static_cast<uint32_t>(size) < ::cmd.size)
-						{
-							for (int e = size; e < static_cast<int>(::cmd.size); ++e)
-								patch_byte(drefEA + e, 0x90); // fill with nops
-						}
-					}
-					else
-					{
-						msg("%s: failed to assembly command: %s at ea: %08X\n", __FUNCTION__, d.c_str(), drefEA);
-					}
-				}
-			}
-			drefEA = get_next_dref_to(pd.ea, drefEA);
-		}
-		reanalyze_callers(addr, false);
+		msg("%s: createImportSegments() failed\n", __FUNCTION__);
+		// TODO
 	}
 
 	char buff[MAXSTR] = {};
@@ -1497,10 +1463,10 @@ void Labeless::onAnalyzeExternalRefsFinished()
 		mnem.erase(p, mnem.size() - p);
 		qstrupr(&mnem[0]);
 
-		if (!ua_mnem(ea, buff, MAXSTR) || !qstrupr(buff) || std::string(buff).substr(0, 1) != mnem.substr(0, 1))
+		if (!ua_mnem(ea, buff, MAXSTR) || !::qstrlen(buff) || !qstrupr(buff) || std::string(buff).substr(0, 1) != mnem.substr(0, 1))
 			continue;
 
-		const uint32_t val = rd.val;
+		const auto val = rd.val;
 		int opndNum = -1;
 		insn_t c = ::cmd;
 		for (int e = 0; e < UA_MAXOP && opndNum == -1; ++e)
@@ -1528,6 +1494,37 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	{
 		onAutoanalysisFinished();
 	}
+}
+
+void Labeless::addAPIConst(const AnalyzeExternalRefs::PointerData& pd)
+{
+	const auto ptrSize = targetPtrSize();
+
+	do_unknown_range(pd.ea, ptrSize, DOUNK_DELNAMES);
+	if (!make_dword_ptr(pd.ea, ptrSize))
+		msg("%s: make_dword_ptr() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
+
+	if (!do_name_anyway(pd.ea, pd.procName.c_str()))
+	{
+		msg("%s: do_name_anyway() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
+		set_cmt(pd.ea, pd.procName.c_str(), false);
+	}
+
+	// add enum value
+	const std::string enumValueName = pd.module + "_" + pd.procName;
+	bool enumValExists = true;
+
+	if (BADNODE == get_enum_member_by_name(enumValueName.c_str()))
+	{
+		const uval_t val = ::inf.is_64bit() ? get_qword(pd.ea) : get_long(pd.ea);
+		enumValExists = addAPIEnumValue(enumValueName, val);
+		if (!enumValExists)
+			msg("%s: addAPIEnumValue() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
+	}
+
+	// set name of old entry to be pointed to our APIs enum
+	if (enumValExists && !op_enum(pd.ea, 0, get_enum(kAPIEnumName.c_str()), 0))
+		msg("%s: op_enum() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
 }
 
 void Labeless::openPythonEditorForm(int options /*= 0*/)
@@ -1566,7 +1563,7 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	rpc::Execute command;
 	command.set_script(
 		"import sys\n"
-		"from py_olly import labeless_ver\n"
+		"from labeless.py_olly import labeless_ver\n"
 		"print 'pong'\n"
 		"print >> sys.stderr, 'v:%s' % labeless_ver()");
 	if (!hlp::net::sockSendString(s, command.SerializeAsString()))
@@ -1604,101 +1601,129 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	return rv && errorMsg.isEmpty();
 }
 
-uint32_t Labeless::loadImportTable()
+size_t Labeless::loadImportTable()
 {
 	m_ExternSegData = ExternSegData();
-	netnode n;
-	if (!n.create(kNetNodeExternSegData.c_str()))
+	if (!storage::loadExternSegData(m_ExternSegData))
 	{
-		m_ExternSegData.start = n.altval(0);
-		m_ExternSegData.len = n.altval(1);
-		uint32_t importCount = n.altval(2);
-		netnode n2;
-		if (!n2.create(kNetNodeExternSegImps.c_str()))
-		{
-			char buff[MAXSTR] = {};
-			for (uint32_t i = 0; i < importCount * 3; i += 3)
-			{
-				ImportEntry ie;
-				std::string key;
-				ie.index = i / 3;
-				ie.ordinal = n2.altval(i);
-				if (n2.supstr(i, buff, MAXSTR) > 0)
-					ie.module = buff;
-				if (n2.supstr(i + 1, buff, MAXSTR) > 0)
-					ie.proc = buff;
-				if (n2.supstr(i + 2, buff, MAXSTR) > 0)
-					key = buff;
-				if (!ie.module.empty() && (!ie.proc.empty() || ie.ordinal))
-					m_ExternSegData.imports[key] = ie;
-			}
-			return m_ExternSegData.imports.size();
-		}
+		msg("%s: storage::loadExternSegData() failed\n", __FUNCTION__);
+		return 0;
 	}
-	return 0;
+	
+	return m_ExternSegData.imports.size();
 }
 
 void Labeless::storeImportTable()
 {
-	netnode n;
-	n.create(kNetNodeExternSegData.c_str());
-	n.altset(0, m_ExternSegData.start);
-	n.altset(1, m_ExternSegData.len);
-	n.altset(2, m_ExternSegData.imports.size());
-	netnode n2;
-	n2.create(kNetNodeExternSegImps.c_str());
-	
-	for (auto it = m_ExternSegData.imports.cbegin(); it != m_ExternSegData.imports.cend(); ++it)
-	{
-		const uint32_t idx = it->second.index * 3;
-		n2.supset(idx, it->second.module.c_str());
-		n2.supset(idx + 1, it->second.proc.c_str());
-		n2.supset(idx + 2, it->first.c_str());
-		n2.altset(idx, it->second.ordinal);
-	}
+	if (!storage::storeExternSegData(m_ExternSegData))
+		msg("%s: storage::storeExternSegData() failed\n", __FUNCTION__);
 }
 
-bool Labeless::createImportSegment(ea_t from, ea_t to)
+bool Labeless::createImportSegments(const std::map<uint64_t, AnalyzeExternalRefs::PointerData>& impData)
 {
-	if (m_ExternSegData.start)
-		return true;
-	segment_t ns;
-	segment_t *s = getseg(from);
-	if (s != NULL)
-		ns = *s;
-	else
-		ns.sel = setup_selector(0);
+	static const int kIDASDKBitness32 = 1;
+	static const int kIDASDKBitness64 = 2;
 
-	ns.startEA = from;
-	ns.endEA = to;
-	ns.type = SEG_XTRN;
-	ns.perm = SEGPERM_READ;
-	ns.comb = scPub;
-	ns.align = saRelPara;
-	ns.color = DEFCOLOR;
-	ns.bitness = 1; // 32
-	ns.set_visible_segm(true);
-	ns.set_loader_segm(true);
-	bool ok = add_segm_ex(&ns, NAME_EXTERN, "XTRN", ADDSEG_NOSREG) != 0;
-	if (ok)
+	if (impData.empty())
+		return true;
+
+	char segName[MAXSTR] = {};
+	bool ok = true;
+
+	const auto ptrSize = targetPtrSize();
+	for (auto it = impData.cbegin(), end = impData.cend(); it != end; ++it)
 	{
-		m_ExternSegData.start = from;
-		m_ExternSegData.len = to - from;
-		msg("Import segment was created successfully\n");
+		const uint64_t ea = it->first;
+		const auto& pd = it->second;
+
+		segment_t* s = nullptr;
+		do
+		{
+			if (get_segm_name(ea - ptrSize, segName, _countof(segName)) > 0 &&
+				std::string(segName) == NAME_EXTERN &&
+				(s = getseg(ea - ptrSize)))
+			{
+				if (segment_t* s2 = getseg(ea))
+				{
+					if (s2->startEA == ea)
+					{
+						if (!move_segm_start(ea, ea + ptrSize, -2))
+						{
+							msg("%s: move_segm_start(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, ea + ptrSize);
+						}
+						else
+						{
+							if (!set_segm_end(s->startEA, ea + ptrSize, SEGMOD_KEEP | SEGMOD_SILENT))
+								msg("%s: set_segm_end(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, ea + ptrSize);
+							//else
+							//	msg("Import segment [0x%08" LL_FMT_EA_T ";0x%08" LL_FMT_EA_T ") was grew up at end\n", s->startEA, s->endEA);
+						}
+					}
+				}
+				break;
+			}
+
+			if (get_segm_name(ea + ptrSize, segName, _countof(segName)) > 0 &&
+				std::string(segName) == NAME_EXTERN &&
+				(s = getseg(ea + ptrSize)))
+			{
+				if (!move_segm_start(s->startEA, ea, -2))
+					msg("%s: move_segm_start(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, ea + ptrSize);
+				//else
+				//	msg("Import segment [0x%08" LL_FMT_EA_T ";0x%08" LL_FMT_EA_T ") was grew up at start", s->startEA, s->endEA);
+				break;
+			}
+
+			// create new segment
+			segment_t ns;
+			s = getseg(ea);
+			if (s != NULL)
+				ns.sel = s->sel;
+			else
+				ns.sel = setup_selector(0);
+
+			ns.startEA = ea;
+			ns.endEA = ea + ptrSize;
+			ns.type = SEG_XTRN;
+			ns.perm = SEGPERM_READ;
+			ns.comb = scPub;
+			ns.align = saRelPara;
+			ns.color = DEFCOLOR;
+			if (::inf.is_64bit())
+				ns.bitness = kIDASDKBitness64;
+			else
+				ns.bitness = kIDASDKBitness32;
+
+			ns.set_visible_segm(true);
+			ns.set_loader_segm(true);
+			ok &= add_segm_ex(&ns, NAME_EXTERN, "XTRN", ADDSEG_NOSREG) != 0;
+			if (ok)
+				msg("Import segment [0x%08" LL_FMT_EA_T ";0x%08" LL_FMT_EA_T ") was created successfully\n", ns.startEA, ns.endEA);
+		} while (0);
+
+		addAPIConst(it->second);
+
+		uint32_t ordinalVal = 0;
+		if (!pd.procName.empty() && pd.procName[0] == '#')
+			ordinalVal = atol(pd.procName.substr(1).c_str());
+
+		m_ExternSegData.addAPI(pd.module, pd.procName, pd.ea, ordinalVal);
+		const std::string joined = pd.module + "." + pd.procName;
+		m_ExternRefsMap[pd.ea] = joined;
 	}
 
-	return ok;
+	return true;
 }
 
 void Labeless::updateImportsNode()
 {
-	std::unordered_map<std::string, uval_t> module2Index;
+	std::unordered_map<std::string, nodeidx_t> module2Index;
 	std::set<std::string> existingAPIs;
 
 	char modname[MAXSTR + 4] = {};
 	char funcName[MAXSTR];
-	uval_t modulesCount = 0;
-	for (uval_t idx = import_node.alt1st(); idx != BADNODE; idx = import_node.altnxt(idx))
+	uint64_t modulesCount = 0;
+	for (nodeidx_t idx = import_node.alt1st(); idx != BADNODE; idx = import_node.altnxt(idx))
 	{
 		modulesCount++;
 		if (import_node.supstr(idx, modname, sizeof(modname)) <= 0)
@@ -1711,54 +1736,60 @@ void Labeless::updateImportsNode()
 		for (uval_t ord = modNode.alt1st(); ord != BADNODE; ord = modNode.altnxt(ord))
 		{
 			ea_t ea = modNode.altval(ord);
-			if (modNode.supstr(ea, funcName, sizeof(funcName)) > 0)
+			if (modNode.supstr(ea, funcName, sizeof(funcName)) > 0 && getFlags(ea))
 				existingAPIs.insert(funcName);
 		}
 
 		for (ea_t ea = modNode.sup1st(); ea != BADADDR; ea = modNode.supnxt(ea))
 		{
-			if (modNode.supstr(ea, funcName, sizeof(funcName)) > 0)
+			if (modNode.supstr(ea, funcName, sizeof(funcName)) > 0 && getFlags(ea))
 				existingAPIs.insert(funcName);
 		}
 	}
 
+	const unsigned ptrSize = targetPtrSize();
+
 	auto it = m_ExternSegData.imports.cbegin();
 	for (; it != m_ExternSegData.imports.cend(); ++it)
 	{
-		if (existingAPIs.count(it->second.proc))
+		const ImportEntry& ie = it->second;
+		if (existingAPIs.count(ie.proc))
 			continue;
 		netnode nModule;
-		const bool moduleExists = module2Index.find(it->second.module) != module2Index.end();
+		const bool moduleExists = module2Index.find(ie.module) != module2Index.end();
 		if (moduleExists)
 		{
-			nModule = import_node.altval(module2Index[it->second.module]);
+			nModule = import_node.altval(module2Index[ie.module]);
 		}
 		else
 		{
 			qstring s;
-			s.sprnt("$lib %s", it->second.module.c_str());
+			s.sprnt("$lib %s", ie.module.c_str());
 			nModule.create(s.c_str());
 		}
-		nModule.supset(m_ExternSegData.start + it->second.index * sizeof(DWORD_PTR), it->second.proc.c_str());
-		if (it->second.ordinal)
+
+		nModule.supset(ie.ea, ie.proc.c_str());
+
+		if (ie.ordinal)
 		{
-			nModule.altset(it->second.ordinal, m_ExternSegData.start + it->second.index * sizeof(DWORD_PTR));
-			set_cmt(m_ExternSegData.start + it->second.index * sizeof(DWORD_PTR), (it->second.module + "." + it->second.proc).c_str(), true);
+			nModule.altset(ie.ordinal, ie.ea); // FIXME
+
+			set_cmt(ie.ea, (ie.module + "." + ie.proc).c_str(), true);
 		}
 		if (!moduleExists)
 		{
 			nodeidx_t lastFreeImpNode = import_node.altval(-1);
 			import_node.altset(-1, lastFreeImpNode + 1);
 			import_node.altset(lastFreeImpNode, nModule);
-			import_node.supset(lastFreeImpNode, it->second.module.c_str());
+			import_node.supset(lastFreeImpNode, ie.module.c_str());
 			import_node.supstr(lastFreeImpNode, modname, sizeof(modname));
-			module2Index[it->second.module] = lastFreeImpNode;
+			module2Index[ie.module] = lastFreeImpNode;
 			modulesCount++;
 
-			import_module(it->second.module.c_str(), nullptr, nModule, nullptr, "win");
+			import_module(ie.module.c_str(), nullptr, nModule, nullptr, "win");
 			import_node.supstr(lastFreeImpNode, modname, sizeof(modname));
 		}
-		existingAPIs.insert(it->second.proc);
+		existingAPIs.insert(ie.proc);
 	}
 	storeImportTable();
 	msg("import mods after update: %u\n", import_node.altval(-1));
@@ -1811,25 +1842,27 @@ void Labeless::onMakeCode(ea_t ea, ::asize_t size)
 	if (generate_disasm_line(ea, disasm, MAXSTR, GENDSM_FORCE_CODE) &&
 		tag_remove(disasm, disasm, MAXSTR))
 		dis = disasm;*/
-	//msg("on make_code: ea: %08X, size %08X, insn: %s\n", ea, size, dis.c_str());
+	//msg("on make_code: ea: %08" LL_FMT_EA_T ", size %08" LL_FMT_EA_T ", insn: %s\n", ea, size, dis.c_str());
 }
 
 void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 {
 	if (m_IgnoreMakeData)
 		return;
-	if (!isDwrd(flags) || len != sizeof(DWORD_PTR))
+	if ((!inf.is_64bit() && !isDwrd(flags)) || (inf.is_64bit() && !isQwrd(flags)))
 		return;
 
-	//msg("on make_data: ea: %08X, flags: %08X, len: %08X\n", ea, flags, len);
-	const auto val = get_long(ea);
+	//msg("on make_data: ea: %08" LL_FMT_EA_T ", flags: %08X, len: %08" LL_FMT_EA_T "\n", ea, flags, len);
+
+	const uval_t val = ::inf.is_64bit() ? get_qword(ea) : get_long(ea);
+
 	auto it = m_ExternRefsMap.find(val);
 	if (it == m_ExternRefsMap.end())
 		return;
 	auto p = it->second.find('.');
 	if (p == it->second.npos)
 	{
-		msg("Wrong internal data for ea: %08X\n", ea);
+		msg("%s: Wrong internal data for ea: %08" LL_FMT_EA_T "\n", __FUNCTION__, ea);
 		return;
 	}
 	const std::string& procName = it->second.substr(p + 1);
@@ -1841,27 +1874,30 @@ void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 
 	if (!do_name_anyway(ea, procName.c_str()))
 	{
-		msg("do_name_anyway() failed for ea: %08X\n", ea);
+		msg("%s: do_name_anyway() failed for ea: %08" LL_FMT_EA_T "\n", __FUNCTION__, ea);
 		set_cmt(ea, procName.c_str(), false);
 	}
 
 	if (!op_enum(ea, 0, get_enum(kAPIEnumName.c_str()), 0))
-		msg("op_enum() failed for ea: %08X\n", ea);
+		msg("%s: op_enum() failed for ea: %08" LL_FMT_EA_T "\n", __FUNCTION__, ea);
 }
 
 void Labeless::onAddCref(ea_t from, ea_t to, cref_t type)
 {
-	//msg("on add_cref (from: %08X, to: %08X, type: %08X)\n", from, to, type);
+	//msg("on add_cref (from: %08" LL_FMT_EA_T ", to: %08" LL_FMT_EA_T ", type: %08X)\n", from, to, type);
 }
 
 void Labeless::onAddDref(ea_t from, ea_t to, dref_t type)
 {
-	//msg("on add_Dref (from: %08X, to: %08X, type: %08X)\n", from, to, type);
+	//msg("on add_Dref (from: %08" LL_FMT_EA_T ", to: %08" LL_FMT_EA_T ", type: %08X)\n", from, to, type);
 }
 
-bool Labeless::make_dword(ea_t ea, asize_t size)
+bool Labeless::make_dword_ptr(ea_t ea, asize_t size)
 {
 	ScopedEnabler enabler(m_IgnoreMakeData);
+	if (::inf.is_64bit())
+		return doQwrd(ea, size);
+
 	return doDwrd(ea, size);
 }
 
@@ -1978,7 +2014,7 @@ int idaapi Labeless::idp_callback(void* /*user_data*/, int notification_code, va
 	case ::processor_t::gen_regvar_def:
 		do {
 			::regvar_t *v = va_arg(va, ::regvar_t *);
-			msg("on gen_regvar_def: ea: %08X, to: %08X, canon: %s, user: %s, cmt: %s\n", v->startEA, v->endEA, v->canon, v->user, v->cmt);
+			msg("on gen_regvar_def: ea: %08" LL_FMT_EA_T ", to: %08" LL_FMT_EA_T ", canon: %s, user: %s, cmt: %s\n", v->startEA, v->endEA, v->canon, v->user, v->cmt);
 		} while (0);
 		break;
 	case ::processor_t::make_code:
@@ -2044,7 +2080,7 @@ bool Labeless::initIDAPython()
 		msg("%s: python extlang not found\n", __FUNCTION__);
 		return false;
 	}
-	char errbuff[1024] = {};
+	char errbuff[MAXSTR] = {};
 	static const std::string pyInitMsg = "import json\n"
 		"idaapi.msg('Labeless: Python initialized... OK\\n')\n";
 	if (!run_statements(pyInitMsg.c_str(), errbuff, _countof(errbuff), elng))

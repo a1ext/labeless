@@ -10,6 +10,7 @@ message RpcRequest {
 		RPCT_READ_MEMORY_REGIONS		= 4;
 		RPCT_ANALYZE_EXTERNAL_REFS		= 5;
 		RPCT_CHECK_PE_HEADERS			= 6;
+		RPCT_GET_BACKEND_INFO			= 7;
 	}
 
 	required RequestType request_type								= 1;
@@ -131,14 +132,14 @@ message AnalyzeExternalRefsResult {
 		required uint32 esi = 7;
 		required uint32 edi = 8;
 		required uint64 rip = 9;
-        optional uint64 rax = 10;
-        optional uint64 rbx = 11;
-        optional uint64 rcx = 12;
-        optional uint64 rdx = 13;
-        optional uint64 rsi = 14;
-        optional uint64 rdi = 15;
-        optional uint64 rbp = 16;
-        optional uint64 rsp = 17;
+		optional uint64 rax = 10;
+		optional uint64 rbx = 11;
+		optional uint64 rcx = 12;
+		optional uint64 rdx = 13;
+		optional uint64 rsi = 14;
+		optional uint64 rdi = 15;
+		optional uint64 rbp = 16;
+		optional uint64 rsp = 17;
 	}
 	repeated PointerData api_constants	= 1;
 	repeated RefData refs				= 2;
@@ -167,4 +168,11 @@ message CheckPEHeadersResult {
 	required bool pe_valid		= 1;
 	repeated Exports exps		= 2;
 	repeated Section sections	= 3;
+}
+
+message GetBackendInfoResult {
+	required uint32 bitness			= 1;
+	required string dbg_name		= 2;
+	optional string dbg_ver			= 3;
+	required string labeless_ver	= 4;
 }

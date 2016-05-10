@@ -26,7 +26,7 @@ static void idaapi run(int)
 
 static int idaapi init()
 {
-	if (inf.is_64bit() || !is_idaq())
+	if (!is_idaq())
 		return PLUGIN_SKIP;
 	if (!hook_to_notification_point(HT_IDP, Labeless::idp_callback, nullptr))
 	{

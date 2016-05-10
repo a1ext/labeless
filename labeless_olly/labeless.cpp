@@ -63,7 +63,7 @@ int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
 			_strdate_s(buff, _countof(buff));
 			of << std::string(buff);
 			_strtime_s(buff, _countof(buff));
-			of << " " << std::string(buff) << ": " << s << " " << frame->f_lineno << std::endl;
+			of << " " << std::string(buff) << ": " << s << " " << frame->f_lineno << " threadId: " << GetCurrentThreadId() << std::endl;
 			of.close();
 		}
 	}
@@ -647,11 +647,15 @@ bool Labeless::initPython()
 
 	init_ollyapi();
 
-	pythonDir += "\\python";
+	pythonDir += "\\labeless_scripts";
+	const std::string addLoacalFolderToPath = "import sys\nsys.path.extend([\"\"\"" + pythonDir + "\"\"\"])";
+	PyRun_SimpleString(addLoacalFolderToPath.c_str());
 	
-	if (!execFile(pythonDir + "\\init.py"))
+	const auto labelessOk = PyRun_SimpleString("import labeless as ll") == 0;
+	const auto pyexcoreOk = labelessOk && PyRun_SimpleString("from labeless import pyexcore") == 0;
+	if (!labelessOk || !pyexcoreOk)
 	{
-		log_r("execFile(init.py) failed.");
+		log_r("\"import labeless as ll\" failed.");
 		std::string error;
 		if (PyErr_Occurred())
 		{
@@ -678,8 +682,6 @@ bool Labeless::initPython()
 		}
 		return false;
 	}
-
-	PyRun_SimpleString("import pyexcore");
 
 	return true;
 }
@@ -1182,7 +1184,10 @@ bool Labeless::onClientSockBufferReceived(ClientData& cd, const std::string& raw
 	try
 	{
 		if (!command.ParseFromString(rawCommand))
-			errorStr = "Unable to parse command";
+		{
+			errorStr = "Unable to parse command.\n";
+			errorStr += "bad packet is saved as " + storeBadCommand(rawCommand);
+		}
 	}
 	catch (...)
 	{
@@ -1330,5 +1335,24 @@ bool Labeless::onClientSockClose(ClientData& cd)
 std::string Labeless::lastChangeTimestamp()
 {
 	return __TIMESTAMP__;
+}
+
+std::string Labeless::storeBadCommand(const std::string& rawCommand)
+{
+	static std::string errorDir = util::getErrorDir();
+	SYSTEMTIME st;
+	GetSystemTime(&st);
+
+	std::string name = util::sformat("%s\\%04h%02h%02h_%02h%02h%02h_%h.pkt", errorDir.c_str(),
+		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
+
+	std::ofstream of(name, std::ios_base::binary);
+	if (of)
+	{
+		of.write(rawCommand.c_str(), rawCommand.size());
+		of.close();
+		return name;
+	}
+	return {};
 }
 

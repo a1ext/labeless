@@ -324,33 +324,13 @@
           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Default &quot;extern&quot; segment size:</string>
-           </property>
-           <property name="buddy">
-            <cstring>leExternSegDefSize</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="leExternSegDefSize">
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Size of &amp;quot;extern&amp;quot; segment in hex.&lt;br/&gt;Should be multiple by DWORD_PTR size (for i686 arch = 4) and not less than 0x1000.&lt;br&gt;If you select too small segment size, then new segment will be soon exhausted.&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="text">
-            <string>0xF000</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>Overwrite warning:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <widget class="QComboBox" name="cbOverwriteWarning">
            <item>
             <property name="text">
