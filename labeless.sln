@@ -9,7 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labeless_ida", "labeless_id
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{9D0A5DD8-AECB-44F4-ABDB-3D25EB7ED509}"
 	ProjectSection(SolutionItems) = preProject
-		generic_backend.h = generic_backend.h
 		common\version.h = common\version.h
 	EndProjectSection
 EndProject
@@ -48,8 +47,8 @@ Global
 		{2D0215D2-2106-4907-A2A0-C16DE4EEF92F}.Release|Win32.ActiveCfg = Release|Win32
 		{2D0215D2-2106-4907-A2A0-C16DE4EEF92F}.Release|Win32.Build.0 = Release|Win32
 		{2D0215D2-2106-4907-A2A0-C16DE4EEF92F}.Release|x64.ActiveCfg = Release|Win32
-		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_DeFixed|Win32.ActiveCfg = Release_vc120|Win32
-		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_DeFixed|Win32.Build.0 = Release_vc120|Win32
+		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_DeFixed|Win32.ActiveCfg = Release_vc140|Win32
+		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_DeFixed|Win32.Build.0 = Release_vc140|Win32
 		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_DeFixed|x64.ActiveCfg = Release_vc140_x64|Win32
 		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_vc120_mb|Win32.ActiveCfg = Release_vc120|Win32
 		{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}.Release_vc120_mb|Win32.Build.0 = Release_vc120|Win32
