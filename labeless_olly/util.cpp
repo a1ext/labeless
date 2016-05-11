@@ -34,10 +34,10 @@ std::string getPluginDir(HINSTANCE hPlugin)
 std::string getErrorDir()
 {
 	std::string rv(MAX_PATH, '\0');
-	if (S_OK != SHGetFolderPath(NULL, CSIDL_COMMON_APPDATA, NULL, 0, &rv[0]))
+	if (S_OK != SHGetFolderPath(NULL, CSIDL_PROFILE, NULL, 0, &rv[0]))
 		return {};
 	rv.resize(strnlen_s(rv.c_str(), MAX_PATH));
-	rv += "\\Labeless\\errors";
+	rv += "\\.labeless\\errors";
 	SHCreateDirectoryEx(NULL, rv.c_str(), NULL);
 	return rv;
 }

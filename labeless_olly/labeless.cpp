@@ -1343,7 +1343,7 @@ std::string Labeless::storeBadCommand(const std::string& rawCommand)
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 
-	std::string name = util::sformat("%s\\%04h%02h%02h_%02h%02h%02h_%h.pkt", errorDir.c_str(),
+	std::string name = util::sformat("%s\\%04hu%02hu%02hu_%02hu%02hu%02hu_%hu.pkt", errorDir.c_str(),
 		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
 
 	std::ofstream of(name, std::ios_base::binary);
