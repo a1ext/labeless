@@ -48,10 +48,11 @@ class DeployLabelessToVM(object):
 
     def find_vmrun(self):
         for program_files in ('Program Files', 'Program Files (x86)'):
-            pth = os.path.join('c:\\', program_files, 'VMware', 'VMware VIX', 'vmrun.exe')
-            if os.path.exists(pth):
-                self.vmrun = pth
-                break
+            for subdir in ('VMware VIX', 'VMware Workstation'):
+                pth = os.path.join('c:\\', program_files, 'VMware', subdir, 'vmrun.exe')
+                if os.path.exists(pth):
+                    self.vmrun = pth
+                    break
         if not self.vmrun:
             raise Exception('vmrun not found :(')
 
