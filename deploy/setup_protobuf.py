@@ -8,8 +8,8 @@ import re
 REQUIRED_PROTOBUF_VER = '2.6.1'
 # url = 'https://bootstrap.pypa.io/get-pip.py' # TODO
 ver = platform.python_version_tuple()
-if platform.architecture()[0] != '32bit' or ver[0] != '2' or ver[1] != '7':
-    print >> sys.stderr, 'Please use 32-bit Python 2.7'
+if ver[0] != '2' or ver[1] != '7':
+    print >> sys.stderr, 'Please use Python 2.7'
     exit(1)
 
 curr_script_path = path.dirname(path.realpath(__file__))
