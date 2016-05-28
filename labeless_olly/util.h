@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <deque>
 #include <string>
 
 #include "types.h"
@@ -22,5 +23,7 @@ std::string getErrorDir();
 std::string inetAddrToString(sockaddr_in* sin);
 
 std::string sformat(const char* fmt, ...);
+
+std::deque<std::string> split(const std::string& s, const std::string& delimitersSet = "\r|\n");
 
 } // util

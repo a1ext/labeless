@@ -244,6 +244,8 @@ extern "C" DLL_EXPORT BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason,
 {
 	if (DLL_PROCESS_ATTACH == fdwReason)
 	{
+		srand(GetTickCount());
+
 		g_hInstance = hinstDLL;
 		DisableThreadLibraryCalls(hinstDLL);
 	}

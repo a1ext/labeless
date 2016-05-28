@@ -95,6 +95,10 @@ void RpcThreadWorker::main()
 				command.set_job_id(pRD->jobId);
 
 			const std::string message = command.SerializeAsString();
+			const uint64_t messageLen = static_cast<uint64_t>(message.length());
+
+			if (!hlp::net::sockSendBuff(s, reinterpret_cast<const char*>(&messageLen), sizeof(messageLen)))
+				continue;
 
 			if (!hlp::net::sockSendString(s, message))
 				continue;
@@ -109,23 +113,27 @@ void RpcThreadWorker::main()
 			auto response = std::make_shared<rpc::Response>();
 			const bool parsedOk = hlp::protobuf::parseBigMessage(*response, strResponse);
 			if (!parsedOk)
+			{
 				hlp::addLogMsg("%s: rpc::Response::ParseFromString() failed\n", __FUNCTION__);
-			else
-				hlp::addLogMsg("OK, tasks left: %u\n", queueSize);
 
 #ifdef LABELESS_ADDITIONAL_LOGGING
-			do {
-				if (auto f = qfopen("c:\\labeless_ida.log", "ab+"))
-				{
-					qfseek(f, 0, SEEK_END);
-					static const std::string s = "\nReceived:\n";
-					qfwrite(f, s.c_str(), s.length());
-					qfwrite(f, strResponse.c_str(), strResponse.length());
-					qfwrite(f, "\r\n", 2);
-					qfclose(f);
-				}
-			} while (0);
+				do {
+					if (auto f = qfopen("c:\\labeless_ida.log", "ab+"))
+					{
+						qfseek(f, 0, SEEK_END);
+						static const std::string s = "\nReceived:\n";
+						qfwrite(f, s.c_str(), s.length());
+						qfwrite(f, strResponse.c_str(), strResponse.length());
+						qfwrite(f, "\r\n", 2);
+						qfclose(f);
+					}
+				} while (0);
 #endif // LABELESS_ADDITIONAL_LOGGING
+			}
+			else
+			{
+				hlp::addLogMsg("OK, tasks left: %u\n", queueSize);
+			}
 
 			if (parsedOk)
 				pRD->response = response;

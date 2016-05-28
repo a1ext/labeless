@@ -92,6 +92,7 @@ public:
 	inline const ClientData& clientData() const { return m_Rpc; }
 
 private:
+	void logInitPythonFail(const std::string& info) const;
 	bool initPython();
 	void destroyPython();
 

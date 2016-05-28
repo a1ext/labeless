@@ -37,8 +37,19 @@
 #define _STR_TT(str) __XTT(str)
 #define __WFUNCTION__ _STR_TT(__FUNCTION__)
 
+typedef std::basic_string<TCHAR, std::char_traits<TCHAR>, std::allocator<TCHAR> > xstring;
+
+// fwd
+namespace util {
+	xstring xformat(const wchar_t* fmt, ...);
+} // util
+
+
 #define __LOG_IMPL(FUN, TYPE, FMT, ...) do {						\
-	Addtolist(0, (TYPE), __LOG_PREFIX FUN FMT, __VA_ARGS__);		\
+	xstring _s = util::xformat(__LOG_PREFIX FUN FMT, __VA_ARGS__);	\
+	if (_s.size() >= TEXTLEN)										\
+		_s.erase(TEXTLEN - 1, _s.length() - TEXTLEN + 1);			\
+	Addtolist(0, (TYPE), L"%s", _s.c_str());						\
 } while (0)
 
 #define _CAT(X, Y) X##Y
@@ -49,4 +60,3 @@
 #define log_g(FMT, ...)			__LOG_IMPL(_CAT(_STR_TT(__FUNCTION__), _STR_TT(": ")), -1, _STR_TT(FMT), __VA_ARGS__)
 #define log_g_no_fn(FMT, ...)	__LOG_IMPL(_STR_TT(""), -1, _STR_TT(FMT), __VA_ARGS__)
 
-typedef std::basic_string<TCHAR, std::char_traits<TCHAR>, std::allocator<TCHAR> > xstring;

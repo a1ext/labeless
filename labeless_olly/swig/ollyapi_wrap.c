@@ -2911,68 +2911,74 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_CONTEXT swig_types[0]
-#define SWIGTYPE_p_HANDLE swig_types[1]
-#define SWIGTYPE_p_HINSTANCE swig_types[2]
-#define SWIGTYPE_p_HWND swig_types[3]
-#define SWIGTYPE_p_IMAGE_SECTION_HEADER swig_types[4]
-#define SWIGTYPE_p_LPARAM swig_types[5]
-#define SWIGTYPE_p_UINT swig_types[6]
-#define SWIGTYPE_p_WNDPROC swig_types[7]
-#define SWIGTYPE_p_WPARAM swig_types[8]
-#define SWIGTYPE_p_a_16__char swig_types[9]
-#define SWIGTYPE_p_a_256__char swig_types[10]
-#define SWIGTYPE_p_a_8__t_extmodel swig_types[11]
-#define SWIGTYPE_p_char swig_types[12]
-#define SWIGTYPE_p_f_p_char_p_char_p_int_p_struct_t_sortheader_int__int swig_types[13]
-#define SWIGTYPE_p_f_p_char_unsigned_long_unsigned_long__int swig_types[14]
-#define SWIGTYPE_p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long swig_types[15]
-#define SWIGTYPE_p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int swig_types[16]
-#define SWIGTYPE_p_f_p_struct_t_sortheader__void swig_types[17]
+#define SWIGTYPE_p_HINSTANCE swig_types[1]
+#define SWIGTYPE_p_HWND swig_types[2]
+#define SWIGTYPE_p_IMAGE_SECTION_HEADER swig_types[3]
+#define SWIGTYPE_p_LPARAM swig_types[4]
+#define SWIGTYPE_p_WNDPROC swig_types[5]
+#define SWIGTYPE_p_WPARAM swig_types[6]
+#define SWIGTYPE_p___int64 swig_types[7]
+#define SWIGTYPE_p_a_16__char swig_types[8]
+#define SWIGTYPE_p_a_256__char swig_types[9]
+#define SWIGTYPE_p_a_8__t_extmodel swig_types[10]
+#define SWIGTYPE_p_char swig_types[11]
+#define SWIGTYPE_p_f_p_char_p_char_p_int_p_struct_t_sortheader_int__int swig_types[12]
+#define SWIGTYPE_p_f_p_char_unsigned_long_unsigned_long__int swig_types[13]
+#define SWIGTYPE_p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long swig_types[14]
+#define SWIGTYPE_p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int swig_types[15]
+#define SWIGTYPE_p_f_p_struct_t_sortheader__void swig_types[16]
+#define SWIGTYPE_p_float swig_types[17]
 #define SWIGTYPE_p_int swig_types[18]
-#define SWIGTYPE_p_long_double swig_types[19]
-#define SWIGTYPE_p_p_char swig_types[20]
-#define SWIGTYPE_p_p_unsigned_char swig_types[21]
-#define SWIGTYPE_p_t_ahint swig_types[22]
-#define SWIGTYPE_p_t_asmmodel swig_types[23]
-#define SWIGTYPE_p_t_bar swig_types[24]
-#define SWIGTYPE_p_t_bpoint swig_types[25]
-#define SWIGTYPE_p_t_disasm swig_types[26]
-#define SWIGTYPE_p_t_dump swig_types[27]
-#define SWIGTYPE_p_t_extmodel swig_types[28]
-#define SWIGTYPE_p_t_fixup swig_types[29]
-#define SWIGTYPE_p_t_hardbpoint swig_types[30]
-#define SWIGTYPE_p_t_heap swig_types[31]
-#define SWIGTYPE_p_t_hexstr swig_types[32]
-#define SWIGTYPE_p_t_inject swig_types[33]
-#define SWIGTYPE_p_t_jdest swig_types[34]
-#define SWIGTYPE_p_t_memory swig_types[35]
-#define SWIGTYPE_p_t_module swig_types[36]
-#define SWIGTYPE_p_t_operand swig_types[37]
-#define SWIGTYPE_p_t_patch swig_types[38]
-#define SWIGTYPE_p_t_ref swig_types[39]
-#define SWIGTYPE_p_t_reg swig_types[40]
-#define SWIGTYPE_p_t_result swig_types[41]
-#define SWIGTYPE_p_t_result_u swig_types[42]
-#define SWIGTYPE_p_t_scheme swig_types[43]
-#define SWIGTYPE_p_t_schemeopt swig_types[44]
-#define SWIGTYPE_p_t_sorted swig_types[45]
-#define SWIGTYPE_p_t_sortheader swig_types[46]
-#define SWIGTYPE_p_t_sourceline swig_types[47]
-#define SWIGTYPE_p_t_status swig_types[48]
-#define SWIGTYPE_p_t_stringtable swig_types[49]
-#define SWIGTYPE_p_t_symvar swig_types[50]
-#define SWIGTYPE_p_t_table swig_types[51]
-#define SWIGTYPE_p_t_thread swig_types[52]
-#define SWIGTYPE_p_t_window swig_types[53]
-#define SWIGTYPE_p_ulongArray swig_types[54]
-#define SWIGTYPE_p_unsigned_char swig_types[55]
-#define SWIGTYPE_p_unsigned_int swig_types[56]
-#define SWIGTYPE_p_unsigned_long swig_types[57]
-#define SWIGTYPE_p_unsigned_short swig_types[58]
-#define SWIGTYPE_p_void swig_types[59]
-#define SWIGTYPE_p_wchar_t swig_types[60]
-static swig_type_info *swig_types[62];
-static swig_module_info swig_module = {swig_types, 61, 0, 0, 0, 0};
+#define SWIGTYPE_p_long swig_types[19]
+#define SWIGTYPE_p_long_double swig_types[20]
+#define SWIGTYPE_p_p_char swig_types[21]
+#define SWIGTYPE_p_p_unsigned_char swig_types[22]
+#define SWIGTYPE_p_p_unsigned_long swig_types[23]
+#define SWIGTYPE_p_short swig_types[24]
+#define SWIGTYPE_p_signed___int64 swig_types[25]
+#define SWIGTYPE_p_signed_char swig_types[26]
+#define SWIGTYPE_p_t_ahint swig_types[27]
+#define SWIGTYPE_p_t_asmmodel swig_types[28]
+#define SWIGTYPE_p_t_bar swig_types[29]
+#define SWIGTYPE_p_t_bpoint swig_types[30]
+#define SWIGTYPE_p_t_disasm swig_types[31]
+#define SWIGTYPE_p_t_dump swig_types[32]
+#define SWIGTYPE_p_t_extmodel swig_types[33]
+#define SWIGTYPE_p_t_fixup swig_types[34]
+#define SWIGTYPE_p_t_hardbpoint swig_types[35]
+#define SWIGTYPE_p_t_heap swig_types[36]
+#define SWIGTYPE_p_t_hexstr swig_types[37]
+#define SWIGTYPE_p_t_inject swig_types[38]
+#define SWIGTYPE_p_t_jdest swig_types[39]
+#define SWIGTYPE_p_t_memory swig_types[40]
+#define SWIGTYPE_p_t_module swig_types[41]
+#define SWIGTYPE_p_t_operand swig_types[42]
+#define SWIGTYPE_p_t_patch swig_types[43]
+#define SWIGTYPE_p_t_ref swig_types[44]
+#define SWIGTYPE_p_t_reg swig_types[45]
+#define SWIGTYPE_p_t_result swig_types[46]
+#define SWIGTYPE_p_t_result_u swig_types[47]
+#define SWIGTYPE_p_t_scheme swig_types[48]
+#define SWIGTYPE_p_t_schemeopt swig_types[49]
+#define SWIGTYPE_p_t_sorted swig_types[50]
+#define SWIGTYPE_p_t_sortheader swig_types[51]
+#define SWIGTYPE_p_t_sourceline swig_types[52]
+#define SWIGTYPE_p_t_status swig_types[53]
+#define SWIGTYPE_p_t_stringtable swig_types[54]
+#define SWIGTYPE_p_t_symvar swig_types[55]
+#define SWIGTYPE_p_t_table swig_types[56]
+#define SWIGTYPE_p_t_thread swig_types[57]
+#define SWIGTYPE_p_t_window swig_types[58]
+#define SWIGTYPE_p_ulongArray swig_types[59]
+#define SWIGTYPE_p_unsigned___int64 swig_types[60]
+#define SWIGTYPE_p_unsigned_char swig_types[61]
+#define SWIGTYPE_p_unsigned_int swig_types[62]
+#define SWIGTYPE_p_unsigned_long swig_types[63]
+#define SWIGTYPE_p_unsigned_short swig_types[64]
+#define SWIGTYPE_p_void swig_types[65]
+#define SWIGTYPE_p_wchar_t swig_types[66]
+static swig_type_info *swig_types[68];
+static swig_module_info swig_module = {swig_types, 67, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -12468,11 +12474,10 @@ fail:
 SWIGINTERN PyObject *_wrap_t_thread_thread_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   struct t_thread *arg1 = (struct t_thread *) 0 ;
-  HANDLE arg2 ;
+  HANDLE arg2 = (HANDLE) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 ;
-  int res2 = 0 ;
+  int res2 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -12482,16 +12487,9 @@ SWIGINTERN PyObject *_wrap_t_thread_thread_set(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "t_thread_thread_set" "', argument " "1"" of type '" "struct t_thread *""'"); 
   }
   arg1 = (struct t_thread *)(argp1);
-  {
-    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_HANDLE,  0 );
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "t_thread_thread_set" "', argument " "2"" of type '" "HANDLE""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "t_thread_thread_set" "', argument " "2"" of type '" "HANDLE""'");
-    } else {
-      arg2 = *((HANDLE *)(argp2));
-    }
+  res2 = SWIG_ConvertPtr(obj1,SWIG_as_voidptrptr(&arg2), 0, SWIG_POINTER_DISOWN);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "t_thread_thread_set" "', argument " "2"" of type '" "HANDLE""'"); 
   }
   if (arg1) (arg1)->thread = arg2;
   resultobj = SWIG_Py_Void();
@@ -12515,8 +12513,8 @@ SWIGINTERN PyObject *_wrap_t_thread_thread_get(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "t_thread_thread_get" "', argument " "1"" of type '" "struct t_thread *""'"); 
   }
   arg1 = (struct t_thread *)(argp1);
-  result =  ((arg1)->thread);
-  resultobj = SWIG_NewPointerObj((HANDLE *)memcpy((HANDLE *)malloc(sizeof(HANDLE)),&result,sizeof(HANDLE)), SWIGTYPE_p_HANDLE, SWIG_POINTER_OWN |  0 );
+  result = (HANDLE) ((arg1)->thread);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -24401,8 +24399,8 @@ SWIGINTERN PyObject *_wrap_Tablefunction(PyObject *SWIGUNUSEDPARM(self), PyObjec
   int res1 = 0 ;
   void *argp2 ;
   int res2 = 0 ;
-  void *argp3 ;
-  int res3 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
   void *argp4 ;
   int res4 = 0 ;
   void *argp5 ;
@@ -24431,17 +24429,11 @@ SWIGINTERN PyObject *_wrap_Tablefunction(PyObject *SWIGUNUSEDPARM(self), PyObjec
       arg2 = *((HWND *)(argp2));
     }
   }
-  {
-    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_UINT,  0 );
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Tablefunction" "', argument " "3"" of type '" "UINT""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Tablefunction" "', argument " "3"" of type '" "UINT""'");
-    } else {
-      arg3 = *((UINT *)(argp3));
-    }
-  }
+  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Tablefunction" "', argument " "3"" of type '" "UINT""'");
+  } 
+  arg3 = (UINT)(val3);
   {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_WPARAM,  0 );
     if (!SWIG_IsOK(res4)) {
@@ -26487,8 +26479,8 @@ SWIGINTERN PyObject *_wrap_Broadcast(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   UINT arg1 ;
   WPARAM arg2 ;
   LPARAM arg3 ;
-  void *argp1 ;
-  int res1 = 0 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
   void *argp2 ;
   int res2 = 0 ;
   void *argp3 ;
@@ -26499,17 +26491,11 @@ SWIGINTERN PyObject *_wrap_Broadcast(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Broadcast",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  {
-    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_UINT,  0 );
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Broadcast" "', argument " "1"" of type '" "UINT""'"); 
-    }  
-    if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Broadcast" "', argument " "1"" of type '" "UINT""'");
-    } else {
-      arg1 = *((UINT *)(argp1));
-    }
-  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Broadcast" "', argument " "1"" of type '" "UINT""'");
+  } 
+  arg1 = (UINT)(val1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_WPARAM,  0 );
     if (!SWIG_IsOK(res2)) {
@@ -30679,27 +30665,32 @@ static PyMethodDef SwigMethods[] = {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_CONTEXT = {"_p_CONTEXT", "CONTEXT *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_HANDLE = {"_p_HANDLE", "HANDLE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_HINSTANCE = {"_p_HINSTANCE", "HINSTANCE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_HWND = {"_p_HWND", "HWND *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMAGE_SECTION_HEADER = {"_p_IMAGE_SECTION_HEADER", "IMAGE_SECTION_HEADER *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LPARAM = {"_p_LPARAM", "LPARAM *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_UINT = {"_p_UINT", "UINT *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_WNDPROC = {"_p_WNDPROC", "WNDPROC *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_WPARAM = {"_p_WPARAM", "WPARAM *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p___int64 = {"_p___int64", "__int64 *|LONGLONG *|LONG64 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_a_16__char = {"_p_a_16__char", "char (*)[16]", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_a_256__char = {"_p_a_256__char", "char (*)[256]", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_a_8__t_extmodel = {"_p_a_8__t_extmodel", "struct t_extmodel (*)[8]|t_extmodel (*)[8]", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_char = {"_p_char", "CHAR *|TCHAR *|char *|CCHAR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_char_p_char_p_int_p_struct_t_sortheader_int__int = {"_p_f_p_char_p_char_p_int_p_struct_t_sortheader_int__int", "DRAWFUNC *|int (*)(char *,char *,int *,struct t_sortheader *,int)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_char_unsigned_long_unsigned_long__int = {"_p_f_p_char_unsigned_long_unsigned_long__int", "INJECTANSWER *|int (*)(char *,unsigned long,unsigned long)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long = {"_p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long", "SPECFUNC *|unsigned long (*)(char *,unsigned long,unsigned long,unsigned long,struct t_disasm *,int)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int = {"_p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int", "int (*)(struct t_sortheader const *,struct t_sortheader const *,int const)|SORTFUNC *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_struct_t_sortheader__void = {"_p_f_p_struct_t_sortheader__void", "void (*)(struct t_sortheader *)|DESTFUNC *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_int = {"_p_int", "int *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_float = {"_p_float", "FLOAT *|float *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_int = {"_p_int", "BOOL *|INT32 *|int *|INT *|INT_PTR *|LONG32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_long = {"_p_long", "SHANDLE_PTR *|LONG_PTR *|LONG *|HRESULT *|long *|SSIZE_T *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_double = {"_p_long_double", "long double *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_char = {"_p_p_char", "PTCH *|PCTSTR *|LPCTSTR *|LPTCH *|PUTSTR *|LPUTSTR *|PCUTSTR *|LPCUTSTR *|char **|PTSTR *|LPTSTR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_unsigned_char = {"_p_p_unsigned_char", "unsigned char **|uchar **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_unsigned_long = {"_p_p_unsigned_long", "unsigned long **|PLCID *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_short = {"_p_short", "HALF_PTR *|short *|SHORT *|INT16 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_signed___int64 = {"_p_signed___int64", "INT64 *|signed __int64 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_signed_char = {"_p_signed_char", "signed char *|INT8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_t_ahint = {"_p_t_ahint", "struct t_ahint *|t_ahint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_t_asmmodel = {"_p_t_asmmodel", "struct t_asmmodel *|t_asmmodel *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_t_bar = {"_p_t_bar", "struct t_bar *|t_bar *", 0, 0, (void*)0, 0};
@@ -30733,23 +30724,23 @@ static swig_type_info _swigt__p_t_table = {"_p_t_table", "struct t_table *|t_tab
 static swig_type_info _swigt__p_t_thread = {"_p_t_thread", "struct t_thread *|t_thread *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_t_window = {"_p_t_window", "struct t_window *|t_window *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ulongArray = {"_p_ulongArray", "ulongArray *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "uchar *|unsigned char *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|uint *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_unsigned_long = {"_p_unsigned_long", "ulong *|unsigned long *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned short *|ushort *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned___int64 = {"_p_unsigned___int64", "UINT64 *|DWORD64 *|unsigned __int64 *|DWORDLONG *|ULONGLONG *|ULONG64 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "FCHAR *|uchar *|unsigned char *|UCHAR *|BYTE *|TBYTE *|UINT8 *|BOOLEAN *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "UINT32 *|DWORD32 *|UINT *|unsigned int *|uint *|UINT_PTR *|ULONG32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_long = {"_p_unsigned_long", "ULONG_PTR *|DWORD *|HANDLE_PTR *|FLONG *|ulong *|DWORD_PTR *|unsigned long *|ULONG *|LCID *|SIZE_T *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "WORD *|UHALF_PTR *|unsigned short *|ushort *|USHORT *|FSHORT *|LANGID *|UINT16 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_void = {"_p_void", "HANDLE|void *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_wchar_t = {"_p_wchar_t", "wchar_t *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_CONTEXT,
-  &_swigt__p_HANDLE,
   &_swigt__p_HINSTANCE,
   &_swigt__p_HWND,
   &_swigt__p_IMAGE_SECTION_HEADER,
   &_swigt__p_LPARAM,
-  &_swigt__p_UINT,
   &_swigt__p_WNDPROC,
   &_swigt__p_WPARAM,
+  &_swigt__p___int64,
   &_swigt__p_a_16__char,
   &_swigt__p_a_256__char,
   &_swigt__p_a_8__t_extmodel,
@@ -30759,10 +30750,16 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long,
   &_swigt__p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int,
   &_swigt__p_f_p_struct_t_sortheader__void,
+  &_swigt__p_float,
   &_swigt__p_int,
+  &_swigt__p_long,
   &_swigt__p_long_double,
   &_swigt__p_p_char,
   &_swigt__p_p_unsigned_char,
+  &_swigt__p_p_unsigned_long,
+  &_swigt__p_short,
+  &_swigt__p_signed___int64,
+  &_swigt__p_signed_char,
   &_swigt__p_t_ahint,
   &_swigt__p_t_asmmodel,
   &_swigt__p_t_bar,
@@ -30796,6 +30793,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_t_thread,
   &_swigt__p_t_window,
   &_swigt__p_ulongArray,
+  &_swigt__p_unsigned___int64,
   &_swigt__p_unsigned_char,
   &_swigt__p_unsigned_int,
   &_swigt__p_unsigned_long,
@@ -30805,14 +30803,13 @@ static swig_type_info *swig_type_initial[] = {
 };
 
 static swig_cast_info _swigc__p_CONTEXT[] = {  {&_swigt__p_CONTEXT, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_HANDLE[] = {  {&_swigt__p_HANDLE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_HINSTANCE[] = {  {&_swigt__p_HINSTANCE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_HWND[] = {  {&_swigt__p_HWND, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMAGE_SECTION_HEADER[] = {  {&_swigt__p_IMAGE_SECTION_HEADER, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LPARAM[] = {  {&_swigt__p_LPARAM, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_UINT[] = {  {&_swigt__p_UINT, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_WNDPROC[] = {  {&_swigt__p_WNDPROC, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_WPARAM[] = {  {&_swigt__p_WPARAM, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p___int64[] = {  {&_swigt__p___int64, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_a_16__char[] = {  {&_swigt__p_a_16__char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_a_256__char[] = {  {&_swigt__p_a_256__char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_a_8__t_extmodel[] = {  {&_swigt__p_a_8__t_extmodel, 0, 0, 0},{0, 0, 0, 0}};
@@ -30822,10 +30819,16 @@ static swig_cast_info _swigc__p_f_p_char_unsigned_long_unsigned_long__int[] = { 
 static swig_cast_info _swigc__p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long[] = {  {&_swigt__p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int[] = {  {&_swigt__p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_struct_t_sortheader__void[] = {  {&_swigt__p_f_p_struct_t_sortheader__void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_long[] = {  {&_swigt__p_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long_double[] = {  {&_swigt__p_long_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_unsigned_char[] = {  {&_swigt__p_p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_unsigned_long[] = {  {&_swigt__p_p_unsigned_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_signed___int64[] = {  {&_swigt__p_signed___int64, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_signed_char[] = {  {&_swigt__p_signed_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_t_ahint[] = {  {&_swigt__p_t_ahint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_t_asmmodel[] = {  {&_swigt__p_t_asmmodel, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_t_bar[] = {  {&_swigt__p_t_bar, 0, 0, 0},{0, 0, 0, 0}};
@@ -30859,6 +30862,7 @@ static swig_cast_info _swigc__p_t_table[] = {  {&_swigt__p_t_table, 0, 0, 0},{0,
 static swig_cast_info _swigc__p_t_thread[] = {  {&_swigt__p_t_thread, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_t_window[] = {  {&_swigt__p_t_window, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ulongArray[] = {  {&_swigt__p_ulongArray, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_unsigned___int64[] = {  {&_swigt__p_unsigned___int64, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_long[] = {  {&_swigt__p_unsigned_long, 0, 0, 0},{0, 0, 0, 0}};
@@ -30868,14 +30872,13 @@ static swig_cast_info _swigc__p_wchar_t[] = {  {&_swigt__p_wchar_t, 0, 0, 0},{0,
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_CONTEXT,
-  _swigc__p_HANDLE,
   _swigc__p_HINSTANCE,
   _swigc__p_HWND,
   _swigc__p_IMAGE_SECTION_HEADER,
   _swigc__p_LPARAM,
-  _swigc__p_UINT,
   _swigc__p_WNDPROC,
   _swigc__p_WPARAM,
+  _swigc__p___int64,
   _swigc__p_a_16__char,
   _swigc__p_a_256__char,
   _swigc__p_a_8__t_extmodel,
@@ -30885,10 +30888,16 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_f_p_char_unsigned_long_unsigned_long_unsigned_long_p_struct_t_disasm_int__unsigned_long,
   _swigc__p_f_p_q_const__struct_t_sortheader_p_q_const__struct_t_sortheader_q_const__int__int,
   _swigc__p_f_p_struct_t_sortheader__void,
+  _swigc__p_float,
   _swigc__p_int,
+  _swigc__p_long,
   _swigc__p_long_double,
   _swigc__p_p_char,
   _swigc__p_p_unsigned_char,
+  _swigc__p_p_unsigned_long,
+  _swigc__p_short,
+  _swigc__p_signed___int64,
+  _swigc__p_signed_char,
   _swigc__p_t_ahint,
   _swigc__p_t_asmmodel,
   _swigc__p_t_bar,
@@ -30922,6 +30931,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_t_thread,
   _swigc__p_t_window,
   _swigc__p_ulongArray,
+  _swigc__p_unsigned___int64,
   _swigc__p_unsigned_char,
   _swigc__p_unsigned_int,
   _swigc__p_unsigned_long,

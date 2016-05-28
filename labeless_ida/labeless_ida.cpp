@@ -286,22 +286,18 @@ void Labeless::onSyncronizeAllRequested()
 			continue;
 		ea_t ea = s->startEA;
 
-		while (true)
+		while (BADADDR != ea)
 		{
-			if (!has_dummy_name(getFlags(ea)) && get_true_name(&name, ea, flags) > 0 && is_uname(name.c_str()))
+			if (!has_dummy_name(getFlags(ea)) && get_true_name(&name, ea, flags) > 0 /*&& is_uname(name.c_str())*/)
 			{
 				std::string s = name.c_str();
 				if (s.length() >= OLLY_TEXTLEN)
 					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
 				if (isUtf8StringValid(s.c_str(), s.length()))
 					labelPoints.push_back(LabelsSync::Data(ea, s));
-				//msg("%08" LL_FMT_EA_T ": %s\n", ea, name.c_str());
 			}
-			
+
 			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
-			if (BADADDR == ea)
-				break;
-			//auto sel_ea = sel2ea(s->sel);
 		}
 	}
 
@@ -718,15 +714,6 @@ void Labeless::onLoadStubDBRequested()
 	static const QString kDatabaseExtX86 = ".idb";
 	static const QString kDatabaseExtX64 = ".i64";
 
-	/*if (::is_debugger_on())
-	{
-		QMessageBox::information(findIDAMainWindow(), tr("!"), tr("Stop debugging first"));
-		return;
-	}
-	if (::dbg && !dbg->version)
-	{
-		term_plugins(PLUGIN_DBG);
-	}*/
 	bool isx86 = true;
 	if (QAction* act = qobject_cast<QAction*>(sender()))
 	{
@@ -747,6 +734,7 @@ void Labeless::onLoadStubDBRequested()
 		tr("IDA PRO IDB-file (*%1)").arg(extension));
 	if (idbFileName.isEmpty())
 		return;
+
 	if (!idbFileName.endsWith(extension, Qt::CaseInsensitive))
 		idbFileName.append(extension);
 	const QString sampleFileName = idbFileName.left(idbFileName.length() - 4) + ".exe";
@@ -796,7 +784,7 @@ void Labeless::onLoadStubDBRequested()
 void Labeless::onShowRemotePythonExecutionViewRequested()
 {
 	if (m_EditorTForm)
-		open_tform(m_EditorTForm, FORM_TAB | FORM_MENU | FORM_RESTORE | FORM_QWIDGET);
+		switchto_tform(m_EditorTForm, true);
 	else
 		openPythonEditorForm(FORM_TAB | FORM_MENU | FORM_RESTORE);
 }
@@ -1566,7 +1554,14 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 		"from labeless.py_olly import labeless_ver\n"
 		"print 'pong'\n"
 		"print >> sys.stderr, 'v:%s' % labeless_ver()");
-	if (!hlp::net::sockSendString(s, command.SerializeAsString()))
+
+	const std::string& message = command.SerializeAsString();
+	const uint64_t messageLen = static_cast<uint64_t>(message.length());
+
+	if (!hlp::net::sockSendBuff(s, reinterpret_cast<const char*>(&messageLen), sizeof(messageLen)))
+		return false;
+
+	if (!hlp::net::sockSendString(s, message))
 	{
 		errorMsg = "sockSendString() failed";
 		return false;

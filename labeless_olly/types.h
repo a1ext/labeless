@@ -27,11 +27,21 @@
 
 #include <string>
 
+// fwd
+namespace util {
+
+std::string sformat(const char* fmt, ...);
+
+} // util
+
 
 #define __LOG_PREFIX "LL: "
 
-#define __LOG_IMPL(FUN, TYPE, FMT, ...) do {						\
-	Addtolist(0, (TYPE), __LOG_PREFIX FUN FMT, __VA_ARGS__);		\
+#define __LOG_IMPL(FUN, TYPE, FMT, ...) do {							\
+	std::string _s = util::sformat(__LOG_PREFIX FUN FMT, __VA_ARGS__);	\
+	if (_s.size() >= TEXTLEN)											\
+		_s.erase(TEXTLEN - 1, _s.length() - TEXTLEN + 1);				\
+	Addtolist(0, (TYPE), "%s", _s.c_str());								\
 } while (0)
 
 #define _CAT(X, Y) X##Y

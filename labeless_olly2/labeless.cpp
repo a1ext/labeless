@@ -309,7 +309,7 @@ static PyObject* get_params(PyObject*, PyObject* arg)
 	for (const Request& r : cd.commands)
 	{
 		if (r.id == jobId)
-			return PyString_FromString(r.params.c_str());
+			return PyString_FromStringAndSize(r.params.c_str(), r.params.size());;
 	}
 
 	Py_RETURN_NONE;
@@ -682,45 +682,68 @@ bool Labeless::initPython()
 	init_ollyapi2();
 
 	pythonDir += _T("\\labeless_scripts");
-	const xstring addLoacalFolderToPath = _T("import sys\nsys.path.extend([\"\"\"") + pythonDir + _T("\"\"\"])");
+	const xstring addLoacalFolderToPath = _T("import sys\nsys.path.extend([r\"\"\"") + pythonDir + _T("\"\"\"])");
 	const std::string ansiAddLoacalFolderToPath = util::w2mb(addLoacalFolderToPath);
 
 	PyRun_SimpleString(ansiAddLoacalFolderToPath.c_str());
 
 	const auto labelessOk = PyRun_SimpleString("import labeless as ll") == 0;
-	const auto pyexcoreOk = labelessOk && PyRun_SimpleString("from labeless import pyexcore") == 0;
-	if (!labelessOk || !pyexcoreOk)
-	//if (!execFile(pythonDir + _T("\\init.py")))
+	if (!labelessOk)
 	{
-		log_r("execFile(init.py) failed.");
-		std::string error;
-		if (PyErr_Occurred())
-		{
-			PyObject* ptTB = nullptr;
-			PyErr_Fetch(nullptr, nullptr, &ptTB);
-			pyTraceback_AsString(ptTB, error);
-		}
-		if (!clientData().stdErr.str().empty() || !clientData().stdOut.str().empty())
-		{
-#ifdef LABELESS_ADDITIONAL_LOGGING
-			std::ofstream of("c:\\labeless.log", std::ios_base::app);
-			if (of)
-			{
-				char buff[128] = {};
-				_strdate_s(buff, 128);
-				of << "\r\n" << std::string(buff);
-				_strtime_s(buff, 128);
-				of << " " << std::string(buff) << " FAILED TO INIT PYTHON, STDERR: " << clientData().stdErr.str() << std::endl
-					<< "STDOUT:" << clientData().stdOut.str();
-				of << "\nTraceBack:\n" << error;
-				of.close();
-			}
-#endif // LABELESS_ADDITIONAL_LOGGING
-		}
+		logInitPythonFail(_T("\"import labeless as ll\" failed."));
+		return false;
+	}
+
+	const auto pyexcoreOk = PyRun_SimpleString("from labeless import pyexcore") == 0;
+	if (!pyexcoreOk)
+	{
+		logInitPythonFail(_T("\"from labeless import pyexcore\" failed."));
 		return false;
 	}
 
 	return true;
+}
+
+void Labeless::logInitPythonFail(const xstring& info) const
+{
+	log_r("%s", info.c_str());
+
+	std::string error;
+	if (PyErr_Occurred())
+	{
+		PyObject* ptTB = nullptr;
+		PyErr_Fetch(nullptr, nullptr, &ptTB);
+		pyTraceback_AsString(ptTB, error);
+	}
+	const std::string& sErr = clientData().stdErr.str();
+	const std::string& sOut = clientData().stdOut.str();
+	if (!sErr.empty() || !sOut.empty())
+	{
+		if (!sErr.empty())
+		{
+			std::deque<xstring> lines = util::split(util::mb2w(sErr));
+			for (auto v : lines)
+			{
+				log_r_no_fn("%s", v.c_str());
+			}
+		}
+
+#ifdef LABELESS_ADDITIONAL_LOGGING
+		std::ofstream of("c:\\labeless.log", std::ios_base::app);
+		if (of)
+		{
+			char buff[128] = {};
+			_strdate_s(buff, 128);
+			of << "\r\n" << std::string(buff);
+			_strtime_s(buff, 128);
+			of << " " << std::string(buff) << " FAILED TO INIT PYTHON, STDERR: " << sErr << std::endl
+				<< "STDOUT:" << sOut;
+			if (!error.empty())
+				of << "\nTraceBack:\n" << error;
+			of.close();
+		}
+#endif // LABELESS_ADDITIONAL_LOGGING
+	}
 }
 
 void Labeless::destroyPython()
@@ -730,7 +753,7 @@ void Labeless::destroyPython()
 
 HWND Labeless::createWindow()
 {
-	static xstring kLabelessHelperWndClassName = _T("l4belezz-helper");
+	static xstring kLabelessHelperWndClassName = util::mb2w(util::randStr(32));
 	if (gConfig.helperWnd)
 		return gConfig.helperWnd;
 
@@ -766,7 +789,7 @@ HWND Labeless::createWindow()
 	RECT rect = {};
 	GetWindowRect(hwollymain, &rect);
 
-	rv = CreateWindow(kLabelessHelperWndClassName.c_str(), _T("Labeless"), WS_CHILDWINDOW /*| WS_VISIBLE| WS_CAPTION*/,
+	rv = CreateWindow(kLabelessHelperWndClassName.c_str(), _T(""), WS_CHILDWINDOW /*| WS_VISIBLE| WS_CAPTION*/,
 		0, 0, 100, 100, hwollymain, NULL, m_hInst, NULL);
 	if (!rv)
 	{
@@ -1008,9 +1031,12 @@ LRESULT CALLBACK Labeless::helperWinProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp
 		{
 			std::wstring s(m, lp);
 			delete[] m;
-			if (s.length() > TEXTLEN)
-				s.erase(TEXTLEN - 1, s.length() - TEXTLEN + 1);
-			log_r_no_fn("%s", s.c_str());
+
+			std::deque<xstring> items = util::split(s);
+			for (const auto& v : items)
+			{
+				log_r_no_fn("%s", v.c_str());
+			}
 		}
 		return 0;
 	}
@@ -1340,10 +1366,30 @@ bool Labeless::onClientSockRead(ClientData& cd)
 		if (!ready)
 		{
 			const std::string& rawCommand = cd.netBuff.str();
+
+			if (rawCommand.size() < sizeof(uint64_t))
+				return true;
+
+			const uint64_t packetLen = *reinterpret_cast<const uint64_t*>(rawCommand.c_str());
+			if (!packetLen)
+			{
+				server_log(_T("%s: invalid (zero) packet length"), util::to_xstr(__FUNCTION__).c_str());
+				return false;
+			}
+
+			if (packetLen > rawCommand.size() - sizeof(uint64_t))
+				return true; // chunked packet, continue receiving
+
+			if (rawCommand.size() - sizeof(uint64_t) > packetLen)
+			{
+				server_log(_T("%s: invalid (bigger than expected) packet length"), util::to_xstr(__FUNCTION__).c_str());
+				return false;
+			}
+
 			cd.netBuff.str("");
 			cd.netBuff.clear();
 
-			return onClientSockBufferReceived(cd, rawCommand);
+			return onClientSockBufferReceived(cd, rawCommand.substr(sizeof(uint64_t)));
 		}
 
 		char* buff = nullptr;

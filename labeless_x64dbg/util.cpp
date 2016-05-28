@@ -7,7 +7,7 @@
  */
 
 #include "util.h"
-
+#include <regex>
 #include <WinSock2.h>
 
 namespace util {
@@ -75,5 +75,39 @@ std::string w2mb(const std::wstring& v)
 	return{};
 }
 
+std::deque<std::string> split(const std::string& s, const std::string& delimitersSet)
+{
+	std::deque<std::string> rv;
+
+	const std::string fixed = std::regex_replace(s, std::regex("\r"), "");
+
+	std::regex rePattern(delimitersSet);
+	std::sregex_token_iterator iter(fixed.begin(), fixed.end(), rePattern, -1);
+	std::sregex_token_iterator end;
+	for (; iter != end; ++iter)
+	{
+		const std::string& item = *iter;
+		if (!item.empty())
+			rv.push_back(item);
+	}
+	return rv;
+}
+
+std::string randStr(int len)
+{
+	auto randChar = []() {
+		char c = '\0';
+		do {
+			c = rand() % 0xFF;
+		} while (!::isalpha(c));
+		return c;
+	};
+
+	std::string rv(len, '\0');
+	for (int i = 0; i < len; ++i)
+		rv[i] = randChar();
+
+	return rv;
+}
 
 } // util

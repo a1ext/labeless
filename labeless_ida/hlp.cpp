@@ -10,6 +10,7 @@
 #include "labeless_ida.h"
 #include <WinSock2.h>
 
+#include <limits>
 #include <sstream>
 #include <QString>
 
@@ -17,6 +18,8 @@
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/io/coded_stream.h>
+
+#undef max // fix for std::numeric_limits<>::max()
 
 
 namespace hlp
@@ -220,7 +223,7 @@ ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames)
 		auto flags = get_aflags(ea);
 		if ((flags & (1 << 0xE)))
 			return ea;
-		flags = get_flags_ex(ea, 1);
+		flags = get_flags_novalue(ea);
 		if (::isEnabled(ea) && (isCode(flags) || (nonCodeNames && isData(flags))))
 			return ea;
 	}
@@ -258,23 +261,51 @@ qstring wsaErrorToString()
 	return rv;
 }
 
+bool sockSendBuff(SOCKET s, const char* buff, uint64_t len)
+{
+	if (INVALID_SOCKET == s || !buff || !len)
+		return false;
+
+	static const int kMaxInt = std::numeric_limits<int>::max();
+	uint64_t left = len;
+
+	while (left > 0)
+	{
+		const int toSend = left > kMaxInt ? left % kMaxInt : static_cast<int>(left);
+		const int retVal = send(s, buff, toSend, 0);
+		if (retVal < 0)
+		{
+			addLogMsg(QString("send() failed. Error: %1\n").arg(wsaErrorToString().c_str()).toStdString().c_str());
+			return false;
+		}
+		left -= retVal;
+		buff += retVal;
+	}
+
+	return true;
+}
+
 bool sockSendString(SOCKET s, const std::string& str)
 {
 	if (INVALID_SOCKET == s || str.empty())
 		return false;
 
 	const char* ptrBuffer = str.c_str();
-	int bytesToSend = int(str.length());
+	static const int kMaxInt = std::numeric_limits<int>::max();
 
-	while (bytesToSend > 0)
+	uint64_t left = static_cast<uint64_t>(str.length());
+
+	while (left > 0)
 	{
-		const int retVal = send(s, ptrBuffer, bytesToSend, 0);
-		if (SOCKET_ERROR == retVal)
+		const int toSend = left > kMaxInt ? left % kMaxInt : static_cast<int>(left);
+
+		const int retVal = send(s, ptrBuffer, toSend, 0);
+		if (retVal < 0)
 		{
 			addLogMsg(QString("send() failed. Error: %1\n").arg(wsaErrorToString().c_str()).toStdString().c_str());
 			return false;
 		}
-		bytesToSend -= retVal;
+		left -= retVal;
 		ptrBuffer += retVal;
 	}
 	return true;

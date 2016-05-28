@@ -11,6 +11,7 @@
 #include <WinSock2.h>
 #include <cstdlib>
 #include <ShlObj.h>
+#include <regex>
 #include <vector>
 
 namespace util {
@@ -62,6 +63,24 @@ std::string sformat(const char* fmt, ...)
 	_vsnprintf_s(&buff[0], kBuffSize, _TRUNCATE, fmt, v);
 	va_end(v);
 	return std::string(&buff[0]);
+}
+
+std::deque<std::string> split(const std::string& s, const std::string& delimitersRE)
+{
+	std::deque<std::string> rv;
+
+	const std::string fixed = std::regex_replace(s, std::regex("\r"), "");
+
+	std::regex rePattern(delimitersRE);
+	std::sregex_token_iterator iter(fixed.begin(), fixed.end(), rePattern, -1);
+	std::sregex_token_iterator end;
+	for (; iter != end; ++iter)
+	{
+		const std::string& item = *iter;
+		if (!item.empty())
+			rv.push_back(item);
+	}
+	return rv;
 }
 
 } // util

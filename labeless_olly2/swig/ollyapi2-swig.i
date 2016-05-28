@@ -12,6 +12,9 @@
 // For Readmemory
 %include <pybuffer.i>
 
+// For types like HANDLE
+%include <windows.i>
+
 %include <pywstrings.swg>
 %include <typemaps/cwstring.swg>
 

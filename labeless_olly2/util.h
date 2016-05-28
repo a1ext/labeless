@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <deque>
 #include <string>
 
 #include "types.h"
@@ -21,10 +22,13 @@ xstring getPluginDir(HINSTANCE hPlugin);
 xstring inetAddrToString(sockaddr_in* sin);
 
 std::string sformat(const char* fmt, ...);
+xstring xformat(const wchar_t* fmt, ...);
 
 std::wstring mb2w(const std::string& v);
 std::string w2mb(const std::wstring& v);
 
+std::deque<xstring> split(const xstring& s, const xstring& delimitersRE = L"\r|\n");
+std::string randStr(int len);
 
 inline xstring to_xstr(const char* v)
 {

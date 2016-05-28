@@ -41,6 +41,7 @@ bool parseBigMessage(::google::protobuf::Message& msg, const std::string& data);
 namespace net {
 
 qstring wsaErrorToString();
+bool sockSendBuff(SOCKET s, const char* buff, uint64_t len);
 bool sockSendString(SOCKET s, const std::string& str);
 bool sockRecvAll(SOCKET s, std::string& result);
 bool sendAll(SOCKET s, const std::string& buff, std::string& error);

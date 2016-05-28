@@ -1,3 +1,12 @@
+# v 1.1.0.3
+ + Support of IDA 6.9 is added
+ + Support of IDA: 64-bit targets is added
+ + Support of OllyDbg2.01 dbg-backend is added
+ + Support of x64dbg (x86/x86_64) dbg-backend is added
+ * Wrapper for python backends is refactored
+ * Fixed: RCP protocol (improved stability)
+ * Anti-debug: removed classnames/window names of helper windows
+
 # v 1.0.0.8
  + Comments syncronization implemented (has configuration)
  + PyCharm remote debug script added

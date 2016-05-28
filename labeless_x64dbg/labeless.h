@@ -95,6 +95,7 @@ public:
 
 private:
 	void destroyPython();
+	void logInitPythonFail(const std::string& info) const;
 
 	HWND createWindow();
 

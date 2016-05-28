@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <deque>
 #include <string>
 
 #include "types.h"
@@ -23,6 +24,8 @@ xstring inetAddrToString(sockaddr_in* sin);
 std::wstring mb2w(const std::string& v);
 std::string w2mb(const std::wstring& v);
 
+std::deque<std::string> split(const std::string& s, const std::string& delimitersRE = "\r|\n");
+std::string randStr(int len);
 
 inline xstring to_xstr(const char* v)
 {

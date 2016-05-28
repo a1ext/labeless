@@ -7,6 +7,7 @@
  */
 
 #include "util.h"
+#include <regex>
 #include <vector>
 #include <WinSock2.h>
 
@@ -47,6 +48,17 @@ std::string sformat(const char* fmt, ...)
 	return std::string(&buff[0]);
 }
 
+xstring xformat(const wchar_t* fmt, ...)
+{
+	static const size_t kBuffSize = 4096 * 4096;
+	std::vector<wchar_t> buff(kBuffSize, '\0');
+	va_list v;
+	va_start(v, fmt);
+	_vsnwprintf_s(&buff[0], kBuffSize, _TRUNCATE, fmt, v);
+	va_end(v);
+	return xstring(&buff[0]);
+}
+
 std::wstring mb2w(const std::string& v)
 {
 	if (v.empty())
@@ -82,5 +94,41 @@ std::string w2mb(const std::wstring& v)
 	return{};
 }
 
+std::deque<xstring> split(const xstring& s, const xstring& delimitersRE)
+{
+	std::deque<xstring> rv;
+
+	const xstring fixed = std::regex_replace(s, std::wregex(L"\r"), L"");
+
+	std::wregex rePattern(delimitersRE);
+	std::wsregex_token_iterator iter(fixed.begin(), fixed.end(), rePattern, -1);
+	std::wsregex_token_iterator end;
+	for (; iter != end; ++iter)
+	{
+		const xstring& item = *iter;
+		if (!item.empty())
+			rv.push_back(item);
+	}
+	return rv;
+}
+
+std::string randStr(int len)
+{
+	srand(GetTickCount());
+
+	auto randChar = []() {
+		char c = '\0';
+		do {
+			c = rand() % 0xFF;
+		} while (!::isalpha(c));
+		return c;
+	};
+
+	std::string rv(len, '\0');
+	for (int i = 0; i < len; ++i)
+		rv[i] = randChar();
+
+	return rv;
+}
 
 } // util

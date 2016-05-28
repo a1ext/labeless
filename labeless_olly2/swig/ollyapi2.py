@@ -366,12 +366,12 @@ def Simpleaddress(*args):
   return _ollyapi2.Simpleaddress(*args)
 
 def Heapsort(*args):
-  """Heapsort(void * data, int const count, int const size, int (*)(__cdecl *)(void const *,void const *) arg4)"""
+  """Heapsort(void * data, int const count, int const size, int (*)(void const *,void const *) compare)"""
   return _ollyapi2.Heapsort(*args)
 
 def Heapsortex(*args):
   """
-    Heapsortex(void * data, int const count, int const size, int (*)(__cdecl *)(void const *,void const *,ulong) arg4, 
+    Heapsortex(void * data, int const count, int const size, int (*)(void const *,void const *,ulong) compareex, 
         ulong lp)
     """
   return _ollyapi2.Heapsortex(*args)

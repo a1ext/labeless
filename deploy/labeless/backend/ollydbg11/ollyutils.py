@@ -40,6 +40,12 @@ def is_valid_addr(ea):
     return 0 <= ea <= sys.maxsize
 
 
+def truncate_text_to_max(s):
+    if len(s) >= api.TEXTLEN:
+        return s[:api.TEXTLEN - 1]
+    return s
+
+
 def make_names(names, base, remote_base):
     if not names:
         return
@@ -49,7 +55,7 @@ def make_names(names, base, remote_base):
     for n in names:
         if not is_valid_addr(n.ea + ptrdiff):
             continue
-        api.Insertname(n.ea + ptrdiff, api.NM_LABEL, str(n.name))
+        api.Insertname(n.ea + ptrdiff, api.NM_LABEL, truncate_text_to_max(str(n.name)))
     api.Redrawdisassembler()
 
 
@@ -60,7 +66,7 @@ def make_comments(comments, base, remote_base):
     for cmt in comments:
         if not is_valid_addr(cmt.ea + ptrdiff):
             continue
-        api.Insertname(cmt.ea + ptrdiff, api.NM_COMMENT, str(cmt.name))
+        api.Insertname(cmt.ea + ptrdiff, api.NM_COMMENT, truncate_text_to_max(str(cmt.name)))
     api.Redrawdisassembler()
 
 

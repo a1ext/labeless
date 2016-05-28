@@ -6,7 +6,7 @@
 # Creative Commons BY-NC 4.0
 # http://creativecommons.org/licenses/by-nc/4.0
 
-__author__ = 'AlexWMF'
+__author__ = 'a1ext'
 
 import logging
 from os import path
@@ -18,8 +18,8 @@ class MyStdOut(object):
         self._func = func
 
     def write(self, text):
-        fixed = text.replace('\n', '')
-        if fixed:
+        fixed = text.replace('\r', '')
+        if fixed.strip():
             self._func(fixed)
 
     def flush(self):
