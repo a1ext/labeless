@@ -14,19 +14,7 @@
 #include "../rpcdata.h"
 #include "../../common/cpp/rpc.pb.h"
 
-namespace {
 
-std::string trimToOllyLimitsString(const std::string& s)
-{
-	std::string rv(s);
-	if (rv.length() >= OLLY_TEXTLEN)
-		rv.erase(rv.begin() + (OLLY_TEXTLEN - 1), rv.end());
-	return rv;
-}
-
-//static const std::string kRpcCallPythonCommand = "import pyexcore\npyexcore.PyExCore.execute()";
-
-} // anonymous
 
 bool ICommand::parseResponse(QPointer<RpcData> rd)
 {
@@ -119,7 +107,7 @@ bool LabelsSync::serialize(QPointer<RpcData> rd) const
 			const Data& sd = *it;
 			auto v = request->add_names();
 			v->set_ea(sd.ea);
-			v->set_name(trimToOllyLimitsString(sd.label));
+			v->set_name(sd.label);
 		}
 		rd->script.clear();
 		rd->params = rpcRequest.SerializeAsString();
@@ -154,7 +142,7 @@ bool CommentsSync::serialize(QPointer<RpcData> rd) const
 			const Data& sd = *it;
 			auto v = request->add_names();
 			v->set_ea(sd.ea);
-			v->set_name(trimToOllyLimitsString(sd.comment));
+			v->set_name(sd.comment);
 		}
 		rd->script.clear();
 		rd->params = rpcRequest.SerializeAsString();
