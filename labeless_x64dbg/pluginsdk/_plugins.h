@@ -29,7 +29,7 @@
 typedef struct
 {
     //provided by the debugger
-    int g_pluginHandle;
+    int pluginHandle;
     //provided by the pluginit function
     int sdkVersion;
     int pluginVersion;
@@ -40,10 +40,10 @@ typedef struct
 {
     //provided by the debugger
     HWND hwndDlg; //gui window handle
-    int g_hMenu; //plugin menu handle
-    int g_hMenuDisasm; //plugin disasm menu handle
-    int g_hMenuDump; //plugin dump menu handle
-    int g_hMenuStack; //plugin stack menu handle
+    int hMenu; //plugin menu handle
+    int hMenuDisasm; //plugin disasm menu handle
+    int hMenuDump; //plugin dump menu handle
+    int hMenuStack; //plugin stack menu handle
 } PLUG_SETUPSTRUCT;
 
 typedef struct

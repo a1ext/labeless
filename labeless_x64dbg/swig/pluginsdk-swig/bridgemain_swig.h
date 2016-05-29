@@ -54,8 +54,10 @@ extern int BridgeGetDbgVersion();
 #define MAX_LABEL_SIZE 256
 #define MAX_COMMENT_SIZE 512
 #define MAX_MODULE_SIZE 256
-#define MAX_IMPORT_SIZE 256
+#define MAX_IMPORT_SIZE 65536
 #define MAX_BREAKPOINT_SIZE 256
+#define MAX_CONDITIONAL_EXPR_SIZE 256
+#define MAX_CONDITIONAL_TEXT_SIZE 256
 #define MAX_SCRIPT_LINE_SIZE 2048
 #define MAX_THREAD_NAME_SIZE 256
 #define MAX_STRING_SIZE 512
@@ -124,6 +126,14 @@ typedef enum
 
 typedef enum
 {
+    ARG_NONE,
+    ARG_BEGIN,
+    ARG_MIDDLE,
+    ARG_END
+} ARGTYPE;
+
+typedef enum
+{
     DBG_SCRIPT_LOAD,                // param1=const char* filename,      param2=unused
     DBG_SCRIPT_UNLOAD,              // param1=unused,                    param2=unused
     DBG_SCRIPT_RUN,                 // param1=int destline,              param2=unused
@@ -170,6 +180,9 @@ typedef enum
     DBG_DEINITIALIZE_LOCKS,         // param1=unused,                    param2=unused
     DBG_GET_TIME_WASTED_COUNTER,    // param1=unused,                    param2=unused
     DBG_SYMBOL_ENUM_FROMCACHE,      // param1=SYMBOLCBINFO* cbInfo,      param2=unused
+    DBG_DELETE_COMMENT_RANGE,       // param1=duint start,               param2=duint end
+    DBG_DELETE_LABEL_RANGE,         // param1=duint start,               param2=duint end
+    DBG_DELETE_BOOKMARK_RANGE,      // param1=duint start,               param2=duint end
 } DBGMSG;
 
 typedef enum
@@ -317,6 +330,14 @@ typedef struct
     char name[MAX_BREAKPOINT_SIZE];
     char mod[MAX_MODULE_SIZE];
     unsigned short slot;
+    // extended part
+    unsigned int hitCount;
+    bool fastResume;
+    char breakCondition[MAX_CONDITIONAL_EXPR_SIZE];
+    char logText[MAX_CONDITIONAL_TEXT_SIZE];
+    char logCondition[MAX_CONDITIONAL_EXPR_SIZE];
+    char commandText[MAX_CONDITIONAL_TEXT_SIZE];
+    char commandCondition[MAX_CONDITIONAL_EXPR_SIZE];
 } BRIDGEBP;
 
 typedef struct
@@ -339,6 +360,7 @@ typedef struct
     duint end; //OUT
 } LOOP;
 
+#ifndef _NO_ADDRINFO
 typedef struct
 {
     int flags; //ADDRINFOFLAGS (IN)
@@ -349,6 +371,7 @@ typedef struct
     FUNCTION function;
     LOOP loop;
 } ADDRINFO;
+#endif
 
 struct SYMBOLINFO_
 {
@@ -537,12 +560,12 @@ typedef struct
 
 typedef struct
 {
-    DISASM_ARGTYPE type;
+    DISASM_ARGTYPE type; //normal/memory
     SEGMENTREG segment;
     char mnemonic[64];
-    duint constant;
-    duint value;
-    duint memvalue;
+    duint constant; //constant in the instruction (imm/disp)
+    duint value; //equal to constant or equal to the register value
+    duint memvalue; //memsize:[value]
 } DISASM_ARG;
 
 typedef struct
@@ -657,13 +680,16 @@ extern bool DbgIsJumpGoingToExecute(duint addr);
 %pybuffer_string(char* text)
 extern bool DbgGetLabelAt(duint addr, SEGMENTREG segment, char* text);
 extern bool DbgSetLabelAt(duint addr, const char* text);
+extern void DbgClearLabelRange(duint start, duint end);
 
 %pybuffer_string(char* text);
 extern bool DbgGetCommentAt(duint addr, char* text);
 
 extern bool DbgSetCommentAt(duint addr, const char* text);
+extern void DbgClearCommentRange(duint start, duint end);
 extern bool DbgGetBookmarkAt(duint addr);
 extern bool DbgSetBookmarkAt(duint addr, bool isbookmark);
+extern void DbgClearBookmarkRange(duint start, duint end);
 
 %pybuffer_string(char* text);
 extern bool DbgGetModuleAt(duint addr, char* text);
@@ -725,6 +751,7 @@ extern bool DbgWinEvent(MSG* message, long* result);
 extern bool DbgWinEventGlobal(MSG* message);
 extern bool DbgIsRunning();
 extern duint DbgGetTimeWastedCounter();
+extern ARGTYPE DbgGetArgTypeAt(duint addr);
 
 //Gui defines
 #define GUI_PLUGIN_MENU 0
@@ -797,6 +824,7 @@ typedef enum
     GUI_REPAINT_TABLE_VIEW,         // param1=unused,               param2=unused
     GUI_UPDATE_PATCHES,             // param1=unused,               param2=unused
     GUI_UPDATE_CALLSTACK,           // param1=unused,               param2=unused
+    GUI_UPDATE_SEHCHAIN,            // param1=unused,               param2=unused
     GUI_SYMBOL_REFRESH_CURRENT,     // param1=unused,               param2=unused
     GUI_UPDATE_MEMORY_VIEW,         // param1=unused,               param2=unused
     GUI_REF_INITIALIZE,             // param1=const char* name,     param2=unused
@@ -816,7 +844,9 @@ typedef enum
     GUI_DUMP_AT_N,                  // param1=int index,            param2=duint va
     GUI_DISPLAY_WARNING,            // param1=const char *text,     param2=unused
     GUI_REGISTER_SCRIPT_LANG,       // param1=SCRIPTTYPEINFO* info, param2=unused
-    GUI_UNREGISTER_SCRIPT_LANG      // param1=int id,               param2=unused
+    GUI_UNREGISTER_SCRIPT_LANG,     // param1=int id,               param2=unused
+    GUI_UPDATE_ARGUMENT_VIEW,       // param1=unused,               param2=unused
+    GUI_FOCUS_VIEW,                 // param1=int hWindow,          param2=unused
 } GUIMSG;
 
 //GUI Typedefs
@@ -917,6 +947,7 @@ extern void GuiUpdateSideBar();
 extern void GuiRepaintTableView();
 extern void GuiUpdatePatches();
 extern void GuiUpdateCallStack();
+extern void GuiUpdateSEHChain();
 extern void GuiLoadSourceFile(const char* path, int line);
 extern void GuiMenuSetIcon(int hMenu, const ICONDATA* icon);
 extern void GuiMenuSetEntryIcon(int hEntry, const ICONDATA* icon);
@@ -934,6 +965,8 @@ extern void GuiDumpAtN(duint va, int index);
 extern void GuiDisplayWarning(const char* title, const char* text);
 extern void GuiRegisterScriptLanguage(SCRIPTTYPEINFO* info);
 extern void GuiUnregisterScriptLanguage(int id);
+extern void GuiUpdateArgumentWidget();
+extern void GuiFocusView(int hWindow);
 
 #ifdef __cplusplus
 }

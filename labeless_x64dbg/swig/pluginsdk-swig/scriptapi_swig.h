@@ -197,7 +197,7 @@ namespace Script
         %rename(Function_Delete) Delete;
         extern bool Delete(duint address);
         %rename(Function_DeleteRange) DeleteRange;
-        extern void DeleteRange(duint start, duint end);
+        extern void DeleteRange(duint start, duint end, bool deleteManual = false);
         %rename(Function_Clear) Clear;
         extern void Clear();
         %rename(Function_GetList) GetList;

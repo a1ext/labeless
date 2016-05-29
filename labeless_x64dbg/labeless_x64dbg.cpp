@@ -166,7 +166,7 @@ DLL_EXPORT bool pluginit(PLUG_INITSTRUCT* initStruct)
 	initStruct->pluginVersion = plugin_version;
 	initStruct->sdkVersion = PLUG_SDKVERSION;
 	strncpy_s(initStruct->pluginName, _countof(initStruct->pluginName), plugin_name, _countof(initStruct->pluginName));
-	g_pluginHandle = initStruct->g_pluginHandle;
+	g_pluginHandle = initStruct->pluginHandle;
 
 	if (!_plugin_registercommand(g_pluginHandle, kCommandAllocEx.c_str(), cbDebugAllocEx, true))
 		log_r("error registering the \"%s\" command!", kCommandAllocEx.c_str());
@@ -215,10 +215,10 @@ DLL_EXPORT bool plugstop()
 DLL_EXPORT void plugsetup(PLUG_SETUPSTRUCT* setupStruct)
 {
 	g_hwndDlg = setupStruct->hwndDlg;
-	g_hMenu = setupStruct->g_hMenu;
-	g_hMenuDisasm = setupStruct->g_hMenuDisasm;
-	g_hMenuDump = setupStruct->g_hMenuDump;
-	g_hMenuStack = setupStruct->g_hMenuStack;
+	g_hMenu = setupStruct->hMenu;
+	g_hMenuDisasm = setupStruct->hMenuDisasm;
+	g_hMenuDump = setupStruct->hMenuDump;
+	g_hMenuStack = setupStruct->hMenuStack;
 	
 	if (!Labeless::instance().init(setupStruct))
 	{

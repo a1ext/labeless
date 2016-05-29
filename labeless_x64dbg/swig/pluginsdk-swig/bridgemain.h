@@ -59,8 +59,10 @@ BRIDGE_IMPEXP int BridgeGetDbgVersion();
 #define MAX_LABEL_SIZE 256
 #define MAX_COMMENT_SIZE 512
 #define MAX_MODULE_SIZE 256
-#define MAX_IMPORT_SIZE 256
+#define MAX_IMPORT_SIZE 65536
 #define MAX_BREAKPOINT_SIZE 256
+#define MAX_CONDITIONAL_EXPR_SIZE 256
+#define MAX_CONDITIONAL_TEXT_SIZE 256
 #define MAX_SCRIPT_LINE_SIZE 2048
 #define MAX_THREAD_NAME_SIZE 256
 #define MAX_STRING_SIZE 512
@@ -183,6 +185,9 @@ typedef enum
     DBG_DEINITIALIZE_LOCKS,         // param1=unused,                    param2=unused
     DBG_GET_TIME_WASTED_COUNTER,    // param1=unused,                    param2=unused
     DBG_SYMBOL_ENUM_FROMCACHE,      // param1=SYMBOLCBINFO* cbInfo,      param2=unused
+    DBG_DELETE_COMMENT_RANGE,       // param1=duint start,               param2=duint end
+    DBG_DELETE_LABEL_RANGE,         // param1=duint start,               param2=duint end
+    DBG_DELETE_BOOKMARK_RANGE,      // param1=duint start,               param2=duint end
 } DBGMSG;
 
 typedef enum
@@ -318,6 +323,14 @@ typedef struct
     char name[MAX_BREAKPOINT_SIZE];
     char mod[MAX_MODULE_SIZE];
     unsigned short slot;
+    // extended part
+    unsigned int hitCount;
+    bool fastResume;
+    char breakCondition[MAX_CONDITIONAL_EXPR_SIZE];
+    char logText[MAX_CONDITIONAL_TEXT_SIZE];
+    char logCondition[MAX_CONDITIONAL_EXPR_SIZE];
+    char commandText[MAX_CONDITIONAL_TEXT_SIZE];
+    char commandCondition[MAX_CONDITIONAL_EXPR_SIZE];
 } BRIDGEBP;
 
 typedef struct
@@ -340,6 +353,7 @@ typedef struct
     duint end; //OUT
 } LOOP;
 
+#ifndef _NO_ADDRINFO
 typedef struct
 {
     int flags; //ADDRINFOFLAGS (IN)
@@ -350,6 +364,7 @@ typedef struct
     FUNCTION function;
     LOOP loop;
 } ADDRINFO;
+#endif
 
 struct SYMBOLINFO_
 {
@@ -538,12 +553,12 @@ typedef struct
 
 typedef struct
 {
-    DISASM_ARGTYPE type;
+    DISASM_ARGTYPE type; //normal/memory
     SEGMENTREG segment;
     char mnemonic[64];
-    duint constant;
-    duint value;
-    duint memvalue;
+    duint constant; //constant in the instruction (imm/disp)
+    duint value; //equal to constant or equal to the register value
+    duint memvalue; //memsize:[value]
 } DISASM_ARG;
 
 typedef struct
@@ -649,10 +664,13 @@ BRIDGE_IMPEXP bool DbgIsDebugging();
 BRIDGE_IMPEXP bool DbgIsJumpGoingToExecute(duint addr);
 BRIDGE_IMPEXP bool DbgGetLabelAt(duint addr, SEGMENTREG segment, char* text);
 BRIDGE_IMPEXP bool DbgSetLabelAt(duint addr, const char* text);
+BRIDGE_IMPEXP void DbgClearLabelRange(duint start, duint end);
 BRIDGE_IMPEXP bool DbgGetCommentAt(duint addr, char* text);
 BRIDGE_IMPEXP bool DbgSetCommentAt(duint addr, const char* text);
+BRIDGE_IMPEXP void DbgClearCommentRange(duint start, duint end);
 BRIDGE_IMPEXP bool DbgGetBookmarkAt(duint addr);
 BRIDGE_IMPEXP bool DbgSetBookmarkAt(duint addr, bool isbookmark);
+BRIDGE_IMPEXP void DbgClearBookmarkRange(duint start, duint end);
 BRIDGE_IMPEXP bool DbgGetModuleAt(duint addr, char* text);
 BRIDGE_IMPEXP BPXTYPE DbgGetBpxTypeAt(duint addr);
 BRIDGE_IMPEXP duint DbgValFromString(const char* string);
@@ -781,6 +799,7 @@ typedef enum
     GUI_REPAINT_TABLE_VIEW,         // param1=unused,               param2=unused
     GUI_UPDATE_PATCHES,             // param1=unused,               param2=unused
     GUI_UPDATE_CALLSTACK,           // param1=unused,               param2=unused
+    GUI_UPDATE_SEHCHAIN,            // param1=unused,               param2=unused
     GUI_SYMBOL_REFRESH_CURRENT,     // param1=unused,               param2=unused
     GUI_UPDATE_MEMORY_VIEW,         // param1=unused,               param2=unused
     GUI_REF_INITIALIZE,             // param1=const char* name,     param2=unused
@@ -800,7 +819,9 @@ typedef enum
     GUI_DUMP_AT_N,                  // param1=int index,            param2=duint va
     GUI_DISPLAY_WARNING,            // param1=const char *text,     param2=unused
     GUI_REGISTER_SCRIPT_LANG,       // param1=SCRIPTTYPEINFO* info, param2=unused
-    GUI_UNREGISTER_SCRIPT_LANG      // param1=int id,               param2=unused
+    GUI_UNREGISTER_SCRIPT_LANG,     // param1=int id,               param2=unused
+    GUI_UPDATE_ARGUMENT_VIEW,       // param1=unused,               param2=unused
+    GUI_FOCUS_VIEW,                 // param1=int hWindow,          param2=unused
 } GUIMSG;
 
 //GUI Typedefs
@@ -837,6 +858,7 @@ typedef struct
 } SCRIPTTYPEINFO;
 
 //GUI functions
+//code page is utf8
 BRIDGE_IMPEXP void GuiDisasmAt(duint addr, duint cip);
 BRIDGE_IMPEXP void GuiSetDebugState(DBGSTATE state);
 BRIDGE_IMPEXP void GuiAddLogMessage(const char* msg);
@@ -896,6 +918,7 @@ BRIDGE_IMPEXP void GuiUpdateSideBar();
 BRIDGE_IMPEXP void GuiRepaintTableView();
 BRIDGE_IMPEXP void GuiUpdatePatches();
 BRIDGE_IMPEXP void GuiUpdateCallStack();
+BRIDGE_IMPEXP void GuiUpdateSEHChain();
 BRIDGE_IMPEXP void GuiLoadSourceFile(const char* path, int line);
 BRIDGE_IMPEXP void GuiMenuSetIcon(int hMenu, const ICONDATA* icon);
 BRIDGE_IMPEXP void GuiMenuSetEntryIcon(int hEntry, const ICONDATA* icon);
@@ -913,6 +936,8 @@ BRIDGE_IMPEXP void GuiDumpAtN(duint va, int index);
 BRIDGE_IMPEXP void GuiDisplayWarning(const char* title, const char* text);
 BRIDGE_IMPEXP void GuiRegisterScriptLanguage(SCRIPTTYPEINFO* info);
 BRIDGE_IMPEXP void GuiUnregisterScriptLanguage(int id);
+BRIDGE_IMPEXP void GuiUpdateArgumentWidget();
+BRIDGE_IMPEXP void GuiFocusView(int hWindow);
 
 #ifdef __cplusplus
 }

@@ -2936,137 +2936,152 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 
 #define SWIGTYPE_p_ADDRINFO swig_types[0]
 #define SWIGTYPE_p_ADDRINFOFLAGS swig_types[1]
-#define SWIGTYPE_p_BASIC_INSTRUCTION_INFO swig_types[2]
-#define SWIGTYPE_p_BPMAP swig_types[3]
-#define SWIGTYPE_p_BPXTYPE swig_types[4]
-#define SWIGTYPE_p_BRIDGEBP swig_types[5]
-#define SWIGTYPE_p_BookmarkInfoArray swig_types[6]
-#define SWIGTYPE_p_CELLINFO swig_types[7]
-#define SWIGTYPE_p_CommentInfoArray swig_types[8]
-#define SWIGTYPE_p_DBGCALLSTACK swig_types[9]
-#define SWIGTYPE_p_DBGCALLSTACKENTRY swig_types[10]
-#define SWIGTYPE_p_DBGFUNCTIONS_ swig_types[11]
-#define SWIGTYPE_p_DBGMSG swig_types[12]
-#define SWIGTYPE_p_DBGPATCHINFO swig_types[13]
-#define SWIGTYPE_p_DBGPROCESSINFO swig_types[14]
-#define SWIGTYPE_p_DBGSTATE swig_types[15]
-#define SWIGTYPE_p_DISASM_ARG swig_types[16]
-#define SWIGTYPE_p_DISASM_ARGTYPE swig_types[17]
-#define SWIGTYPE_p_DISASM_INSTR swig_types[18]
-#define SWIGTYPE_p_DISASM_INSTRTYPE swig_types[19]
-#define SWIGTYPE_p_FLAGS swig_types[20]
-#define SWIGTYPE_p_FUNCTION swig_types[21]
-#define SWIGTYPE_p_FUNCTION_LOOP_INFO swig_types[22]
-#define SWIGTYPE_p_FUNCTYPE swig_types[23]
-#define SWIGTYPE_p_FunctionInfoArray swig_types[24]
-#define SWIGTYPE_p_GUIMSG swig_types[25]
-#define SWIGTYPE_p_ICONDATA swig_types[26]
-#define SWIGTYPE_p_LASTERROR swig_types[27]
-#define SWIGTYPE_p_LOOP swig_types[28]
-#define SWIGTYPE_p_LOOPTYPE swig_types[29]
-#define SWIGTYPE_p_LabelInfoArray swig_types[30]
-#define SWIGTYPE_p_ListInfo swig_types[31]
-#define SWIGTYPE_p_MEMMAP swig_types[32]
-#define SWIGTYPE_p_MEMORY_INFO swig_types[33]
-#define SWIGTYPE_p_MEMORY_SIZE swig_types[34]
-#define SWIGTYPE_p_MEMPAGE swig_types[35]
-#define SWIGTYPE_p_MEMPAGEArray swig_types[36]
-#define SWIGTYPE_p_MSG swig_types[37]
-#define SWIGTYPE_p_MXCSRFIELDS swig_types[38]
-#define SWIGTYPE_p_ModuleInfoArray swig_types[39]
-#define SWIGTYPE_p_ModuleSectionInfoArray swig_types[40]
-#define SWIGTYPE_p_REGDUMP swig_types[41]
-#define SWIGTYPE_p_REGISTERCONTEXT swig_types[42]
-#define SWIGTYPE_p_SCRIPTBRANCH swig_types[43]
-#define SWIGTYPE_p_SCRIPTBRANCHTYPE swig_types[44]
-#define SWIGTYPE_p_SCRIPTLINETYPE swig_types[45]
-#define SWIGTYPE_p_SCRIPTTYPEINFO swig_types[46]
-#define SWIGTYPE_p_SEGMENTREG swig_types[47]
-#define SWIGTYPE_p_SELECTIONDATA swig_types[48]
-#define SWIGTYPE_p_STACK_COMMENT swig_types[49]
-#define SWIGTYPE_p_STRING_TYPE swig_types[50]
-#define SWIGTYPE_p_SYMBOLCBINFO swig_types[51]
-#define SWIGTYPE_p_SYMBOLINFO_ swig_types[52]
-#define SWIGTYPE_p_SYMBOLMODULEINFO swig_types[53]
-#define SWIGTYPE_p_Script__Bookmark__BookmarkInfo swig_types[54]
-#define SWIGTYPE_p_Script__Comment__CommentInfo swig_types[55]
-#define SWIGTYPE_p_Script__Function__FunctionInfo swig_types[56]
-#define SWIGTYPE_p_Script__Label__LabelInfo swig_types[57]
-#define SWIGTYPE_p_Script__Module__ModuleInfo swig_types[58]
-#define SWIGTYPE_p_Script__Module__ModuleSectionInfo swig_types[59]
-#define SWIGTYPE_p_Script__Symbol__SymbolInfo swig_types[60]
-#define SWIGTYPE_p_SymbolInfoArray swig_types[61]
-#define SWIGTYPE_p_THREADALLINFO swig_types[62]
-#define SWIGTYPE_p_THREADINFO swig_types[63]
-#define SWIGTYPE_p_THREADLIST swig_types[64]
-#define SWIGTYPE_p_THREADPRIORITY swig_types[65]
-#define SWIGTYPE_p_THREADWAITREASON swig_types[66]
-#define SWIGTYPE_p_VALUE_INFO swig_types[67]
-#define SWIGTYPE_p_X87CONTROLWORDFIELDS swig_types[68]
-#define SWIGTYPE_p_X87FPU swig_types[69]
-#define SWIGTYPE_p_X87FPUREGISTER swig_types[70]
-#define SWIGTYPE_p_X87STATUSWORDFIELDS swig_types[71]
-#define SWIGTYPE_p_YMMREGISTER swig_types[72]
-#define SWIGTYPE_p__MEMORY_BASIC_INFORMATION swig_types[73]
-#define SWIGTYPE_p__XMMREGISTER swig_types[74]
-#define SWIGTYPE_p___int64 swig_types[75]
-#define SWIGTYPE_p_bool swig_types[76]
-#define SWIGTYPE_p_char swig_types[77]
-#define SWIGTYPE_p_f___bool swig_types[78]
-#define SWIGTYPE_p_f___void swig_types[79]
-#define SWIGTYPE_p_f_p_DBGCALLSTACK__void swig_types[80]
-#define SWIGTYPE_p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int swig_types[81]
-#define SWIGTYPE_p_f_p_DBGPATCHINFO_p_size_t__bool swig_types[82]
-#define SWIGTYPE_p_f_p_SYMBOLINFO__p_void__void swig_types[83]
-#define SWIGTYPE_p_f_p_bool__bool swig_types[84]
-#define SWIGTYPE_p_f_p_char__bool swig_types[85]
-#define SWIGTYPE_p_f_p_char_bool__bool swig_types[86]
-#define SWIGTYPE_p_f_p_char_p_size_t__bool swig_types[87]
-#define SWIGTYPE_p_f_p_p_DBGPROCESSINFO_p_int__bool swig_types[88]
-#define SWIGTYPE_p_f_p_q_const__char__bool swig_types[89]
-#define SWIGTYPE_p_f_p_q_const__char__unsigned_long_long swig_types[90]
-#define SWIGTYPE_p_f_p_q_const__char__void swig_types[91]
-#define SWIGTYPE_p_f_p_q_const__char_int__unsigned_long_long swig_types[92]
-#define SWIGTYPE_p_f_p_q_const__char_p_char_int__int swig_types[93]
-#define SWIGTYPE_p_f_p_q_const__char_p_p_char_p_int__void swig_types[94]
-#define SWIGTYPE_p_f_p_q_const__char_p_unsigned_long_long__bool swig_types[95]
-#define SWIGTYPE_p_f_p_q_const__char_unsigned_long_long__unsigned_long_long swig_types[96]
-#define SWIGTYPE_p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool swig_types[97]
-#define SWIGTYPE_p_f_unsigned_long_long__bool swig_types[98]
-#define SWIGTYPE_p_f_unsigned_long_long__unsigned_long_long swig_types[99]
-#define SWIGTYPE_p_f_unsigned_long_long_p_DBGPATCHINFO__bool swig_types[100]
-#define SWIGTYPE_p_f_unsigned_long_long_p_char__bool swig_types[101]
-#define SWIGTYPE_p_f_unsigned_long_long_p_char_bool__bool swig_types[102]
-#define SWIGTYPE_p_f_unsigned_long_long_p_char_int__int swig_types[103]
-#define SWIGTYPE_p_f_unsigned_long_long_p_char_p_int__bool swig_types[104]
-#define SWIGTYPE_p_f_unsigned_long_long_p_q_const__char__bool swig_types[105]
-#define SWIGTYPE_p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool swig_types[106]
-#define SWIGTYPE_p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool swig_types[107]
-#define SWIGTYPE_p_f_unsigned_long_long_p_unsigned_char_p_int_p_q_const__char_p_char__bool swig_types[108]
-#define SWIGTYPE_p_f_unsigned_long_long_unsigned_long_long__bool swig_types[109]
-#define SWIGTYPE_p_f_unsigned_long_long_unsigned_long_long__void swig_types[110]
-#define SWIGTYPE_p_f_unsigned_long_p_char__bool swig_types[111]
-#define SWIGTYPE_p_float swig_types[112]
-#define SWIGTYPE_p_int swig_types[113]
-#define SWIGTYPE_p_long swig_types[114]
-#define SWIGTYPE_p_long_long swig_types[115]
-#define SWIGTYPE_p_p_DBGPROCESSINFO swig_types[116]
-#define SWIGTYPE_p_p_char swig_types[117]
-#define SWIGTYPE_p_p_unsigned_long swig_types[118]
-#define SWIGTYPE_p_short swig_types[119]
-#define SWIGTYPE_p_signed___int64 swig_types[120]
-#define SWIGTYPE_p_signed_char swig_types[121]
-#define SWIGTYPE_p_size_t swig_types[122]
-#define SWIGTYPE_p_unsigned___int64 swig_types[123]
-#define SWIGTYPE_p_unsigned_char swig_types[124]
-#define SWIGTYPE_p_unsigned_int swig_types[125]
-#define SWIGTYPE_p_unsigned_long swig_types[126]
-#define SWIGTYPE_p_unsigned_long_long swig_types[127]
-#define SWIGTYPE_p_unsigned_short swig_types[128]
-#define SWIGTYPE_p_void swig_types[129]
-#define SWIGTYPE_p_wchar_t swig_types[130]
-static swig_type_info *swig_types[132];
-static swig_module_info swig_module = {swig_types, 131, 0, 0, 0, 0};
+#define SWIGTYPE_p_ARGTYPE swig_types[2]
+#define SWIGTYPE_p_BASIC_INSTRUCTION_INFO swig_types[3]
+#define SWIGTYPE_p_BPMAP swig_types[4]
+#define SWIGTYPE_p_BPXTYPE swig_types[5]
+#define SWIGTYPE_p_BRIDGEBP swig_types[6]
+#define SWIGTYPE_p_BookmarkInfoArray swig_types[7]
+#define SWIGTYPE_p_CELLINFO swig_types[8]
+#define SWIGTYPE_p_CommentInfoArray swig_types[9]
+#define SWIGTYPE_p_DBGCALLSTACK swig_types[10]
+#define SWIGTYPE_p_DBGCALLSTACKENTRY swig_types[11]
+#define SWIGTYPE_p_DBGFUNCTIONS_ swig_types[12]
+#define SWIGTYPE_p_DBGMSG swig_types[13]
+#define SWIGTYPE_p_DBGPATCHINFO swig_types[14]
+#define SWIGTYPE_p_DBGPROCESSINFO swig_types[15]
+#define SWIGTYPE_p_DBGSEHCHAIN swig_types[16]
+#define SWIGTYPE_p_DBGSEHRECORD swig_types[17]
+#define SWIGTYPE_p_DBGSTATE swig_types[18]
+#define SWIGTYPE_p_DISASM_ARG swig_types[19]
+#define SWIGTYPE_p_DISASM_ARGTYPE swig_types[20]
+#define SWIGTYPE_p_DISASM_INSTR swig_types[21]
+#define SWIGTYPE_p_DISASM_INSTRTYPE swig_types[22]
+#define SWIGTYPE_p_FLAGS swig_types[23]
+#define SWIGTYPE_p_FUNCTION swig_types[24]
+#define SWIGTYPE_p_FUNCTION_LOOP_INFO swig_types[25]
+#define SWIGTYPE_p_FUNCTYPE swig_types[26]
+#define SWIGTYPE_p_FunctionInfoArray swig_types[27]
+#define SWIGTYPE_p_GUIMSG swig_types[28]
+#define SWIGTYPE_p_HANDLEINFO swig_types[29]
+#define SWIGTYPE_p_ICONDATA swig_types[30]
+#define SWIGTYPE_p_LASTERROR swig_types[31]
+#define SWIGTYPE_p_LOOP swig_types[32]
+#define SWIGTYPE_p_LOOPTYPE swig_types[33]
+#define SWIGTYPE_p_LabelInfoArray swig_types[34]
+#define SWIGTYPE_p_ListInfo swig_types[35]
+#define SWIGTYPE_p_MEMMAP swig_types[36]
+#define SWIGTYPE_p_MEMORY_INFO swig_types[37]
+#define SWIGTYPE_p_MEMORY_SIZE swig_types[38]
+#define SWIGTYPE_p_MEMPAGE swig_types[39]
+#define SWIGTYPE_p_MEMPAGEArray swig_types[40]
+#define SWIGTYPE_p_MSG swig_types[41]
+#define SWIGTYPE_p_MXCSRFIELDS swig_types[42]
+#define SWIGTYPE_p_ModuleInfoArray swig_types[43]
+#define SWIGTYPE_p_ModuleSectionInfoArray swig_types[44]
+#define SWIGTYPE_p_REGDUMP swig_types[45]
+#define SWIGTYPE_p_REGISTERCONTEXT swig_types[46]
+#define SWIGTYPE_p_SCRIPTBRANCH swig_types[47]
+#define SWIGTYPE_p_SCRIPTBRANCHTYPE swig_types[48]
+#define SWIGTYPE_p_SCRIPTLINETYPE swig_types[49]
+#define SWIGTYPE_p_SCRIPTTYPEINFO swig_types[50]
+#define SWIGTYPE_p_SEGMENTREG swig_types[51]
+#define SWIGTYPE_p_SELECTIONDATA swig_types[52]
+#define SWIGTYPE_p_STACK_COMMENT swig_types[53]
+#define SWIGTYPE_p_STRING_TYPE swig_types[54]
+#define SWIGTYPE_p_SYMBOLCBINFO swig_types[55]
+#define SWIGTYPE_p_SYMBOLINFO_ swig_types[56]
+#define SWIGTYPE_p_SYMBOLMODULEINFO swig_types[57]
+#define SWIGTYPE_p_Script__Bookmark__BookmarkInfo swig_types[58]
+#define SWIGTYPE_p_Script__Comment__CommentInfo swig_types[59]
+#define SWIGTYPE_p_Script__Function__FunctionInfo swig_types[60]
+#define SWIGTYPE_p_Script__Label__LabelInfo swig_types[61]
+#define SWIGTYPE_p_Script__Module__ModuleInfo swig_types[62]
+#define SWIGTYPE_p_Script__Module__ModuleSectionInfo swig_types[63]
+#define SWIGTYPE_p_Script__Symbol__SymbolInfo swig_types[64]
+#define SWIGTYPE_p_SymbolInfoArray swig_types[65]
+#define SWIGTYPE_p_TCPCONNECTIONINFO swig_types[66]
+#define SWIGTYPE_p_THREADALLINFO swig_types[67]
+#define SWIGTYPE_p_THREADINFO swig_types[68]
+#define SWIGTYPE_p_THREADLIST swig_types[69]
+#define SWIGTYPE_p_THREADPRIORITY swig_types[70]
+#define SWIGTYPE_p_THREADWAITREASON swig_types[71]
+#define SWIGTYPE_p_VALUE_INFO swig_types[72]
+#define SWIGTYPE_p_X87CONTROLWORDFIELDS swig_types[73]
+#define SWIGTYPE_p_X87FPU swig_types[74]
+#define SWIGTYPE_p_X87FPUREGISTER swig_types[75]
+#define SWIGTYPE_p_X87STATUSWORDFIELDS swig_types[76]
+#define SWIGTYPE_p_YMMREGISTER swig_types[77]
+#define SWIGTYPE_p__MEMORY_BASIC_INFORMATION swig_types[78]
+#define SWIGTYPE_p__XMMREGISTER swig_types[79]
+#define SWIGTYPE_p___int64 swig_types[80]
+#define SWIGTYPE_p_bool swig_types[81]
+#define SWIGTYPE_p_char swig_types[82]
+#define SWIGTYPE_p_f___bool swig_types[83]
+#define SWIGTYPE_p_f___void swig_types[84]
+#define SWIGTYPE_p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool swig_types[85]
+#define SWIGTYPE_p_f_p_DBGCALLSTACK__void swig_types[86]
+#define SWIGTYPE_p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int swig_types[87]
+#define SWIGTYPE_p_f_p_DBGPATCHINFO_p_size_t__bool swig_types[88]
+#define SWIGTYPE_p_f_p_DBGSEHCHAIN__void swig_types[89]
+#define SWIGTYPE_p_f_p_ListInfo__bool swig_types[90]
+#define SWIGTYPE_p_f_p_SYMBOLINFO__p_void__void swig_types[91]
+#define SWIGTYPE_p_f_p_bool__bool swig_types[92]
+#define SWIGTYPE_p_f_p_char__bool swig_types[93]
+#define SWIGTYPE_p_f_p_char_bool__bool swig_types[94]
+#define SWIGTYPE_p_f_p_char_p_size_t__bool swig_types[95]
+#define SWIGTYPE_p_f_p_p_DBGPROCESSINFO_p_int__bool swig_types[96]
+#define SWIGTYPE_p_f_p_q_const__char__bool swig_types[97]
+#define SWIGTYPE_p_f_p_q_const__char__unsigned_long_long swig_types[98]
+#define SWIGTYPE_p_f_p_q_const__char__void swig_types[99]
+#define SWIGTYPE_p_f_p_q_const__char_int__unsigned_long_long swig_types[100]
+#define SWIGTYPE_p_f_p_q_const__char_p_char_int__int swig_types[101]
+#define SWIGTYPE_p_f_p_q_const__char_p_p_char_p_int__void swig_types[102]
+#define SWIGTYPE_p_f_p_q_const__char_p_unsigned_long_long__bool swig_types[103]
+#define SWIGTYPE_p_f_p_q_const__char_size_t_p_char__bool swig_types[104]
+#define SWIGTYPE_p_f_p_q_const__char_size_t_p_char__void swig_types[105]
+#define SWIGTYPE_p_f_p_q_const__char_unsigned_long_long__unsigned_long_long swig_types[106]
+#define SWIGTYPE_p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool swig_types[107]
+#define SWIGTYPE_p_f_unsigned_long_long__TRACERECORDBYTETYPE swig_types[108]
+#define SWIGTYPE_p_f_unsigned_long_long__TRACERECORDTYPE swig_types[109]
+#define SWIGTYPE_p_f_unsigned_long_long__bool swig_types[110]
+#define SWIGTYPE_p_f_unsigned_long_long__unsigned_int swig_types[111]
+#define SWIGTYPE_p_f_unsigned_long_long__unsigned_long_long swig_types[112]
+#define SWIGTYPE_p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool swig_types[113]
+#define SWIGTYPE_p_f_unsigned_long_long_p_DBGPATCHINFO__bool swig_types[114]
+#define SWIGTYPE_p_f_unsigned_long_long_p_char__bool swig_types[115]
+#define SWIGTYPE_p_f_unsigned_long_long_p_char_bool__bool swig_types[116]
+#define SWIGTYPE_p_f_unsigned_long_long_p_char_int__int swig_types[117]
+#define SWIGTYPE_p_f_unsigned_long_long_p_char_p_int__bool swig_types[118]
+#define SWIGTYPE_p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool swig_types[119]
+#define SWIGTYPE_p_f_unsigned_long_long_p_q_const__char__bool swig_types[120]
+#define SWIGTYPE_p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool swig_types[121]
+#define SWIGTYPE_p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool swig_types[122]
+#define SWIGTYPE_p_f_unsigned_long_long_p_unsigned_char_p_int_p_q_const__char_p_char__bool swig_types[123]
+#define SWIGTYPE_p_f_unsigned_long_long_unsigned_long_long__bool swig_types[124]
+#define SWIGTYPE_p_f_unsigned_long_long_unsigned_long_long__void swig_types[125]
+#define SWIGTYPE_p_f_unsigned_long_p_char__bool swig_types[126]
+#define SWIGTYPE_p_float swig_types[127]
+#define SWIGTYPE_p_int swig_types[128]
+#define SWIGTYPE_p_long swig_types[129]
+#define SWIGTYPE_p_long_long swig_types[130]
+#define SWIGTYPE_p_p_DBGPROCESSINFO swig_types[131]
+#define SWIGTYPE_p_p_char swig_types[132]
+#define SWIGTYPE_p_p_unsigned_long swig_types[133]
+#define SWIGTYPE_p_short swig_types[134]
+#define SWIGTYPE_p_signed___int64 swig_types[135]
+#define SWIGTYPE_p_signed_char swig_types[136]
+#define SWIGTYPE_p_size_t swig_types[137]
+#define SWIGTYPE_p_unsigned___int64 swig_types[138]
+#define SWIGTYPE_p_unsigned_char swig_types[139]
+#define SWIGTYPE_p_unsigned_int swig_types[140]
+#define SWIGTYPE_p_unsigned_long swig_types[141]
+#define SWIGTYPE_p_unsigned_long_long swig_types[142]
+#define SWIGTYPE_p_unsigned_short swig_types[143]
+#define SWIGTYPE_p_void swig_types[144]
+#define SWIGTYPE_p_wchar_t swig_types[145]
+static swig_type_info *swig_types[147];
+static swig_module_info swig_module = {swig_types, 146, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3705,6 +3720,29 @@ SWIG_From_unsigned_SS_short  (unsigned short value)
 
 
 SWIGINTERN int
+SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UINT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< unsigned int >(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_unsigned_SS_int  (unsigned int value)
+{
+  return PyInt_FromSize_t((size_t) value);
+}
+
+
+SWIGINTERN int
 SWIG_AsVal_long_SS_long (PyObject *obj, long long *val)
 {
   int res = SWIG_TypeError;
@@ -3737,22 +3775,6 @@ SWIG_AsVal_long_SS_long (PyObject *obj, long long *val)
     res = SWIG_TypeError;
   }
 #endif
-  return res;
-}
-
-
-SWIGINTERN int
-SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UINT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< unsigned int >(v);
-    }
-  }  
   return res;
 }
 
@@ -3862,13 +3884,6 @@ SWIGINTERN bool DBGFUNCTIONS__PatchGetEx_(DBGFUNCTIONS_ *self,duint addr,DBGPATC
 #include "../pluginsdk/_scriptapi_register.h"
 #include "../pluginsdk/_scriptapi_stack.h"
 #include "../pluginsdk/_scriptapi_symbol.h"
-
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_unsigned_SS_int  (unsigned int value)
-{
-  return PyInt_FromSize_t((size_t) value);
-}
 
 
 typedef Script::Bookmark::BookmarkInfo BookmarkInfoArray;
@@ -5768,6 +5783,405 @@ SWIGINTERN PyObject *_wrap_BRIDGEBP_slot_get(PyObject *SWIGUNUSEDPARM(self), PyO
   arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
   result = (unsigned short) ((arg1)->slot);
   resultobj = SWIG_From_unsigned_SS_short(static_cast< unsigned short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_hitCount_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_hitCount_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_hitCount_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BRIDGEBP_hitCount_set" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->hitCount = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_hitCount_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned int result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_hitCount_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_hitCount_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (unsigned int) ((arg1)->hitCount);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_fastResume_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_fastResume_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_fastResume_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BRIDGEBP_fastResume_set" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  if (arg1) (arg1)->fastResume = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_fastResume_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_fastResume_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_fastResume_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (bool) ((arg1)->fastResume);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_breakCondition_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[256] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_breakCondition_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_breakCondition_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 256);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BRIDGEBP_breakCondition_set" "', argument " "2"" of type '" "char [256]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->breakCondition,arg2,256*sizeof(char));
+  else memset(arg1->breakCondition,0,256*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_breakCondition_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_breakCondition_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_breakCondition_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (char *)(char *) ((arg1)->breakCondition);
+  {
+    size_t size = SWIG_strnlen(result, 256);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_logText_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[256] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_logText_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_logText_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 256);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BRIDGEBP_logText_set" "', argument " "2"" of type '" "char [256]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->logText,arg2,256*sizeof(char));
+  else memset(arg1->logText,0,256*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_logText_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_logText_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_logText_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (char *)(char *) ((arg1)->logText);
+  {
+    size_t size = SWIG_strnlen(result, 256);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_logCondition_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[256] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_logCondition_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_logCondition_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 256);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BRIDGEBP_logCondition_set" "', argument " "2"" of type '" "char [256]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->logCondition,arg2,256*sizeof(char));
+  else memset(arg1->logCondition,0,256*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_logCondition_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_logCondition_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_logCondition_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (char *)(char *) ((arg1)->logCondition);
+  {
+    size_t size = SWIG_strnlen(result, 256);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_commandText_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[256] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_commandText_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_commandText_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 256);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BRIDGEBP_commandText_set" "', argument " "2"" of type '" "char [256]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->commandText,arg2,256*sizeof(char));
+  else memset(arg1->commandText,0,256*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_commandText_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_commandText_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_commandText_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (char *)(char *) ((arg1)->commandText);
+  {
+    size_t size = SWIG_strnlen(result, 256);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_commandCondition_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[256] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_commandCondition_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_commandCondition_set" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 256);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "BRIDGEBP_commandCondition_set" "', argument " "2"" of type '" "char [256]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->commandCondition,arg2,256*sizeof(char));
+  else memset(arg1->commandCondition,0,256*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BRIDGEBP_commandCondition_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BRIDGEBP *arg1 = (BRIDGEBP *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"BRIDGEBP_commandCondition_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BRIDGEBP, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BRIDGEBP_commandCondition_get" "', argument " "1"" of type '" "BRIDGEBP *""'"); 
+  }
+  arg1 = reinterpret_cast< BRIDGEBP * >(argp1);
+  result = (char *)(char *) ((arg1)->commandCondition);
+  {
+    size_t size = SWIG_strnlen(result, 256);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
   return resultobj;
 fail:
   return NULL;
@@ -16945,6 +17359,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DbgClearLabelRange(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  duint arg1 ;
+  duint arg2 ;
+  unsigned long long val1 ;
+  int ecode1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DbgClearLabelRange",2,2,&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgClearLabelRange" "', argument " "1"" of type '" "duint""'");
+  } 
+  arg1 = static_cast< duint >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DbgClearLabelRange" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  DbgClearLabelRange(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DbgGetCommentAt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   duint arg1 ;
@@ -17013,6 +17457,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DbgClearCommentRange(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  duint arg1 ;
+  duint arg2 ;
+  unsigned long long val1 ;
+  int ecode1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DbgClearCommentRange",2,2,&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgClearCommentRange" "', argument " "1"" of type '" "duint""'");
+  } 
+  arg1 = static_cast< duint >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DbgClearCommentRange" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  DbgClearCommentRange(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DbgGetBookmarkAt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   duint arg1 ;
@@ -17060,6 +17534,36 @@ SWIGINTERN PyObject *_wrap_DbgSetBookmarkAt(PyObject *SWIGUNUSEDPARM(self), PyOb
   arg2 = static_cast< bool >(val2);
   result = (bool)DbgSetBookmarkAt(arg1,arg2);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DbgClearBookmarkRange(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  duint arg1 ;
+  duint arg2 ;
+  unsigned long long val1 ;
+  int ecode1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DbgClearBookmarkRange",2,2,&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgClearBookmarkRange" "', argument " "1"" of type '" "duint""'");
+  } 
+  arg1 = static_cast< duint >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DbgClearBookmarkRange" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  DbgClearBookmarkRange(arg1,arg2);
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -18502,6 +19006,28 @@ SWIGINTERN PyObject *_wrap_DbgGetTimeWastedCounter(PyObject *SWIGUNUSEDPARM(self
   if(!PyArg_UnpackTuple(args,(char *)"DbgGetTimeWastedCounter",0,0)) SWIG_fail;
   result = (duint)DbgGetTimeWastedCounter();
   resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DbgGetArgTypeAt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  duint arg1 ;
+  unsigned long long val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ARGTYPE result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DbgGetArgTypeAt",1,1,&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgGetArgTypeAt" "', argument " "1"" of type '" "duint""'");
+  } 
+  arg1 = static_cast< duint >(val1);
+  result = (ARGTYPE)DbgGetArgTypeAt(arg1);
+  resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -20551,6 +21077,18 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_GuiUpdateSEHChain(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"GuiUpdateSEHChain",0,0)) SWIG_fail;
+  GuiUpdateSEHChain();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_GuiLoadSourceFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   char *arg1 = (char *) 0 ;
@@ -20936,6 +21474,39 @@ SWIGINTERN PyObject *_wrap_GuiUnregisterScriptLanguage(PyObject *SWIGUNUSEDPARM(
   } 
   arg1 = static_cast< int >(val1);
   GuiUnregisterScriptLanguage(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GuiUpdateArgumentWidget(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"GuiUpdateArgumentWidget",0,0)) SWIG_fail;
+  GuiUpdateArgumentWidget();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GuiFocusView(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"GuiFocusView",1,1,&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GuiFocusView" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  GuiFocusView(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -21792,6 +22363,296 @@ SWIGINTERN PyObject *DBGCALLSTACK_swigregister(PyObject *SWIGUNUSEDPARM(self), P
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_DBGSEHRECORD_addr_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHRECORD *arg1 = (DBGSEHRECORD *) 0 ;
+  duint arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHRECORD_addr_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHRECORD, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHRECORD_addr_set" "', argument " "1"" of type '" "DBGSEHRECORD *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHRECORD * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DBGSEHRECORD_addr_set" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  if (arg1) (arg1)->addr = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGSEHRECORD_addr_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHRECORD *arg1 = (DBGSEHRECORD *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  duint result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHRECORD_addr_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHRECORD, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHRECORD_addr_get" "', argument " "1"" of type '" "DBGSEHRECORD *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHRECORD * >(argp1);
+  result = (duint) ((arg1)->addr);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGSEHRECORD_handler_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHRECORD *arg1 = (DBGSEHRECORD *) 0 ;
+  duint arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHRECORD_handler_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHRECORD, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHRECORD_handler_set" "', argument " "1"" of type '" "DBGSEHRECORD *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHRECORD * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DBGSEHRECORD_handler_set" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  if (arg1) (arg1)->handler = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGSEHRECORD_handler_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHRECORD *arg1 = (DBGSEHRECORD *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  duint result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHRECORD_handler_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHRECORD, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHRECORD_handler_get" "', argument " "1"" of type '" "DBGSEHRECORD *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHRECORD * >(argp1);
+  result = (duint) ((arg1)->handler);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DBGSEHRECORD(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHRECORD *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_DBGSEHRECORD",0,0)) SWIG_fail;
+  result = (DBGSEHRECORD *)new DBGSEHRECORD();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_DBGSEHRECORD, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_DBGSEHRECORD(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHRECORD *arg1 = (DBGSEHRECORD *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_DBGSEHRECORD",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHRECORD, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DBGSEHRECORD" "', argument " "1"" of type '" "DBGSEHRECORD *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHRECORD * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DBGSEHRECORD_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_DBGSEHRECORD, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_DBGSEHCHAIN_total_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHCHAIN *arg1 = (DBGSEHCHAIN *) 0 ;
+  duint arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHCHAIN_total_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHCHAIN, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHCHAIN_total_set" "', argument " "1"" of type '" "DBGSEHCHAIN *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHCHAIN * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DBGSEHCHAIN_total_set" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  if (arg1) (arg1)->total = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGSEHCHAIN_total_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHCHAIN *arg1 = (DBGSEHCHAIN *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  duint result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHCHAIN_total_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHCHAIN, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHCHAIN_total_get" "', argument " "1"" of type '" "DBGSEHCHAIN *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHCHAIN * >(argp1);
+  result = (duint) ((arg1)->total);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGSEHCHAIN_records_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHCHAIN *arg1 = (DBGSEHCHAIN *) 0 ;
+  DBGSEHRECORD *arg2 = (DBGSEHRECORD *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHCHAIN_records_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHCHAIN, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHCHAIN_records_set" "', argument " "1"" of type '" "DBGSEHCHAIN *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHCHAIN * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_DBGSEHRECORD, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DBGSEHCHAIN_records_set" "', argument " "2"" of type '" "DBGSEHRECORD *""'"); 
+  }
+  arg2 = reinterpret_cast< DBGSEHRECORD * >(argp2);
+  if (arg1) (arg1)->records = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGSEHCHAIN_records_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHCHAIN *arg1 = (DBGSEHCHAIN *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  DBGSEHRECORD *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGSEHCHAIN_records_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHCHAIN, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGSEHCHAIN_records_get" "', argument " "1"" of type '" "DBGSEHCHAIN *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHCHAIN * >(argp1);
+  result = (DBGSEHRECORD *) ((arg1)->records);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_DBGSEHRECORD, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_DBGSEHCHAIN(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHCHAIN *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_DBGSEHCHAIN",0,0)) SWIG_fail;
+  result = (DBGSEHCHAIN *)new DBGSEHCHAIN();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_DBGSEHCHAIN, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_DBGSEHCHAIN(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGSEHCHAIN *arg1 = (DBGSEHCHAIN *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_DBGSEHCHAIN",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGSEHCHAIN, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_DBGSEHCHAIN" "', argument " "1"" of type '" "DBGSEHCHAIN *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGSEHCHAIN * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *DBGSEHCHAIN_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_DBGSEHCHAIN, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_DBGPROCESSINFO_dwProcessId_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   DBGPROCESSINFO *arg1 = (DBGPROCESSINFO *) 0 ;
@@ -21941,6 +22802,577 @@ SWIGINTERN PyObject *DBGPROCESSINFO_swigregister(PyObject *SWIGUNUSEDPARM(self),
   PyObject *obj;
   if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_DBGPROCESSINFO, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_HANDLEINFO_Handle_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  duint arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"HANDLEINFO_Handle_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HANDLEINFO_Handle_set" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HANDLEINFO_Handle_set" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  if (arg1) (arg1)->Handle = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HANDLEINFO_Handle_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  duint result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"HANDLEINFO_Handle_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HANDLEINFO_Handle_get" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  result = (duint) ((arg1)->Handle);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HANDLEINFO_TypeNumber_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  unsigned char arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned char val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"HANDLEINFO_TypeNumber_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HANDLEINFO_TypeNumber_set" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_char(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HANDLEINFO_TypeNumber_set" "', argument " "2"" of type '" "unsigned char""'");
+  } 
+  arg2 = static_cast< unsigned char >(val2);
+  if (arg1) (arg1)->TypeNumber = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HANDLEINFO_TypeNumber_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned char result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"HANDLEINFO_TypeNumber_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HANDLEINFO_TypeNumber_get" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  result = (unsigned char) ((arg1)->TypeNumber);
+  resultobj = SWIG_From_unsigned_SS_char(static_cast< unsigned char >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HANDLEINFO_GrantedAccess_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"HANDLEINFO_GrantedAccess_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HANDLEINFO_GrantedAccess_set" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "HANDLEINFO_GrantedAccess_set" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->GrantedAccess = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_HANDLEINFO_GrantedAccess_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned int result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"HANDLEINFO_GrantedAccess_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "HANDLEINFO_GrantedAccess_get" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  result = (unsigned int) ((arg1)->GrantedAccess);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_HANDLEINFO(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_HANDLEINFO",0,0)) SWIG_fail;
+  result = (HANDLEINFO *)new HANDLEINFO();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_HANDLEINFO, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_HANDLEINFO(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  HANDLEINFO *arg1 = (HANDLEINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_HANDLEINFO",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_HANDLEINFO, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_HANDLEINFO" "', argument " "1"" of type '" "HANDLEINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< HANDLEINFO * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *HANDLEINFO_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_HANDLEINFO, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_RemoteAddress_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[50] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_RemoteAddress_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_RemoteAddress_set" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 50);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TCPCONNECTIONINFO_RemoteAddress_set" "', argument " "2"" of type '" "char [50]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->RemoteAddress,arg2,50*sizeof(char));
+  else memset(arg1->RemoteAddress,0,50*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_RemoteAddress_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_RemoteAddress_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_RemoteAddress_get" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  result = (char *)(char *) ((arg1)->RemoteAddress);
+  {
+    size_t size = SWIG_strnlen(result, 50);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_RemotePort_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  unsigned short arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_RemotePort_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_RemotePort_set" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TCPCONNECTIONINFO_RemotePort_set" "', argument " "2"" of type '" "unsigned short""'");
+  } 
+  arg2 = static_cast< unsigned short >(val2);
+  if (arg1) (arg1)->RemotePort = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_RemotePort_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned short result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_RemotePort_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_RemotePort_get" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  result = (unsigned short) ((arg1)->RemotePort);
+  resultobj = SWIG_From_unsigned_SS_short(static_cast< unsigned short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_LocalAddress_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[50] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_LocalAddress_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_LocalAddress_set" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 50);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TCPCONNECTIONINFO_LocalAddress_set" "', argument " "2"" of type '" "char [50]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->LocalAddress,arg2,50*sizeof(char));
+  else memset(arg1->LocalAddress,0,50*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_LocalAddress_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_LocalAddress_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_LocalAddress_get" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  result = (char *)(char *) ((arg1)->LocalAddress);
+  {
+    size_t size = SWIG_strnlen(result, 50);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_LocalPort_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  unsigned short arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_LocalPort_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_LocalPort_set" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TCPCONNECTIONINFO_LocalPort_set" "', argument " "2"" of type '" "unsigned short""'");
+  } 
+  arg2 = static_cast< unsigned short >(val2);
+  if (arg1) (arg1)->LocalPort = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_LocalPort_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned short result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_LocalPort_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_LocalPort_get" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  result = (unsigned short) ((arg1)->LocalPort);
+  resultobj = SWIG_From_unsigned_SS_short(static_cast< unsigned short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_StateText_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  char *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char temp2[50] ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_StateText_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_StateText_set" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  res2 = SWIG_AsCharArray(obj1, temp2, 50);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "TCPCONNECTIONINFO_StateText_set" "', argument " "2"" of type '" "char [50]""'");
+  }
+  arg2 = reinterpret_cast< char * >(temp2);
+  if (arg2) memcpy(arg1->StateText,arg2,50*sizeof(char));
+  else memset(arg1->StateText,0,50*sizeof(char));
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_StateText_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_StateText_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_StateText_get" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  result = (char *)(char *) ((arg1)->StateText);
+  {
+    size_t size = SWIG_strnlen(result, 50);
+    
+    
+    
+    resultobj = SWIG_FromCharPtrAndSize(result, size);
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_State_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_State_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_State_set" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TCPCONNECTIONINFO_State_set" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->State = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TCPCONNECTIONINFO_State_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  unsigned int result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"TCPCONNECTIONINFO_State_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TCPCONNECTIONINFO_State_get" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  result = (unsigned int) ((arg1)->State);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_TCPCONNECTIONINFO(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_TCPCONNECTIONINFO",0,0)) SWIG_fail;
+  result = (TCPCONNECTIONINFO *)new TCPCONNECTIONINFO();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_TCPCONNECTIONINFO, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_TCPCONNECTIONINFO(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TCPCONNECTIONINFO *arg1 = (TCPCONNECTIONINFO *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_TCPCONNECTIONINFO",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TCPCONNECTIONINFO, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_TCPCONNECTIONINFO" "', argument " "1"" of type '" "TCPCONNECTIONINFO *""'"); 
+  }
+  arg1 = reinterpret_cast< TCPCONNECTIONINFO * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *TCPCONNECTIONINFO_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_TCPCONNECTIONINFO, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -22913,6 +24345,57 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetSEHChain_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETSEHCHAIN arg2 = (GETSEHCHAIN) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetSEHChain_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetSEHChain_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_p_DBGSEHCHAIN__void);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetSEHChain_set" "', argument " "2"" of type '" "GETSEHCHAIN""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetSEHChain = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetSEHChain_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETSEHCHAIN result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetSEHChain_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetSEHChain_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETSEHCHAIN) ((arg1)->GetSEHChain);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_DBGSEHCHAIN__void);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_SymbolDownloadAllSymbols_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
@@ -23774,6 +25257,516 @@ SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_PatchGetEx_get(PyObject *SWIGUNUSEDPARM(
   arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
   result = (PATCHGETEX) ((arg1)->PatchGetEx);
   resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_unsigned_long_long_p_DBGPATCHINFO__bool);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetBridgeBp_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETBRIDGEBP arg2 = (GETBRIDGEBP) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetBridgeBp_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetBridgeBp_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetBridgeBp_set" "', argument " "2"" of type '" "GETBRIDGEBP""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetBridgeBp = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetBridgeBp_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETBRIDGEBP result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetBridgeBp_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetBridgeBp_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETBRIDGEBP) ((arg1)->GetBridgeBp);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_StringFormatInline_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  STRINGFORMATINLINE arg2 = (STRINGFORMATINLINE) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_StringFormatInline_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_StringFormatInline_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_p_q_const__char_size_t_p_char__bool);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_StringFormatInline_set" "', argument " "2"" of type '" "STRINGFORMATINLINE""'"); 
+    }
+  }
+  if (arg1) (arg1)->StringFormatInline = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_StringFormatInline_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  STRINGFORMATINLINE result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_StringFormatInline_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_StringFormatInline_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (STRINGFORMATINLINE) ((arg1)->StringFormatInline);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_q_const__char_size_t_p_char__bool);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetMnemonicBrief_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETMNEMONICBRIEF arg2 = (GETMNEMONICBRIEF) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetMnemonicBrief_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetMnemonicBrief_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_p_q_const__char_size_t_p_char__void);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetMnemonicBrief_set" "', argument " "2"" of type '" "GETMNEMONICBRIEF""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetMnemonicBrief = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetMnemonicBrief_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETMNEMONICBRIEF result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetMnemonicBrief_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetMnemonicBrief_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETMNEMONICBRIEF) ((arg1)->GetMnemonicBrief);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_q_const__char_size_t_p_char__void);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetTraceRecordHitCount_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETTRACERECORDHITCOUNT arg2 = (GETTRACERECORDHITCOUNT) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetTraceRecordHitCount_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetTraceRecordHitCount_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_unsigned_long_long__unsigned_int);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetTraceRecordHitCount_set" "', argument " "2"" of type '" "GETTRACERECORDHITCOUNT""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetTraceRecordHitCount = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetTraceRecordHitCount_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETTRACERECORDHITCOUNT result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetTraceRecordHitCount_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetTraceRecordHitCount_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETTRACERECORDHITCOUNT) ((arg1)->GetTraceRecordHitCount);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_unsigned_long_long__unsigned_int);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetTraceRecordByteType_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETTRACERECORDBYTETYPE arg2 = (GETTRACERECORDBYTETYPE) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetTraceRecordByteType_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetTraceRecordByteType_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_unsigned_long_long__TRACERECORDBYTETYPE);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetTraceRecordByteType_set" "', argument " "2"" of type '" "GETTRACERECORDBYTETYPE""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetTraceRecordByteType = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetTraceRecordByteType_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETTRACERECORDBYTETYPE result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetTraceRecordByteType_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetTraceRecordByteType_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETTRACERECORDBYTETYPE) ((arg1)->GetTraceRecordByteType);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_unsigned_long_long__TRACERECORDBYTETYPE);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_SetTraceRecordType_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  SETTRACERECORDTYPE arg2 = (SETTRACERECORDTYPE) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_SetTraceRecordType_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_SetTraceRecordType_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_SetTraceRecordType_set" "', argument " "2"" of type '" "SETTRACERECORDTYPE""'"); 
+    }
+  }
+  if (arg1) (arg1)->SetTraceRecordType = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_SetTraceRecordType_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  SETTRACERECORDTYPE result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_SetTraceRecordType_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_SetTraceRecordType_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (SETTRACERECORDTYPE) ((arg1)->SetTraceRecordType);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetTraceRecordType_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETTRACERECORDTYPE arg2 = (GETTRACERECORDTYPE) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetTraceRecordType_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetTraceRecordType_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_unsigned_long_long__TRACERECORDTYPE);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetTraceRecordType_set" "', argument " "2"" of type '" "GETTRACERECORDTYPE""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetTraceRecordType = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetTraceRecordType_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETTRACERECORDTYPE result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetTraceRecordType_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetTraceRecordType_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETTRACERECORDTYPE) ((arg1)->GetTraceRecordType);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_unsigned_long_long__TRACERECORDTYPE);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_EnumHandles_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  ENUMHANDLES arg2 = (ENUMHANDLES) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_EnumHandles_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_EnumHandles_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_p_ListInfo__bool);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_EnumHandles_set" "', argument " "2"" of type '" "ENUMHANDLES""'"); 
+    }
+  }
+  if (arg1) (arg1)->EnumHandles = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_EnumHandles_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ENUMHANDLES result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_EnumHandles_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_EnumHandles_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (ENUMHANDLES) ((arg1)->EnumHandles);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_ListInfo__bool);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetHandleName_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  GETHANDLENAME arg2 = (GETHANDLENAME) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetHandleName_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetHandleName_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_GetHandleName_set" "', argument " "2"" of type '" "GETHANDLENAME""'"); 
+    }
+  }
+  if (arg1) (arg1)->GetHandleName = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_GetHandleName_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  GETHANDLENAME result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_GetHandleName_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_GetHandleName_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (GETHANDLENAME) ((arg1)->GetHandleName);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_EnumTcpConnections_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  ENUMTCPCONNECTIONS arg2 = (ENUMTCPCONNECTIONS) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_EnumTcpConnections_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_EnumTcpConnections_set" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_p_ListInfo__bool);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "DBGFUNCTIONS_EnumTcpConnections_set" "', argument " "2"" of type '" "ENUMTCPCONNECTIONS""'"); 
+    }
+  }
+  if (arg1) (arg1)->EnumTcpConnections = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_DBGFUNCTIONS_EnumTcpConnections_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DBGFUNCTIONS_ *arg1 = (DBGFUNCTIONS_ *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ENUMTCPCONNECTIONS result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"DBGFUNCTIONS_EnumTcpConnections_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DBGFUNCTIONS_, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DBGFUNCTIONS_EnumTcpConnections_get" "', argument " "1"" of type '" "DBGFUNCTIONS_ *""'"); 
+  }
+  arg1 = reinterpret_cast< DBGFUNCTIONS_ * >(argp1);
+  result = (ENUMTCPCONNECTIONS) ((arg1)->EnumTcpConnections);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_ListInfo__bool);
   return resultobj;
 fail:
   return NULL;
@@ -28040,7 +30033,46 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Function_DeleteRange(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Function_DeleteRange__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  duint arg1 ;
+  duint arg2 ;
+  bool arg3 ;
+  unsigned long long val1 ;
+  int ecode1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"Function_DeleteRange",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Function_DeleteRange" "', argument " "1"" of type '" "duint""'");
+  } 
+  arg1 = static_cast< duint >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Function_DeleteRange" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Function_DeleteRange" "', argument " "3"" of type '" "bool""'");
+  } 
+  arg3 = static_cast< bool >(val3);
+  Script::Function::DeleteRange(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Function_DeleteRange__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   duint arg1 ;
   duint arg2 ;
@@ -28067,6 +30099,64 @@ SWIGINTERN PyObject *_wrap_Function_DeleteRange(PyObject *SWIGUNUSEDPARM(self), 
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Function_DeleteRange(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[4];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = args ? (int)PyObject_Length(args) : 0;
+  for (ii = 0; (ii < 3) && (ii < argc); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_long_SS_long(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_long_SS_long(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_Function_DeleteRange__SWIG_1(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    {
+      int res = SWIG_AsVal_unsigned_SS_long_SS_long(argv[0], NULL);
+      _v = SWIG_CheckState(res);
+    }
+    if (_v) {
+      {
+        int res = SWIG_AsVal_unsigned_SS_long_SS_long(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_bool(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_Function_DeleteRange__SWIG_0(self, args);
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'Function_DeleteRange'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Script::Function::DeleteRange(duint,duint,bool)\n"
+    "    Script::Function::DeleteRange(duint,duint)\n");
+  return 0;
 }
 
 
@@ -36222,6 +38312,20 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"BRIDGEBP_mod_get", _wrap_BRIDGEBP_mod_get, METH_VARARGS, (char *)"BRIDGEBP_mod_get(BRIDGEBP self) -> char [256]"},
 	 { (char *)"BRIDGEBP_slot_set", _wrap_BRIDGEBP_slot_set, METH_VARARGS, (char *)"BRIDGEBP_slot_set(BRIDGEBP self, unsigned short slot)"},
 	 { (char *)"BRIDGEBP_slot_get", _wrap_BRIDGEBP_slot_get, METH_VARARGS, (char *)"BRIDGEBP_slot_get(BRIDGEBP self) -> unsigned short"},
+	 { (char *)"BRIDGEBP_hitCount_set", _wrap_BRIDGEBP_hitCount_set, METH_VARARGS, (char *)"BRIDGEBP_hitCount_set(BRIDGEBP self, unsigned int hitCount)"},
+	 { (char *)"BRIDGEBP_hitCount_get", _wrap_BRIDGEBP_hitCount_get, METH_VARARGS, (char *)"BRIDGEBP_hitCount_get(BRIDGEBP self) -> unsigned int"},
+	 { (char *)"BRIDGEBP_fastResume_set", _wrap_BRIDGEBP_fastResume_set, METH_VARARGS, (char *)"BRIDGEBP_fastResume_set(BRIDGEBP self, bool fastResume)"},
+	 { (char *)"BRIDGEBP_fastResume_get", _wrap_BRIDGEBP_fastResume_get, METH_VARARGS, (char *)"BRIDGEBP_fastResume_get(BRIDGEBP self) -> bool"},
+	 { (char *)"BRIDGEBP_breakCondition_set", _wrap_BRIDGEBP_breakCondition_set, METH_VARARGS, (char *)"BRIDGEBP_breakCondition_set(BRIDGEBP self, char [256] breakCondition)"},
+	 { (char *)"BRIDGEBP_breakCondition_get", _wrap_BRIDGEBP_breakCondition_get, METH_VARARGS, (char *)"BRIDGEBP_breakCondition_get(BRIDGEBP self) -> char [256]"},
+	 { (char *)"BRIDGEBP_logText_set", _wrap_BRIDGEBP_logText_set, METH_VARARGS, (char *)"BRIDGEBP_logText_set(BRIDGEBP self, char [256] logText)"},
+	 { (char *)"BRIDGEBP_logText_get", _wrap_BRIDGEBP_logText_get, METH_VARARGS, (char *)"BRIDGEBP_logText_get(BRIDGEBP self) -> char [256]"},
+	 { (char *)"BRIDGEBP_logCondition_set", _wrap_BRIDGEBP_logCondition_set, METH_VARARGS, (char *)"BRIDGEBP_logCondition_set(BRIDGEBP self, char [256] logCondition)"},
+	 { (char *)"BRIDGEBP_logCondition_get", _wrap_BRIDGEBP_logCondition_get, METH_VARARGS, (char *)"BRIDGEBP_logCondition_get(BRIDGEBP self) -> char [256]"},
+	 { (char *)"BRIDGEBP_commandText_set", _wrap_BRIDGEBP_commandText_set, METH_VARARGS, (char *)"BRIDGEBP_commandText_set(BRIDGEBP self, char [256] commandText)"},
+	 { (char *)"BRIDGEBP_commandText_get", _wrap_BRIDGEBP_commandText_get, METH_VARARGS, (char *)"BRIDGEBP_commandText_get(BRIDGEBP self) -> char [256]"},
+	 { (char *)"BRIDGEBP_commandCondition_set", _wrap_BRIDGEBP_commandCondition_set, METH_VARARGS, (char *)"BRIDGEBP_commandCondition_set(BRIDGEBP self, char [256] commandCondition)"},
+	 { (char *)"BRIDGEBP_commandCondition_get", _wrap_BRIDGEBP_commandCondition_get, METH_VARARGS, (char *)"BRIDGEBP_commandCondition_get(BRIDGEBP self) -> char [256]"},
 	 { (char *)"new_BRIDGEBP", _wrap_new_BRIDGEBP, METH_VARARGS, (char *)"new_BRIDGEBP() -> BRIDGEBP"},
 	 { (char *)"delete_BRIDGEBP", _wrap_delete_BRIDGEBP, METH_VARARGS, (char *)"delete_BRIDGEBP(BRIDGEBP self)"},
 	 { (char *)"BRIDGEBP_swigregister", BRIDGEBP_swigregister, METH_VARARGS, NULL},
@@ -36688,10 +38792,13 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"DbgIsJumpGoingToExecute", _wrap_DbgIsJumpGoingToExecute, METH_VARARGS, (char *)"DbgIsJumpGoingToExecute(duint addr) -> bool"},
 	 { (char *)"DbgGetLabelAt", _wrap_DbgGetLabelAt, METH_VARARGS, (char *)"DbgGetLabelAt(duint addr, SEGMENTREG segment, char * text) -> bool"},
 	 { (char *)"DbgSetLabelAt", _wrap_DbgSetLabelAt, METH_VARARGS, (char *)"DbgSetLabelAt(duint addr, char const * text) -> bool"},
+	 { (char *)"DbgClearLabelRange", _wrap_DbgClearLabelRange, METH_VARARGS, (char *)"DbgClearLabelRange(duint start, duint end)"},
 	 { (char *)"DbgGetCommentAt", _wrap_DbgGetCommentAt, METH_VARARGS, (char *)"DbgGetCommentAt(duint addr, char * text) -> bool"},
 	 { (char *)"DbgSetCommentAt", _wrap_DbgSetCommentAt, METH_VARARGS, (char *)"DbgSetCommentAt(duint addr, char const * text) -> bool"},
+	 { (char *)"DbgClearCommentRange", _wrap_DbgClearCommentRange, METH_VARARGS, (char *)"DbgClearCommentRange(duint start, duint end)"},
 	 { (char *)"DbgGetBookmarkAt", _wrap_DbgGetBookmarkAt, METH_VARARGS, (char *)"DbgGetBookmarkAt(duint addr) -> bool"},
 	 { (char *)"DbgSetBookmarkAt", _wrap_DbgSetBookmarkAt, METH_VARARGS, (char *)"DbgSetBookmarkAt(duint addr, bool isbookmark) -> bool"},
+	 { (char *)"DbgClearBookmarkRange", _wrap_DbgClearBookmarkRange, METH_VARARGS, (char *)"DbgClearBookmarkRange(duint start, duint end)"},
 	 { (char *)"DbgGetModuleAt", _wrap_DbgGetModuleAt, METH_VARARGS, (char *)"DbgGetModuleAt(duint addr, char * text) -> bool"},
 	 { (char *)"DbgGetBpxTypeAt", _wrap_DbgGetBpxTypeAt, METH_VARARGS, (char *)"DbgGetBpxTypeAt(duint addr) -> BPXTYPE"},
 	 { (char *)"DbgValFromString", _wrap_DbgValFromString, METH_VARARGS, (char *)"DbgValFromString(char const * string) -> duint"},
@@ -36747,6 +38854,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"DbgWinEventGlobal", _wrap_DbgWinEventGlobal, METH_VARARGS, (char *)"DbgWinEventGlobal(MSG * message) -> bool"},
 	 { (char *)"DbgIsRunning", _wrap_DbgIsRunning, METH_VARARGS, (char *)"DbgIsRunning() -> bool"},
 	 { (char *)"DbgGetTimeWastedCounter", _wrap_DbgGetTimeWastedCounter, METH_VARARGS, (char *)"DbgGetTimeWastedCounter() -> duint"},
+	 { (char *)"DbgGetArgTypeAt", _wrap_DbgGetArgTypeAt, METH_VARARGS, (char *)"DbgGetArgTypeAt(duint addr) -> ARGTYPE"},
 	 { (char *)"CELLINFO_row_set", _wrap_CELLINFO_row_set, METH_VARARGS, (char *)"CELLINFO_row_set(CELLINFO self, int row)"},
 	 { (char *)"CELLINFO_row_get", _wrap_CELLINFO_row_get, METH_VARARGS, (char *)"CELLINFO_row_get(CELLINFO self) -> int"},
 	 { (char *)"CELLINFO_col_set", _wrap_CELLINFO_col_set, METH_VARARGS, (char *)"CELLINFO_col_set(CELLINFO self, int col)"},
@@ -36840,6 +38948,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"GuiRepaintTableView", _wrap_GuiRepaintTableView, METH_VARARGS, (char *)"GuiRepaintTableView()"},
 	 { (char *)"GuiUpdatePatches", _wrap_GuiUpdatePatches, METH_VARARGS, (char *)"GuiUpdatePatches()"},
 	 { (char *)"GuiUpdateCallStack", _wrap_GuiUpdateCallStack, METH_VARARGS, (char *)"GuiUpdateCallStack()"},
+	 { (char *)"GuiUpdateSEHChain", _wrap_GuiUpdateSEHChain, METH_VARARGS, (char *)"GuiUpdateSEHChain()"},
 	 { (char *)"GuiLoadSourceFile", _wrap_GuiLoadSourceFile, METH_VARARGS, (char *)"GuiLoadSourceFile(char const * path, int line)"},
 	 { (char *)"GuiMenuSetIcon", _wrap_GuiMenuSetIcon, METH_VARARGS, (char *)"GuiMenuSetIcon(int hMenu, ICONDATA icon)"},
 	 { (char *)"GuiMenuSetEntryIcon", _wrap_GuiMenuSetEntryIcon, METH_VARARGS, (char *)"GuiMenuSetEntryIcon(int hEntry, ICONDATA icon)"},
@@ -36857,6 +38966,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"GuiDisplayWarning", _wrap_GuiDisplayWarning, METH_VARARGS, (char *)"GuiDisplayWarning(char const * title, char const * text)"},
 	 { (char *)"GuiRegisterScriptLanguage", _wrap_GuiRegisterScriptLanguage, METH_VARARGS, (char *)"GuiRegisterScriptLanguage(SCRIPTTYPEINFO info)"},
 	 { (char *)"GuiUnregisterScriptLanguage", _wrap_GuiUnregisterScriptLanguage, METH_VARARGS, (char *)"GuiUnregisterScriptLanguage(int id)"},
+	 { (char *)"GuiUpdateArgumentWidget", _wrap_GuiUpdateArgumentWidget, METH_VARARGS, (char *)"GuiUpdateArgumentWidget()"},
+	 { (char *)"GuiFocusView", _wrap_GuiFocusView, METH_VARARGS, (char *)"GuiFocusView(int hWindow)"},
 	 { (char *)"new_MEMPAGEArray", _wrap_new_MEMPAGEArray, METH_VARARGS, (char *)"new_MEMPAGEArray(size_t nelements) -> MEMPAGEArray"},
 	 { (char *)"delete_MEMPAGEArray", _wrap_delete_MEMPAGEArray, METH_VARARGS, (char *)"delete_MEMPAGEArray(MEMPAGEArray self)"},
 	 { (char *)"MEMPAGEArray___getitem__", _wrap_MEMPAGEArray___getitem__, METH_VARARGS, (char *)"MEMPAGEArray___getitem__(MEMPAGEArray self, size_t index) -> MEMPAGE"},
@@ -36894,6 +39005,20 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_DBGCALLSTACK", _wrap_new_DBGCALLSTACK, METH_VARARGS, (char *)"new_DBGCALLSTACK() -> DBGCALLSTACK"},
 	 { (char *)"delete_DBGCALLSTACK", _wrap_delete_DBGCALLSTACK, METH_VARARGS, (char *)"delete_DBGCALLSTACK(DBGCALLSTACK self)"},
 	 { (char *)"DBGCALLSTACK_swigregister", DBGCALLSTACK_swigregister, METH_VARARGS, NULL},
+	 { (char *)"DBGSEHRECORD_addr_set", _wrap_DBGSEHRECORD_addr_set, METH_VARARGS, (char *)"DBGSEHRECORD_addr_set(DBGSEHRECORD self, duint addr)"},
+	 { (char *)"DBGSEHRECORD_addr_get", _wrap_DBGSEHRECORD_addr_get, METH_VARARGS, (char *)"DBGSEHRECORD_addr_get(DBGSEHRECORD self) -> duint"},
+	 { (char *)"DBGSEHRECORD_handler_set", _wrap_DBGSEHRECORD_handler_set, METH_VARARGS, (char *)"DBGSEHRECORD_handler_set(DBGSEHRECORD self, duint handler)"},
+	 { (char *)"DBGSEHRECORD_handler_get", _wrap_DBGSEHRECORD_handler_get, METH_VARARGS, (char *)"DBGSEHRECORD_handler_get(DBGSEHRECORD self) -> duint"},
+	 { (char *)"new_DBGSEHRECORD", _wrap_new_DBGSEHRECORD, METH_VARARGS, (char *)"new_DBGSEHRECORD() -> DBGSEHRECORD"},
+	 { (char *)"delete_DBGSEHRECORD", _wrap_delete_DBGSEHRECORD, METH_VARARGS, (char *)"delete_DBGSEHRECORD(DBGSEHRECORD self)"},
+	 { (char *)"DBGSEHRECORD_swigregister", DBGSEHRECORD_swigregister, METH_VARARGS, NULL},
+	 { (char *)"DBGSEHCHAIN_total_set", _wrap_DBGSEHCHAIN_total_set, METH_VARARGS, (char *)"DBGSEHCHAIN_total_set(DBGSEHCHAIN self, duint total)"},
+	 { (char *)"DBGSEHCHAIN_total_get", _wrap_DBGSEHCHAIN_total_get, METH_VARARGS, (char *)"DBGSEHCHAIN_total_get(DBGSEHCHAIN self) -> duint"},
+	 { (char *)"DBGSEHCHAIN_records_set", _wrap_DBGSEHCHAIN_records_set, METH_VARARGS, (char *)"DBGSEHCHAIN_records_set(DBGSEHCHAIN self, DBGSEHRECORD records)"},
+	 { (char *)"DBGSEHCHAIN_records_get", _wrap_DBGSEHCHAIN_records_get, METH_VARARGS, (char *)"DBGSEHCHAIN_records_get(DBGSEHCHAIN self) -> DBGSEHRECORD"},
+	 { (char *)"new_DBGSEHCHAIN", _wrap_new_DBGSEHCHAIN, METH_VARARGS, (char *)"new_DBGSEHCHAIN() -> DBGSEHCHAIN"},
+	 { (char *)"delete_DBGSEHCHAIN", _wrap_delete_DBGSEHCHAIN, METH_VARARGS, (char *)"delete_DBGSEHCHAIN(DBGSEHCHAIN self)"},
+	 { (char *)"DBGSEHCHAIN_swigregister", DBGSEHCHAIN_swigregister, METH_VARARGS, NULL},
 	 { (char *)"DBGPROCESSINFO_dwProcessId_set", _wrap_DBGPROCESSINFO_dwProcessId_set, METH_VARARGS, (char *)"DBGPROCESSINFO_dwProcessId_set(DBGPROCESSINFO self, DWORD dwProcessId)"},
 	 { (char *)"DBGPROCESSINFO_dwProcessId_get", _wrap_DBGPROCESSINFO_dwProcessId_get, METH_VARARGS, (char *)"DBGPROCESSINFO_dwProcessId_get(DBGPROCESSINFO self) -> DWORD"},
 	 { (char *)"DBGPROCESSINFO_szExeFile_set", _wrap_DBGPROCESSINFO_szExeFile_set, METH_VARARGS, (char *)"DBGPROCESSINFO_szExeFile_set(DBGPROCESSINFO self, char [MAX_PATH] szExeFile)"},
@@ -36901,6 +39026,30 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_DBGPROCESSINFO", _wrap_new_DBGPROCESSINFO, METH_VARARGS, (char *)"new_DBGPROCESSINFO() -> DBGPROCESSINFO"},
 	 { (char *)"delete_DBGPROCESSINFO", _wrap_delete_DBGPROCESSINFO, METH_VARARGS, (char *)"delete_DBGPROCESSINFO(DBGPROCESSINFO self)"},
 	 { (char *)"DBGPROCESSINFO_swigregister", DBGPROCESSINFO_swigregister, METH_VARARGS, NULL},
+	 { (char *)"HANDLEINFO_Handle_set", _wrap_HANDLEINFO_Handle_set, METH_VARARGS, (char *)"HANDLEINFO_Handle_set(HANDLEINFO self, duint Handle)"},
+	 { (char *)"HANDLEINFO_Handle_get", _wrap_HANDLEINFO_Handle_get, METH_VARARGS, (char *)"HANDLEINFO_Handle_get(HANDLEINFO self) -> duint"},
+	 { (char *)"HANDLEINFO_TypeNumber_set", _wrap_HANDLEINFO_TypeNumber_set, METH_VARARGS, (char *)"HANDLEINFO_TypeNumber_set(HANDLEINFO self, unsigned char TypeNumber)"},
+	 { (char *)"HANDLEINFO_TypeNumber_get", _wrap_HANDLEINFO_TypeNumber_get, METH_VARARGS, (char *)"HANDLEINFO_TypeNumber_get(HANDLEINFO self) -> unsigned char"},
+	 { (char *)"HANDLEINFO_GrantedAccess_set", _wrap_HANDLEINFO_GrantedAccess_set, METH_VARARGS, (char *)"HANDLEINFO_GrantedAccess_set(HANDLEINFO self, unsigned int GrantedAccess)"},
+	 { (char *)"HANDLEINFO_GrantedAccess_get", _wrap_HANDLEINFO_GrantedAccess_get, METH_VARARGS, (char *)"HANDLEINFO_GrantedAccess_get(HANDLEINFO self) -> unsigned int"},
+	 { (char *)"new_HANDLEINFO", _wrap_new_HANDLEINFO, METH_VARARGS, (char *)"new_HANDLEINFO() -> HANDLEINFO"},
+	 { (char *)"delete_HANDLEINFO", _wrap_delete_HANDLEINFO, METH_VARARGS, (char *)"delete_HANDLEINFO(HANDLEINFO self)"},
+	 { (char *)"HANDLEINFO_swigregister", HANDLEINFO_swigregister, METH_VARARGS, NULL},
+	 { (char *)"TCPCONNECTIONINFO_RemoteAddress_set", _wrap_TCPCONNECTIONINFO_RemoteAddress_set, METH_VARARGS, (char *)"TCPCONNECTIONINFO_RemoteAddress_set(TCPCONNECTIONINFO self, char [50] RemoteAddress)"},
+	 { (char *)"TCPCONNECTIONINFO_RemoteAddress_get", _wrap_TCPCONNECTIONINFO_RemoteAddress_get, METH_VARARGS, (char *)"TCPCONNECTIONINFO_RemoteAddress_get(TCPCONNECTIONINFO self) -> char [50]"},
+	 { (char *)"TCPCONNECTIONINFO_RemotePort_set", _wrap_TCPCONNECTIONINFO_RemotePort_set, METH_VARARGS, (char *)"TCPCONNECTIONINFO_RemotePort_set(TCPCONNECTIONINFO self, unsigned short RemotePort)"},
+	 { (char *)"TCPCONNECTIONINFO_RemotePort_get", _wrap_TCPCONNECTIONINFO_RemotePort_get, METH_VARARGS, (char *)"TCPCONNECTIONINFO_RemotePort_get(TCPCONNECTIONINFO self) -> unsigned short"},
+	 { (char *)"TCPCONNECTIONINFO_LocalAddress_set", _wrap_TCPCONNECTIONINFO_LocalAddress_set, METH_VARARGS, (char *)"TCPCONNECTIONINFO_LocalAddress_set(TCPCONNECTIONINFO self, char [50] LocalAddress)"},
+	 { (char *)"TCPCONNECTIONINFO_LocalAddress_get", _wrap_TCPCONNECTIONINFO_LocalAddress_get, METH_VARARGS, (char *)"TCPCONNECTIONINFO_LocalAddress_get(TCPCONNECTIONINFO self) -> char [50]"},
+	 { (char *)"TCPCONNECTIONINFO_LocalPort_set", _wrap_TCPCONNECTIONINFO_LocalPort_set, METH_VARARGS, (char *)"TCPCONNECTIONINFO_LocalPort_set(TCPCONNECTIONINFO self, unsigned short LocalPort)"},
+	 { (char *)"TCPCONNECTIONINFO_LocalPort_get", _wrap_TCPCONNECTIONINFO_LocalPort_get, METH_VARARGS, (char *)"TCPCONNECTIONINFO_LocalPort_get(TCPCONNECTIONINFO self) -> unsigned short"},
+	 { (char *)"TCPCONNECTIONINFO_StateText_set", _wrap_TCPCONNECTIONINFO_StateText_set, METH_VARARGS, (char *)"TCPCONNECTIONINFO_StateText_set(TCPCONNECTIONINFO self, char [50] StateText)"},
+	 { (char *)"TCPCONNECTIONINFO_StateText_get", _wrap_TCPCONNECTIONINFO_StateText_get, METH_VARARGS, (char *)"TCPCONNECTIONINFO_StateText_get(TCPCONNECTIONINFO self) -> char [50]"},
+	 { (char *)"TCPCONNECTIONINFO_State_set", _wrap_TCPCONNECTIONINFO_State_set, METH_VARARGS, (char *)"TCPCONNECTIONINFO_State_set(TCPCONNECTIONINFO self, unsigned int State)"},
+	 { (char *)"TCPCONNECTIONINFO_State_get", _wrap_TCPCONNECTIONINFO_State_get, METH_VARARGS, (char *)"TCPCONNECTIONINFO_State_get(TCPCONNECTIONINFO self) -> unsigned int"},
+	 { (char *)"new_TCPCONNECTIONINFO", _wrap_new_TCPCONNECTIONINFO, METH_VARARGS, (char *)"new_TCPCONNECTIONINFO() -> TCPCONNECTIONINFO"},
+	 { (char *)"delete_TCPCONNECTIONINFO", _wrap_delete_TCPCONNECTIONINFO, METH_VARARGS, (char *)"delete_TCPCONNECTIONINFO(TCPCONNECTIONINFO self)"},
+	 { (char *)"TCPCONNECTIONINFO_swigregister", TCPCONNECTIONINFO_swigregister, METH_VARARGS, NULL},
 	 { (char *)"DBGFUNCTIONS_AssembleAtEx_set", _wrap_DBGFUNCTIONS_AssembleAtEx_set, METH_VARARGS, (char *)"DBGFUNCTIONS_AssembleAtEx_set(DBGFUNCTIONS self, ASSEMBLEATEX AssembleAtEx)"},
 	 { (char *)"DBGFUNCTIONS_AssembleAtEx_get", _wrap_DBGFUNCTIONS_AssembleAtEx_get, METH_VARARGS, (char *)"DBGFUNCTIONS_AssembleAtEx_get(DBGFUNCTIONS self) -> ASSEMBLEATEX"},
 	 { (char *)"DBGFUNCTIONS_SectionFromAddr_set", _wrap_DBGFUNCTIONS_SectionFromAddr_set, METH_VARARGS, (char *)"DBGFUNCTIONS_SectionFromAddr_set(DBGFUNCTIONS self, SECTIONFROMADDR SectionFromAddr)"},
@@ -36939,6 +39088,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"DBGFUNCTIONS_MemUpdateMap_get", _wrap_DBGFUNCTIONS_MemUpdateMap_get, METH_VARARGS, (char *)"DBGFUNCTIONS_MemUpdateMap_get(DBGFUNCTIONS self) -> MEMUPDATEMAP"},
 	 { (char *)"DBGFUNCTIONS_GetCallStack_set", _wrap_DBGFUNCTIONS_GetCallStack_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetCallStack_set(DBGFUNCTIONS self, GETCALLSTACK GetCallStack)"},
 	 { (char *)"DBGFUNCTIONS_GetCallStack_get", _wrap_DBGFUNCTIONS_GetCallStack_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetCallStack_get(DBGFUNCTIONS self) -> GETCALLSTACK"},
+	 { (char *)"DBGFUNCTIONS_GetSEHChain_set", _wrap_DBGFUNCTIONS_GetSEHChain_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetSEHChain_set(DBGFUNCTIONS self, GETSEHCHAIN GetSEHChain)"},
+	 { (char *)"DBGFUNCTIONS_GetSEHChain_get", _wrap_DBGFUNCTIONS_GetSEHChain_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetSEHChain_get(DBGFUNCTIONS self) -> GETSEHCHAIN"},
 	 { (char *)"DBGFUNCTIONS_SymbolDownloadAllSymbols_set", _wrap_DBGFUNCTIONS_SymbolDownloadAllSymbols_set, METH_VARARGS, (char *)"DBGFUNCTIONS_SymbolDownloadAllSymbols_set(DBGFUNCTIONS self, SYMBOLDOWNLOADALLSYMBOLS SymbolDownloadAllSymbols)"},
 	 { (char *)"DBGFUNCTIONS_SymbolDownloadAllSymbols_get", _wrap_DBGFUNCTIONS_SymbolDownloadAllSymbols_get, METH_VARARGS, (char *)"DBGFUNCTIONS_SymbolDownloadAllSymbols_get(DBGFUNCTIONS self) -> SYMBOLDOWNLOADALLSYMBOLS"},
 	 { (char *)"DBGFUNCTIONS_GetJitAuto_set", _wrap_DBGFUNCTIONS_GetJitAuto_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetJitAuto_set(DBGFUNCTIONS self, GETJITAUTO GetJitAuto)"},
@@ -36973,6 +39124,26 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"DBGFUNCTIONS_ValFromString_get", _wrap_DBGFUNCTIONS_ValFromString_get, METH_VARARGS, (char *)"DBGFUNCTIONS_ValFromString_get(DBGFUNCTIONS self) -> VALFROMSTRING"},
 	 { (char *)"DBGFUNCTIONS_PatchGetEx_set", _wrap_DBGFUNCTIONS_PatchGetEx_set, METH_VARARGS, (char *)"DBGFUNCTIONS_PatchGetEx_set(DBGFUNCTIONS self, PATCHGETEX PatchGetEx)"},
 	 { (char *)"DBGFUNCTIONS_PatchGetEx_get", _wrap_DBGFUNCTIONS_PatchGetEx_get, METH_VARARGS, (char *)"DBGFUNCTIONS_PatchGetEx_get(DBGFUNCTIONS self) -> PATCHGETEX"},
+	 { (char *)"DBGFUNCTIONS_GetBridgeBp_set", _wrap_DBGFUNCTIONS_GetBridgeBp_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetBridgeBp_set(DBGFUNCTIONS self, GETBRIDGEBP GetBridgeBp)"},
+	 { (char *)"DBGFUNCTIONS_GetBridgeBp_get", _wrap_DBGFUNCTIONS_GetBridgeBp_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetBridgeBp_get(DBGFUNCTIONS self) -> GETBRIDGEBP"},
+	 { (char *)"DBGFUNCTIONS_StringFormatInline_set", _wrap_DBGFUNCTIONS_StringFormatInline_set, METH_VARARGS, (char *)"DBGFUNCTIONS_StringFormatInline_set(DBGFUNCTIONS self, STRINGFORMATINLINE StringFormatInline)"},
+	 { (char *)"DBGFUNCTIONS_StringFormatInline_get", _wrap_DBGFUNCTIONS_StringFormatInline_get, METH_VARARGS, (char *)"DBGFUNCTIONS_StringFormatInline_get(DBGFUNCTIONS self) -> STRINGFORMATINLINE"},
+	 { (char *)"DBGFUNCTIONS_GetMnemonicBrief_set", _wrap_DBGFUNCTIONS_GetMnemonicBrief_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetMnemonicBrief_set(DBGFUNCTIONS self, GETMNEMONICBRIEF GetMnemonicBrief)"},
+	 { (char *)"DBGFUNCTIONS_GetMnemonicBrief_get", _wrap_DBGFUNCTIONS_GetMnemonicBrief_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetMnemonicBrief_get(DBGFUNCTIONS self) -> GETMNEMONICBRIEF"},
+	 { (char *)"DBGFUNCTIONS_GetTraceRecordHitCount_set", _wrap_DBGFUNCTIONS_GetTraceRecordHitCount_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetTraceRecordHitCount_set(DBGFUNCTIONS self, GETTRACERECORDHITCOUNT GetTraceRecordHitCount)"},
+	 { (char *)"DBGFUNCTIONS_GetTraceRecordHitCount_get", _wrap_DBGFUNCTIONS_GetTraceRecordHitCount_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetTraceRecordHitCount_get(DBGFUNCTIONS self) -> GETTRACERECORDHITCOUNT"},
+	 { (char *)"DBGFUNCTIONS_GetTraceRecordByteType_set", _wrap_DBGFUNCTIONS_GetTraceRecordByteType_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetTraceRecordByteType_set(DBGFUNCTIONS self, GETTRACERECORDBYTETYPE GetTraceRecordByteType)"},
+	 { (char *)"DBGFUNCTIONS_GetTraceRecordByteType_get", _wrap_DBGFUNCTIONS_GetTraceRecordByteType_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetTraceRecordByteType_get(DBGFUNCTIONS self) -> GETTRACERECORDBYTETYPE"},
+	 { (char *)"DBGFUNCTIONS_SetTraceRecordType_set", _wrap_DBGFUNCTIONS_SetTraceRecordType_set, METH_VARARGS, (char *)"DBGFUNCTIONS_SetTraceRecordType_set(DBGFUNCTIONS self, SETTRACERECORDTYPE SetTraceRecordType)"},
+	 { (char *)"DBGFUNCTIONS_SetTraceRecordType_get", _wrap_DBGFUNCTIONS_SetTraceRecordType_get, METH_VARARGS, (char *)"DBGFUNCTIONS_SetTraceRecordType_get(DBGFUNCTIONS self) -> SETTRACERECORDTYPE"},
+	 { (char *)"DBGFUNCTIONS_GetTraceRecordType_set", _wrap_DBGFUNCTIONS_GetTraceRecordType_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetTraceRecordType_set(DBGFUNCTIONS self, GETTRACERECORDTYPE GetTraceRecordType)"},
+	 { (char *)"DBGFUNCTIONS_GetTraceRecordType_get", _wrap_DBGFUNCTIONS_GetTraceRecordType_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetTraceRecordType_get(DBGFUNCTIONS self) -> GETTRACERECORDTYPE"},
+	 { (char *)"DBGFUNCTIONS_EnumHandles_set", _wrap_DBGFUNCTIONS_EnumHandles_set, METH_VARARGS, (char *)"DBGFUNCTIONS_EnumHandles_set(DBGFUNCTIONS self, ENUMHANDLES EnumHandles)"},
+	 { (char *)"DBGFUNCTIONS_EnumHandles_get", _wrap_DBGFUNCTIONS_EnumHandles_get, METH_VARARGS, (char *)"DBGFUNCTIONS_EnumHandles_get(DBGFUNCTIONS self) -> ENUMHANDLES"},
+	 { (char *)"DBGFUNCTIONS_GetHandleName_set", _wrap_DBGFUNCTIONS_GetHandleName_set, METH_VARARGS, (char *)"DBGFUNCTIONS_GetHandleName_set(DBGFUNCTIONS self, GETHANDLENAME GetHandleName)"},
+	 { (char *)"DBGFUNCTIONS_GetHandleName_get", _wrap_DBGFUNCTIONS_GetHandleName_get, METH_VARARGS, (char *)"DBGFUNCTIONS_GetHandleName_get(DBGFUNCTIONS self) -> GETHANDLENAME"},
+	 { (char *)"DBGFUNCTIONS_EnumTcpConnections_set", _wrap_DBGFUNCTIONS_EnumTcpConnections_set, METH_VARARGS, (char *)"DBGFUNCTIONS_EnumTcpConnections_set(DBGFUNCTIONS self, ENUMTCPCONNECTIONS EnumTcpConnections)"},
+	 { (char *)"DBGFUNCTIONS_EnumTcpConnections_get", _wrap_DBGFUNCTIONS_EnumTcpConnections_get, METH_VARARGS, (char *)"DBGFUNCTIONS_EnumTcpConnections_get(DBGFUNCTIONS self) -> ENUMTCPCONNECTIONS"},
 	 { (char *)"DBGFUNCTIONS_AssembleAtEx_", _wrap_DBGFUNCTIONS_AssembleAtEx_, METH_VARARGS, (char *)"DBGFUNCTIONS_AssembleAtEx_(DBGFUNCTIONS self, duint addr, char const * instruction, char * error, bool fillnop) -> bool"},
 	 { (char *)"DBGFUNCTIONS_SectionFromAddr_", _wrap_DBGFUNCTIONS_SectionFromAddr_, METH_VARARGS, (char *)"DBGFUNCTIONS_SectionFromAddr_(DBGFUNCTIONS self, duint addr, char * section) -> bool"},
 	 { (char *)"DBGFUNCTIONS_ModNameFromAddr_", _wrap_DBGFUNCTIONS_ModNameFromAddr_, METH_VARARGS, (char *)"DBGFUNCTIONS_ModNameFromAddr_(DBGFUNCTIONS self, duint addr, char * modname, bool extension) -> bool"},
@@ -37123,7 +39294,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Function_GetInfo", _wrap_Function_GetInfo, METH_VARARGS, (char *)"Function_GetInfo(duint addr, FunctionInfo info) -> bool"},
 	 { (char *)"Function_Overlaps", _wrap_Function_Overlaps, METH_VARARGS, (char *)"Function_Overlaps(duint start, duint end) -> bool"},
 	 { (char *)"Function_Delete", _wrap_Function_Delete, METH_VARARGS, (char *)"Function_Delete(duint address) -> bool"},
-	 { (char *)"Function_DeleteRange", _wrap_Function_DeleteRange, METH_VARARGS, (char *)"Function_DeleteRange(duint start, duint end)"},
+	 { (char *)"Function_DeleteRange", _wrap_Function_DeleteRange, METH_VARARGS, (char *)"\n"
+		"Function_DeleteRange(duint start, duint end, bool deleteManual=False)\n"
+		"Function_DeleteRange(duint start, duint end)\n"
+		""},
 	 { (char *)"Function_Clear", _wrap_Function_Clear, METH_VARARGS, (char *)"Function_Clear()"},
 	 { (char *)"Function_GetList", _wrap_Function_GetList, METH_VARARGS, (char *)"Function_GetList(ListInfo list) -> bool"},
 	 { (char *)"Gui_Disassembly_SelectionGet", _wrap_Gui_Disassembly_SelectionGet, METH_VARARGS, (char *)"Gui_Disassembly_SelectionGet(duint * start, duint * end) -> bool"},
@@ -37524,6 +39698,7 @@ static void *_p_BookmarkInfoArrayTo_p_Script__Bookmark__BookmarkInfo(void *x, in
 }
 static swig_type_info _swigt__p_ADDRINFO = {"_p_ADDRINFO", "ADDRINFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ADDRINFOFLAGS = {"_p_ADDRINFOFLAGS", "enum ADDRINFOFLAGS *|ADDRINFOFLAGS *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ARGTYPE = {"_p_ARGTYPE", "enum ARGTYPE *|ARGTYPE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_BASIC_INSTRUCTION_INFO = {"_p_BASIC_INSTRUCTION_INFO", "BASIC_INSTRUCTION_INFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_BPMAP = {"_p_BPMAP", "BPMAP *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_BPXTYPE = {"_p_BPXTYPE", "enum BPXTYPE *|BPXTYPE *", 0, 0, (void*)0, 0};
@@ -37537,6 +39712,8 @@ static swig_type_info _swigt__p_DBGFUNCTIONS_ = {"_p_DBGFUNCTIONS_", "DBGFUNCTIO
 static swig_type_info _swigt__p_DBGMSG = {"_p_DBGMSG", "enum DBGMSG *|DBGMSG *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_DBGPATCHINFO = {"_p_DBGPATCHINFO", "DBGPATCHINFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_DBGPROCESSINFO = {"_p_DBGPROCESSINFO", "DBGPROCESSINFO *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_DBGSEHCHAIN = {"_p_DBGSEHCHAIN", "DBGSEHCHAIN *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_DBGSEHRECORD = {"_p_DBGSEHRECORD", "DBGSEHRECORD *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_DBGSTATE = {"_p_DBGSTATE", "enum DBGSTATE *|DBGSTATE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_DISASM_ARG = {"_p_DISASM_ARG", "DISASM_ARG *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_DISASM_ARGTYPE = {"_p_DISASM_ARGTYPE", "enum DISASM_ARGTYPE *|DISASM_ARGTYPE *", 0, 0, (void*)0, 0};
@@ -37548,6 +39725,7 @@ static swig_type_info _swigt__p_FUNCTION_LOOP_INFO = {"_p_FUNCTION_LOOP_INFO", "
 static swig_type_info _swigt__p_FUNCTYPE = {"_p_FUNCTYPE", "enum FUNCTYPE *|FUNCTYPE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FunctionInfoArray = {"_p_FunctionInfoArray", "FunctionInfoArray *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_GUIMSG = {"_p_GUIMSG", "enum GUIMSG *|GUIMSG *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_HANDLEINFO = {"_p_HANDLEINFO", "HANDLEINFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ICONDATA = {"_p_ICONDATA", "ICONDATA *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LASTERROR = {"_p_LASTERROR", "LASTERROR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_LOOP = {"_p_LOOP", "LOOP *", 0, 0, (void*)0, 0};
@@ -37584,6 +39762,7 @@ static swig_type_info _swigt__p_Script__Module__ModuleInfo = {"_p_Script__Module
 static swig_type_info _swigt__p_Script__Module__ModuleSectionInfo = {"_p_Script__Module__ModuleSectionInfo", "Script::Module::ModuleSectionInfo *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Script__Symbol__SymbolInfo = {"_p_Script__Symbol__SymbolInfo", "Script::Symbol::SymbolInfo *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SymbolInfoArray = {"_p_SymbolInfoArray", "SymbolInfoArray *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_TCPCONNECTIONINFO = {"_p_TCPCONNECTIONINFO", "TCPCONNECTIONINFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_THREADALLINFO = {"_p_THREADALLINFO", "THREADALLINFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_THREADINFO = {"_p_THREADINFO", "THREADINFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_THREADLIST = {"_p_THREADLIST", "THREADLIST *", 0, 0, (void*)0, 0};
@@ -37602,9 +39781,12 @@ static swig_type_info _swigt__p_bool = {"_p_bool", "bool *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "CHAR *|TCHAR *|char *|CCHAR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f___bool = {"_p_f___bool", "ISPROCESSELEVATED|bool (*)()", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f___void = {"_p_f___void", "GUICALLBACK|void (*)()|MEMUPDATEMAP", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool = {"_p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool", "GETBRIDGEBP|bool (*)(enum BPXTYPE,unsigned long long,BRIDGEBP *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_DBGCALLSTACK__void = {"_p_f_p_DBGCALLSTACK__void", "void (*)(DBGCALLSTACK *)|GETCALLSTACK", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int = {"_p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int", "int (*)(DBGPATCHINFO *,int,char const *,char *)|PATCHFILE", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_DBGPATCHINFO_p_size_t__bool = {"_p_f_p_DBGPATCHINFO_p_size_t__bool", "bool (*)(DBGPATCHINFO *,size_t *)|PATCHENUM", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_DBGSEHCHAIN__void = {"_p_f_p_DBGSEHCHAIN__void", "void (*)(DBGSEHCHAIN *)|GETSEHCHAIN", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_ListInfo__bool = {"_p_f_p_ListInfo__bool", "bool (*)(ListInfo *)|ENUMTCPCONNECTIONS|ENUMHANDLES", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_SYMBOLINFO__p_void__void = {"_p_f_p_SYMBOLINFO__p_void__void", "CBSYMBOLENUM|void (*)(SYMBOLINFO_ *,void *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_bool__bool = {"_p_f_p_bool__bool", "bool (*)(bool *)|GETJITAUTO", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_char__bool = {"_p_f_p_char__bool", "bool (*)(char *)|GETDEFJIT", 0, 0, (void*)0, 0};
@@ -37618,15 +39800,22 @@ static swig_type_info _swigt__p_f_p_q_const__char_int__unsigned_long_long = {"_p
 static swig_type_info _swigt__p_f_p_q_const__char_p_char_int__int = {"_p_f_p_q_const__char_p_char_int__int", "int (*)(char const *,char *,int)|MODPATHFROMNAME", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__char_p_p_char_p_int__void = {"_p_f_p_q_const__char_p_p_char_p_int__void", "void (*)(char const *,char **,int *)|GUISCRIPTCOMPLETER", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__char_p_unsigned_long_long__bool = {"_p_f_p_q_const__char_p_unsigned_long_long__bool", "bool (*)(char const *,unsigned long long *)|VALFROMSTRING", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_q_const__char_size_t_p_char__bool = {"_p_f_p_q_const__char_size_t_p_char__bool", "bool (*)(char const *,size_t,char *)|STRINGFORMATINLINE", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_q_const__char_size_t_p_char__void = {"_p_f_p_q_const__char_size_t_p_char__void", "void (*)(char const *,size_t,char *)|GETMNEMONICBRIEF", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__char_unsigned_long_long__unsigned_long_long = {"_p_f_p_q_const__char_unsigned_long_long__unsigned_long_long", "unsigned long long (*)(char const *,unsigned long long)|FILEOFFSETTOVA", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool = {"_p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool", "bool (*)(unsigned char const *,unsigned long long,BASIC_INSTRUCTION_INFO *)|DISASMFAST", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_unsigned_long_long__TRACERECORDBYTETYPE = {"_p_f_unsigned_long_long__TRACERECORDBYTETYPE", "GETTRACERECORDBYTETYPE|enum TRACERECORDBYTETYPE (*)(unsigned long long)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_unsigned_long_long__TRACERECORDTYPE = {"_p_f_unsigned_long_long__TRACERECORDTYPE", "GETTRACERECORDTYPE|enum TRACERECORDTYPE (*)(unsigned long long)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long__bool = {"_p_f_unsigned_long_long__bool", "PATCHGET|PATCHRESTORE|bool (*)(unsigned long long)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_unsigned_long_long__unsigned_int = {"_p_f_unsigned_long_long__unsigned_int", "GETTRACERECORDHITCOUNT|unsigned int (*)(unsigned long long)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long__unsigned_long_long = {"_p_f_unsigned_long_long__unsigned_long_long", "MODBASEFROMADDR|MODSIZEFROMADDR|VATOFILEOFFSET|unsigned long long (*)(unsigned long long)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool = {"_p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool", "bool (*)(unsigned long long,enum TRACERECORDTYPE)|SETTRACERECORDTYPE", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_DBGPATCHINFO__bool = {"_p_f_unsigned_long_long_p_DBGPATCHINFO__bool", "bool (*)(unsigned long long,DBGPATCHINFO *)|PATCHGETEX", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_char__bool = {"_p_f_unsigned_long_long_p_char__bool", "bool (*)(unsigned long long,char *)|SECTIONFROMADDR|GETPAGERIGHTS", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_char_bool__bool = {"_p_f_unsigned_long_long_p_char_bool__bool", "MODNAMEFROMADDR|bool (*)(unsigned long long,char *,bool)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_char_int__int = {"_p_f_unsigned_long_long_p_char_int__int", "MODPATHFROMADDR|int (*)(unsigned long long,char *,int)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_char_p_int__bool = {"_p_f_unsigned_long_long_p_char_p_int__bool", "bool (*)(unsigned long long,char *,int *)|GETSOURCEFROMADDR", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool = {"_p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool", "GETHANDLENAME|bool (*)(unsigned long long,char *,size_t,char *,size_t)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_q_const__char__bool = {"_p_f_unsigned_long_long_p_q_const__char__bool", "bool (*)(unsigned long long,char const *)|SETPAGERIGHTS", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool = {"_p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool", "ASSEMBLEATEX|bool (*)(unsigned long long,char const *,char *,bool)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool = {"_p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool", "MEMPATCH|bool (*)(unsigned long long,unsigned char const *,unsigned long long)", 0, 0, (void*)0, 0};
@@ -37657,6 +39846,7 @@ static swig_type_info _swigt__p_wchar_t = {"_p_wchar_t", "wchar_t *", 0, 0, (voi
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ADDRINFO,
   &_swigt__p_ADDRINFOFLAGS,
+  &_swigt__p_ARGTYPE,
   &_swigt__p_BASIC_INSTRUCTION_INFO,
   &_swigt__p_BPMAP,
   &_swigt__p_BPXTYPE,
@@ -37670,6 +39860,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_DBGMSG,
   &_swigt__p_DBGPATCHINFO,
   &_swigt__p_DBGPROCESSINFO,
+  &_swigt__p_DBGSEHCHAIN,
+  &_swigt__p_DBGSEHRECORD,
   &_swigt__p_DBGSTATE,
   &_swigt__p_DISASM_ARG,
   &_swigt__p_DISASM_ARGTYPE,
@@ -37681,6 +39873,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_FUNCTYPE,
   &_swigt__p_FunctionInfoArray,
   &_swigt__p_GUIMSG,
+  &_swigt__p_HANDLEINFO,
   &_swigt__p_ICONDATA,
   &_swigt__p_LASTERROR,
   &_swigt__p_LOOP,
@@ -37717,6 +39910,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Script__Module__ModuleSectionInfo,
   &_swigt__p_Script__Symbol__SymbolInfo,
   &_swigt__p_SymbolInfoArray,
+  &_swigt__p_TCPCONNECTIONINFO,
   &_swigt__p_THREADALLINFO,
   &_swigt__p_THREADINFO,
   &_swigt__p_THREADLIST,
@@ -37735,9 +39929,12 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
   &_swigt__p_f___bool,
   &_swigt__p_f___void,
+  &_swigt__p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool,
   &_swigt__p_f_p_DBGCALLSTACK__void,
   &_swigt__p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int,
   &_swigt__p_f_p_DBGPATCHINFO_p_size_t__bool,
+  &_swigt__p_f_p_DBGSEHCHAIN__void,
+  &_swigt__p_f_p_ListInfo__bool,
   &_swigt__p_f_p_SYMBOLINFO__p_void__void,
   &_swigt__p_f_p_bool__bool,
   &_swigt__p_f_p_char__bool,
@@ -37751,15 +39948,22 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_f_p_q_const__char_p_char_int__int,
   &_swigt__p_f_p_q_const__char_p_p_char_p_int__void,
   &_swigt__p_f_p_q_const__char_p_unsigned_long_long__bool,
+  &_swigt__p_f_p_q_const__char_size_t_p_char__bool,
+  &_swigt__p_f_p_q_const__char_size_t_p_char__void,
   &_swigt__p_f_p_q_const__char_unsigned_long_long__unsigned_long_long,
   &_swigt__p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool,
+  &_swigt__p_f_unsigned_long_long__TRACERECORDBYTETYPE,
+  &_swigt__p_f_unsigned_long_long__TRACERECORDTYPE,
   &_swigt__p_f_unsigned_long_long__bool,
+  &_swigt__p_f_unsigned_long_long__unsigned_int,
   &_swigt__p_f_unsigned_long_long__unsigned_long_long,
+  &_swigt__p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool,
   &_swigt__p_f_unsigned_long_long_p_DBGPATCHINFO__bool,
   &_swigt__p_f_unsigned_long_long_p_char__bool,
   &_swigt__p_f_unsigned_long_long_p_char_bool__bool,
   &_swigt__p_f_unsigned_long_long_p_char_int__int,
   &_swigt__p_f_unsigned_long_long_p_char_p_int__bool,
+  &_swigt__p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool,
   &_swigt__p_f_unsigned_long_long_p_q_const__char__bool,
   &_swigt__p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool,
   &_swigt__p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool,
@@ -37790,6 +39994,7 @@ static swig_type_info *swig_type_initial[] = {
 
 static swig_cast_info _swigc__p_ADDRINFO[] = {  {&_swigt__p_ADDRINFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ADDRINFOFLAGS[] = {  {&_swigt__p_ADDRINFOFLAGS, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ARGTYPE[] = {  {&_swigt__p_ARGTYPE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_BASIC_INSTRUCTION_INFO[] = {  {&_swigt__p_BASIC_INSTRUCTION_INFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_BPMAP[] = {  {&_swigt__p_BPMAP, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_BPXTYPE[] = {  {&_swigt__p_BPXTYPE, 0, 0, 0},{0, 0, 0, 0}};
@@ -37803,6 +40008,8 @@ static swig_cast_info _swigc__p_DBGFUNCTIONS_[] = {  {&_swigt__p_DBGFUNCTIONS_, 
 static swig_cast_info _swigc__p_DBGMSG[] = {  {&_swigt__p_DBGMSG, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_DBGPATCHINFO[] = {  {&_swigt__p_DBGPATCHINFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_DBGPROCESSINFO[] = {  {&_swigt__p_DBGPROCESSINFO, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_DBGSEHCHAIN[] = {  {&_swigt__p_DBGSEHCHAIN, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_DBGSEHRECORD[] = {  {&_swigt__p_DBGSEHRECORD, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_DBGSTATE[] = {  {&_swigt__p_DBGSTATE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_DISASM_ARG[] = {  {&_swigt__p_DISASM_ARG, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_DISASM_ARGTYPE[] = {  {&_swigt__p_DISASM_ARGTYPE, 0, 0, 0},{0, 0, 0, 0}};
@@ -37814,6 +40021,7 @@ static swig_cast_info _swigc__p_FUNCTION_LOOP_INFO[] = {  {&_swigt__p_FUNCTION_L
 static swig_cast_info _swigc__p_FUNCTYPE[] = {  {&_swigt__p_FUNCTYPE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FunctionInfoArray[] = {  {&_swigt__p_FunctionInfoArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_GUIMSG[] = {  {&_swigt__p_GUIMSG, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_HANDLEINFO[] = {  {&_swigt__p_HANDLEINFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ICONDATA[] = {  {&_swigt__p_ICONDATA, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LASTERROR[] = {  {&_swigt__p_LASTERROR, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_LOOP[] = {  {&_swigt__p_LOOP, 0, 0, 0},{0, 0, 0, 0}};
@@ -37850,6 +40058,7 @@ static swig_cast_info _swigc__p_Script__Module__ModuleInfo[] = {  {&_swigt__p_Sc
 static swig_cast_info _swigc__p_Script__Module__ModuleSectionInfo[] = {  {&_swigt__p_Script__Module__ModuleSectionInfo, 0, 0, 0},  {&_swigt__p_ModuleSectionInfoArray, _p_ModuleSectionInfoArrayTo_p_Script__Module__ModuleSectionInfo, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Script__Symbol__SymbolInfo[] = {  {&_swigt__p_Script__Symbol__SymbolInfo, 0, 0, 0},  {&_swigt__p_SymbolInfoArray, _p_SymbolInfoArrayTo_p_Script__Symbol__SymbolInfo, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SymbolInfoArray[] = {  {&_swigt__p_SymbolInfoArray, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_TCPCONNECTIONINFO[] = {  {&_swigt__p_TCPCONNECTIONINFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_THREADALLINFO[] = {  {&_swigt__p_THREADALLINFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_THREADINFO[] = {  {&_swigt__p_THREADINFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_THREADLIST[] = {  {&_swigt__p_THREADLIST, 0, 0, 0},{0, 0, 0, 0}};
@@ -37868,9 +40077,12 @@ static swig_cast_info _swigc__p_bool[] = {  {&_swigt__p_bool, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f___bool[] = {  {&_swigt__p_f___bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f___void[] = {  {&_swigt__p_f___void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool[] = {  {&_swigt__p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_DBGCALLSTACK__void[] = {  {&_swigt__p_f_p_DBGCALLSTACK__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int[] = {  {&_swigt__p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_DBGPATCHINFO_p_size_t__bool[] = {  {&_swigt__p_f_p_DBGPATCHINFO_p_size_t__bool, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_DBGSEHCHAIN__void[] = {  {&_swigt__p_f_p_DBGSEHCHAIN__void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_ListInfo__bool[] = {  {&_swigt__p_f_p_ListInfo__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_SYMBOLINFO__p_void__void[] = {  {&_swigt__p_f_p_SYMBOLINFO__p_void__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_bool__bool[] = {  {&_swigt__p_f_p_bool__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_char__bool[] = {  {&_swigt__p_f_p_char__bool, 0, 0, 0},{0, 0, 0, 0}};
@@ -37884,15 +40096,22 @@ static swig_cast_info _swigc__p_f_p_q_const__char_int__unsigned_long_long[] = { 
 static swig_cast_info _swigc__p_f_p_q_const__char_p_char_int__int[] = {  {&_swigt__p_f_p_q_const__char_p_char_int__int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_q_const__char_p_p_char_p_int__void[] = {  {&_swigt__p_f_p_q_const__char_p_p_char_p_int__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_q_const__char_p_unsigned_long_long__bool[] = {  {&_swigt__p_f_p_q_const__char_p_unsigned_long_long__bool, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_q_const__char_size_t_p_char__bool[] = {  {&_swigt__p_f_p_q_const__char_size_t_p_char__bool, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_q_const__char_size_t_p_char__void[] = {  {&_swigt__p_f_p_q_const__char_size_t_p_char__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_q_const__char_unsigned_long_long__unsigned_long_long[] = {  {&_swigt__p_f_p_q_const__char_unsigned_long_long__unsigned_long_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool[] = {  {&_swigt__p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_unsigned_long_long__TRACERECORDBYTETYPE[] = {  {&_swigt__p_f_unsigned_long_long__TRACERECORDBYTETYPE, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_unsigned_long_long__TRACERECORDTYPE[] = {  {&_swigt__p_f_unsigned_long_long__TRACERECORDTYPE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long__bool[] = {  {&_swigt__p_f_unsigned_long_long__bool, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_unsigned_long_long__unsigned_int[] = {  {&_swigt__p_f_unsigned_long_long__unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long__unsigned_long_long[] = {  {&_swigt__p_f_unsigned_long_long__unsigned_long_long, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool[] = {  {&_swigt__p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_DBGPATCHINFO__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_DBGPATCHINFO__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_char__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_char__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_char_bool__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_char_bool__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_char_int__int[] = {  {&_swigt__p_f_unsigned_long_long_p_char_int__int, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_char_p_int__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_char_p_int__bool, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_q_const__char__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_q_const__char__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool[] = {  {&_swigt__p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool, 0, 0, 0},{0, 0, 0, 0}};
@@ -37923,6 +40142,7 @@ static swig_cast_info _swigc__p_wchar_t[] = {  {&_swigt__p_wchar_t, 0, 0, 0},{0,
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ADDRINFO,
   _swigc__p_ADDRINFOFLAGS,
+  _swigc__p_ARGTYPE,
   _swigc__p_BASIC_INSTRUCTION_INFO,
   _swigc__p_BPMAP,
   _swigc__p_BPXTYPE,
@@ -37936,6 +40156,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_DBGMSG,
   _swigc__p_DBGPATCHINFO,
   _swigc__p_DBGPROCESSINFO,
+  _swigc__p_DBGSEHCHAIN,
+  _swigc__p_DBGSEHRECORD,
   _swigc__p_DBGSTATE,
   _swigc__p_DISASM_ARG,
   _swigc__p_DISASM_ARGTYPE,
@@ -37947,6 +40169,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_FUNCTYPE,
   _swigc__p_FunctionInfoArray,
   _swigc__p_GUIMSG,
+  _swigc__p_HANDLEINFO,
   _swigc__p_ICONDATA,
   _swigc__p_LASTERROR,
   _swigc__p_LOOP,
@@ -37983,6 +40206,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Script__Module__ModuleSectionInfo,
   _swigc__p_Script__Symbol__SymbolInfo,
   _swigc__p_SymbolInfoArray,
+  _swigc__p_TCPCONNECTIONINFO,
   _swigc__p_THREADALLINFO,
   _swigc__p_THREADINFO,
   _swigc__p_THREADLIST,
@@ -38001,9 +40225,12 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
   _swigc__p_f___bool,
   _swigc__p_f___void,
+  _swigc__p_f_enum_BPXTYPE_unsigned_long_long_p_BRIDGEBP__bool,
   _swigc__p_f_p_DBGCALLSTACK__void,
   _swigc__p_f_p_DBGPATCHINFO_int_p_q_const__char_p_char__int,
   _swigc__p_f_p_DBGPATCHINFO_p_size_t__bool,
+  _swigc__p_f_p_DBGSEHCHAIN__void,
+  _swigc__p_f_p_ListInfo__bool,
   _swigc__p_f_p_SYMBOLINFO__p_void__void,
   _swigc__p_f_p_bool__bool,
   _swigc__p_f_p_char__bool,
@@ -38017,15 +40244,22 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_f_p_q_const__char_p_char_int__int,
   _swigc__p_f_p_q_const__char_p_p_char_p_int__void,
   _swigc__p_f_p_q_const__char_p_unsigned_long_long__bool,
+  _swigc__p_f_p_q_const__char_size_t_p_char__bool,
+  _swigc__p_f_p_q_const__char_size_t_p_char__void,
   _swigc__p_f_p_q_const__char_unsigned_long_long__unsigned_long_long,
   _swigc__p_f_p_q_const__unsigned_char_unsigned_long_long_p_BASIC_INSTRUCTION_INFO__bool,
+  _swigc__p_f_unsigned_long_long__TRACERECORDBYTETYPE,
+  _swigc__p_f_unsigned_long_long__TRACERECORDTYPE,
   _swigc__p_f_unsigned_long_long__bool,
+  _swigc__p_f_unsigned_long_long__unsigned_int,
   _swigc__p_f_unsigned_long_long__unsigned_long_long,
+  _swigc__p_f_unsigned_long_long_enum_TRACERECORDTYPE__bool,
   _swigc__p_f_unsigned_long_long_p_DBGPATCHINFO__bool,
   _swigc__p_f_unsigned_long_long_p_char__bool,
   _swigc__p_f_unsigned_long_long_p_char_bool__bool,
   _swigc__p_f_unsigned_long_long_p_char_int__int,
   _swigc__p_f_unsigned_long_long_p_char_p_int__bool,
+  _swigc__p_f_unsigned_long_long_p_char_size_t_p_char_size_t__bool,
   _swigc__p_f_unsigned_long_long_p_q_const__char__bool,
   _swigc__p_f_unsigned_long_long_p_q_const__char_p_char_bool__bool,
   _swigc__p_f_unsigned_long_long_p_q_const__unsigned_char_unsigned_long_long__bool,
@@ -38741,8 +40975,10 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "MAX_LABEL_SIZE",SWIG_From_int(static_cast< int >(256)));
   SWIG_Python_SetConstant(d, "MAX_COMMENT_SIZE",SWIG_From_int(static_cast< int >(512)));
   SWIG_Python_SetConstant(d, "MAX_MODULE_SIZE",SWIG_From_int(static_cast< int >(256)));
-  SWIG_Python_SetConstant(d, "MAX_IMPORT_SIZE",SWIG_From_int(static_cast< int >(256)));
+  SWIG_Python_SetConstant(d, "MAX_IMPORT_SIZE",SWIG_From_int(static_cast< int >(65536)));
   SWIG_Python_SetConstant(d, "MAX_BREAKPOINT_SIZE",SWIG_From_int(static_cast< int >(256)));
+  SWIG_Python_SetConstant(d, "MAX_CONDITIONAL_EXPR_SIZE",SWIG_From_int(static_cast< int >(256)));
+  SWIG_Python_SetConstant(d, "MAX_CONDITIONAL_TEXT_SIZE",SWIG_From_int(static_cast< int >(256)));
   SWIG_Python_SetConstant(d, "MAX_SCRIPT_LINE_SIZE",SWIG_From_int(static_cast< int >(2048)));
   SWIG_Python_SetConstant(d, "MAX_THREAD_NAME_SIZE",SWIG_From_int(static_cast< int >(256)));
   SWIG_Python_SetConstant(d, "MAX_STRING_SIZE",SWIG_From_int(static_cast< int >(512)));
@@ -38782,6 +41018,10 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "LOOP_MIDDLE",SWIG_From_int(static_cast< int >(LOOP_MIDDLE)));
   SWIG_Python_SetConstant(d, "LOOP_ENTRY",SWIG_From_int(static_cast< int >(LOOP_ENTRY)));
   SWIG_Python_SetConstant(d, "LOOP_END",SWIG_From_int(static_cast< int >(LOOP_END)));
+  SWIG_Python_SetConstant(d, "ARG_NONE",SWIG_From_int(static_cast< int >(ARG_NONE)));
+  SWIG_Python_SetConstant(d, "ARG_BEGIN",SWIG_From_int(static_cast< int >(ARG_BEGIN)));
+  SWIG_Python_SetConstant(d, "ARG_MIDDLE",SWIG_From_int(static_cast< int >(ARG_MIDDLE)));
+  SWIG_Python_SetConstant(d, "ARG_END",SWIG_From_int(static_cast< int >(ARG_END)));
   SWIG_Python_SetConstant(d, "DBG_SCRIPT_LOAD",SWIG_From_int(static_cast< int >(DBG_SCRIPT_LOAD)));
   SWIG_Python_SetConstant(d, "DBG_SCRIPT_UNLOAD",SWIG_From_int(static_cast< int >(DBG_SCRIPT_UNLOAD)));
   SWIG_Python_SetConstant(d, "DBG_SCRIPT_RUN",SWIG_From_int(static_cast< int >(DBG_SCRIPT_RUN)));
@@ -38828,6 +41068,9 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "DBG_DEINITIALIZE_LOCKS",SWIG_From_int(static_cast< int >(DBG_DEINITIALIZE_LOCKS)));
   SWIG_Python_SetConstant(d, "DBG_GET_TIME_WASTED_COUNTER",SWIG_From_int(static_cast< int >(DBG_GET_TIME_WASTED_COUNTER)));
   SWIG_Python_SetConstant(d, "DBG_SYMBOL_ENUM_FROMCACHE",SWIG_From_int(static_cast< int >(DBG_SYMBOL_ENUM_FROMCACHE)));
+  SWIG_Python_SetConstant(d, "DBG_DELETE_COMMENT_RANGE",SWIG_From_int(static_cast< int >(DBG_DELETE_COMMENT_RANGE)));
+  SWIG_Python_SetConstant(d, "DBG_DELETE_LABEL_RANGE",SWIG_From_int(static_cast< int >(DBG_DELETE_LABEL_RANGE)));
+  SWIG_Python_SetConstant(d, "DBG_DELETE_BOOKMARK_RANGE",SWIG_From_int(static_cast< int >(DBG_DELETE_BOOKMARK_RANGE)));
   SWIG_Python_SetConstant(d, "linecommand",SWIG_From_int(static_cast< int >(linecommand)));
   SWIG_Python_SetConstant(d, "linebranch",SWIG_From_int(static_cast< int >(linebranch)));
   SWIG_Python_SetConstant(d, "linelabel",SWIG_From_int(static_cast< int >(linelabel)));
@@ -38966,6 +41209,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "GUI_REPAINT_TABLE_VIEW",SWIG_From_int(static_cast< int >(GUI_REPAINT_TABLE_VIEW)));
   SWIG_Python_SetConstant(d, "GUI_UPDATE_PATCHES",SWIG_From_int(static_cast< int >(GUI_UPDATE_PATCHES)));
   SWIG_Python_SetConstant(d, "GUI_UPDATE_CALLSTACK",SWIG_From_int(static_cast< int >(GUI_UPDATE_CALLSTACK)));
+  SWIG_Python_SetConstant(d, "GUI_UPDATE_SEHCHAIN",SWIG_From_int(static_cast< int >(GUI_UPDATE_SEHCHAIN)));
   SWIG_Python_SetConstant(d, "GUI_SYMBOL_REFRESH_CURRENT",SWIG_From_int(static_cast< int >(GUI_SYMBOL_REFRESH_CURRENT)));
   SWIG_Python_SetConstant(d, "GUI_UPDATE_MEMORY_VIEW",SWIG_From_int(static_cast< int >(GUI_UPDATE_MEMORY_VIEW)));
   SWIG_Python_SetConstant(d, "GUI_REF_INITIALIZE",SWIG_From_int(static_cast< int >(GUI_REF_INITIALIZE)));
@@ -38986,6 +41230,29 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "GUI_DISPLAY_WARNING",SWIG_From_int(static_cast< int >(GUI_DISPLAY_WARNING)));
   SWIG_Python_SetConstant(d, "GUI_REGISTER_SCRIPT_LANG",SWIG_From_int(static_cast< int >(GUI_REGISTER_SCRIPT_LANG)));
   SWIG_Python_SetConstant(d, "GUI_UNREGISTER_SCRIPT_LANG",SWIG_From_int(static_cast< int >(GUI_UNREGISTER_SCRIPT_LANG)));
+  SWIG_Python_SetConstant(d, "GUI_UPDATE_ARGUMENT_VIEW",SWIG_From_int(static_cast< int >(GUI_UPDATE_ARGUMENT_VIEW)));
+  SWIG_Python_SetConstant(d, "GUI_FOCUS_VIEW",SWIG_From_int(static_cast< int >(GUI_FOCUS_VIEW)));
+  SWIG_Python_SetConstant(d, "InstructionBody",SWIG_From_int(static_cast< int >(InstructionBody)));
+  SWIG_Python_SetConstant(d, "InstructionHeading",SWIG_From_int(static_cast< int >(InstructionHeading)));
+  SWIG_Python_SetConstant(d, "InstructionTailing",SWIG_From_int(static_cast< int >(InstructionTailing)));
+  SWIG_Python_SetConstant(d, "InstructionOverlapped",SWIG_From_int(static_cast< int >(InstructionOverlapped)));
+  SWIG_Python_SetConstant(d, "DataByte",SWIG_From_int(static_cast< int >(DataByte)));
+  SWIG_Python_SetConstant(d, "DataWord",SWIG_From_int(static_cast< int >(DataWord)));
+  SWIG_Python_SetConstant(d, "DataDWord",SWIG_From_int(static_cast< int >(DataDWord)));
+  SWIG_Python_SetConstant(d, "DataQWord",SWIG_From_int(static_cast< int >(DataQWord)));
+  SWIG_Python_SetConstant(d, "DataFloat",SWIG_From_int(static_cast< int >(DataFloat)));
+  SWIG_Python_SetConstant(d, "DataDouble",SWIG_From_int(static_cast< int >(DataDouble)));
+  SWIG_Python_SetConstant(d, "DataLongDouble",SWIG_From_int(static_cast< int >(DataLongDouble)));
+  SWIG_Python_SetConstant(d, "DataXMM",SWIG_From_int(static_cast< int >(DataXMM)));
+  SWIG_Python_SetConstant(d, "DataYMM",SWIG_From_int(static_cast< int >(DataYMM)));
+  SWIG_Python_SetConstant(d, "DataMMX",SWIG_From_int(static_cast< int >(DataMMX)));
+  SWIG_Python_SetConstant(d, "DataMixed",SWIG_From_int(static_cast< int >(DataMixed)));
+  SWIG_Python_SetConstant(d, "InstructionDataMixed",SWIG_From_int(static_cast< int >(InstructionDataMixed)));
+  SWIG_Python_SetConstant(d, "TraceRecordNone",SWIG_From_int(static_cast< int >(TraceRecordNone)));
+  SWIG_Python_SetConstant(d, "TraceRecordBitExec",SWIG_From_int(static_cast< int >(TraceRecordBitExec)));
+  SWIG_Python_SetConstant(d, "TraceRecordByteWithExecTypeAndCounter",SWIG_From_int(static_cast< int >(TraceRecordByteWithExecTypeAndCounter)));
+  SWIG_Python_SetConstant(d, "TraceRecordWordWithExecTypeAndCounter",SWIG_From_int(static_cast< int >(TraceRecordWordWithExecTypeAndCounter)));
+  SWIG_Python_SetConstant(d, "TCP_ADDR_SIZE",SWIG_From_int(static_cast< int >(50)));
   SWIG_Python_SetConstant(d, "HardwareAccess",SWIG_From_int(static_cast< int >(Script::Debug::HardwareAccess)));
   SWIG_Python_SetConstant(d, "HardwareWrite",SWIG_From_int(static_cast< int >(Script::Debug::HardwareWrite)));
   SWIG_Python_SetConstant(d, "HardwareExecute",SWIG_From_int(static_cast< int >(Script::Debug::HardwareExecute)));
