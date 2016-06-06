@@ -574,6 +574,11 @@ Labeless::Labeless()
 	::google::protobuf::SetLogHandler(protobufLogHandler);
 }
 
+Labeless::~Labeless()
+{
+	destroy();
+}
+
 Labeless& Labeless::instance()
 {
 	static Labeless ll;
@@ -602,6 +607,11 @@ bool Labeless::init()
 
 bool Labeless::destroy()
 {
+	static bool destroyed = false;
+	if (destroyed)
+		return true;
+	destroyed = true;
+
 	if (gConfig.helperWnd)
 		DestroyWindow(gConfig.helperWnd);
 	gConfig.helperWnd = nullptr;

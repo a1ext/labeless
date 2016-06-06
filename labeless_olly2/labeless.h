@@ -69,6 +69,8 @@ class Labeless
 	Labeless(const Labeless&) = delete;
 	Labeless& operator=(const Labeless&) = delete;
 public:
+	virtual ~Labeless();
+
 	static Labeless& instance();
 	inline void setHInstance(HINSTANCE hInst) { m_hInst = hInst; }
 	inline HINSTANCE hInstance() const { return m_hInst; }
