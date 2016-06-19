@@ -1,3 +1,10 @@
+# v 1.1.0.6
+ + IDA's local variables (structs only) syncronization as comment is added
+ * Fixed: issue #5
+
+# v 1.1.0.4
+ * x64dbg backend updated to snapshot on 2016-05-29_01-10
+
 # v 1.1.0.3
  + Support of IDA 6.9 is added
  + Support of IDA: 64-bit targets is added
