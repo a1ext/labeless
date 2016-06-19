@@ -30,6 +30,7 @@
 #include <offset.hpp>
 #include <segment.hpp>
 #include <srarea.hpp>
+#include <struct.hpp>
 #include <typeinf.hpp>
 #include <../ldr/idaldr.h>
 
@@ -158,6 +159,7 @@ void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename
 
 
 static const std::string kAPIEnumName = "OLD_API_EXTERN_CONSTS";
+static const qstring kReturnAddrStackStructFieldName = " r";
 static const QString kLabelessMenuObjectName = "labeless_menu";
 static const QString kLabelessMenuLoadStubItemName = "act-load-stub-x86";
 static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
@@ -304,11 +306,87 @@ void Labeless::onSyncronizeAllRequested()
 	if (!labelPoints.empty())
 		addLabelsSyncData(labelPoints);
 
-	if (m_Settings.commentsSync != Settings::CS_Disabled)
+	QHash<ea_t, std::string> ea2comment;
+
+	auto fnJoinComment = [&ea2comment](ea_t ea, const std::string& cmt)
+	{
+		auto it = ea2comment.find(ea);
+		if (it == ea2comment.end())
+		{
+			ea2comment[ea] = cmt;
+			return;
+		}
+		std::string v = it.value();
+		if (it.value() != cmt)
+		{
+			it.value() += ", " + cmt;
+			//msg("LL: %#08x collision, multi-comment: %s\n", ea, it.value().c_str());
+		}
+	};
+
+	if (m_Settings.commentsSync.testFlag(Settings::CS_LocalVar))
+	{
+		const size_t funcCnt = get_func_qty();
+		qstring memberName;
+		strpath_t path;
+
+		for (size_t i = 0; i < funcCnt; ++i)
+		{
+			func_t* fn = getn_func(i);
+			struc_t* frame = get_frame(fn);
+
+			func_item_iterator_t fnItemIt(fn);
+			fnItemIt.first();
+			while (fnItemIt.next_code())
+			{
+				const ea_t ea = fnItemIt.current();
+				flags_t flags = get_flags_novalue(ea);
+				if (!isStkvar0(flags) && !isStkvar1(flags))
+					continue;
+
+				if (decode_insn(ea) <= 0)
+					continue;
+
+				for (size_t opNum = 0; opNum < 2; ++opNum)
+				{
+					sval_t v = 0;
+					member_t* member = get_stkvar(::cmd.Operands[opNum], cmd.Operands[opNum].addr, &v);
+					if (!member)
+						continue;
+
+					if (get_member_name2(&memberName, member->id) <= 0)
+						continue;
+
+					if (is_dummy_member_name(memberName.c_str()))
+						continue;
+
+					if (memberName == kReturnAddrStackStructFieldName)
+						continue;
+
+					if (isStruct(member->flag))
+					{
+						adiff_t disp;
+						qstring fields;
+						path.len = get_struct_operand(ea, opNum, path.ids, &disp, &path.delta);
+						if (path.len > 0 && (::cmd.itype != NN_lea || disp != 0))
+						{
+							append_struct_fields2(&fields, opNum, path.ids, path.len, byteflag(), &disp, path.delta, true);
+							memberName += fields;
+							fnJoinComment(ea, memberName.c_str());
+							continue;
+						}
+					}
+
+					// non-structs variable names is skipped
+					//fnJoinComment(ea, memberName.c_str());
+				}
+			}
+		}
+	}
+
+	if (m_Settings.commentsSync.testFlag(Settings::CS_IDAComment))
 	{
 		char buff[OLLY_TEXTLEN];
-		const bool nonRptCmt = m_Settings.commentsSync == Settings::CS_NonRepeatable || m_Settings.commentsSync == Settings::CS_All;
-		const bool rptCmt = m_Settings.commentsSync == Settings::CS_Repeatable || m_Settings.commentsSync == Settings::CS_All;
 		ssize_t len;
 
 		s = static_cast<segment_t*>(segs.first_area_ptr());
@@ -319,22 +397,27 @@ void Labeless::onSyncronizeAllRequested()
 				if (!has_cmt(getFlags(ea)))
 					continue;
 
-				if (nonRptCmt &&
-					(len = get_cmt(ea, false, buff, OLLY_TEXTLEN)) > 0 &&
+				if ((len = get_cmt(ea, false, buff, OLLY_TEXTLEN)) > 0 &&
 					isUtf8StringValid(buff, len))
 				{
-					commentPoints.append(CommentsSync::Data(ea, std::string(buff, static_cast<size_t>(len))));
+					fnJoinComment(ea, std::string(buff, static_cast<size_t>(len)));
 					continue;
 				}
-				if (rptCmt &&
-					(len = get_cmt(ea, true, buff, OLLY_TEXTLEN)) > 0 &&
+				if ((len = get_cmt(ea, true, buff, OLLY_TEXTLEN)) > 0 &&
 					isUtf8StringValid(buff, len))
-					commentPoints.append(CommentsSync::Data(ea, std::string(buff, static_cast<size_t>(len))));
+				{
+					fnJoinComment(ea, std::string(buff, static_cast<size_t>(len)));
+				}
 			}
 		}
-		if (!commentPoints.isEmpty())
-			addCommentsSyncData(commentPoints);
 	}
+
+	for (auto it = ea2comment.constBegin(), end = ea2comment.constEnd(); it != end; ++it)
+		commentPoints.append(CommentsSync::Data(it.key(), it.value()));
+
+	if (!commentPoints.isEmpty())
+		addCommentsSyncData(commentPoints);
+
 	msg("Labels: %d, comments: %d\n", labelPoints.count(), commentPoints.count());
 	m_SynchronizeAllNow = false;
 }

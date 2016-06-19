@@ -118,11 +118,11 @@ struct Settings
 
 	enum CommentsSync
 	{
-		CS_Disabled = 0,
-		CS_NonRepeatable,
-		CS_Repeatable,
-		CS_All
+		CS_Disabled			= 0,
+		CS_IDAComment		= 1 << 0, // means repeatable and non-repeatable
+		CS_LocalVar			= 1 << 1
 	};
+	Q_DECLARE_FLAGS(CommentSyncFlags, CommentsSync);
 
 	std::string host;
 	uint16_t port;
@@ -134,7 +134,7 @@ struct Settings
 	bool analysePEHeader;
 	bool postProcessFixCallJumps;
 	OverwriteWarning overwriteWarning;
-	CommentsSync commentsSync;
+	CommentSyncFlags commentsSync;
 
 	Settings(const std::string host_ = std::string(),
 		uint16_t port = 0,
@@ -146,7 +146,7 @@ struct Settings
 		bool analysePEHeader = false,
 		bool postProcessFixCallJumps = false,
 		OverwriteWarning overwriteWarning_ = OW_AlwaysAsk,
-		CommentsSync commentsSync_ = CS_Disabled);
+		CommentSyncFlags commentsSync_ = CS_Disabled);
 };
 
 struct LogItem

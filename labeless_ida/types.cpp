@@ -36,7 +36,7 @@ Settings::Settings(const std::string host_,
 	bool analysePEHeader_,
 	bool postProcessFixCallJumps_,
 	OverwriteWarning overwriteWarning_,
-	CommentsSync commentsSync_)
+	CommentSyncFlags commentsSync_)
 	: host(host_)
 	, port(port_)
 	, enabled(enabled_)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>356</height>
+    <width>431</width>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,19 +31,37 @@
         <number>9</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1">
+         <property name="spacing">
+          <number>11</number>
+         </property>
          <item>
           <widget class="QGroupBox" name="groupBox_3">
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
            <property name="title">
             <string>Connection</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <property name="topMargin">
+             <number>9</number>
+            </property>
+            <property name="bottomMargin">
+             <number>9</number>
+            </property>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0,1,0">
               <item>
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>OllyDbg IP:</string>
+                 <string>IP:</string>
                 </property>
                 <property name="buddy">
                  <cstring>cbOllyIP</cstring>
@@ -51,23 +69,10 @@
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QComboBox" name="cbOllyIP">
                 <property name="minimumSize">
                  <size>
-                  <width>120</width>
+                  <width>110</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -87,14 +92,26 @@
                 </item>
                </widget>
               </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>7</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item>
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>OllyDbg Port:</string>
+                 <string>Port:</string>
                 </property>
                 <property name="buddy">
                  <cstring>sbOllyPort</cstring>
@@ -102,23 +119,10 @@
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QSpinBox" name="sbOllyPort">
                 <property name="minimumSize">
                  <size>
-                  <width>120</width>
+                  <width>72</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -136,12 +140,27 @@
                 </property>
                </widget>
               </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item>
                <widget class="QPushButton" name="bTestConnection">
+                <property name="minimumSize">
+                 <size>
+                  <width>110</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>&amp;Test connection</string>
                 </property>
@@ -155,71 +174,157 @@
          <item>
           <widget class="QGroupBox" name="gbEnabledSync">
            <property name="title">
-            <string>Enable labels &amp;&amp; comments sync</string>
+            <string>Labels &amp;&amp; comments sync</string>
            </property>
            <property name="checkable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
+           <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0,0,0,1">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
+             <widget class="QCheckBox" name="cbAutoSync">
+              <property name="text">
+               <string>Auto-sync on rename</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
                <widget class="QLabel" name="label_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="text">
                  <string>Remote module base:</string>
                 </property>
-                <property name="buddy">
-                 <cstring>leRemoteModuleBase</cstring>
-                </property>
                </widget>
               </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="leRemoteModuleBase">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>120</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="placeholderText">
-                 <string>0x400000</string>
-                </property>
+              <item row="0" column="1">
+               <widget class="QWidget" name="wRemoteBaseHorLayout" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLineEdit" name="leRemoteModuleBase">
+                   <property name="minimumSize">
+                    <size>
+                     <width>120</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>120</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="placeholderText">
+                    <string>0x400000</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
+             <widget class="Line" name="line_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="3" column="0">
                <widget class="QCheckBox" name="chDemangleNames">
                 <property name="text">
-                 <string>Demangle name</string>
+                 <string>Demangle</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item>
+              <item row="2" column="1">
+               <widget class="QCheckBox" name="chFuncLocalVars">
+                <property name="text">
+                 <string>Function local vars (structs only)</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_9">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Sync as comment:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QCheckBox" name="chIDAComments">
+                <property name="text">
+                 <string>Comments non-/repeatable</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="font">
+                 <font>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Sync labels:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="chNonCodeNames">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Names which point to data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Non-code names</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
                <widget class="QCheckBox" name="chLocalLabels">
                 <property name="text">
                  <string>Local labels</string>
@@ -229,58 +334,14 @@
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QCheckBox" name="chNonCodeNames">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Names that point to data in IDA&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="text">
-                 <string>Non-code names</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2">
-              <item>
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>Comments:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="cbCommentsSync">
-                <property name="sizeAdjustPolicy">
-                 <enum>QComboBox::AdjustToMinimumContentsLength</enum>
-                </property>
-                <property name="duplicatesEnabled">
-                 <bool>true</bool>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>&lt;Disabled&gt;</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Non-repeatable</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Repeatable</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>All</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
+             <widget class="Line" name="line_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="bSyncNow">
@@ -294,6 +355,11 @@
              </widget>
             </item>
            </layout>
+           <zorder>cbAutoSync</zorder>
+           <zorder>line_2</zorder>
+           <zorder>bSyncNow</zorder>
+           <zorder>line_3</zorder>
+           <zorder>line_4</zorder>
           </widget>
          </item>
         </layout>
@@ -409,189 +475,183 @@ another instruction like:</string>
       <attribute name="title">
        <string>Python editor</string>
       </attribute>
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>9</y>
-         <width>353</width>
-         <height>232</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Palette</string>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,2">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Palette</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,2">
           <item>
-           <widget class="QTableWidget" name="twPyPaletteNames">
-            <property name="editTriggers">
-             <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::SingleSelection</enum>
-            </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectRows</enum>
-            </property>
-            <property name="horizontalScrollMode">
-             <enum>QAbstractItemView::ScrollPerPixel</enum>
-            </property>
-            <property name="showGrid">
-             <bool>false</bool>
-            </property>
-            <property name="rowCount">
-             <number>0</number>
-            </property>
-            <property name="columnCount">
-             <number>1</number>
-            </property>
-            <attribute name="horizontalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderDefaultSectionSize">
-             <number>17</number>
-            </attribute>
-            <column/>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bResetPalette">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Reset</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,0,0">
+           <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <widget class="QComboBox" name="cbPaletteType"/>
-            </item>
-            <item>
-             <widget class="QWidget" name="wPaletteColor" native="true">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QTableWidget" name="twPyPaletteNames">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>15</width>
-                <height>15</height>
-               </size>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::SingleSelection</enum>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: black;</string>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
               </property>
+              <property name="horizontalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+              <property name="showGrid">
+               <bool>false</bool>
+              </property>
+              <property name="rowCount">
+               <number>0</number>
+              </property>
+              <property name="columnCount">
+               <number>1</number>
+              </property>
+              <attribute name="horizontalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>17</number>
+              </attribute>
+              <column/>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="bPalettePickColor">
-              <property name="minimumSize">
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
                <size>
-                <width>50</width>
-                <height>0</height>
+                <width>20</width>
+                <height>40</height>
                </size>
               </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bResetPalette">
               <property name="maximumSize">
                <size>
-                <width>50</width>
+                <width>100</width>
                 <height>16777215</height>
                </size>
               </property>
               <property name="text">
-               <string>Pick...</string>
+               <string>Reset</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
+             <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,0,0">
+              <item>
+               <widget class="QComboBox" name="cbPaletteType"/>
+              </item>
+              <item>
+               <widget class="QWidget" name="wPaletteColor" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>15</width>
+                  <height>15</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: black;</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bPalettePickColor">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Pick...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item>
-             <widget class="QCheckBox" name="chPaletteBold">
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chPaletteBold">
+                <property name="text">
+                 <string>Bold</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chPaletteItalic">
+                <property name="text">
+                 <string>Italic</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
               <property name="text">
-               <string>Bold</string>
+               <string>Preview:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="chPaletteItalic">
-              <property name="text">
-               <string>Italic</string>
+             <widget class="TextEdit" name="tePalettePreview">
+              <property name="readOnly">
+               <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Preview:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="TextEdit" name="tePalettePreview">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="html">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+              <property name="html">
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -619,13 +679,15 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;var1 = 0x00400000&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;__extern__ = {'ea': 0x10000000, 'name': 'some name'}&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
-        </item>
-       </layout>
-      </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
@@ -710,6 +772,33 @@ p, li { white-space: pre-wrap; }
    <header location="global">textedit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>cbOllyIP</tabstop>
+  <tabstop>sbOllyPort</tabstop>
+  <tabstop>bTestConnection</tabstop>
+  <tabstop>cbAutoSync</tabstop>
+  <tabstop>leRemoteModuleBase</tabstop>
+  <tabstop>chNonCodeNames</tabstop>
+  <tabstop>chLocalLabels</tabstop>
+  <tabstop>chDemangleNames</tabstop>
+  <tabstop>chIDAComments</tabstop>
+  <tabstop>chFuncLocalVars</tabstop>
+  <tabstop>bSyncNow</tabstop>
+  <tabstop>chPerformPEAnalysis</tabstop>
+  <tabstop>cbOverwriteWarning</tabstop>
+  <tabstop>chPostProcessFixCallJumps</tabstop>
+  <tabstop>twPyPaletteNames</tabstop>
+  <tabstop>cbPaletteType</tabstop>
+  <tabstop>bPalettePickColor</tabstop>
+  <tabstop>chPaletteBold</tabstop>
+  <tabstop>chPaletteItalic</tabstop>
+  <tabstop>bResetPalette</tabstop>
+  <tabstop>bRemotePythonExecution</tabstop>
+  <tabstop>bSaveAncClose</tabstop>
+  <tabstop>bDiscard</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>tePalettePreview</tabstop>
+ </tabstops>
  <resources>
   <include location="../res/res.qrc"/>
  </resources>

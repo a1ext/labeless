@@ -58,14 +58,15 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->sbOllyPort->setValue(settings.port);
 	m_UI->leRemoteModuleBase->setText(QString("0x%1").arg(settings.remoteModBase, sizeof(ea_t) * 2, 16, QChar('0')));
 	m_UI->leRemoteModuleBase->setToolTip(QString("Current IDA DB's module base is 0x%1.").arg(currModBase, sizeof(ea_t) * 2, 16, QChar('0')));
-	m_UI->gbEnabledSync->setChecked(settings.enabled);
+	m_UI->cbAutoSync->setChecked(settings.enabled);
 	m_UI->chDemangleNames->setChecked(settings.demangle);
 	m_UI->chLocalLabels->setChecked(settings.localLabels);
 	m_UI->chPerformPEAnalysis->setChecked(settings.analysePEHeader);
 	m_UI->chPostProcessFixCallJumps->setChecked(settings.postProcessFixCallJumps);
 	m_UI->chNonCodeNames->setChecked(settings.nonCodeNames);
 	m_UI->cbOverwriteWarning->setCurrentIndex(settings.overwriteWarning);
-	m_UI->cbCommentsSync->setCurrentIndex(settings.commentsSync);
+	m_UI->chIDAComments->setChecked(settings.commentsSync.testFlag(Settings::CS_IDAComment));
+	m_UI->chFuncLocalVars->setChecked(settings.commentsSync.testFlag(Settings::CS_LocalVar));
 
 	QLabel* const lVer = new QLabel(m_UI->tabWidget);
 	lVer->setText(QString("v %1").arg(LABELESS_VER_STR));
@@ -78,8 +79,8 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->tabWidget->setCornerWidget(lVer);
 
 	setUpPalette();
+	//adjustSize();
 	setFixedSize(size());
-	adjustSize();
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
@@ -149,14 +150,18 @@ void SettingsDialog::getSettings(Settings& result)
 	QString remoteModBase = m_UI->leRemoteModuleBase->text().trimmed();
 	result.remoteModBase = remoteModBase.toULongLong(&ok, 16);
 	
-	result.enabled = m_UI->gbEnabledSync->isChecked();
+	result.enabled = m_UI->cbAutoSync->isChecked();
 	result.demangle = m_UI->chDemangleNames->isChecked();
 	result.localLabels = m_UI->chLocalLabels->isChecked();
 	result.nonCodeNames = m_UI->chNonCodeNames->isChecked();
 	result.analysePEHeader = m_UI->chPerformPEAnalysis->isChecked();
 	result.postProcessFixCallJumps = m_UI->chPostProcessFixCallJumps->isChecked();
 	result.overwriteWarning = static_cast<Settings::OverwriteWarning>(m_UI->cbOverwriteWarning->currentIndex());
-	result.commentsSync = static_cast<Settings::CommentsSync>(m_UI->cbCommentsSync->currentIndex());
+	result.commentsSync = Settings::CS_Disabled;
+	if (m_UI->chIDAComments->isChecked())
+		result.commentsSync |= Settings::CS_IDAComment;
+	if (m_UI->chFuncLocalVars->isChecked())
+		result.commentsSync |= Settings::CS_LocalVar;
 }
 
 void SettingsDialog::changeEvent(QEvent *e)
