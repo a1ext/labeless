@@ -1060,15 +1060,36 @@ stdapi (void)    Deletedatarangelist(ulong addr0,ulong addr1,int *list,int n);
 stdapi (int)     Quickinsertdata(ulong addr,int type,
                    void *data,ulong datasize);
 stdapi (void)    Mergequickdata(void);
+
+%pybuffer_mutable_string(wchar_t *undecorated)
 stdapi (int)     DemanglenameW(wchar_t *name,wchar_t *undecorated,int recurs);
+%typemap(in) wchar_t *undecorated;
+
+%pybuffer_string(wchar_t* s)
 stdapi (int)     InsertnameW(ulong addr,int type,wchar_t *s);
+
+%pybuffer_string(wchar_t* s)
 stdapi (int)     QuickinsertnameW(ulong addr,int type,wchar_t *s);
+
+%pybuffer_mutable_string(wchar_t *name)
 stdapi (int)     FindnameW(ulong addr,int type,wchar_t *name,int nname);
+%typemap(in) wchar_t *name;
+
+%pybuffer_mutable_string(wchar_t *name)
 stdapi (int)     FindnextnameW(ulong *addr,wchar_t *name,int nname);
+%typemap(in) wchar_t *name;
+
 stdapi (void)    Startnextnamelist(ulong addr0,ulong addr1,int *list,int n);
+
+%pybuffer_mutable_string(wchar_t *name)
 stdapi (int)     FindnextnamelistW(ulong *addr,int *type,
                    wchar_t *name,int nname);
+%typemap(in) wchar_t *name;
+				   
+%pybuffer_mutable_string(wchar_t *name)
 stdapi (int)     Findlabel(ulong addr,wchar_t *name,int firsttype);
+%typemap(in) wchar_t *name;
+
 stdapi (int)     FindaddressW(wchar_t *name,struct t_module *pmod,
                    ulong *addr,wchar_t *errtxt);
 

@@ -10492,8 +10492,8 @@ SWIGINTERN PyObject *_wrap_DemanglenameW(PyObject *SWIGUNUSEDPARM(self), PyObjec
   wchar_t *buf1 = 0 ;
   int alloc1 = 0 ;
   int res2 ;
-  wchar_t *buf2 = 0 ;
-  int alloc2 = 0 ;
+  Py_ssize_t size2 = 0 ;
+  void *buf2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -10507,11 +10507,14 @@ SWIGINTERN PyObject *_wrap_DemanglenameW(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DemanglenameW" "', argument " "1"" of type '" "wchar_t *""'");
   }
   arg1 = (wchar_t *)(buf1);
-  res2 = SWIG_AsWCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DemanglenameW" "', argument " "2"" of type '" "wchar_t *""'");
+  {
+    res2 = PyObject_AsWriteBuffer(obj1, &buf2, &size2);
+    if (res2<0) {
+      PyErr_Clear();
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DemanglenameW" "', argument " "2"" of type '" "(wchar_t *undecorated, SIZE)""'");
+    }
+    arg2 = (wchar_t *) buf2;
   }
-  arg2 = (wchar_t *)(buf2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "DemanglenameW" "', argument " "3"" of type '" "int""'");
@@ -10520,11 +10523,9 @@ SWIGINTERN PyObject *_wrap_DemanglenameW(PyObject *SWIGUNUSEDPARM(self), PyObjec
   result = (int)DemanglenameW(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
   if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
 fail:
   if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return NULL;
 }
 
@@ -10539,8 +10540,8 @@ SWIGINTERN PyObject *_wrap_InsertnameW(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int val2 ;
   int ecode2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void const *buf3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -10557,17 +10558,17 @@ SWIGINTERN PyObject *_wrap_InsertnameW(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "InsertnameW" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = (int)(val2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "InsertnameW" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsReadBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "InsertnameW" "', argument " "3"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   result = (int)InsertnameW(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
@@ -10582,8 +10583,8 @@ SWIGINTERN PyObject *_wrap_QuickinsertnameW(PyObject *SWIGUNUSEDPARM(self), PyOb
   int val2 ;
   int ecode2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void const *buf3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -10600,17 +10601,17 @@ SWIGINTERN PyObject *_wrap_QuickinsertnameW(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "QuickinsertnameW" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = (int)(val2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "QuickinsertnameW" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsReadBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "QuickinsertnameW" "', argument " "3"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   result = (int)QuickinsertnameW(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
@@ -10626,8 +10627,8 @@ SWIGINTERN PyObject *_wrap_FindnameW(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   int val2 ;
   int ecode2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
@@ -10647,11 +10648,14 @@ SWIGINTERN PyObject *_wrap_FindnameW(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "FindnameW" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = (int)(val2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindnameW" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsWriteBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      PyErr_Clear();
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindnameW" "', argument " "3"" of type '" "(wchar_t *FindnameW, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   ecode4 = SWIG_AsVal_int(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FindnameW" "', argument " "4"" of type '" "int""'");
@@ -10659,10 +10663,8 @@ SWIGINTERN PyObject *_wrap_FindnameW(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   arg4 = (int)(val4);
   result = (int)FindnameW(arg1,arg2,arg3,arg4);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
@@ -10675,8 +10677,8 @@ SWIGINTERN PyObject *_wrap_FindnextnameW(PyObject *SWIGUNUSEDPARM(self), PyObjec
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 ;
-  wchar_t *buf2 = 0 ;
-  int alloc2 = 0 ;
+  Py_ssize_t size2 = 0 ;
+  void *buf2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -10690,11 +10692,14 @@ SWIGINTERN PyObject *_wrap_FindnextnameW(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FindnextnameW" "', argument " "1"" of type '" "ulong *""'"); 
   }
   arg1 = (ulong *)(argp1);
-  res2 = SWIG_AsWCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindnextnameW" "', argument " "2"" of type '" "wchar_t *""'");
+  {
+    res2 = PyObject_AsWriteBuffer(obj1, &buf2, &size2);
+    if (res2<0) {
+      PyErr_Clear();
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindnextnameW" "', argument " "2"" of type '" "(wchar_t *FindnextnameW, SIZE)""'");
+    }
+    arg2 = (wchar_t *) buf2;
   }
-  arg2 = (wchar_t *)(buf2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "FindnextnameW" "', argument " "3"" of type '" "int""'");
@@ -10702,10 +10707,8 @@ SWIGINTERN PyObject *_wrap_FindnextnameW(PyObject *SWIGUNUSEDPARM(self), PyObjec
   arg3 = (int)(val3);
   result = (int)FindnextnameW(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return NULL;
 }
 
@@ -10769,8 +10772,8 @@ SWIGINTERN PyObject *_wrap_FindnextnamelistW(PyObject *SWIGUNUSEDPARM(self), PyO
   void *argp2 = 0 ;
   int res2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
@@ -10790,11 +10793,14 @@ SWIGINTERN PyObject *_wrap_FindnextnamelistW(PyObject *SWIGUNUSEDPARM(self), PyO
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "FindnextnamelistW" "', argument " "2"" of type '" "int *""'"); 
   }
   arg2 = (int *)(argp2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindnextnamelistW" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsWriteBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      PyErr_Clear();
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "FindnextnamelistW" "', argument " "3"" of type '" "(wchar_t *FindnextnamelistW, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   ecode4 = SWIG_AsVal_int(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FindnextnamelistW" "', argument " "4"" of type '" "int""'");
@@ -10802,10 +10808,8 @@ SWIGINTERN PyObject *_wrap_FindnextnamelistW(PyObject *SWIGUNUSEDPARM(self), PyO
   arg4 = (int)(val4);
   result = (int)FindnextnamelistW(arg1,arg2,arg3,arg4);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
@@ -10818,8 +10822,8 @@ SWIGINTERN PyObject *_wrap_Findlabel(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   unsigned long val1 ;
   int ecode1 = 0 ;
   int res2 ;
-  wchar_t *buf2 = 0 ;
-  int alloc2 = 0 ;
+  Py_ssize_t size2 = 0 ;
+  void *buf2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -10833,11 +10837,14 @@ SWIGINTERN PyObject *_wrap_Findlabel(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Findlabel" "', argument " "1"" of type '" "ulong""'");
   } 
   arg1 = (ulong)(val1);
-  res2 = SWIG_AsWCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Findlabel" "', argument " "2"" of type '" "wchar_t *""'");
+  {
+    res2 = PyObject_AsWriteBuffer(obj1, &buf2, &size2);
+    if (res2<0) {
+      PyErr_Clear();
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Findlabel" "', argument " "2"" of type '" "(wchar_t *Findlabel, SIZE)""'");
+    }
+    arg2 = (wchar_t *) buf2;
   }
-  arg2 = (wchar_t *)(buf2);
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Findlabel" "', argument " "3"" of type '" "int""'");
@@ -10845,10 +10852,8 @@ SWIGINTERN PyObject *_wrap_Findlabel(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   arg3 = (int)(val3);
   result = (int)Findlabel(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return NULL;
 }
 
@@ -21115,7 +21120,7 @@ SWIGINTERN PyObject *_wrap_Readmemory(PyObject *SWIGUNUSEDPARM(self), PyObject *
       PyErr_Clear();
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Readmemory" "', argument " "1"" of type '" "(char *buf1, SIZE)""'");
     }
-    arg1 = (char*) buf1;
+    arg1 = (char *) buf1;
   }
   ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -28511,8 +28516,8 @@ SWIGINTERN PyObject *_wrap_Decoderange(PyObject *SWIGUNUSEDPARM(self), PyObject 
   ulong arg2 ;
   ulong arg3 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   unsigned long val2 ;
   int ecode2 = 0 ;
   unsigned long val3 ;
@@ -28523,11 +28528,13 @@ SWIGINTERN PyObject *_wrap_Decoderange(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Decoderange",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Decoderange" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Decoderange" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Decoderange" "', argument " "2"" of type '" "ulong""'");
@@ -28540,10 +28547,8 @@ SWIGINTERN PyObject *_wrap_Decoderange(PyObject *SWIGUNUSEDPARM(self), PyObject 
   arg3 = (ulong)(val3);
   result = (int)Decoderange(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -28592,8 +28597,8 @@ SWIGINTERN PyObject *_wrap_Getexportfrommemory(PyObject *SWIGUNUSEDPARM(self), P
   unsigned long val1 ;
   int ecode1 = 0 ;
   int res2 ;
-  wchar_t *buf2 = 0 ;
-  int alloc2 = 0 ;
+  Py_ssize_t size2 = 0 ;
+  void const *buf2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   int result;
@@ -28604,17 +28609,17 @@ SWIGINTERN PyObject *_wrap_Getexportfrommemory(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Getexportfrommemory" "', argument " "1"" of type '" "ulong""'");
   } 
   arg1 = (ulong)(val1);
-  res2 = SWIG_AsWCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Getexportfrommemory" "', argument " "2"" of type '" "wchar_t *""'");
+  {
+    res2 = PyObject_AsReadBuffer(obj1, &buf2, &size2);
+    if (res2<0) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Getexportfrommemory" "', argument " "2"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg2 = (wchar_t *) buf2;
   }
-  arg2 = (wchar_t *)(buf2);
   result = (int)Getexportfrommemory(arg1,arg2);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return NULL;
 }
 
@@ -30334,8 +30339,8 @@ SWIGINTERN PyObject *_wrap_Getmodulestring(PyObject *SWIGUNUSEDPARM(self), PyObj
   unsigned long val2 ;
   int ecode2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void const *buf3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -30352,17 +30357,17 @@ SWIGINTERN PyObject *_wrap_Getmodulestring(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Getmodulestring" "', argument " "2"" of type '" "ulong""'");
   } 
   arg2 = (ulong)(val2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Getmodulestring" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsReadBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Getmodulestring" "', argument " "3"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   result = (int)Getmodulestring(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
@@ -33639,8 +33644,8 @@ SWIGINTERN PyObject *_wrap_Decodethreadname(PyObject *SWIGUNUSEDPARM(self), PyOb
   ulong arg2 ;
   int arg3 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   unsigned long val2 ;
   int ecode2 = 0 ;
   int val3 ;
@@ -33651,11 +33656,13 @@ SWIGINTERN PyObject *_wrap_Decodethreadname(PyObject *SWIGUNUSEDPARM(self), PyOb
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Decodethreadname",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Decodethreadname" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Decodethreadname" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Decodethreadname" "', argument " "2"" of type '" "ulong""'");
@@ -33668,10 +33675,8 @@ SWIGINTERN PyObject *_wrap_Decodethreadname(PyObject *SWIGUNUSEDPARM(self), PyOb
   arg3 = (int)(val3);
   result = (int)Decodethreadname(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -41551,8 +41556,8 @@ SWIGINTERN PyObject *_wrap_Printfloat4(PyObject *SWIGUNUSEDPARM(self), PyObject 
   wchar_t *arg1 = (wchar_t *) 0 ;
   float arg2 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   float val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
@@ -41560,11 +41565,13 @@ SWIGINTERN PyObject *_wrap_Printfloat4(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Printfloat4",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printfloat4" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printfloat4" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Printfloat4" "', argument " "2"" of type '" "float""'");
@@ -41572,10 +41579,8 @@ SWIGINTERN PyObject *_wrap_Printfloat4(PyObject *SWIGUNUSEDPARM(self), PyObject 
   arg2 = (float)(val2);
   result = (int)Printfloat4(arg1,arg2);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -41585,8 +41590,8 @@ SWIGINTERN PyObject *_wrap_Printfloat8(PyObject *SWIGUNUSEDPARM(self), PyObject 
   wchar_t *arg1 = (wchar_t *) 0 ;
   double arg2 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
@@ -41594,11 +41599,13 @@ SWIGINTERN PyObject *_wrap_Printfloat8(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Printfloat8",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printfloat8" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printfloat8" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Printfloat8" "', argument " "2"" of type '" "double""'");
@@ -41606,10 +41613,8 @@ SWIGINTERN PyObject *_wrap_Printfloat8(PyObject *SWIGUNUSEDPARM(self), PyObject 
   arg2 = (double)(val2);
   result = (int)Printfloat8(arg1,arg2);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -41619,8 +41624,8 @@ SWIGINTERN PyObject *_wrap_Printfloat10(PyObject *SWIGUNUSEDPARM(self), PyObject
   wchar_t *arg1 = (wchar_t *) 0 ;
   long double arg2 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj0 = 0 ;
@@ -41628,11 +41633,13 @@ SWIGINTERN PyObject *_wrap_Printfloat10(PyObject *SWIGUNUSEDPARM(self), PyObject
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Printfloat10",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printfloat10" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printfloat10" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_long_double,  0 );
     if (!SWIG_IsOK(res2)) {
@@ -41646,10 +41653,8 @@ SWIGINTERN PyObject *_wrap_Printfloat10(PyObject *SWIGUNUSEDPARM(self), PyObject
   }
   result = (int)Printfloat10(arg1,arg2);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -41659,8 +41664,8 @@ SWIGINTERN PyObject *_wrap_Printmmx(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   wchar_t *arg1 = (wchar_t *) 0 ;
   uchar *arg2 = (uchar *) 0 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   int res2 ;
   char *buf2 = 0 ;
   int alloc2 = 0 ;
@@ -41669,11 +41674,13 @@ SWIGINTERN PyObject *_wrap_Printmmx(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Printmmx",2,2,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printmmx" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Printmmx" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Printmmx" "', argument " "2"" of type '" "uchar *""'");
@@ -41681,10 +41688,8 @@ SWIGINTERN PyObject *_wrap_Printmmx(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   arg2 = (uchar *)(buf2);
   result = (int)Printmmx(arg1,arg2);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -41695,8 +41700,8 @@ SWIGINTERN PyObject *_wrap_Commentcharacter(PyObject *SWIGUNUSEDPARM(self), PyOb
   int arg2 ;
   int arg3 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
   int val3 ;
@@ -41707,11 +41712,13 @@ SWIGINTERN PyObject *_wrap_Commentcharacter(PyObject *SWIGUNUSEDPARM(self), PyOb
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Commentcharacter",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Commentcharacter" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Commentcharacter" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Commentcharacter" "', argument " "2"" of type '" "int""'");
@@ -41724,10 +41731,8 @@ SWIGINTERN PyObject *_wrap_Commentcharacter(PyObject *SWIGUNUSEDPARM(self), PyOb
   arg3 = (int)(val3);
   result = (int)Commentcharacter(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -41738,8 +41743,8 @@ SWIGINTERN PyObject *_wrap_Nameoffloat(PyObject *SWIGUNUSEDPARM(self), PyObject 
   uchar *arg2 = (uchar *) 0 ;
   ulong arg3 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   int res2 ;
   char *buf2 = 0 ;
   int alloc2 = 0 ;
@@ -41751,11 +41756,13 @@ SWIGINTERN PyObject *_wrap_Nameoffloat(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int result;
   
   if(!PyArg_UnpackTuple(args,(char *)"Nameoffloat",3,3,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Nameoffloat" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Nameoffloat" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Nameoffloat" "', argument " "2"" of type '" "uchar *""'");
@@ -41768,10 +41775,8 @@ SWIGINTERN PyObject *_wrap_Nameoffloat(PyObject *SWIGUNUSEDPARM(self), PyObject 
   arg3 = (ulong)(val3);
   result = (int)Nameoffloat(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -51536,8 +51541,8 @@ SWIGINTERN PyObject *_wrap_Addstringtocombolist(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 ;
   int res1 = 0 ;
   int res2 ;
-  wchar_t *buf2 = 0 ;
-  int alloc2 = 0 ;
+  Py_ssize_t size2 = 0 ;
+  void const *buf2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -51553,17 +51558,17 @@ SWIGINTERN PyObject *_wrap_Addstringtocombolist(PyObject *SWIGUNUSEDPARM(self), 
       arg1 = *((HWND *)(argp1));
     }
   }
-  res2 = SWIG_AsWCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Addstringtocombolist" "', argument " "2"" of type '" "wchar_t *""'");
+  {
+    res2 = PyObject_AsReadBuffer(obj1, &buf2, &size2);
+    if (res2<0) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Addstringtocombolist" "', argument " "2"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg2 = (wchar_t *) buf2;
   }
-  arg2 = (wchar_t *)(buf2);
   Addstringtocombolist(arg1,arg2);
   resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
   return NULL;
 }
 
@@ -52733,8 +52738,8 @@ SWIGINTERN PyObject *_wrap_Getstring(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   wchar_t *buf2 = 0 ;
   int alloc2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void const *buf3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
   int val5 ;
@@ -52778,11 +52783,13 @@ SWIGINTERN PyObject *_wrap_Getstring(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Getstring" "', argument " "2"" of type '" "wchar_t *""'");
   }
   arg2 = (wchar_t *)(buf2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Getstring" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsReadBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Getstring" "', argument " "3"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   ecode4 = SWIG_AsVal_int(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Getstring" "', argument " "4"" of type '" "int""'");
@@ -52821,11 +52828,9 @@ SWIGINTERN PyObject *_wrap_Getstring(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   result = (int)Getstring(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10);
   resultobj = SWIG_From_int((int)(result));
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
@@ -54307,22 +54312,22 @@ SWIGINTERN PyObject *_wrap_Uncapitalize(PyObject *SWIGUNUSEDPARM(self), PyObject
   PyObject *resultobj = 0;
   wchar_t *arg1 = (wchar_t *) 0 ;
   int res1 ;
-  wchar_t *buf1 = 0 ;
-  int alloc1 = 0 ;
+  Py_ssize_t size1 = 0 ;
+  void const *buf1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"Uncapitalize",1,1,&obj0)) SWIG_fail;
-  res1 = SWIG_AsWCharPtrAndSize(obj0, &buf1, NULL, &alloc1);
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Uncapitalize" "', argument " "1"" of type '" "wchar_t *""'");
+  {
+    res1 = PyObject_AsReadBuffer(obj0, &buf1, &size1);
+    if (res1<0) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Uncapitalize" "', argument " "1"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg1 = (wchar_t *) buf1;
   }
-  arg1 = (wchar_t *)(buf1);
   Uncapitalize(arg1);
   resultobj = SWIG_Py_Void();
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return resultobj;
 fail:
-  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   return NULL;
 }
 
@@ -62428,8 +62433,8 @@ SWIGINTERN PyObject *_wrap_Getlasterror(PyObject *SWIGUNUSEDPARM(self), PyObject
   void *argp2 = 0 ;
   int res2 = 0 ;
   int res3 ;
-  wchar_t *buf3 = 0 ;
-  int alloc3 = 0 ;
+  Py_ssize_t size3 = 0 ;
+  void const *buf3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -62446,17 +62451,17 @@ SWIGINTERN PyObject *_wrap_Getlasterror(PyObject *SWIGUNUSEDPARM(self), PyObject
     SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Getlasterror" "', argument " "2"" of type '" "ulong *""'"); 
   }
   arg2 = (ulong *)(argp2);
-  res3 = SWIG_AsWCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Getlasterror" "', argument " "3"" of type '" "wchar_t *""'");
+  {
+    res3 = PyObject_AsReadBuffer(obj2, &buf3, &size3);
+    if (res3<0) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Getlasterror" "', argument " "3"" of type '" "(wchar_t* s, SIZE)""'");
+    }
+    arg3 = (wchar_t *) buf3;
   }
-  arg3 = (wchar_t *)(buf3);
   result = (int)Getlasterror(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
-  if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return NULL;
 }
 
