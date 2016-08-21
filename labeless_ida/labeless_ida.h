@@ -88,6 +88,7 @@ public:
 
 	static int idaapi ui_callback(void* /*user_data*/, int notification_code, va_list va);
 	static int idaapi idp_callback(void* /*user_data*/, int notification_code, va_list va);
+	static int idaapi idb_callback(void* /*user_data*/, int notification_code, va_list va);
 
 private slots:
 	void onRunPythonScriptFinished();

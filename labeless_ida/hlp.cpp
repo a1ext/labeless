@@ -230,6 +230,15 @@ ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames)
 	return BADADDR;
 }
 
+bool isFuncStart(ea_t ea)
+{
+	if (ea == BADADDR)
+		return false;
+
+	func_t* fn = get_func(ea);
+	return fn && fn->startEA == ea;
+}
+
 namespace protobuf {
 
 bool parseBigMessage(::google::protobuf::Message& msg, const std::string& data)

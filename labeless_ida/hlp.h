@@ -31,6 +31,7 @@ std::string memoryProtectToStr(DWORD p);
 qlist<ea_t> codeRefsToCode(ea_t ea);
 qlist<ea_t> dataRefsToCode(ea_t ea);
 ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames);
+bool isFuncStart(ea_t ea);
 
 namespace protobuf {
 

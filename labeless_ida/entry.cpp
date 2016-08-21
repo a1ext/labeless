@@ -14,8 +14,11 @@
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
-	Q_INIT_RESOURCE(res);
-	DisableThreadLibraryCalls(hModule);
+	if (ul_reason_for_call == DLL_PROCESS_ATTACH)
+	{
+		Q_INIT_RESOURCE(res);
+		DisableThreadLibraryCalls(hModule);
+	}
 	return TRUE;
 }
 
@@ -38,6 +41,11 @@ static int idaapi init()
 		msg("%s: hook_to_notification_point(HT_UI) failed.", __FUNCTION__);
 		return PLUGIN_SKIP;
 	}
+	if (!hook_to_notification_point(HT_IDB, Labeless::idb_callback, nullptr))
+	{
+		msg("%s: hook_to_notification_point(HT_IDB) failed.", __FUNCTION__);
+		return PLUGIN_SKIP;
+	}
 	Labeless::instance().firstInit();
 	return PLUGIN_KEEP;
 }
@@ -46,6 +54,7 @@ void idaapi term()
 {
 	unhook_from_notification_point(HT_IDP, Labeless::idp_callback);
 	unhook_from_notification_point(HT_UI, Labeless::ui_callback);
+	unhook_from_notification_point(HT_IDB, Labeless::idb_callback);
 	Labeless::instance().shutdown();
 }
 

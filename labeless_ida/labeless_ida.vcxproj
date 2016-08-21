@@ -559,6 +559,7 @@
       </Message>
     </CustomBuild>
     <ClInclude Include="idastorage.h" />
+    <ClInclude Include="palette.h" />
     <ClInclude Include="pythonpalettemanager.h" />
     <CustomBuild Include="settingsdialog.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing settingsdialog.h...</Message>

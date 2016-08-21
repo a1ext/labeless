@@ -15,6 +15,9 @@
 #   include <QMessageBox>
 #endif // QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 
+#include <QButtonGroup>
+#include <QMenu>
+
 #include "hlp.h"
 
 namespace {
@@ -23,6 +26,23 @@ QString ollyStyleFormatHex(ea_t v)
 {
 	return QString("%1").arg(v, sizeof(ea_t) * 2, 16, QChar('0')).replace("0x", "").toUpper();
 }
+
+enum
+{
+	COL_BASE,
+	COL_SIZE,
+	COL_OWNER,
+	COL_PROTECT
+};
+
+enum RB_Manual
+{
+	RBM_VA_To,
+	RBM_Size
+};
+
+static const QString kRedBorderStyleSheet = "border: 3px solid red;";
+
 
 } // anonymous
 
@@ -36,8 +56,16 @@ ChooseMemoryDialog::ChooseMemoryDialog(const MemoryRegionList& memMap, const QSt
 		setWindowTitle(title);
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-	fillView();
+	QButtonGroup* bg = new QButtonGroup(this);
+	bg->addButton(m_UI->rbVaTo, RBM_VA_To);
+	bg->addButton(m_UI->rbSize, RBM_Size);
+	bg->setExclusive(true);
+	CHECKED_CONNECT(connect(bg, SIGNAL(buttonClicked(int)), this, SLOT(onManualMeasureTypeChanged(int))));
+	m_UI->gbManual->setChecked(true);
+	m_UI->rbSize->click();
 	m_UI->gbManual->setChecked(false);
+
+	fillView();
 }
 
 ChooseMemoryDialog::~ChooseMemoryDialog()
@@ -64,7 +92,8 @@ bool ChooseMemoryDialog::getSelectedMemory(MemoryRegionList& selected) const
 	MemoryRegion r(
 		m_UI->leManualVaFrom->text().toULongLong(nullptr, 16),
 		m_UI->leManualSize->text().toULongLong(nullptr, 16),
-		0);
+		PAGE_EXECUTE_READWRITE,
+		true);
 	selected.append(r);
 	return true;
 }
@@ -85,9 +114,10 @@ void ChooseMemoryDialog::accept()
 {
 	if (m_UI->gbManual->isChecked())
 	{
-		bool ok1, ok2;
-		const auto base = m_UI->leManualVaFrom->text().toULongLong(&ok1, 16);
-		const auto size = m_UI->leManualSize->text().toULongLong(&ok2, 16);
+		bool ok1, ok2, ok3;
+		const qulonglong base = m_UI->leManualVaFrom->text().toULongLong(&ok1, 16);
+		const qulonglong size = m_UI->leManualSize->text().toULongLong(&ok2, 16);
+		const qulonglong eaEnd = m_UI->leManualVaTo->text().toULongLong(&ok3, 16);
 		if (!ok1 || !base)
 		{
 			QMessageBox::warning(this, tr(":("), tr("<b>'VA from'</b> field is invalid"));
@@ -100,6 +130,13 @@ void ChooseMemoryDialog::accept()
 			m_UI->leManualSize->setFocus();
 			return;
 		}
+
+		if (base >= eaEnd)
+		{
+			QMessageBox::warning(this, tr(":("), tr("Empty or invalid memory range is specified"));
+			return;
+		}
+
 		if (!isRangeBelongsToExistingRegions(base, size))
 		{
 			QMessageBox::warning(this, tr(":("),
@@ -132,16 +169,134 @@ void ChooseMemoryDialog::selectTypeChanged()
 		m_UI->leManualVaFrom->setFocus();
 }
 
+void ChooseMemoryDialog::on_twMemoryMap_customContextMenuRequested(const QPoint&)
+{
+	QTableWidget* tw = qobject_cast<QTableWidget*>(sender());
+	if (!tw)
+		return;
+
+	auto items = tw->selectionModel()->selectedRows();
+	QMenu m(this);
+	QAction* actMarkAsRWE = m.addAction(tr("Import as RWE"));
+	QAction* rv = m.exec(QCursor::pos());
+	if (!rv || rv != actMarkAsRWE)
+		return;
+
+	for (int i = 0; i < items.count(); ++i)
+	{
+		const auto idx = items.at(i);
+		if (!idx.isValid())
+			continue;
+		const auto row = idx.row();
+		auto& r = m_MemMap[row];
+		r.protect = PAGE_EXECUTE_READWRITE;
+		r.forceProtect = true;
+
+		m_UI->twMemoryMap->item(row, COL_PROTECT)->setText(QString::fromStdString(hlp::memoryProtectToStr(m_MemMap[row].protect)));
+	}
+}
+
+void ChooseMemoryDialog::on_leManualVaFrom_textChanged(const QString& v)
+{
+	QLineEdit* le = qobject_cast<QLineEdit*>(sender());
+	if (!le)
+		return;
+
+	bool fromOk = false;
+	const qulonglong from = le->text().toULongLong(&fromOk, 16);
+
+	if (!m_UI->leManualVaTo->text().isEmpty() || !m_UI->leManualSize->text().isEmpty())
+	{
+		QLineEdit* lePrimary = m_UI->rbSize->isChecked() ? m_UI->leManualSize : m_UI->leManualVaTo;
+		QLineEdit* leSecondary = m_UI->rbSize->isChecked() ? m_UI->leManualVaTo : m_UI->leManualSize;
+
+		ScopedSignalBlocker signalBlocker(QList<QPointer<QObject>>() << leSecondary);
+		Q_UNUSED(signalBlocker);
+
+		bool ok = false;
+		uval_t size = static_cast<uval_t>(lePrimary->text().toULongLong(&ok, 16));
+		if (!ok || !size)
+			return;
+		leSecondary->setText(ollyStyleFormatHex(from + size));
+		leSecondary->setStyleSheet(QString::null);
+		lePrimary->setStyleSheet(QString::null);
+	}
+
+	le->setStyleSheet(!fromOk || from > BADADDR ? kRedBorderStyleSheet : QString::null);
+}
+
+void ChooseMemoryDialog::on_leManualVaTo_textChanged(const QString& v)
+{
+	QLineEdit* le = qobject_cast<QLineEdit*>(sender());
+	if (!le)
+		return;
+
+	bool endOk = false;
+	const qulonglong ea_end = le->text().toULongLong(&endOk, 16);
+	if (m_UI->leManualVaFrom->text().isEmpty())
+		return;
+
+	ScopedSignalBlocker signalBlocker(QList<QPointer<QObject>>() << m_UI->leManualSize);
+	Q_UNUSED(signalBlocker);
+
+	if (!endOk)
+	{
+		m_UI->leManualSize->clear();
+		le->setStyleSheet(kRedBorderStyleSheet);
+		return;
+	}
+	bool ok = false;
+	const qulonglong from = m_UI->leManualVaFrom->text().toULongLong(&ok, 16);
+	if (!ok || !from)
+		return;
+
+	le->setStyleSheet(from >= ea_end || ea_end > BADADDR ? kRedBorderStyleSheet : QString::null);
+	m_UI->leManualSize->setText(ollyStyleFormatHex(ea_end - from));
+	m_UI->leManualSize->setStyleSheet(QString::null);
+}
+
+void ChooseMemoryDialog::on_leManualSize_textChanged(const QString& v)
+{
+	QLineEdit* le = qobject_cast<QLineEdit*>(sender());
+	if (!le)
+		return;
+
+	bool sizeOk = false;
+	const qulonglong size = le->text().toULongLong(&sizeOk, 16);
+	if (m_UI->leManualVaFrom->text().isEmpty())
+		return;
+
+	ScopedSignalBlocker signalBlocker(QList<QPointer<QObject>>() << m_UI->leManualVaTo);
+	Q_UNUSED(signalBlocker);
+
+	if (!sizeOk)
+	{
+		m_UI->leManualVaTo->clear();
+		le->setStyleSheet(kRedBorderStyleSheet);
+		return;
+	}
+
+	bool ok = false;
+	const qulonglong from = m_UI->leManualVaFrom->text().toULongLong(&ok, 16);
+	if (!ok || !from)
+		return;
+
+	le->setStyleSheet(size > BADADDR || from + size > BADADDR ? kRedBorderStyleSheet : QString::null);
+	m_UI->leManualVaTo->setText(ollyStyleFormatHex(from + size));
+	m_UI->leManualVaTo->setStyleSheet(QString::null);
+}
+
+void ChooseMemoryDialog::onManualMeasureTypeChanged(int t)
+{
+	auto v = static_cast<RB_Manual>(t);
+
+	m_UI->leManualSize->setEnabled(v == RBM_Size);
+	m_UI->leManualVaTo->setEnabled(v == RBM_VA_To);
+	(v == RBM_Size ? m_UI->leManualSize : m_UI->leManualVaTo)->setFocus();
+}
+
 void ChooseMemoryDialog::fillView()
 {
-	enum
-	{
-		COL_BASE,
-		COL_SIZE,
-		COL_OWNER,
-		COL_PROTECT
-	};
-
 	for (auto it = m_MemMap.constBegin(), end = m_MemMap.constEnd(); it != end; ++it)
 	{
 		const MemoryRegion& mr = *it;

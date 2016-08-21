@@ -16,6 +16,8 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
+#include "pythonpalettemanager.h"
+
 TextEdit::TextEdit(QWidget* parent)
 	: QTextEdit(parent)
 {
@@ -27,11 +29,6 @@ TextEdit::TextEdit(QWidget* parent)
 	m_Completer->setWidget(this);
 	CHECKED_CONNECT(connect(m_Completer, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString))));
 
-	auto f = font();
-	f.setBold(true);
-	setFont(f);
-	QFontMetrics m(font());
-	setTabStopWidth(4 * m.width(' '));
 	setAcceptRichText(false);
 }
 
@@ -110,7 +107,8 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
 
 void TextEdit::colorSchemeChanged()
 {
-	m_Highlighter->updatePalette(true);
+	auto palette = PythonPaletteManager::instance().palette();
+	setPalette(palette);
 }
 
 bool TextEdit::asHighlightedHtml(QString& result)
@@ -123,6 +121,12 @@ bool TextEdit::asHighlightedHtml(QString& result)
 
 void TextEdit::setPalette(const PythonPalette& p)
 {
+	QFont fnt(p.mainFont, p.mainFontPointSize);
+	setFont(fnt);
+
+	auto w = p.tabWidth * fontMetrics().width(' ');
+	setTabStopWidth(w);
+
 	if (m_Highlighter)
 		m_Highlighter->setPalette(p);
 }

@@ -51,7 +51,8 @@ enum SettingsNodeAltType
 	LNAT_RmoteModBase,
 	LNAT_Demangle,
 	LNAT_LocalLabels,
-	LNAT_CommentsSync
+	LNAT_CommentsSync,
+	LNAT_RemoveFuncArgs
 };
 
 enum StorageVersionAltType
@@ -261,6 +262,7 @@ bool loadDbSettings(Settings& result)
 	result.demangle = n.altval(LNAT_Demangle) != 0;
 	result.localLabels = n.altval(LNAT_LocalLabels) != 0;
 	result.commentsSync = static_cast<Settings::CommentsSync>(n.altval(LNAT_CommentsSync));
+	result.removeFuncArgs = n.altval(LNAT_RemoveFuncArgs) != 0;
 	return true;
 }
 
@@ -275,6 +277,7 @@ bool storeDbSettings(const Settings& result)
 	n.altset(LNAT_Demangle, result.demangle ? 1 : 0);
 	n.altset(LNAT_LocalLabels, result.localLabels ? 1 : 0);
 	n.altset(LNAT_CommentsSync, result.commentsSync);
+	n.altset(LNAT_RemoveFuncArgs, result.removeFuncArgs ? 1 : 0);
 	return true;
 }
 

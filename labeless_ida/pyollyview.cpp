@@ -275,12 +275,12 @@ bool PyOllyView::eventFilter(QObject* obj, QEvent* event)
 
 void PyOllyView::setOllyScript(const QString& text)
 {
-	m_UI->teOllyScript->setText(text);
+	m_UI->teOllyScript->setPlainText(text);
 }
 
 void PyOllyView::setIDAScript(const QString& text)
 {
-	m_UI->teIDAScript->setText(text);
+	m_UI->teIDAScript->setPlainText(text);
 }
 
 void PyOllyView::onScriptEditContextMenuRequested(const QPoint& pt)
@@ -372,7 +372,7 @@ void PyOllyView::onLoadTemplateRequested()
 	TextEdit* const te = type == STT_IDA
 		? m_UI->teIDAScript
 		: m_UI->teOllyScript;
-	te->setText(value);
+	te->setPlainText(value);
 }
 
 void PyOllyView::onFastActionRequested()
@@ -402,8 +402,8 @@ void PyOllyView::onFastActionRequested()
 		if (ASKBTN_YES != askyn_c(ASKBTN_YES, "Do you want to execute stored FastAction (current scripts will be lost)?"))
 			return;
 	}
-	m_UI->teIDAScript->setText(idaScript);
-	m_UI->teOllyScript->setText(ollyScript);
+	m_UI->teIDAScript->setPlainText(idaScript);
+	m_UI->teOllyScript->setPlainText(ollyScript);
 	emit runScriptRequested();
 }
 

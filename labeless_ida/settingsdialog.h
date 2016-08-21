@@ -7,6 +7,7 @@
  */
 
 #pragma once
+#include <QAtomicInt>
 #include <QDialog>
 
 struct Settings;
@@ -54,9 +55,12 @@ private slots:
 	void on_twPyPaletteNames_currentItemChanged(QTableWidgetItem*, QTableWidgetItem*);
 	void on_cbPaletteType_currentIndexChanged(int index);
 	void on_bPalettePickColor_clicked();
-	void on_chPaletteBold_toggled(bool value);
-	void on_chPaletteItalic_toggled(bool value);
+	void on_chPaletteBold_clicked();
+	void on_chPaletteItalic_clicked();
 	void on_bResetPalette_clicked();
+	void on_fcbFont_currentFontChanged(const QFont& fnt);
+	void on_spbFontPointSize_valueChanged(int v);
+	void on_spbTabWidth_valueChanged(int v);
 
 private:
 	void setUpPalette();
@@ -67,4 +71,5 @@ private:
 private:
 	Ui::SettingsDialog* m_UI;
 	bool				m_PaletteChanged;
+	QAtomicInt			m_bIgnoreChange;
 };

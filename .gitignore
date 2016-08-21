@@ -42,3 +42,4 @@
 /test_x64dbg/x64/db
 /test_x64dbg/x64/minidump
 /test_x64dbg/x64/symbols
+/deploy/build

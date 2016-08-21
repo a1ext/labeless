@@ -1,3 +1,11 @@
+# v 1.1.0.7
+ * Fixed issue #8
+ + New options for python editor added: font (+size), tab size
+ + Now Memory choose dialog allows to specify region size by "size" and "VA to" on manual select
+ + Now Memory choose dialog allows to import some memory pages with overrided "RWE" protect using context menu
+ * Manual memory range validation fixed in Memory choose dialog
+ + New shortcut Alt+Shift+R is added for "Synchronize now" feature
+
 # v 1.1.0.6
  + IDA's local variables (structs only) syncronization as comment is added
  * Fixed: issue #5

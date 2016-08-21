@@ -15,18 +15,26 @@
 
 namespace {
 
-void updateWithModifier(QTextCharFormat& fmt, FormatSpec::Modifiers mods)
+void updateWithModifier(QTextCharFormat& fmt, const QFont& font, FormatSpec::Modifiers mods)
 {
 	if (mods & FormatSpec::MOD_Bold)
 		fmt.setFontWeight(QFont::Bold);
 	if (mods & FormatSpec::MOD_Italic)
 		fmt.setFontItalic(true);
+	fmt.setFont(font);
 }
 
 static const QString kColorSchemeLight = "light";
 static const QString kPaletteColor = "color";
 static const QString kPaletteModifiers = "mods";
 static const QString kPalette = "palette";
+static const QString kFont = "font";
+static const QString kCourier = "Courier";
+static const QString kFontPointSize = "font_point_size";
+static const QString kTabWidth = "tab_width";
+static const int kDefaultFontPointSize = 8;
+static const int kDefaultTabWidth = 4;
+
 
 bool checkFieldsExists(const QVariantMap& vm, const QStringList& names)
 {
@@ -49,6 +57,10 @@ bool toVariant(const PythonPalette& palette, QVariant& result)
 	}
 	QVariantMap vmPalette;
 	vmPalette[kPalette] = vm;
+	vmPalette[kFont] = palette.mainFont;
+	vmPalette[kFontPointSize] = palette.mainFontPointSize;
+	vmPalette[kTabWidth] = palette.tabWidth;
+
 	result = vmPalette;
 	return true;
 }
@@ -80,6 +92,10 @@ bool fromVariant(const QVariant& vPalette, PythonPalette& result)
 			result.palette[type] = spec;
 		}
 	}
+
+	result.mainFont = vmPalette.value(kFont, kCourier).toString();
+	result.mainFontPointSize = vmPalette.value(kFontPointSize, kDefaultFontPointSize).toInt();
+	result.tabWidth = vmPalette.value(kTabWidth, kDefaultTabWidth).toInt();
 	return true;
 }
 
@@ -96,7 +112,7 @@ QTextCharFormat getTextCharFormat(PythonPaletteEntryType t, const PythonPalette&
 	{
 		c = it.value().color;
 		FormatSpec::Modifiers mods = it.value().modifiers;
-		updateWithModifier(rv, mods);
+		updateWithModifier(rv, QFont(pp.mainFont, pp.mainFontPointSize), mods);
 	}
 	rv.setForeground(c);
 	return rv;
@@ -131,7 +147,10 @@ PythonPalette PythonPaletteManager::getDefaultLightPalette()
 		for (unsigned i = 0; i < _countof(kFormats); ++i)
 			defaultPalette.palette[kFormats[i].type] = kFormats[i].spec;
 	}
-	
+	defaultPalette.mainFont = kCourier;
+	defaultPalette.mainFontPointSize = kDefaultFontPointSize;
+	defaultPalette.tabWidth = kDefaultTabWidth;
+
 	return defaultPalette;
 }
 
@@ -162,6 +181,10 @@ PythonPalette PythonPaletteManager::getDefaultDarkPalette()
 		for (unsigned i = 0; i < _countof(kFormats); ++i)
 			defaultPalette.palette[kFormats[i].type] = kFormats[i].spec;
 	}
+	defaultPalette.mainFont = kCourier;
+	defaultPalette.mainFontPointSize = kDefaultFontPointSize;
+	defaultPalette.tabWidth = kDefaultTabWidth;
+
 	return defaultPalette;
 }
 

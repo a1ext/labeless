@@ -40,6 +40,11 @@ protected:
 
 private slots:
 	void selectTypeChanged();
+	void on_twMemoryMap_customContextMenuRequested(const QPoint&);
+	void on_leManualVaFrom_textChanged(const QString&);
+	void on_leManualVaTo_textChanged(const QString&);
+	void on_leManualSize_textChanged(const QString&);
+	void onManualMeasureTypeChanged(int);
 
 private:
 	void fillView();
@@ -47,6 +52,6 @@ private:
 
 private:
 	Ui::ChooseMemoryDialog* m_UI;
-	const MemoryRegionList& m_MemMap;
+	MemoryRegionList m_MemMap;
 };
 

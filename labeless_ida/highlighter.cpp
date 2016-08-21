@@ -101,6 +101,10 @@ Highlighter::Highlighter(QTextDocument* parent)
 
 void Highlighter::highlightBlock(const QString &text)
 {
+	QTextCharFormat fmt;
+	fmt.setFont(QFont(m_Palette->mainFont, m_Palette->mainFontPointSize));
+	setFormat(0, text.length(), fmt);
+
 	foreach(const ::HighlightingRule& rule, kHighlightingRules.rules)
 	{
 		QRegExp expression(rule.pattern);
@@ -109,10 +113,11 @@ void Highlighter::highlightBlock(const QString &text)
 		{
 			index = expression.pos(rule.index);
 			int length = expression.cap(rule.index).length();
-			QTextCharFormat fmt;
 			if (m_Formats.contains(rule.t))
+			{
 				fmt = m_Formats[rule.t];
-			setFormat(index, length, fmt);
+				setFormat(index, length, fmt);
+			}
 			index = expression.indexIn(text, index + length);
 		}
 	}
@@ -171,6 +176,7 @@ void Highlighter::updatePalette(bool invalidate)
 	{
 		m_Formats[t] = getTextCharFormat(t, *m_Palette);
 	}
+	document()->setDefaultFont(QFont(m_Palette->mainFont, m_Palette->mainFontPointSize));
 	rehighlight();
 }
 

@@ -74,20 +74,6 @@
 namespace {
 
 
-struct ScopedEnabler
-{
-	QAtomicInt& ref;
-	ScopedEnabler(QAtomicInt& ref_)
-		: ref(ref_)
-	{
-		ref = 1;
-	}
-	~ScopedEnabler()
-	{
-		ref = 0;
-	}
-};
-
 enum SettingsCtrl
 {
 	SC_Ip					= 1,
@@ -109,6 +95,7 @@ static const Settings kDefaultSettings(
 	true,
 	true,
 	true,
+	false,
 	Settings::OW_AlwaysAsk,
 	Settings::CS_Disabled
 );
@@ -157,12 +144,44 @@ void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename
 		Q_ARG(QString, kPrefix));
 }
 
+static struct SyncAllNowActionHandler_t : public action_handler_t
+{
+	virtual int idaapi activate(action_activation_ctx_t *)
+	{
+		if (Labeless::instance().isEnabled())
+			QMetaObject::invokeMethod(&Labeless::instance(), "onSyncronizeAllRequested", Qt::QueuedConnection);
+		return 1;
+	}
+
+	virtual action_state_t idaapi update(action_update_ctx_t *)
+	{
+		return AST_ENABLE_ALWAYS;
+	}
+} g_SyncAllNowActionHandler;
+
+
+struct ScopedWaitBox
+{
+	ScopedWaitBox(const char* fmt, ...)
+	{
+		va_list va;
+		va_start(va, fmt);
+		show_wait_box_v(fmt, va);
+		va_end(va);
+	}
+	~ScopedWaitBox()
+	{
+		hide_wait_box();
+	}
+};
+
 
 static const std::string kAPIEnumName = "OLD_API_EXTERN_CONSTS";
 static const qstring kReturnAddrStackStructFieldName = " r";
 static const QString kLabelessMenuObjectName = "labeless_menu";
 static const QString kLabelessMenuLoadStubItemName = "act-load-stub-x86";
 static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
+static const std::string kSyncAllNowActionName = "Labeless: Sync all now";
 
 } // anonymous
 
@@ -263,8 +282,12 @@ void Labeless::onSyncronizeAllRequested()
 			QMessageBox::Yes, QMessageBox::No))
 		return;
 
+	ScopedWaitBox waitBox("HIDECANCEL\nLabeless: synchronization in progress...");
+	Q_UNUSED(waitBox);
+
 	m_SynchronizeAllNow = true;
 	msg("Labeless: do sync all now...\n");
+	const size_t funcCnt = get_func_qty();
 
 	LabelsSync::DataList labelPoints;
 	CommentsSync::DataList commentPoints;
@@ -276,35 +299,7 @@ void Labeless::onSyncronizeAllRequested()
 	if (m_Settings.demangle)
 		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;
 
-	char segBuff[MAXSTR];
-
-	segment_t* s = static_cast<segment_t*>(segs.first_area_ptr());
-	for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
-	{
-		if (is_spec_segm(s->type))
-			continue;
-		const bool isExternSeg = (s->type & SEG_XTRN) == SEG_XTRN && get_segm_name(s, segBuff, MAXSTR) > 0 && std::string(segBuff) == NAME_EXTERN;
-		if (isExternSeg)
-			continue;
-		ea_t ea = s->startEA;
-
-		while (BADADDR != ea)
-		{
-			if (!has_dummy_name(getFlags(ea)) && get_true_name(&name, ea, flags) > 0 /*&& is_uname(name.c_str())*/)
-			{
-				std::string s = name.c_str();
-				if (s.length() >= OLLY_TEXTLEN)
-					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
-				if (isUtf8StringValid(s.c_str(), s.length()))
-					labelPoints.push_back(LabelsSync::Data(ea, s));
-			}
-
-			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
-		}
-	}
-
-	if (!labelPoints.empty())
-		addLabelsSyncData(labelPoints);
+	char segBuff[MAXSTR] = {};
 
 	QHash<ea_t, std::string> ea2comment;
 
@@ -324,23 +319,73 @@ void Labeless::onSyncronizeAllRequested()
 		}
 	};
 
+
+	// enumerate labels
+	segment_t* s = static_cast<segment_t*>(segs.first_area_ptr());
+	for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
+	{
+		if (is_spec_segm(s->type))
+			continue;
+		const bool isExternSeg = (s->type & SEG_XTRN) == SEG_XTRN && get_segm_name(s, segBuff, MAXSTR) > 0 && std::string(segBuff) == NAME_EXTERN;
+		if (isExternSeg)
+			continue;
+		ea_t ea = s->startEA;
+
+		while (BADADDR != ea)
+		{
+			if (!has_dummy_name(getFlags(ea)) && get_true_name(&name, ea, flags) > 0 /*&& is_uname(name.c_str())*/)
+			{
+				std::string s = name.c_str();
+				if (s.length() >= OLLY_TEXTLEN) // FIXME: move length checking to the backends
+					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
+				if (isUtf8StringValid(s.c_str(), s.length()))
+				{
+					if (hlp::isFuncStart(ea))
+					{
+						// handle func
+						if (m_Settings.commentsSync.testFlag(Settings::CS_FuncNameAsComment))
+						{
+							//msg("func as comment point: 0x%08" LL_FMT_EA_T " name: %s\n", ea, s.c_str());
+							fnJoinComment(ea, s);
+						}
+						else
+						{
+							//msg("func point: 0x%08" LL_FMT_EA_T " name: %s\n", ea, s.c_str());
+							labelPoints.push_back(LabelsSync::Data(ea, s));
+						}
+					}
+					else
+					{
+						labelPoints.push_back(LabelsSync::Data(ea, s));
+						//msg("label point: 0x%08" LL_FMT_EA_T " name: %s\n", ea, s.c_str());
+					}
+				}
+			}
+
+			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
+		}
+	}
+
+
+	if (!labelPoints.empty())
+		addLabelsSyncData(labelPoints);
+
 	if (m_Settings.commentsSync.testFlag(Settings::CS_LocalVar))
 	{
-		const size_t funcCnt = get_func_qty();
 		qstring memberName;
 		strpath_t path;
 
 		for (size_t i = 0; i < funcCnt; ++i)
 		{
 			func_t* fn = getn_func(i);
-			struc_t* frame = get_frame(fn);
+			//struc_t* frame = get_frame(fn);
 
 			func_item_iterator_t fnItemIt(fn);
 			fnItemIt.first();
 			while (fnItemIt.next_code())
 			{
 				const ea_t ea = fnItemIt.current();
-				flags_t flags = get_flags_novalue(ea);
+				const flags_t flags = get_flags_novalue(ea);
 				if (!isStkvar0(flags) && !isStkvar1(flags))
 					continue;
 
@@ -386,8 +431,33 @@ void Labeless::onSyncronizeAllRequested()
 
 	if (m_Settings.commentsSync.testFlag(Settings::CS_IDAComment))
 	{
-		char buff[OLLY_TEXTLEN];
-		ssize_t len;
+		char buff[OLLY_TEXTLEN] = {};
+		ssize_t len = 0;
+
+		for (size_t i = 0; i < funcCnt; ++i)
+		{
+			func_t* fn = getn_func(i);
+			if (!fn)
+				continue;
+
+			const char* nonRptCmt = get_func_cmt(fn, false);
+			if (nonRptCmt && ::qstrlen(nonRptCmt))
+				fnJoinComment(fn->startEA, nonRptCmt);
+
+			const char* cmt = get_func_cmt(fn, true);
+			if (!cmt || !::qstrlen(cmt))
+				continue;
+
+			if (!nonRptCmt)
+				fnJoinComment(fn->startEA, cmt);
+
+			const qlist<ea_t> refs = hlp::codeRefsToCode(fn->startEA); // hlp::dataRefsToCode(fn->startEA);
+
+			for (qlist<ea_t>::const_iterator it = refs.begin(), end = refs.end(); it != end; ++it)
+			{
+				fnJoinComment(*it, cmt);
+			}
+		}
 
 		s = static_cast<segment_t*>(segs.first_area_ptr());
 		for (; s; s = static_cast<segment_t*>(segs.next_area_ptr(s->startEA)))
@@ -420,6 +490,9 @@ void Labeless::onSyncronizeAllRequested()
 
 	msg("Labels: %d, comments: %d\n", labelPoints.count(), commentPoints.count());
 	m_SynchronizeAllNow = false;
+
+	//QRegExp reExtractFuncName("^[\\?]*([\\w\\d_]+)", Qt::CaseInsensitive);
+	// TODO: handle option "remove func args"
 }
 
 bool Labeless::setEnabled()
@@ -560,11 +633,21 @@ bool Labeless::firstInit()
 			QMenu* dumpMenu = m->addMenu(QIcon(":/dump.png"), tr("IDADump"));
 			m_MenuActions << dumpMenu->addAction(tr("Wipe all and import..."), this, SLOT(onWipeAndImportRequested()));
 			m_MenuActions << dumpMenu->addAction(tr("Keep existing and import..."), this, SLOT(onKeepAndImportRequested()));
-			m_MenuActions << m->addAction(QIcon(":/sync.png"), tr("Sync labels now"), this, SLOT(onSyncronizeAllRequested()));
+			m_MenuActions << m->addAction(QIcon(":/sync.png"), tr("Sync labels now"), this, SLOT(onSyncronizeAllRequested()), Qt::ALT | Qt::SHIFT | Qt::Key_R);
 			m->addSeparator();
 			m_MenuActions << m->addAction(QIcon(":/settings.png"), tr("Settings..."), this, SLOT(onSettingsRequested()));
 		}
 	}
+	static const action_desc_t sync_all_action = ACTION_DESC_LITERAL(
+		kSyncAllNowActionName.c_str(),
+		"Sync labels now",
+		&g_SyncAllNowActionHandler,
+		"Alt+Shift+R",
+		NULL,
+		-1);
+	if (!register_action(sync_all_action))
+		msg("%s: unable to register %s action\n", __FUNCTION__, kSyncAllNowActionName.c_str());
+
 	enableMenuActions(false);
 	return true;
 }
@@ -602,6 +685,8 @@ void Labeless::terminate()
 
 	if (m_Enabled)
 		m_Enabled = 0;
+
+	unregister_action(kSyncAllNowActionName.c_str());
 
 	QMutexLocker lock(&m_ThreadLock);
 	if (m_Thread)
@@ -1102,7 +1187,7 @@ void Labeless::onGetMemoryMapFinished()
 		if (v.base + v.size > endEa)
 			endEa = v.base + v.size;
 		msg("addr: %08llX, size: %08llX, protect: %08X\n", v.base, v.size, v.protect);
-		rmr->data.push_back(ReadMemoryRegions::t_memory(v.base, v.size, v.protect, ""));
+		rmr->data.push_back(ReadMemoryRegions::t_memory(v.base, v.size, v.protect, "", v.forceProtect));
 	}
 	if (!rmr->data.empty())
 	{
@@ -1209,8 +1294,6 @@ bool Labeless::askForSnapshotBeforeOverwrite(const area_t* area, const segment_t
 		const QDateTime dt = QDateTime::currentDateTime();
 		const QString dtStr = dt.toString("yyyy-MM-dd hh_mm_ss");
 		const std::string snapshotName = kSnapshotDescriptionFmt.arg(dtStr).toStdString();
-		//char ss_date[MAXSTR];
-		//qstrftime64(ss_date, sizeof(ss_date), "%Y-%m-%d %H:%M:%S", qtime64());
 
 		::qstrncpy(snap.desc, snapshotName.c_str(), sizeof(snap.desc));
 		snapshotTaken = take_database_snapshot(&snap, &errmsg);
@@ -1345,6 +1428,8 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 		return rv;*/
 	});
 
+	const auto sProtect = hlp::memoryProtectToStr(m.protect);
+
 	if (sectionIt != icInfo.sections.constEnd())
 	{
 		msg("Section found for region{ ea: %08" LL_FMT_EA_T ", size: %08" LL_FMT_EA_T " } is section { name: %s, va: %08llX, size: %08llX, ch: %08X }\n",
@@ -1354,24 +1439,33 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 		type = (ch & (IMAGE_SCN_MEM_EXECUTE | IMAGE_SCN_CNT_CODE))
 			? SEG_CODE
 			: SEG_DATA;
-		perm =
-			((ch & IMAGE_SCN_MEM_WRITE) ? SEGPERM_WRITE : 0) +
-			((ch & IMAGE_SCN_MEM_READ) ? SEGPERM_READ : 0) +
-			((ch & IMAGE_SCN_MEM_EXECUTE) ? SEGPERM_EXEC : 0);
+
+		if ((ch & IMAGE_SCN_MEM_EXECUTE) ||
+			(m.forceProtect && sProtect.find('E') != sProtect.npos))
+			perm |= SEGPERM_EXEC;
+
+		if ((ch & IMAGE_SCN_MEM_WRITE) ||
+			(m.forceProtect && sProtect.find('W') != sProtect.npos))
+			perm |= SEGPERM_WRITE;
+
+		if ((ch & IMAGE_SCN_MEM_READ) ||
+			(m.forceProtect && sProtect.find('R') != sProtect.npos))
+			perm |= SEGPERM_READ;
+
 		return;
 	}
-	const auto sProtect = hlp::memoryProtectToStr(m.protect);
+	
 	if (sProtect.find('E') != sProtect.npos)
 		type = SEG_CODE;
 	else
 		type = SEG_DATA;
 
 	if (sProtect.find('E') != sProtect.npos)
-		perm += SEGPERM_EXEC;
+		perm |= SEGPERM_EXEC;
 	if (sProtect.find('W') != sProtect.npos)
-		perm += SEGPERM_WRITE;
+		perm |= SEGPERM_WRITE;
 	if (sProtect.find('R') != sProtect.npos)
-		perm += SEGPERM_READ;
+		perm |= SEGPERM_READ;
 }
 
 bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size)
@@ -1411,11 +1505,7 @@ bool Labeless::createSegment(const area_t& area, uchar perm, uchar type, const s
 	memset(&result, 0, sizeof(result));
 	static_cast<area_t&>(result) = area;
 
-//#ifdef __X64__
 	result.bitness = ::inf.is_64bit() ? 2 : 1;
-//#else // __X64__
-//	result.bitness = 1;
-//#endif // __X64__
 	result.sel = setup_selector(0);
 	result.perm = perm;
 	result.type = type;
@@ -2137,6 +2227,21 @@ int idaapi Labeless::idp_callback(void* /*user_data*/, int notification_code, va
 	//	break;
 	}
 
+	return 0;
+}
+
+int idaapi Labeless::idb_callback(void* /*user_data*/, int notification_code, va_list va)
+{
+	/*switch (notification_code)
+	{
+	case ::idb_event::cmt_changed:
+		do {
+			ea_t ea = va_arg(va, ::ea_t);
+			bool rpt = va_arg(va, bool);
+			msg("cmt_changed at %" FMT_EA " is_rpt: %s\n", ea, rpt ? "yes":"no"); // TODO
+		} while (0);
+		break;
+	}*/
 	return 0;
 }
 

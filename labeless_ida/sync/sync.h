@@ -110,8 +110,8 @@ struct ReadMemoryRegions : public ICommand
 	struct t_memory : public MemoryRegion
 	{
 		std::string raw;
-		t_memory(uint64_t base_, uint64_t size_, uint32_t protect_, const std::string& raw_)
-			: MemoryRegion(base_, size_, protect_)
+		t_memory(uint64_t base_, uint64_t size_, uint32_t protect_, const std::string& raw_, bool forceProtect_)
+			: MemoryRegion(base_, size_, protect_, forceProtect_)
 			, raw(raw_)
 		{}
 	};

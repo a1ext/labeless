@@ -33,6 +33,7 @@
 #include <QPointer>
 #include <QList>
 
+QT_FORWARD_DECLARE_CLASS(QObject);
 
 struct ICommand;
 typedef std::shared_ptr<ICommand> ICommandPtr;
@@ -92,8 +93,9 @@ struct MemoryRegion
 	uint64_t size;
 	uint32 protect;
 	std::string name;
+	bool forceProtect; // not serializable
 
-	MemoryRegion(uint64_t base_, uint64_t size_, uint32 protect_);
+	MemoryRegion(uint64_t base_, uint64_t size_, uint32 protect_, bool forceProtect_ = false);
 
 	inline uint64_t end() const {
 		return base + size;
@@ -118,9 +120,10 @@ struct Settings
 
 	enum CommentsSync
 	{
-		CS_Disabled			= 0,
-		CS_IDAComment		= 1 << 0, // means repeatable and non-repeatable
-		CS_LocalVar			= 1 << 1
+		CS_Disabled				= 0,
+		CS_IDAComment			= 1 << 0, // means repeatable and non-repeatable
+		CS_LocalVar				= 1 << 1,
+		CS_FuncNameAsComment	= 1 << 2
 	};
 	Q_DECLARE_FLAGS(CommentSyncFlags, CommentsSync);
 
@@ -133,18 +136,20 @@ struct Settings
 	bool nonCodeNames;
 	bool analysePEHeader;
 	bool postProcessFixCallJumps;
+	bool removeFuncArgs;
 	OverwriteWarning overwriteWarning;
 	CommentSyncFlags commentsSync;
 
 	Settings(const std::string host_ = std::string(),
-		uint16_t port = 0,
-		uint64_t remoteModBase = 0,
-		bool enabled = false,
-		bool demangle = false,
-		bool localLabels = false,
-		bool nonCodeNames = false,
-		bool analysePEHeader = false,
-		bool postProcessFixCallJumps = false,
+		uint16_t port_ = 0,
+		uint64_t remoteModBase_ = 0,
+		bool enabled_ = false,
+		bool demangle_ = false,
+		bool localLabels_ = false,
+		bool nonCodeNames_ = false,
+		bool analysePEHeader_ = false,
+		bool postProcessFixCallJumps_ = false,
+		bool removeFuncArgs_ = false,
 		OverwriteWarning overwriteWarning_ = OW_AlwaysAsk,
 		CommentSyncFlags commentsSync_ = CS_Disabled);
 };
@@ -158,6 +163,20 @@ struct LogItem
 	QString idaScript;
 	QString textStdOut;
 	QString textStdErr;
+};
+
+struct ScopedEnabler
+{
+	QAtomicInt& ref;
+	ScopedEnabler(QAtomicInt& ref_);
+	virtual ~ScopedEnabler();
+};
+
+struct ScopedSignalBlocker
+{
+	QList<QPointer<QObject>> items;
+	ScopedSignalBlocker(const QList<QPointer<QObject>>& items_);
+	virtual ~ScopedSignalBlocker();
 };
 
 #if _MSC_VER >= 1800

@@ -30,6 +30,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	: QDialog(parent)
 	, m_UI(new Ui::SettingsDialog)
 	, m_PaletteChanged(false)
+	, m_bIgnoreChange(0)
 {
 	m_UI->setupUi(this);
 	CHECKED_CONNECT(connect(m_UI->bTestConnection, SIGNAL(clicked()), this, SIGNAL(testConnection())));
@@ -64,9 +65,11 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->chPerformPEAnalysis->setChecked(settings.analysePEHeader);
 	m_UI->chPostProcessFixCallJumps->setChecked(settings.postProcessFixCallJumps);
 	m_UI->chNonCodeNames->setChecked(settings.nonCodeNames);
+	m_UI->chRemoveFuncArgs->setChecked(settings.removeFuncArgs);
 	m_UI->cbOverwriteWarning->setCurrentIndex(settings.overwriteWarning);
 	m_UI->chIDAComments->setChecked(settings.commentsSync.testFlag(Settings::CS_IDAComment));
 	m_UI->chFuncLocalVars->setChecked(settings.commentsSync.testFlag(Settings::CS_LocalVar));
+	m_UI->chFuncNameAsComment->setChecked(settings.commentsSync.testFlag(Settings::CS_FuncNameAsComment));
 
 	QLabel* const lVer = new QLabel(m_UI->tabWidget);
 	lVer->setText(QString("v %1").arg(LABELESS_VER_STR));
@@ -77,6 +80,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	effect->setColor(Qt::white);
 	lVer->setGraphicsEffect(effect);
 	m_UI->tabWidget->setCornerWidget(lVer);
+	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
 	setUpPalette();
 	//adjustSize();
@@ -137,6 +141,9 @@ void SettingsDialog::setUpPalette()
 	m_UI->twPyPaletteNames->setItem(0, 0, light);
 	m_UI->twPyPaletteNames->setItem(1, 0, dark);
 
+	QFont fnt(pLightPalette->mainFont);
+	fnt.setPointSize(pLightPalette->mainFontPointSize);
+
 	m_UI->cbPaletteType->setCurrentIndex(0);
 	m_UI->twPyPaletteNames->setCurrentItem(light);
 }
@@ -156,12 +163,15 @@ void SettingsDialog::getSettings(Settings& result)
 	result.nonCodeNames = m_UI->chNonCodeNames->isChecked();
 	result.analysePEHeader = m_UI->chPerformPEAnalysis->isChecked();
 	result.postProcessFixCallJumps = m_UI->chPostProcessFixCallJumps->isChecked();
+	result.removeFuncArgs = m_UI->chRemoveFuncArgs->isChecked();
 	result.overwriteWarning = static_cast<Settings::OverwriteWarning>(m_UI->cbOverwriteWarning->currentIndex());
 	result.commentsSync = Settings::CS_Disabled;
 	if (m_UI->chIDAComments->isChecked())
 		result.commentsSync |= Settings::CS_IDAComment;
 	if (m_UI->chFuncLocalVars->isChecked())
 		result.commentsSync |= Settings::CS_LocalVar;
+	if (m_UI->chFuncNameAsComment->isChecked())
+		result.commentsSync |= Settings::CS_FuncNameAsComment;
 }
 
 void SettingsDialog::changeEvent(QEvent *e)
@@ -243,6 +253,8 @@ bool SettingsDialog::validate() const
 
 void SettingsDialog::on_twPyPaletteNames_currentItemChanged(QTableWidgetItem*, QTableWidgetItem*)
 {
+	ScopedEnabler enabler(m_bIgnoreChange);
+	Q_UNUSED(enabler);
 	updateCurrentPalette();
 }
 
@@ -268,6 +280,9 @@ void SettingsDialog::updateCurrentPalette()
 	m_UI->wPaletteColor->setProperty(kPropColor.c_str(), QVariant::fromValue(spec.color));
 	m_UI->chPaletteBold->setChecked((spec.modifiers & FormatSpec::MOD_Bold) == FormatSpec::MOD_Bold);
 	m_UI->chPaletteItalic->setChecked((spec.modifiers & FormatSpec::MOD_Italic) == FormatSpec::MOD_Italic);
+	m_UI->fcbFont->setCurrentFont(QFont(pPalette->mainFont, pPalette->mainFontPointSize));
+	m_UI->spbFontPointSize->setValue(pPalette->mainFontPointSize);
+	m_UI->spbTabWidth->setValue(pPalette->tabWidth);
 	m_UI->tePalettePreview->setPalette(*pPalette);
 }
 
@@ -316,15 +331,19 @@ void SettingsDialog::on_bPalettePickColor_clicked()
 	m_PaletteChanged = true;
 }
 
-void SettingsDialog::on_chPaletteBold_toggled(bool value)
+void SettingsDialog::on_chPaletteBold_clicked()
 {
+	QCheckBox* cb = qobject_cast<QCheckBox*>(sender());
+	if (!cb)
+		return;
+
 	const PythonPaletteEntryType ppet = getSelectedPaletteEntryType();
 	if (PPET_Unknown == ppet)
 		return;
 	PythonPalette* const pPalette = getCurrentPalette();
 	if (!pPalette)
 		return;
-	if (value)
+	if (cb->isChecked())
 		pPalette->palette[ppet].modifiers = static_cast<FormatSpec::Modifiers>(pPalette->palette[ppet].modifiers | FormatSpec::MOD_Bold);
 	else
 		pPalette->palette[ppet].modifiers = static_cast<FormatSpec::Modifiers>(pPalette->palette[ppet].modifiers & ~FormatSpec::MOD_Bold);
@@ -332,15 +351,19 @@ void SettingsDialog::on_chPaletteBold_toggled(bool value)
 	m_UI->tePalettePreview->setPalette(*pPalette);
 }
 
-void SettingsDialog::on_chPaletteItalic_toggled(bool value)
+void SettingsDialog::on_chPaletteItalic_clicked()
 {
+	QCheckBox* cb = qobject_cast<QCheckBox*>(sender());
+	if (!cb)
+		return;
+
 	const PythonPaletteEntryType ppet = getSelectedPaletteEntryType();
 	if (PPET_Unknown == ppet)
 		return;
 	PythonPalette* const pPalette = getCurrentPalette();
 	if (!pPalette)
 		return;
-	if (value)
+	if (cb->isChecked())
 		pPalette->palette[ppet].modifiers = static_cast<FormatSpec::Modifiers>(pPalette->palette[ppet].modifiers | FormatSpec::MOD_Italic);
 	else
 		pPalette->palette[ppet].modifiers = static_cast<FormatSpec::Modifiers>(pPalette->palette[ppet].modifiers & ~FormatSpec::MOD_Italic);
@@ -366,6 +389,48 @@ void SettingsDialog::on_bResetPalette_clicked()
 	m_PaletteChanged = true;
 
 	updateCurrentPalette();
+}
+
+void SettingsDialog::on_fcbFont_currentFontChanged(const QFont& fnt)
+{
+	if (m_bIgnoreChange)
+		return;
+
+	PythonPalette* const pPalette = getCurrentPalette();
+	if (!pPalette)
+		return;
+
+	pPalette->mainFont = fnt.family();
+	m_PaletteChanged = true;
+	m_UI->tePalettePreview->setPalette(*pPalette);
+}
+
+void SettingsDialog::on_spbFontPointSize_valueChanged(int v)
+{
+	if (m_bIgnoreChange)
+		return;
+
+	PythonPalette* const pPalette = getCurrentPalette();
+	if (!pPalette)
+		return;
+
+	pPalette->mainFontPointSize = v;
+	m_PaletteChanged = true;
+	m_UI->tePalettePreview->setPalette(*pPalette);
+}
+
+void SettingsDialog::on_spbTabWidth_valueChanged(int v)
+{
+	if (m_bIgnoreChange)
+		return;
+
+	PythonPalette* const pPalette = getCurrentPalette();
+	if (!pPalette)
+		return;
+
+	pPalette->tabWidth = v;
+	m_PaletteChanged = true;
+	m_UI->tePalettePreview->setPalette(*pPalette);
 }
 
 bool SettingsDialog::getLightPalette(PythonPalette& result) const
