@@ -175,13 +175,16 @@ struct ScopedWaitBox
 	}
 };
 
-
+static const QString kLabelessTitle = "Labeless";
 static const std::string kAPIEnumName = "OLD_API_EXTERN_CONSTS";
 static const qstring kReturnAddrStackStructFieldName = " r";
 static const QString kLabelessMenuObjectName = "labeless_menu";
 static const QString kLabelessMenuLoadStubItemName = "act-load-stub-x86";
 static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
 static const std::string kSyncAllNowActionName = "Labeless: Sync all now";
+static const std::string kExternKeyword = "__extern__";
+static const std::string kResultKeyword = "__result__";
+static const std::string kResultStrKeyword = "__result_str__";
 
 } // anonymous
 
@@ -1074,7 +1077,25 @@ void Labeless::onSyncResultReady()
 
 void Labeless::onRunPythonScriptFinished()
 {
-	// TODO
+	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
+	if (!pRD)
+	{
+		msg("%s: Invalid internal data structure (null)\n", __FUNCTION__);
+		return;
+	}
+	auto req = std::dynamic_pointer_cast<ExecPyScript>(pRD->iCmd);
+	if (!req)
+	{
+		msg("%s: Invalid type of ICommand\n", __FUNCTION__);
+		return;
+	}
+
+	if (req->d.ollyResultIsSet)
+	{
+		std::string error;
+		if (!setIDAPythonResultObject(req->d.ollyResult, error))
+			msg("%s: setIDAPythonResultObject() failed with error: %s\n", __FUNCTION__, error.c_str());
+	}
 }
 
 void Labeless::onGetBackendInfoFinished()
@@ -1704,9 +1725,9 @@ void Labeless::onTestConnectRequested()
 	sd->getSettings(tmpSettings);
 	QString error;
 	if (testConnect(tmpSettings.host, tmpSettings.port, error))
-		info("Successfully connected!");
+		QMessageBox::information(findIDAMainWindow(), kLabelessTitle, tr("Successfully connected!"));
 	else
-		info("Test failed, error: %s", error.toStdString().c_str());
+		QMessageBox::warning(findIDAMainWindow(), kLabelessTitle, tr("Test failed, error:\n%1").arg(error));
 }
 
 bool Labeless::testConnect(const std::string& host, uint16_t port, QString& errorMsg)
@@ -2264,7 +2285,7 @@ bool Labeless::initIDAPython()
 		return false;
 	}
 	char errbuff[MAXSTR] = {};
-	static const std::string pyInitMsg = "import json\n"
+	static const std::string pyInitMsg = "import json;" + kResultKeyword + " = None\n"
 		"idaapi.msg('Labeless: Python initialized... OK\\n')\n";
 	if (!run_statements(pyInitMsg.c_str(), errbuff, _countof(errbuff), elng))
 	{
@@ -2296,18 +2317,51 @@ bool Labeless::runIDAPythonScript(const std::string& script, std::string& extern
 		msg("%s: unable to execute Python script, error: %s", __FUNCTION__, errbuff);
 		return false;
 	}
-	errbuff[0] = '\0';
+
 	idc_value_t rv;
-	if (elng->calcexpr(BADADDR, "json.dumps(__extern__)", &rv, errbuff, sizeof(errbuff)))
+	if (elng->calcexpr(BADADDR, ("json.dumps(" + kExternKeyword + ")").c_str(), &rv, errbuff, sizeof(errbuff)))
 	{
 		externObj = rv.c_str();
-		VarFree(&rv);
 	}
 	else if (::qstrlen(errbuff) && !QString::fromLatin1(errbuff).contains("NameError"))
 	{
 		error = errbuff;
 		return false;
 	}
+	return true;
+}
+
+bool Labeless::setIDAPythonResultObject(const std::string& obj, std::string& error)
+{
+	const extlang_t* elng = find_extlang_by_name("python");
+	if (!elng)
+	{
+		msg("%s: Python extlang not found\n", __FUNCTION__);
+		return false;
+	}
+
+	select_extlang(elng);
+
+	char errbuff[1024] = {};
+	error.clear();
+
+	idc_value_t varStr(obj.c_str());
+
+	if (!elng->set_attr(nullptr, kResultStrKeyword.c_str(), &varStr))
+	{
+		error = "unable to set " + kResultStrKeyword;
+		return false;
+	}
+
+	const std::string stmt = kResultKeyword + " = json.loads(" + kResultStrKeyword + ")";
+	if (!run_statements(stmt.c_str(), errbuff, _countof(errbuff), elng))
+	{
+		if (::qstrlen(errbuff))
+			error = errbuff;
+		msg("%s: unable to execute Python script, error: %s", __FUNCTION__, errbuff);
+		return false;
+	}
+
 	return true;
 }
 

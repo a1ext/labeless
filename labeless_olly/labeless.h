@@ -41,19 +41,11 @@ struct ClientData
 	std::recursive_mutex	commandsLock;
 	std::deque<Request>		commands;
 
-	//std::recursive_mutex	resultLock;
-	//std::string				result;
-
 	std::recursive_mutex	stdOutLock;
 	std::stringstream		stdOut;
 
 	std::recursive_mutex	stdErrLock;
 	std::stringstream		stdErr;
-
-	//std::recursive_mutex	binaryResultLock;
-	//std::string				binaryResult;
-
-	//std::recursive_mutex	lock; // this lock
 
 	Request* find(uint64_t jobId);
 	bool remove(uint64_t jobId);
@@ -104,7 +96,7 @@ private:
 	static void WINAPI serverThread(Labeless* ll);
 
 	static LRESULT CALLBACK helperWinProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp);
-	bool onCommandReceived(const std::string& command, const std::string& scriptExternObj);
+	bool onCommandReceived(const std::string& command, const std::string& scriptExternObj, std::string& resultObj);
 	bool onCommandReceived(ClientData& cd);
 	void onPortChanged();
 

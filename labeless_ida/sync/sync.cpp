@@ -89,7 +89,27 @@ bool ExecPyScript::serialize(QPointer<RpcData> rd) const
 
 bool ExecPyScript::parseResponse(QPointer<RpcData> rd)
 {
-	return ICommand::parseResponse(rd);
+	if (!ICommand::parseResponse(rd))
+		return false;
+
+	try
+	{
+		if (rd->response->has_script_result_obj())
+		{
+			d.ollyResult = rd->response->script_result_obj();
+			d.ollyResultIsSet = true;
+		}
+		return true;
+	}
+	catch (std::runtime_error e)
+	{
+		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
+	}
+	catch (...)
+	{
+		msg("%s: Unable to parse ExecPyScript response\n", __FUNCTION__);
+	}
+	return false;
 }
 
 bool LabelsSync::serialize(QPointer<RpcData> rd) const

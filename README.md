@@ -47,6 +47,10 @@ As a result we have a lot of memory regions that may represent even different mo
 * Python scripting video on [YouTube](https://youtu.be/SkcM8Hz2dT4)
 * Basic labels sync video on [YouTube](https://youtu.be/iqipmqE2Znk)
 
+## Help videos
+* [Labeless setup on Win10 x64 (with x64dbg)](https://youtu.be/r5JsDk1SYoM)
+* [Resolving APIs dynamically with Labeless & OllyDbg2](https://youtu.be/Dv8YlzXJ5x8)
+* [Resolving APIs dynamically with Labeless & x64dbg](https://youtu.be/hMWuWVRkpB0)
 
 Installation
 ============
@@ -143,6 +147,8 @@ Repeatable - are comments, which IDA shows in any referenced place.
 # Troubleshooting
 Issue with Python 2.7.11 is described [here](http://bugs.python.org/issue26998?), so avoid usage of this version. The latest stable supported version is 2.7.10.
 
+* Q: Labeless for x64dbg x32 is works, but x64 doesn't. Why?
+* A: Please, recheck that you have installed protobuf and 'labeless' module for Python x64
 
 # Download
 * [Download latest release of Labeless](https://github.com/a1ext/labeless/releases/latest)

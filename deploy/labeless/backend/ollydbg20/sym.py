@@ -26,7 +26,7 @@ import threads
 
 MAX_SYM_NAME = 2000
 MAX_PATH = 260
-
+DBG_HELP_DLL = 'dbghelp.dll'
 
 class symbol_info_t(C.Structure):
     """
@@ -221,6 +221,9 @@ def resolve_api(n, mod):
     assert(addr != 0)
     return addr
 
+if not C.windll.kernel32.GetModuleHandleA(DBG_HELP_DLL):
+    C.windll.kernel32.LoadLibraryA(DBG_HELP_DLL)
+
 # XXX: ctypes.wintypes doesn't exist in python 2.6
 # BOOL WINAPI SymInitialize(
 #   _In_      HANDLE hProcess,
@@ -235,7 +238,7 @@ def resolve_api(n, mod):
 # In [15]: wintypes.LPCSTR
 # Out[15]: ctypes.c_char_p
 Syminitialize_TYPE = C.WINFUNCTYPE(C.c_long, C.c_void_p, C.c_char_p, C.c_long)
-Syminitialize = Syminitialize_TYPE(resolve_api('SymInitialize', 'dbghelp.dll'))
+Syminitialize = Syminitialize_TYPE(resolve_api('SymInitialize', DBG_HELP_DLL))
 
 # BOOL WINAPI SymFromAddr(
 #   _In_       HANDLE hProcess,
@@ -244,7 +247,7 @@ Syminitialize = Syminitialize_TYPE(resolve_api('SymInitialize', 'dbghelp.dll'))
 #   _Inout_    PSYMBOL_INFO Symbol
 # );
 Symfromaddr_TYPE = C.WINFUNCTYPE(C.c_bool, C.c_void_p, C.c_longlong, c_longlong_p, symbol_info_p)
-Symfromaddr = Symfromaddr_TYPE(resolve_api('SymFromAddr', 'dbghelp.dll'))
+Symfromaddr = Symfromaddr_TYPE(resolve_api('SymFromAddr', DBG_HELP_DLL))
 
 # BOOL WINAPI SymGetModuleInfo64(
 #   _In_   HANDLE hProcess,
@@ -252,7 +255,7 @@ Symfromaddr = Symfromaddr_TYPE(resolve_api('SymFromAddr', 'dbghelp.dll'))
 #   _Out_  PIMAGEHLP_MODULE64 ModuleInfo
 # );
 Symgetmoduleinfo64_TYPE = C.WINFUNCTYPE(C.c_bool, C.c_void_p, C.c_longlong, imagehlp_module64_p)
-Symgetmoduleinfo64 = Symgetmoduleinfo64_TYPE(resolve_api('SymGetModuleInfo64', 'dbghelp.dll'))
+Symgetmoduleinfo64 = Symgetmoduleinfo64_TYPE(resolve_api('SymGetModuleInfo64', DBG_HELP_DLL))
 
 
 def SymInitialize(hProcess, UserSearchPath=None, fInvadeProcess=True):

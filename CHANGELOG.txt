@@ -1,3 +1,6 @@
+# v 1.1.0.8
+ + Now the data can be transferred from debug-backend-side to IDA using __result__ variable
+
 # v 1.1.0.7
  * Fixed issue #8
  + New options for python editor added: font (+size), tab size

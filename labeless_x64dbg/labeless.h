@@ -105,7 +105,7 @@ private:
 	static void WINAPI serverThread(Labeless* ll);
 
 	static LRESULT CALLBACK helperWinProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp);
-	bool onCommandReceived(const std::string& command, const std::string& scriptExternObj);
+	bool onCommandReceived(const std::string& command, const std::string& scriptExternObj, std::string& resultObj);
 	bool onCommandReceived(ClientData& cd);
 	void onPortChanged();
 

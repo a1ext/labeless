@@ -447,6 +447,11 @@ static PyMethodDef PyOllyMethods [] =
 };
 
 static const std::string kExternKeyword = "__extern__";
+static const std::string kResultKeyword = "__result__";
+static const std::string kJsonModuleName = "json";
+static const std::string kJsonLoadsFuncName = "loads";
+static const std::string kLabelessPythonModuleName = "labeless";
+static const std::string kLabelessSerializeResultFuncName = "serialize_result";
 
 DWORD pyExecExceptionFilter(DWORD code, _EXCEPTION_POINTERS* ep)
 {
@@ -456,43 +461,87 @@ DWORD pyExecExceptionFilter(DWORD code, _EXCEPTION_POINTERS* ep)
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
-static bool safePyRunSimpleString(const std::string& script, const std::string& scriptExternObj, bool& exceptionOccured)
+PyObject* pyDeserializeObjectFromJsonString(const std::string& jsonStr)
+{
+	PyObject* pyJson = nullptr;
+	PyObject* pyJsonLoads = nullptr;
+	PyObject* pyJsonStr = nullptr;
+	PyObject* pyArgs = nullptr;
+	PyObject* result = nullptr;
+
+	if ((pyJson = PyImport_ImportModule(kJsonModuleName.c_str())) &&
+		(pyJsonLoads = PyObject_GetAttrString(pyJson, kJsonLoadsFuncName.c_str())) &&
+		(pyJsonStr = PyString_FromString(jsonStr.c_str())) &&
+		(pyArgs = PyTuple_Pack(1, pyJsonStr)))
+	{
+		result = PyObject_Call(pyJsonLoads, pyArgs, NULL);
+	}
+
+	Py_XDECREF(pyArgs);
+	Py_XDECREF(pyJsonStr);
+	Py_XDECREF(pyJsonLoads);
+	Py_XDECREF(pyJson);
+
+	return result;
+}
+
+bool pySerializeObjectToJson(PyObject* o, std::string& rv)
+{
+	PyObject* pyModuleDict = nullptr;
+	PyObject* pyLLstr = nullptr;
+	PyObject* pyLL = nullptr;
+	PyObject* pySerializeResultFn = nullptr;
+	PyObject* pyArgs = nullptr;
+	PyObject* result = nullptr;
+
+	rv.clear();
+	bool isOk = false;
+
+	if ((pyModuleDict = PyImport_GetModuleDict()) &&
+		(pyLLstr = PyString_FromString(kLabelessPythonModuleName.c_str())) &&
+		(PyDict_Contains(pyModuleDict, pyLLstr) == 1) &&
+		(pyLL = PyDict_GetItem(pyModuleDict, pyLLstr)) &&
+		(pySerializeResultFn = PyObject_GetAttrString(pyLL, kLabelessSerializeResultFuncName.c_str())) &&
+		(pyArgs = PyTuple_Pack(1, o)) &&
+		(result = PyObject_Call(pySerializeResultFn, pyArgs, NULL)) &&
+		PyString_Check(result))
+	{
+		rv = PyString_AsString(result);
+		isOk = true;
+	}
+
+	Py_XDECREF(result);
+	Py_XDECREF(pyArgs);
+	Py_XDECREF(pySerializeResultFn);
+	Py_XDECREF(pyLLstr);
+
+	return isOk;
+}
+
+static bool safePyRunSimpleString(const std::string& script, const std::string& scriptExternObj, bool& exceptionOccured, std::string& resultObj)
 {
 	bool rv = true;
 	exceptionOccured = false;
+	resultObj.clear();
 
 	__try
 	{
 		PyObject* m = PyImport_AddModule("__main__");
-		if (m == NULL)
+		if (!m)
 			return false;
 		PyObject* d = PyModule_GetDict(m);
 
 		if (!scriptExternObj.empty())
 		{
-			PyObject* pyJson = nullptr;
-			PyObject* pyJsonLoads = nullptr;
-			PyObject* pyArgs = nullptr;
-			PyObject* pyExternalObjStr = nullptr;
-			PyObject* result = nullptr;
+			PyObject* pyExternObj = pyDeserializeObjectFromJsonString(scriptExternObj);
 
-			if ((pyJson = PyImport_ImportModule("json")) &&
-				(pyJsonLoads = PyObject_GetAttrString(pyJson, "loads")) &&
-				(pyExternalObjStr = PyString_FromString(scriptExternObj.c_str())) &&
-				(pyArgs = PyTuple_Pack(1, pyExternalObjStr)) &&
-				(result = PyObject_Call(pyJsonLoads, pyArgs, NULL)))
-			{
-				PyDict_SetItemString(d, kExternKeyword.c_str(), result);
-			}
-
-			if (!result)
+			if (pyExternObj)
+				PyDict_SetItemString(d, kExternKeyword.c_str(), pyExternObj);
+			else
 				PyErr_PrintEx(0);
-			rv = !!result;
-			Py_XDECREF(pyExternalObjStr);
-			Py_XDECREF(result);
-			Py_XDECREF(pyArgs);
-			Py_XDECREF(pyJsonLoads);
-			Py_XDECREF(pyJson);
+
+			rv = !!pyExternObj;
+			Py_XDECREF(pyExternObj);
 		}
 		else
 		{
@@ -511,6 +560,18 @@ static bool safePyRunSimpleString(const std::string& script, const std::string& 
 		}
 
 		rv &= true;
+
+		// retrieve __result__ object and try to serialize it...
+		PyObject* pyResultKey = PyString_FromString(kResultKeyword.c_str());
+		if (PyDict_Contains(d, pyResultKey) == 1)
+		{
+			if (PyObject* pyResultObj = PyDict_GetItem(d, pyResultKey))
+			{
+				pySerializeObjectToJson(pyResultObj, resultObj);
+			}
+		}
+		Py_XDECREF(pyResultKey);
+
 		Py_DECREF(v);
 		if (Py_FlushLine())
 			PyErr_Clear();
@@ -1096,10 +1157,10 @@ LRESULT CALLBACK Labeless::helperWinProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp
 	return 0;
 }
 
-bool Labeless::onCommandReceived(const std::string& command, const std::string& scriptExternObj)
+bool Labeless::onCommandReceived(const std::string& command, const std::string& scriptExternObj, std::string& resultObj)
 {
 	bool hasException = false;
-	const bool rv = safePyRunSimpleString(command, scriptExternObj, hasException);
+	const bool rv = safePyRunSimpleString(command, scriptExternObj, hasException, resultObj);
 	if (!rv)
 	{
 		log_r("safePyRunSimpleString() failed. With exception: %u", int(hasException));
@@ -1107,24 +1168,6 @@ bool Labeless::onCommandReceived(const std::string& command, const std::string& 
 			PyErr_Print();
 	}
 	return rv;
-	/*PyObject* pType = nullptr;
-	PyObject* pVal = nullptr;
-	PyObject* pTraceback = nullptr;
-	PyErr_Fetch(&pType, &pVal, &pTraceback);
-	if (pType)
-	{
-		char* const errorPtr = PyString_AsString(pVal);
-		if (errorPtr)
-			error = errorPtr;
-	}
-
-	if (pVal)
-		Py_DECREF(pVal);
-	if (pTraceback)
-		Py_DECREF(pTraceback);
-	PyErr_Clear();
-
-	return pType == nullptr;*/
 }
 
 bool Labeless::onCommandReceived(ClientData& cd)
@@ -1146,13 +1189,17 @@ bool Labeless::onCommandReceived(ClientData& cd)
 		cd.stdErr.str("");
 		cd.stdErr.clear();
 
-		if (!onCommandReceived(request.script, request.scriptExternObj))
+		std::string resultObj;
+
+		if (!onCommandReceived(request.script, request.scriptExternObj, resultObj))
 		{
 			log_r("An error occured");
 			response.set_error("An error occurred");
 		}
 		response.set_std_out(cd.stdOut.str());
 		response.set_std_err(cd.stdErr.str());
+		if (!resultObj.empty())
+			response.set_script_result_obj(resultObj);
 
 		do {
 			recursive_lock_guard lock(cd.commandsLock);

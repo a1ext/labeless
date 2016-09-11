@@ -46,7 +46,7 @@ static struct HighlightingRules
 				"\\bfor\\b" << "\\bfrom\\b" << "\\bglobal\\b" << "\\bif\\b" << "\\bimport\\b" << "\\bin\\b" <<
 				"\\bis\\b" << "\\blambda\\b" << "\\bnot\\b" << "\\bor\\b" << "\\bpass\\b" << "\\bprint\\b" <<
 				"\\braise\\b" << "\\breturn\\b" << "\\btry\\b" << "\\bwhile\\b" << "\\byield\\b" <<
-				"\\bas\\b" << "\\bwith\\b" << "\\b__extern__\\b";
+				"\\bas\\b" << "\\bwith\\b" << "\\b__extern__\\b" << "\\b__result_str__\\b" << "\\b__result__\\b";
 		QStringList operators;
 		operators << "==" << "!=" << "<" << "<=" << ">" << ">=" <<
 				"\\+" << "-" << "\\*" << "/" << "//" << "\\%" << "\\*\\*" <<

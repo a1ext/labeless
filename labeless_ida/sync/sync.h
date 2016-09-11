@@ -52,6 +52,12 @@ struct ExecPyScript : public ICommand
 		std::string idaScript;
 		std::string idaExtern;
 		std::string ollyScript;
+		bool ollyResultIsSet;
+		std::string ollyResult;
+
+		Data()
+			: ollyResultIsSet(false)
+		{}
 	};
 	Data d;
 

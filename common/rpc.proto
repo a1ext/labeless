@@ -35,12 +35,13 @@ message Response {
 		JS_PENDING	= 2;
 	}
 
-	required uint64 job_id			= 1;
-	optional string std_out			= 2;
-	optional string std_err			= 3;
-	optional string error			= 4;
-	optional bytes rpc_result		= 5;
-	optional JobStatus job_status	= 6;
+	required uint64 job_id				= 1;
+	optional string std_out				= 2;
+	optional string std_err				= 3;
+	optional string error				= 4;
+	optional bytes rpc_result			= 5;
+	optional JobStatus job_status		= 6;
+	optional string script_result_obj	= 7;
 }
 
 message MakeNamesRequest {

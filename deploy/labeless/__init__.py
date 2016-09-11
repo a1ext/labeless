@@ -8,11 +8,9 @@
 
 __author__ = 'a1ex_t'
 
-# import os
+import datetime
 import sys
-# import os
-# import time
-# import traceback
+import json
 
 # import rdebug
 import py_olly
@@ -43,4 +41,18 @@ for name in all_names:
 del backend_name
 del all_names
 del my_ns
+
+
+class _DateTimeJsonSerializer(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (datetime.datetime, datetime.date)):
+            return obj.isoformat()
+
+        return super(_DateTimeJsonSerializer, self).default(obj)
+
+
+def serialize_result(v):
+    """This method calls after each python execution"""
+    # override this method or cls if you want to add custom types to be serialized
+    return json.dumps(v, cls=_DateTimeJsonSerializer)
 

@@ -135,6 +135,7 @@ private:
 
 	bool initIDAPython();
 	bool runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error);
+	bool setIDAPythonResultObject(const std::string& obj, std::string& error);
 
 	Settings loadSettings();
 	void storeSettings();

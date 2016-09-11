@@ -143,13 +143,14 @@ void protobuf_AssignDesc_rpc_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Execute));
   Response_descriptor_ = file->message_type(2);
-  static const int Response_offsets_[6] = {
+  static const int Response_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, job_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, std_out_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, std_err_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, error_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, rpc_result_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, job_status_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Response, script_result_obj_),
   };
   Response_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -657,63 +658,64 @@ void protobuf_AddDesc_rpc_2eproto() {
     "ERS\020\006\022\031\n\025RPCT_GET_BACKEND_INFO\020\007\"t\n\007Exec"
     "ute\022\016\n\006script\030\001 \001(\t\022\031\n\021script_extern_obj"
     "\030\002 \001(\t\022\023\n\013rpc_request\030\003 \001(\014\022\031\n\nbackgroun"
-    "d\030\004 \001(\010:\005false\022\016\n\006job_id\030\005 \001(\004\"\272\001\n\010Respo"
+    "d\030\004 \001(\010:\005false\022\016\n\006job_id\030\005 \001(\004\"\325\001\n\010Respo"
     "nse\022\016\n\006job_id\030\001 \002(\004\022\017\n\007std_out\030\002 \001(\t\022\017\n\007"
     "std_err\030\003 \001(\t\022\r\n\005error\030\004 \001(\t\022\022\n\nrpc_resu"
     "lt\030\005 \001(\014\022+\n\njob_status\030\006 \001(\0162\027.rpc.Respo"
-    "nse.JobStatus\",\n\tJobStatus\022\017\n\013JS_FINISHE"
-    "D\020\001\022\016\n\nJS_PENDING\020\002\"\202\001\n\020MakeNamesRequest"
-    "\022)\n\005names\030\001 \003(\0132\032.rpc.MakeNamesRequest.N"
-    "ame\022\014\n\004base\030\002 \002(\004\022\023\n\013remote_base\030\003 \002(\004\032 "
-    "\n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n\004name\030\002 \002(\t\"\210\001\n\023Mak"
-    "eCommentsRequest\022,\n\005names\030\001 \003(\0132\035.rpc.Ma"
-    "keCommentsRequest.Name\022\014\n\004base\030\002 \002(\004\022\023\n\013"
-    "remote_base\030\003 \002(\004\032 \n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n"
-    "\004name\030\002 \002(\t\"\212\001\n\022GetMemoryMapResult\0220\n\010me"
-    "mories\030\001 \003(\0132\036.rpc.GetMemoryMapResult.Me"
-    "mory\032B\n\006Memory\022\014\n\004base\030\001 \002(\004\022\014\n\004size\030\002 \002"
-    "(\004\022\016\n\006access\030\003 \002(\r\022\014\n\004name\030\004 \002(\t\"w\n\030Read"
-    "MemoryRegionsRequest\0225\n\007regions\030\001 \003(\0132$."
-    "rpc.ReadMemoryRegionsRequest.Region\032$\n\006R"
-    "egion\022\014\n\004addr\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\"\224\001\n\027Re"
-    "adMemoryRegionsResult\0225\n\010memories\030\001 \003(\0132"
-    "#.rpc.ReadMemoryRegionsResult.Memory\032B\n\006"
-    "Memory\022\014\n\004addr\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\022\013\n\003me"
-    "m\030\003 \002(\014\022\017\n\007protect\030\004 \002(\r\"\177\n\032AnalyzeExter"
-    "nalRefsRequest\022\017\n\007ea_from\030\001 \002(\004\022\r\n\005ea_to"
-    "\030\002 \002(\004\022\021\n\tincrement\030\003 \002(\r\022\026\n\016analysing_b"
-    "ase\030\004 \002(\004\022\026\n\016analysing_size\030\005 \002(\004\"\225\006\n\031An"
-    "alyzeExternalRefsResult\022A\n\rapi_constants"
-    "\030\001 \003(\0132*.rpc.AnalyzeExternalRefsResult.P"
-    "ointerData\0224\n\004refs\030\002 \003(\0132&.rpc.AnalyzeEx"
-    "ternalRefsResult.RefData\0225\n\007context\030\003 \002("
-    "\0132$.rpc.AnalyzeExternalRefsResult.reg_t\032"
-    "[\n\013PointerData\022\n\n\002ea\030\001 \002(\004\022\016\n\006module\030\002 \002"
-    "(\t\022\014\n\004proc\030\003 \002(\t\022\"\n\032ordinal_collision_dl"
-    "l_path\030\004 \001(\t\032\203\002\n\007RefData\022\n\n\002ea\030\001 \002(\004\022\013\n\003"
-    "len\030\002 \002(\004\022\013\n\003dis\030\003 \002(\t\022\t\n\001v\030\004 \002(\004\022@\n\010ref"
-    "_type\030\005 \002(\0162..rpc.AnalyzeExternalRefsRes"
-    "ult.RefData.RefType\022\016\n\006module\030\006 \002(\t\022\014\n\004p"
-    "roc\030\007 \002(\t\022\"\n\032ordinal_collision_dll_path\030"
-    "\010 \001(\t\"C\n\007RefType\022\021\n\rREFT_JMPCONST\020\001\022\021\n\rR"
-    "EFT_IMMCONST\020\002\022\022\n\016REFT_ADDRCONST\020\003\032\344\001\n\005r"
-    "eg_t\022\013\n\003eax\030\001 \002(\r\022\013\n\003ecx\030\002 \002(\r\022\013\n\003edx\030\003 "
-    "\002(\r\022\013\n\003ebx\030\004 \002(\r\022\013\n\003esp\030\005 \002(\r\022\013\n\003ebp\030\006 \002"
-    "(\r\022\013\n\003esi\030\007 \002(\r\022\013\n\003edi\030\010 \002(\r\022\013\n\003rip\030\t \002("
-    "\004\022\013\n\003rax\030\n \001(\004\022\013\n\003rbx\030\013 \001(\004\022\013\n\003rcx\030\014 \001(\004"
-    "\022\013\n\003rdx\030\r \001(\004\022\013\n\003rsi\030\016 \001(\004\022\013\n\003rdi\030\017 \001(\004\022"
-    "\013\n\003rbp\030\020 \001(\004\022\013\n\003rsp\030\021 \001(\004\"3\n\025CheckPEHead"
-    "ersRequest\022\014\n\004base\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\"\255"
-    "\002\n\024CheckPEHeadersResult\022\020\n\010pe_valid\030\001 \002("
-    "\010\022/\n\004exps\030\002 \003(\0132!.rpc.CheckPEHeadersResu"
-    "lt.Exports\0223\n\010sections\030\003 \003(\0132!.rpc.Check"
-    "PEHeadersResult.Section\0320\n\007Exports\022\n\n\002ea"
-    "\030\001 \002(\004\022\013\n\003ord\030\002 \002(\004\022\014\n\004name\030\003 \001(\t\032k\n\007Sec"
-    "tion\022\014\n\004name\030\001 \001(\t\022\n\n\002va\030\002 \001(\004\022\016\n\006v_size"
-    "\030\003 \001(\004\022\013\n\003raw\030\004 \001(\004\022\020\n\010raw_size\030\005 \001(\004\022\027\n"
-    "\017characteristics\030\006 \001(\r\"`\n\024GetBackendInfo"
-    "Result\022\017\n\007bitness\030\001 \002(\r\022\020\n\010dbg_name\030\002 \002("
-    "\t\022\017\n\007dbg_ver\030\003 \001(\t\022\024\n\014labeless_ver\030\004 \002(\t", 2960);
+    "nse.JobStatus\022\031\n\021script_result_obj\030\007 \001(\t"
+    "\",\n\tJobStatus\022\017\n\013JS_FINISHED\020\001\022\016\n\nJS_PEN"
+    "DING\020\002\"\202\001\n\020MakeNamesRequest\022)\n\005names\030\001 \003"
+    "(\0132\032.rpc.MakeNamesRequest.Name\022\014\n\004base\030\002"
+    " \002(\004\022\023\n\013remote_base\030\003 \002(\004\032 \n\004Name\022\n\n\002ea\030"
+    "\001 \002(\004\022\014\n\004name\030\002 \002(\t\"\210\001\n\023MakeCommentsRequ"
+    "est\022,\n\005names\030\001 \003(\0132\035.rpc.MakeCommentsReq"
+    "uest.Name\022\014\n\004base\030\002 \002(\004\022\023\n\013remote_base\030\003"
+    " \002(\004\032 \n\004Name\022\n\n\002ea\030\001 \002(\004\022\014\n\004name\030\002 \002(\t\"\212"
+    "\001\n\022GetMemoryMapResult\0220\n\010memories\030\001 \003(\0132"
+    "\036.rpc.GetMemoryMapResult.Memory\032B\n\006Memor"
+    "y\022\014\n\004base\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\022\016\n\006access\030"
+    "\003 \002(\r\022\014\n\004name\030\004 \002(\t\"w\n\030ReadMemoryRegions"
+    "Request\0225\n\007regions\030\001 \003(\0132$.rpc.ReadMemor"
+    "yRegionsRequest.Region\032$\n\006Region\022\014\n\004addr"
+    "\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\"\224\001\n\027ReadMemoryRegio"
+    "nsResult\0225\n\010memories\030\001 \003(\0132#.rpc.ReadMem"
+    "oryRegionsResult.Memory\032B\n\006Memory\022\014\n\004add"
+    "r\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\022\013\n\003mem\030\003 \002(\014\022\017\n\007pr"
+    "otect\030\004 \002(\r\"\177\n\032AnalyzeExternalRefsReques"
+    "t\022\017\n\007ea_from\030\001 \002(\004\022\r\n\005ea_to\030\002 \002(\004\022\021\n\tinc"
+    "rement\030\003 \002(\r\022\026\n\016analysing_base\030\004 \002(\004\022\026\n\016"
+    "analysing_size\030\005 \002(\004\"\225\006\n\031AnalyzeExternal"
+    "RefsResult\022A\n\rapi_constants\030\001 \003(\0132*.rpc."
+    "AnalyzeExternalRefsResult.PointerData\0224\n"
+    "\004refs\030\002 \003(\0132&.rpc.AnalyzeExternalRefsRes"
+    "ult.RefData\0225\n\007context\030\003 \002(\0132$.rpc.Analy"
+    "zeExternalRefsResult.reg_t\032[\n\013PointerDat"
+    "a\022\n\n\002ea\030\001 \002(\004\022\016\n\006module\030\002 \002(\t\022\014\n\004proc\030\003 "
+    "\002(\t\022\"\n\032ordinal_collision_dll_path\030\004 \001(\t\032"
+    "\203\002\n\007RefData\022\n\n\002ea\030\001 \002(\004\022\013\n\003len\030\002 \002(\004\022\013\n\003"
+    "dis\030\003 \002(\t\022\t\n\001v\030\004 \002(\004\022@\n\010ref_type\030\005 \002(\0162."
+    ".rpc.AnalyzeExternalRefsResult.RefData.R"
+    "efType\022\016\n\006module\030\006 \002(\t\022\014\n\004proc\030\007 \002(\t\022\"\n\032"
+    "ordinal_collision_dll_path\030\010 \001(\t\"C\n\007RefT"
+    "ype\022\021\n\rREFT_JMPCONST\020\001\022\021\n\rREFT_IMMCONST\020"
+    "\002\022\022\n\016REFT_ADDRCONST\020\003\032\344\001\n\005reg_t\022\013\n\003eax\030\001"
+    " \002(\r\022\013\n\003ecx\030\002 \002(\r\022\013\n\003edx\030\003 \002(\r\022\013\n\003ebx\030\004 "
+    "\002(\r\022\013\n\003esp\030\005 \002(\r\022\013\n\003ebp\030\006 \002(\r\022\013\n\003esi\030\007 \002"
+    "(\r\022\013\n\003edi\030\010 \002(\r\022\013\n\003rip\030\t \002(\004\022\013\n\003rax\030\n \001("
+    "\004\022\013\n\003rbx\030\013 \001(\004\022\013\n\003rcx\030\014 \001(\004\022\013\n\003rdx\030\r \001(\004"
+    "\022\013\n\003rsi\030\016 \001(\004\022\013\n\003rdi\030\017 \001(\004\022\013\n\003rbp\030\020 \001(\004\022"
+    "\013\n\003rsp\030\021 \001(\004\"3\n\025CheckPEHeadersRequest\022\014\n"
+    "\004base\030\001 \002(\004\022\014\n\004size\030\002 \002(\004\"\255\002\n\024CheckPEHea"
+    "dersResult\022\020\n\010pe_valid\030\001 \002(\010\022/\n\004exps\030\002 \003"
+    "(\0132!.rpc.CheckPEHeadersResult.Exports\0223\n"
+    "\010sections\030\003 \003(\0132!.rpc.CheckPEHeadersResu"
+    "lt.Section\0320\n\007Exports\022\n\n\002ea\030\001 \002(\004\022\013\n\003ord"
+    "\030\002 \002(\004\022\014\n\004name\030\003 \001(\t\032k\n\007Section\022\014\n\004name\030"
+    "\001 \001(\t\022\n\n\002va\030\002 \001(\004\022\016\n\006v_size\030\003 \001(\004\022\013\n\003raw"
+    "\030\004 \001(\004\022\020\n\010raw_size\030\005 \001(\004\022\027\n\017characterist"
+    "ics\030\006 \001(\r\"`\n\024GetBackendInfoResult\022\017\n\007bit"
+    "ness\030\001 \002(\r\022\020\n\010dbg_name\030\002 \002(\t\022\017\n\007dbg_ver\030"
+    "\003 \001(\t\022\024\n\014labeless_ver\030\004 \002(\t", 2987);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rpc.proto", &protobuf_RegisterTypes);
   RpcRequest::default_instance_ = new RpcRequest();
@@ -1741,6 +1743,7 @@ const int Response::kStdErrFieldNumber;
 const int Response::kErrorFieldNumber;
 const int Response::kRpcResultFieldNumber;
 const int Response::kJobStatusFieldNumber;
+const int Response::kScriptResultObjFieldNumber;
 #endif  // !_MSC_VER
 
 Response::Response()
@@ -1768,6 +1771,7 @@ void Response::SharedCtor() {
   error_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   rpc_result_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   job_status_ = 1;
+  script_result_obj_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1788,6 +1792,9 @@ void Response::SharedDtor() {
   }
   if (rpc_result_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete rpc_result_;
+  }
+  if (script_result_obj_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete script_result_obj_;
   }
   if (this != default_instance_) {
   }
@@ -1815,7 +1822,7 @@ Response* Response::New() const {
 }
 
 void Response::Clear() {
-  if (_has_bits_[0 / 32] & 63) {
+  if (_has_bits_[0 / 32] & 127) {
     job_id_ = GOOGLE_ULONGLONG(0);
     if (has_std_out()) {
       if (std_out_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -1838,6 +1845,11 @@ void Response::Clear() {
       }
     }
     job_status_ = 1;
+    if (has_script_result_obj()) {
+      if (script_result_obj_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        script_result_obj_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -1947,6 +1959,23 @@ bool Response::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(58)) goto parse_script_result_obj;
+        break;
+      }
+
+      // optional string script_result_obj = 7;
+      case 7: {
+        if (tag == 58) {
+         parse_script_result_obj:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_script_result_obj()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->script_result_obj().data(), this->script_result_obj().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "script_result_obj");
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2023,6 +2052,16 @@ void Response::SerializeWithCachedSizes(
       6, this->job_status(), output);
   }
 
+  // optional string script_result_obj = 7;
+  if (has_script_result_obj()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->script_result_obj().data(), this->script_result_obj().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "script_result_obj");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      7, this->script_result_obj(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -2084,6 +2123,17 @@ void Response::SerializeWithCachedSizes(
       6, this->job_status(), target);
   }
 
+  // optional string script_result_obj = 7;
+  if (has_script_result_obj()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->script_result_obj().data(), this->script_result_obj().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "script_result_obj");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        7, this->script_result_obj(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -2137,6 +2187,13 @@ int Response::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->job_status());
     }
 
+    // optional string script_result_obj = 7;
+    if (has_script_result_obj()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->script_result_obj());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -2182,6 +2239,9 @@ void Response::MergeFrom(const Response& from) {
     if (from.has_job_status()) {
       set_job_status(from.job_status());
     }
+    if (from.has_script_result_obj()) {
+      set_script_result_obj(from.script_result_obj());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -2212,6 +2272,7 @@ void Response::Swap(Response* other) {
     std::swap(error_, other->error_);
     std::swap(rpc_result_, other->rpc_result_);
     std::swap(job_status_, other->job_status_);
+    std::swap(script_result_obj_, other->script_result_obj_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -566,6 +566,18 @@ class Response : public ::google::protobuf::Message {
   inline ::rpc::Response_JobStatus job_status() const;
   inline void set_job_status(::rpc::Response_JobStatus value);
 
+  // optional string script_result_obj = 7;
+  inline bool has_script_result_obj() const;
+  inline void clear_script_result_obj();
+  static const int kScriptResultObjFieldNumber = 7;
+  inline const ::std::string& script_result_obj() const;
+  inline void set_script_result_obj(const ::std::string& value);
+  inline void set_script_result_obj(const char* value);
+  inline void set_script_result_obj(const char* value, size_t size);
+  inline ::std::string* mutable_script_result_obj();
+  inline ::std::string* release_script_result_obj();
+  inline void set_allocated_script_result_obj(::std::string* script_result_obj);
+
   // @@protoc_insertion_point(class_scope:rpc.Response)
  private:
   inline void set_has_job_id();
@@ -580,6 +592,8 @@ class Response : public ::google::protobuf::Message {
   inline void clear_has_rpc_result();
   inline void set_has_job_status();
   inline void clear_has_job_status();
+  inline void set_has_script_result_obj();
+  inline void clear_has_script_result_obj();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -590,6 +604,7 @@ class Response : public ::google::protobuf::Message {
   ::std::string* std_err_;
   ::std::string* error_;
   ::std::string* rpc_result_;
+  ::std::string* script_result_obj_;
   int job_status_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
@@ -3781,6 +3796,82 @@ inline void Response::set_job_status(::rpc::Response_JobStatus value) {
   set_has_job_status();
   job_status_ = value;
   // @@protoc_insertion_point(field_set:rpc.Response.job_status)
+}
+
+// optional string script_result_obj = 7;
+inline bool Response::has_script_result_obj() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void Response::set_has_script_result_obj() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void Response::clear_has_script_result_obj() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void Response::clear_script_result_obj() {
+  if (script_result_obj_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    script_result_obj_->clear();
+  }
+  clear_has_script_result_obj();
+}
+inline const ::std::string& Response::script_result_obj() const {
+  // @@protoc_insertion_point(field_get:rpc.Response.script_result_obj)
+  return *script_result_obj_;
+}
+inline void Response::set_script_result_obj(const ::std::string& value) {
+  set_has_script_result_obj();
+  if (script_result_obj_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    script_result_obj_ = new ::std::string;
+  }
+  script_result_obj_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.Response.script_result_obj)
+}
+inline void Response::set_script_result_obj(const char* value) {
+  set_has_script_result_obj();
+  if (script_result_obj_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    script_result_obj_ = new ::std::string;
+  }
+  script_result_obj_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.Response.script_result_obj)
+}
+inline void Response::set_script_result_obj(const char* value, size_t size) {
+  set_has_script_result_obj();
+  if (script_result_obj_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    script_result_obj_ = new ::std::string;
+  }
+  script_result_obj_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.Response.script_result_obj)
+}
+inline ::std::string* Response::mutable_script_result_obj() {
+  set_has_script_result_obj();
+  if (script_result_obj_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    script_result_obj_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.Response.script_result_obj)
+  return script_result_obj_;
+}
+inline ::std::string* Response::release_script_result_obj() {
+  clear_has_script_result_obj();
+  if (script_result_obj_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = script_result_obj_;
+    script_result_obj_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Response::set_allocated_script_result_obj(::std::string* script_result_obj) {
+  if (script_result_obj_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete script_result_obj_;
+  }
+  if (script_result_obj) {
+    set_has_script_result_obj();
+    script_result_obj_ = script_result_obj;
+  } else {
+    clear_has_script_result_obj();
+    script_result_obj_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.Response.script_result_obj)
 }
 
 // -------------------------------------------------------------------

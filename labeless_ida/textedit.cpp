@@ -23,7 +23,7 @@ TextEdit::TextEdit(QWidget* parent)
 {
 	m_Highlighter = new Highlighter(document());
 	m_Completer = new QCompleter(QStringList()
-		<< "class"<< "def"<< "import"<< "from"<< "with" << "__extern__", this); // TODO: add support to load from file
+		<< "class"<< "def"<< "import"<< "from"<< "with" << "__extern__" << "__result__" << "__result_str__", this); // TODO: add support to load from file
 	m_Completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_Completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_Completer->setWidget(this);
