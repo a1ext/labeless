@@ -23,6 +23,7 @@ namespace Script
         extern void StepOut();
         extern bool SetBreakpoint(duint address);
         extern bool DeleteBreakpoint(duint address);
+        extern bool DisableBreakpoint(duint address);
         extern bool SetHardwareBreakpoint(duint address, HardwareType type = HardwareExecute);
         extern bool DeleteHardwareBreakpoint(duint address);
     }; //Debug

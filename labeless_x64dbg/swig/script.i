@@ -1,6 +1,7 @@
 %module script
 %{
 #include "../pluginsdk/_scriptapi.h"
+#include "../pluginsdk/_scriptapi_argument.h"
 #include "../pluginsdk/_scriptapi_assembler.h"
 #include "../pluginsdk/_scriptapi_bookmark.h"
 #include "../pluginsdk/_scriptapi_comment.h"
@@ -20,7 +21,7 @@
 
 %include "./pluginsdk-swig/scriptapi_swig.h"
 
-
+%array_class(Script::Argument::ArgumentInfo, ArgumentInfoArray);
 %array_class(Script::Bookmark::BookmarkInfo, BookmarkInfoArray);
 %array_class(Script::Comment::CommentInfo, CommentInfoArray);
 %array_class(Script::Function::FunctionInfo, FunctionInfoArray);

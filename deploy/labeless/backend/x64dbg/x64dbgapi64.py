@@ -108,11 +108,11 @@ MAX_SETTING_SIZE = _x64dbgapi64.MAX_SETTING_SIZE
 DBG_VERSION = _x64dbgapi64.DBG_VERSION
 
 def BridgeInit():
-  """BridgeInit() -> char const *"""
+  """BridgeInit() -> wchar_t const *"""
   return _x64dbgapi64.BridgeInit()
 
 def BridgeStart():
-  """BridgeStart() -> char const *"""
+  """BridgeStart() -> wchar_t const *"""
   return _x64dbgapi64.BridgeStart()
 
 def BridgeAlloc(*args):
@@ -159,6 +159,7 @@ MAX_CONDITIONAL_EXPR_SIZE = _x64dbgapi64.MAX_CONDITIONAL_EXPR_SIZE
 MAX_CONDITIONAL_TEXT_SIZE = _x64dbgapi64.MAX_CONDITIONAL_TEXT_SIZE
 MAX_SCRIPT_LINE_SIZE = _x64dbgapi64.MAX_SCRIPT_LINE_SIZE
 MAX_THREAD_NAME_SIZE = _x64dbgapi64.MAX_THREAD_NAME_SIZE
+MAX_WATCH_NAME_SIZE = _x64dbgapi64.MAX_WATCH_NAME_SIZE
 MAX_STRING_SIZE = _x64dbgapi64.MAX_STRING_SIZE
 MAX_ERROR_SIZE = _x64dbgapi64.MAX_ERROR_SIZE
 MAX_SECTION_SIZE = _x64dbgapi64.MAX_SECTION_SIZE
@@ -182,10 +183,13 @@ flagcomment = _x64dbgapi64.flagcomment
 flagbookmark = _x64dbgapi64.flagbookmark
 flagfunction = _x64dbgapi64.flagfunction
 flagloop = _x64dbgapi64.flagloop
+flagargs = _x64dbgapi64.flagargs
 bp_none = _x64dbgapi64.bp_none
 bp_normal = _x64dbgapi64.bp_normal
 bp_hardware = _x64dbgapi64.bp_hardware
 bp_memory = _x64dbgapi64.bp_memory
+bp_dll = _x64dbgapi64.bp_dll
+bp_exception = _x64dbgapi64.bp_exception
 FUNC_NONE = _x64dbgapi64.FUNC_NONE
 FUNC_BEGIN = _x64dbgapi64.FUNC_BEGIN
 FUNC_MIDDLE = _x64dbgapi64.FUNC_MIDDLE
@@ -196,10 +200,15 @@ LOOP_BEGIN = _x64dbgapi64.LOOP_BEGIN
 LOOP_MIDDLE = _x64dbgapi64.LOOP_MIDDLE
 LOOP_ENTRY = _x64dbgapi64.LOOP_ENTRY
 LOOP_END = _x64dbgapi64.LOOP_END
+XREF_NONE = _x64dbgapi64.XREF_NONE
+XREF_DATA = _x64dbgapi64.XREF_DATA
+XREF_JMP = _x64dbgapi64.XREF_JMP
+XREF_CALL = _x64dbgapi64.XREF_CALL
 ARG_NONE = _x64dbgapi64.ARG_NONE
 ARG_BEGIN = _x64dbgapi64.ARG_BEGIN
 ARG_MIDDLE = _x64dbgapi64.ARG_MIDDLE
 ARG_END = _x64dbgapi64.ARG_END
+ARG_SINGLE = _x64dbgapi64.ARG_SINGLE
 DBG_SCRIPT_LOAD = _x64dbgapi64.DBG_SCRIPT_LOAD
 DBG_SCRIPT_UNLOAD = _x64dbgapi64.DBG_SCRIPT_UNLOAD
 DBG_SCRIPT_RUN = _x64dbgapi64.DBG_SCRIPT_RUN
@@ -249,6 +258,22 @@ DBG_SYMBOL_ENUM_FROMCACHE = _x64dbgapi64.DBG_SYMBOL_ENUM_FROMCACHE
 DBG_DELETE_COMMENT_RANGE = _x64dbgapi64.DBG_DELETE_COMMENT_RANGE
 DBG_DELETE_LABEL_RANGE = _x64dbgapi64.DBG_DELETE_LABEL_RANGE
 DBG_DELETE_BOOKMARK_RANGE = _x64dbgapi64.DBG_DELETE_BOOKMARK_RANGE
+DBG_GET_XREF_COUNT_AT = _x64dbgapi64.DBG_GET_XREF_COUNT_AT
+DBG_GET_XREF_TYPE_AT = _x64dbgapi64.DBG_GET_XREF_TYPE_AT
+DBG_XREF_ADD = _x64dbgapi64.DBG_XREF_ADD
+DBG_XREF_DEL_ALL = _x64dbgapi64.DBG_XREF_DEL_ALL
+DBG_XREF_GET = _x64dbgapi64.DBG_XREF_GET
+DBG_GET_ENCODE_TYPE_BUFFER = _x64dbgapi64.DBG_GET_ENCODE_TYPE_BUFFER
+DBG_ENCODE_TYPE_GET = _x64dbgapi64.DBG_ENCODE_TYPE_GET
+DBG_DELETE_ENCODE_TYPE_RANGE = _x64dbgapi64.DBG_DELETE_ENCODE_TYPE_RANGE
+DBG_ENCODE_SIZE_GET = _x64dbgapi64.DBG_ENCODE_SIZE_GET
+DBG_DELETE_ENCODE_TYPE_SEG = _x64dbgapi64.DBG_DELETE_ENCODE_TYPE_SEG
+DBG_RELEASE_ENCODE_TYPE_BUFFER = _x64dbgapi64.DBG_RELEASE_ENCODE_TYPE_BUFFER
+DBG_ARGUMENT_GET = _x64dbgapi64.DBG_ARGUMENT_GET
+DBG_ARGUMENT_OVERLAPS = _x64dbgapi64.DBG_ARGUMENT_OVERLAPS
+DBG_ARGUMENT_ADD = _x64dbgapi64.DBG_ARGUMENT_ADD
+DBG_ARGUMENT_DEL = _x64dbgapi64.DBG_ARGUMENT_DEL
+DBG_GET_WATCH_LIST = _x64dbgapi64.DBG_GET_WATCH_LIST
 linecommand = _x64dbgapi64.linecommand
 linebranch = _x64dbgapi64.linebranch
 linelabel = _x64dbgapi64.linelabel
@@ -320,6 +345,37 @@ size_byte = _x64dbgapi64.size_byte
 size_word = _x64dbgapi64.size_word
 size_dword = _x64dbgapi64.size_dword
 size_qword = _x64dbgapi64.size_qword
+enc_unknown = _x64dbgapi64.enc_unknown
+enc_byte = _x64dbgapi64.enc_byte
+enc_word = _x64dbgapi64.enc_word
+enc_dword = _x64dbgapi64.enc_dword
+enc_fword = _x64dbgapi64.enc_fword
+enc_qword = _x64dbgapi64.enc_qword
+enc_tbyte = _x64dbgapi64.enc_tbyte
+enc_oword = _x64dbgapi64.enc_oword
+enc_mmword = _x64dbgapi64.enc_mmword
+enc_xmmword = _x64dbgapi64.enc_xmmword
+enc_ymmword = _x64dbgapi64.enc_ymmword
+enc_zmmword = _x64dbgapi64.enc_zmmword
+enc_real4 = _x64dbgapi64.enc_real4
+enc_real8 = _x64dbgapi64.enc_real8
+enc_real10 = _x64dbgapi64.enc_real10
+enc_ascii = _x64dbgapi64.enc_ascii
+enc_unicode = _x64dbgapi64.enc_unicode
+enc_code = _x64dbgapi64.enc_code
+enc_junk = _x64dbgapi64.enc_junk
+enc_middle = _x64dbgapi64.enc_middle
+TYPE_UINT = _x64dbgapi64.TYPE_UINT
+TYPE_INT = _x64dbgapi64.TYPE_INT
+TYPE_FLOAT = _x64dbgapi64.TYPE_FLOAT
+TYPE_ASCII = _x64dbgapi64.TYPE_ASCII
+TYPE_UNICODE = _x64dbgapi64.TYPE_UNICODE
+TYPE_INVALID = _x64dbgapi64.TYPE_INVALID
+MODE_DISABLED = _x64dbgapi64.MODE_DISABLED
+MODE_ISTRUE = _x64dbgapi64.MODE_ISTRUE
+MODE_ISFALSE = _x64dbgapi64.MODE_ISFALSE
+MODE_CHANGED = _x64dbgapi64.MODE_CHANGED
+MODE_UNCHANGED = _x64dbgapi64.MODE_UNCHANGED
 class MEMORY_BASIC_INFORMATION(object):
     """Proxy of C++ _MEMORY_BASIC_INFORMATION class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
@@ -387,6 +443,7 @@ class BRIDGEBP(object):
     slot = _swig_property(_x64dbgapi64.BRIDGEBP_slot_get, _x64dbgapi64.BRIDGEBP_slot_set)
     hitCount = _swig_property(_x64dbgapi64.BRIDGEBP_hitCount_get, _x64dbgapi64.BRIDGEBP_hitCount_set)
     fastResume = _swig_property(_x64dbgapi64.BRIDGEBP_fastResume_get, _x64dbgapi64.BRIDGEBP_fastResume_set)
+    silent = _swig_property(_x64dbgapi64.BRIDGEBP_silent_get, _x64dbgapi64.BRIDGEBP_silent_set)
     breakCondition = _swig_property(_x64dbgapi64.BRIDGEBP_breakCondition_get, _x64dbgapi64.BRIDGEBP_breakCondition_set)
     logText = _swig_property(_x64dbgapi64.BRIDGEBP_logText_get, _x64dbgapi64.BRIDGEBP_logText_set)
     logCondition = _swig_property(_x64dbgapi64.BRIDGEBP_logCondition_get, _x64dbgapi64.BRIDGEBP_logCondition_set)
@@ -417,6 +474,28 @@ class BPMAP(object):
     __del__ = lambda self : None;
 BPMAP_swigregister = _x64dbgapi64.BPMAP_swigregister
 BPMAP_swigregister(BPMAP)
+
+class WATCHINFO(object):
+    """Proxy of C++ WATCHINFO class"""
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    WatchName = _swig_property(_x64dbgapi64.WATCHINFO_WatchName_get, _x64dbgapi64.WATCHINFO_WatchName_set)
+    Expression = _swig_property(_x64dbgapi64.WATCHINFO_Expression_get, _x64dbgapi64.WATCHINFO_Expression_set)
+    window = _swig_property(_x64dbgapi64.WATCHINFO_window_get, _x64dbgapi64.WATCHINFO_window_set)
+    id = _swig_property(_x64dbgapi64.WATCHINFO_id_get, _x64dbgapi64.WATCHINFO_id_set)
+    varType = _swig_property(_x64dbgapi64.WATCHINFO_varType_get, _x64dbgapi64.WATCHINFO_varType_set)
+    watchdogMode = _swig_property(_x64dbgapi64.WATCHINFO_watchdogMode_get, _x64dbgapi64.WATCHINFO_watchdogMode_set)
+    value = _swig_property(_x64dbgapi64.WATCHINFO_value_get, _x64dbgapi64.WATCHINFO_value_set)
+    watchdogTriggered = _swig_property(_x64dbgapi64.WATCHINFO_watchdogTriggered_get, _x64dbgapi64.WATCHINFO_watchdogTriggered_set)
+    def __init__(self): 
+        """__init__(WATCHINFO self) -> WATCHINFO"""
+        this = _x64dbgapi64.new_WATCHINFO()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _x64dbgapi64.delete_WATCHINFO
+    __del__ = lambda self : None;
+WATCHINFO_swigregister = _x64dbgapi64.WATCHINFO_swigregister
+WATCHINFO_swigregister(WATCHINFO)
 
 class FUNCTION(object):
     """Proxy of C++ FUNCTION class"""
@@ -463,6 +542,7 @@ class ADDRINFO(object):
     isbookmark = _swig_property(_x64dbgapi64.ADDRINFO_isbookmark_get, _x64dbgapi64.ADDRINFO_isbookmark_set)
     function = _swig_property(_x64dbgapi64.ADDRINFO_function_get, _x64dbgapi64.ADDRINFO_function_set)
     loop = _swig_property(_x64dbgapi64.ADDRINFO_loop_get, _x64dbgapi64.ADDRINFO_loop_set)
+    args = _swig_property(_x64dbgapi64.ADDRINFO_args_get, _x64dbgapi64.ADDRINFO_args_set)
     def __init__(self): 
         """__init__(ADDRINFO self) -> ADDRINFO"""
         this = _x64dbgapi64.new_ADDRINFO()
@@ -871,6 +951,10 @@ class THREADALLINFO(object):
     Priority = _swig_property(_x64dbgapi64.THREADALLINFO_Priority_get, _x64dbgapi64.THREADALLINFO_Priority_set)
     WaitReason = _swig_property(_x64dbgapi64.THREADALLINFO_WaitReason_get, _x64dbgapi64.THREADALLINFO_WaitReason_set)
     LastError = _swig_property(_x64dbgapi64.THREADALLINFO_LastError_get, _x64dbgapi64.THREADALLINFO_LastError_set)
+    UserTime = _swig_property(_x64dbgapi64.THREADALLINFO_UserTime_get, _x64dbgapi64.THREADALLINFO_UserTime_set)
+    KernelTime = _swig_property(_x64dbgapi64.THREADALLINFO_KernelTime_get, _x64dbgapi64.THREADALLINFO_KernelTime_set)
+    CreationTime = _swig_property(_x64dbgapi64.THREADALLINFO_CreationTime_get, _x64dbgapi64.THREADALLINFO_CreationTime_set)
+    Cycles = _swig_property(_x64dbgapi64.THREADALLINFO_Cycles_get, _x64dbgapi64.THREADALLINFO_Cycles_set)
     def __init__(self): 
         """__init__(THREADALLINFO self) -> THREADALLINFO"""
         this = _x64dbgapi64.new_THREADALLINFO()
@@ -991,6 +1075,38 @@ class FUNCTION_LOOP_INFO(object):
     __del__ = lambda self : None;
 FUNCTION_LOOP_INFO_swigregister = _x64dbgapi64.FUNCTION_LOOP_INFO_swigregister
 FUNCTION_LOOP_INFO_swigregister(FUNCTION_LOOP_INFO)
+
+class XREF_RECORD(object):
+    """Proxy of C++ XREF_RECORD class"""
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    addr = _swig_property(_x64dbgapi64.XREF_RECORD_addr_get, _x64dbgapi64.XREF_RECORD_addr_set)
+    type = _swig_property(_x64dbgapi64.XREF_RECORD_type_get, _x64dbgapi64.XREF_RECORD_type_set)
+    def __init__(self): 
+        """__init__(XREF_RECORD self) -> XREF_RECORD"""
+        this = _x64dbgapi64.new_XREF_RECORD()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _x64dbgapi64.delete_XREF_RECORD
+    __del__ = lambda self : None;
+XREF_RECORD_swigregister = _x64dbgapi64.XREF_RECORD_swigregister
+XREF_RECORD_swigregister(XREF_RECORD)
+
+class XREF_INFO(object):
+    """Proxy of C++ XREF_INFO class"""
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    refcount = _swig_property(_x64dbgapi64.XREF_INFO_refcount_get, _x64dbgapi64.XREF_INFO_refcount_set)
+    references = _swig_property(_x64dbgapi64.XREF_INFO_references_get, _x64dbgapi64.XREF_INFO_references_set)
+    def __init__(self): 
+        """__init__(XREF_INFO self) -> XREF_INFO"""
+        this = _x64dbgapi64.new_XREF_INFO()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _x64dbgapi64.delete_XREF_INFO
+    __del__ = lambda self : None;
+XREF_INFO_swigregister = _x64dbgapi64.XREF_INFO_swigregister
+XREF_INFO_swigregister(XREF_INFO)
 
 
 def DbgInit():
@@ -1899,6 +2015,7 @@ class DBGPROCESSINFO(object):
     __repr__ = _swig_repr
     dwProcessId = _swig_property(_x64dbgapi64.DBGPROCESSINFO_dwProcessId_get, _x64dbgapi64.DBGPROCESSINFO_dwProcessId_set)
     szExeFile = _swig_property(_x64dbgapi64.DBGPROCESSINFO_szExeFile_get, _x64dbgapi64.DBGPROCESSINFO_szExeFile_set)
+    szExeArgs = _swig_property(_x64dbgapi64.DBGPROCESSINFO_szExeArgs_get, _x64dbgapi64.DBGPROCESSINFO_szExeArgs_set)
     def __init__(self): 
         """__init__(DBGPROCESSINFO self) -> DBGPROCESSINFO"""
         this = _x64dbgapi64.new_DBGPROCESSINFO()
@@ -2018,6 +2135,14 @@ class DBGFUNCTIONS(object):
     EnumHandles = _swig_property(_x64dbgapi64.DBGFUNCTIONS_EnumHandles_get, _x64dbgapi64.DBGFUNCTIONS_EnumHandles_set)
     GetHandleName = _swig_property(_x64dbgapi64.DBGFUNCTIONS_GetHandleName_get, _x64dbgapi64.DBGFUNCTIONS_GetHandleName_set)
     EnumTcpConnections = _swig_property(_x64dbgapi64.DBGFUNCTIONS_EnumTcpConnections_get, _x64dbgapi64.DBGFUNCTIONS_EnumTcpConnections_set)
+    GetDbgEvents = _swig_property(_x64dbgapi64.DBGFUNCTIONS_GetDbgEvents_get, _x64dbgapi64.DBGFUNCTIONS_GetDbgEvents_set)
+    ModGetParty = _swig_property(_x64dbgapi64.DBGFUNCTIONS_ModGetParty_get, _x64dbgapi64.DBGFUNCTIONS_ModGetParty_set)
+    ModSetParty = _swig_property(_x64dbgapi64.DBGFUNCTIONS_ModSetParty_get, _x64dbgapi64.DBGFUNCTIONS_ModSetParty_set)
+    WatchIsWatchdogTriggered = _swig_property(_x64dbgapi64.DBGFUNCTIONS_WatchIsWatchdogTriggered_get, _x64dbgapi64.DBGFUNCTIONS_WatchIsWatchdogTriggered_set)
+    MemIsCodePage = _swig_property(_x64dbgapi64.DBGFUNCTIONS_MemIsCodePage_get, _x64dbgapi64.DBGFUNCTIONS_MemIsCodePage_set)
+    AnimateCommand = _swig_property(_x64dbgapi64.DBGFUNCTIONS_AnimateCommand_get, _x64dbgapi64.DBGFUNCTIONS_AnimateCommand_set)
+    DbgSetDebuggeeInitScript = _swig_property(_x64dbgapi64.DBGFUNCTIONS_DbgSetDebuggeeInitScript_get, _x64dbgapi64.DBGFUNCTIONS_DbgSetDebuggeeInitScript_set)
+    DbgGetDebuggeeInitScript = _swig_property(_x64dbgapi64.DBGFUNCTIONS_DbgGetDebuggeeInitScript_get, _x64dbgapi64.DBGFUNCTIONS_DbgGetDebuggeeInitScript_set)
     def AssembleAtEx_(self, *args):
         """AssembleAtEx_(DBGFUNCTIONS self, duint addr, char const * instruction, char * error, bool fillnop) -> bool"""
         return _x64dbgapi64.DBGFUNCTIONS_AssembleAtEx_(self, *args)
@@ -2147,7 +2272,7 @@ class DBGFUNCTIONS(object):
         return _x64dbgapi64.DBGFUNCTIONS_VaToFileOffset_(self, *args)
 
     def GetAddrFromLine_(self, *args):
-        """GetAddrFromLine_(DBGFUNCTIONS self, char const * szSourceFile, int line) -> duint"""
+        """GetAddrFromLine_(DBGFUNCTIONS self, char const * szSourceFile, int line, duint * displacement) -> duint"""
         return _x64dbgapi64.DBGFUNCTIONS_GetAddrFromLine_(self, *args)
 
     def GetSourceFromAddr_(self, *args):
@@ -2161,6 +2286,78 @@ class DBGFUNCTIONS(object):
     def PatchGetEx_(self, *args):
         """PatchGetEx_(DBGFUNCTIONS self, duint addr, DBGPATCHINFO info) -> bool"""
         return _x64dbgapi64.DBGFUNCTIONS_PatchGetEx_(self, *args)
+
+    def GetBridgeBp_(self, *args):
+        """GetBridgeBp_(DBGFUNCTIONS self, BPXTYPE type, duint addr, BRIDGEBP bp) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetBridgeBp_(self, *args)
+
+    def StringFormatInline_(self, *args):
+        """StringFormatInline_(DBGFUNCTIONS self, char const * format, size_t resultSize, char * result) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_StringFormatInline_(self, *args)
+
+    def GetMnemonicBrief_(self, *args):
+        """GetMnemonicBrief_(DBGFUNCTIONS self, char const * mnem, size_t resultSize, char * result)"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetMnemonicBrief_(self, *args)
+
+    def GetTraceRecordHitCount_(self, *args):
+        """GetTraceRecordHitCount_(DBGFUNCTIONS self, duint address) -> unsigned int"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetTraceRecordHitCount_(self, *args)
+
+    def GetTraceRecordByteType_(self, *args):
+        """GetTraceRecordByteType_(DBGFUNCTIONS self, duint address) -> TRACERECORDBYTETYPE"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetTraceRecordByteType_(self, *args)
+
+    def SetTraceRecordType_(self, *args):
+        """SetTraceRecordType_(DBGFUNCTIONS self, duint pageAddress, TRACERECORDTYPE type) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_SetTraceRecordType_(self, *args)
+
+    def GetTraceRecordType_(self, *args):
+        """GetTraceRecordType_(DBGFUNCTIONS self, duint pageAddress) -> TRACERECORDTYPE"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetTraceRecordType_(self, *args)
+
+    def EnumHandles_(self, *args):
+        """EnumHandles_(DBGFUNCTIONS self, ListInfo handles) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_EnumHandles_(self, *args)
+
+    def GetHandleName_(self, *args):
+        """GetHandleName_(DBGFUNCTIONS self, duint handle, char * name, size_t nameSize, char * typeName, size_t typeNameSize) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetHandleName_(self, *args)
+
+    def EnumTcpConnections_(self, *args):
+        """EnumTcpConnections_(DBGFUNCTIONS self, ListInfo connections) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_EnumTcpConnections_(self, *args)
+
+    def GetDbgEvents_(self):
+        """GetDbgEvents_(DBGFUNCTIONS self) -> duint"""
+        return _x64dbgapi64.DBGFUNCTIONS_GetDbgEvents_(self)
+
+    def ModGetParty_(self, *args):
+        """ModGetParty_(DBGFUNCTIONS self, duint base) -> int"""
+        return _x64dbgapi64.DBGFUNCTIONS_ModGetParty_(self, *args)
+
+    def ModSetParty_(self, *args):
+        """ModSetParty_(DBGFUNCTIONS self, duint base, int party)"""
+        return _x64dbgapi64.DBGFUNCTIONS_ModSetParty_(self, *args)
+
+    def WatchIsWatchdogTriggered_(self, *args):
+        """WatchIsWatchdogTriggered_(DBGFUNCTIONS self, unsigned int id) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_WatchIsWatchdogTriggered_(self, *args)
+
+    def MemIsCodePage_(self, *args):
+        """MemIsCodePage_(DBGFUNCTIONS self, duint addr, bool refresh) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_MemIsCodePage_(self, *args)
+
+    def AnimateCommand_(self, *args):
+        """AnimateCommand_(DBGFUNCTIONS self, char const * command) -> bool"""
+        return _x64dbgapi64.DBGFUNCTIONS_AnimateCommand_(self, *args)
+
+    def DbgSetDebuggeeInitScript_(self, *args):
+        """DbgSetDebuggeeInitScript_(DBGFUNCTIONS self, char const * fileName)"""
+        return _x64dbgapi64.DBGFUNCTIONS_DbgSetDebuggeeInitScript_(self, *args)
+
+    def DbgGetDebuggeeInitScript_(self):
+        """DbgGetDebuggeeInitScript_(DBGFUNCTIONS self) -> char const *"""
+        return _x64dbgapi64.DBGFUNCTIONS_DbgGetDebuggeeInitScript_(self)
 
     def __init__(self): 
         """__init__(DBGFUNCTIONS_ self) -> DBGFUNCTIONS"""
@@ -2176,6 +2373,72 @@ DBGFUNCTIONS_swigregister(DBGFUNCTIONS)
 def _plugin_logprintf(*args):
   """_plugin_logprintf(char const * format)"""
   return _x64dbgapi64._plugin_logprintf(*args)
+class ArgumentInfo(object):
+    """Proxy of C++ Script::Argument::ArgumentInfo class"""
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    mod = _swig_property(_x64dbgapi64.ArgumentInfo_mod_get, _x64dbgapi64.ArgumentInfo_mod_set)
+    rvaStart = _swig_property(_x64dbgapi64.ArgumentInfo_rvaStart_get, _x64dbgapi64.ArgumentInfo_rvaStart_set)
+    rvaEnd = _swig_property(_x64dbgapi64.ArgumentInfo_rvaEnd_get, _x64dbgapi64.ArgumentInfo_rvaEnd_set)
+    manual = _swig_property(_x64dbgapi64.ArgumentInfo_manual_get, _x64dbgapi64.ArgumentInfo_manual_set)
+    instructioncount = _swig_property(_x64dbgapi64.ArgumentInfo_instructioncount_get, _x64dbgapi64.ArgumentInfo_instructioncount_set)
+    def __init__(self): 
+        """__init__(Script::Argument::ArgumentInfo self) -> ArgumentInfo"""
+        this = _x64dbgapi64.new_ArgumentInfo()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _x64dbgapi64.delete_ArgumentInfo
+    __del__ = lambda self : None;
+ArgumentInfo_swigregister = _x64dbgapi64.ArgumentInfo_swigregister
+ArgumentInfo_swigregister(ArgumentInfo)
+
+
+def Argument_Add(*args):
+  """
+    Argument_Add(duint start, duint end, bool manual, duint instructionCount=0) -> bool
+    Argument_Add(duint start, duint end, bool manual) -> bool
+    """
+  return _x64dbgapi64.Argument_Add(*args)
+
+def Argument_AddByArgumentInfo(*args):
+  """Argument_AddByArgumentInfo(ArgumentInfo info) -> bool"""
+  return _x64dbgapi64.Argument_AddByArgumentInfo(*args)
+
+def Argument_Get(*args):
+  """
+    Argument_Get(duint addr, duint * start=None, duint * end=None, duint * instructionCount=None) -> bool
+    Argument_Get(duint addr, duint * start=None, duint * end=None) -> bool
+    Argument_Get(duint addr, duint * start=None) -> bool
+    Argument_Get(duint addr) -> bool
+    """
+  return _x64dbgapi64.Argument_Get(*args)
+
+def Argument_GetInfo(*args):
+  """Argument_GetInfo(duint addr, ArgumentInfo info) -> bool"""
+  return _x64dbgapi64.Argument_GetInfo(*args)
+
+def Argument_Overlaps(*args):
+  """Argument_Overlaps(duint start, duint end) -> bool"""
+  return _x64dbgapi64.Argument_Overlaps(*args)
+
+def Argument_Delete(*args):
+  """Argument_Delete(duint address) -> bool"""
+  return _x64dbgapi64.Argument_Delete(*args)
+
+def Argument_DeleteRange(*args):
+  """
+    Argument_DeleteRange(duint start, duint end, bool deleteManual=False)
+    Argument_DeleteRange(duint start, duint end)
+    """
+  return _x64dbgapi64.Argument_DeleteRange(*args)
+
+def Argument_Clear():
+  """Argument_Clear()"""
+  return _x64dbgapi64.Argument_Clear()
+
+def Argument_GetList(*args):
+  """Argument_GetList(ListInfo list) -> bool"""
+  return _x64dbgapi64.Argument_GetList(*args)
 
 def Assembler_Assemble(*args):
   """Assembler_Assemble(duint addr, unsigned char * dest, int * size, char const * instruction) -> bool"""
@@ -3658,6 +3921,41 @@ SymbolInfo_swigregister(SymbolInfo)
 def Symbol_GetList(*args):
   """Symbol_GetList(ListInfo list) -> bool"""
   return _x64dbgapi64.Symbol_GetList(*args)
+class ArgumentInfoArray(object):
+    """Proxy of C++ ArgumentInfoArray class"""
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        """__init__(ArgumentInfoArray self, size_t nelements) -> ArgumentInfoArray"""
+        this = _x64dbgapi64.new_ArgumentInfoArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _x64dbgapi64.delete_ArgumentInfoArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args):
+        """__getitem__(ArgumentInfoArray self, size_t index) -> ArgumentInfo"""
+        return _x64dbgapi64.ArgumentInfoArray___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        """__setitem__(ArgumentInfoArray self, size_t index, ArgumentInfo value)"""
+        return _x64dbgapi64.ArgumentInfoArray___setitem__(self, *args)
+
+    def cast(self):
+        """cast(ArgumentInfoArray self) -> ArgumentInfo"""
+        return _x64dbgapi64.ArgumentInfoArray_cast(self)
+
+    def frompointer(*args):
+        """frompointer(ArgumentInfo t) -> ArgumentInfoArray"""
+        return _x64dbgapi64.ArgumentInfoArray_frompointer(*args)
+
+    frompointer = staticmethod(frompointer)
+ArgumentInfoArray_swigregister = _x64dbgapi64.ArgumentInfoArray_swigregister
+ArgumentInfoArray_swigregister(ArgumentInfoArray)
+
+def ArgumentInfoArray_frompointer(*args):
+  """ArgumentInfoArray_frompointer(ArgumentInfo t) -> ArgumentInfoArray"""
+  return _x64dbgapi64.ArgumentInfoArray_frompointer(*args)
+
 class BookmarkInfoArray(object):
     """Proxy of C++ BookmarkInfoArray class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')

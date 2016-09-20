@@ -5,7 +5,13 @@
 #include <stdbool.h>
 #endif
 
-
+#ifndef PLUG_IMPEXP
+#ifdef BUILD_DBG
+#define PLUG_IMPEXP __declspec(dllexport)
+#else
+#define PLUG_IMPEXP __declspec(dllimport)
+#endif //BUILD_DBG
+#endif //PLUG_IMPEXP
 
 #include "_plugin_types.h"
 
@@ -18,6 +24,9 @@
 
 //defines
 #define PLUG_SDKVERSION 1
+
+#define PLUG_DB_LOADSAVE_DATA 1
+#define PLUG_DB_LOADSAVE_ALL 2
 
 //structures
 typedef struct
@@ -161,6 +170,12 @@ typedef struct
     bool retval;
 } PLUG_CB_WINEVENTGLOBAL;
 
+typedef struct
+{
+    json_t* root;
+    int loadSaveType;
+} PLUG_CB_LOADSAVEDB;
+
 //enums
 typedef enum
 {
@@ -184,13 +199,16 @@ typedef enum
     CB_DEBUGEVENT, //PLUG_CB_DEBUGEVENT (called on any debug event)
     CB_MENUENTRY, //PLUG_CB_MENUENTRY
     CB_WINEVENT, //PLUG_CB_WINEVENT
-    CB_WINEVENTGLOBAL //PLUG_CB_WINEVENTGLOBAL
+    CB_WINEVENTGLOBAL, //PLUG_CB_WINEVENTGLOBAL
+    CB_LOADDB, //PLUG_CB_LOADSAVEDB
+    CB_SAVEDB //PLUG_CB_LOADSAVEDB
 } CBTYPE;
 
 //typedefs
 typedef void (*CBPLUGIN)(CBTYPE cbType, void* callbackInfo);
-typedef bool (*CBPLUGINCOMMAND)(int, char**);
+typedef bool (*CBPLUGINCOMMAND)(int argc, char** argv);
 typedef void (*CBPLUGINSCRIPT)();
+typedef duint(*CBPLUGINEXPRFUNCTION)(int argc, duint* argv, void* userdata);
 
 //exports
 #ifdef __cplusplus
@@ -214,6 +232,8 @@ extern void _plugin_menuseticon(int hMenu, const ICONDATA* icon);
 extern void _plugin_menuentryseticon(int pluginHandle, int hEntry, const ICONDATA* icon);
 extern void _plugin_startscript(CBPLUGINSCRIPT cbScript);
 extern bool _plugin_waituntilpaused();
+extern bool _plugin_registerexprfunction(int pluginHandle, const char* name, int argc, CBPLUGINEXPRFUNCTION cbFunction, void* userdata);
+extern bool _plugin_unregisterexprfunction(int pluginHandle, const char* name);
 
 #ifdef __cplusplus
 }

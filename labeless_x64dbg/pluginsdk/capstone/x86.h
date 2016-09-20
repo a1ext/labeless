@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
+#include "platform.h"
 
 // Calculate relative address for X86-64, given cs_insn structure
 #define X86_REL_ADDR(insn) (insn.address + insn.size + insn.detail->x86.disp)
@@ -125,7 +125,6 @@ typedef enum x86_op_type
     X86_OP_REG, // = CS_OP_REG (Register operand).
     X86_OP_IMM, // = CS_OP_IMM (Immediate operand).
     X86_OP_MEM, // = CS_OP_MEM (Memory operand).
-    X86_OP_FP,  //  = CS_OP_FP  (Floating-Point operand).
 } x86_op_type;
 
 //> XOP Code Condition type
@@ -252,7 +251,6 @@ typedef struct cs_x86_op
     {
         x86_reg reg;      // register value for REG operand
         int64_t imm;        // immediate value for IMM operand
-        double fp;      // floating point value for FP operand
         x86_op_mem mem;     // base/index/scale/disp value for MEM operand
     };
 

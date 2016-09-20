@@ -8,7 +8,6 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
 #include "platform.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
@@ -27,35 +26,6 @@ typedef enum mips_op_type
     MIPS_OP_IMM, // = CS_OP_IMM (Immediate operand).
     MIPS_OP_MEM, // = CS_OP_MEM (Memory operand).
 } mips_op_type;
-
-// Instruction's operand referring to memory
-// This is associated with MIPS_OP_MEM operand type above
-typedef struct mips_op_mem
-{
-    unsigned int base;  // base register
-    int64_t disp;   // displacement/offset value
-} mips_op_mem;
-
-// Instruction operand
-typedef struct cs_mips_op
-{
-    mips_op_type type;  // operand type
-    union
-    {
-        unsigned int reg;   // register value for REG operand
-        int64_t imm;        // immediate value for IMM operand
-        mips_op_mem mem;    // base/index/scale/disp value for MEM operand
-    };
-} cs_mips_op;
-
-// Instruction structure
-typedef struct cs_mips
-{
-    // Number of operands of this instruction,
-    // or 0 when instruction has no operand.
-    uint8_t op_count;
-    cs_mips_op operands[8]; // operands for this instruction.
-} cs_mips;
 
 //> MIPS registers
 typedef enum mips_reg
@@ -260,6 +230,35 @@ typedef enum mips_reg
     MIPS_REG_LO2 = MIPS_REG_HI2,
     MIPS_REG_LO3 = MIPS_REG_HI3,
 } mips_reg;
+
+// Instruction's operand referring to memory
+// This is associated with MIPS_OP_MEM operand type above
+typedef struct mips_op_mem
+{
+    mips_reg base;  // base register
+    int64_t disp;   // displacement/offset value
+} mips_op_mem;
+
+// Instruction operand
+typedef struct cs_mips_op
+{
+    mips_op_type type;  // operand type
+    union
+    {
+        mips_reg reg;       // register value for REG operand
+        int64_t imm;        // immediate value for IMM operand
+        mips_op_mem mem;    // base/index/scale/disp value for MEM operand
+    };
+} cs_mips_op;
+
+// Instruction structure
+typedef struct cs_mips
+{
+    // Number of operands of this instruction,
+    // or 0 when instruction has no operand.
+    uint8_t op_count;
+    cs_mips_op operands[8]; // operands for this instruction.
+} cs_mips;
 
 //> MIPS instruction
 typedef enum mips_insn
@@ -907,6 +906,16 @@ typedef enum mips_insn_group
     //> Generic groups
     // all jump instructions (conditional+direct+indirect jumps)
     MIPS_GRP_JUMP,  // = CS_GRP_JUMP
+    // all call instructions
+    MIPS_GRP_CALL,  // = CS_GRP_CALL
+    // all return instructions
+    MIPS_GRP_RET,   // = CS_GRP_RET
+    // all interrupt instructions (int+syscall)
+    MIPS_GRP_INT,   // = CS_GRP_INT
+    // all interrupt return instructions
+    MIPS_GRP_IRET,  // = CS_GRP_IRET
+    // all privileged instructions
+    MIPS_GRP_PRIVILEGE, // = CS_GRP_PRIVILEGE
 
     //> Architecture-specific groups
     MIPS_GRP_BITCOUNT = 128,

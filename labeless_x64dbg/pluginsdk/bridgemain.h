@@ -43,8 +43,8 @@ extern "C"
 #define DBG_VERSION 25
 
 //Bridge functions
-BRIDGE_IMPEXP const char* BridgeInit();
-BRIDGE_IMPEXP const char* BridgeStart();
+BRIDGE_IMPEXP const wchar_t* BridgeInit();
+BRIDGE_IMPEXP const wchar_t* BridgeStart();
 BRIDGE_IMPEXP void* BridgeAlloc(size_t size);
 BRIDGE_IMPEXP void BridgeFree(void* ptr);
 BRIDGE_IMPEXP bool BridgeSettingGet(const char* section, const char* key, char* value);
@@ -54,6 +54,17 @@ BRIDGE_IMPEXP bool BridgeSettingSetUint(const char* section, const char* key, du
 BRIDGE_IMPEXP bool BridgeSettingFlush();
 BRIDGE_IMPEXP bool BridgeSettingRead(int* errorLine);
 BRIDGE_IMPEXP int BridgeGetDbgVersion();
+
+#ifdef __cplusplus
+}
+#endif
+
+#include "bridgegraph.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 //Debugger defines
 #define MAX_LABEL_SIZE 256
@@ -65,6 +76,7 @@ BRIDGE_IMPEXP int BridgeGetDbgVersion();
 #define MAX_CONDITIONAL_TEXT_SIZE 256
 #define MAX_SCRIPT_LINE_SIZE 2048
 #define MAX_THREAD_NAME_SIZE 256
+#define MAX_WATCH_NAME_SIZE 256
 #define MAX_STRING_SIZE 512
 #define MAX_ERROR_SIZE 512
 #define RIGHTS_STRING_SIZE (sizeof("ERWCG") + 1)
@@ -100,7 +112,8 @@ typedef enum
     flagcomment = 4,
     flagbookmark = 8,
     flagfunction = 16,
-    flagloop = 32
+    flagloop = 32,
+    flagargs = 64
 } ADDRINFOFLAGS;
 
 typedef enum
@@ -108,7 +121,9 @@ typedef enum
     bp_none = 0,
     bp_normal = 1,
     bp_hardware = 2,
-    bp_memory = 4
+    bp_memory = 4,
+    bp_dll = 8,
+    bp_exception = 16
 } BPXTYPE;
 
 typedef enum
@@ -129,12 +144,22 @@ typedef enum
     LOOP_END
 } LOOPTYPE;
 
+//order by most important type last
+typedef enum
+{
+    XREF_NONE,
+    XREF_DATA,
+    XREF_JMP,
+    XREF_CALL
+} XREFTYPE;
+
 typedef enum
 {
     ARG_NONE,
     ARG_BEGIN,
     ARG_MIDDLE,
-    ARG_END
+    ARG_END,
+    ARG_SINGLE
 } ARGTYPE;
 
 typedef enum
@@ -188,6 +213,22 @@ typedef enum
     DBG_DELETE_COMMENT_RANGE,       // param1=duint start,               param2=duint end
     DBG_DELETE_LABEL_RANGE,         // param1=duint start,               param2=duint end
     DBG_DELETE_BOOKMARK_RANGE,      // param1=duint start,               param2=duint end
+    DBG_GET_XREF_COUNT_AT,          // param1=duint addr,                param2=unused
+    DBG_GET_XREF_TYPE_AT,           // param1=duint addr,                param2=unused
+    DBG_XREF_ADD,                   // param1=duint addr,                param2=duint from
+    DBG_XREF_DEL_ALL,               // param1=duint addr,                param2=unused
+    DBG_XREF_GET,                   // param1=duint addr,                param2=XREF_INFO* info
+    DBG_GET_ENCODE_TYPE_BUFFER,     // param1=duint addr,                param2=unused
+    DBG_ENCODE_TYPE_GET,            // param1=duint addr,                param2=duint size
+    DBG_DELETE_ENCODE_TYPE_RANGE,   // param1=duint start,               param2=duint end
+    DBG_ENCODE_SIZE_GET,            // param1=duint addr,                param2=duint codesize
+    DBG_DELETE_ENCODE_TYPE_SEG,     // param1=duint addr,                param2=unused
+    DBG_RELEASE_ENCODE_TYPE_BUFFER, // param1=void* buffer,              param2=unused
+    DBG_ARGUMENT_GET,               // param1=FUNCTION* info,            param2=unused
+    DBG_ARGUMENT_OVERLAPS,          // param1=FUNCTION* info,            param2=unused
+    DBG_ARGUMENT_ADD,               // param1=FUNCTION* info,            param2=unused
+    DBG_ARGUMENT_DEL,               // param1=FUNCTION* info,            param2=unused
+    DBG_GET_WATCH_LIST              // param1=ListOf(WATCHINFO),         param2=unused
 } DBGMSG;
 
 typedef enum
@@ -293,6 +334,49 @@ typedef enum
     size_qword = 8
 } MEMORY_SIZE;
 
+typedef enum
+{
+    enc_unknown,  //must be 0
+    enc_byte,     //1 byte
+    enc_word,     //2 bytes
+    enc_dword,    //4 bytes
+    enc_fword,    //6 bytes
+    enc_qword,    //8 bytes
+    enc_tbyte,    //10 bytes
+    enc_oword,    //16 bytes
+    enc_mmword,   //8 bytes
+    enc_xmmword,  //16 bytes
+    enc_ymmword,  //32 bytes
+    enc_zmmword,  //64 bytes avx512 not supported
+    enc_real4,    //4 byte float
+    enc_real8,    //8 byte double
+    enc_real10,   //10 byte decimal
+    enc_ascii,    //ascii sequence
+    enc_unicode,  //unicode sequence
+    enc_code,     //start of code
+    enc_junk,     //junk code
+    enc_middle    //middle of data
+} ENCODETYPE;
+
+typedef enum
+{
+    TYPE_UINT, // unsigned integer
+    TYPE_INT,  // signed integer
+    TYPE_FLOAT,// single precision floating point value
+    TYPE_ASCII, // ascii string
+    TYPE_UNICODE, // unicode string
+    TYPE_INVALID // invalid watch expression or data type
+} WATCHVARTYPE;
+
+typedef enum
+{
+    MODE_DISABLED, // watchdog is disabled
+    MODE_ISTRUE,   // alert if expression is not 0
+    MODE_ISFALSE,  // alert if expression is 0
+    MODE_CHANGED,  // alert if expression is changed
+    MODE_UNCHANGED // alert if expression is not changed
+} WATCHDOGMODE;
+
 //Debugger typedefs
 typedef MEMORY_SIZE VALUE_SIZE;
 typedef struct SYMBOLINFO_ SYMBOLINFO;
@@ -326,6 +410,7 @@ typedef struct
     // extended part
     unsigned int hitCount;
     bool fastResume;
+    bool silent;
     char breakCondition[MAX_CONDITIONAL_EXPR_SIZE];
     char logText[MAX_CONDITIONAL_TEXT_SIZE];
     char logCondition[MAX_CONDITIONAL_EXPR_SIZE];
@@ -338,6 +423,18 @@ typedef struct
     int count;
     BRIDGEBP* bp;
 } BPMAP;
+
+typedef struct
+{
+    char WatchName[MAX_WATCH_NAME_SIZE];
+    char Expression[MAX_CONDITIONAL_EXPR_SIZE];
+    unsigned int window;
+    unsigned int id;
+    WATCHVARTYPE varType;
+    WATCHDOGMODE watchdogMode;
+    duint value;
+    bool watchdogTriggered;
+} WATCHINFO;
 
 typedef struct
 {
@@ -363,6 +460,7 @@ typedef struct
     bool isbookmark;
     FUNCTION function;
     LOOP loop;
+    FUNCTION args;
 } ADDRINFO;
 #endif
 
@@ -536,7 +634,7 @@ typedef struct
 typedef struct
 {
     DWORD code;
-    const char* name;
+    char name[128];
 } LASTERROR;
 
 typedef struct
@@ -594,6 +692,10 @@ typedef struct
     THREADPRIORITY Priority;
     THREADWAITREASON WaitReason;
     DWORD LastError;
+    FILETIME UserTime;
+    FILETIME KernelTime;
+    FILETIME CreationTime;
+    ULONG64 Cycles; // Windows Vista or greater
 } THREADALLINFO;
 
 typedef struct
@@ -648,6 +750,18 @@ typedef struct
     bool manual;
     int depth;
 } FUNCTION_LOOP_INFO;
+
+typedef struct
+{
+    duint addr;
+    XREFTYPE type;
+} XREF_RECORD;
+
+typedef struct
+{
+    duint refcount;
+    XREF_RECORD* references;
+} XREF_INFO;
 
 //Debugger functions
 BRIDGE_IMPEXP const char* DbgInit();
@@ -706,10 +820,19 @@ BRIDGE_IMPEXP bool DbgFunctionGet(duint addr, duint* start, duint* end);
 BRIDGE_IMPEXP bool DbgFunctionOverlaps(duint start, duint end);
 BRIDGE_IMPEXP bool DbgFunctionAdd(duint start, duint end);
 BRIDGE_IMPEXP bool DbgFunctionDel(duint addr);
+BRIDGE_IMPEXP bool DbgArgumentGet(duint addr, duint* start, duint* end);
+BRIDGE_IMPEXP bool DbgArgumentOverlaps(duint start, duint end);
+BRIDGE_IMPEXP bool DbgArgumentAdd(duint start, duint end);
+BRIDGE_IMPEXP bool DbgArgumentDel(duint addr);
 BRIDGE_IMPEXP bool DbgLoopGet(int depth, duint addr, duint* start, duint* end);
 BRIDGE_IMPEXP bool DbgLoopOverlaps(int depth, duint start, duint end);
 BRIDGE_IMPEXP bool DbgLoopAdd(duint start, duint end);
 BRIDGE_IMPEXP bool DbgLoopDel(int depth, duint addr);
+BRIDGE_IMPEXP bool DbgXrefAdd(duint addr, duint from);
+BRIDGE_IMPEXP bool DbgXrefDelAll(duint addr);
+BRIDGE_IMPEXP bool DbgXrefGet(duint addr, XREF_INFO* info);
+BRIDGE_IMPEXP size_t DbgGetXrefCountAt(duint addr);
+BRIDGE_IMPEXP XREFTYPE DbgGetXrefTypeAt(duint addr);
 BRIDGE_IMPEXP bool DbgIsRunLocked();
 BRIDGE_IMPEXP bool DbgIsBpDisabled(duint addr);
 BRIDGE_IMPEXP bool DbgSetAutoCommentAt(duint addr, const char* text);
@@ -727,6 +850,14 @@ BRIDGE_IMPEXP bool DbgWinEventGlobal(MSG* message);
 BRIDGE_IMPEXP bool DbgIsRunning();
 BRIDGE_IMPEXP duint DbgGetTimeWastedCounter();
 BRIDGE_IMPEXP ARGTYPE DbgGetArgTypeAt(duint addr);
+BRIDGE_IMPEXP void* DbgGetEncodeTypeBuffer(duint addr);
+BRIDGE_IMPEXP void DbgReleaseEncodeTypeBuffer(void* buffer);
+BRIDGE_IMPEXP ENCODETYPE DbgGetEncodeTypeAt(duint addr, duint size);
+BRIDGE_IMPEXP duint DbgGetEncodeSizeAt(duint addr, duint codesize);
+BRIDGE_IMPEXP bool DbgSetEncodeType(duint addr, duint size, ENCODETYPE type);
+BRIDGE_IMPEXP void DbgDelEncodeTypeRange(duint start, duint end);
+BRIDGE_IMPEXP void DbgDelEncodeTypeSegment(duint start);
+BRIDGE_IMPEXP bool DbgGetWatchList(ListOf(WATCHINFO) list);
 
 //Gui defines
 #define GUI_PLUGIN_MENU 0
@@ -822,6 +953,16 @@ typedef enum
     GUI_UNREGISTER_SCRIPT_LANG,     // param1=int id,               param2=unused
     GUI_UPDATE_ARGUMENT_VIEW,       // param1=unused,               param2=unused
     GUI_FOCUS_VIEW,                 // param1=int hWindow,          param2=unused
+    GUI_UPDATE_WATCH_VIEW,          // param1=unused,               param2=unused
+    GUI_LOAD_GRAPH,                 // param1=BridgeCFGraphList*    param2=unused
+    GUI_GRAPH_AT,                   // param1=duint addr            param2=unused
+    GUI_UPDATE_GRAPH_VIEW,          // param1=unused,               param2=unused
+    GUI_SET_LOG_ENABLED,            // param1=bool isEnabled        param2=unused
+    GUI_ADD_FAVOURITE_TOOL,         // param1=const char* name      param2=const char* description
+    GUI_ADD_FAVOURITE_COMMAND,      // param1=const char* command   param2=const char* shortcut
+    GUI_SET_FAVOURITE_TOOL_SHORTCUT,// param1=const char* name      param2=const char* shortcut
+    GUI_FOLD_DISASSEMBLY,           // param1=duint startAddress    param2=duint length
+    GUI_SELECT_IN_MEMORY_MAP        // param1=duint addr,           param2=unused
 } GUIMSG;
 
 //GUI Typedefs
@@ -859,6 +1000,7 @@ typedef struct
 
 //GUI functions
 //code page is utf8
+BRIDGE_IMPEXP const char* GuiTranslateText(const char* Source);
 BRIDGE_IMPEXP void GuiDisasmAt(duint addr, duint cip);
 BRIDGE_IMPEXP void GuiSetDebugState(DBGSTATE state);
 BRIDGE_IMPEXP void GuiAddLogMessage(const char* msg);
@@ -898,6 +1040,7 @@ BRIDGE_IMPEXP void GuiReferenceSetCurrentTaskProgress(int progress, const char* 
 BRIDGE_IMPEXP void GuiReferenceSetSearchStartCol(int col);
 BRIDGE_IMPEXP void GuiStackDumpAt(duint addr, duint csp);
 BRIDGE_IMPEXP void GuiUpdateDumpView();
+BRIDGE_IMPEXP void GuiUpdateWatchView();
 BRIDGE_IMPEXP void GuiUpdateThreadView();
 BRIDGE_IMPEXP void GuiUpdateMemoryView();
 BRIDGE_IMPEXP void GuiAddRecentFile(const char* file);
@@ -938,6 +1081,19 @@ BRIDGE_IMPEXP void GuiRegisterScriptLanguage(SCRIPTTYPEINFO* info);
 BRIDGE_IMPEXP void GuiUnregisterScriptLanguage(int id);
 BRIDGE_IMPEXP void GuiUpdateArgumentWidget();
 BRIDGE_IMPEXP void GuiFocusView(int hWindow);
+BRIDGE_IMPEXP bool GuiIsUpdateDisabled();
+BRIDGE_IMPEXP void GuiUpdateEnable(bool updateNow);
+BRIDGE_IMPEXP void GuiUpdateDisable();
+BRIDGE_IMPEXP void GuiLoadGraph(BridgeCFGraphList* graph, duint addr);
+BRIDGE_IMPEXP bool GuiGraphAt(duint addr);
+BRIDGE_IMPEXP void GuiUpdateGraphView();
+BRIDGE_IMPEXP void GuiDisableLog();
+BRIDGE_IMPEXP void GuiEnableLog();
+BRIDGE_IMPEXP void GuiAddFavouriteTool(const char* name, const char* description);
+BRIDGE_IMPEXP void GuiAddFavouriteCommand(const char* name, const char* shortcut);
+BRIDGE_IMPEXP void GuiSetFavouriteToolShortcut(const char* name, const char* shortcut);
+BRIDGE_IMPEXP void GuiFoldDisassembly(duint startAddress, duint length);
+BRIDGE_IMPEXP void GuiSelectInMemoryMap(duint addr);
 
 #ifdef __cplusplus
 }

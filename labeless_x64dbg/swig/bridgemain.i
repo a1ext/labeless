@@ -143,8 +143,8 @@
     duint VaToFileOffset_(duint va)
     { return $self->VaToFileOffset(va); }
     
-    duint GetAddrFromLine_(const char* szSourceFile, int line)
-    { return $self->GetAddrFromLine(szSourceFile, line); }
+    duint GetAddrFromLine_(const char* szSourceFile, int line, duint* displacement)
+    { return $self->GetAddrFromLine(szSourceFile, line, displacement); }
     
     %pybuffer_mutable_string(char* szSourceFile)
     bool GetSourceFromAddr_(duint addr, char* szSourceFile, int* line)
@@ -157,5 +157,66 @@
     bool PatchGetEx_(duint addr, DBGPATCHINFO* info)
     { return $self->PatchGetEx(addr, info); }
     
+    bool GetBridgeBp_(BPXTYPE type, duint addr, BRIDGEBP* bp)
+    { return $self->GetBridgeBp(type, addr, bp); }
+    
+    %pybuffer_mutable_string(char* result)
+    bool StringFormatInline_(const char* format, size_t resultSize, char* result)
+    { return $self->StringFormatInline(format, resultSize, result); }
+    %typemap(in) char* result;
+    
+    %pybuffer_mutable_string(char* result)
+    void GetMnemonicBrief_(const char* mnem, size_t resultSize, char* result)
+    { return $self->GetMnemonicBrief(mnem, resultSize, result); }
+    %typemap(in) char* result;
+    
+    unsigned int GetTraceRecordHitCount_(duint address)
+    { return $self->GetTraceRecordHitCount(address); }
+    
+    TRACERECORDBYTETYPE GetTraceRecordByteType_(duint address)
+    { return $self->GetTraceRecordByteType(address); }
+    
+    bool SetTraceRecordType_(duint pageAddress, TRACERECORDTYPE type)
+    { return $self->SetTraceRecordType(pageAddress, type); }
+    
+    TRACERECORDTYPE GetTraceRecordType_(duint pageAddress)
+    { return $self->GetTraceRecordType(pageAddress); }
+    
+    bool EnumHandles_(ListInfo* handles)
+    { return $self->EnumHandles(handles); }
+    
+    %pybuffer_mutable_string(char* name)
+    %pybuffer_mutable_string(char* typeName)
+    bool GetHandleName_(duint handle, char* name, size_t nameSize, char* typeName, size_t typeNameSize)
+    { return $self->GetHandleName(handle, name, nameSize, typeName, typeNameSize); }
+    %typemap(in) char* name;
+    %typemap(in) char* typeName;
+    
+    bool EnumTcpConnections_(ListInfo* connections)
+    { return $self->EnumTcpConnections(connections); }
+    
+    duint GetDbgEvents_()
+    { return $self->GetDbgEvents(); }
+    
+    int ModGetParty_(duint base)
+    { return $self->ModGetParty(base); }
+    
+    void ModSetParty_(duint base, int party)
+    { return $self->ModSetParty(base, party); }
+    
+    bool WatchIsWatchdogTriggered_(unsigned int id)
+    { return $self->WatchIsWatchdogTriggered(id); }
+    
+    bool MemIsCodePage_(duint addr, bool refresh)
+    { return $self->MemIsCodePage(addr, refresh); }
+    
+    bool AnimateCommand_(const char* command)
+    { return $self->AnimateCommand(command); }
+    
+    void DbgSetDebuggeeInitScript_(const char* fileName)
+    { return $self->DbgSetDebuggeeInitScript(fileName); }
+    
+    const char* DbgGetDebuggeeInitScript_()
+    { return $self->DbgGetDebuggeeInitScript(); }
 }
 
