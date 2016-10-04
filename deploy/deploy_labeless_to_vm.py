@@ -27,13 +27,15 @@ class DeployLabelessToVM(object):
     __CFG_DEFAULT_USERNAME = 'Administrator'
     # vmrun -T ws -gu Administrator -gp %pass% CopyFileFromGuestToHost %VMX% %FILE_FROM% %FILE_TO%
 
-    def __init__(self, vmx):
+    def __init__(self, vmx, cfg_path=None):
         super(DeployLabelessToVM, self).__init__()
         self.cfg = dict()
         self.local_dir = None
         self.bin_dir = None
         self.vmrun = None
         self.vmx = vmx
+        if cfg_path:
+            self.CFG_PATH = cfg_path
 
         self.load_config()
         self.find_vmrun()
@@ -146,10 +148,11 @@ class DeployLabelessToVM(object):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print >> sys.stderr, '[-] Usage: deploy_labeless_to_vm.py <vmx_path>'
+        print >> sys.stderr, '[-] Usage: deploy_labeless_to_vm.py <vmx_path> [cfg_path]'
         exit(1)
 
     vmx = sys.argv[1]
-    deploy_to_vm = DeployLabelessToVM(vmx)
+    cfg_path = sys.argv[2] if len(sys.argv) > 2 else None
+    deploy_to_vm = DeployLabelessToVM(vmx, cfg_path)
     deploy_to_vm.deploy()
     raw_input()
