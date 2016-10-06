@@ -8,6 +8,7 @@
 
 #include "pythonpalettemanager.h"
 #include "globalsettingsmanager.h"
+#include "types.h"
 
 #include <pro.h>
 #include <kernwin.hpp>
@@ -17,11 +18,11 @@ namespace {
 
 void updateWithModifier(QTextCharFormat& fmt, const QFont& font, FormatSpec::Modifiers mods)
 {
+	fmt.setFont(font);
 	if (mods & FormatSpec::MOD_Bold)
 		fmt.setFontWeight(QFont::Bold);
 	if (mods & FormatSpec::MOD_Italic)
 		fmt.setFontItalic(true);
-	fmt.setFont(font);
 }
 
 static const QString kColorSchemeLight = "light";
