@@ -14,7 +14,7 @@
 
 #include "palette.h"
 
-enum PythonPaletteType
+enum PythonPaletteType : int
 {
 	PPT_Light,
 	PPT_Dark

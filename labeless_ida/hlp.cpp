@@ -8,7 +8,10 @@
 
 #include "hlp.h"
 #include "labeless_ida.h"
-#include <WinSock2.h>
+
+#if defined(__unix__) || defined(__linux__)
+#include <string.h>
+#endif
 
 #include <limits>
 #include <sstream>
@@ -138,7 +141,7 @@ void addLogMsg(const char* fmt, ...)
 		va_list va;
 		va_start(va, fmt);
 		char buff[1024] = {};
-		const int len = ::qvsnprintf(buff, sizeof(buff), fmt, va);
+		::qvsnprintf(buff, sizeof(buff), fmt, va);
 		va_end(va);
 		message = buff;
 	} while (0);
@@ -148,7 +151,7 @@ void addLogMsg(const char* fmt, ...)
 		Q_ARG(QString, kRPCThread));
 }
 
-std::string memoryProtectToStr(DWORD p)
+std::string memoryProtectToStr(quint32 p)
 {
 	std::string rv;
 
@@ -257,6 +260,7 @@ namespace net {
 qstring wsaErrorToString()
 {
 	qstring rv;
+#ifdef __NT__
 	const DWORD e = WSAGetLastError();
 	rv.sprnt("\n0x%08X ", e);
 
@@ -267,6 +271,10 @@ qstring wsaErrorToString()
 		return rv;
 	rv += msg;
 	LocalFree((HLOCAL)msg);
+#elif defined(__unix__) || defined(__linux__)
+	if (auto errStr = strerror(errno))
+		rv = errStr;
+#endif
 	return rv;
 }
 

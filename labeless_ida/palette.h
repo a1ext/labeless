@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QColor>
+#include "types.h"
 
 struct FormatSpec
 {
@@ -16,7 +17,7 @@ struct FormatSpec
 };
 
 
-enum PythonPaletteEntryType
+enum PythonPaletteEntryType FORCE_ENUM_SIZE_INT
 {
 	PPET_Unknown,
 	PPET_Keyword,

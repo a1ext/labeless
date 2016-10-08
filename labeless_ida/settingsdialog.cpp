@@ -22,6 +22,11 @@
 
 namespace {
 
+enum PaletteItemRole
+{
+	PIR_PaletteType = Qt::UserRole,
+	PIR_PPalette
+};
 static const std::string kPropColor = "p_color";
 
 } // anonymous
@@ -84,7 +89,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 
 	setUpPalette();
 	//adjustSize();
-	setFixedSize(size());
+	setMaximumSize(size());
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
@@ -94,12 +99,12 @@ SettingsDialog::~SettingsDialog()
 	QTableWidgetItem* const itDark = m_UI->twPyPaletteNames->item(1, 0);
 	if (itLight)
 	{
-		if (PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(Qt::UserRole + 1).value<void*>()))
+		if (PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>()))
 			delete lightPalette;
 	}
 	if (!itDark)
 	{
-		if (PythonPalette* const darkPalette = static_cast<PythonPalette*>(itLight->data(Qt::UserRole + 1).value<void*>()))
+		if (PythonPalette* const darkPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>()))
 			delete darkPalette;
 	}
 
@@ -125,14 +130,14 @@ void SettingsDialog::setUpPalette()
 	};
 
 	QTableWidgetItem* const light = new QTableWidgetItem(tr("light"));
-	light->setData(Qt::UserRole, PPT_Light);
+	light->setData(PIR_PaletteType, PPT_Light);
 	auto pLightPalette = new PythonPalette(PythonPaletteManager::instance().lightPalette());
-	light->setData(Qt::UserRole + 1, QVariant::fromValue<void*>(pLightPalette));
+	light->setData(PIR_PPalette, QVariant::fromValue<void*>(pLightPalette));
 
 	QTableWidgetItem* const dark = new QTableWidgetItem(tr("dark"));
-	dark->setData(Qt::UserRole, PPT_Dark);
+	dark->setData(PIR_PaletteType, PPT_Dark);
 	auto pDarkPalette = new PythonPalette(PythonPaletteManager::instance().darkPalette());
-	dark->setData(Qt::UserRole + 1, QVariant::fromValue<void*>(pDarkPalette));
+	dark->setData(PIR_PPalette, QVariant::fromValue<void*>(pDarkPalette));
 
 	for (unsigned i = 0; i < _countof(kPaletteEntryTypes); ++i)
 		m_UI->cbPaletteType->addItem(kPaletteEntryTypes[i].name, kPaletteEntryTypes[i].type);
@@ -263,10 +268,10 @@ void SettingsDialog::updateCurrentPalette()
 	QTableWidgetItem* const currentNameItem = m_UI->twPyPaletteNames->currentItem();
 	if (!currentNameItem)
 		return;
-	const PythonPaletteType ppt = static_cast<PythonPaletteType>(currentNameItem->data(Qt::UserRole).toInt());
+	const PythonPaletteType ppt = static_cast<PythonPaletteType>(currentNameItem->data(PIR_PaletteType).toInt());
 	if (ppt != PPT_Dark && ppt != PPT_Light)
 		return;
-	PythonPalette* const pPalette = static_cast<PythonPalette*>(currentNameItem->data(Qt::UserRole + 1).value<void*>());
+	PythonPalette* const pPalette = static_cast<PythonPalette*>(currentNameItem->data(PIR_PPalette).value<void*>());
 	if (!pPalette)
 		return;
 	const PythonPaletteEntryType ppet = getSelectedPaletteEntryType();
@@ -288,6 +293,7 @@ void SettingsDialog::updateCurrentPalette()
 
 void SettingsDialog::on_cbPaletteType_currentIndexChanged(int index)
 {
+	Q_UNUSED(index);
 	updateCurrentPalette();
 }
 
@@ -296,7 +302,7 @@ PythonPaletteEntryType SettingsDialog::getSelectedPaletteEntryType()
 	const int currIndex = m_UI->cbPaletteType->currentIndex();
 	if (currIndex == -1)
 		return PPET_Unknown;
-	return static_cast<PythonPaletteEntryType>(m_UI->cbPaletteType->itemData(currIndex, Qt::UserRole).toInt());
+	return static_cast<PythonPaletteEntryType>(m_UI->cbPaletteType->itemData(currIndex, PIR_PaletteType).toInt());
 }
 
 PythonPalette* SettingsDialog::getCurrentPalette()
@@ -304,7 +310,7 @@ PythonPalette* SettingsDialog::getCurrentPalette()
 	QTableWidgetItem* const currentNameItem = m_UI->twPyPaletteNames->currentItem();
 	if (!currentNameItem)
 		return nullptr;
-	return static_cast<PythonPalette*>(currentNameItem->data(Qt::UserRole + 1).value<void*>());
+	return static_cast<PythonPalette*>(currentNameItem->data(PIR_PPalette).value<void*>());
 }
 
 void SettingsDialog::on_bPalettePickColor_clicked()
@@ -380,8 +386,8 @@ void SettingsDialog::on_bResetPalette_clicked()
 	QTableWidgetItem* const itDark = m_UI->twPyPaletteNames->item(1, 0);
 	if (!itLight || !itDark)
 		return;
-	PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(Qt::UserRole + 1).value<void*>());
-	PythonPalette* const darkPalette = static_cast<PythonPalette*>(itLight->data(Qt::UserRole + 1).value<void*>());
+	PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>());
+	PythonPalette* const darkPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>());
 	if (!lightPalette || !darkPalette)
 		return;
 	*lightPalette = PythonPaletteManager::getDefaultLightPalette();
@@ -437,7 +443,7 @@ bool SettingsDialog::getLightPalette(PythonPalette& result) const
 {
 	if (QTableWidgetItem* const itLight = m_UI->twPyPaletteNames->item(0, 0))
 	{
-		if (PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(Qt::UserRole + 1).value<void*>()))
+		if (PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>()))
 		{
 			result = *lightPalette;
 			return true;
@@ -450,7 +456,7 @@ bool SettingsDialog::getDarkPalette(PythonPalette& result) const
 {
 	if (QTableWidgetItem* const itDark = m_UI->twPyPaletteNames->item(1, 0))
 	{
-		if (PythonPalette* const darkPalette = static_cast<PythonPalette*>(itDark->data(Qt::UserRole + 1).value<void*>()))
+		if (PythonPalette* const darkPalette = static_cast<PythonPalette*>(itDark->data(PIR_PPalette).value<void*>()))
 		{
 			result = *darkPalette;
 			return true;

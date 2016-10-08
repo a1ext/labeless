@@ -39,7 +39,6 @@
 #include <deque>
 #include <set>
 #include <sstream>
-#include <mstcpip.h>
 #include <unordered_map>
 
 // Qt
@@ -58,6 +57,14 @@
 #include <QVariant>
 
 #include <google/protobuf/stubs/common.h>
+
+#if defined(__NT__)
+#	include <mstcpip.h>
+#elif defined(__unix__) || defined(__linux__)
+#	include <arpa/inet.h>
+#	include <netdb.h>
+#	include <netinet/tcp.h>
+#endif // defined(__unix__) || defined(__linux__)
 
 #include "hlp.h"
 #include "rpcthreadworker.h"
@@ -88,7 +95,6 @@ enum SettingsCtrl
 static const Settings kDefaultSettings(
 	"127.0.0.1",
 	3852,
-	0,
 	false,
 	true,
 	true,
@@ -193,15 +199,16 @@ TForm* Labeless::m_EditorTForm;
 Labeless::Labeless()
 	: m_Initialized(false)
 	, m_ConfigLock(QMutex::Recursive)
-	, m_ThreadLock(QMutex::Recursive)
 	, m_SynchronizeAllNow(false)
 	, m_LabelSyncOnRenameIfZero(0)
 	, m_ShowAllResponsesInLog(true)
+	, m_ThreadLock(QMutex::Recursive)
 {
 	msg("%s\n", __FUNCTION__);
+#ifdef __NT__
 	WSADATA wd = {};
 	WSAStartup(MAKEWORD(2, 2), &wd);
-
+#endif // __NT__
 	m_Settings = kDefaultSettings;
 
 	::google::protobuf::SetLogHandler(protobufLogHandler);
@@ -270,7 +277,7 @@ bool Labeless::isUtf8StringValid(const char* const s, size_t len) const
 	return state.invalidChars == 0;
 }
 
-void Labeless::setTargetHostAddr(const std::string& ip, WORD port)
+void Labeless::setTargetHostAddr(const std::string& ip, quint16 port)
 {
 	QMutexLocker lock(&m_ConfigLock);
 
@@ -525,7 +532,7 @@ std::string Labeless::ollyHost() const
 	return m_Settings.host;
 }
 
-WORD Labeless::ollyPort() const
+quint16 Labeless::ollyPort() const
 {
 	QMutexLocker lock(&m_ConfigLock);
 	return m_Settings.port;
@@ -560,15 +567,12 @@ void Labeless::onAutoanalysisFinished()
 	msg("%s: post processing calls/jumps\n", __FUNCTION__);
 	autoWait();
 	
-	char mnemBuff[MAXSTR] = {};
 	char disasm[MAXSTR] = {};
 
 	const QRegExp reOpnd("\\s*(dword|near|far)\\s+ptr\\s+([\\w]+)\\+([a-f0-9]+)h?\\s*", Qt::CaseInsensitive);
 	const QRegExp reShortOpnd("\\s*\\$\\+([a-f0-9]+)h?\\s*", Qt::CaseInsensitive);
 	foreach(ReadMemoryRegions::t_memory m, dump.readMemRegions->data)
 	{
-		segment_t* const seg = getseg(m.base);
-
 		for (unsigned i = 0; i < m.size; ++i)
 		{
 			const ea_t ea = m.base + i;
@@ -714,7 +718,9 @@ void Labeless::shutdown()
 		return;
 	shutdownCalled = true;
 	terminate();
+#ifdef __NT__
 	WSACleanup();
+#endif // __NT__
 	GlobalSettingsManger::instance().detach();
 }
 
@@ -808,22 +814,48 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 				break;
 			}
 		}
-		const DWORD recvTimeout = 30 * 60 * 1000;
+#ifdef __NT__
+		const quint32 recvTimeout = 30 * 60 * 1000;
+#elif defined(__unix__) || defined(__linux__)
+		timeval recvTimeout;
+ 		recvTimeout.tv_sec = 30 * 60;
+#endif // __NT__
 		if (SOCKET_ERROR == ::setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&recvTimeout), sizeof(recvTimeout)))
 		{
 			errorMsg = QString("%1: setsockopt(SO_RCVTIMEO) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
 			break;
 		}
 
-		static const tcp_keepalive keepAliveCfg = { 1, 30 * 60 * 1000, 2000 };
 		if (keepAlive)
 		{
+#ifdef __NT__
+			static const tcp_keepalive keepAliveCfg = { 1, 30 * 60 * 1000, 2000 };
 			DWORD dwDummy = 0;
 			if (SOCKET_ERROR == ::WSAIoctl(s, SIO_KEEPALIVE_VALS, LPVOID(&keepAliveCfg), sizeof(keepAliveCfg), nullptr, 0, &dwDummy, nullptr, nullptr))
 			{
 				errorMsg = QString("%1: WSAIoctl(SIO_KEEPALIVE_VALS) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
-				break;;
+				break;
 			}
+#elif defined(__unix__) || defined(__linux__)
+			const quint32 dwKeepCnt = 10;
+			const quint32 dwKeepInterval = 2;
+			const quint32 dwKeepIdle = 30 * 60;
+			if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, TCP_KEEPCNT, reinterpret_cast<const char*>(&dwKeepCnt), sizeof(dwKeepCnt)))
+			{
+				errorMsg = QString("%1: setsockopt(TCP_KEEPCNT) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				//break;
+			}
+			if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, TCP_KEEPINTVL, reinterpret_cast<const char*>(&dwKeepInterval), sizeof(dwKeepInterval)))
+			{
+				errorMsg = QString("%1: setsockopt(TCP_KEEPINTVL) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				//break;
+			}
+			if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, TCP_KEEPIDLE, reinterpret_cast<const char*>(&dwKeepIdle), sizeof(dwKeepIdle)))
+			{
+				errorMsg = QString("%1: setsockopt(TCP_KEEPIDLE) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				//break;
+			}
+#endif
 		}
 		if (SOCKET_ERROR == ::connect(s, reinterpret_cast<sockaddr*>(&addr), sizeof(addr)))
 		{
@@ -838,7 +870,11 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 	} while (0);
 	if (failed)
 	{
-		::closesocket(s);
+#ifdef __NT__
+		closesocket(s);
+#else
+		close(s);
+#endif
 		s = INVALID_SOCKET;
 	}
 	return s;
@@ -1259,6 +1295,8 @@ bool Labeless::askForSnapshotBeforeOverwrite(const area_t* area, const segment_t
 	static const int kTakeSnapAndOverwrite = 1 << 1;
 	static const int kAlwaysTakeSnapAndOvrDontAsk = 1 << 2;
 	static const int kAlwaysOvrDontAsk = 1 << 3;
+	Q_UNUSED(kOverwrite);
+
 	int chTakeSnapshot = 1;
 
 	QString prefix;
@@ -1414,7 +1452,7 @@ void Labeless::onReadMemoryRegionsFinished()
 		const ReadMemoryRegions::t_memory& m = rmr->data.at(i);
 		if (m.raw.size() != m.size)
 		{
-			msg("%s: Raw data size mismatch (expected %08llX, received %08" PRIXPTR ")\n", __FUNCTION__, m.size, m.raw.size());
+			msg("%s: Raw data size mismatch (expected %08llX, received %08" MY_PRIXPTR ")\n", __FUNCTION__, m.size, m.raw.size());
 			return;
 		}
 		if (!mergeMemoryRegion(icInfo, m, region_base, region_size))
@@ -1491,6 +1529,9 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 
 bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size)
 {
+	Q_UNUSED(region_base);
+	Q_UNUSED(region_size);
+
 	uchar perm = 0;
 	uchar type = 0;
 	const area_t area(m.base, m.base + m.size);
@@ -1625,7 +1666,6 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 
 	char buff[MAXSTR] = {};
-	char bclean[MAXSTR] = {};
 	for (int i = 0; i < gdp->rdl.size(); ++i)
 	{
 		const AnalyzeExternalRefs::RefData& rd = gdp->rdl.at(i);
@@ -1633,7 +1673,7 @@ void Labeless::onAnalyzeExternalRefsFinished()
 		if (!isCode(get_flags_novalue(ea)))
 		{
 			const auto autoLen = create_insn(ea);
-			if (autoLen != rd.len)
+			if (autoLen != static_cast<int>(rd.len))
 				continue;
 		}
 		if (get_item_end(ea) - ea != rd.len)
@@ -1711,6 +1751,7 @@ void Labeless::addAPIConst(const AnalyzeExternalRefs::PointerData& pd)
 
 void Labeless::openPythonEditorForm(int options /*= 0*/)
 {
+	Q_UNUSED(options);
 	HWND hwnd = NULL;
 	m_EditorTForm = create_tform("PyOlly", &hwnd);
 	open_tform(m_EditorTForm, FORM_TAB | FORM_MENU | FORM_RESTORE | FORM_QWIDGET);
@@ -1740,7 +1781,14 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 			errorMsg = "connectToHost() failed\n";
 		return false;
 	}
-	std::shared_ptr<void> guard (nullptr, [s](void*){ closesocket(s); }); // clean-up guard
+	std::shared_ptr<void> guard (nullptr, [s](void*){
+#ifdef __NT__
+		closesocket(s);
+#else
+		close(s);
+#endif
+	}); // clean-up guard
+	Q_UNUSED(guard);
 
 	rpc::Execute command;
 	command.set_script(
@@ -1785,7 +1833,7 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	if (err.length() < kVer.length())
 		errorMsg = QString::fromStdString("Invalid version response: " + err);
 	else if (err.substr(0, kVer.length()) != kVer)
-		errorMsg = QString::fromStdString("version mismatch. Labeless IDA: " + kVer + ". But Labeless Olly: " + err);
+		errorMsg = QString::fromStdString("version mismatch. Labeless IDA: " + kVer + ". But Labeless in the debugger: " + err);
 	
 	return rv && errorMsg.isEmpty();
 }
@@ -1838,12 +1886,12 @@ bool Labeless::createImportSegments(const std::map<uint64_t, AnalyzeExternalRefs
 					{
 						if (!move_segm_start(ea, ea + ptrSize, -2))
 						{
-							msg("%s: move_segm_start(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, ea + ptrSize);
+							msg("%s: move_segm_start(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, static_cast<ea_t>(ea + ptrSize));
 						}
 						else
 						{
 							if (!set_segm_end(s->startEA, ea + ptrSize, SEGMOD_KEEP | SEGMOD_SILENT))
-								msg("%s: set_segm_end(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, ea + ptrSize);
+								msg("%s: set_segm_end(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, static_cast<ea_t>(ea + ptrSize));
 							//else
 							//	msg("Import segment [0x%08" LL_FMT_EA_T ";0x%08" LL_FMT_EA_T ") was grew up at end\n", s->startEA, s->endEA);
 						}
@@ -1857,7 +1905,7 @@ bool Labeless::createImportSegments(const std::map<uint64_t, AnalyzeExternalRefs
 				(s = getseg(ea + ptrSize)))
 			{
 				if (!move_segm_start(s->startEA, ea, -2))
-					msg("%s: move_segm_start(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, ea + ptrSize);
+					msg("%s: move_segm_start(0x%08" LL_FMT_EA_T ", 0x%08" LL_FMT_EA_T ") failed\n", __FUNCTION__, s->startEA, static_cast<ea_t>(ea + ptrSize));
 				//else
 				//	msg("Import segment [0x%08" LL_FMT_EA_T ";0x%08" LL_FMT_EA_T ") was grew up at start", s->startEA, s->endEA);
 				break;
@@ -1935,8 +1983,6 @@ void Labeless::updateImportsNode()
 				existingAPIs.insert(funcName);
 		}
 	}
-
-	const unsigned ptrSize = targetPtrSize();
 
 	auto it = m_ExternSegData.imports.cbegin();
 	for (; it != m_ExternSegData.imports.cend(); ++it)
@@ -2036,6 +2082,7 @@ void Labeless::onMakeCode(ea_t ea, ::asize_t size)
 
 void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 {
+	Q_UNUSED(len);
 	if (m_IgnoreMakeData)
 		return;
 	if ((!inf.is_64bit() && !isDwrd(flags)) || (inf.is_64bit() && !isQwrd(flags)))
@@ -2073,11 +2120,17 @@ void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 
 void Labeless::onAddCref(ea_t from, ea_t to, cref_t type)
 {
+	Q_UNUSED(from);
+	Q_UNUSED(to);
+	Q_UNUSED(type);
 	//msg("on add_cref (from: %08" LL_FMT_EA_T ", to: %08" LL_FMT_EA_T ", type: %08X)\n", from, to, type);
 }
 
 void Labeless::onAddDref(ea_t from, ea_t to, dref_t type)
 {
+	Q_UNUSED(from);
+	Q_UNUSED(to);
+	Q_UNUSED(type);
 	//msg("on add_Dref (from: %08" LL_FMT_EA_T ", to: %08" LL_FMT_EA_T ", type: %08X)\n", from, to, type);
 }
 
@@ -2187,7 +2240,7 @@ int idaapi Labeless::idp_callback(void* /*user_data*/, int notification_code, va
 		do {
 			ea_t ea = va_arg(va, ea_t);
 			const char* newName = va_arg(va, const char*);
-			int flags = va_arg(va, int);
+			// int flags = va_arg(va, int);
 			ll.onRename(ea, newName);
 		} while (0);
 		break;
@@ -2231,6 +2284,7 @@ int idaapi Labeless::idp_callback(void* /*user_data*/, int notification_code, va
 			::cref_t type = va_arg(va, ::cref_t);
 			ll.onAddCref(from, to, type);
 		} while (0);
+#ifdef __NT__
 	case ::processor_t::add_dref:
 		do {
 			::ea_t from = va_arg(va, ::ea_t);
@@ -2239,6 +2293,7 @@ int idaapi Labeless::idp_callback(void* /*user_data*/, int notification_code, va
 			ll.onAddDref(from, to, type);
 		} while (0);
 		break;
+#endif // __NT__
 	// TODO: disable on-rename
 	//case ::processor_t::moving_segm:
 	//	msg("on moving_segm\n");
@@ -2253,6 +2308,8 @@ int idaapi Labeless::idp_callback(void* /*user_data*/, int notification_code, va
 
 int idaapi Labeless::idb_callback(void* /*user_data*/, int notification_code, va_list va)
 {
+	Q_UNUSED(notification_code);
+	Q_UNUSED(va);
 	/*switch (notification_code)
 	{
 	case ::idb_event::cmt_changed:
@@ -2375,7 +2432,8 @@ QMainWindow* Labeless::findIDAMainWindow() const
 		if (mainWindow = qobject_cast<QMainWindow*>(QWidget::find(hwnd)))
 			return mainWindow;
 	}
-#if 0
+
+	// fallback: when we cannot get the main window using callui
 	static const QString kIDAMainWindowClassName = "IDAMainWindow";
 
 	QWidgetList wl = qApp->allWidgets();
@@ -2388,7 +2446,7 @@ QMainWindow* Labeless::findIDAMainWindow() const
 				return mainWindow;
 		}
 	}
-#endif
+
 	return nullptr;
 }
 

@@ -36,8 +36,8 @@ class Labeless : public QObject
 
 	Labeless();
 	~Labeless();
-	Labeless(const Labeless&) {};
-	Labeless& operator=(const Labeless&) {};
+	Labeless(const Labeless&); // TODO: = delete;
+	Labeless& operator=(const Labeless&); // TODO: = delete;
 public:
 	enum HelperMsg
 	{
@@ -46,7 +46,7 @@ public:
 	};
 	static Labeless& instance();
 
-	void setTargetHostAddr(const std::string& ip, WORD port);
+	void setTargetHostAddr(const std::string& ip, quint16 port);
 
 	bool isEnabled() const { return m_Enabled; }
 	bool setEnabled();
@@ -58,7 +58,7 @@ public:
 	void shutdown();
 
 	std::string ollyHost() const;
-	WORD ollyPort() const;
+	quint16 ollyPort() const;
 	ea_t remoteModuleBase();
 
 	/**< hook processor_t::idp_notify - begin */

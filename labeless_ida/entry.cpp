@@ -11,16 +11,16 @@
 
 #include <loader.hpp>
 
-
+#ifdef __NT__
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	if (ul_reason_for_call == DLL_PROCESS_ATTACH)
 	{
-		Q_INIT_RESOURCE(res);
 		DisableThreadLibraryCalls(hModule);
 	}
 	return TRUE;
 }
+#endif // __NT__
 
 static void idaapi run(int)
 {
@@ -31,6 +31,8 @@ static int idaapi init()
 {
 	if (!is_idaq())
 		return PLUGIN_SKIP;
+
+	Q_INIT_RESOURCE(res);
 	if (!hook_to_notification_point(HT_IDP, Labeless::idp_callback, nullptr))
 	{
 		msg("%s: hook_to_notification_point(HT_IDP) failed.", __FUNCTION__);

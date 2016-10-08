@@ -30,15 +30,15 @@ struct IDADump
 		bool finished;
 
 		AnalyseExtRefsWrapper(RpcDataPtr rpcData_)
-			: finished(false)
-			, rpcData(rpcData_)
+			: rpcData(rpcData_)
+			, finished(false)
 		{}
 	};
 
 public:
+	State state;
 	bool wipe;
 	bool analyzePEHeader;
-	State state;
 
 	ExportItemList exports;
 	SectionList sections;

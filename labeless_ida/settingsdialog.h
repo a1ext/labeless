@@ -9,6 +9,7 @@
 #pragma once
 #include <QAtomicInt>
 #include <QDialog>
+#include "types.h"
 
 struct Settings;
 
@@ -20,8 +21,7 @@ QT_END_NAMESPACE
 QT_FORWARD_DECLARE_CLASS(QTableWidgetItem)
 
 struct PythonPalette;
-enum PythonPaletteType;
-enum PythonPaletteEntryType;
+enum PythonPaletteEntryType FORCE_ENUM_SIZE_INT;
 
 class SettingsDialog : public QDialog
 {

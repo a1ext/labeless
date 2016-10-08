@@ -29,7 +29,6 @@ bool MemoryRegion::isIntersects(const MemoryRegion& r) const
 
 Settings::Settings(const std::string host_,
 	uint16_t port_,
-	uint64_t remoteModBase_,
 	bool enabled_,
 	bool demangle_,
 	bool localLabels_,

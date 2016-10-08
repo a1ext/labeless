@@ -15,6 +15,7 @@
 #include <QApplication>
 
 RpcThreadWorker::RpcThreadWorker(QObject* parent)
+	: QObject(parent)
 {
 	msg("%s\n", Q_FUNC_INFO);
 }
@@ -80,7 +81,14 @@ void RpcThreadWorker::main()
 			pRD->emitFailed(errorMsg);
 			continue;
 		}
-		std::shared_ptr<void> guard(nullptr, [s](void*){ closesocket(s); }); // clean-up guard
+		std::shared_ptr<void> guard(nullptr, [s](void*){
+#ifdef __NT__
+			closesocket(s);
+#else
+			close(s);
+#endif
+		}); // clean-up guard
+		Q_UNUSED(guard);
 
 		try
 		{

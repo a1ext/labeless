@@ -27,7 +27,7 @@ std::string base64_decode(std::string const& encoded_string);
 
 std::string unhexlify(const std::string& hexStr);
 void addLogMsg(const char* fmt, ...);
-std::string memoryProtectToStr(DWORD p);
+std::string memoryProtectToStr(quint32 p);
 qlist<ea_t> codeRefsToCode(ea_t ea);
 qlist<ea_t> dataRefsToCode(ea_t ea);
 ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames);
@@ -40,6 +40,7 @@ bool parseBigMessage(::google::protobuf::Message& msg, const std::string& data);
 } // protobuf
 
 namespace net {
+
 
 qstring wsaErrorToString();
 bool sockSendBuff(SOCKET s, const char* buff, uint64_t len);

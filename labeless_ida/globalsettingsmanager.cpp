@@ -141,8 +141,8 @@ void GlobalSettingsManger::detach()
 }
 
 ScopedSettings::ScopedSettings(GlobalSettingsManger* manager, QSettingsPtr pSettings)
-	: pManager(manager)
-	, settings(pSettings)
+	: settings(pSettings)
+	, pManager(manager)
 {
 	pManager->lock();
 }

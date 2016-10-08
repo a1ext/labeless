@@ -8,17 +8,56 @@
 
 #pragma once
 
+#ifdef __NT__
 #include <SDKDDKVer.h>
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 #include <windows.h>
 #include <stdint.h>
 #include <WinSock2.h>
+#define FORCE_ENUM_SIZE_INT
 
+#elif defined(__unix__) || defined(__linux__)
+
+#include <stdint.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+#define SOCKET int
+#define INVALID_SOCKET -1
+#define SOCKET_ERROR -1
+
+#define PAGE_NOACCESS          0x01
+#define PAGE_READONLY          0x02
+#define PAGE_READWRITE         0x04
+#define PAGE_WRITECOPY         0x08
+#define PAGE_EXECUTE           0x10
+#define PAGE_EXECUTE_READ      0x20
+#define PAGE_EXECUTE_READWRITE 0x40
+#define PAGE_EXECUTE_WRITECOPY 0x80
+#define PAGE_GUARD            0x100
+#define PAGE_NOCACHE          0x200
+#define PAGE_WRITECOMBINE     0x400
+
+#define SEC_IMAGE         0x1000000
+
+#define IMAGE_SCN_CNT_CODE                   0x00000020  // Section contains code.
+#define IMAGE_SCN_MEM_EXECUTE                0x20000000  // Section is executable.
+#define IMAGE_SCN_MEM_READ                   0x40000000  // Section is readable.
+#define IMAGE_SCN_MEM_WRITE                  0x80000000  // Section is writeable.
+
+#define _countof(X) (sizeof((X))/sizeof((X)[0]))
+#define FORCE_ENUM_SIZE_INT : int
+#endif
+
+#ifdef __NT__
 #pragma warning(push)
 #pragma warning(disable:4309)           // disable "truncation of constant value" warning from IDA SDK
+#endif // __NT__
 #include <pro.h>
+#ifdef __NT__
 #pragma warning(pop)
+#endif // __NT__
 #include <ida.hpp>
 #include <idp.hpp>
 
@@ -142,7 +181,6 @@ struct Settings
 
 	Settings(const std::string host_ = std::string(),
 		uint16_t port_ = 0,
-		uint64_t remoteModBase_ = 0,
 		bool enabled_ = false,
 		bool demangle_ = false,
 		bool localLabels_ = false,
@@ -191,37 +229,42 @@ qlist<T> qlistFromInitializerList(const std::initializer_list<T>& il)
 }
 #endif // _MSC_VER >= 1800
 
-inline uint64_t targetPtrSize()
+inline ea_t targetPtrSize()
 {
 	return ::inf.is_64bit() ? sizeof(uint64_t) : sizeof(uint32_t);
 }
 
 typedef std::unordered_map<uint64_t, std::string> ExternRefDataMap;
 
+#ifdef __NT__
 #define CHECKED_CONNECT(X)											\
 	if (!(X)) do {													\
 		msg(__FUNCTION__ ": connect() failed: " #X "\n");			\
 	} while (0)
+#elif defined(__unix__) || defined(__linux__)
+// FIXME
+#define CHECKED_CONNECT(X)                                          \
+    if (!(X)) do {													\
+	} while (0)
+#endif
 
 #define OLLY_TEXTLEN 256
 
-#ifndef PRIXPTR
-#	ifdef _WIN64
-#		define _PFX_PTR  "ll"
-#	else
-#		define _PFX_PTR  "l"
-#	endif
-#	define PRIXPTR      _PFX_PTR "X"
-#endif // PRIXPTR
+#ifdef _WIN64
+#	define MY_PFX_PTR  "ll"
+#else
+#	define MY_PFX_PTR  "l"
+#endif
+#define MY_PRIXPTR      MY_PFX_PTR "X"
 
-#if defined(_MSC_VER) || defined(__MINGW32__)
-#	ifdef __X64__
-#		define LL_FMT_EA_T  "llX"
-#	else
-#		define LL_FMT_EA_T  "X"
-#	endif
-#endif // defined(_MSC_VER) || defined(__MINGW32__)
 
-#ifndef __NT__
-#error "WIN32 platform only is supported"
-#endif // __NT__
+#ifdef __X64__
+#	define LL_FMT_EA_T  "llX"
+#else
+#	define LL_FMT_EA_T  "X"
+#endif
+
+
+#if !defined(__NT__) && !defined(__unix__) && !defined(__unix__)
+#error "WIN32 and Linux/Unix platforms are supported"
+#endif

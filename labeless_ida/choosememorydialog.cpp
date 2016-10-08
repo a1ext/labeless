@@ -198,6 +198,7 @@ void ChooseMemoryDialog::on_twMemoryMap_customContextMenuRequested(const QPoint&
 
 void ChooseMemoryDialog::on_leManualVaFrom_textChanged(const QString& v)
 {
+	Q_UNUSED(v);
 	QLineEdit* le = qobject_cast<QLineEdit*>(sender());
 	if (!le)
 		return;
@@ -227,6 +228,7 @@ void ChooseMemoryDialog::on_leManualVaFrom_textChanged(const QString& v)
 
 void ChooseMemoryDialog::on_leManualVaTo_textChanged(const QString& v)
 {
+	Q_UNUSED(v);
 	QLineEdit* le = qobject_cast<QLineEdit*>(sender());
 	if (!le)
 		return;
@@ -257,6 +259,7 @@ void ChooseMemoryDialog::on_leManualVaTo_textChanged(const QString& v)
 
 void ChooseMemoryDialog::on_leManualSize_textChanged(const QString& v)
 {
+	Q_UNUSED(v);
 	QLineEdit* le = qobject_cast<QLineEdit*>(sender());
 	if (!le)
 		return;

@@ -68,6 +68,7 @@ IDADump& IDADump::nextState(RpcDataPtr rpcData)
 
 bool IDADump::onCheckingPEHeaderState(RpcDataPtr rpcData)
 {
+	Q_UNUSED(rpcData);
 	if (!analyzePEHeader)
 	{
 		state = ST_ReadingMemoryRegions;

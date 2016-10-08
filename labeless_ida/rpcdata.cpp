@@ -21,8 +21,8 @@ RpcData::RpcData(uint64_t jobId_,
 	, scriptExternObj(scriptExternObj_)
 	, params(params_)
 	, iCmd(iCmd_)
-	, readyToSendHandler(readyToSendHandler_)
 	, m_State(ST_Working)
+	, readyToSendHandler(readyToSendHandler_)
 {
 }
 
