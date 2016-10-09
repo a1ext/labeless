@@ -818,6 +818,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 		const quint32 recvTimeout = 30 * 60 * 1000;
 #elif defined(__unix__) || defined(__linux__)
 		timeval recvTimeout;
+		recvTimeout.tv_usec = 500000;
  		recvTimeout.tv_sec = 30 * 60;
 #endif // __NT__
 		if (SOCKET_ERROR == ::setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&recvTimeout), sizeof(recvTimeout)))
