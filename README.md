@@ -55,6 +55,7 @@ As a result we have a lot of memory regions that may represent even different mo
 Installation
 ============
 ## Usage of precompiled binaries (release version) 
+### Debug-backend setup:
 If you want to use both x86 and x86_64 targets, then you should do the following steps for each python distro.
 
 * Set up Python 2.7 (x86/x86_64)
@@ -75,7 +76,21 @@ c:\Python27\python.exe setup.py install
 * Configure your debugger backend: set up ```plugins``` directory
 
 ## Configuring of your IDA PRO:
-Copy IDA plugins ```IDA[XX]\plugins\labeless_ida.plw``` and ```IDA[XX]\plugins\labeless_ida.p64``` to IDA's ```plugins``` directory, for example ```c:\IDA68\plugins```
+Labeless supports **Windows** and **Linux** (starting from 6.9.5 version of) IDA PRO. Labeless handles only PE/AMD64 binaries. Labeless requires **IDAPython** plugin ```python.[plw|p64|plx|plx64]``` (it ships with IDA PRO, but make sure it works well).
+
+There are plugins:
+```
+IDA[XX]\plugins\labeless_ida.plw - for IDA for Windows, handles 32-bit binaries (used with idaq)
+IDA[XX]\plugins\labeless_ida.p64 - for IDA for Windows, handles 64-bit binaries (used with idaq64)
+IDA[XX]\plugins\labeless_ida.plx - for IDA for Linux, handles 32-bit binaries (used with idaq)
+IDA[XX]\plugins\labeless_ida.plx64 - for IDA for Linux, handles 64-bit binaries (used with idaq64)
+```
+
+Copy Labeless plugins to your IDA's ```plugins``` directory, for example ```c:\IDA68\plugins```
+
+* In case you have IDA for Windows, please, use ```.plw```/```.p64``` plugins.
+
+* If you have IDA for Linux, please, use ```.plx```/```.plx64``` plugins. Also, copy ```IDA[XX]/libprotobuf.so.9``` to your IDA home directory (for example ```/home/alex/ida695/````), it's an important library.
 
 ## Configuring of debug backends
 ### 1. OllyDbg 1.10

@@ -1,3 +1,12 @@
+# v 1.1.1.0
+ + Added IDA for Linux support
+ * Fixed issue #16 (GUI resize in high-dpi resolution/font size)
+ * Fixed broken highlighting in python editor
+ * VM deployment script can get configuration path form the commandline
+
+# v 1.1.0.9
+ * x64dbg's SDK and testing bundle are updated to snapshot on snapshot_2016-09-18_01-22
+
 # v 1.1.0.8
  + Now the data can be transferred from debug-backend-side to IDA using __result__ variable
 
