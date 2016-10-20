@@ -134,15 +134,12 @@ private:
 	qstring getNewNameOfEntry() const;
 
 	bool initIDAPython();
-	bool runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error);
-	bool setIDAPythonResultObject(const std::string& obj, std::string& error);
 
 	Settings loadSettings();
 	void storeSettings();
 
 	bool isUtf8StringValid(const char* const s, size_t len) const;
 
-	QMainWindow* findIDAMainWindow() const;
 private:
 	bool addAPIEnumValue(const std::string& name, uval_t value);
 	void addAPIConst(const AnalyzeExternalRefs::PointerData& pd);

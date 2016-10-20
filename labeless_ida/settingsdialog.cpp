@@ -11,11 +11,13 @@
 
 #include <QColorDialog>
 #include <QGraphicsDropShadowEffect>
+#include <QMainWindow>
 #include <QMessageBox>
 #include <QTableWidgetItem>
 #include <QTextCharFormat>
 
 #include "types.h"
+#include "hlp.h"
 #include "globalsettingsmanager.h"
 #include "pythonpalettemanager.h"
 #include "../common/version.h"
@@ -76,7 +78,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->chFuncLocalVars->setChecked(settings.commentsSync.testFlag(Settings::CS_LocalVar));
 	m_UI->chFuncNameAsComment->setChecked(settings.commentsSync.testFlag(Settings::CS_FuncNameAsComment));
 
-	QLabel* const lVer = new QLabel(m_UI->tabWidget);
+	QLabel* const lVer = new QLabel(m_UI->tabCommon);
 	lVer->setText(QString("v %1").arg(LABELESS_VER_STR));
 	lVer->setStyleSheet("color: rgb(0x8a, 0x8a, 0x8a);");
 	QGraphicsDropShadowEffect* const effect = new QGraphicsDropShadowEffect(lVer);
@@ -84,7 +86,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	effect->setOffset(0);
 	effect->setColor(Qt::white);
 	lVer->setGraphicsEffect(effect);
-	m_UI->tabWidget->setCornerWidget(lVer);
+	m_UI->tabCommon->setCornerWidget(lVer);
 	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
 	setUpPalette();
@@ -437,6 +439,36 @@ void SettingsDialog::on_spbTabWidth_valueChanged(int v)
 	pPalette->tabWidth = v;
 	m_PaletteChanged = true;
 	m_UI->tePalettePreview->setPalette(*pPalette);
+}
+
+void SettingsDialog::on_bCheckForUpdates_clicked()
+{
+	hlp::github::ReleaseInfo ri;
+	std::string error;
+	if (!hlp::github::getLatestRelease(ri, error))
+	{
+		QMessageBox::warning(hlp::findIDAMainWindow(),
+				tr("Error"),
+				tr("Unable to get the latest build, error: %1")
+					.arg(QString::fromStdString(error)));
+		return;
+	}
+
+	static const QString currentVer = QString("v_%1").arg(LABELESS_VER_STR).replace(".", "_");
+	if (currentVer == ri.tag)
+	{
+		QMessageBox::information(hlp::findIDAMainWindow(),
+			tr(":)"),
+			tr("You are using the latest version"));
+		return;
+	}
+
+	QMessageBox::information(hlp::findIDAMainWindow(),
+			tr(":)"),
+			tr("New release is available:<br><b>ver</b>: %1<br><b>name</b>: %2<br><a href=\"%3\">View on GitHub</a>")
+				.arg(ri.tag)
+				.arg(ri.name)
+				.arg(ri.url));
 }
 
 bool SettingsDialog::getLightPalette(PythonPalette& result) const

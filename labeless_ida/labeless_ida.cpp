@@ -20,7 +20,6 @@
 #include <demangle.hpp>
 #include <entry.hpp>
 #include <enum.hpp>
-#include <expr.hpp>
 #include <fixup.hpp>
 #include <frame.hpp>
 #include <kernwin.hpp>
@@ -188,9 +187,7 @@ static const QString kLabelessMenuObjectName = "labeless_menu";
 static const QString kLabelessMenuLoadStubItemName = "act-load-stub-x86";
 static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
 static const std::string kSyncAllNowActionName = "Labeless: Sync all now";
-static const std::string kExternKeyword = "__extern__";
-static const std::string kResultKeyword = "__result__";
-static const std::string kResultStrKeyword = "__result_str__";
+
 
 } // anonymous
 
@@ -287,7 +284,7 @@ void Labeless::setTargetHostAddr(const std::string& ip, quint16 port)
 
 void Labeless::onSyncronizeAllRequested()
 {
-	if (!m_Settings.remoteModBase && QMessageBox::No == QMessageBox::question(findIDAMainWindow(), tr("?"),
+	if (!m_Settings.remoteModBase && QMessageBox::No == QMessageBox::question(hlp::findIDAMainWindow(), tr("?"),
 			tr("The \"Remote module base\" is zero.\nDo you want to continue?"),
 			QMessageBox::Yes, QMessageBox::No))
 		return;
@@ -618,7 +615,7 @@ void Labeless::onAutoanalysisFinished()
 
 bool Labeless::firstInit()
 {
-	if (QMainWindow* mw = findIDAMainWindow())
+	if (QMainWindow* mw = hlp::findIDAMainWindow())
 	{
 		if (QMenu* m = mw->menuBar()->addMenu("Labeless"))
 		{
@@ -683,6 +680,7 @@ bool Labeless::initialize()
 
 void Labeless::terminate()
 {
+	static const unsigned kMaxThreadWaitTimeoutMsec = 20 * 1000;
 	if (!m_Initialized)
 		return;
 	m_Initialized = false;
@@ -701,8 +699,6 @@ void Labeless::terminate()
 		m_QueueCond.wakeAll();
 		QEventLoop loop;
 		loop.processEvents(QEventLoop::AllEvents, 2000);
-		m_Thread->terminate();
-		m_Thread->wait();
 		m_Thread = nullptr;
 	}
 	lock.unlock();
@@ -891,7 +887,7 @@ void Labeless::onPyOllyFormClose()
 
 void Labeless::onSettingsRequested()
 {
-	QMainWindow* idaw = findIDAMainWindow();
+	QMainWindow* idaw = hlp::findIDAMainWindow();
 	if (!idaw)
 	{
 		msg("%s: Unable to find IDA Main window\n", __FUNCTION__);
@@ -929,14 +925,14 @@ void Labeless::onLoadStubDBRequested()
 	}
 	if (!::is_temp_database())
 	{
-		const auto rv = QMessageBox::question(findIDAMainWindow(), tr("?"), tr("Do you really want to load sample DB?"),
+		const auto rv = QMessageBox::question(hlp::findIDAMainWindow(), tr("?"), tr("Do you really want to load sample DB?"),
 				QMessageBox::Yes, QMessageBox::No);
 		if (rv != QMessageBox::Yes)
 			return;
 	}
 	const QString extension = isx86 ? kDatabaseExtX86 : kDatabaseExtX64;
 
-	QString idbFileName = QFileDialog::getSaveFileName(findIDAMainWindow(),
+	QString idbFileName = QFileDialog::getSaveFileName(hlp::findIDAMainWindow(),
 		tr("Select where to save new DB"),
 		QString("sample%1").arg(extension),
 		tr("IDA PRO IDB-file (*%1)").arg(extension));
@@ -965,7 +961,7 @@ void Labeless::onLoadStubDBRequested()
 	QFile f(sampleFileName);
 	if (!f.open(QIODevice::WriteOnly))
 	{
-		QMessageBox::critical(findIDAMainWindow(), tr("!"), tr("Unable to open file \"%1\" for write").arg(sampleFileName));
+		QMessageBox::critical(hlp::findIDAMainWindow(), tr("!"), tr("Unable to open file \"%1\" for write").arg(sampleFileName));
 		return;
 	}
 	f.write(raw);
@@ -1007,7 +1003,7 @@ void Labeless::onRunScriptRequested()
 	if (!idaScript.empty())
 	{
 		std::string errorMsg;
-		if (!runIDAPythonScript(idaScript, externObj, errorMsg))
+		if (!hlp::runIDAPythonScript(idaScript, externObj, errorMsg))
 		{
 			m_PyOllyView->prependStdoutLog(QString("runIDAPythonScript() failed with error: %1\n")
 				.arg(QString::fromStdString(errorMsg)));
@@ -1130,7 +1126,7 @@ void Labeless::onRunPythonScriptFinished()
 	if (req->d.ollyResultIsSet)
 	{
 		std::string error;
-		if (!setIDAPythonResultObject(req->d.ollyResult, error))
+		if (!hlp::setIDAPythonResultObject(req->d.ollyResult, error))
 			msg("%s: setIDAPythonResultObject() failed with error: %s\n", __FUNCTION__, error.c_str());
 	}
 }
@@ -1179,7 +1175,7 @@ void Labeless::onGetBackendInfoFinished()
 
 	if (!error.isEmpty())
 	{
-		QMessageBox::information(findIDAMainWindow(),
+		QMessageBox::information(hlp::findIDAMainWindow(),
 			tr("Bad backend"),
 			error);
 		return;
@@ -1216,7 +1212,7 @@ void Labeless::onGetMemoryMapFinished()
 		return;
 	}
 	MemoryRegionList& vals = req->data;
-	ChooseMemoryDialog cmd(vals, tr("Select memory to dump"), findIDAMainWindow());
+	ChooseMemoryDialog cmd(vals, tr("Select memory to dump"), hlp::findIDAMainWindow());
 	if (QDialog::Accepted != cmd.exec())
 		return; // canceled
 
@@ -1318,7 +1314,7 @@ bool Labeless::askForSnapshotBeforeOverwrite(const area_t* area, const segment_t
 	{
 		const QString msg = tr("%1\nExiting... The default behavior can be changed in Settings view.")
 			.arg(prefix);
-		QMessageBox::warning(findIDAMainWindow(), tr("!"), msg);
+		QMessageBox::warning(hlp::findIDAMainWindow(), tr("!"), msg);
 		return false;
 	}
 	if (Settings::OW_AlwaysAsk == m_Settings.overwriteWarning)
@@ -1767,9 +1763,9 @@ void Labeless::onTestConnectRequested()
 	sd->getSettings(tmpSettings);
 	QString error;
 	if (testConnect(tmpSettings.host, tmpSettings.port, error))
-		QMessageBox::information(findIDAMainWindow(), kLabelessTitle, tr("Successfully connected!"));
+		QMessageBox::information(hlp::findIDAMainWindow(), kLabelessTitle, tr("Successfully connected!"));
 	else
-		QMessageBox::warning(findIDAMainWindow(), kLabelessTitle, tr("Test failed, error:\n%1").arg(error));
+		QMessageBox::warning(hlp::findIDAMainWindow(), kLabelessTitle, tr("Test failed, error:\n%1").arg(error));
 }
 
 bool Labeless::testConnect(const std::string& host, uint16_t port, QString& errorMsg)
@@ -1842,12 +1838,8 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 size_t Labeless::loadImportTable()
 {
 	m_ExternSegData = ExternSegData();
-	if (!storage::loadExternSegData(m_ExternSegData))
-	{
-		msg("%s: storage::loadExternSegData() failed\n", __FUNCTION__);
-		return 0;
-	}
-	
+	storage::loadExternSegData(m_ExternSegData);
+
 	return m_ExternSegData.imports.size();
 }
 
@@ -2336,119 +2328,7 @@ void Labeless::onKeepAndImportRequested()
 
 bool Labeless::initIDAPython()
 {
-	const extlang_t* elng = find_extlang_by_name("python");
-	if (!elng)
-	{
-		msg("%s: python extlang not found\n", __FUNCTION__);
-		return false;
-	}
-	char errbuff[MAXSTR] = {};
-	static const std::string pyInitMsg = "import json;" + kResultKeyword + " = None\n"
-		"idaapi.msg('Labeless: Python initialized... OK\\n')\n";
-	if (!run_statements(pyInitMsg.c_str(), errbuff, _countof(errbuff), elng))
-	{
-		msg("%s: run_statements() failed\n", __FUNCTION__);
-		if (::qstrlen(errbuff))
-			msg("%s: error: %s", __FUNCTION__, errbuff);
-		return false;
-	}
-
-	return true;
-}
-
-bool Labeless::runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error)
-{
-	const extlang_t* elng = find_extlang_by_name("python");
-	if (!elng)
-	{
-		msg("%s: Python extlang not found\n", __FUNCTION__);
-		return false;
-	}
-	char errbuff[1024] = {};
-	externObj.clear();
-	error.clear();
-
-	if (!run_statements(script.c_str(), errbuff, _countof(errbuff), elng))
-	{
-		if (::qstrlen(errbuff))
-			error = errbuff;
-		msg("%s: unable to execute Python script, error: %s", __FUNCTION__, errbuff);
-		return false;
-	}
-
-	idc_value_t rv;
-	if (elng->calcexpr(BADADDR, ("json.dumps(" + kExternKeyword + ")").c_str(), &rv, errbuff, sizeof(errbuff)))
-	{
-		externObj = rv.c_str();
-	}
-	else if (::qstrlen(errbuff) && !QString::fromLatin1(errbuff).contains("NameError"))
-	{
-		error = errbuff;
-		return false;
-	}
-	return true;
-}
-
-bool Labeless::setIDAPythonResultObject(const std::string& obj, std::string& error)
-{
-	const extlang_t* elng = find_extlang_by_name("python");
-	if (!elng)
-	{
-		msg("%s: Python extlang not found\n", __FUNCTION__);
-		return false;
-	}
-
-	select_extlang(elng);
-
-	char errbuff[1024] = {};
-	error.clear();
-
-	idc_value_t varStr(obj.c_str());
-
-	if (!elng->set_attr(nullptr, kResultStrKeyword.c_str(), &varStr))
-	{
-		error = "unable to set " + kResultStrKeyword;
-		return false;
-	}
-
-	const std::string stmt = kResultKeyword + " = json.loads(" + kResultStrKeyword + ")";
-	if (!run_statements(stmt.c_str(), errbuff, _countof(errbuff), elng))
-	{
-		if (::qstrlen(errbuff))
-			error = errbuff;
-		msg("%s: unable to execute Python script, error: %s", __FUNCTION__, errbuff);
-		return false;
-	}
-
-	return true;
-}
-
-QMainWindow* Labeless::findIDAMainWindow() const
-{
-	static QPointer<QMainWindow> mainWindow;
-	if (mainWindow)
-		return mainWindow;
-	if (WId hwnd = reinterpret_cast<WId>(callui(ui_get_hwnd).vptr))
-	{
-		if (mainWindow = qobject_cast<QMainWindow*>(QWidget::find(hwnd)))
-			return mainWindow;
-	}
-
-	// fallback: when we cannot get the main window using callui
-	static const QString kIDAMainWindowClassName = "IDAMainWindow";
-
-	QWidgetList wl = qApp->allWidgets();
-	for (int i = 0; i < wl.size(); ++i)
-	{
-		QString clsname = wl.at(i)->metaObject()->className();
-		if (clsname == kIDAMainWindowClassName)
-		{
-			if (mainWindow = qobject_cast<QMainWindow*>(wl.at(i)))
-				return mainWindow;
-		}
-	}
-
-	return nullptr;
+	return hlp::initIDAPython();
 }
 
 void Labeless::onLogMessage(const QString& message, const QString& prefix)

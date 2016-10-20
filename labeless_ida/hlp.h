@@ -11,6 +11,10 @@
 #include <string>
 #include "types.h"
 
+#include <QString>
+
+QT_FORWARD_DECLARE_CLASS(QMainWindow)
+
 namespace google	{
 namespace protobuf	{
 
@@ -32,6 +36,12 @@ qlist<ea_t> codeRefsToCode(ea_t ea);
 qlist<ea_t> dataRefsToCode(ea_t ea);
 ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames);
 bool isFuncStart(ea_t ea);
+QMainWindow* findIDAMainWindow();
+
+bool initIDAPython();
+bool runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error);
+bool setIDAPythonResultObject(const std::string& obj, std::string& error);
+
 
 namespace protobuf {
 
@@ -49,5 +59,19 @@ bool sockRecvAll(SOCKET s, std::string& result);
 bool sendAll(SOCKET s, const std::string& buff, std::string& error);
 
 } // net
+
+namespace github {
+
+struct ReleaseInfo
+{
+	QString tag; // tag_name
+	QString name; // name
+	QString url; // html_url
+};
+
+bool getLatestRelease(ReleaseInfo& ri, std::string& error);
+
+} // github
+
 } // hlp
 
