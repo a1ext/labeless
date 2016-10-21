@@ -77,3 +77,16 @@ ScopedSignalBlocker::~ScopedSignalBlocker()
 		if (items.at(i))
 			items.at(i)->blockSignals(false);
 }
+
+ScopedWaitBox::ScopedWaitBox(const char* fmt, ...)
+{
+	va_list va;
+	va_start(va, fmt);
+	show_wait_box_v(fmt, va);
+	va_end(va);
+}
+
+ScopedWaitBox::~ScopedWaitBox()
+{
+	hide_wait_box();
+}

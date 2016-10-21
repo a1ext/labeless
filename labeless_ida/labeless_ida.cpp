@@ -165,21 +165,6 @@ static struct SyncAllNowActionHandler_t : public action_handler_t
 } g_SyncAllNowActionHandler;
 
 
-struct ScopedWaitBox
-{
-	ScopedWaitBox(const char* fmt, ...)
-	{
-		va_list va;
-		va_start(va, fmt);
-		show_wait_box_v(fmt, va);
-		va_end(va);
-	}
-	~ScopedWaitBox()
-	{
-		hide_wait_box();
-	}
-};
-
 static const QString kLabelessTitle = "Labeless";
 static const std::string kAPIEnumName = "OLD_API_EXTERN_CONSTS";
 static const qstring kReturnAddrStackStructFieldName = " r";

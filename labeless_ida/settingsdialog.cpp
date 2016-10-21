@@ -86,7 +86,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	effect->setOffset(0);
 	effect->setColor(Qt::white);
 	lVer->setGraphicsEffect(effect);
-	m_UI->tabCommon->setCornerWidget(lVer);
+	m_UI->tw->setCornerWidget(lVer);
 	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
 	setUpPalette();
@@ -445,7 +445,13 @@ void SettingsDialog::on_bCheckForUpdates_clicked()
 {
 	hlp::github::ReleaseInfo ri;
 	std::string error;
-	if (!hlp::github::getLatestRelease(ri, error))
+	bool ok = false;
+	{
+		ScopedWaitBox wb("HIDECANCEL\nLabeless: checking for updates...");
+		Q_UNUSED(wb);
+		ok = hlp::github::getLatestRelease(ri, error);
+	}
+	if (!ok)
 	{
 		QMessageBox::warning(hlp::findIDAMainWindow(),
 				tr("Error"),

@@ -217,6 +217,12 @@ struct ScopedSignalBlocker
 	virtual ~ScopedSignalBlocker();
 };
 
+struct ScopedWaitBox
+{
+	explicit ScopedWaitBox(const char* fmt, ...);
+	~ScopedWaitBox();
+};
+
 #if _MSC_VER >= 1800
 
 template <typename T>
