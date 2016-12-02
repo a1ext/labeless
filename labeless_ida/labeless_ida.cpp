@@ -10,6 +10,8 @@
 #include "labeless_ida.h"
 
 // IDA
+#pragma warning(push)
+#pragma warning(disable: 4267) // disable warning like "sdk\include\typeinf.hpp(2642): warning C4267: 'return': conversion from 'size_t' to 'cm_t', possible loss of data"
 #include <ida.hpp>
 #include <idp.hpp>
 
@@ -32,6 +34,7 @@
 #include <struct.hpp>
 #include <typeinf.hpp>
 #include <../ldr/idaldr.h>
+#pragma warning(pop)
 
 // std
 #include <algorithm>
@@ -52,6 +55,7 @@
 #include <QProcess>
 #include <QRegExp>
 #include <QSettings>
+#include <QThread>
 #include <QTextCodec>
 #include <QVariant>
 
@@ -164,6 +168,26 @@ static struct SyncAllNowActionHandler_t : public action_handler_t
 	}
 } g_SyncAllNowActionHandler;
 
+
+class PingThread : public QThread
+{
+	std::string host;
+	uint16_t port;
+public:
+	PingThread(const std::string& host_, uint16_t port_)
+		: host(host_)
+		, port(port_)
+	{}
+
+	void run() override
+	{
+		QString error;
+		bool ok = Labeless::testConnect(host, port, error);
+		QMetaObject::invokeMethod(&Labeless::instance(), "onTestConnectFinished", Qt::QueuedConnection,
+			Q_ARG(bool, ok),
+			Q_ARG(QString, error));
+	}
+};
 
 static const QString kLabelessTitle = "Labeless";
 static const std::string kAPIEnumName = "OLD_API_EXTERN_CONSTS";
@@ -751,7 +775,7 @@ RpcDataPtr Labeless::addRpcData(RpcDataPtr rpc, const QObject* receiver, const c
 	return rpc;
 }
 
-SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive /*= true*/)
+SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive /*= true*/, quint32 recvtimeout /*= 30 * 60 * 1000*/)
 {
 	if (host.empty() || !port)
 		return INVALID_SOCKET;
@@ -795,19 +819,21 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 				break;
 			}
 		}
-#ifdef __NT__
-		const quint32 recvTimeout = 30 * 60 * 1000;
-#elif defined(__unix__) || defined(__linux__)
-		timeval recvTimeout;
-		recvTimeout.tv_usec = 500000;
- 		recvTimeout.tv_sec = 30 * 60;
-#endif // __NT__
-		if (SOCKET_ERROR == ::setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&recvTimeout), sizeof(recvTimeout)))
+		if (recvtimeout)
 		{
-			errorMsg = QString("%1: setsockopt(SO_RCVTIMEO) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
-			break;
+#ifdef __NT__
+			const quint32 recvTimeout = recvtimeout;
+#elif defined(__unix__) || defined(__linux__)
+			timeval recvTimeout;
+			recvTimeout.tv_usec = 500000;
+			recvTimeout.tv_sec = recvtimeout / 1000;
+#endif // __NT__
+			if (SOCKET_ERROR == ::setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&recvTimeout), sizeof(recvTimeout)))
+			{
+				errorMsg = QString("%1: setsockopt(SO_RCVTIMEO) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				break;
+			}
 		}
-
 		if (keepAlive)
 		{
 #ifdef __NT__
@@ -1746,8 +1772,20 @@ void Labeless::onTestConnectRequested()
 		return;
 	Settings tmpSettings;
 	sd->getSettings(tmpSettings);
-	QString error;
-	if (testConnect(tmpSettings.host, tmpSettings.port, error))
+	auto host = tmpSettings.host;
+	auto port = tmpSettings.port;
+
+	show_wait_box("HIDECANCEL\nChecking the connection to %s:%hu...", host.c_str(), port);
+
+	PingThread* const pt = new PingThread(host, port);
+	connect(pt, SIGNAL(finished()), pt, SLOT(deleteLater()));
+	pt->start();
+}
+
+void Labeless::onTestConnectFinished(bool ok, const QString& error)
+{
+	hide_wait_box();
+	if (ok)
 		QMessageBox::information(hlp::findIDAMainWindow(), kLabelessTitle, tr("Successfully connected!"));
 	else
 		QMessageBox::warning(hlp::findIDAMainWindow(), kLabelessTitle, tr("Test failed, error:\n%1").arg(error));
@@ -1756,7 +1794,7 @@ void Labeless::onTestConnectRequested()
 bool Labeless::testConnect(const std::string& host, uint16_t port, QString& errorMsg)
 {
 	errorMsg.clear();
-	SOCKET s = connectToHost(host, port, errorMsg, false);
+	SOCKET s = connectToHost(host, port, errorMsg, false, 0);
 	if (INVALID_SOCKET == s)
 	{
 		if (errorMsg.isEmpty())

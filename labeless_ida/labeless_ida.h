@@ -86,6 +86,8 @@ public:
 
 	inline bool isShowAllResponsesInLog() const { return m_ShowAllResponsesInLog; }
 
+	static bool testConnect(const std::string& host, uint16_t port, QString& errorMsg);
+
 	static int idaapi ui_callback(void* /*user_data*/, int notification_code, va_list va);
 	static int idaapi idp_callback(void* /*user_data*/, int notification_code, va_list va);
 	static int idaapi idb_callback(void* /*user_data*/, int notification_code, va_list va);
@@ -116,11 +118,10 @@ public slots:
 	void onShowRemotePythonExecutionViewRequested();
 	void onTestConnectRequested();
 	void onLogMessage(const QString& message, const QString& prefix);
+	void onTestConnectFinished(bool ok, const QString& error);
 
 private:
-	static SOCKET connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive = true);
-
-	static bool testConnect(const std::string& host, uint16_t port, QString& errorMsg);
+	static SOCKET connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive = true, quint32 recvtimeout = 30 * 60 * 1000);
 
 	void enableRunScriptButton(bool enabled);
 
