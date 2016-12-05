@@ -77,6 +77,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->chIDAComments->setChecked(settings.commentsSync.testFlag(Settings::CS_IDAComment));
 	m_UI->chFuncLocalVars->setChecked(settings.commentsSync.testFlag(Settings::CS_LocalVar));
 	m_UI->chFuncNameAsComment->setChecked(settings.commentsSync.testFlag(Settings::CS_FuncNameAsComment));
+	m_UI->chFuncLocalVarsAll->setChecked(settings.commentsSync.testFlag(Settings::CS_LocalVarAll));
 
 	QLabel* const lVer = new QLabel(m_UI->tabCommon);
 	lVer->setText(QString("v %1").arg(LABELESS_VER_STR));
@@ -179,6 +180,8 @@ void SettingsDialog::getSettings(Settings& result)
 		result.commentsSync |= Settings::CS_LocalVar;
 	if (m_UI->chFuncNameAsComment->isChecked())
 		result.commentsSync |= Settings::CS_FuncNameAsComment;
+	if (m_UI->chFuncLocalVarsAll->isChecked())
+		result.commentsSync |= Settings::CS_LocalVarAll;
 }
 
 void SettingsDialog::changeEvent(QEvent *e)
@@ -246,12 +249,12 @@ bool SettingsDialog::validate() const
 	const QString hostOrIP = m_UI->cbOllyIP->currentText();
 	if (!kRxIpAddress.exactMatch(hostOrIP) && !kRxHostname.exactMatch(hostOrIP))
 	{
-		info(tr("Invalid Olly's hostname/IP address entered").toStdString().c_str());
+		info(tr("Invalid debugger's hostname/IP address entered").toStdString().c_str());
 		return false;
 	}
 	if (m_UI->sbOllyPort->value() <= 0 || m_UI->sbOllyPort->value() >= UINT16_MAX)
 	{
-		info(tr("Invalid Olly's Port entered").toStdString().c_str());
+		info(tr("Invalid debugger's Port entered").toStdString().c_str());
 		return false;
 	}
 
@@ -475,6 +478,11 @@ void SettingsDialog::on_bCheckForUpdates_clicked()
 				.arg(ri.tag)
 				.arg(ri.name)
 				.arg(ri.url));
+}
+
+void SettingsDialog::on_chFuncLocalVarsAll_toggled(bool v)
+{
+	m_UI->chFuncLocalVars->setEnabled(!v);
 }
 
 bool SettingsDialog::getLightPalette(PythonPalette& result) const

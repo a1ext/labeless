@@ -162,7 +162,8 @@ struct Settings
 		CS_Disabled				= 0,
 		CS_IDAComment			= 1 << 0, // means repeatable and non-repeatable
 		CS_LocalVar				= 1 << 1,
-		CS_FuncNameAsComment	= 1 << 2
+		CS_FuncNameAsComment	= 1 << 2,
+		CS_LocalVarAll			= 1 << 3
 	};
 	Q_DECLARE_FLAGS(CommentSyncFlags, CommentsSync);
 

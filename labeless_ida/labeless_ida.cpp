@@ -386,14 +386,15 @@ void Labeless::onSyncronizeAllRequested()
 	if (!labelPoints.empty())
 		addLabelsSyncData(labelPoints);
 
-	if (m_Settings.commentsSync.testFlag(Settings::CS_LocalVar))
+	const auto allLocalVars = m_Settings.commentsSync.testFlag(Settings::CS_LocalVarAll);
+	if (m_Settings.commentsSync.testFlag(Settings::CS_LocalVar) || allLocalVars)
 	{
 		qstring memberName;
 		strpath_t path;
 
 		for (size_t i = 0; i < funcCnt; ++i)
 		{
-			func_t* fn = getn_func(i);
+			func_t* const fn = getn_func(i);
 			//struc_t* frame = get_frame(fn);
 
 			func_item_iterator_t fnItemIt(fn);
@@ -418,7 +419,7 @@ void Labeless::onSyncronizeAllRequested()
 					if (get_member_name2(&memberName, member->id) <= 0)
 						continue;
 
-					if (is_dummy_member_name(memberName.c_str()))
+					if (is_dummy_member_name(memberName.c_str()) && !allLocalVars)
 						continue;
 
 					if (memberName == kReturnAddrStackStructFieldName)
@@ -438,8 +439,8 @@ void Labeless::onSyncronizeAllRequested()
 						}
 					}
 
-					// non-structs variable names is skipped
-					//fnJoinComment(ea, memberName.c_str());
+					if (allLocalVars)
+						fnJoinComment(ea, memberName.c_str());
 				}
 			}
 		}

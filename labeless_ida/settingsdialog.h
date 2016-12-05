@@ -62,6 +62,7 @@ private slots:
 	void on_spbFontPointSize_valueChanged(int v);
 	void on_spbTabWidth_valueChanged(int v);
 	void on_bCheckForUpdates_clicked();
+	void on_chFuncLocalVarsAll_toggled(bool v);
 
 private:
 	void setUpPalette();
