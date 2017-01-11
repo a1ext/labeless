@@ -1002,7 +1002,7 @@ void Labeless::onShowRemotePythonExecutionViewRequested()
 	if (m_EditorTForm)
 		switchto_tform(m_EditorTForm, true);
 	else
-		openPythonEditorForm(FORM_TAB | FORM_MENU | FORM_RESTORE);
+		openPythonEditorForm(FORM_TAB | FORM_MENU | FORM_RESTORE | FORM_QWIDGET | FORM_NOT_CLOSED_BY_ESC);
 }
 
 void Labeless::onRunScriptRequested()
@@ -1758,12 +1758,11 @@ void Labeless::addAPIConst(const AnalyzeExternalRefs::PointerData& pd)
 		msg("%s: op_enum() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
 }
 
-void Labeless::openPythonEditorForm(int options /*= 0*/)
+void Labeless::openPythonEditorForm(int options)
 {
-	Q_UNUSED(options);
 	HWND hwnd = NULL;
 	m_EditorTForm = create_tform("PyOlly", &hwnd);
-	open_tform(m_EditorTForm, FORM_TAB | FORM_MENU | FORM_RESTORE | FORM_QWIDGET);
+	open_tform(m_EditorTForm, options);
 }
 
 void Labeless::onTestConnectRequested()
