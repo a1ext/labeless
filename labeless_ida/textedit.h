@@ -12,6 +12,7 @@
 #include <QTextEdit>
 
 QT_FORWARD_DECLARE_CLASS(QCompleter)
+QT_FORWARD_DECLARE_CLASS(QStringListModel)
 
 class Highlighter;
 struct PythonPalette;
@@ -38,9 +39,12 @@ protected:
 
 private:
 	QString textUnderCursor() const;
+	QString textTillCursor() const;
 
 private:
 	QPointer<Highlighter> m_Highlighter;
 	QPointer<QCompleter> m_Completer;
+	QPointer<QStringListModel> m_CompletionModel;
+	QStringList m_InternalNames;
 };
 

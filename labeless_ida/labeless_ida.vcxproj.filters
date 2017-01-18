@@ -80,6 +80,9 @@
     <ClInclude Include="palette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="jedi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="labeless_ida.cpp">
@@ -245,6 +248,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="idastorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jedi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "hlp.h"
 #include "labeless_ida.h"
 #include "../common/version.h"
+#include "jedi.h"
 
 #if defined(__unix__) || defined(__linux__)
 #include <string.h>
@@ -33,6 +34,14 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/io/coded_stream.h>
 
+// kludge to avoid link with debug version of python27
+#ifdef _DEBUG
+#  undef _DEBUG
+#  include <Python.h>
+#  define _DEBUG
+#else
+#  include <Python.h>
+#endif // _DEBUG
 
 #undef max // fix for std::numeric_limits<>::max()
 
@@ -45,7 +54,6 @@ static const std::string base64_chars =
 	"abcdefghijklmnopqrstuvwxyz"
 	"0123456789+/";
 
-static const std::string kPython = "python";
 static const std::string kExternKeyword = "__extern__";
 static const std::string kResultKeyword = "__result__";
 static const std::string kResultStrKeyword = "__result_str__";
@@ -287,9 +295,11 @@ QMainWindow* findIDAMainWindow()
 	return nullptr;
 }
 
-bool initIDAPython()
+namespace idapython {
+
+bool init()
 {
-	const extlang_t* elng = find_extlang_by_name(kPython.c_str());
+	const extlang_t* elng = find_extlang_by_name(PYTHON_EXTLANG_NAME);
 	if (!elng)
 	{
 		msg("%s: python extlang not found\n", __FUNCTION__);
@@ -306,12 +316,18 @@ bool initIDAPython()
 		return false;
 	}
 
+	QString error;
+	if (!jedi::init_completer(elng, error))
+	{
+		msg("Labeless: Unable to import `jedi` python module, auto-completion and intellisence won't be available in the python editors\n");
+	}
+
 	return true;
 }
 
-bool runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error)
+bool runScript(const std::string& script, std::string& externObj, std::string& error)
 {
-	const extlang_t* elng = find_extlang_by_name(kPython.c_str());
+	const extlang_t* elng = find_extlang_by_name(PYTHON_EXTLANG_NAME);
 	if (!elng)
 	{
 		msg("%s: Python extlang not found\n", __FUNCTION__);
@@ -342,9 +358,9 @@ bool runIDAPythonScript(const std::string& script, std::string& externObj, std::
 	return true;
 }
 
-bool setIDAPythonResultObject(const std::string& obj, std::string& error)
+bool setResultObject(const std::string& obj, std::string& error)
 {
-	const extlang_t* elng = find_extlang_by_name(kPython.c_str());
+	const extlang_t* elng = find_extlang_by_name(PYTHON_EXTLANG_NAME);
 	if (!elng)
 	{
 		msg("%s: Python extlang not found\n", __FUNCTION__);
@@ -376,6 +392,77 @@ bool setIDAPythonResultObject(const std::string& obj, std::string& error)
 	return true;
 }
 
+} // idapython
+
+namespace python {
+
+bool init(QString& error)
+{
+	Py_InteractiveFlag = 0; // ??
+
+	Py_InitializeEx(0);
+
+	if (!Py_IsInitialized())
+	{
+		error = "Cannot initialize Python";
+		return false;
+	}
+	PyEval_InitThreads();
+
+	// PyRun_SimpleString("import site");
+
+	return true;
+}
+
+namespace {
+
+DWORD pyExecExceptionFilter(DWORD code, _EXCEPTION_POINTERS* ep)
+{
+	// FIXME
+	/*PyObject* msg = PyString_FromFormat("An exception occurred, code: 0x%x", code);
+	stdErrHandler(nullptr, msg);	 
+	Py_XDECREF(msg);*/
+	return EXCEPTION_EXECUTE_HANDLER;
+}
+
+} // anonymous
+
+bool safeRunString(const std::string& script, bool& exceptionOccured, std::string& error)
+{
+	bool rv = true;
+	exceptionOccured = false;
+	error.clear();
+
+	__try
+	{
+		PyObject* m = PyImport_AddModule("__main__");
+		if (!m)
+			return false;
+		PyObject* d = PyModule_GetDict(m);
+
+		PyObject* v = PyRun_StringFlags(script.c_str(), Py_file_input, d, d, NULL);
+		if (v == NULL)
+		{
+			PyErr_Print();
+			return false;
+		}
+
+		rv &= true;
+
+
+		Py_DECREF(v);
+		if (Py_FlushLine())
+			PyErr_Clear();
+	}
+	__except (pyExecExceptionFilter(GetExceptionCode(), GetExceptionInformation()))
+	{
+		exceptionOccured = true;
+		return false;
+	}
+	return rv;
+}
+
+} // python
 
 namespace protobuf {
 
@@ -521,7 +608,7 @@ static const std::string kGetUrlSTMT = "str(j['html_url'])";
 
 bool getLatestRelease(ReleaseInfo& ri, std::string& error)
 {
-	const extlang_t* elng = find_extlang_by_name(kPython.c_str());
+	const extlang_t* elng = find_extlang_by_name(PYTHON_EXTLANG_NAME);
 	if (!elng)
 	{
 		msg("%s: Python extlang not found\n", __FUNCTION__);

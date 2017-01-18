@@ -135,6 +135,7 @@ private:
 	qstring getNewNameOfEntry() const;
 
 	bool initIDAPython();
+	bool initPython();
 
 	Settings loadSettings();
 	void storeSettings();

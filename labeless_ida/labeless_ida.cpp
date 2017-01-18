@@ -1015,7 +1015,7 @@ void Labeless::onRunScriptRequested()
 	if (!idaScript.empty())
 	{
 		std::string errorMsg;
-		if (!hlp::runIDAPythonScript(idaScript, externObj, errorMsg))
+		if (!hlp::idapython::runScript(idaScript, externObj, errorMsg))
 		{
 			m_PyOllyView->prependStdoutLog(QString("runIDAPythonScript() failed with error: %1\n")
 				.arg(QString::fromStdString(errorMsg)));
@@ -1138,7 +1138,7 @@ void Labeless::onRunPythonScriptFinished()
 	if (req->d.ollyResultIsSet)
 	{
 		std::string error;
-		if (!hlp::setIDAPythonResultObject(req->d.ollyResult, error))
+		if (!hlp::idapython::setResultObject(req->d.ollyResult, error))
 			msg("%s: setIDAPythonResultObject() failed with error: %s\n", __FUNCTION__, error.c_str());
 	}
 }
@@ -2351,7 +2351,7 @@ void Labeless::onKeepAndImportRequested()
 
 bool Labeless::initIDAPython()
 {
-	return hlp::initIDAPython();
+	return hlp::idapython::init();
 }
 
 void Labeless::onLogMessage(const QString& message, const QString& prefix)

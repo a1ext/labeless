@@ -275,3 +275,5 @@ typedef std::unordered_map<uint64_t, std::string> ExternRefDataMap;
 #if !defined(__NT__) && !defined(__unix__) && !defined(__unix__)
 #error "WIN32 and Linux/Unix platforms are supported"
 #endif
+
+#define PYTHON_EXTLANG_NAME "python"

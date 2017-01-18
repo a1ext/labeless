@@ -21,6 +21,8 @@
 #include "globalsettingsmanager.h"
 #include "pythonpalettemanager.h"
 #include "../common/version.h"
+#include "jedi.h"
+
 
 namespace {
 
@@ -90,10 +92,15 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->tw->setCornerWidget(lVer);
 	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
+	const bool jediAvailable = jedi::is_available();
+	m_UI->lbJediStatus->setText(QString("<p style=\"color: %1\">%2</p>").arg(jediAvailable ? "green": "red").arg(jediAvailable ? tr("available") : tr("not available")));
+
 	setUpPalette();
 	//adjustSize();
 	setMaximumSize(size());
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+	m_UI->tw->setCurrentIndex(0);
 }
 
 SettingsDialog::~SettingsDialog()

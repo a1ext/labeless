@@ -38,10 +38,22 @@ ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames);
 bool isFuncStart(ea_t ea);
 QMainWindow* findIDAMainWindow();
 
-bool initIDAPython();
-bool runIDAPythonScript(const std::string& script, std::string& externObj, std::string& error);
-bool setIDAPythonResultObject(const std::string& obj, std::string& error);
+namespace idapython {
 
+bool init();
+bool runScript(const std::string& script, std::string& externObj, std::string& error);
+bool setResultObject(const std::string& obj, std::string& error);
+
+} // idapython
+
+
+namespace python {
+
+// direct Python bindings
+bool init(QString& error);
+bool safeRunString(const std::string& script, bool& exceptionOccured, std::string& error);
+
+} // python
 
 namespace protobuf {
 
