@@ -18,7 +18,7 @@
 #include <QButtonGroup>
 #include <QMenu>
 
-#include "hlp.h"
+#include "util/util_ida.h"
 
 namespace {
 
@@ -192,7 +192,7 @@ void ChooseMemoryDialog::on_twMemoryMap_customContextMenuRequested(const QPoint&
 		r.protect = PAGE_EXECUTE_READWRITE;
 		r.forceProtect = true;
 
-		m_UI->twMemoryMap->item(row, COL_PROTECT)->setText(QString::fromStdString(hlp::memoryProtectToStr(m_MemMap[row].protect)));
+		m_UI->twMemoryMap->item(row, COL_PROTECT)->setText(util::ida::memoryProtectToStr(m_MemMap[row].protect));
 	}
 }
 
@@ -308,7 +308,7 @@ void ChooseMemoryDialog::fillView()
 		m_UI->twMemoryMap->setItem(row, COL_BASE, new QTableWidgetItem(ollyStyleFormatHex(mr.base)));
 		m_UI->twMemoryMap->setItem(row, COL_SIZE, new QTableWidgetItem(ollyStyleFormatHex(mr.size)));
 		m_UI->twMemoryMap->setItem(row, COL_OWNER, new QTableWidgetItem(QString::fromStdString(mr.name)));
-		m_UI->twMemoryMap->setItem(row, COL_PROTECT, new QTableWidgetItem(QString::fromStdString(hlp::memoryProtectToStr(mr.protect))));
+		m_UI->twMemoryMap->setItem(row, COL_PROTECT, new QTableWidgetItem(util::ida::memoryProtectToStr(mr.protect)));
 	}
 	m_UI->twMemoryMap->horizontalHeader()->setStretchLastSection(true);
 	m_UI->twMemoryMap->adjustSize();

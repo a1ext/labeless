@@ -229,12 +229,22 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_jedicompletionworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_labeless_ida.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_pyollyview.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_pysignaturetooltip.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
@@ -259,6 +269,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_jedicompletionworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_pysignaturetooltip.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_choosememorydialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
@@ -274,6 +294,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_jedicompletionworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_labeless_ida.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
@@ -283,6 +308,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_pysignaturetooltip.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_rpcdata.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
@@ -319,6 +349,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_jedicompletionworker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_labeless_ida.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
@@ -328,6 +363,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pysignaturetooltip.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcdata.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">true</ExcludedFromBuild>
@@ -401,14 +441,62 @@
     <ClCompile Include="idadump.cpp" />
     <ClCompile Include="idastorage.cpp" />
     <ClCompile Include="jedi.cpp" />
+    <ClCompile Include="jedicompletionworker.cpp" />
+    <ClCompile Include="pysignaturetooltip.cpp" />
     <ClCompile Include="pythonpalettemanager.cpp" />
     <ClCompile Include="settingsdialog.cpp" />
     <ClCompile Include="textedit.cpp" />
     <ClCompile Include="types.cpp" />
+    <ClCompile Include="util\util_ida.cpp" />
+    <ClCompile Include="util\util_idapython.cpp" />
+    <ClCompile Include="util\util_net.cpp" />
+    <ClCompile Include="util\util_protobuf.cpp" />
+    <ClCompile Include="util\util_python.cpp" />
     <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_choosememorydialog.h" />
     <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_settingsdialog.h" />
     <ClInclude Include="..\bin\src\GeneratedFiles\Release\ui_pyollyview.h" />
     <ClInclude Include="..\common\cpp\rpc.pb.h" />
+    <CustomBuild Include="jedicompletionworker.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing jedicompletionworker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing jedicompletionworker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets" "-I$(QTDIR)\..\msvc2015_32\qtbase\include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing jedicompletionworker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing jedicompletionworker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\Python27\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets" "-I$(QTDIR)\..\msvc2015_32\qtbase\include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <CustomBuild Include="pysignaturetooltip.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">Moc%27ing pysignaturetooltip.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">Moc%27ing pysignaturetooltip.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D__X64__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets" "-I$(QTDIR)\..\msvc2015_32\qtbase\include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing pysignaturetooltip.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-Ie:\Qt\4.8.4_msvc2010\include\QtCore" "-Ie:\Qt\4.8.4_msvc2010\include\QtGui" "-Ie:\Qt\4.8.4_msvc2010\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing pysignaturetooltip.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -D_WINDLL -D_MBCS "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\Python27\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets" "-I$(QTDIR)\..\msvc2015_32\qtbase\include" "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
+    <ClInclude Include="util\util_ida.h" />
+    <ClInclude Include="util\util_idapython.h" />
+    <ClInclude Include="util\util_net.h" />
+    <ClInclude Include="util\util_protobuf.h" />
+    <ClInclude Include="util\util_python.h" />
     <CustomBuild Include="highlighter.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing highlighter.h...</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing highlighter.h...</Message>
@@ -464,7 +552,6 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="externsegdata.h" />
-    <ClInclude Include="hlp.h" />
     <CustomBuild Include="labeless_ida.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc120|Win32'">Moc%27ing labeless_ida.h...</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release_vc140|Win32'">Moc%27ing labeless_ida.h...</Message>
@@ -623,7 +710,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_vc140_x64|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="hlp.cpp" />
     <ClCompile Include="labeless_ida.cpp" />
     <ClCompile Include="pyollyview.cpp" />
     <ClCompile Include="rpcdata.cpp" />

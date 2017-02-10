@@ -10,7 +10,7 @@
 #include <sstream>
 #include <QFile>
 
-#include "../hlp.h"
+#include "../util/util_protobuf.h"
 #include "../rpcdata.h"
 #include "../../common/cpp/rpc.pb.h"
 
@@ -196,7 +196,7 @@ bool GetMemoryMapReq::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::GetMemoryMapResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
 			msg("%s: rpc::GetMemoryMapResult::ParseFromString() failed\n", __FUNCTION__);
 			return false;
@@ -257,7 +257,7 @@ bool ReadMemoryRegions::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::ReadMemoryRegionsResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
 			msg("%s: rpc::ReadMemoryRegionsResult::ParseFromString() failed\n", __FUNCTION__);
 			return false;
@@ -327,7 +327,7 @@ bool AnalyzeExternalRefs::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::AnalyzeExternalRefsResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
 			msg("%s: rpc::AnalyzeExternalRefsResult::ParseFromString() failed\n", __FUNCTION__);
 			return false;
@@ -408,7 +408,7 @@ bool CheckPEHeaders::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::CheckPEHeadersResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
 			msg("%s: rpc::CheckPEHeadersResult::ParseFromString() failed\n", __FUNCTION__);
 			return false;
@@ -470,7 +470,7 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::GetBackendInfoResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
 			msg("%s: rpc::GetBackendInfo::ParseFromString() failed\n", __FUNCTION__);
 			return false;

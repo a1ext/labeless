@@ -42,15 +42,15 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{3a299ee3-a64e-4c0b-89b3-c97a3219c3b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sync\sync.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hlp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\common\cpp\rpc.pb.h">
@@ -83,6 +83,21 @@
     <ClInclude Include="jedi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="util\util_python.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_idapython.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_net.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_ida.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_protobuf.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="labeless_ida.cpp">
@@ -92,9 +107,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sync\sync.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hlp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\common\cpp\rpc.pb.cc">
@@ -253,6 +265,51 @@
     <ClCompile Include="jedi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="util\util_python.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_idapython.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_net.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_ida.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_protobuf.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="jedicompletionworker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_jedicompletionworker.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_jedicompletionworker.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_jedicompletionworker.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_jedicompletionworker.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
+    </ClCompile>
+    <ClCompile Include="pysignaturetooltip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120_x64\moc_pysignaturetooltip.cpp">
+      <Filter>Generated Files\Release_vc120_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pysignaturetooltip.cpp">
+      <Filter>Generated Files\Release_vc140_x64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc120\moc_pysignaturetooltip.cpp">
+      <Filter>Generated Files\Release_vc120</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140\moc_pysignaturetooltip.cpp">
+      <Filter>Generated Files\Release_vc140</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="labeless_ida.h">
@@ -295,6 +352,12 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="globalsettingsmanager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="jedicompletionworker.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="pysignaturetooltip.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

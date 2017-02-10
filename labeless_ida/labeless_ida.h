@@ -24,11 +24,19 @@
 #include "rpcdata.h"
 #include "idadump.h"
 
+// fwd
 QT_FORWARD_DECLARE_CLASS(QAction)
 QT_FORWARD_DECLARE_CLASS(QMainWindow)
 struct form_actions_t;
 
 class PyOllyView;
+
+namespace jedi {
+struct State;
+struct Result;
+struct Request;
+} // jedi
+
 
 class Labeless : public QObject
 {
@@ -36,8 +44,8 @@ class Labeless : public QObject
 
 	Labeless();
 	~Labeless();
-	Labeless(const Labeless&); // TODO: = delete;
-	Labeless& operator=(const Labeless&); // TODO: = delete;
+	Labeless(const Labeless&) = delete;
+	Labeless& operator=(const Labeless&) = delete;
 public:
 	enum HelperMsg
 	{
@@ -119,6 +127,8 @@ public slots:
 	void onTestConnectRequested();
 	void onLogMessage(const QString& message, const QString& prefix);
 	void onTestConnectFinished(bool ok, const QString& error);
+	void onAutoCompletionFinished();
+	void onAutoCompleteRequested(QSharedPointer<jedi::Request> r);
 
 private:
 	static SOCKET connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive = true, quint32 recvtimeout = 30 * 60 * 1000);
@@ -161,13 +171,16 @@ public:
 
 private:
 	friend class RpcThreadWorker;
+	friend class JediCompletionWorker;
 
+	// settings
 	mutable QMutex					m_ConfigLock;
 	Settings						m_Settings;
 	bool							m_SynchronizeAllNow;
 	size_t							m_LabelSyncOnRenameIfZero;
 	bool							m_ShowAllResponsesInLog;
 
+	// RPC network worker vars
 	QMutex							m_ThreadLock;
 	QPointer<QThread>				m_Thread;
 	QMutex							m_QueueLock;
@@ -175,6 +188,7 @@ private:
 
 	QWaitCondition					m_QueueCond;
 
+	// GUI
 	static TForm*					m_EditorTForm;
 	QPointer<PyOllyView>			m_PyOllyView;
 
@@ -184,4 +198,13 @@ private:
 	QList<IDADump>					m_DumpList;
 	QMap<uint64_t, LogItem>			m_LogItems;
 	QList<QAction*>					m_MenuActions;
+
+	// auto-completion vars
+	mutable QMutex					m_AutoCompletionLock;
+	QMutex							m_AutoCompletionThreadLock;
+	QPointer<QThread>				m_AutoCompletionThread;
+	QSharedPointer<jedi::Request>	m_AutoCompletionRequest;
+	QSharedPointer<jedi::Result>	m_AutoCompletionResult;
+	QSharedPointer<jedi::State>		m_AutoCompletionState;
+	QWaitCondition					m_AutoCompletionCond;
 };

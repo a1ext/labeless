@@ -1,7 +1,17 @@
+/* Labeless
+* by Aliaksandr Trafimchuk
+*
+* Source code released under
+* Creative Commons BY-NC 4.0
+* http://creativecommons.org/licenses/by-nc/4.0
+*/
+
 #pragma once
 
 #include <QList>
-#include <QString>
+#include <QMetaType>
+#include <QSharedPointer>
+#include <QStringList>
 
 struct extlang_t;
 
@@ -20,22 +30,42 @@ struct SignatureMatch
 	QString name;
 	int argIndex;
 	FuncArgList args;
+	QString rawDoc;
 };
 
 typedef QList<SignatureMatch> SignatureMatchList;
 
+struct State
+{
+	enum StateType
+	{
+		RS_DONE,
+		RS_ASKED,
+		RS_FINISHED
+	};
+	StateType state = RS_DONE;
 
-bool init_completer(const extlang_t* elng, QString& error);
+	inline bool isValid() const	{ return state == RS_ASKED; }
+	inline bool isFinished() const { return state == RS_FINISHED; }
+};
 
-bool is_available();
+struct Request
+{
+	QString script;
+	int zline = -1;
+	int zcol = -1;
+	
+	QObject* rcv = nullptr;
+};
 
-bool get_completions(const QString& script,
-	int zline,
-	int zcol,
-	QStringList& completions,
-	SignatureMatchList& signatureMatches,
-	QString& error);
-
+struct Result
+{
+	QStringList completions;
+	SignatureMatchList sigMatches;
+};
 
 } // jedi
+
+Q_DECLARE_METATYPE(QSharedPointer<jedi::Request>)
+Q_DECLARE_METATYPE(QSharedPointer<jedi::Result>)
 

@@ -10,27 +10,35 @@
 #include "types.h"
 #include "highlighter.h"
 #include "pythonpalettemanager.h"
+#include "util/util_python.h"
 #include "jedi.h"
+#include "labeless_ida.h"
+#include "pysignaturetooltip.h"
 
 #include <QAbstractItemView>
 #include <QCompleter>
 #include <QDateTime>
+#include <QDebug>
 #include <QElapsedTimer>
 #include <QFocusEvent>
 #include <QKeyEvent>
 #include <QScrollBar>
 #include <QStringListModel>
+#include <QTimer>
 
 
 TextEdit::TextEdit(QWidget* parent)
 	: QTextEdit(parent)
 	, m_CompletionModel(new QStringListModel(this))
+	, m_CompletionTimer(new QTimer(this))
+	, m_SignatureToolTip(new PySignatureToolTip(this))
+	, m_CompletionType(CT_Unknown)
 {
 	m_Highlighter = new Highlighter(document());
 	m_InternalNames
 		<< "__extern__" << "__result__" << "__result_str__";
 
-	if (!jedi::is_available())
+	if (!util::python::jedi::is_available())
 	{
 		m_InternalNames
 			<< "class" << "def" << "import" << "from" << "with" << "object" << "open";
@@ -44,6 +52,13 @@ TextEdit::TextEdit(QWidget* parent)
 	m_Completer->setMaxVisibleItems(15);
 	m_Completer->setWidget(this);
 	CHECKED_CONNECT(connect(m_Completer, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString))));
+
+	m_CompletionTimer->setSingleShot(true);
+	m_CompletionTimer->setInterval(1200);
+	CHECKED_CONNECT(connect(m_CompletionTimer, SIGNAL(timeout()), this, SLOT(onAutoCompletionRequested())));
+
+	CHECKED_CONNECT(connect(this, SIGNAL(autoCompleteThis(QSharedPointer<jedi::Request>)),
+			&Labeless::instance(), SLOT(onAutoCompleteRequested(QSharedPointer<jedi::Request>))));
 
 	setAcceptRichText(false);
 }
@@ -62,6 +77,18 @@ void TextEdit::insertCompletion(const QString& completion)
 	tc.removeSelectedText();
 	tc.insertText(completion);
 	setTextCursor(tc);
+}
+
+void TextEdit::onAutoCompletionRequested()
+{
+	QSharedPointer<jedi::Request> req(new jedi::Request);
+	req->script = textTillCursor();
+	// std::string s = req->script.toStdString();
+	QTextCursor tc = textCursor();
+	req->zline = tc.blockNumber();
+	req->zcol = tc.positionInBlock();
+
+	emit autoCompleteThis(req);
 }
 
 void TextEdit::focusInEvent(QFocusEvent* e)
@@ -92,8 +119,15 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
 {
 	static const int kMinCompletionPrefixLen = 1; // 3
 
-	if (m_Completer && m_Completer->popup()->isVisible()) {
-		switch (e->key()) {
+	if (m_CompletionTimer->isActive())
+		m_CompletionTimer->stop();
+
+	m_SignatureToolTip->hide();
+
+	if (m_Completer && m_Completer->popup()->isVisible())
+	{
+		switch (e->key())
+		{
 		case Qt::Key_Enter:
 		case Qt::Key_Return:
 		case Qt::Key_Escape:
@@ -123,70 +157,115 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
 	QString completionPrefix = textUnderCursor();
 
 	if (!isCompletionsRequested && (hasModifier || e->text().isEmpty() || completionPrefix.length() < kMinCompletionPrefixLen
-						|| eow.contains(e->text().right(1)))) {
+						|| eow.contains(e->text().right(1))))
+	{
 		m_Completer->popup()->hide();
 		return;
 	}
 
-	if (jedi::is_available())
+	if (util::python::jedi::is_available())
 	{
-		const QString textBeforeCursor = textTillCursor();
-		//std::string s = textBeforeCursor.toStdString();
-		QString error;
-		QTextCursor tc = textCursor();
-		const int row = tc.blockNumber();
-		const int col = tc.positionInBlock();
-		QStringList completions;
-		jedi::SignatureMatchList sigMatches;
-		msg("%s: -------------------------------------\n", __FUNCTION__);
-		QElapsedTimer t;
-		t.start();
-		const bool ok = jedi::get_completions(textBeforeCursor, row, col, completions, sigMatches, error);
-		const int nMsec = t.elapsed();
-		msg("%s: jedi::get_completions() took %s\n", __FUNCTION__, QDateTime::fromMSecsSinceEpoch(nMsec).toUTC().toString("hh:mm:ss.zzz").toStdString().c_str());
-		if (!ok)
+		m_CompletionType = isCallSignaturesRequested ? CT_CallSignature : CT_Completions;
+		if (isCompletionsRequested || isCallSignaturesRequested)
 		{
-			msg("%s: jedi::get_completions() failed\n", __FUNCTION__);
-			m_CompletionModel->setStringList(m_InternalNames);
+			// don't wait, just ask worker for completion
+			onAutoCompletionRequested();
 		}
 		else
 		{
-			QStringList signatureList;
-			if (!sigMatches.isEmpty())
-			{
-				for (const auto& sigMatch : sigMatches)
-				{
-					QStringList argList;
-					for (int i = 0; i < sigMatch.args.count(); ++i)
-					{
-						if (i == sigMatch.argIndex)
-							argList.append(QString("<b>%1</b>").arg(sigMatch.args.at(i).description));
-						else
-							argList.append(QString("%1").arg(sigMatch.args.at(i).description));
-					}
-					const QString qsig = QString("%1(%2)").arg(sigMatch.name).arg(argList.join(", "));
-					const std::string sig = qsig.toStdString();
-					signatureList.append(qsig);
-				}
-			}
-			// TODO: use signatureList
-			m_CompletionModel->setStringList(m_InternalNames + completions);
+			m_CompletionTimer->start();
 		}
 	}
-	if (completionPrefix != m_Completer->completionPrefix()) {
+	if (isCallSignaturesRequested)
+		return;
+
+	if (completionPrefix != m_Completer->completionPrefix())
+	{
 		m_Completer->setCompletionPrefix(completionPrefix);
 		m_Completer->popup()->setCurrentIndex(m_Completer->completionModel()->index(0, 0));
 	}
+	
 	QRect cr = cursorRect();
 	cr.setWidth(m_Completer->popup()->sizeHintForColumn(0)
 				+ m_Completer->popup()->verticalScrollBar()->sizeHint().width());
 	m_Completer->complete(cr);
 }
 
+void TextEdit::focusOutEvent(QFocusEvent *e)
+{
+	if (m_CompletionTimer->isActive())
+		m_CompletionTimer->stop();
+
+	m_SignatureToolTip->hide();
+
+	QTextEdit::focusOutEvent(e);
+}
+
+void TextEdit::mousePressEvent(QMouseEvent* e)
+{
+	m_SignatureToolTip->hide();
+	QTextEdit::mousePressEvent(e);
+}
+
+void TextEdit::mouseMoveEvent(QMouseEvent* e)
+{
+	m_SignatureToolTip->hide();
+	QTextEdit::mouseMoveEvent(e);
+}
+
 void TextEdit::colorSchemeChanged()
 {
 	auto palette = PythonPaletteManager::instance().palette();
 	setPalette(palette);
+}
+
+void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
+{
+	if (!hasFocus())
+		return;
+
+	m_SignatureToolTip->hide();
+
+	if (m_CompletionType == CT_CallSignature)
+	{
+		QStringList signatureList;
+		if (!r->sigMatches.isEmpty())
+		{
+			for (const auto& sigMatch : r->sigMatches)
+			{
+				QStringList argList;
+				for (int i = 0; i < sigMatch.args.count(); ++i)
+				{
+					if (i == sigMatch.argIndex)
+						argList.append(QString("<b>%1</b>").arg(sigMatch.args.at(i).description));
+					else
+						argList.append(QString("%1").arg(sigMatch.args.at(i).description));
+				}
+				QString qsig = QString("%1(%2)").arg(sigMatch.name).arg(argList.join(", "));
+				if (!sigMatch.rawDoc.isEmpty())
+				{
+					QStringList items = sigMatch.rawDoc.split(QRegExp("\\r|\\n"), QString::SkipEmptyParts);
+					qsig += "<br><br>" + items.join("<br>");
+				}
+				//const std::string sig = qsig.toStdString();
+				signatureList.append(qsig);
+			}
+			const QRect& cr = cursorRect();
+			m_SignatureToolTip->showText(signatureList.join('<br>'), mapToGlobal(cr.bottomLeft()));
+		}
+		return;
+	}
+
+	m_CompletionModel->setStringList(r->completions + m_InternalNames);
+
+	const QString& completionPrefix = textUnderCursor();
+	m_Completer->setCompletionPrefix(completionPrefix);
+	m_Completer->popup()->setCurrentIndex(m_Completer->completionModel()->index(0, 0));
+
+	QRect cr = cursorRect();
+	cr.setWidth(m_Completer->popup()->sizeHintForColumn(0)
+		+ m_Completer->popup()->verticalScrollBar()->sizeHint().width());
+	m_Completer->complete(cr);
 }
 
 bool TextEdit::asHighlightedHtml(QString& result)

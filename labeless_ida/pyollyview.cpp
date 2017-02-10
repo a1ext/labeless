@@ -116,9 +116,6 @@ void PyOllyView::setUpGUI()
 	int idx = m_UI->cbColorScheme->findText(scheme, static_cast<Qt::MatchFlags>(Qt::MatchExactly));
 	m_UI->cbColorScheme->setCurrentIndex(idx);
 
-	m_UI->horSplitter->setStretchFactor(0, 1);
-	m_UI->horSplitter->setStretchFactor(1, 2);
-
 	m_UI->vertSplitter->setStretchFactor(0, 3);
 	m_UI->vertSplitter->setStretchFactor(1, 1);
 
