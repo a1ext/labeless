@@ -26,6 +26,16 @@
 #include <QStringListModel>
 #include <QTimer>
 
+namespace {
+
+static const QString kkwExtern = "__extern__";
+static const QString kkwResult = "__result__";
+static const QString kkwResultStr = "__result_str__";
+static const QStringList kAdditionalKeyWords = QStringList()
+	<< "class" << "def" << "import" << "from" << "with" << "object" << "open";
+
+} // anonymous
+
 
 TextEdit::TextEdit(QWidget* parent)
 	: QTextEdit(parent)
@@ -33,15 +43,15 @@ TextEdit::TextEdit(QWidget* parent)
 	, m_CompletionTimer(new QTimer(this))
 	, m_SignatureToolTip(new PySignatureToolTip(this))
 	, m_CompletionType(CT_Unknown)
+	, m_IsIDASide(false)
 {
 	m_Highlighter = new Highlighter(document());
 	m_InternalNames
-		<< "__extern__" << "__result__" << "__result_str__";
+		<< kkwExtern << kkwResult;
 
 	if (!util::python::jedi::is_available())
 	{
-		m_InternalNames
-			<< "class" << "def" << "import" << "from" << "with" << "object" << "open";
+		m_InternalNames += kAdditionalKeyWords;
 	}
 	m_CompletionModel->setStringList(m_InternalNames);
 
@@ -56,10 +66,7 @@ TextEdit::TextEdit(QWidget* parent)
 	m_CompletionTimer->setSingleShot(true);
 	m_CompletionTimer->setInterval(1200);
 	CHECKED_CONNECT(connect(m_CompletionTimer, SIGNAL(timeout()), this, SLOT(onAutoCompletionRequested())));
-
-	CHECKED_CONNECT(connect(this, SIGNAL(autoCompleteThis(QSharedPointer<jedi::Request>)),
-			&Labeless::instance(), SLOT(onAutoCompleteRequested(QSharedPointer<jedi::Request>))));
-
+	
 	setAcceptRichText(false);
 }
 
@@ -231,7 +238,7 @@ void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
 		QStringList signatureList;
 		if (!r->sigMatches.isEmpty())
 		{
-			for (const auto& sigMatch : r->sigMatches)
+			foreach(const auto& sigMatch, r->sigMatches)
 			{
 				QStringList argList;
 				for (int i = 0; i < sigMatch.args.count(); ++i)
@@ -251,11 +258,13 @@ void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
 				signatureList.append(qsig);
 			}
 			const QRect& cr = cursorRect();
-			m_SignatureToolTip->showText(signatureList.join('<br>'), mapToGlobal(cr.bottomLeft()));
+			m_SignatureToolTip->showText(signatureList.join("<br>"), mapToGlobal(cr.bottomLeft()));
 		}
 		return;
 	}
 
+	msg("%s: (REMOVE ME) completions got: %s\n-------------------\n",
+		__FUNCTION__, r->completions.join("\n").toStdString().c_str());
 	m_CompletionModel->setStringList(r->completions + m_InternalNames);
 
 	const QString& completionPrefix = textUnderCursor();
@@ -286,4 +295,21 @@ void TextEdit::setPalette(const PythonPalette& p)
 
 	if (m_Highlighter)
 		m_Highlighter->setPalette(p);
+}
+
+void TextEdit::markAsIDASideEditor(bool v)
+{
+	m_IsIDASide = v;
+
+	if (m_IsIDASide)
+	{
+		m_InternalNames << kkwResultStr;
+		CHECKED_CONNECT(connect(this, SIGNAL(autoCompleteThis(QSharedPointer<jedi::Request>)),
+				&Labeless::instance(), SLOT(onAutoCompleteRequested(QSharedPointer<jedi::Request>))));
+	}
+	else
+	{
+		CHECKED_CONNECT(connect(this, SIGNAL(autoCompleteThis(QSharedPointer<jedi::Request>)),
+			&Labeless::instance(), SLOT(onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request>))));
+	}
 }

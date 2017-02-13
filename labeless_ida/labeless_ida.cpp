@@ -1454,7 +1454,7 @@ void Labeless::onReadMemoryRegionsFinished()
 	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
 	if (!pRD)
 	{
-		msg("\n");
+		msg("%s: invalid sender\n", __FUNCTION__);
 		return;
 	}
 	auto rmr = std::dynamic_pointer_cast<ReadMemoryRegions>(pRD->iCmd);
@@ -1771,6 +1771,37 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 }
 
+void Labeless::onAutoCompleteRemoteFinished()
+{
+	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
+	if (!pRD)
+	{
+		msg("%s: invalid sender\n", __FUNCTION__);
+		return;
+	}
+	auto acc = std::dynamic_pointer_cast<AutoCompleteCode>(pRD->iCmd);
+	if (!acc)
+	{
+		msg("%s: Invalid type of ICommand\n", __FUNCTION__);
+		return;
+	}
+
+	auto r = pRD->property("r").value<QSharedPointer<jedi::Request>>();
+	if (!r)
+	{
+		msg("%s: jedi::Request is null\n", __FUNCTION__);
+		return;
+	}
+	
+	if (!QMetaObject::invokeMethod(r->rcv, "onAutoCompleteFinished",
+		Qt::QueuedConnection,
+		Q_ARG(QSharedPointer<jedi::Result>, acc->jresult)))
+	{
+		msg("%s: QMetaObject::invokeMethod() failed\n", __FUNCTION__);
+		return;
+	}
+}
+
 void Labeless::addAPIConst(const AnalyzeExternalRefs::PointerData& pd)
 {
 	const auto ptrSize = targetPtrSize();
@@ -1848,8 +1879,8 @@ void Labeless::onAutoCompletionFinished()
 			return;
 		}
 	}
-	m_AutoCompletionRequest.reset();
-	m_AutoCompletionResult.reset();
+	m_AutoCompletionRequest.clear();
+	m_AutoCompletionResult.clear();
 	m_AutoCompletionState->state = jedi::State::RS_DONE;
 }
 
@@ -1865,6 +1896,19 @@ void Labeless::onAutoCompleteRequested(QSharedPointer<jedi::Request> r)
 	}
 	lock.unlock();
 	m_AutoCompletionCond.wakeOne();
+}
+
+void Labeless::onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r)
+{
+	// TODO: 
+	auto cmd = std::make_shared<AutoCompleteCode>();
+	cmd->source = r->script.toUtf8();
+	cmd->zline = r->zline;
+	cmd->zcol = r->zcol;
+	r->rcv = sender();
+	cmd->callSigsOnly = false; // FIXME
+	RpcDataPtr p = addRpcData(cmd, RpcReadyToSendHandler(), this, SLOT(onAutoCompleteRemoteFinished()));
+	p->setProperty("r", QVariant::fromValue(r));
 }
 
 bool Labeless::testConnect(const std::string& host, uint16_t port, QString& errorMsg)

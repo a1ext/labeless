@@ -43,7 +43,12 @@ struct State
 		RS_ASKED,
 		RS_FINISHED
 	};
-	StateType state = RS_DONE;
+
+	StateType state;
+
+	State()
+		: state(RS_DONE)
+	{}
 
 	inline bool isValid() const	{ return state == RS_ASKED; }
 	inline bool isFinished() const { return state == RS_FINISHED; }
@@ -52,10 +57,16 @@ struct State
 struct Request
 {
 	QString script;
-	int zline = -1;
-	int zcol = -1;
+	quint32 zline;
+	quint32 zcol;
 	
-	QObject* rcv = nullptr;
+	QObject* rcv;
+
+	Request()
+		: zline(0)
+		, zcol(0)
+		, rcv(nullptr)
+	{}
 };
 
 struct Result

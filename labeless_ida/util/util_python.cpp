@@ -32,13 +32,9 @@ DWORD pyExecExceptionFilter(DWORD code, _EXCEPTION_POINTERS* ep)
 // grabbed from https://github.com/idapython/src
 class gil_lock_t
 {
-private:
+	Q_DISABLE_COPY(gil_lock_t)
 	PyGILState_STATE state;
 
-private:
-	gil_lock_t(const gil_lock_t&) = delete;
-	gil_lock_t& operator=(const gil_lock_t&) = delete;
-	gil_lock_t&& operator=(gil_lock_t&&) = delete;
 public:
 	gil_lock_t()
 	{
@@ -53,11 +49,9 @@ public:
 
 class PyPTR
 {
-	PyPTR(const PyPTR&) = delete;
-	PyPTR& operator=(const PyPTR&) = delete;
-	PyPTR&& operator=(PyPTR&&) = delete;
+	Q_DISABLE_COPY(PyPTR)
 public:
-	explicit PyPTR(PyObject* o)
+	PyPTR(PyObject* o)
 		: m_o(o)
 	{
 	}
@@ -306,7 +300,7 @@ bool getQStringFromPyUnicode(PyObject* o, QString& rv)
 	if (!o || !PyUnicode_Check(o))
 		return false;
 
-	PyPTR pyUtf8Str{ PyUnicode_AsUTF8String(o) };
+	PyPTR pyUtf8Str = PyUnicode_AsUTF8String(o);
 	if (!pyUtf8Str)
 		return false;
 
@@ -337,14 +331,14 @@ QString getErrorInfo()
 		}
 		else if (val && PyUnicode_Check(val))
 		{
-			PyPTR pyUTF8str{ PyUnicode_AsUTF8String(val) };
+			PyPTR pyUTF8str = PyUnicode_AsUTF8String(val);
 			if (pyUTF8str && PyString_Check(pyUTF8str))
 				msg = QString::fromUtf8(PyString_AsString(pyUTF8str));
 		}
 	}
 	if (exc)
 	{
-		PyPTR tmp{PyObject_GetAttrString(exc, "__name__")};
+		PyPTR tmp = PyObject_GetAttrString(exc, "__name__");
 		rv = PyString_AsString(tmp);
 	}
 	if (!msg.isEmpty())
@@ -403,36 +397,36 @@ bool get_completions(const QString& script,
 
 	const QByteArray& ba = script.toUtf8();
 
-	PyPTR pySource { PyString_FromStringAndSize(ba.data(), ba.size())};
+	PyPTR pySource = PyString_FromStringAndSize(ba.data(), ba.size());
 	if (!pySource)
 	{
 		error = "Cannot create py`str` from passed script value\n" + getErrorInfo();
 		return false;
 	}
 
-	PyPTR pyLine { PyInt_FromLong(zline + 1) };
-	PyPTR pyColumn { PyInt_FromLong(zcol) };
+	PyPTR pyLine = PyInt_FromLong(zline + 1);
+	PyPTR pyColumn = PyInt_FromLong(zcol);
 
-	PyPTR pykwARGS { PyDict_New() };
+	PyPTR pykwARGS = PyDict_New();
 	PyDict_SetItemString(pykwARGS, "source", pySource);
 	PyDict_SetItemString(pykwARGS, "line", pyLine);
 	PyDict_SetItemString(pykwARGS, "column", pyColumn);
 
-	PyPTR pyARGS{ PyTuple_New(0) };
-	PyPTR pyJediClassInstance { PyObject_Call(pyJediScriptClass, pyARGS, pykwARGS) };
+	PyPTR pyARGS = PyTuple_New(0);
+	PyPTR pyJediClassInstance = PyObject_Call(pyJediScriptClass, pyARGS, pykwARGS);
 	if (!pyJediClassInstance)
 	{
 		error = "Cannot create a `jedi.Script` instance\n" + getErrorInfo();
 		return false;
 	}
 
-	PyPTR pyCompletionsFn { PyObject_GetAttrString(pyJediClassInstance, "completions") };
+	PyPTR pyCompletionsFn = PyObject_GetAttrString(pyJediClassInstance, "completions");
 	if (!pyCompletionsFn)
 	{
 		error = "Cannot get `jedi.Script.completions function\n" + getErrorInfo();
 		return false;
 	}
-	PyPTR pyCompletions{ PyObject_CallObject(pyCompletionsFn, NULL) };
+	PyPTR pyCompletions = PyObject_CallObject(pyCompletionsFn, NULL);
 	if (!pyCompletions || !PyList_Check(pyCompletions))
 	{
 		error = "Cannot get completions\n" + getErrorInfo();
@@ -450,19 +444,19 @@ bool get_completions(const QString& script,
 		}
 
 		QString completionStr;
-		PyPTR pyCompletion{ PyObject_GetAttrString(pyItem, "name") };
+		PyPTR pyCompletion = PyObject_GetAttrString(pyItem, "name");
 		if (getQStringFromPyUnicode(pyCompletion, completionStr))
 			completions.append(completionStr);
 	}
 
-	PyPTR pyCallSigsFn{ PyObject_GetAttrString(pyJediClassInstance, "call_signatures") };
+	PyPTR pyCallSigsFn = PyObject_GetAttrString(pyJediClassInstance, "call_signatures");
 	if (!pyCallSigsFn)
 	{
 		error = "Cannot get `jedi.Script.call_signatures` function\n" + getErrorInfo();
 		return false;
 	}
 
-	PyPTR pyCallSigList{ PyObject_CallObject(pyCallSigsFn, NULL) };
+	PyPTR pyCallSigList = PyObject_CallObject(pyCallSigsFn, NULL);
 	if (!pyCallSigList || !PyList_Check(pyCallSigList))
 	{
 		error = "Cannot get CALL signatures\n" + getErrorInfo();
@@ -479,21 +473,21 @@ bool get_completions(const QString& script,
 			return false;
 		}
 
-		signatureMatches.push_back({});
+		signatureMatches.push_back(::jedi::SignatureMatch());
 		::jedi::SignatureMatch& sm = signatureMatches.back();
 
 		do {
-			PyPTR pyType{ PyObject_GetAttrString(pyCS, "type") };
+			PyPTR pyType = PyObject_GetAttrString(pyCS, "type");
 			getQStringFromPyUnicode(pyType, sm.type);
 		} while (0);
 			
 		do {
-			PyPTR pyName{ PyObject_GetAttrString(pyCS, "name") };
+			PyPTR pyName = PyObject_GetAttrString(pyCS, "name");
 			getQStringFromPyUnicode(pyName, sm.name);
 		} while (0);
 
 		do {
-			PyPTR pyIndex{ PyObject_GetAttrString(pyCS, "index") };
+			PyPTR pyIndex = PyObject_GetAttrString(pyCS, "index");
 			if (!pyIndex)
 				break;
 
@@ -504,10 +498,10 @@ bool get_completions(const QString& script,
 		} while (0);
 
 		do {
-			PyPTR pyRawDoc{ PyObject_GetAttrString(pyCS, "raw_doc") };
+			PyPTR pyRawDoc = PyObject_GetAttrString(pyCS, "raw_doc");
 			if (!pyRawDoc || !PyUnicode_Check(pyRawDoc))
 				break;
-			PyPTR pyUtf8RawDoc{ PyUnicode_AsUTF8String(pyRawDoc) };
+			PyPTR pyUtf8RawDoc = PyUnicode_AsUTF8String(pyRawDoc);
 			if (!pyUtf8RawDoc)
 				break;
 			if (const char* crawDoc = PyString_AsString(pyUtf8RawDoc))
@@ -515,7 +509,7 @@ bool get_completions(const QString& script,
 		} while (0);
 
 		do {
-			PyPTR pyParams{ PyObject_GetAttrString(pyCS, "params") };
+			PyPTR pyParams = PyObject_GetAttrString(pyCS, "params");
 			if (!pyParams || !PyList_Check(pyParams.data()))
 				break;
 				
@@ -532,12 +526,12 @@ bool get_completions(const QString& script,
 				::jedi::FuncArg arg;
 
 				do {
-					PyPTR pyName{ PyObject_GetAttrString(pyParam, "name") };
+					PyPTR pyName = PyObject_GetAttrString(pyParam, "name");
 					getQStringFromPyUnicode(pyName, arg.name);
 				} while (0);
 
 				do {
-					PyPTR pyDescription{ PyObject_GetAttrString(pyParam, "description") };
+					PyPTR pyDescription = PyObject_GetAttrString(pyParam, "description");
 					getQStringFromPyUnicode(pyDescription, arg.description);
 				} while (0);
 
@@ -546,30 +540,6 @@ bool get_completions(const QString& script,
 			}
 		} while (0);
 	}
-
-	/*if (!pyJediClassInstance)
-	{
-		std::string err;
-		// TODO: check for error
-		PyObject *exc = 0, *val = 0, *tb = 0;
-
-		PyErr_Fetch(&exc, &val, &tb);
-		if (val)
-		{
-			if (auto errStr = PyString_AsString(val))
-			{
-				err = errStr;
-			}
-		}
-		if (tb)
-		{
-			pyTraceback_AsString(tb, err);
-			error = QString::fromStdString(err);
-		}
-		error += "\nCannot create `jedi.Script()`";
-		return false;
-	}*/
-
 
 	//PyObject_CallFunctionObjArgs()
 #if 0

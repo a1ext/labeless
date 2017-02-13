@@ -11,6 +11,8 @@
 #include <QPointer>
 #include <QTextEdit>
 
+#include "jedi.h"
+
 QT_FORWARD_DECLARE_CLASS(QCompleter)
 QT_FORWARD_DECLARE_CLASS(QStringListModel)
 QT_FORWARD_DECLARE_CLASS(QTimer)
@@ -19,10 +21,6 @@ class Highlighter;
 class PySignatureToolTip;
 struct PythonPalette;
 
-namespace jedi {
-struct Result;
-struct Request;
-} // jedi
 
 class TextEdit : public QTextEdit
 {
@@ -33,6 +31,8 @@ public:
 
 	bool asHighlightedHtml(QString& result);
 	void setPalette(const PythonPalette& p);
+	void markAsIDASideEditor(bool v);
+	inline bool isIDASideEditor() const { return m_IsIDASide; }
 
 signals:
 	void autoCompleteThis(QSharedPointer<jedi::Request>);
@@ -71,5 +71,7 @@ private:
 	QPointer<QTimer> m_CompletionTimer;
 	QPointer<PySignatureToolTip> m_SignatureToolTip;
 	CompletionType m_CompletionType;
+
+	bool m_IsIDASide;
 };
 

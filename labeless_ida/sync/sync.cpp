@@ -198,7 +198,7 @@ bool GetMemoryMapReq::parseResponse(QPointer<RpcData> rd)
 		rpc::GetMemoryMapResult result;
 		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::GetMemoryMapResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -259,7 +259,7 @@ bool ReadMemoryRegions::parseResponse(QPointer<RpcData> rd)
 		rpc::ReadMemoryRegionsResult result;
 		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::ReadMemoryRegionsResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s:util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -329,7 +329,7 @@ bool AnalyzeExternalRefs::parseResponse(QPointer<RpcData> rd)
 		rpc::AnalyzeExternalRefsResult result;
 		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::AnalyzeExternalRefsResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -410,7 +410,7 @@ bool CheckPEHeaders::parseResponse(QPointer<RpcData> rd)
 		rpc::CheckPEHeadersResult result;
 		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::CheckPEHeadersResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -472,7 +472,7 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 		rpc::GetBackendInfoResult result;
 		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::GetBackendInfo::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -495,6 +495,78 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 	catch (...)
 	{
 		msg("%s: Unable to parse GetBackendInfo response\n", __FUNCTION__);
+	}
+	return false;
+}
+
+bool AutoCompleteCode::serialize(QPointer<RpcData> rd) const
+{
+	rd->script.clear();
+	rpc::RpcRequest rpcRequest;
+	rpcRequest.set_request_type(rpc::RpcRequest::RPCT_AUTO_COMPLETE_CODE);
+
+	rpc::AutoCompleteCodeRequest* const request = rpcRequest.mutable_auto_complete_code_req();
+	request->set_source(source);
+	request->set_zline(zline);
+	request->set_zcol(zcol);
+	request->set_call_sig_only(callSigsOnly);
+
+	rd->script.clear();
+	rd->params = rpcRequest.SerializeAsString();
+	return true;
+}
+
+bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
+{
+	if (!ICommand::parseResponse(rd))
+		return false;
+	try
+	{
+		rpc::AutoCompleteCodeResult result;
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		{
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
+			return false;
+		}
+
+		const auto& completions = result.completions();
+		for (auto it = completions.begin(), end = completions.end(); it != end; ++it)
+		{
+			jresult->completions.append(QString::fromStdString(*it));
+		}
+
+		const auto& callSigs = result.call_sigs();
+		for (auto it = callSigs.begin(), end = callSigs.end(); it != end; ++it)
+		{
+			jedi::SignatureMatch sm;
+			if (it->has_cs_type())
+				sm.type = QString::fromStdString(it->cs_type());
+			sm.name = QString::fromStdString(it->name());
+			sm.argIndex = it->index();
+			if (it->has_raw_doc())
+				sm.rawDoc = QString::fromStdString(it->raw_doc());
+
+			const auto& params = it->params();
+			for (auto paramIt = params.begin(), paramEnd = params.end(); paramIt != paramEnd; ++paramIt)
+			{
+				jedi::FuncArg arg;
+				arg.name = QString::fromStdString(paramIt->name());
+				if (paramIt->has_description())
+					arg.description = QString::fromStdString(paramIt->description());
+				sm.args.append(arg);
+			}
+			jresult->sigMatches.append(sm);
+		}
+
+		return true;
+	}
+	catch (std::runtime_error e)
+	{
+		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
+	}
+	catch (...)
+	{
+		msg("%s: Unable to parse AutoCompleteCode response\n", __FUNCTION__);
 	}
 	return false;
 }

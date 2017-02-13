@@ -44,8 +44,7 @@ class Labeless : public QObject
 
 	Labeless();
 	~Labeless();
-	Labeless(const Labeless&) = delete;
-	Labeless& operator=(const Labeless&) = delete;
+	Q_DISABLE_COPY(Labeless);
 public:
 	enum HelperMsg
 	{
@@ -107,6 +106,7 @@ private slots:
 	void onCheckPEHeadersFinished();
 	void onReadMemoryRegionsFinished();
 	void onAnalyzeExternalRefsFinished();
+	void onAutoCompleteRemoteFinished();
 
 	void onSyncResultReady();
 	void onRpcRequestFailed(QString message);
@@ -129,6 +129,7 @@ public slots:
 	void onTestConnectFinished(bool ok, const QString& error);
 	void onAutoCompletionFinished();
 	void onAutoCompleteRequested(QSharedPointer<jedi::Request> r);
+	void onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r);
 
 private:
 	static SOCKET connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive = true, quint32 recvtimeout = 30 * 60 * 1000);

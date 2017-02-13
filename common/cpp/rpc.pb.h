@@ -57,6 +57,10 @@ class CheckPEHeadersResult;
 class CheckPEHeadersResult_Exports;
 class CheckPEHeadersResult_Section;
 class GetBackendInfoResult;
+class AutoCompleteCodeRequest;
+class AutoCompleteCodeResult;
+class AutoCompleteCodeResult_CallSignature;
+class AutoCompleteCodeResult_CallSignature_Param;
 
 enum RpcRequest_RequestType {
   RpcRequest_RequestType_RPCT_UNKNOWN = 0,
@@ -66,11 +70,12 @@ enum RpcRequest_RequestType {
   RpcRequest_RequestType_RPCT_READ_MEMORY_REGIONS = 4,
   RpcRequest_RequestType_RPCT_ANALYZE_EXTERNAL_REFS = 5,
   RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS = 6,
-  RpcRequest_RequestType_RPCT_GET_BACKEND_INFO = 7
+  RpcRequest_RequestType_RPCT_GET_BACKEND_INFO = 7,
+  RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE = 8
 };
 bool RpcRequest_RequestType_IsValid(int value);
 const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MIN = RpcRequest_RequestType_RPCT_UNKNOWN;
-const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MAX = RpcRequest_RequestType_RPCT_GET_BACKEND_INFO;
+const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MAX = RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE;
 const int RpcRequest_RequestType_RequestType_ARRAYSIZE = RpcRequest_RequestType_RequestType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* RpcRequest_RequestType_descriptor();
@@ -184,6 +189,7 @@ class RpcRequest : public ::google::protobuf::Message {
   static const RequestType RPCT_ANALYZE_EXTERNAL_REFS = RpcRequest_RequestType_RPCT_ANALYZE_EXTERNAL_REFS;
   static const RequestType RPCT_CHECK_PE_HEADERS = RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS;
   static const RequestType RPCT_GET_BACKEND_INFO = RpcRequest_RequestType_RPCT_GET_BACKEND_INFO;
+  static const RequestType RPCT_AUTO_COMPLETE_CODE = RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE;
   static inline bool RequestType_IsValid(int value) {
     return RpcRequest_RequestType_IsValid(value);
   }
@@ -259,6 +265,15 @@ class RpcRequest : public ::google::protobuf::Message {
   inline ::rpc::CheckPEHeadersRequest* release_check_pe_headers_req();
   inline void set_allocated_check_pe_headers_req(::rpc::CheckPEHeadersRequest* check_pe_headers_req);
 
+  // optional .rpc.AutoCompleteCodeRequest auto_complete_code_req = 7;
+  inline bool has_auto_complete_code_req() const;
+  inline void clear_auto_complete_code_req();
+  static const int kAutoCompleteCodeReqFieldNumber = 7;
+  inline const ::rpc::AutoCompleteCodeRequest& auto_complete_code_req() const;
+  inline ::rpc::AutoCompleteCodeRequest* mutable_auto_complete_code_req();
+  inline ::rpc::AutoCompleteCodeRequest* release_auto_complete_code_req();
+  inline void set_allocated_auto_complete_code_req(::rpc::AutoCompleteCodeRequest* auto_complete_code_req);
+
   // @@protoc_insertion_point(class_scope:rpc.RpcRequest)
  private:
   inline void set_has_request_type();
@@ -273,6 +288,8 @@ class RpcRequest : public ::google::protobuf::Message {
   inline void clear_has_analyze_external_refs_req();
   inline void set_has_check_pe_headers_req();
   inline void clear_has_check_pe_headers_req();
+  inline void set_has_auto_complete_code_req();
+  inline void clear_has_auto_complete_code_req();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -283,6 +300,7 @@ class RpcRequest : public ::google::protobuf::Message {
   ::rpc::ReadMemoryRegionsRequest* read_memory_regions_req_;
   ::rpc::AnalyzeExternalRefsRequest* analyze_external_refs_req_;
   ::rpc::CheckPEHeadersRequest* check_pe_headers_req_;
+  ::rpc::AutoCompleteCodeRequest* auto_complete_code_req_;
   int request_type_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
@@ -2924,6 +2942,459 @@ class GetBackendInfoResult : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static GetBackendInfoResult* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class AutoCompleteCodeRequest : public ::google::protobuf::Message {
+ public:
+  AutoCompleteCodeRequest();
+  virtual ~AutoCompleteCodeRequest();
+
+  AutoCompleteCodeRequest(const AutoCompleteCodeRequest& from);
+
+  inline AutoCompleteCodeRequest& operator=(const AutoCompleteCodeRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AutoCompleteCodeRequest& default_instance();
+
+  void Swap(AutoCompleteCodeRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  AutoCompleteCodeRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const AutoCompleteCodeRequest& from);
+  void MergeFrom(const AutoCompleteCodeRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string source = 1;
+  inline bool has_source() const;
+  inline void clear_source();
+  static const int kSourceFieldNumber = 1;
+  inline const ::std::string& source() const;
+  inline void set_source(const ::std::string& value);
+  inline void set_source(const char* value);
+  inline void set_source(const char* value, size_t size);
+  inline ::std::string* mutable_source();
+  inline ::std::string* release_source();
+  inline void set_allocated_source(::std::string* source);
+
+  // required uint32 zline = 2;
+  inline bool has_zline() const;
+  inline void clear_zline();
+  static const int kZlineFieldNumber = 2;
+  inline ::google::protobuf::uint32 zline() const;
+  inline void set_zline(::google::protobuf::uint32 value);
+
+  // required uint32 zcol = 3;
+  inline bool has_zcol() const;
+  inline void clear_zcol();
+  static const int kZcolFieldNumber = 3;
+  inline ::google::protobuf::uint32 zcol() const;
+  inline void set_zcol(::google::protobuf::uint32 value);
+
+  // required bool call_sig_only = 4;
+  inline bool has_call_sig_only() const;
+  inline void clear_call_sig_only();
+  static const int kCallSigOnlyFieldNumber = 4;
+  inline bool call_sig_only() const;
+  inline void set_call_sig_only(bool value);
+
+  // @@protoc_insertion_point(class_scope:rpc.AutoCompleteCodeRequest)
+ private:
+  inline void set_has_source();
+  inline void clear_has_source();
+  inline void set_has_zline();
+  inline void clear_has_zline();
+  inline void set_has_zcol();
+  inline void clear_has_zcol();
+  inline void set_has_call_sig_only();
+  inline void clear_has_call_sig_only();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* source_;
+  ::google::protobuf::uint32 zline_;
+  ::google::protobuf::uint32 zcol_;
+  bool call_sig_only_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static AutoCompleteCodeRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class AutoCompleteCodeResult_CallSignature_Param : public ::google::protobuf::Message {
+ public:
+  AutoCompleteCodeResult_CallSignature_Param();
+  virtual ~AutoCompleteCodeResult_CallSignature_Param();
+
+  AutoCompleteCodeResult_CallSignature_Param(const AutoCompleteCodeResult_CallSignature_Param& from);
+
+  inline AutoCompleteCodeResult_CallSignature_Param& operator=(const AutoCompleteCodeResult_CallSignature_Param& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AutoCompleteCodeResult_CallSignature_Param& default_instance();
+
+  void Swap(AutoCompleteCodeResult_CallSignature_Param* other);
+
+  // implements Message ----------------------------------------------
+
+  AutoCompleteCodeResult_CallSignature_Param* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const AutoCompleteCodeResult_CallSignature_Param& from);
+  void MergeFrom(const AutoCompleteCodeResult_CallSignature_Param& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional string description = 2;
+  inline bool has_description() const;
+  inline void clear_description();
+  static const int kDescriptionFieldNumber = 2;
+  inline const ::std::string& description() const;
+  inline void set_description(const ::std::string& value);
+  inline void set_description(const char* value);
+  inline void set_description(const char* value, size_t size);
+  inline ::std::string* mutable_description();
+  inline ::std::string* release_description();
+  inline void set_allocated_description(::std::string* description);
+
+  // @@protoc_insertion_point(class_scope:rpc.AutoCompleteCodeResult.CallSignature.Param)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_description();
+  inline void clear_has_description();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* name_;
+  ::std::string* description_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static AutoCompleteCodeResult_CallSignature_Param* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class AutoCompleteCodeResult_CallSignature : public ::google::protobuf::Message {
+ public:
+  AutoCompleteCodeResult_CallSignature();
+  virtual ~AutoCompleteCodeResult_CallSignature();
+
+  AutoCompleteCodeResult_CallSignature(const AutoCompleteCodeResult_CallSignature& from);
+
+  inline AutoCompleteCodeResult_CallSignature& operator=(const AutoCompleteCodeResult_CallSignature& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AutoCompleteCodeResult_CallSignature& default_instance();
+
+  void Swap(AutoCompleteCodeResult_CallSignature* other);
+
+  // implements Message ----------------------------------------------
+
+  AutoCompleteCodeResult_CallSignature* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const AutoCompleteCodeResult_CallSignature& from);
+  void MergeFrom(const AutoCompleteCodeResult_CallSignature& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef AutoCompleteCodeResult_CallSignature_Param Param;
+
+  // accessors -------------------------------------------------------
+
+  // optional string cs_type = 1;
+  inline bool has_cs_type() const;
+  inline void clear_cs_type();
+  static const int kCsTypeFieldNumber = 1;
+  inline const ::std::string& cs_type() const;
+  inline void set_cs_type(const ::std::string& value);
+  inline void set_cs_type(const char* value);
+  inline void set_cs_type(const char* value, size_t size);
+  inline ::std::string* mutable_cs_type();
+  inline ::std::string* release_cs_type();
+  inline void set_allocated_cs_type(::std::string* cs_type);
+
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required int32 index = 3;
+  inline bool has_index() const;
+  inline void clear_index();
+  static const int kIndexFieldNumber = 3;
+  inline ::google::protobuf::int32 index() const;
+  inline void set_index(::google::protobuf::int32 value);
+
+  // optional string raw_doc = 4;
+  inline bool has_raw_doc() const;
+  inline void clear_raw_doc();
+  static const int kRawDocFieldNumber = 4;
+  inline const ::std::string& raw_doc() const;
+  inline void set_raw_doc(const ::std::string& value);
+  inline void set_raw_doc(const char* value);
+  inline void set_raw_doc(const char* value, size_t size);
+  inline ::std::string* mutable_raw_doc();
+  inline ::std::string* release_raw_doc();
+  inline void set_allocated_raw_doc(::std::string* raw_doc);
+
+  // repeated .rpc.AutoCompleteCodeResult.CallSignature.Param params = 5;
+  inline int params_size() const;
+  inline void clear_params();
+  static const int kParamsFieldNumber = 5;
+  inline const ::rpc::AutoCompleteCodeResult_CallSignature_Param& params(int index) const;
+  inline ::rpc::AutoCompleteCodeResult_CallSignature_Param* mutable_params(int index);
+  inline ::rpc::AutoCompleteCodeResult_CallSignature_Param* add_params();
+  inline const ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature_Param >&
+      params() const;
+  inline ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature_Param >*
+      mutable_params();
+
+  // @@protoc_insertion_point(class_scope:rpc.AutoCompleteCodeResult.CallSignature)
+ private:
+  inline void set_has_cs_type();
+  inline void clear_has_cs_type();
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_index();
+  inline void clear_has_index();
+  inline void set_has_raw_doc();
+  inline void clear_has_raw_doc();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* cs_type_;
+  ::std::string* name_;
+  ::std::string* raw_doc_;
+  ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature_Param > params_;
+  ::google::protobuf::int32 index_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static AutoCompleteCodeResult_CallSignature* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class AutoCompleteCodeResult : public ::google::protobuf::Message {
+ public:
+  AutoCompleteCodeResult();
+  virtual ~AutoCompleteCodeResult();
+
+  AutoCompleteCodeResult(const AutoCompleteCodeResult& from);
+
+  inline AutoCompleteCodeResult& operator=(const AutoCompleteCodeResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AutoCompleteCodeResult& default_instance();
+
+  void Swap(AutoCompleteCodeResult* other);
+
+  // implements Message ----------------------------------------------
+
+  AutoCompleteCodeResult* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const AutoCompleteCodeResult& from);
+  void MergeFrom(const AutoCompleteCodeResult& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef AutoCompleteCodeResult_CallSignature CallSignature;
+
+  // accessors -------------------------------------------------------
+
+  // repeated string completions = 1;
+  inline int completions_size() const;
+  inline void clear_completions();
+  static const int kCompletionsFieldNumber = 1;
+  inline const ::std::string& completions(int index) const;
+  inline ::std::string* mutable_completions(int index);
+  inline void set_completions(int index, const ::std::string& value);
+  inline void set_completions(int index, const char* value);
+  inline void set_completions(int index, const char* value, size_t size);
+  inline ::std::string* add_completions();
+  inline void add_completions(const ::std::string& value);
+  inline void add_completions(const char* value);
+  inline void add_completions(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& completions() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_completions();
+
+  // repeated .rpc.AutoCompleteCodeResult.CallSignature call_sigs = 2;
+  inline int call_sigs_size() const;
+  inline void clear_call_sigs();
+  static const int kCallSigsFieldNumber = 2;
+  inline const ::rpc::AutoCompleteCodeResult_CallSignature& call_sigs(int index) const;
+  inline ::rpc::AutoCompleteCodeResult_CallSignature* mutable_call_sigs(int index);
+  inline ::rpc::AutoCompleteCodeResult_CallSignature* add_call_sigs();
+  inline const ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature >&
+      call_sigs() const;
+  inline ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature >*
+      mutable_call_sigs();
+
+  // @@protoc_insertion_point(class_scope:rpc.AutoCompleteCodeResult)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> completions_;
+  ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature > call_sigs_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static AutoCompleteCodeResult* default_instance_;
+};
 // ===================================================================
 
 
@@ -3159,6 +3630,47 @@ inline void RpcRequest::set_allocated_check_pe_headers_req(::rpc::CheckPEHeaders
     clear_has_check_pe_headers_req();
   }
   // @@protoc_insertion_point(field_set_allocated:rpc.RpcRequest.check_pe_headers_req)
+}
+
+// optional .rpc.AutoCompleteCodeRequest auto_complete_code_req = 7;
+inline bool RpcRequest::has_auto_complete_code_req() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void RpcRequest::set_has_auto_complete_code_req() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void RpcRequest::clear_has_auto_complete_code_req() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void RpcRequest::clear_auto_complete_code_req() {
+  if (auto_complete_code_req_ != NULL) auto_complete_code_req_->::rpc::AutoCompleteCodeRequest::Clear();
+  clear_has_auto_complete_code_req();
+}
+inline const ::rpc::AutoCompleteCodeRequest& RpcRequest::auto_complete_code_req() const {
+  // @@protoc_insertion_point(field_get:rpc.RpcRequest.auto_complete_code_req)
+  return auto_complete_code_req_ != NULL ? *auto_complete_code_req_ : *default_instance_->auto_complete_code_req_;
+}
+inline ::rpc::AutoCompleteCodeRequest* RpcRequest::mutable_auto_complete_code_req() {
+  set_has_auto_complete_code_req();
+  if (auto_complete_code_req_ == NULL) auto_complete_code_req_ = new ::rpc::AutoCompleteCodeRequest;
+  // @@protoc_insertion_point(field_mutable:rpc.RpcRequest.auto_complete_code_req)
+  return auto_complete_code_req_;
+}
+inline ::rpc::AutoCompleteCodeRequest* RpcRequest::release_auto_complete_code_req() {
+  clear_has_auto_complete_code_req();
+  ::rpc::AutoCompleteCodeRequest* temp = auto_complete_code_req_;
+  auto_complete_code_req_ = NULL;
+  return temp;
+}
+inline void RpcRequest::set_allocated_auto_complete_code_req(::rpc::AutoCompleteCodeRequest* auto_complete_code_req) {
+  delete auto_complete_code_req_;
+  auto_complete_code_req_ = auto_complete_code_req;
+  if (auto_complete_code_req) {
+    set_has_auto_complete_code_req();
+  } else {
+    clear_has_auto_complete_code_req();
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.RpcRequest.auto_complete_code_req)
 }
 
 // -------------------------------------------------------------------
@@ -6728,6 +7240,688 @@ inline void GetBackendInfoResult::set_allocated_labeless_ver(::std::string* labe
     labeless_ver_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:rpc.GetBackendInfoResult.labeless_ver)
+}
+
+// -------------------------------------------------------------------
+
+// AutoCompleteCodeRequest
+
+// required string source = 1;
+inline bool AutoCompleteCodeRequest::has_source() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void AutoCompleteCodeRequest::set_has_source() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void AutoCompleteCodeRequest::clear_has_source() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void AutoCompleteCodeRequest::clear_source() {
+  if (source_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    source_->clear();
+  }
+  clear_has_source();
+}
+inline const ::std::string& AutoCompleteCodeRequest::source() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeRequest.source)
+  return *source_;
+}
+inline void AutoCompleteCodeRequest::set_source(const ::std::string& value) {
+  set_has_source();
+  if (source_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    source_ = new ::std::string;
+  }
+  source_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeRequest.source)
+}
+inline void AutoCompleteCodeRequest::set_source(const char* value) {
+  set_has_source();
+  if (source_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    source_ = new ::std::string;
+  }
+  source_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeRequest.source)
+}
+inline void AutoCompleteCodeRequest::set_source(const char* value, size_t size) {
+  set_has_source();
+  if (source_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    source_ = new ::std::string;
+  }
+  source_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeRequest.source)
+}
+inline ::std::string* AutoCompleteCodeRequest::mutable_source() {
+  set_has_source();
+  if (source_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    source_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeRequest.source)
+  return source_;
+}
+inline ::std::string* AutoCompleteCodeRequest::release_source() {
+  clear_has_source();
+  if (source_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = source_;
+    source_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AutoCompleteCodeRequest::set_allocated_source(::std::string* source) {
+  if (source_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete source_;
+  }
+  if (source) {
+    set_has_source();
+    source_ = source;
+  } else {
+    clear_has_source();
+    source_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.AutoCompleteCodeRequest.source)
+}
+
+// required uint32 zline = 2;
+inline bool AutoCompleteCodeRequest::has_zline() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void AutoCompleteCodeRequest::set_has_zline() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void AutoCompleteCodeRequest::clear_has_zline() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void AutoCompleteCodeRequest::clear_zline() {
+  zline_ = 0u;
+  clear_has_zline();
+}
+inline ::google::protobuf::uint32 AutoCompleteCodeRequest::zline() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeRequest.zline)
+  return zline_;
+}
+inline void AutoCompleteCodeRequest::set_zline(::google::protobuf::uint32 value) {
+  set_has_zline();
+  zline_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeRequest.zline)
+}
+
+// required uint32 zcol = 3;
+inline bool AutoCompleteCodeRequest::has_zcol() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void AutoCompleteCodeRequest::set_has_zcol() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void AutoCompleteCodeRequest::clear_has_zcol() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void AutoCompleteCodeRequest::clear_zcol() {
+  zcol_ = 0u;
+  clear_has_zcol();
+}
+inline ::google::protobuf::uint32 AutoCompleteCodeRequest::zcol() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeRequest.zcol)
+  return zcol_;
+}
+inline void AutoCompleteCodeRequest::set_zcol(::google::protobuf::uint32 value) {
+  set_has_zcol();
+  zcol_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeRequest.zcol)
+}
+
+// required bool call_sig_only = 4;
+inline bool AutoCompleteCodeRequest::has_call_sig_only() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void AutoCompleteCodeRequest::set_has_call_sig_only() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void AutoCompleteCodeRequest::clear_has_call_sig_only() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void AutoCompleteCodeRequest::clear_call_sig_only() {
+  call_sig_only_ = false;
+  clear_has_call_sig_only();
+}
+inline bool AutoCompleteCodeRequest::call_sig_only() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeRequest.call_sig_only)
+  return call_sig_only_;
+}
+inline void AutoCompleteCodeRequest::set_call_sig_only(bool value) {
+  set_has_call_sig_only();
+  call_sig_only_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeRequest.call_sig_only)
+}
+
+// -------------------------------------------------------------------
+
+// AutoCompleteCodeResult_CallSignature_Param
+
+// required string name = 1;
+inline bool AutoCompleteCodeResult_CallSignature_Param::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& AutoCompleteCodeResult_CallSignature_Param::name() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.Param.name)
+  return *name_;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.CallSignature.Param.name)
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeResult.CallSignature.Param.name)
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeResult.CallSignature.Param.name)
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature_Param::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.CallSignature.Param.name)
+  return name_;
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature_Param::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.AutoCompleteCodeResult.CallSignature.Param.name)
+}
+
+// optional string description = 2;
+inline bool AutoCompleteCodeResult_CallSignature_Param::has_description() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_has_description() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::clear_has_description() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::clear_description() {
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_->clear();
+  }
+  clear_has_description();
+}
+inline const ::std::string& AutoCompleteCodeResult_CallSignature_Param::description() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.Param.description)
+  return *description_;
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_description(const ::std::string& value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.CallSignature.Param.description)
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_description(const char* value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeResult.CallSignature.Param.description)
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_description(const char* value, size_t size) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  description_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeResult.CallSignature.Param.description)
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature_Param::mutable_description() {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    description_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.CallSignature.Param.description)
+  return description_;
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature_Param::release_description() {
+  clear_has_description();
+  if (description_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = description_;
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AutoCompleteCodeResult_CallSignature_Param::set_allocated_description(::std::string* description) {
+  if (description_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete description_;
+  }
+  if (description) {
+    set_has_description();
+    description_ = description;
+  } else {
+    clear_has_description();
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.AutoCompleteCodeResult.CallSignature.Param.description)
+}
+
+// -------------------------------------------------------------------
+
+// AutoCompleteCodeResult_CallSignature
+
+// optional string cs_type = 1;
+inline bool AutoCompleteCodeResult_CallSignature::has_cs_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_has_cs_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_has_cs_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_cs_type() {
+  if (cs_type_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    cs_type_->clear();
+  }
+  clear_has_cs_type();
+}
+inline const ::std::string& AutoCompleteCodeResult_CallSignature::cs_type() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.cs_type)
+  return *cs_type_;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_cs_type(const ::std::string& value) {
+  set_has_cs_type();
+  if (cs_type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    cs_type_ = new ::std::string;
+  }
+  cs_type_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.CallSignature.cs_type)
+}
+inline void AutoCompleteCodeResult_CallSignature::set_cs_type(const char* value) {
+  set_has_cs_type();
+  if (cs_type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    cs_type_ = new ::std::string;
+  }
+  cs_type_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeResult.CallSignature.cs_type)
+}
+inline void AutoCompleteCodeResult_CallSignature::set_cs_type(const char* value, size_t size) {
+  set_has_cs_type();
+  if (cs_type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    cs_type_ = new ::std::string;
+  }
+  cs_type_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeResult.CallSignature.cs_type)
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature::mutable_cs_type() {
+  set_has_cs_type();
+  if (cs_type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    cs_type_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.CallSignature.cs_type)
+  return cs_type_;
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature::release_cs_type() {
+  clear_has_cs_type();
+  if (cs_type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = cs_type_;
+    cs_type_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AutoCompleteCodeResult_CallSignature::set_allocated_cs_type(::std::string* cs_type) {
+  if (cs_type_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete cs_type_;
+  }
+  if (cs_type) {
+    set_has_cs_type();
+    cs_type_ = cs_type;
+  } else {
+    clear_has_cs_type();
+    cs_type_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.AutoCompleteCodeResult.CallSignature.cs_type)
+}
+
+// required string name = 2;
+inline bool AutoCompleteCodeResult_CallSignature::has_name() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_has_name() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_has_name() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& AutoCompleteCodeResult_CallSignature::name() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.name)
+  return *name_;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.CallSignature.name)
+}
+inline void AutoCompleteCodeResult_CallSignature::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeResult.CallSignature.name)
+}
+inline void AutoCompleteCodeResult_CallSignature::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeResult.CallSignature.name)
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.CallSignature.name)
+  return name_;
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AutoCompleteCodeResult_CallSignature::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.AutoCompleteCodeResult.CallSignature.name)
+}
+
+// required int32 index = 3;
+inline bool AutoCompleteCodeResult_CallSignature::has_index() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_has_index() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_has_index() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_index() {
+  index_ = 0;
+  clear_has_index();
+}
+inline ::google::protobuf::int32 AutoCompleteCodeResult_CallSignature::index() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.index)
+  return index_;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_index(::google::protobuf::int32 value) {
+  set_has_index();
+  index_ = value;
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.CallSignature.index)
+}
+
+// optional string raw_doc = 4;
+inline bool AutoCompleteCodeResult_CallSignature::has_raw_doc() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_has_raw_doc() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_has_raw_doc() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_raw_doc() {
+  if (raw_doc_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    raw_doc_->clear();
+  }
+  clear_has_raw_doc();
+}
+inline const ::std::string& AutoCompleteCodeResult_CallSignature::raw_doc() const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.raw_doc)
+  return *raw_doc_;
+}
+inline void AutoCompleteCodeResult_CallSignature::set_raw_doc(const ::std::string& value) {
+  set_has_raw_doc();
+  if (raw_doc_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    raw_doc_ = new ::std::string;
+  }
+  raw_doc_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.CallSignature.raw_doc)
+}
+inline void AutoCompleteCodeResult_CallSignature::set_raw_doc(const char* value) {
+  set_has_raw_doc();
+  if (raw_doc_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    raw_doc_ = new ::std::string;
+  }
+  raw_doc_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeResult.CallSignature.raw_doc)
+}
+inline void AutoCompleteCodeResult_CallSignature::set_raw_doc(const char* value, size_t size) {
+  set_has_raw_doc();
+  if (raw_doc_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    raw_doc_ = new ::std::string;
+  }
+  raw_doc_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeResult.CallSignature.raw_doc)
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature::mutable_raw_doc() {
+  set_has_raw_doc();
+  if (raw_doc_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    raw_doc_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.CallSignature.raw_doc)
+  return raw_doc_;
+}
+inline ::std::string* AutoCompleteCodeResult_CallSignature::release_raw_doc() {
+  clear_has_raw_doc();
+  if (raw_doc_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = raw_doc_;
+    raw_doc_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void AutoCompleteCodeResult_CallSignature::set_allocated_raw_doc(::std::string* raw_doc) {
+  if (raw_doc_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete raw_doc_;
+  }
+  if (raw_doc) {
+    set_has_raw_doc();
+    raw_doc_ = raw_doc;
+  } else {
+    clear_has_raw_doc();
+    raw_doc_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.AutoCompleteCodeResult.CallSignature.raw_doc)
+}
+
+// repeated .rpc.AutoCompleteCodeResult.CallSignature.Param params = 5;
+inline int AutoCompleteCodeResult_CallSignature::params_size() const {
+  return params_.size();
+}
+inline void AutoCompleteCodeResult_CallSignature::clear_params() {
+  params_.Clear();
+}
+inline const ::rpc::AutoCompleteCodeResult_CallSignature_Param& AutoCompleteCodeResult_CallSignature::params(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.CallSignature.params)
+  return params_.Get(index);
+}
+inline ::rpc::AutoCompleteCodeResult_CallSignature_Param* AutoCompleteCodeResult_CallSignature::mutable_params(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.CallSignature.params)
+  return params_.Mutable(index);
+}
+inline ::rpc::AutoCompleteCodeResult_CallSignature_Param* AutoCompleteCodeResult_CallSignature::add_params() {
+  // @@protoc_insertion_point(field_add:rpc.AutoCompleteCodeResult.CallSignature.params)
+  return params_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature_Param >&
+AutoCompleteCodeResult_CallSignature::params() const {
+  // @@protoc_insertion_point(field_list:rpc.AutoCompleteCodeResult.CallSignature.params)
+  return params_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature_Param >*
+AutoCompleteCodeResult_CallSignature::mutable_params() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.AutoCompleteCodeResult.CallSignature.params)
+  return &params_;
+}
+
+// -------------------------------------------------------------------
+
+// AutoCompleteCodeResult
+
+// repeated string completions = 1;
+inline int AutoCompleteCodeResult::completions_size() const {
+  return completions_.size();
+}
+inline void AutoCompleteCodeResult::clear_completions() {
+  completions_.Clear();
+}
+inline const ::std::string& AutoCompleteCodeResult::completions(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.completions)
+  return completions_.Get(index);
+}
+inline ::std::string* AutoCompleteCodeResult::mutable_completions(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.completions)
+  return completions_.Mutable(index);
+}
+inline void AutoCompleteCodeResult::set_completions(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:rpc.AutoCompleteCodeResult.completions)
+  completions_.Mutable(index)->assign(value);
+}
+inline void AutoCompleteCodeResult::set_completions(int index, const char* value) {
+  completions_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.AutoCompleteCodeResult.completions)
+}
+inline void AutoCompleteCodeResult::set_completions(int index, const char* value, size_t size) {
+  completions_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.AutoCompleteCodeResult.completions)
+}
+inline ::std::string* AutoCompleteCodeResult::add_completions() {
+  return completions_.Add();
+}
+inline void AutoCompleteCodeResult::add_completions(const ::std::string& value) {
+  completions_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:rpc.AutoCompleteCodeResult.completions)
+}
+inline void AutoCompleteCodeResult::add_completions(const char* value) {
+  completions_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:rpc.AutoCompleteCodeResult.completions)
+}
+inline void AutoCompleteCodeResult::add_completions(const char* value, size_t size) {
+  completions_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:rpc.AutoCompleteCodeResult.completions)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+AutoCompleteCodeResult::completions() const {
+  // @@protoc_insertion_point(field_list:rpc.AutoCompleteCodeResult.completions)
+  return completions_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+AutoCompleteCodeResult::mutable_completions() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.AutoCompleteCodeResult.completions)
+  return &completions_;
+}
+
+// repeated .rpc.AutoCompleteCodeResult.CallSignature call_sigs = 2;
+inline int AutoCompleteCodeResult::call_sigs_size() const {
+  return call_sigs_.size();
+}
+inline void AutoCompleteCodeResult::clear_call_sigs() {
+  call_sigs_.Clear();
+}
+inline const ::rpc::AutoCompleteCodeResult_CallSignature& AutoCompleteCodeResult::call_sigs(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.AutoCompleteCodeResult.call_sigs)
+  return call_sigs_.Get(index);
+}
+inline ::rpc::AutoCompleteCodeResult_CallSignature* AutoCompleteCodeResult::mutable_call_sigs(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.AutoCompleteCodeResult.call_sigs)
+  return call_sigs_.Mutable(index);
+}
+inline ::rpc::AutoCompleteCodeResult_CallSignature* AutoCompleteCodeResult::add_call_sigs() {
+  // @@protoc_insertion_point(field_add:rpc.AutoCompleteCodeResult.call_sigs)
+  return call_sigs_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature >&
+AutoCompleteCodeResult::call_sigs() const {
+  // @@protoc_insertion_point(field_list:rpc.AutoCompleteCodeResult.call_sigs)
+  return call_sigs_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::rpc::AutoCompleteCodeResult_CallSignature >*
+AutoCompleteCodeResult::mutable_call_sigs() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.AutoCompleteCodeResult.call_sigs)
+  return &call_sigs_;
 }
 
 

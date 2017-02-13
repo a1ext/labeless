@@ -180,6 +180,9 @@ void PyOllyView::setUpConnections()
 		this, SLOT(onScriptEditContextMenuRequested(const QPoint&))));
 	CHECKED_CONNECT(connect(m_UI->teOllyScript, SIGNAL(customContextMenuRequested(const QPoint&)),
 		this, SLOT(onScriptEditContextMenuRequested(const QPoint&))));
+
+	m_UI->teIDAScript->markAsIDASideEditor(true);
+	m_UI->teOllyScript->markAsIDASideEditor(false);
 }
 
 void PyOllyView::changeEvent(QEvent* e)
