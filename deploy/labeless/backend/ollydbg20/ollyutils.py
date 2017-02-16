@@ -226,6 +226,9 @@ def read_memory_regions(regions):
 def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_size):
     # print >> sys.stderr, 'analyze_external_refs(%08X, %08X, %08X, %08X, %08X)' % \
     #                      (ea_from, ea_to, increment, analysing_base, analysing_size)
+
+    update_modules_meta()
+
     rv = rpc.AnalyzeExternalRefsResult()
     if ea_from > ea_to:
         print >> sys.stderr, 'Invalid arguments passed'
@@ -450,8 +453,6 @@ def update_modules_meta():
 
 
 def check_pe_headers(base, size):
-    update_modules_meta()
-
     rv = rpc.CheckPEHeadersResult()
     rv.pe_valid = False
     mem = safe_read_chunked_memory_region_as_one(base, size)
