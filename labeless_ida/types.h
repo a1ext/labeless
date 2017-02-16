@@ -179,6 +179,7 @@ struct Settings
 	bool removeFuncArgs;
 	OverwriteWarning overwriteWarning;
 	CommentSyncFlags commentsSync;
+	bool codeCompletion;
 
 	Settings(const std::string host_ = std::string(),
 		uint16_t port_ = 0,
@@ -190,7 +191,8 @@ struct Settings
 		bool postProcessFixCallJumps_ = false,
 		bool removeFuncArgs_ = false,
 		OverwriteWarning overwriteWarning_ = OW_AlwaysAsk,
-		CommentSyncFlags commentsSync_ = CS_Disabled);
+		CommentSyncFlags commentsSync_ = CS_Disabled,
+		bool codeCompletion_ = true);
 };
 
 struct LogItem

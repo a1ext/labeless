@@ -30,7 +30,7 @@ class PyOllyView : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PyOllyView(bool isShowAllResponsesInLog, QWidget* parent = nullptr);
+	explicit PyOllyView(bool isShowAllResponsesInLog, bool isCodeCompletionEnabled, QWidget* parent = nullptr);
 	~PyOllyView();
 
 	void prependStdoutLog(const QString& text, bool isHtml = false);
@@ -72,4 +72,5 @@ private:
 	Ui::PyOllyView* m_UI;
 	QMap<QString, QString> m_OllyTemplates;
 	QMap<QString, QString> m_IDATemplates;
+	const bool m_IsCodeCompletionEnabled;
 };

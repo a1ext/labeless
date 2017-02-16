@@ -93,6 +93,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->tw->setCornerWidget(lVer);
 	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
+	m_UI->bgAutoCompletion->setChecked(settings.codeCompletion);
 	const bool jediAvailable = util::python::jedi::is_available();
 	m_UI->lbJediStatus->setText(QString("<p style=\"color: %1\">%2</p>").arg(jediAvailable ? "green": "red").arg(jediAvailable ? tr("available") : tr("not available")));
 
@@ -190,6 +191,7 @@ void SettingsDialog::getSettings(Settings& result)
 		result.commentsSync |= Settings::CS_FuncNameAsComment;
 	if (m_UI->chFuncLocalVarsAll->isChecked())
 		result.commentsSync |= Settings::CS_LocalVarAll;
+	result.codeCompletion = m_UI->bgAutoCompletion->isChecked();
 }
 
 void SettingsDialog::changeEvent(QEvent *e)
@@ -491,6 +493,12 @@ void SettingsDialog::on_bCheckForUpdates_clicked()
 void SettingsDialog::on_chFuncLocalVarsAll_toggled(bool v)
 {
 	m_UI->chFuncLocalVars->setEnabled(!v);
+}
+
+void SettingsDialog::on_bgAutoCompletion_toggled(bool v)
+{
+	if (v)
+		QMessageBox::information(this, tr("Note!"), tr("To turn on auto-completion restart is required"));
 }
 
 bool SettingsDialog::getLightPalette(PythonPalette& result) const

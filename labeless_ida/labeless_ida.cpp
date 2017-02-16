@@ -111,7 +111,8 @@ static const Settings kDefaultSettings(
 	true,
 	false,
 	Settings::OW_AlwaysAsk,
-	Settings::CS_Disabled
+	Settings::CS_Disabled,
+	true
 );
 
 enum LabelessNodeAltType
@@ -253,6 +254,7 @@ Settings Labeless::loadSettings()
 		m_Settings.analysePEHeader = gsm.value(GSK_AnalyzePEHeader, m_Settings.analysePEHeader).toBool();
 		m_Settings.postProcessFixCallJumps = gsm.value(GSK_PostProcessFixCallJumps, m_Settings.postProcessFixCallJumps).toBool();
 		m_Settings.overwriteWarning = static_cast<Settings::OverwriteWarning>(gsm.value(GSK_OverwriteWarning, m_Settings.overwriteWarning).toInt());
+		m_Settings.codeCompletion = gsm.value(GSK_CodeCompletion, m_Settings.codeCompletion).toBool();
 	} while (0);
 
 	if (!nodeExists)
@@ -272,6 +274,7 @@ void Labeless::storeSettings()
 		gsm.setValue(GSK_AnalyzePEHeader, m_Settings.analysePEHeader);
 		gsm.setValue(GSK_PostProcessFixCallJumps, m_Settings.postProcessFixCallJumps);
 		gsm.setValue(GSK_OverwriteWarning, m_Settings.overwriteWarning);
+		gsm.setValue(GSK_CodeCompletion, m_Settings.codeCompletion);
 	} while (0);
 
 	PythonPaletteManager::instance().storeSettings();
@@ -693,7 +696,8 @@ bool Labeless::initialize()
 		m_Thread->start();
 	} while (0);
 
-	do {
+	if (m_Settings.codeCompletion)
+	{
 		QMutexLocker lock(&m_AutoCompletionThreadLock);
 		m_AutoCompletionThread = QPointer<QThread>(new QThread(this));
 		JediCompletionWorker* worker = new JediCompletionWorker();
@@ -703,7 +707,7 @@ bool Labeless::initialize()
 		CHECKED_CONNECT(connect(worker, SIGNAL(completeFinished()), this, SLOT(onAutoCompletionFinished()), Qt::QueuedConnection));
 		worker->moveToThread(m_AutoCompletionThread.data());
 		m_AutoCompletionThread->start();
-	} while (0);
+	}
 
 	m_Initialized = true;
 
@@ -2293,7 +2297,7 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 			mainLayout->setMargin(0);
 			if (!ll.m_PyOllyView)
 			{
-				ll.m_PyOllyView = new PyOllyView(ll.isShowAllResponsesInLog());
+				ll.m_PyOllyView = new PyOllyView(ll.isShowAllResponsesInLog(), ll.m_Settings.codeCompletion && ll.m_AutoCompletionThread);
 				CHECKED_CONNECT(connect(ll.m_PyOllyView.data(), SIGNAL(runScriptRequested()),
 					&ll, SLOT(onRunScriptRequested())));
 				CHECKED_CONNECT(connect(ll.m_PyOllyView.data(), SIGNAL(settingsRequested()),
