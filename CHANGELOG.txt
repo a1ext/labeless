@@ -1,3 +1,7 @@
+# v 1.1.2.0
+ + Added code-completion support in the Python editors, powered on `jedi`
+ * Perform meta preparing even if 'Check PE-headers' is not set in the Settings.
+
 # v 1.1.1.0
  + Added IDA for Linux support
  * Fixed issue #16 (GUI resize in high-dpi resolution/font size)
