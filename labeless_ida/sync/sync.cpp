@@ -530,29 +530,27 @@ bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
 		}
 
 		const auto& completions = result.completions();
-		for (auto it = completions.begin(), end = completions.end(); it != end; ++it)
-		{
-			jresult->completions.append(QString::fromStdString(*it));
-		}
+		foreach (const auto& compl, completions)
+			jresult->completions.append(QString::fromStdString(compl));
 
 		const auto& callSigs = result.call_sigs();
-		for (auto it = callSigs.begin(), end = callSigs.end(); it != end; ++it)
+		foreach (const auto& cs, callSigs)
 		{
 			jedi::SignatureMatch sm;
-			if (it->has_cs_type())
-				sm.type = QString::fromStdString(it->cs_type());
-			sm.name = QString::fromStdString(it->name());
-			sm.argIndex = it->index();
-			if (it->has_raw_doc())
-				sm.rawDoc = QString::fromStdString(it->raw_doc());
+			if (cs.has_cs_type())
+				sm.type = QString::fromStdString(cs.cs_type());
+			sm.name = QString::fromStdString(cs.name());
+			sm.argIndex = cs.index();
+			if (cs.has_raw_doc())
+				sm.rawDoc = QString::fromStdString(cs.raw_doc());
 
-			const auto& params = it->params();
-			for (auto paramIt = params.begin(), paramEnd = params.end(); paramIt != paramEnd; ++paramIt)
+			const auto& params = cs.params();
+			foreach (const auto param, params)
 			{
 				jedi::FuncArg arg;
-				arg.name = QString::fromStdString(paramIt->name());
-				if (paramIt->has_description())
-					arg.description = QString::fromStdString(paramIt->description());
+				arg.name = QString::fromStdString(param.name());
+				if (param.has_description())
+					arg.description = QString::fromStdString(param.description());
 				sm.args.append(arg);
 			}
 			jresult->sigMatches.append(sm);

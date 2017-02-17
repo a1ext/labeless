@@ -12,4 +12,21 @@
 
 namespace jedi {
 
+State::State()
+	: state(RS_DONE)
+{
+}
+
+Request::Request()
+	: zline(0)
+	, zcol(0)
+	, rcv(nullptr)
+{
+}
+
+SignatureMatch::SignatureMatch()
+	: argIndex(-1)
+{
+}
+
 } // jedi

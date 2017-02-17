@@ -31,6 +31,8 @@ struct SignatureMatch
 	int argIndex;
 	FuncArgList args;
 	QString rawDoc;
+
+	SignatureMatch();
 };
 
 typedef QList<SignatureMatch> SignatureMatchList;
@@ -46,9 +48,7 @@ struct State
 
 	StateType state;
 
-	State()
-		: state(RS_DONE)
-	{}
+	State();
 
 	inline bool isValid() const	{ return state == RS_ASKED; }
 	inline bool isFinished() const { return state == RS_FINISHED; }
@@ -62,11 +62,7 @@ struct Request
 	
 	QObject* rcv;
 
-	Request()
-		: zline(0)
-		, zcol(0)
-		, rcv(nullptr)
-	{}
+	Request();
 };
 
 struct Result

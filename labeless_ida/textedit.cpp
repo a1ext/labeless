@@ -263,8 +263,8 @@ void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
 		return;
 	}
 
-	msg("%s: (REMOVE ME) completions got: %s\n-------------------\n",
-		__FUNCTION__, r->completions.join("\n").toStdString().c_str());
+	//msg("%s: (REMOVE ME) completions got: %s\n-------------------\n",
+	//	__FUNCTION__, r->completions.join("\n").toStdString().c_str());
 	m_CompletionModel->setStringList(r->completions + m_InternalNames);
 
 	const QString& completionPrefix = textUnderCursor();
