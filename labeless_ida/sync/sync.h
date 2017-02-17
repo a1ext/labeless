@@ -13,6 +13,7 @@
 #include <pro.h>
 
 #include "../types.h"
+#include "../jedi.h"
 
 #include <QList>
 #include <QPointer>
@@ -231,6 +232,28 @@ struct GetBackendInfo : public ICommand
 	std::string dbg_ver;
 	std::string labeless_ver;
 
+
+	virtual bool serialize(QPointer<RpcData> rd) const override;
+	virtual bool parseResponse(QPointer<RpcData> rd) override;
+};
+
+struct AutoCompleteCode : public ICommand
+{
+	AutoCompleteCode()
+		: zline(0)
+		, zcol(0)
+		, callSigsOnly(false)
+		, jresult(new jedi::Result)
+	{}
+
+	// params
+	std::string source;
+	quint32 zline;
+	quint32 zcol;
+	bool callSigsOnly;
+
+	// result
+	QSharedPointer<jedi::Result> jresult;
 
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;

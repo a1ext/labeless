@@ -222,6 +222,9 @@ def read_memory_regions(regions):
 def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_size):
     # print >> sys.stderr, 'analyze_external_refs(%08X, %08X, %08X, %08X, %08X)' % \
     #                      (ea_from, ea_to, increment, analysing_base, analysing_size)
+
+    update_modules_meta()
+
     rv = rpc.AnalyzeExternalRefsResult()
     if ea_from > ea_to:
         print >> sys.stderr, 'Invalid arguments passed'
@@ -445,8 +448,6 @@ def update_modules_meta():
 
 
 def check_pe_headers(base, size):
-    update_modules_meta()
-
     rv = rpc.CheckPEHeadersResult()
     rv.pe_valid = False
     mem = safe_read_chunked_memory_region_as_one(base, size)
@@ -491,4 +492,40 @@ def get_backend_info():
     rv.bitness = int(info['bitness'])
     rv.dbg_name = info['name']
     rv.labeless_ver = py_olly.labeless_ver()
+    return rv
+
+
+def auto_complete_code(source, zline, zcol, call_sig_only):
+    rv = rpc.AutoCompleteCodeResult()
+
+    try:
+        try:
+            import jedi
+        except ImportError:
+            py_olly.olly_log('Auto-completions is unavailable, please install `jedi` python module')
+            return rv
+        j = jedi.Script(source=source, line=zline+1, column=zcol)
+        if not call_sig_only:
+            for c in j.completions():
+                rv.completions.append(c.name.encode('utf-8'))
+
+        css = j.call_signatures()
+
+        for cs in css:
+            new_cs = rv.call_sigs.add()
+            if cs.type:
+                new_cs.cs_type = cs.type
+            new_cs.name = cs.name.encode('utf-8')
+            new_cs.index = cs.index if cs.index is not None else -1
+            if cs.raw_doc:
+                new_cs.raw_doc = cs.raw_doc.encode('utf-8')
+
+            for param in cs.params:
+                new_param = new_cs.params.add()
+                new_param.name = param.name.encode('utf-8')
+                if param.description:
+                    new_param.description = param.description.encode('utf-8')
+    except:
+        py_olly.olly_log('Exception occurred while trying to auto-complete the code')
+        py_olly.olly_log(traceback.format_exc())
     return rv

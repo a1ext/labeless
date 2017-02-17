@@ -46,7 +46,8 @@ class PyExCore(object):
         rpc.RpcRequest.RPCT_READ_MEMORY_REGIONS:    ('read_memory_regions_req', '_rpc_read_memory_regions'),
         rpc.RpcRequest.RPCT_ANALYZE_EXTERNAL_REFS:  ('analyze_external_refs_req', '_rpc_analyze_external_refs'),
         rpc.RpcRequest.RPCT_CHECK_PE_HEADERS:       ('check_pe_headers_req', '_rpc_check_pe_headers'),
-        rpc.RpcRequest.RPCT_GET_BACKEND_INFO:       (None, '_rpc_get_backend_info')
+        rpc.RpcRequest.RPCT_GET_BACKEND_INFO:       (None, '_rpc_get_backend_info'),
+        rpc.RpcRequest.RPCT_AUTO_COMPLETE_CODE:     ('auto_complete_code_req', '_rpc_auto_complete_code')
     }
 
     @classmethod
@@ -111,3 +112,8 @@ class PyExCore(object):
     @binary_result
     def _rpc_get_backend_info(cls, req, job_id):
         return job_id, labeless.get_backend_info()
+
+    @classmethod
+    @binary_result
+    def _rpc_auto_complete_code(cls, req, job_id):
+        return job_id, labeless.auto_complete_code(req.source, req.zline, req.zcol, req.call_sig_only)

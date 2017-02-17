@@ -17,10 +17,13 @@
 #include <QTextCharFormat>
 
 #include "types.h"
-#include "hlp.h"
 #include "globalsettingsmanager.h"
 #include "pythonpalettemanager.h"
+#include "util/util_ida.h"
+#include "util/util_idapython.h"
+#include "util/util_python.h"
 #include "../common/version.h"
+
 
 namespace {
 
@@ -90,10 +93,16 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->tw->setCornerWidget(lVer);
 	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
+	m_UI->bgAutoCompletion->setChecked(settings.codeCompletion);
+	const bool jediAvailable = util::python::jedi::is_available();
+	m_UI->lbJediStatus->setText(QString("<p style=\"color: %1\">%2</p>").arg(jediAvailable ? "green": "red").arg(jediAvailable ? tr("available") : tr("not available")));
+
 	setUpPalette();
 	//adjustSize();
 	setMaximumSize(size());
 	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+	m_UI->tw->setCurrentIndex(0);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -182,6 +191,7 @@ void SettingsDialog::getSettings(Settings& result)
 		result.commentsSync |= Settings::CS_FuncNameAsComment;
 	if (m_UI->chFuncLocalVarsAll->isChecked())
 		result.commentsSync |= Settings::CS_LocalVarAll;
+	result.codeCompletion = m_UI->bgAutoCompletion->isChecked();
 }
 
 void SettingsDialog::changeEvent(QEvent *e)
@@ -446,17 +456,17 @@ void SettingsDialog::on_spbTabWidth_valueChanged(int v)
 
 void SettingsDialog::on_bCheckForUpdates_clicked()
 {
-	hlp::github::ReleaseInfo ri;
+	util::idapython::github::ReleaseInfo ri;
 	std::string error;
 	bool ok = false;
 	{
 		ScopedWaitBox wb("HIDECANCEL\nLabeless: checking for updates...");
 		Q_UNUSED(wb);
-		ok = hlp::github::getLatestRelease(ri, error);
+		ok = util::idapython::github::getLatestRelease(ri, error);
 	}
 	if (!ok)
 	{
-		QMessageBox::warning(hlp::findIDAMainWindow(),
+		QMessageBox::warning(util::ida::findIDAMainWindow(),
 				tr("Error"),
 				tr("Unable to get the latest build, error: %1")
 					.arg(QString::fromStdString(error)));
@@ -466,13 +476,13 @@ void SettingsDialog::on_bCheckForUpdates_clicked()
 	static const QString currentVer = QString("v_%1").arg(LABELESS_VER_STR).replace(".", "_");
 	if (currentVer == ri.tag)
 	{
-		QMessageBox::information(hlp::findIDAMainWindow(),
+		QMessageBox::information(util::ida::findIDAMainWindow(),
 			tr(":)"),
 			tr("You are using the latest version"));
 		return;
 	}
 
-	QMessageBox::information(hlp::findIDAMainWindow(),
+	QMessageBox::information(util::ida::findIDAMainWindow(),
 			tr(":)"),
 			tr("New release is available:<br><b>ver</b>: %1<br><b>name</b>: %2<br><a href=\"%3\">View on GitHub</a>")
 				.arg(ri.tag)
@@ -483,6 +493,12 @@ void SettingsDialog::on_bCheckForUpdates_clicked()
 void SettingsDialog::on_chFuncLocalVarsAll_toggled(bool v)
 {
 	m_UI->chFuncLocalVars->setEnabled(!v);
+}
+
+void SettingsDialog::on_bgAutoCompletion_toggled(bool v)
+{
+	if (v)
+		QMessageBox::information(this, tr("Note!"), tr("To turn on auto-completion restart is required"));
 }
 
 bool SettingsDialog::getLightPalette(PythonPalette& result) const

@@ -41,6 +41,17 @@ for name in all_names:
 del backend_name
 del all_names
 del my_ns
+# if backend_name == 'ollydbg11':
+#     from backend.ollydbg11 import *
+# elif backend_name == 'ollydbg20':
+#     from backend.ollydbg20 import *
+# elif backend_name == 'x64dbg':
+#     from backend.x64dbg import *
+# else:
+#     msg = 'labeless.__init__: invalid debug backend got: %s' % backend_name
+#     py_olly.olly_log(msg)
+#     raise Exception(msg)
+# FIXME
 
 
 class _DateTimeJsonSerializer(json.JSONEncoder):

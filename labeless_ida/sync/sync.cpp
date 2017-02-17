@@ -10,7 +10,7 @@
 #include <sstream>
 #include <QFile>
 
-#include "../hlp.h"
+#include "../util/util_protobuf.h"
 #include "../rpcdata.h"
 #include "../../common/cpp/rpc.pb.h"
 
@@ -196,9 +196,9 @@ bool GetMemoryMapReq::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::GetMemoryMapResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::GetMemoryMapResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -257,9 +257,9 @@ bool ReadMemoryRegions::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::ReadMemoryRegionsResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::ReadMemoryRegionsResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s:util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -327,9 +327,9 @@ bool AnalyzeExternalRefs::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::AnalyzeExternalRefsResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::AnalyzeExternalRefsResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -408,9 +408,9 @@ bool CheckPEHeaders::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::CheckPEHeadersResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::CheckPEHeadersResult::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -470,9 +470,9 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 	try
 	{
 		rpc::GetBackendInfoResult result;
-		if (!hlp::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
 		{
-			msg("%s: rpc::GetBackendInfo::ParseFromString() failed\n", __FUNCTION__);
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
 			return false;
 		}
 
@@ -495,6 +495,76 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 	catch (...)
 	{
 		msg("%s: Unable to parse GetBackendInfo response\n", __FUNCTION__);
+	}
+	return false;
+}
+
+bool AutoCompleteCode::serialize(QPointer<RpcData> rd) const
+{
+	rd->script.clear();
+	rpc::RpcRequest rpcRequest;
+	rpcRequest.set_request_type(rpc::RpcRequest::RPCT_AUTO_COMPLETE_CODE);
+
+	rpc::AutoCompleteCodeRequest* const request = rpcRequest.mutable_auto_complete_code_req();
+	request->set_source(source);
+	request->set_zline(zline);
+	request->set_zcol(zcol);
+	request->set_call_sig_only(callSigsOnly);
+
+	rd->script.clear();
+	rd->params = rpcRequest.SerializeAsString();
+	return true;
+}
+
+bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
+{
+	if (!ICommand::parseResponse(rd))
+		return false;
+	try
+	{
+		rpc::AutoCompleteCodeResult result;
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		{
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
+			return false;
+		}
+
+		const auto& completions = result.completions();
+		foreach (const auto& compl, completions)
+			jresult->completions.append(QString::fromStdString(compl));
+
+		const auto& callSigs = result.call_sigs();
+		foreach (const auto& cs, callSigs)
+		{
+			jedi::SignatureMatch sm;
+			if (cs.has_cs_type())
+				sm.type = QString::fromStdString(cs.cs_type());
+			sm.name = QString::fromStdString(cs.name());
+			sm.argIndex = cs.index();
+			if (cs.has_raw_doc())
+				sm.rawDoc = QString::fromStdString(cs.raw_doc());
+
+			const auto& params = cs.params();
+			foreach (const auto param, params)
+			{
+				jedi::FuncArg arg;
+				arg.name = QString::fromStdString(param.name());
+				if (param.has_description())
+					arg.description = QString::fromStdString(param.description());
+				sm.args.append(arg);
+			}
+			jresult->sigMatches.append(sm);
+		}
+
+		return true;
+	}
+	catch (std::runtime_error e)
+	{
+		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
+	}
+	catch (...)
+	{
+		msg("%s: Unable to parse AutoCompleteCode response\n", __FUNCTION__);
 	}
 	return false;
 }

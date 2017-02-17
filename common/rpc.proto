@@ -11,6 +11,7 @@ message RpcRequest {
 		RPCT_ANALYZE_EXTERNAL_REFS		= 5;
 		RPCT_CHECK_PE_HEADERS			= 6;
 		RPCT_GET_BACKEND_INFO			= 7;
+		RPCT_AUTO_COMPLETE_CODE			= 8;
 	}
 
 	required RequestType request_type								= 1;
@@ -19,6 +20,7 @@ message RpcRequest {
 	optional ReadMemoryRegionsRequest read_memory_regions_req		= 4;
 	optional AnalyzeExternalRefsRequest analyze_external_refs_req	= 5;
 	optional CheckPEHeadersRequest check_pe_headers_req				= 6;
+	optional AutoCompleteCodeRequest auto_complete_code_req			= 7;
 }
 
 message Execute {
@@ -176,4 +178,27 @@ message GetBackendInfoResult {
 	required string dbg_name		= 2;
 	optional string dbg_ver			= 3;
 	required string labeless_ver	= 4;
+}
+
+message AutoCompleteCodeRequest {
+	required string source			= 1;
+	required uint32 zline			= 2;
+	required uint32 zcol			= 3;
+	required bool call_sig_only		= 4;
+}
+
+message AutoCompleteCodeResult {
+	message CallSignature {
+		message Param {
+			required string name		= 1;
+			optional string description	= 2;
+		}
+		optional string cs_type			= 1;
+		required string name			= 2;
+		required int32 index			= 3;
+		optional string raw_doc			= 4;
+		repeated Param params			= 5;
+	}
+	repeated string completions			= 1;
+	repeated CallSignature call_sigs	= 2;
 }

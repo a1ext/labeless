@@ -8,8 +8,13 @@
 
 #include "types.h"
 #include "labeless_ida.h"
+#include "jedi.h"
 
+// IDA
 #include <loader.hpp>
+
+// Qt
+#include <QMetaType>
 
 #ifdef __NT__
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
@@ -49,6 +54,8 @@ static int idaapi init()
 		return PLUGIN_SKIP;
 	}
 	Labeless::instance().firstInit();
+	qRegisterMetaType<QSharedPointer<jedi::Request>>("QSharedPointer<jedi::Request>");
+	qRegisterMetaType<QSharedPointer<jedi::Result>>("QSharedPointer<jedi::Result>");
 	return PLUGIN_KEEP;
 }
 

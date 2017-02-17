@@ -37,7 +37,8 @@ Settings::Settings(const std::string host_,
 	bool postProcessFixCallJumps_,
 	bool removeFuncArgs_,
 	OverwriteWarning overwriteWarning_,
-	CommentSyncFlags commentsSync_)
+	CommentSyncFlags commentsSync_,
+	bool codeCompletion_)
 	: host(host_)
 	, port(port_)
 	, enabled(enabled_)
@@ -49,6 +50,7 @@ Settings::Settings(const std::string host_,
 	, removeFuncArgs(removeFuncArgs_)
 	, overwriteWarning(overwriteWarning_)
 	, commentsSync(commentsSync_)
+	, codeCompletion(codeCompletion_)
 {
 }
 

@@ -11,10 +11,16 @@
 #include <QPointer>
 #include <QTextEdit>
 
+#include "jedi.h"
+
 QT_FORWARD_DECLARE_CLASS(QCompleter)
+QT_FORWARD_DECLARE_CLASS(QStringListModel)
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 class Highlighter;
+class PySignatureToolTip;
 struct PythonPalette;
+
 
 class TextEdit : public QTextEdit
 {
@@ -25,22 +31,47 @@ public:
 
 	bool asHighlightedHtml(QString& result);
 	void setPalette(const PythonPalette& p);
+	void markAsIDASideEditor(bool v);
+	inline bool isIDASideEditor() const { return m_IsIDASide; }
+
+signals:
+	void autoCompleteThis(QSharedPointer<jedi::Request>);
 
 public slots:
 	void colorSchemeChanged();
+	void onAutoCompleteFinished(QSharedPointer<jedi::Result> r);
 
 private slots:
 	void insertCompletion(const QString& completion);
+	void onAutoCompletionRequested();
 
 protected:
-	virtual void focusInEvent(QFocusEvent* e);
-	virtual void keyPressEvent(QKeyEvent* e);
+	void focusInEvent(QFocusEvent* e) override;
+	void keyPressEvent(QKeyEvent* e) override;
+	void focusOutEvent(QFocusEvent *e) override;
+	void mousePressEvent(QMouseEvent* e) override;
+	void mouseMoveEvent(QMouseEvent* e) override;
 
 private:
 	QString textUnderCursor() const;
+	QString textTillCursor() const;
 
 private:
+	enum CompletionType
+	{
+		CT_Unknown,
+		CT_Completions,
+		CT_CallSignature
+	};
+
 	QPointer<Highlighter> m_Highlighter;
 	QPointer<QCompleter> m_Completer;
+	QPointer<QStringListModel> m_CompletionModel;
+	QStringList m_InternalNames;
+	QPointer<QTimer> m_CompletionTimer;
+	QPointer<PySignatureToolTip> m_SignatureToolTip;
+	CompletionType m_CompletionType;
+
+	bool m_IsIDASide;
 };
 

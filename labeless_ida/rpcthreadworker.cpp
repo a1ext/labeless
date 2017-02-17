@@ -9,7 +9,9 @@
 #include "rpcthreadworker.h"
 
 #include "labeless_ida.h"
-#include "hlp.h"
+#include "util/util_ida.h"
+#include "util/util_net.h"
+#include "util/util_protobuf.h"
 #include "../common/cpp/rpc.pb.h"
 
 #include <QApplication>
@@ -77,7 +79,7 @@ void RpcThreadWorker::main()
 		{
 			if (errorMsg.isEmpty())
 				errorMsg = "connectToHost() failed";
-			hlp::addLogMsg("%s\n", errorMsg.toStdString().c_str());
+			util::ida::addLogMsg("%s\n", errorMsg.toStdString().c_str());
 			pRD->emitFailed(errorMsg);
 			continue;
 		}
@@ -105,24 +107,24 @@ void RpcThreadWorker::main()
 			const std::string message = command.SerializeAsString();
 			const uint64_t messageLen = static_cast<uint64_t>(message.length());
 
-			if (!hlp::net::sockSendBuff(s, reinterpret_cast<const char*>(&messageLen), sizeof(messageLen)))
+			if (!util::net::sockSendBuff(s, reinterpret_cast<const char*>(&messageLen), sizeof(messageLen)))
 				continue;
 
-			if (!hlp::net::sockSendString(s, message))
+			if (!util::net::sockSendString(s, message))
 				continue;
 
 			std::string strResponse;
-			if (!hlp::net::sockRecvAll(s, strResponse) || strResponse.empty())
+			if (!util::net::sockRecvAll(s, strResponse) || strResponse.empty())
 			{
-				hlp::addLogMsg("sockRecvAll() failed, error: %s\n", hlp::net::wsaErrorToString().c_str());
+				util::ida::addLogMsg("sockRecvAll() failed, error: %s\n", util::net::wsaErrorToString().toStdString().c_str());
 				continue;
 			}
 
 			auto response = std::make_shared<rpc::Response>();
-			const bool parsedOk = hlp::protobuf::parseBigMessage(*response, strResponse);
+			const bool parsedOk = util::protobuf::parseBigMessage(*response, strResponse);
 			if (!parsedOk)
 			{
-				hlp::addLogMsg("%s: rpc::Response::ParseFromString() failed\n", __FUNCTION__);
+				util::ida::addLogMsg("%s: rpc::Response::ParseFromString() failed\n", __FUNCTION__);
 
 #ifdef LABELESS_ADDITIONAL_LOGGING
 				do {
@@ -140,7 +142,7 @@ void RpcThreadWorker::main()
 			}
 			else
 			{
-				hlp::addLogMsg("OK, tasks left: %u\n", queueSize);
+				util::ida::addLogMsg("OK, tasks left: %u\n", queueSize);
 			}
 
 			if (parsedOk)

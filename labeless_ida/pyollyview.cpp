@@ -89,9 +89,10 @@ void storeTemplates(const QMap<QString, QString>& templates, StoredTemplateType 
 
 } // anonymous
 
-PyOllyView::PyOllyView(bool isShowAllResponsesInLog, QWidget* parent)
+PyOllyView::PyOllyView(bool isShowAllResponsesInLog, bool isCodeCompletionEnabled, QWidget* parent)
 	: QWidget(parent)
 	, m_UI(new Ui::PyOllyView)
+	, m_IsCodeCompletionEnabled(isCodeCompletionEnabled)
 {
 	m_UI->setupUi(this);
 	m_UI->chShowAllResponsesInLog->setChecked(isShowAllResponsesInLog);
@@ -107,6 +108,8 @@ PyOllyView::~PyOllyView()
 
 void PyOllyView::setUpGUI()
 {
+	static const int kMaxFastActions = 4;
+
 	const QString scheme = GlobalSettingsManger::instance().
 			value(GSK_ColorScheme, kColorSchemeLight).toString().toLower();
 
@@ -115,9 +118,6 @@ void PyOllyView::setUpGUI()
 
 	int idx = m_UI->cbColorScheme->findText(scheme, static_cast<Qt::MatchFlags>(Qt::MatchExactly));
 	m_UI->cbColorScheme->setCurrentIndex(idx);
-
-	m_UI->horSplitter->setStretchFactor(0, 1);
-	m_UI->horSplitter->setStretchFactor(1, 2);
 
 	m_UI->vertSplitter->setStretchFactor(0, 3);
 	m_UI->vertSplitter->setStretchFactor(1, 1);
@@ -135,7 +135,7 @@ void PyOllyView::setUpGUI()
 	m_UI->teLog->viewport()->installEventFilter(this);
 	m_UI->teLogErr->viewport()->installEventFilter(this);
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < kMaxFastActions; ++i)
 	{
 		QPushButton* pb = findChild<QPushButton*>(QString("bFastAction%1").arg(i+1));
 		if (!pb)
@@ -183,6 +183,12 @@ void PyOllyView::setUpConnections()
 		this, SLOT(onScriptEditContextMenuRequested(const QPoint&))));
 	CHECKED_CONNECT(connect(m_UI->teOllyScript, SIGNAL(customContextMenuRequested(const QPoint&)),
 		this, SLOT(onScriptEditContextMenuRequested(const QPoint&))));
+
+	if (m_IsCodeCompletionEnabled)
+	{
+		m_UI->teIDAScript->markAsIDASideEditor(true);
+		m_UI->teOllyScript->markAsIDASideEditor(false);
+	}
 }
 
 void PyOllyView::changeEvent(QEvent* e)

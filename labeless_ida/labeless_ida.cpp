@@ -69,7 +69,9 @@
 #	include <netinet/tcp.h>
 #endif // defined(__unix__) || defined(__linux__)
 
-#include "hlp.h"
+#include "util/util_ida.h"
+#include "util/util_idapython.h"
+#include "util/util_net.h"
 #include "rpcthreadworker.h"
 #include "../common/cpp/rpc.pb.h"
 #include "../common/version.h"
@@ -80,6 +82,9 @@
 #include "pyollyview.h"
 #include "pythonpalettemanager.h"
 #include "settingsdialog.h"
+#include "jedi.h"
+#include "jedicompletionworker.h"
+
 
 namespace {
 
@@ -106,7 +111,8 @@ static const Settings kDefaultSettings(
 	true,
 	false,
 	Settings::OW_AlwaysAsk,
-	Settings::CS_Disabled
+	Settings::CS_Disabled,
+	true
 );
 
 enum LabelessNodeAltType
@@ -209,6 +215,8 @@ Labeless::Labeless()
 	, m_LabelSyncOnRenameIfZero(0)
 	, m_ShowAllResponsesInLog(true)
 	, m_ThreadLock(QMutex::Recursive)
+	, m_AutoCompletionThreadLock(QMutex::Recursive)
+	, m_AutoCompletionState(new jedi::State)
 {
 	msg("%s\n", __FUNCTION__);
 #ifdef __NT__
@@ -246,6 +254,7 @@ Settings Labeless::loadSettings()
 		m_Settings.analysePEHeader = gsm.value(GSK_AnalyzePEHeader, m_Settings.analysePEHeader).toBool();
 		m_Settings.postProcessFixCallJumps = gsm.value(GSK_PostProcessFixCallJumps, m_Settings.postProcessFixCallJumps).toBool();
 		m_Settings.overwriteWarning = static_cast<Settings::OverwriteWarning>(gsm.value(GSK_OverwriteWarning, m_Settings.overwriteWarning).toInt());
+		m_Settings.codeCompletion = gsm.value(GSK_CodeCompletion, m_Settings.codeCompletion).toBool();
 	} while (0);
 
 	if (!nodeExists)
@@ -265,6 +274,7 @@ void Labeless::storeSettings()
 		gsm.setValue(GSK_AnalyzePEHeader, m_Settings.analysePEHeader);
 		gsm.setValue(GSK_PostProcessFixCallJumps, m_Settings.postProcessFixCallJumps);
 		gsm.setValue(GSK_OverwriteWarning, m_Settings.overwriteWarning);
+		gsm.setValue(GSK_CodeCompletion, m_Settings.codeCompletion);
 	} while (0);
 
 	PythonPaletteManager::instance().storeSettings();
@@ -293,7 +303,7 @@ void Labeless::setTargetHostAddr(const std::string& ip, quint16 port)
 
 void Labeless::onSyncronizeAllRequested()
 {
-	if (!m_Settings.remoteModBase && QMessageBox::No == QMessageBox::question(hlp::findIDAMainWindow(), tr("?"),
+	if (!m_Settings.remoteModBase && QMessageBox::No == QMessageBox::question(util::ida::findIDAMainWindow(), tr("?"),
 			tr("The \"Remote module base\" is zero.\nDo you want to continue?"),
 			QMessageBox::Yes, QMessageBox::No))
 		return;
@@ -356,7 +366,7 @@ void Labeless::onSyncronizeAllRequested()
 					s.erase(s.begin() + OLLY_TEXTLEN - 1, s.end());
 				if (isUtf8StringValid(s.c_str(), s.length()))
 				{
-					if (hlp::isFuncStart(ea))
+					if (util::ida::isFuncStart(ea))
 					{
 						// handle func
 						if (m_Settings.commentsSync.testFlag(Settings::CS_FuncNameAsComment))
@@ -378,7 +388,7 @@ void Labeless::onSyncronizeAllRequested()
 				}
 			}
 
-			ea = hlp::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
+			ea = util::ida::getNextCodeOrDataEA(ea, m_Settings.nonCodeNames);
 		}
 	}
 
@@ -468,7 +478,7 @@ void Labeless::onSyncronizeAllRequested()
 			if (!nonRptCmt)
 				fnJoinComment(fn->startEA, cmt);
 
-			const qlist<ea_t> refs = hlp::codeRefsToCode(fn->startEA); // hlp::dataRefsToCode(fn->startEA);
+			const qlist<ea_t> refs = util::ida::codeRefsToCode(fn->startEA); // hlp::dataRefsToCode(fn->startEA);
 
 			for (qlist<ea_t>::const_iterator it = refs.begin(), end = refs.end(); it != end; ++it)
 			{
@@ -625,7 +635,7 @@ void Labeless::onAutoanalysisFinished()
 
 bool Labeless::firstInit()
 {
-	if (QMainWindow* mw = hlp::findIDAMainWindow())
+	if (QMainWindow* mw = util::ida::findIDAMainWindow())
 	{
 		if (QMenu* m = mw->menuBar()->addMenu("Labeless"))
 		{
@@ -675,14 +685,30 @@ bool Labeless::initialize()
 	loadSettings();
 	loadImportTable();
 
-	QMutexLocker lock(&m_ThreadLock);
-	m_Thread = QPointer<QThread>(new QThread(this));
-	RpcThreadWorker* worker = new RpcThreadWorker();
-	CHECKED_CONNECT(connect(m_Thread.data(), SIGNAL(started()), worker, SLOT(main())));
-	CHECKED_CONNECT(connect(worker, SIGNAL(destroyed()), m_Thread.data(), SLOT(quit()), Qt::QueuedConnection));
-	CHECKED_CONNECT(connect(m_Thread.data(), SIGNAL(finished()), worker, SLOT(deleteLater())));
-	worker->moveToThread(m_Thread.data());
-	m_Thread->start();
+	do {
+		QMutexLocker lock(&m_ThreadLock);
+		m_Thread = QPointer<QThread>(new QThread(this));
+		RpcThreadWorker* worker = new RpcThreadWorker();
+		CHECKED_CONNECT(connect(m_Thread.data(), SIGNAL(started()), worker, SLOT(main())));
+		CHECKED_CONNECT(connect(worker, SIGNAL(destroyed()), m_Thread.data(), SLOT(quit()), Qt::QueuedConnection));
+		//CHECKED_CONNECT(connect(m_Thread.data(), SIGNAL(finished()), worker, SLOT(deleteLater())));
+		worker->moveToThread(m_Thread.data());
+		m_Thread->start();
+	} while (0);
+
+	if (m_Settings.codeCompletion)
+	{
+		QMutexLocker lock(&m_AutoCompletionThreadLock);
+		m_AutoCompletionThread = QPointer<QThread>(new QThread(this));
+		JediCompletionWorker* worker = new JediCompletionWorker();
+		CHECKED_CONNECT(connect(m_AutoCompletionThread.data(), SIGNAL(started()), worker, SLOT(main())));
+		CHECKED_CONNECT(connect(worker, SIGNAL(destroyed()), m_AutoCompletionThread.data(), SLOT(quit()), Qt::QueuedConnection));
+		//CHECKED_CONNECT(connect(m_AutoCompletionThread.data(), SIGNAL(finished()), worker, SLOT(deleteLater())));
+		CHECKED_CONNECT(connect(worker, SIGNAL(completeFinished()), this, SLOT(onAutoCompletionFinished()), Qt::QueuedConnection));
+		worker->moveToThread(m_AutoCompletionThread.data());
+		m_AutoCompletionThread->start();
+	}
+
 	m_Initialized = true;
 
 	return true;
@@ -703,16 +729,38 @@ void Labeless::terminate()
 
 	unregister_action(kSyncAllNowActionName.c_str());
 
-	QMutexLocker lock(&m_ThreadLock);
-	if (m_Thread)
-	{
-		m_QueueCond.wakeAll();
-		QEventLoop loop;
-		loop.processEvents(QEventLoop::AllEvents, 2000);
-		m_Thread = nullptr;
-	}
-	lock.unlock();
-	m_Queue.clear();
+	do {
+		QMutexLocker lock(&m_ThreadLock);
+		if (m_Thread)
+		{
+			m_QueueCond.wakeAll();
+			QEventLoop loop;
+			while (m_Thread->isRunning())
+			{
+				loop.processEvents(QEventLoop::AllEvents, 500);
+				m_Thread->wait(500);
+			}
+			m_Thread = nullptr;
+		}
+		lock.unlock();
+		m_Queue.clear();
+	} while (0);
+
+	do {
+		QMutexLocker lock(&m_AutoCompletionThreadLock);
+		if (m_AutoCompletionThread)
+		{
+			m_AutoCompletionCond.wakeAll();
+			QEventLoop loop;
+			while (m_AutoCompletionThread->isRunning())
+			{
+				loop.processEvents(QEventLoop::AllEvents, 500);
+				m_AutoCompletionThread->wait(500);
+			}
+			m_AutoCompletionThread = nullptr;
+		}
+		lock.unlock();
+	} while (0);
 
 	m_ExternSegData = ExternSegData();
 }
@@ -793,7 +841,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 			errorMsg = QString("%1: Unable to resolve host: %2, err: %3")
 				.arg(__FUNCTION__)
 				.arg(QString::fromStdString(host))
-				.arg(hlp::net::wsaErrorToString().c_str());
+				.arg(util::net::wsaErrorToString());
 			return INVALID_SOCKET;
 		}
 		addr.sin_addr.s_addr = *(ulong*)he->h_addr_list[0];
@@ -804,7 +852,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 	SOCKET s = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET)
 	{
-		errorMsg = QString("%1: socket() failed. Error %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+		errorMsg = QString("%1: socket() failed. Error %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 		return s;
 	}
 
@@ -816,7 +864,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 		{
 			if (SOCKET_ERROR == ::setsockopt(s, SOL_SOCKET, SO_KEEPALIVE, reinterpret_cast<const char*>(&bTrue), sizeof(bTrue)))
 			{
-				errorMsg = QString("%1: setsockopt(SO_KEEPALIVE) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				errorMsg = QString("%1: setsockopt(SO_KEEPALIVE) failed. LE: %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 				break;
 			}
 		}
@@ -831,7 +879,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 #endif // __NT__
 			if (SOCKET_ERROR == ::setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&recvTimeout), sizeof(recvTimeout)))
 			{
-				errorMsg = QString("%1: setsockopt(SO_RCVTIMEO) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				errorMsg = QString("%1: setsockopt(SO_RCVTIMEO) failed. LE: %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 				break;
 			}
 		}
@@ -842,7 +890,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 			DWORD dwDummy = 0;
 			if (SOCKET_ERROR == ::WSAIoctl(s, SIO_KEEPALIVE_VALS, LPVOID(&keepAliveCfg), sizeof(keepAliveCfg), nullptr, 0, &dwDummy, nullptr, nullptr))
 			{
-				errorMsg = QString("%1: WSAIoctl(SIO_KEEPALIVE_VALS) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				errorMsg = QString("%1: WSAIoctl(SIO_KEEPALIVE_VALS) failed. LE: %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 				break;
 			}
 #elif defined(__unix__) || defined(__linux__)
@@ -851,17 +899,17 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 			const quint32 dwKeepIdle = 30 * 60;
 			if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, TCP_KEEPCNT, reinterpret_cast<const char*>(&dwKeepCnt), sizeof(dwKeepCnt)))
 			{
-				errorMsg = QString("%1: setsockopt(TCP_KEEPCNT) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				errorMsg = QString("%1: setsockopt(TCP_KEEPCNT) failed. LE: %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 				//break;
 			}
 			if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, TCP_KEEPINTVL, reinterpret_cast<const char*>(&dwKeepInterval), sizeof(dwKeepInterval)))
 			{
-				errorMsg = QString("%1: setsockopt(TCP_KEEPINTVL) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				errorMsg = QString("%1: setsockopt(TCP_KEEPINTVL) failed. LE: %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 				//break;
 			}
 			if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, TCP_KEEPIDLE, reinterpret_cast<const char*>(&dwKeepIdle), sizeof(dwKeepIdle)))
 			{
-				errorMsg = QString("%1: setsockopt(TCP_KEEPIDLE) failed. LE: %2\n").arg(__FUNCTION__).arg(hlp::net::wsaErrorToString().c_str());
+				errorMsg = QString("%1: setsockopt(TCP_KEEPIDLE) failed. LE: %2\n").arg(__FUNCTION__).arg(util::net::wsaErrorToString());
 				//break;
 			}
 #endif
@@ -872,7 +920,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 				.arg(__FUNCTION__)
 				.arg(QString::fromStdString(host))
 				.arg(port)
-				.arg(hlp::net::wsaErrorToString().c_str());
+				.arg(util::net::wsaErrorToString());
 			break;
 		}
 		failed = false;
@@ -899,7 +947,7 @@ void Labeless::onPyOllyFormClose()
 
 void Labeless::onSettingsRequested()
 {
-	QMainWindow* idaw = hlp::findIDAMainWindow();
+	QMainWindow* idaw = util::ida::findIDAMainWindow();
 	if (!idaw)
 	{
 		msg("%s: Unable to find IDA Main window\n", __FUNCTION__);
@@ -937,14 +985,14 @@ void Labeless::onLoadStubDBRequested()
 	}
 	if (!::is_temp_database())
 	{
-		const auto rv = QMessageBox::question(hlp::findIDAMainWindow(), tr("?"), tr("Do you really want to load sample DB?"),
+		const auto rv = QMessageBox::question(util::ida::findIDAMainWindow(), tr("?"), tr("Do you really want to load sample DB?"),
 				QMessageBox::Yes, QMessageBox::No);
 		if (rv != QMessageBox::Yes)
 			return;
 	}
 	const QString extension = isx86 ? kDatabaseExtX86 : kDatabaseExtX64;
 
-	QString idbFileName = QFileDialog::getSaveFileName(hlp::findIDAMainWindow(),
+	QString idbFileName = QFileDialog::getSaveFileName(util::ida::findIDAMainWindow(),
 		tr("Select where to save new DB"),
 		QString("sample%1").arg(extension),
 		tr("IDA PRO IDB-file (*%1)").arg(extension));
@@ -973,7 +1021,7 @@ void Labeless::onLoadStubDBRequested()
 	QFile f(sampleFileName);
 	if (!f.open(QIODevice::WriteOnly))
 	{
-		QMessageBox::critical(hlp::findIDAMainWindow(), tr("!"), tr("Unable to open file \"%1\" for write").arg(sampleFileName));
+		QMessageBox::critical(util::ida::findIDAMainWindow(), tr("!"), tr("Unable to open file \"%1\" for write").arg(sampleFileName));
 		return;
 	}
 	f.write(raw);
@@ -1015,7 +1063,7 @@ void Labeless::onRunScriptRequested()
 	if (!idaScript.empty())
 	{
 		std::string errorMsg;
-		if (!hlp::runIDAPythonScript(idaScript, externObj, errorMsg))
+		if (!util::idapython::runScript(idaScript, externObj, errorMsg))
 		{
 			m_PyOllyView->prependStdoutLog(QString("runIDAPythonScript() failed with error: %1\n")
 				.arg(QString::fromStdString(errorMsg)));
@@ -1138,7 +1186,7 @@ void Labeless::onRunPythonScriptFinished()
 	if (req->d.ollyResultIsSet)
 	{
 		std::string error;
-		if (!hlp::setIDAPythonResultObject(req->d.ollyResult, error))
+		if (!util::idapython::setResultObject(req->d.ollyResult, error))
 			msg("%s: setIDAPythonResultObject() failed with error: %s\n", __FUNCTION__, error.c_str());
 	}
 }
@@ -1187,7 +1235,7 @@ void Labeless::onGetBackendInfoFinished()
 
 	if (!error.isEmpty())
 	{
-		QMessageBox::information(hlp::findIDAMainWindow(),
+		QMessageBox::information(util::ida::findIDAMainWindow(),
 			tr("Bad backend"),
 			error);
 		return;
@@ -1224,7 +1272,7 @@ void Labeless::onGetMemoryMapFinished()
 		return;
 	}
 	MemoryRegionList& vals = req->data;
-	ChooseMemoryDialog cmd(vals, tr("Select memory to dump"), hlp::findIDAMainWindow());
+	ChooseMemoryDialog cmd(vals, tr("Select memory to dump"), util::ida::findIDAMainWindow());
 	if (QDialog::Accepted != cmd.exec())
 		return; // canceled
 
@@ -1326,7 +1374,7 @@ bool Labeless::askForSnapshotBeforeOverwrite(const area_t* area, const segment_t
 	{
 		const QString msg = tr("%1\nExiting... The default behavior can be changed in Settings view.")
 			.arg(prefix);
-		QMessageBox::warning(hlp::findIDAMainWindow(), tr("!"), msg);
+		QMessageBox::warning(util::ida::findIDAMainWindow(), tr("!"), msg);
 		return false;
 	}
 	if (Settings::OW_AlwaysAsk == m_Settings.overwriteWarning)
@@ -1410,7 +1458,7 @@ void Labeless::onReadMemoryRegionsFinished()
 	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
 	if (!pRD)
 	{
-		msg("\n");
+		msg("%s: invalid sender\n", __FUNCTION__);
 		return;
 	}
 	auto rmr = std::dynamic_pointer_cast<ReadMemoryRegions>(pRD->iCmd);
@@ -1496,7 +1544,7 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 		return rv;*/
 	});
 
-	const auto sProtect = hlp::memoryProtectToStr(m.protect);
+	const auto sProtect = util::ida::decodeMemoryProtect(m.protect);
 
 	if (sectionIt != icInfo.sections.constEnd())
 	{
@@ -1509,30 +1557,30 @@ void Labeless::getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemo
 			: SEG_DATA;
 
 		if ((ch & IMAGE_SCN_MEM_EXECUTE) ||
-			(m.forceProtect && sProtect.find('E') != sProtect.npos))
+			(m.forceProtect && (sProtect & util::ida::MPF_EXEC)))
 			perm |= SEGPERM_EXEC;
 
 		if ((ch & IMAGE_SCN_MEM_WRITE) ||
-			(m.forceProtect && sProtect.find('W') != sProtect.npos))
+			(m.forceProtect && (sProtect & util::ida::MPF_WRITE)))
 			perm |= SEGPERM_WRITE;
 
 		if ((ch & IMAGE_SCN_MEM_READ) ||
-			(m.forceProtect && sProtect.find('R') != sProtect.npos))
+			(m.forceProtect && (sProtect & util::ida::MPF_READ)))
 			perm |= SEGPERM_READ;
 
 		return;
 	}
 	
-	if (sProtect.find('E') != sProtect.npos)
+	if (sProtect & util::ida::MPF_EXEC)
 		type = SEG_CODE;
 	else
 		type = SEG_DATA;
 
-	if (sProtect.find('E') != sProtect.npos)
+	if (sProtect & util::ida::MPF_EXEC)
 		perm |= SEGPERM_EXEC;
-	if (sProtect.find('W') != sProtect.npos)
+	if (sProtect & util::ida::MPF_WRITE)
 		perm |= SEGPERM_WRITE;
-	if (sProtect.find('R') != sProtect.npos)
+	if (sProtect & util::ida::MPF_READ)
 		perm |= SEGPERM_READ;
 }
 
@@ -1727,6 +1775,37 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 }
 
+void Labeless::onAutoCompleteRemoteFinished()
+{
+	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
+	if (!pRD)
+	{
+		msg("%s: invalid sender\n", __FUNCTION__);
+		return;
+	}
+	auto acc = std::dynamic_pointer_cast<AutoCompleteCode>(pRD->iCmd);
+	if (!acc)
+	{
+		msg("%s: Invalid type of ICommand\n", __FUNCTION__);
+		return;
+	}
+
+	auto r = pRD->property("r").value<QSharedPointer<jedi::Request>>();
+	if (!r)
+	{
+		msg("%s: jedi::Request is null\n", __FUNCTION__);
+		return;
+	}
+	
+	if (!QMetaObject::invokeMethod(r->rcv, "onAutoCompleteFinished",
+		Qt::QueuedConnection,
+		Q_ARG(QSharedPointer<jedi::Result>, acc->jresult)))
+	{
+		msg("%s: QMetaObject::invokeMethod() failed\n", __FUNCTION__);
+		return;
+	}
+}
+
 void Labeless::addAPIConst(const AnalyzeExternalRefs::PointerData& pd)
 {
 	const auto ptrSize = targetPtrSize();
@@ -1786,9 +1865,54 @@ void Labeless::onTestConnectFinished(bool ok, const QString& error)
 {
 	hide_wait_box();
 	if (ok)
-		QMessageBox::information(hlp::findIDAMainWindow(), kLabelessTitle, tr("Successfully connected!"));
+		QMessageBox::information(util::ida::findIDAMainWindow(), kLabelessTitle, tr("Successfully connected!"));
 	else
-		QMessageBox::warning(hlp::findIDAMainWindow(), kLabelessTitle, tr("Test failed, error:\n%1").arg(error));
+		QMessageBox::warning(util::ida::findIDAMainWindow(), kLabelessTitle, tr("Test failed, error:\n%1").arg(error));
+}
+
+void Labeless::onAutoCompletionFinished()
+{
+	QMutexLocker lock(&m_AutoCompletionLock);
+	if (m_AutoCompletionRequest->rcv && m_AutoCompletionResult)
+	{
+		if (!QMetaObject::invokeMethod(m_AutoCompletionRequest->rcv, "onAutoCompleteFinished",
+			Qt::QueuedConnection,
+			Q_ARG(QSharedPointer<jedi::Result>, m_AutoCompletionResult)))
+		{
+			msg("%s: QMetaObject::invokeMethod() failed\n", __FUNCTION__);
+			return;
+		}
+	}
+	m_AutoCompletionRequest.clear();
+	m_AutoCompletionResult.clear();
+	m_AutoCompletionState->state = jedi::State::RS_DONE;
+}
+
+void Labeless::onAutoCompleteRequested(QSharedPointer<jedi::Request> r)
+{
+	QMutexLocker lock(&m_AutoCompletionLock);
+	if (m_AutoCompletionState->state == jedi::State::RS_DONE) 
+	{
+		// means that user should switch state from RS_FINISHED to RS_DONE to accent new requests
+		m_AutoCompletionRequest = r;
+		m_AutoCompletionRequest->rcv = sender();
+		m_AutoCompletionState->state = jedi::State::RS_ASKED;
+	}
+	lock.unlock();
+	m_AutoCompletionCond.wakeOne();
+}
+
+void Labeless::onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r)
+{
+	// TODO: 
+	auto cmd = std::make_shared<AutoCompleteCode>();
+	cmd->source = r->script.toUtf8();
+	cmd->zline = r->zline;
+	cmd->zcol = r->zcol;
+	r->rcv = sender();
+	cmd->callSigsOnly = false; // FIXME
+	RpcDataPtr p = addRpcData(cmd, RpcReadyToSendHandler(), this, SLOT(onAutoCompleteRemoteFinished()));
+	p->setProperty("r", QVariant::fromValue(r));
 }
 
 bool Labeless::testConnect(const std::string& host, uint16_t port, QString& errorMsg)
@@ -1820,19 +1944,19 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	const std::string& message = command.SerializeAsString();
 	const uint64_t messageLen = static_cast<uint64_t>(message.length());
 
-	if (!hlp::net::sockSendBuff(s, reinterpret_cast<const char*>(&messageLen), sizeof(messageLen)))
+	if (!util::net::sockSendBuff(s, reinterpret_cast<const char*>(&messageLen), sizeof(messageLen)))
 		return false;
 
-	if (!hlp::net::sockSendString(s, message))
+	if (!util::net::sockSendString(s, message))
 	{
 		errorMsg = "sockSendString() failed";
 		return false;
 	}
 
 	std::string rawResponse;
-	if (!hlp::net::sockRecvAll(s, rawResponse) || rawResponse.empty())
+	if (!util::net::sockRecvAll(s, rawResponse) || rawResponse.empty())
 	{
-		errorMsg = QString("sockRecvAll() failed, error: %1").arg(hlp::net::wsaErrorToString().c_str());
+		errorMsg = QString("sockRecvAll() failed, error: %1").arg(util::net::wsaErrorToString());
 		return false;
 	}
 
@@ -2173,7 +2297,7 @@ int idaapi Labeless::ui_callback(void*, int notification_code, va_list va)
 			mainLayout->setMargin(0);
 			if (!ll.m_PyOllyView)
 			{
-				ll.m_PyOllyView = new PyOllyView(ll.isShowAllResponsesInLog());
+				ll.m_PyOllyView = new PyOllyView(ll.isShowAllResponsesInLog(), ll.m_Settings.codeCompletion && ll.m_AutoCompletionThread);
 				CHECKED_CONNECT(connect(ll.m_PyOllyView.data(), SIGNAL(runScriptRequested()),
 					&ll, SLOT(onRunScriptRequested())));
 				CHECKED_CONNECT(connect(ll.m_PyOllyView.data(), SIGNAL(settingsRequested()),
@@ -2351,7 +2475,7 @@ void Labeless::onKeepAndImportRequested()
 
 bool Labeless::initIDAPython()
 {
-	return hlp::initIDAPython();
+	return util::idapython::init();
 }
 
 void Labeless::onLogMessage(const QString& message, const QString& prefix)

@@ -753,4 +753,8 @@ Py_NO_ENABLE_SHARED to find out.  Also support MS_NO_COREDLL for b/w compat */
    least significant byte first */
 #define DOUBLE_IS_LITTLE_ENDIAN_IEEE754 1
 
+#if defined(_MSC_VER)
+#define HAVE_ROUND 1
+#endif // _MSC_VER
+
 #endif /* !Py_CONFIG_H */
