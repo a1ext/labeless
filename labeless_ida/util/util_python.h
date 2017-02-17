@@ -18,7 +18,9 @@ namespace python {
 
 // direct Python bindings
 bool init(QString& error);
+#if !defined(__unix__) && !defined(__linux__)
 bool safeRunString(const std::string& script, bool& exceptionOccured, std::string& error);
+#endif // !defined(__unix__) && !defined(__linux__)
 
 namespace jedi {
 

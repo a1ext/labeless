@@ -1,7 +1,15 @@
 # v 1.1.2.0
  + Added code-completion support in the Python editors, powered on `jedi`
  * Perform meta preparing even if 'Check PE-headers' is not set in the Settings.
-
+ + OllyDbg110: Added license files from the original bundle
+ * IDA: prevent editor tab close by ESC
+ * IDA: Fixed issue #20 (added option to use 'all' local function vars as comments)
+ * IDA: Don't freeze the GUI of IDA on 'Test Connection'
+ * IDA: Func local vars sync
+ * IDA: Fixed issue #18 (hanging on shutdown)
+ * IDA: About page. Check for updates button added (with wait box).
+ * IDA: qmake project added to help on Linux build
+ 
 # v 1.1.1.0
  + Added IDA for Linux support
  * Fixed issue #16 (GUI resize in high-dpi resolution/font size)
