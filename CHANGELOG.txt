@@ -1,3 +1,6 @@
+# v 1.1.2.1
+ * IDA: code-completion fixed (not only unicode)
+
 # v 1.1.2.0
  + Added code-completion support in the Python editors, powered on `jedi`
  * Perform meta preparing even if 'Check PE-headers' is not set in the Settings.

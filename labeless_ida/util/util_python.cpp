@@ -298,20 +298,36 @@ bool is_available()
 	return g_pyJedi != nullptr;
 }
 
-bool getQStringFromPyUnicode(PyObject* o, QString& rv)
+bool getQStringFromPyUnicodeOrPyString(PyObject* o, QString& rv)
 {
 	rv.clear();
 
-	if (!o || !PyUnicode_Check(o))
+	if (!o)
 		return false;
 
-    PyPTR pyUtf8Str(PyUnicode_AsUTF8String(o));
-	if (!pyUtf8Str)
+	if (PyUnicode_Check(o))
+	{
+		PyPTR pyUtf8Str(PyUnicode_AsUTF8String(o));
+		if (!pyUtf8Str)
+			return false;
+		if (const char* cstr = PyString_AsString(pyUtf8Str))
+		{
+			rv = QString::fromUtf8(cstr);
+			return true;
+		}
 		return false;
+	}
 
-	const char* cstr = PyString_AsString(pyUtf8Str);
-	rv = QString::fromUtf8(cstr);
-	return true;
+	if (PyString_Check(o))
+	{
+		if (const char* cstr = PyString_AsString(o))
+		{
+			rc = QString::fromUtf8(cstr);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 QString getErrorInfo()
@@ -336,14 +352,14 @@ QString getErrorInfo()
 		}
 		else if (val && PyUnicode_Check(val))
 		{
-            PyPTR pyUTF8str(PyUnicode_AsUTF8String(val));
+			PyPTR pyUTF8str(PyUnicode_AsUTF8String(val));
 			if (pyUTF8str && PyString_Check(pyUTF8str))
 				msg = QString::fromUtf8(PyString_AsString(pyUTF8str));
 		}
 	}
 	if (exc)
 	{
-        PyPTR tmp(PyObject_GetAttrString(exc, "__name__"));
+		PyPTR tmp(PyObject_GetAttrString(exc, "__name__"));
 		rv = PyString_AsString(tmp);
 	}
 	if (!msg.isEmpty())
@@ -402,36 +418,36 @@ bool get_completions(const QString& script,
 
 	const QByteArray& ba = script.toUtf8();
 
-    PyPTR pySource(PyString_FromStringAndSize(ba.data(), ba.size()));
+	PyPTR pySource(PyString_FromStringAndSize(ba.data(), ba.size()));
 	if (!pySource)
 	{
 		error = "Cannot create py`str` from passed script value\n" + getErrorInfo();
 		return false;
 	}
 
-    PyPTR pyLine(PyInt_FromLong(zline + 1));
-    PyPTR pyColumn(PyInt_FromLong(zcol));
+	PyPTR pyLine(PyInt_FromLong(zline + 1));
+	PyPTR pyColumn(PyInt_FromLong(zcol));
 
-    PyPTR pykwARGS(PyDict_New());
+	PyPTR pykwARGS(PyDict_New());
 	PyDict_SetItemString(pykwARGS, "source", pySource);
 	PyDict_SetItemString(pykwARGS, "line", pyLine);
 	PyDict_SetItemString(pykwARGS, "column", pyColumn);
 
-    PyPTR pyARGS(PyTuple_New(0));
-    PyPTR pyJediClassInstance(PyObject_Call(pyJediScriptClass, pyARGS, pykwARGS));
+	PyPTR pyARGS(PyTuple_New(0));
+	PyPTR pyJediClassInstance(PyObject_Call(pyJediScriptClass, pyARGS, pykwARGS));
 	if (!pyJediClassInstance)
 	{
 		error = "Cannot create a `jedi.Script` instance\n" + getErrorInfo();
 		return false;
 	}
 
-    PyPTR pyCompletionsFn(PyObject_GetAttrString(pyJediClassInstance, "completions"));
+	PyPTR pyCompletionsFn(PyObject_GetAttrString(pyJediClassInstance, "completions"));
 	if (!pyCompletionsFn)
 	{
 		error = "Cannot get `jedi.Script.completions function\n" + getErrorInfo();
 		return false;
 	}
-    PyPTR pyCompletions(PyObject_CallObject(pyCompletionsFn, NULL));
+	PyPTR pyCompletions(PyObject_CallObject(pyCompletionsFn, NULL));
 	if (!pyCompletions || !PyList_Check(pyCompletions))
 	{
 		error = "Cannot get completions\n" + getErrorInfo();
@@ -449,19 +465,19 @@ bool get_completions(const QString& script,
 		}
 
 		QString completionStr;
-        PyPTR pyCompletion(PyObject_GetAttrString(pyItem, "name"));
-		if (getQStringFromPyUnicode(pyCompletion, completionStr))
+		PyPTR pyCompletion(PyObject_GetAttrString(pyItem, "name"));
+		if (getQStringFromPyUnicodeOrPyString(pyCompletion, completionStr))
 			completions.append(completionStr);
 	}
 
-    PyPTR pyCallSigsFn(PyObject_GetAttrString(pyJediClassInstance, "call_signatures"));
+	PyPTR pyCallSigsFn(PyObject_GetAttrString(pyJediClassInstance, "call_signatures"));
 	if (!pyCallSigsFn)
 	{
 		error = "Cannot get `jedi.Script.call_signatures` function\n" + getErrorInfo();
 		return false;
 	}
 
-    PyPTR pyCallSigList(PyObject_CallObject(pyCallSigsFn, NULL));
+	PyPTR pyCallSigList(PyObject_CallObject(pyCallSigsFn, NULL));
 	if (!pyCallSigList || !PyList_Check(pyCallSigList))
 	{
 		error = "Cannot get CALL signatures\n" + getErrorInfo();
@@ -482,17 +498,17 @@ bool get_completions(const QString& script,
 		::jedi::SignatureMatch& sm = signatureMatches.back();
 
 		do {
-            PyPTR pyType(PyObject_GetAttrString(pyCS, "type"));
-			getQStringFromPyUnicode(pyType, sm.type);
+			PyPTR pyType(PyObject_GetAttrString(pyCS, "type"));
+			getQStringFromPyUnicodeOrPyString(pyType, sm.type);
 		} while (0);
 			
 		do {
-            PyPTR pyName(PyObject_GetAttrString(pyCS, "name"));
-			getQStringFromPyUnicode(pyName, sm.name);
+			PyPTR pyName(PyObject_GetAttrString(pyCS, "name"));
+			getQStringFromPyUnicodeOrPyString(pyName, sm.name);
 		} while (0);
 
 		do {
-            PyPTR pyIndex(PyObject_GetAttrString(pyCS, "index"));
+			PyPTR pyIndex(PyObject_GetAttrString(pyCS, "index"));
 			if (!pyIndex)
 				break;
 
@@ -503,10 +519,10 @@ bool get_completions(const QString& script,
 		} while (0);
 
 		do {
-            PyPTR pyRawDoc(PyObject_GetAttrString(pyCS, "raw_doc"));
+			PyPTR pyRawDoc(PyObject_GetAttrString(pyCS, "raw_doc"));
 			if (!pyRawDoc || !PyUnicode_Check(pyRawDoc))
 				break;
-            PyPTR pyUtf8RawDoc(PyUnicode_AsUTF8String(pyRawDoc));
+			PyPTR pyUtf8RawDoc(PyUnicode_AsUTF8String(pyRawDoc));
 			if (!pyUtf8RawDoc)
 				break;
 			if (const char* crawDoc = PyString_AsString(pyUtf8RawDoc))
@@ -514,7 +530,7 @@ bool get_completions(const QString& script,
 		} while (0);
 
 		do {
-            PyPTR pyParams(PyObject_GetAttrString(pyCS, "params"));
+			PyPTR pyParams(PyObject_GetAttrString(pyCS, "params"));
 			if (!pyParams || !PyList_Check(pyParams.data()))
 				break;
 				
@@ -531,13 +547,13 @@ bool get_completions(const QString& script,
 				::jedi::FuncArg arg;
 
 				do {
-                    PyPTR pyName(PyObject_GetAttrString(pyParam, "name"));
-					getQStringFromPyUnicode(pyName, arg.name);
+					PyPTR pyName(PyObject_GetAttrString(pyParam, "name"));
+					getQStringFromPyUnicodeOrPyString(pyName, arg.name);
 				} while (0);
 
 				do {
-                    PyPTR pyDescription(PyObject_GetAttrString(pyParam, "description"));
-					getQStringFromPyUnicode(pyDescription, arg.description);
+					PyPTR pyDescription(PyObject_GetAttrString(pyParam, "description"));
+					getQStringFromPyUnicodeOrPyString(pyDescription, arg.description);
 				} while (0);
 
 				if (!arg.name.isEmpty())
