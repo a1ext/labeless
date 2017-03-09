@@ -322,7 +322,7 @@ bool getQStringFromPyUnicodeOrPyString(PyObject* o, QString& rv)
 	{
 		if (const char* cstr = PyString_AsString(o))
 		{
-			rc = QString::fromUtf8(cstr);
+			rv = QString::fromUtf8(cstr);
 			return true;
 		}
 	}
