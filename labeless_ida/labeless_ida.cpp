@@ -1906,7 +1906,8 @@ void Labeless::onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r)
 {
 	// TODO: 
 	auto cmd = std::make_shared<AutoCompleteCode>();
-	cmd->source = r->script.toUtf8();
+    const auto& uscript = r->script.toUtf8();
+    cmd->source = std::string(uscript.data(), uscript.length());
 	cmd->zline = r->zline;
 	cmd->zcol = r->zcol;
 	r->rcv = sender();
