@@ -134,7 +134,8 @@ else:!mac:unix {
     else {
         IDA_LIB = ida
     }
-
+    INCLUDEPATH += /usr/include/python2.7
+    LIBS += -lpython2.7
     LIBS += -L$${IDA_PATH} -l$${IDA_LIB} -lprotobuf
 }
 
@@ -170,17 +171,24 @@ SOURCES += \
     externsegdata.cpp \
     globalsettingsmanager.cpp \
     highlighter.cpp \
-    hlp.cpp \
     idadump.cpp \
     idastorage.cpp \
+    jedi.cpp \
+    jedicompletionworker.cpp \
     labeless_ida.cpp \
     pyollyview.cpp \
+    pysignaturetooltip.cpp \
     pythonpalettemanager.cpp \
     rpcdata.cpp \
     rpcthreadworker.cpp \
     settingsdialog.cpp \
     textedit.cpp \
-    types.cpp
+    types.cpp \
+    util/util_ida.cpp \
+    util/util_idapython.cpp \
+    util/util_net.cpp \
+    util/util_protobuf.cpp \
+    util/util_python.cpp
 
 HEADERS += \
     ../common/cpp/rpc.pb.h \
@@ -190,18 +198,25 @@ HEADERS += \
     externsegdata.h \
     globalsettingsmanager.h \
     highlighter.h \
-    hlp.h \
     idadump.h \
     idastorage.h \
+    jedi.h \
+    jedicompletionworker.h \
     labeless_ida.h \
     palette.h \
     pyollyview.h \
+    pysignaturetooltip.h \
     pythonpalettemanager.h \
     rpcdata.h \
     rpcthreadworker.h \
     settingsdialog.h \
     textedit.h \
-    types.h
+    types.h \
+    util/util_ida.h \
+    util/util_idapython.h \
+    util/util_net.h \
+    util/util_protobuf.h \
+    util/util_python.h
 
 unix {
     target.path = /usr/lib
