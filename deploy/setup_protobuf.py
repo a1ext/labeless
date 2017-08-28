@@ -15,6 +15,7 @@ if ver[0] != '2' or ver[1] != '7':
 curr_script_path = path.dirname(path.realpath(__file__))
 get_pip_script = path.join(curr_script_path, 'get-pip.py')
 pip_executable = path.join(sys.exec_prefix, 'Scripts', 'pip.exe')
+easy_install = path.join(sys.exec_prefix, 'Scripts', 'easy_install.exe')
 ver_re = re.compile(r'^Version: ([\d\.]+)', re.I | re.M)
 
 try:
@@ -39,11 +40,14 @@ if p_show_protobuf.returncode == 0 and out.strip():
     if m and m.group(1) == REQUIRED_PROTOBUF_VER:
         print 'Protobuf check is OK'
         exit(0)
-p_install_protobuf = subprocess.Popen([pip_executable, 'install', 'protobuf==%s' % REQUIRED_PROTOBUF_VER], shell=True)
+
+egg_file = path.join(path.abspath(path.dirname(path.realpath(__file__))), 'protobuf-2.6.1-py2.7.egg')
+p_install_protobuf = subprocess.Popen([easy_install, egg_file], shell=True)
 p_install_protobuf.communicate()
 if p_install_protobuf.returncode != 0:
     print >> sys.stderr, 'pip install failed, stderr: %s' % err
     exit(4)
+
 p_show_protobuf = subprocess.Popen(cmd_show_protobuf, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 out, err = p_show_protobuf.communicate()
 print out
