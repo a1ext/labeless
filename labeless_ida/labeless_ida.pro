@@ -26,6 +26,8 @@ win32 {
 else:unix {
     SDK_PATH = $$PWD/../idasdk695/
     IDA_PATH = $$PWD/../idademo695/
+    QMAKE_CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+    QMAKE_CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
 }
 else:mac {
     error("mac platform doesn't supported right now")
