@@ -27,6 +27,9 @@ AS_IF([test "x${ac_cv_env_CFLAGS_set}" = "x"],
 AS_IF([test "x${ac_cv_env_CXXFLAGS_set}" = "x"],
       [CXXFLAGS=""])
 
+      
+CFLAGS="$CFLAGS -D_GLIBCXX_USE_CXX11_ABI=0 "  
+CXXFLAGS="$CXXFLAGS -D_GLIBCXX_USE_CXX11_ABI=0 "    
 AC_CANONICAL_TARGET
 
 AM_INIT_AUTOMAKE([subdir-objects])

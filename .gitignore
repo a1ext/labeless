@@ -46,3 +46,6 @@
 /deploy/build
 *.udd
 *.dmp
+/deploy/MANIFEST
+/deploy/README.rst
+/deploy/dist
