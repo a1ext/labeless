@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libprotobuf", "protobuf-2.6.1\vsprojects\libprotobuf.vcxproj", "{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release_DeFixed|Win32 = Release_DeFixed|Win32
+		Release_DeFixed|x64 = Release_DeFixed|x64
+		Release_vc120_mb|Win32 = Release_vc120_mb|Win32
+		Release_vc120_mb|x64 = Release_vc120_mb|x64
+		Release_vc120_uni|Win32 = Release_vc120_uni|Win32
+		Release_vc120_uni|x64 = Release_vc120_uni|x64
+		Release_x64|Win32 = Release_x64|Win32
+		Release_x64|x64 = Release_x64|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_DeFixed|Win32.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_DeFixed|Win32.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_DeFixed|x64.ActiveCfg = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_DeFixed|x64.Build.0 = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_mb|Win32.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_mb|Win32.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_mb|x64.ActiveCfg = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_mb|x64.Build.0 = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_uni|Win32.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_uni|Win32.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_uni|x64.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_vc120_uni|x64.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_x64|Win32.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_x64|Win32.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_x64|x64.ActiveCfg = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release_x64|x64.Build.0 = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release|Win32.ActiveCfg = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release|Win32.Build.0 = Release|Win32
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release|x64.ActiveCfg = Release|x64
+		{3E283F37-A4ED-41B7-A3E6-A2D89D131A30}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
