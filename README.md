@@ -1,9 +1,9 @@
 Contributed By Check Point Software Technologies LTD.
 
+[![Join the chat at https://gitter.im/labeless/Lobby](https://badges.gitter.im/labeless/Lobby.svg)](https://gitter.im/labeless/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Features
 ========
-
-[![Join the chat at https://gitter.im/labeless/Lobby](https://badges.gitter.im/labeless/Lobby.svg)](https://gitter.im/labeless/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## 1. Seamless synchronization of labels, function names, comments and global variables (w/wo demangling)
 
