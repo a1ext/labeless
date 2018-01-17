@@ -9,6 +9,7 @@
 #include "pyollyview.h"
 #include "ui_pyollyview.h"
 #include "types.h"
+#include "compat.h"
 #include "pythonpalettemanager.h"
 
 #include <QEvent>
@@ -342,7 +343,7 @@ void PyOllyView::onScriptEditContextMenuRequested(const QPoint& pt)
 
 			if (!templates.contains(name))
 				break;
-			const int sel = askyn_c(ASKBTN_NO,
+			const int sel = ASK_YN(ASKBTN_NO,
 				"The template with name '%s' is already saved. Do you want to update it?",
 				name.toStdString().c_str());
 			if (sel == ASKBTN_YES)
@@ -405,7 +406,7 @@ void PyOllyView::onFastActionRequested()
 	if (((!m_UI->teIDAScript->toPlainText().isEmpty() && m_UI->teIDAScript->toPlainText() != idaScript) ||
 		(!m_UI->teOllyScript->toPlainText().isEmpty() && m_UI->teOllyScript->toPlainText() != ollyScript)))
 	{
-		if (ASKBTN_YES != askyn_c(ASKBTN_YES, "Do you want to execute stored FastAction (current scripts will be lost)?"))
+		if (ASKBTN_YES != ASK_YN(ASKBTN_YES, "Do you want to execute stored FastAction (current scripts will be lost)?"))
 			return;
 	}
 	m_UI->teIDAScript->setPlainText(idaScript);

@@ -52,14 +52,14 @@
 
 #ifdef __NT__
 #pragma warning(push)
-#pragma warning(disable:4309)           // disable "truncation of constant value" warning from IDA SDK
+#pragma warning(disable:4309 4244 4267)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
 #endif // __NT__
 #include <pro.h>
+#include <ida.hpp>
+#include <idp.hpp>
 #ifdef __NT__
 #pragma warning(pop)
 #endif // __NT__
-#include <ida.hpp>
-#include <idp.hpp>
 
 #undef wait // Stupid undef 'wait' (added by IDA SDK) to allow to call m_QueueCond.wait(lock)
 
@@ -71,6 +71,7 @@
 #include <QSharedPointer>
 #include <QPointer>
 #include <QList>
+
 
 QT_FORWARD_DECLARE_CLASS(QObject);
 
@@ -267,11 +268,11 @@ typedef std::unordered_map<uint64_t, std::string> ExternRefDataMap;
 #define MY_PRIXPTR      MY_PFX_PTR "X"
 
 
-#ifdef __X64__
+#ifdef __EA64__
 #	define LL_FMT_EA_T  "llX"
-#else
+#else // __EA64__
 #	define LL_FMT_EA_T  "X"
-#endif
+#endif // __EA64__
 
 
 #if !defined(__NT__) && !defined(__unix__) && !defined(__unix__)

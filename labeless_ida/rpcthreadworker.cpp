@@ -52,7 +52,7 @@ void RpcThreadWorker::main()
 			{
 				pRD = *it;
 				ll.m_Queue.erase(it);
-				queueSize = ll.m_Queue.size();
+				queueSize = static_cast<unsigned>(ll.m_Queue.size());
 				break;
 			}
 		}

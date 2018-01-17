@@ -31,7 +31,7 @@ Overview
 Labeless is a plugin system for **dynamic, seamless and realtime synchronization between IDA Database and debug backend**.
 It consists of two parts: IDA plugin and debug backend's plugin.
 
-Labeless significantly reduces time that researcher spends on transferring already reversed\documented code information from IDA (static) to debugger (dynamic). It saves time, preventing from doing the same job twice. Also, you can document and add data to the IDB on the fly and your changes will be automatically propagated to debug backend, even if you will restart the virtual machine or instance of debug backend will crash. So, you will never lose your research.
+Labeless significantly reduces time that researcher spends on transferring already reversed/documented code information from IDA (static) to debugger (dynamic). It saves time, preventing from doing the same job twice. Also, you can document and add data to the IDB on the fly and your changes will be automatically propagated to debug backend, even if you will restart the virtual machine or instance of debug backend will crash. So, you will never lose your research.
 
 This solution is highly upgradable. You can implement any helper scripts in Python on debug backend's side and then just call them from IDA with one line of code, parsing the results and automatically propagating changes to IDB.
 
@@ -59,7 +59,7 @@ Installation
 If you want to use both x86 and x86_64 targets, then you should do the following steps for each python distro.
 
 * Set up Python 2.7 (x86/x86_64)
-* Copy ```deploy``` direcotry to target machine, where you want to use a debugger backend
+* Copy `deploy` direcotry to target machine, where you want to use a debugger backend
 * Set up protobuf 2.6.1 using the following commands:
 
 ```bat
@@ -73,10 +73,10 @@ cd c:\deploy
 c:\Python27\python.exe setup.py install
 ```
 
-* Configure your debugger backend: set up ```plugins``` directory
+* Configure your debugger backend: set up `plugins` directory
 
 ## Configuring of your IDA PRO:
-Labeless supports **Windows** and **Linux** (starting from 6.9.5 version of) IDA PRO. Labeless handles only PE/AMD64 binaries. Labeless requires **IDAPython** plugin ```python.[plw|p64|plx|plx64]``` (it ships with IDA PRO, but make sure it works well).
+Labeless supports **Windows** and **Linux** (starting from 6.9.5 version of) IDA PRO. Labeless handles only PE/AMD64 binaries. Labeless requires **IDAPython** plugin `python.[plw|p64|plx|plx64]` (it ships with IDA PRO, but make sure it works well).
 
 There are plugins:
 ```
@@ -86,27 +86,27 @@ IDA[XX]\plugins\labeless_ida.plx - for IDA for Linux, handles 32-bit binaries (u
 IDA[XX]\plugins\labeless_ida.plx64 - for IDA for Linux, handles 64-bit binaries (used with idaq64)
 ```
 
-Copy Labeless plugins to your IDA's ```plugins``` directory, for example ```c:\IDA68\plugins```
+Copy Labeless plugins to your IDA's `plugins` directory, for example `c:\IDA68\plugins`
 
-* In case you have IDA for Windows, please, use ```.plw```/```.p64``` plugins.
+* In case you have IDA for Windows, please, use `.plw`/`.p64` plugins.
 
-* If you have IDA for Linux, please, use ```.plx```/```.plx64``` plugins. Also, copy ```IDA[XX]/libprotobuf.so.9``` to your IDA home directory (for example ```/home/alex/ida695/````), it's an important library.
+* If you have IDA for Linux, please, use `.plx`/`.plx64` plugins. Also, copy `IDA[XX]/libprotobuf.so.9` to your IDA home directory (for example `/home/alex/ida695/`), it's an important library.
 
 ## Configuring of debug backends
 ### 1. OllyDbg 1.10
-You may find prepared debugger in the following directory ```OllyDbg110```. (Note!: Don't forget to set up debugger's ```plugins``` directory).
+You may find prepared debugger in the following directory `OllyDbg110`. (Note!: Don't forget to set up debugger's `plugins` directory).
 
 ### 1.1 DeFixed 1.10 (FOFF's team mod)
-Copy ```DeFixed110\plugins\labeless_olly_foff.dll``` to DeFixed ```plugins``` directory (Note!: Don't forget to set up debugger's ```plugins``` directory)
+Copy `DeFixed110\plugins\labeless_olly_foff.dll` to DeFixed `plugins` directory (Note!: Don't forget to set up debugger's `plugins` directory)
 
 ### 2. OllyDbg 2.01
-You may find prepared debugger in the following directory ```OllyDbg201```. (Note!: Don't forget to set up debugger's ```plugins``` directory).
+You may find prepared debugger in the following directory `OllyDbg201`. (Note!: Don't forget to set up debugger's `plugins` directory).
 
 ### 3. x64dbg (x32,x64)
-You may find prepared debugger in the following directory ```x64dbg```.
+You may find prepared debugger in the following directory `x64dbg`.
 
 # Checking if everything works
- * Start debug backend (debugger) and check for _Labeless_ item presence in the _Plugins_ menu. If there is any problem, then check Olly's log window for details. Open the log window and check for ```LL: ok, binded at <IP>:<PORT>``` message, its presence means that debug backend-side plugin is initialized successfully. Note: if you start many debuggers, you may see that the following message appears
+ * Start debug backend (debugger) and check for _Labeless_ item presence in the _Plugins_ menu. If there is any problem, then check Olly's log window for details. Open the log window and check for `LL: ok, binded at <IP>:<PORT>` message, its presence means that debug backend-side plugin is initialized successfully. Note: if you start many debuggers, you may see that the following message appears
 
 ![port_auto_select.png](docs/port_auto_select.png)
 
@@ -116,13 +116,13 @@ Also, you may see the firewall alert
 
 If you want to access the debug backend from another computer, you should allow the backend to listen by this dialog or manually.
 
- * Start working with existing IDA database or use ```Labeless``` -> ```Load stub database...``` from the menu
+ * Start working with existing IDA database or use `Labeless` -> `Load stub database...` from the menu
  * Open Labeless settings dialog using any of the following actions:
-    * menu ```Edit``` -> ```Plugins``` -> ```Labeless```
-    * main menu ```Labeless``` -> ```Settings...```
-    * hotkey ```Alt+Shift+E```
+    * menu `Edit` -> `Plugins` -> `Labeless`
+    * main menu `Labeless` -> `Settings...`
+    * hotkey `Alt+Shift+E`
  * Enter **IP address** and **port** of the guest machine (where debug backend is set up), then click on '_Test connection'_ button
- * If IDA displays the message ```Successfully connected!```, then configuration is done correctly.
+ * If IDA displays the message `Successfully connected!`, then configuration is done correctly.
 
 
 ## Development
@@ -131,7 +131,7 @@ If you want to access the debug backend from another computer, you should allow 
 * protobuf 2.6.1
 * Visual Studio 2010 + Qt 4.8.4 (built with "QT" namespace) - required by **IDA's 6.8** plugin (to proper use IDA's Qt). You can configure Qt by yourself with the following command:
 
-```configure -platform win32-msvc2010 -shared -release -no-webkit -opensource -no-qt3support -no-phonon -no-phonon-backend -opengl desktop  -nomake demos -nomake examples -nomake tools -no-script -no-scripttools -no-declarative -qtnamespace QT```
+`configure -platform win32-msvc2010 -shared -release -no-webkit -opensource -no-qt3support -no-phonon -no-phonon-backend -opengl desktop  -nomake demos -nomake examples -nomake tools -no-script -no-scripttools -no-declarative -qtnamespace QT`
 
 * Visual Studio 2015 + Qt 5.4.1 to build IDA's 6.9 and debug backend plugins. You should build Qt 5.4.1 from sources. Do the following steps to do that:
     * Download sources of Qt 5.4.1 from  [http://download.qt.io/official_releases/qt/5.4/5.4.1/single/](http://download.qt.io/official_releases/qt/5.4/5.4.1/single/qt-everywhere-opensource-src-5.4.1.7z)
@@ -152,7 +152,7 @@ If you want to access the debug backend from another computer, you should allow 
 Repeatable - are comments, which IDA shows in any referenced place.
 
  * If you want to sync labels right now - press '_Sync now_' button. Labeless will sync all found names in your IDB with Olly. Settings dialog will be automatically closed, while saving all settings
- * Also, you may use ```Labeless``` -> ```Sync labels now``` from IDA's main menu
+ * Also, you may use `Labeless` -> `Sync labels now` from IDA's main menu
  * If you want to customize settings for IDADump engine, do it in the '_IDADump_' tab.
  * To save changed settings, click on '_Save & Close_'
 

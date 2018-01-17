@@ -7,6 +7,7 @@
  */
 
 #include <memory>
+#include <set>
 #include <string>
 
 #include <QAtomicInt>
@@ -18,11 +19,12 @@
 #include <QThread>
 #include <QWaitCondition>
 
-#include "types.h"
+#include "compat.h"
 #include "externsegdata.h"
 #include "sync/sync.h"
 #include "rpcdata.h"
 #include "idadump.h"
+
 
 // fwd
 QT_FORWARD_DECLARE_CLASS(QAction)
@@ -36,6 +38,13 @@ struct State;
 struct Result;
 struct Request;
 } // jedi
+
+
+#if (IDA_SDK_VERSION < 700)
+typedef int hook_cb_t_ret_type_t;
+#else // IDA_SDK_VERSION < 700
+typedef ::ssize_t hook_cb_t_ret_type_t;
+#endif // IDA_SDK_VERSION < 700
 
 
 class Labeless : public QObject
@@ -95,9 +104,13 @@ public:
 
 	static bool testConnect(const std::string& host, uint16_t port, QString& errorMsg);
 
-	static int idaapi ui_callback(void* /*user_data*/, int notification_code, va_list va);
-	static int idaapi idp_callback(void* /*user_data*/, int notification_code, va_list va);
-	static int idaapi idb_callback(void* /*user_data*/, int notification_code, va_list va);
+	static hook_cb_t_ret_type_t idaapi ui_callback(void* /*user_data*/, int notification_code, va_list va);
+	static hook_cb_t_ret_type_t idaapi idp_callback(void* /*user_data*/, int notification_code, va_list va);
+	static hook_cb_t_ret_type_t idaapi idb_callback(void* /*user_data*/, int notification_code, va_list va);
+
+	inline const Settings& settings() const { return m_Settings; }
+	inline bool pauseNotificationHanlingEnabled() const { return m_PauseNotificationHandlingEnabled; }
+	inline WORD pauseNotificationPort() const { return m_PauseNotificationPort; }
 
 private slots:
 	void onRunPythonScriptFinished();
@@ -130,6 +143,8 @@ public slots:
 	void onAutoCompletionFinished();
 	void onAutoCompleteRequested(QSharedPointer<jedi::Request> r);
 	void onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r);
+	void onPauseNotificationReceived(void*);
+	void onTogglePauseNotificationHandling(bool enabled);
 
 private:
 	static SOCKET connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive = true, quint32 recvtimeout = 30 * 60 * 1000);
@@ -150,17 +165,16 @@ private:
 
 	Settings loadSettings();
 	void storeSettings();
-
-	bool isUtf8StringValid(const char* const s, size_t len) const;
+	bool isDbgBackendNotificatiosAllowed(const std::string& backendId);
 
 private:
 	bool addAPIEnumValue(const std::string& name, uval_t value);
 	void addAPIConst(const AnalyzeExternalRefs::PointerData& pd);
 	bool mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size);
-	segment_t* getFirstOverlappedSegment(const area_t& area, segment_t* exceptThisSegment);
-	bool createSegment(const area_t& area, uchar perm, uchar type, const std::string& data, segment_t& result);
+	//segment_t* getFirstOverlappedSegment(const area_t& area, segment_t* exceptThisSegment);
+	bool createSegment(const compat::IDARange& area, uchar perm, uchar type, const std::string& data, segment_t& result);
 	void getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemoryRegions::t_memory& m, uchar& perm, uchar& type) const;
-	bool askForSnapshotBeforeOverwrite(const area_t* area, const segment_t* seg, bool& snapshotTaken);
+	bool askForSnapshotBeforeOverwrite(const compat::IDARange* area, const segment_t* seg, bool& snapshotTaken);
 
 	bool make_dword_ptr(ea_t ea, asize_t size);
 public:
@@ -190,7 +204,7 @@ private:
 	QWaitCondition					m_QueueCond;
 
 	// GUI
-	static TForm*					m_EditorTForm;
+	static compat::TWidget*			m_EditorTForm;
 	QPointer<PyOllyView>			m_PyOllyView;
 
 	qlist<segment_t>				m_CreatedSegments;
@@ -199,6 +213,7 @@ private:
 	QList<IDADump>					m_DumpList;
 	QMap<uint64_t, LogItem>			m_LogItems;
 	QList<QAction*>					m_MenuActions;
+	QAction*						m_PauseNotificationMenuAction;
 
 	// auto-completion vars
 	mutable QMutex					m_AutoCompletionLock;
@@ -208,4 +223,12 @@ private:
 	QSharedPointer<jedi::Result>	m_AutoCompletionResult;
 	QSharedPointer<jedi::State>		m_AutoCompletionState;
 	QWaitCondition					m_AutoCompletionCond;
+
+	// pause notification stuff
+	bool							m_PauseNotificationHandlingEnabled;
+	QPointer<QThread>				m_PauseNotificationThread;
+	QMutex							m_PauseNotificationThreadLock;
+	ea_t							m_PauseNotificationCursor;
+	WORD							m_PauseNotificationPort;
+	std::set<std::string>			m_PauseNotificationAllowedClients;
 };

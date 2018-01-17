@@ -2,8 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <IDA_DIR>c:\IDA68\</IDA_DIR>
-    <SDK_DIR>c:\IDA68\idasdk68\</SDK_DIR>
+    <IDA_DIR>m:\!re\IDA68\</IDA_DIR>
+    <SDK_DIR>m:\!re\IDA68\idasdk68\</SDK_DIR>
+    <IDA_SUFFIX>68</IDA_SUFFIX>
+    <QTDIR>E:\Qt\4.8.4_msvc2010</QTDIR>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
@@ -14,6 +16,14 @@
     </BuildMacro>
     <BuildMacro Include="SDK_DIR">
       <Value>$(SDK_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="IDA_SUFFIX">
+      <Value>$(IDA_SUFFIX)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="QTDIR">
+      <Value>$(QTDIR)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

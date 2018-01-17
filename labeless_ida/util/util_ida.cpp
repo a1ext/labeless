@@ -8,7 +8,8 @@
 
 #include "util_ida.h"
 #include "../labeless_ida.h"
- 
+#include "../compat.h"
+
 // Qt
 #include <QApplication>
 #include <QMainWindow>
@@ -19,6 +20,8 @@
 
 // IDA
 #include <expr.hpp>
+#include <../ldr/idaldr.h>
+
 
 namespace util {
 namespace ida {
@@ -122,7 +125,7 @@ MemProtFlag decodeMemoryProtect(quint32 p)
 
 qlist<ea_t> codeRefsToCode(ea_t ea)
 {
-	if (!isCode(get_flags_novalue(ea)))
+	if (!compat::is_code(compat::get_flags(ea)))
 		return qlist<ea_t>();
 	ea_t eCref = get_first_fcref_to(ea);
 	if (eCref == BADADDR)
@@ -137,7 +140,7 @@ qlist<ea_t> codeRefsToCode(ea_t ea)
 
 qlist<ea_t> dataRefsToCode(ea_t ea)
 {
-	if (!isCode(get_flags_novalue(ea)))
+	if (!compat::is_code(compat::get_flags(ea)))
 		return qlist<ea_t>();
 	ea_t eDref = get_first_dref_to(ea);
 	if (eDref == BADADDR)
@@ -157,8 +160,8 @@ ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames)
 		auto flags = get_aflags(ea);
 		if ((flags & (1 << 0xE)))
 			return ea;
-		flags = get_flags_novalue(ea);
-		if (::isEnabled(ea) && (isCode(flags) || (nonCodeNames && isData(flags))))
+		flags = compat::get_flags(ea);
+		if (compat::is_enabled(ea) && (compat::is_code(flags) || (nonCodeNames && compat::is_data(flags))))
 			return ea;
 	}
 	return BADADDR;
@@ -170,7 +173,7 @@ bool isFuncStart(ea_t ea)
 		return false;
 
 	func_t* fn = get_func(ea);
-	return fn && fn->startEA == ea;
+	return fn && START_RANGE_EA(fn) == ea;
 }
 
 QMainWindow* findIDAMainWindow()
@@ -178,11 +181,14 @@ QMainWindow* findIDAMainWindow()
 	static QPointer<QMainWindow> mainWindow;
 	if (mainWindow)
 		return mainWindow;
+
+#if (IDA_SDK_VERSION < 700)
 	if (WId hwnd = reinterpret_cast<WId>(callui(ui_get_hwnd).vptr))
 	{
 		if (mainWindow = qobject_cast<QMainWindow*>(QWidget::find(hwnd)))
 			return mainWindow;
 	}
+#endif // IDA_SDK_VERSION < 700
 
 	// fallback: when we cannot get the main window using callui
 	static const QString kIDAMainWindowClassName = "IDAMainWindow";
@@ -201,6 +207,22 @@ QMainWindow* findIDAMainWindow()
 	return nullptr;
 }
 
+bool isExternSeg(::segment_t* s)
+{
+	if (!s)
+		return false;
+
+	if ((s->type & SEG_XTRN) != SEG_XTRN)
+		return false;
+	
+#if (IDA_SDK_VERSION < 700)
+	char segBuff[MAXSTR] = {};
+	return get_segm_name(s, segBuff, MAXSTR) > 0 && std::string(segBuff) == NAME_EXTERN;
+#else // IDA_SDK_VERSION < 700
+	::qstring segname;
+	return ::get_segm_name(&segname, s) > 0 && segname == NAME_EXTERN;
+#endif // IDA_SDK_VERSION < 700	
+}
 
 
 } // ida

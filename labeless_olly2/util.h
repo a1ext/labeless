@@ -27,8 +27,21 @@ xstring xformat(const wchar_t* fmt, ...);
 std::wstring mb2w(const std::string& v);
 std::string w2mb(const std::wstring& v);
 
+std::string hexlify(const BYTE* data, SIZE_T len);
 std::deque<xstring> split(const xstring& s, const xstring& delimitersRE = L"\r|\n");
 std::string randStr(int len);
+
+#include <PshPack1.h>
+struct PausedInfo
+{
+	ulong          ip;                   // Instruction pointer (EIP)
+	ulong          r[NREG];              // EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI
+	ulong          flags;                // Flags
+	ulong          s[NSEG];              // Segment registers ES,CS,SS,DS,FS,GS
+};
+#include <poppack.h>
+
+bool broadcastPaused(const PausedInfo& info, const GUID& instanceId);
 
 inline xstring to_xstr(const char* v)
 {

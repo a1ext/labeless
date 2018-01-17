@@ -9,5 +9,6 @@
         <file>refresh.png</file>
         <file>stub.exe.bin</file>
         <file>stub64.exe.bin</file>
+        <file>pause_notif.png</file>
     </qresource>
 </RCC>

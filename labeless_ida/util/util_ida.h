@@ -40,6 +40,7 @@ qlist<ea_t> dataRefsToCode(ea_t ea);
 ea_t getNextCodeOrDataEA(ea_t ea, bool nonCodeNames);
 bool isFuncStart(ea_t ea);
 QMainWindow* findIDAMainWindow();
+bool isExternSeg(::segment_t* s);
 
 } // ida
 } // util

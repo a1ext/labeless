@@ -438,6 +438,8 @@ static const std::string kJsonModuleName = "json";
 static const std::string kJsonLoadsFuncName = "loads";
 static const std::string kLabelessPythonModuleName = "labeless";
 static const std::string kLabelessSerializeResultFuncName = "serialize_result";
+static const WORD kDefaultNotificationPort = 12344;
+
 
 DWORD pyExecExceptionFilter(DWORD code, _EXCEPTION_POINTERS* ep)
 {
@@ -664,9 +666,13 @@ Labeless::Labeless()
 	: m_hInst(nullptr)
 	, m_Port(defaultPort())
 	, m_LogList(nullptr)
+	, m_NotificationPort(kDefaultNotificationPort)
+	, m_PauseNotificationsEnabled(false)
 {
 	__asm __volatile finit; // Stupid Olly's bug fix
 	::google::protobuf::SetLogHandler(protobufLogHandler);
+
+	CoCreateGuid(&m_InstanceId);
 }
 
 Labeless::~Labeless()
@@ -910,6 +916,68 @@ void Labeless::onSetIPFilter()
 		return;
 	m_FilterIP = m[1].str() + _T(".") + m[2].str() + _T(".") + m[3].str() + _T(".") + m[4].str();
 	storeFilterIP(m_FilterIP);
+}
+
+void Labeless::onSetPauseNotificationBroadcastPort()
+{
+	ulong port = m_NotificationPort;
+	if (Getdword(hwollymain, _T("Enter notification port value"), &port, 2, 0, 0, 0, DIA_DWORD | DIA_DATAVALID) != 0)
+		return;
+	m_NotificationPort = static_cast<WORD>(port);
+	m_PauseNotificationsEnabled = true;
+	log_r("Pause Notifications broadcasting ENABLED and set to port: %u.", port);
+}
+
+void Labeless::onDisablePauseNotificationsBroadcast()
+{
+	m_PauseNotificationsEnabled = false;
+	log_r("Pause Notifications broadcasting DISABLED");
+}
+
+void Labeless::notifyPaused()
+{
+	if (!m_PauseNotificationsEnabled)
+		return;
+
+	t_reg* regs = Threadregisters(::run.threadid);
+	if (!regs)
+		return;
+
+	util::PausedInfo tmp;
+	tmp.ip = regs->ip;
+	memcpy(tmp.r, regs->r, sizeof(tmp.r));
+	tmp.flags = regs->flags;
+	memcpy(tmp.s, regs->s, sizeof(tmp.s));
+
+	// TODO
+	uchar cmd[MAXCMDSIZE] = {};
+	uchar udec[TEXTLEN] = {};
+	auto len = Readmemory(cmd, regs->ip, MAXCMDSIZE, MM_FAILGUARD | MM_PARTIAL | MM_SILENT);
+	t_disasm dis = {};
+	t_predict predict = {};
+	ulong decodeSize = 0;
+	uchar* d = Finddecode(regs->ip, &decodeSize);
+	if (len > decodeSize)
+		d = udec;
+	len = Disasm(cmd, len, regs->ip, d, &dis, DA_TEXT | DA_OPCOMM | DA_MEMORY | DA_SHOWARG, regs, &predict);
+	if (len)
+	{
+		for (BYTE i = 0; i < NOPERAND && (dis.op[i].features /* & 0x808FF*/); ++i)
+		{
+			const auto& op = dis.op[i];
+			Addtolist(0, BLACK, L"LL: opnd%u = %s, %s, addr: %08x, u: %08x, features: %08x",
+				i,
+				op.comment[0] ? op.comment : L"<none>",
+				op.text[0] ? op.text : L"<none>",
+				op.addr,
+				op.u,
+				op.features
+				);
+		}
+	}
+	const bool ok = util::broadcastPaused(tmp, m_InstanceId);
+	if (!ok)
+		Addtolist(0, BLACK, L"LL: %s: paused at %x, send failed, le: %x", __FUNCTION__, ::run.eip, GetLastError());
 }
 
 void Labeless::stopServer()

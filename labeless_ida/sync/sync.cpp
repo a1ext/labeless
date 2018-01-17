@@ -36,7 +36,7 @@ bool ICommand::parseResponse(QPointer<RpcData> rd)
 
 		error = rd->response->error();
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 		return false;
@@ -101,7 +101,7 @@ bool ExecPyScript::parseResponse(QPointer<RpcData> rd)
 		}
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}
@@ -117,7 +117,7 @@ bool LabelsSync::serialize(QPointer<RpcData> rd) const
 	try
 	{
 		rpc::RpcRequest rpcRequest;
-		rpcRequest.set_request_type(rpc::RpcRequest::RPCT_MAKE_NAMES); 
+		rpcRequest.set_request_type(rpc::RpcRequest::RPCT_MAKE_NAMES);
 		rpc::MakeNamesRequest* const request = rpcRequest.mutable_make_names_req();
 		request->set_base(base);
 		request->set_remote_base(remoteBase);
@@ -212,7 +212,7 @@ bool GetMemoryMapReq::parseResponse(QPointer<RpcData> rd)
 		}
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}
@@ -283,7 +283,7 @@ bool ReadMemoryRegions::parseResponse(QPointer<RpcData> rd)
 		}
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}
@@ -367,7 +367,7 @@ bool AnalyzeExternalRefs::parseResponse(QPointer<RpcData> rd)
 		}
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}
@@ -443,7 +443,7 @@ bool CheckPEHeaders::parseResponse(QPointer<RpcData> rd)
 		}
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}
@@ -488,7 +488,7 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}
@@ -558,7 +558,7 @@ bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
 
 		return true;
 	}
-	catch (std::runtime_error e)
+	catch (const std::runtime_error& e)
 	{
 		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
 	}

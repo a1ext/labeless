@@ -7,6 +7,7 @@
  */
 
 #include "types.h"
+#include "resource.h"
 
 #include <strsafe.h>
 #include <intsafe.h>
@@ -26,7 +27,9 @@ enum MenuAction
 	MA_SetPort,
 	MA_SetIncommingIPFiltering,
 	MA_ShowConfig,
-	MA_About
+	MA_About,
+	MA_SetBroadcastPort,
+	MA_DisableBroadcast
 };
 
 
@@ -44,7 +47,7 @@ static t_menu kMainMenu [] =
 	},
 	{
 		L"|Set listening port...",
-		L"Sets the listenimg port.",
+		L"Sets the listening port.",
 		K_NONE, handle_menu, NULL, MA_SetPort
 	},
 	{
@@ -53,17 +56,43 @@ static t_menu kMainMenu [] =
 		K_NONE, handle_menu, NULL, MA_SetIncommingIPFiltering
 	},
 	{
+		L"Set Broadcast Port...",
+		L"Set Pause Notification Broadcast Port.",
+		K_NONE, handle_menu, NULL, MA_SetBroadcastPort
+	},
+	{
+		L"Disable Broadcast",
+		L"Disable Pause Notifications Broadcasting.",
+		K_NONE, handle_menu, NULL, MA_DisableBroadcast
+	},
+	{
 		L"|Show config",
 		L"Shows configuration dialog.",
 		K_NONE, handle_menu, NULL, MA_ShowConfig
 	},
 	{
 		L"|About",
-		L"Fire the about messagebox.",
+		L"Fire the about dialog.",
 		K_NONE, handle_menu, NULL, MA_About
 	},
 	{ NULL, NULL, K_NONE, NULL, NULL, 0 }
 };
+
+static WNDPROC g_oldWndProc;
+static HWND g_hOptionsBtn;
+
+LRESULT CALLBACK wndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_COMMAND && reinterpret_cast<HWND>(lParam) == g_hOptionsBtn)
+	{
+		//DialogBoxParamA(hInstance, (LPCSTR)0x65, hWndParent, DialogFunc, 0);
+		Addtolist(0, BLACK, L"btn clicked");
+		return 0;
+	}
+
+	return CallWindowProcA(g_oldWndProc, hwnd, uMsg, wParam, lParam);
+}
+
 
 static const std::wstring kSettingsFileName = L"labeless.ini";
 static const std::wstring kSettingsNetSection = L"net";
@@ -119,7 +148,25 @@ extc int __cdecl ODBG2_Plugininit(void)
 	}
 	Addtolist(0, BLACK, L"Labeless");
 	Addtolist(0, 2, L"  Written by Aliaksandr Trafimchuk");
+
+	wchar_t backendId[50] = {};
+	StringFromGUID2(Labeless::instance().instanceId(), backendId, _countof(backendId));
+	Addtolist(0, 2, L"  BackendID: %s", backendId);
 	
+	// 
+	HINSTANCE hInst = GetModuleHandle(nullptr);
+	g_hOptionsBtn = CreateWindowExA(0, "BUTTON", 0, WS_CHILDWINDOW | WS_VISIBLE | BS_PUSHBUTTON /*| BS_TEXT*/ | BS_BITMAP, 686, 2, 18, 18, hwollymain, 0, hInst, 0);
+	if (!g_hOptionsBtn)
+	{
+		Addtolist(0, BLACK, L"failed to create button");
+	}
+	else
+	{
+		LPARAM lParam = (LPARAM)LoadBitmapA(g_hInstance, (LPCSTR)IDB_BITMAP1);
+		SendMessageA(g_hOptionsBtn, BM_SETIMAGE, 0, lParam);
+
+		g_oldWndProc = (WNDPROC)SetWindowLongA(hwollymain, GWL_WNDPROC, (LONG)wndProc);
+	}
 	return 0;
 }
 
@@ -154,6 +201,12 @@ int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 		break;
 	case MA_SetIncommingIPFiltering:
 		Labeless::instance().onSetIPFilter();
+		break;
+	case MA_SetBroadcastPort:
+		Labeless::instance().onSetPauseNotificationBroadcastPort();
+		break;
+	case MA_DisableBroadcast:
+		Labeless::instance().onDisablePauseNotificationsBroadcast();
 		break;
 	case MA_ShowConfig:
 		do {
@@ -192,6 +245,14 @@ extc t_menu* __cdecl ODBG2_Pluginmenu(wchar_t* type)
 extc void cdecl ODBG2_Plugindestroy()
 {
 	Labeless::instance().destroy();
+}
+
+extc void cdecl ODBG2_Pluginnotify(int code, void *data, ulong parm1, ulong parm2)
+{
+	if (code != PN_STATUS || parm1 != STAT_PAUSED)
+		return;
+
+	Labeless::instance().notifyPaused();
 }
 
 void storePort(WORD port)

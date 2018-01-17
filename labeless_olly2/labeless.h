@@ -87,12 +87,19 @@ public:
 	WORD port() const { return m_Port; }
 	std::wstring filterIP() const { return m_FilterIP; }
 	static std::wstring lastChangeTimestamp();
+	inline const GUID& instanceId() const { return m_InstanceId; }
 
 	void onSetPortRequested();
 	void onSetIPFilter();
+	void onSetPauseNotificationBroadcastPort();
+	void onDisablePauseNotificationsBroadcast();
 
 	inline ClientData& clientData() { return m_Rpc; }
 	inline const ClientData& clientData() const { return m_Rpc; }
+
+	inline bool pauseNotificationsEnabled() const { return m_PauseNotificationsEnabled; }
+
+	void notifyPaused();
 
 private:
 	void logInitPythonFail(const xstring& info) const;
@@ -121,6 +128,7 @@ private:
 	WORD					m_Port;
 	HWND					m_LogList;
 
+
 	std::wstring			m_FilterIP;
 
 	std::recursive_mutex	m_ThreadLock;
@@ -128,4 +136,10 @@ private:
 	static std::atomic_bool	m_ServerEnabled;
 
 	ClientData				m_Rpc;
+
+	// pause notifications settings
+	WORD					m_NotificationPort;
+	bool					m_PauseNotificationsEnabled;
+
+	GUID					m_InstanceId;
 };

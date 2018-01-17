@@ -202,3 +202,21 @@ message AutoCompleteCodeResult {
 	repeated string completions			= 1;
 	repeated CallSignature call_sigs	= 2;
 }
+
+message PausedNotification {
+    message PausedNotification32 {
+        required uint32 ip = 1;
+        repeated uint32 r = 2 [packed=true];
+        required uint32 flags = 3;
+        repeated uint32 s = 4 [packed=true];
+    }
+    message PausedNotification64 {
+        required uint64 ip = 1;
+        repeated uint64 r = 2 [packed=true];
+        required uint64 flags = 3;
+        repeated uint64 s = 4 [packed=true];
+    }
+    required bytes backend_id = 1;
+    optional PausedNotification32 info32 = 2;
+    optional PausedNotification64 info64 = 3;
+}

@@ -203,7 +203,6 @@ struct AnalyzeExternalRefs : public ICommand
 struct CheckPEHeaders : public ICommand
 {
 	// params
-	uint64_t base;
 	uint64_t size;
 
 	// result
@@ -212,8 +211,7 @@ struct CheckPEHeaders : public ICommand
 	SectionList sections;
 
 	CheckPEHeaders()
-		: base(0)
-		, size(0)
+		: size(0)
 		, peValid(false)
 	{}
 

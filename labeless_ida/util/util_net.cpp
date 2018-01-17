@@ -109,7 +109,7 @@ bool sockRecvAll(SOCKET s, std::string& result)
 
 bool sendAll(SOCKET s, const std::string& buff, std::string& error)
 {
-	unsigned total_sent = 0;
+	size_t total_sent = 0;
 	int sent;
 	while (total_sent < buff.length())
 	{
