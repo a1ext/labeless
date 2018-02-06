@@ -234,6 +234,39 @@ void addComment(EA2CommentHash& ea2commentHash, ea_t ea, const std::string& cmt)
 		it.value() += ", " + cmt;
 }
 
+/*
+ * WARN! not thread-safe due to Qt regex implementation!
+ * took from here https://github.com/zyantific/REtypedef and slightly modified
+ **/
+bool substituteTemplateLabelName(std::string& name)
+{
+	struct Repl
+	{
+		QRegExp reg;
+		QString repl;
+	};
+
+	static const Repl kPatternsToReplace[] = {
+		{QRegExp("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>\\s*>"), "\\1\\2"},
+		{QRegExp("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>,\\s*(?:class\\s+)?std::allocator<char>\\s*>") , "\\1\\2"},
+		{QRegExp("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>\\s*>") , "\\1w\\2"},
+		{QRegExp("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>,\\s*(?:class\\s+)?std::allocator<wchar_t>\\s*>"), "\\1w\\2"},
+	};
+	// TODO: make this configurable in settings view
+
+	QString qname = name.c_str();
+	if (qname.isEmpty())
+		return false;
+
+	for (size_t i = 0; i < _countof(kPatternsToReplace); ++i)
+		qname.replace(kPatternsToReplace[i].reg, kPatternsToReplace[i].repl);
+
+	const auto& rv = qname.toStdString();
+	const bool ok = rv != name;
+	name = rv;
+	return ok;
+}
+
 void enumerateNames(Labeless& ll, EA2CommentHash& ea2commentHash, LabelsSync::DataList& labelPoints)
 {
 	qstring name;
@@ -264,6 +297,9 @@ void enumerateNames(Labeless& ll, EA2CommentHash& ea2commentHash, LabelsSync::Da
 
 			if (!isUtf8StringValid(s.c_str(), s.length()))
 				continue;
+
+			if (substituteTemplateLabelName(s))
+				msg("LL: name optimized: %s\n", s.c_str());
 
 			if (util::ida::isFuncStart(ea))
 			{
