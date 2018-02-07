@@ -2717,9 +2717,6 @@
     <None Include="res\stub.exe.bin" />
     <None Include="res\stub64.exe.bin" />
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="res\wres.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
