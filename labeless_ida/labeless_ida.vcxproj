@@ -308,7 +308,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -479,7 +479,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
