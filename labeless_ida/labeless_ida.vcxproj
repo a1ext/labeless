@@ -308,7 +308,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -332,7 +332,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -455,7 +455,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);e:\Qt\4.8.4_msvc2010\include\QtCore;e:\Qt\4.8.4_msvc2010\include\QtGui;e:\Qt\4.8.4_msvc2010\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -1686,7 +1686,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|Win32'">.\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|x64'">
       </Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\Python27\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui" "-I$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets" "-I$(QTDIR)\..\msvc2015_32\qtbase\include" "-I$(QTDIR)\include"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\bin\src\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DWIN32 -DNDEBUG -D_WINDOWS -D_USRDLL -DLABELESS_IDA_EXPORTS -D__NT__ -D__IDP__ -D__QT__ -D__VC__ -D_WINSOCK_DEPRECATED_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNO_OBSOLETE_FUNCS -DQT_NAMESPACE=QT -DQT_THREAD_SUPPORT -DQT_NO_UNICODE_LITERAL -DHAVE_SNPRINTF -DLABELESS_ADDITIONAL_LOGGING -D_WINDLL -D_MBCS  "-I$(SDK_DIR)\include" "-I$(SolutionDir)\3rdparty\Python27\include" "-I$(SolutionDir)\3rdparty\protobuf-2.6.1\src" "-I.\..\bin\src\GeneratedFiles\$(ConfigurationName)\." "-I$(ProjectDir)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include" "-I$(QTDIR)\include"</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|x64'">
       </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='IDA7|Win32'">
