@@ -240,13 +240,11 @@ void addComment(EA2CommentHash& ea2commentHash, ea_t ea, const std::string& cmt)
  **/
 bool substituteTemplateLabelName(std::string& name)
 {
-	struct Repl
+	static const struct
 	{
 		QRegExp reg;
 		QString repl;
-	};
-
-	static const Repl kPatternsToReplace[] = {
+	} kPatternsToReplace[] = {
 		{QRegExp("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>\\s*>"), "\\1\\2"},
 		{QRegExp("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>,\\s*(?:class\\s+)?std::allocator<char>\\s*>") , "\\1\\2"},
 		{QRegExp("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>\\s*>") , "\\1w\\2"},
@@ -276,17 +274,15 @@ void enumerateNames(Labeless& ll, EA2CommentHash& ea2commentHash, LabelsSync::Da
 	if (ll.settings().demangle)
 		flags |= GN_VISIBLE | GN_DEMANGLED | GN_SHORT;
 
-	char segBuff[MAXSTR] = {};
-
-	segment_t* s = get_first_seg();
-	for (; s; s = get_next_seg(START_RANGE_EA(s)))
+	segment_t* seg = get_first_seg();
+	for (; seg; seg = get_next_seg(START_RANGE_EA(seg)))
 	{
-		if (is_spec_segm(s->type))
+		if (is_spec_segm(seg->type))
 			continue;
-		if (util::ida::isExternSeg(s))
+		if (util::ida::isExternSeg(seg))
 			continue;
 
-		for (ea_t ea = START_RANGE_EA(s); BADADDR != ea; ea = util::ida::getNextCodeOrDataEA(ea, ll.settings().nonCodeNames))
+		for (ea_t ea = START_RANGE_EA(seg); BADADDR != ea; ea = util::ida::getNextCodeOrDataEA(ea, ll.settings().nonCodeNames))
 		{
 			if (has_dummy_name(compat::get_flags(ea)) || get_ea_name(&name, ea, flags) <= 0)
 				continue;
@@ -298,8 +294,7 @@ void enumerateNames(Labeless& ll, EA2CommentHash& ea2commentHash, LabelsSync::Da
 			if (!isUtf8StringValid(s.c_str(), s.length()))
 				continue;
 
-			if (substituteTemplateLabelName(s))
-				msg("LL: name optimized: %s\n", s.c_str());
+			substituteTemplateLabelName(s);
 
 			if (util::ida::isFuncStart(ea))
 			{
@@ -530,7 +525,7 @@ bool parseBackendId(const ::qstring& qid, std::string& result)
 	for (unsigned i = 0; i < _countof(backendId.Data4) - 2; ++i)
 	{
 		auto t = reGUID.cap(5).mid(i * 2, 2);
-		auto c = t.toStdString();
+		// auto c = t.toStdString();
 		backendId.Data4[i + 2] = static_cast<BYTE>(t.toUShort(&ok, 16));
 		if (!ok)
 			return false;
@@ -865,9 +860,6 @@ bool Labeless::initialize()
 		worker->moveToThread(m_AutoCompletionThread.data());
 		m_AutoCompletionThread->start();
 	}
-
-	//m_PauseNotificationListener = new PauseNotificationListener(this);
-	//CHECKED_CONNECT(connect(m_PauseNotificationListener.data(), SIGNAL(received()), this, SLOT(onPauseNotificationReceived())));
 
 	m_Initialized = true;
 
