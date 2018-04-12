@@ -71,6 +71,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>ollydbg.lib;shlwapi.lib;ws2_32.lib;libprotobuf_v120xp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)\sdk;$(SolutionDir)\3rdparty\Python27\libs;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)-$(PlatformTarget).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" $(SolutionDir)test\plugins\$(ProjectName)$(TargetExt)</Command>
@@ -95,6 +96,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>defixed.lib;shlwapi.lib;ws2_32.lib;libprotobuf_v120xp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)\sdk;$(SolutionDir)\3rdparty\Python27\libs;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)-$(PlatformTarget).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" $(SolutionDir)test\plugins\$(TargetFileName)</Command>
