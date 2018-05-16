@@ -64,6 +64,8 @@ class AutoCompleteCodeResult_CallSignature_Param;
 class PausedNotification;
 class PausedNotification_PausedNotification32;
 class PausedNotification_PausedNotification64;
+class JumpToFromRequest;
+class JumpToFromResult;
 
 enum RpcRequest_RequestType {
   RpcRequest_RequestType_RPCT_UNKNOWN = 0,
@@ -74,11 +76,12 @@ enum RpcRequest_RequestType {
   RpcRequest_RequestType_RPCT_ANALYZE_EXTERNAL_REFS = 5,
   RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS = 6,
   RpcRequest_RequestType_RPCT_GET_BACKEND_INFO = 7,
-  RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE = 8
+  RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE = 8,
+  RpcRequest_RequestType_RPCT_JUMP_TO_FROM = 9
 };
 bool RpcRequest_RequestType_IsValid(int value);
 const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MIN = RpcRequest_RequestType_RPCT_UNKNOWN;
-const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MAX = RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE;
+const RpcRequest_RequestType RpcRequest_RequestType_RequestType_MAX = RpcRequest_RequestType_RPCT_JUMP_TO_FROM;
 const int RpcRequest_RequestType_RequestType_ARRAYSIZE = RpcRequest_RequestType_RequestType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* RpcRequest_RequestType_descriptor();
@@ -129,6 +132,44 @@ inline bool AnalyzeExternalRefsResult_RefData_RefType_Parse(
     const ::std::string& name, AnalyzeExternalRefsResult_RefData_RefType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<AnalyzeExternalRefsResult_RefData_RefType>(
     AnalyzeExternalRefsResult_RefData_RefType_descriptor(), name, value);
+}
+enum JumpToFromRequest_JUMP_TYPE {
+  JumpToFromRequest_JUMP_TYPE_JT_TO = 1,
+  JumpToFromRequest_JUMP_TYPE_JT_FROM = 2
+};
+bool JumpToFromRequest_JUMP_TYPE_IsValid(int value);
+const JumpToFromRequest_JUMP_TYPE JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_MIN = JumpToFromRequest_JUMP_TYPE_JT_TO;
+const JumpToFromRequest_JUMP_TYPE JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_MAX = JumpToFromRequest_JUMP_TYPE_JT_FROM;
+const int JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_ARRAYSIZE = JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* JumpToFromRequest_JUMP_TYPE_descriptor();
+inline const ::std::string& JumpToFromRequest_JUMP_TYPE_Name(JumpToFromRequest_JUMP_TYPE value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    JumpToFromRequest_JUMP_TYPE_descriptor(), value);
+}
+inline bool JumpToFromRequest_JUMP_TYPE_Parse(
+    const ::std::string& name, JumpToFromRequest_JUMP_TYPE* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<JumpToFromRequest_JUMP_TYPE>(
+    JumpToFromRequest_JUMP_TYPE_descriptor(), name, value);
+}
+enum JumpToFromResult_JUMP_RESULT {
+  JumpToFromResult_JUMP_RESULT_JR_OK = 1,
+  JumpToFromResult_JUMP_RESULT_JR_FAILED = 2
+};
+bool JumpToFromResult_JUMP_RESULT_IsValid(int value);
+const JumpToFromResult_JUMP_RESULT JumpToFromResult_JUMP_RESULT_JUMP_RESULT_MIN = JumpToFromResult_JUMP_RESULT_JR_OK;
+const JumpToFromResult_JUMP_RESULT JumpToFromResult_JUMP_RESULT_JUMP_RESULT_MAX = JumpToFromResult_JUMP_RESULT_JR_FAILED;
+const int JumpToFromResult_JUMP_RESULT_JUMP_RESULT_ARRAYSIZE = JumpToFromResult_JUMP_RESULT_JUMP_RESULT_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* JumpToFromResult_JUMP_RESULT_descriptor();
+inline const ::std::string& JumpToFromResult_JUMP_RESULT_Name(JumpToFromResult_JUMP_RESULT value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    JumpToFromResult_JUMP_RESULT_descriptor(), value);
+}
+inline bool JumpToFromResult_JUMP_RESULT_Parse(
+    const ::std::string& name, JumpToFromResult_JUMP_RESULT* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<JumpToFromResult_JUMP_RESULT>(
+    JumpToFromResult_JUMP_RESULT_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -193,6 +234,7 @@ class RpcRequest : public ::google::protobuf::Message {
   static const RequestType RPCT_CHECK_PE_HEADERS = RpcRequest_RequestType_RPCT_CHECK_PE_HEADERS;
   static const RequestType RPCT_GET_BACKEND_INFO = RpcRequest_RequestType_RPCT_GET_BACKEND_INFO;
   static const RequestType RPCT_AUTO_COMPLETE_CODE = RpcRequest_RequestType_RPCT_AUTO_COMPLETE_CODE;
+  static const RequestType RPCT_JUMP_TO_FROM = RpcRequest_RequestType_RPCT_JUMP_TO_FROM;
   static inline bool RequestType_IsValid(int value) {
     return RpcRequest_RequestType_IsValid(value);
   }
@@ -277,6 +319,15 @@ class RpcRequest : public ::google::protobuf::Message {
   inline ::rpc::AutoCompleteCodeRequest* release_auto_complete_code_req();
   inline void set_allocated_auto_complete_code_req(::rpc::AutoCompleteCodeRequest* auto_complete_code_req);
 
+  // optional .rpc.JumpToFromRequest jump_to_from_req = 8;
+  inline bool has_jump_to_from_req() const;
+  inline void clear_jump_to_from_req();
+  static const int kJumpToFromReqFieldNumber = 8;
+  inline const ::rpc::JumpToFromRequest& jump_to_from_req() const;
+  inline ::rpc::JumpToFromRequest* mutable_jump_to_from_req();
+  inline ::rpc::JumpToFromRequest* release_jump_to_from_req();
+  inline void set_allocated_jump_to_from_req(::rpc::JumpToFromRequest* jump_to_from_req);
+
   // @@protoc_insertion_point(class_scope:rpc.RpcRequest)
  private:
   inline void set_has_request_type();
@@ -293,6 +344,8 @@ class RpcRequest : public ::google::protobuf::Message {
   inline void clear_has_check_pe_headers_req();
   inline void set_has_auto_complete_code_req();
   inline void clear_has_auto_complete_code_req();
+  inline void set_has_jump_to_from_req();
+  inline void clear_has_jump_to_from_req();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -304,6 +357,7 @@ class RpcRequest : public ::google::protobuf::Message {
   ::rpc::AnalyzeExternalRefsRequest* analyze_external_refs_req_;
   ::rpc::CheckPEHeadersRequest* check_pe_headers_req_;
   ::rpc::AutoCompleteCodeRequest* auto_complete_code_req_;
+  ::rpc::JumpToFromRequest* jump_to_from_req_;
   int request_type_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
@@ -3743,6 +3797,252 @@ class PausedNotification : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static PausedNotification* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class JumpToFromRequest : public ::google::protobuf::Message {
+ public:
+  JumpToFromRequest();
+  virtual ~JumpToFromRequest();
+
+  JumpToFromRequest(const JumpToFromRequest& from);
+
+  inline JumpToFromRequest& operator=(const JumpToFromRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JumpToFromRequest& default_instance();
+
+  void Swap(JumpToFromRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  JumpToFromRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const JumpToFromRequest& from);
+  void MergeFrom(const JumpToFromRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef JumpToFromRequest_JUMP_TYPE JUMP_TYPE;
+  static const JUMP_TYPE JT_TO = JumpToFromRequest_JUMP_TYPE_JT_TO;
+  static const JUMP_TYPE JT_FROM = JumpToFromRequest_JUMP_TYPE_JT_FROM;
+  static inline bool JUMP_TYPE_IsValid(int value) {
+    return JumpToFromRequest_JUMP_TYPE_IsValid(value);
+  }
+  static const JUMP_TYPE JUMP_TYPE_MIN =
+    JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_MIN;
+  static const JUMP_TYPE JUMP_TYPE_MAX =
+    JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_MAX;
+  static const int JUMP_TYPE_ARRAYSIZE =
+    JumpToFromRequest_JUMP_TYPE_JUMP_TYPE_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  JUMP_TYPE_descriptor() {
+    return JumpToFromRequest_JUMP_TYPE_descriptor();
+  }
+  static inline const ::std::string& JUMP_TYPE_Name(JUMP_TYPE value) {
+    return JumpToFromRequest_JUMP_TYPE_Name(value);
+  }
+  static inline bool JUMP_TYPE_Parse(const ::std::string& name,
+      JUMP_TYPE* value) {
+    return JumpToFromRequest_JUMP_TYPE_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  // required .rpc.JumpToFromRequest.JUMP_TYPE jump_type = 1;
+  inline bool has_jump_type() const;
+  inline void clear_jump_type();
+  static const int kJumpTypeFieldNumber = 1;
+  inline ::rpc::JumpToFromRequest_JUMP_TYPE jump_type() const;
+  inline void set_jump_type(::rpc::JumpToFromRequest_JUMP_TYPE value);
+
+  // optional uint64 to = 2;
+  inline bool has_to() const;
+  inline void clear_to();
+  static const int kToFieldNumber = 2;
+  inline ::google::protobuf::uint64 to() const;
+  inline void set_to(::google::protobuf::uint64 value);
+
+  // required uint64 base = 3;
+  inline bool has_base() const;
+  inline void clear_base();
+  static const int kBaseFieldNumber = 3;
+  inline ::google::protobuf::uint64 base() const;
+  inline void set_base(::google::protobuf::uint64 value);
+
+  // required uint64 remote_base = 4;
+  inline bool has_remote_base() const;
+  inline void clear_remote_base();
+  static const int kRemoteBaseFieldNumber = 4;
+  inline ::google::protobuf::uint64 remote_base() const;
+  inline void set_remote_base(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:rpc.JumpToFromRequest)
+ private:
+  inline void set_has_jump_type();
+  inline void clear_has_jump_type();
+  inline void set_has_to();
+  inline void clear_has_to();
+  inline void set_has_base();
+  inline void clear_has_base();
+  inline void set_has_remote_base();
+  inline void clear_has_remote_base();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint64 to_;
+  ::google::protobuf::uint64 base_;
+  ::google::protobuf::uint64 remote_base_;
+  int jump_type_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static JumpToFromRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class JumpToFromResult : public ::google::protobuf::Message {
+ public:
+  JumpToFromResult();
+  virtual ~JumpToFromResult();
+
+  JumpToFromResult(const JumpToFromResult& from);
+
+  inline JumpToFromResult& operator=(const JumpToFromResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JumpToFromResult& default_instance();
+
+  void Swap(JumpToFromResult* other);
+
+  // implements Message ----------------------------------------------
+
+  JumpToFromResult* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const JumpToFromResult& from);
+  void MergeFrom(const JumpToFromResult& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  typedef JumpToFromResult_JUMP_RESULT JUMP_RESULT;
+  static const JUMP_RESULT JR_OK = JumpToFromResult_JUMP_RESULT_JR_OK;
+  static const JUMP_RESULT JR_FAILED = JumpToFromResult_JUMP_RESULT_JR_FAILED;
+  static inline bool JUMP_RESULT_IsValid(int value) {
+    return JumpToFromResult_JUMP_RESULT_IsValid(value);
+  }
+  static const JUMP_RESULT JUMP_RESULT_MIN =
+    JumpToFromResult_JUMP_RESULT_JUMP_RESULT_MIN;
+  static const JUMP_RESULT JUMP_RESULT_MAX =
+    JumpToFromResult_JUMP_RESULT_JUMP_RESULT_MAX;
+  static const int JUMP_RESULT_ARRAYSIZE =
+    JumpToFromResult_JUMP_RESULT_JUMP_RESULT_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  JUMP_RESULT_descriptor() {
+    return JumpToFromResult_JUMP_RESULT_descriptor();
+  }
+  static inline const ::std::string& JUMP_RESULT_Name(JUMP_RESULT value) {
+    return JumpToFromResult_JUMP_RESULT_Name(value);
+  }
+  static inline bool JUMP_RESULT_Parse(const ::std::string& name,
+      JUMP_RESULT* value) {
+    return JumpToFromResult_JUMP_RESULT_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  // required .rpc.JumpToFromResult.JUMP_RESULT result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline ::rpc::JumpToFromResult_JUMP_RESULT result() const;
+  inline void set_result(::rpc::JumpToFromResult_JUMP_RESULT value);
+
+  // optional uint64 va = 2;
+  inline bool has_va() const;
+  inline void clear_va();
+  static const int kVaFieldNumber = 2;
+  inline ::google::protobuf::uint64 va() const;
+  inline void set_va(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:rpc.JumpToFromResult)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_va();
+  inline void clear_has_va();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::uint64 va_;
+  int result_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static JumpToFromResult* default_instance_;
+};
 // ===================================================================
 
 
@@ -4019,6 +4319,47 @@ inline void RpcRequest::set_allocated_auto_complete_code_req(::rpc::AutoComplete
     clear_has_auto_complete_code_req();
   }
   // @@protoc_insertion_point(field_set_allocated:rpc.RpcRequest.auto_complete_code_req)
+}
+
+// optional .rpc.JumpToFromRequest jump_to_from_req = 8;
+inline bool RpcRequest::has_jump_to_from_req() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void RpcRequest::set_has_jump_to_from_req() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void RpcRequest::clear_has_jump_to_from_req() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void RpcRequest::clear_jump_to_from_req() {
+  if (jump_to_from_req_ != NULL) jump_to_from_req_->::rpc::JumpToFromRequest::Clear();
+  clear_has_jump_to_from_req();
+}
+inline const ::rpc::JumpToFromRequest& RpcRequest::jump_to_from_req() const {
+  // @@protoc_insertion_point(field_get:rpc.RpcRequest.jump_to_from_req)
+  return jump_to_from_req_ != NULL ? *jump_to_from_req_ : *default_instance_->jump_to_from_req_;
+}
+inline ::rpc::JumpToFromRequest* RpcRequest::mutable_jump_to_from_req() {
+  set_has_jump_to_from_req();
+  if (jump_to_from_req_ == NULL) jump_to_from_req_ = new ::rpc::JumpToFromRequest;
+  // @@protoc_insertion_point(field_mutable:rpc.RpcRequest.jump_to_from_req)
+  return jump_to_from_req_;
+}
+inline ::rpc::JumpToFromRequest* RpcRequest::release_jump_to_from_req() {
+  clear_has_jump_to_from_req();
+  ::rpc::JumpToFromRequest* temp = jump_to_from_req_;
+  jump_to_from_req_ = NULL;
+  return temp;
+}
+inline void RpcRequest::set_allocated_jump_to_from_req(::rpc::JumpToFromRequest* jump_to_from_req) {
+  delete jump_to_from_req_;
+  jump_to_from_req_ = jump_to_from_req;
+  if (jump_to_from_req) {
+    set_has_jump_to_from_req();
+  } else {
+    clear_has_jump_to_from_req();
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.RpcRequest.jump_to_from_req)
 }
 
 // -------------------------------------------------------------------
@@ -8658,6 +8999,160 @@ inline void PausedNotification::set_allocated_info64(::rpc::PausedNotification_P
   // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.info64)
 }
 
+// -------------------------------------------------------------------
+
+// JumpToFromRequest
+
+// required .rpc.JumpToFromRequest.JUMP_TYPE jump_type = 1;
+inline bool JumpToFromRequest::has_jump_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void JumpToFromRequest::set_has_jump_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void JumpToFromRequest::clear_has_jump_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void JumpToFromRequest::clear_jump_type() {
+  jump_type_ = 1;
+  clear_has_jump_type();
+}
+inline ::rpc::JumpToFromRequest_JUMP_TYPE JumpToFromRequest::jump_type() const {
+  // @@protoc_insertion_point(field_get:rpc.JumpToFromRequest.jump_type)
+  return static_cast< ::rpc::JumpToFromRequest_JUMP_TYPE >(jump_type_);
+}
+inline void JumpToFromRequest::set_jump_type(::rpc::JumpToFromRequest_JUMP_TYPE value) {
+  assert(::rpc::JumpToFromRequest_JUMP_TYPE_IsValid(value));
+  set_has_jump_type();
+  jump_type_ = value;
+  // @@protoc_insertion_point(field_set:rpc.JumpToFromRequest.jump_type)
+}
+
+// optional uint64 to = 2;
+inline bool JumpToFromRequest::has_to() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void JumpToFromRequest::set_has_to() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void JumpToFromRequest::clear_has_to() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void JumpToFromRequest::clear_to() {
+  to_ = GOOGLE_ULONGLONG(0);
+  clear_has_to();
+}
+inline ::google::protobuf::uint64 JumpToFromRequest::to() const {
+  // @@protoc_insertion_point(field_get:rpc.JumpToFromRequest.to)
+  return to_;
+}
+inline void JumpToFromRequest::set_to(::google::protobuf::uint64 value) {
+  set_has_to();
+  to_ = value;
+  // @@protoc_insertion_point(field_set:rpc.JumpToFromRequest.to)
+}
+
+// required uint64 base = 3;
+inline bool JumpToFromRequest::has_base() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void JumpToFromRequest::set_has_base() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void JumpToFromRequest::clear_has_base() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void JumpToFromRequest::clear_base() {
+  base_ = GOOGLE_ULONGLONG(0);
+  clear_has_base();
+}
+inline ::google::protobuf::uint64 JumpToFromRequest::base() const {
+  // @@protoc_insertion_point(field_get:rpc.JumpToFromRequest.base)
+  return base_;
+}
+inline void JumpToFromRequest::set_base(::google::protobuf::uint64 value) {
+  set_has_base();
+  base_ = value;
+  // @@protoc_insertion_point(field_set:rpc.JumpToFromRequest.base)
+}
+
+// required uint64 remote_base = 4;
+inline bool JumpToFromRequest::has_remote_base() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void JumpToFromRequest::set_has_remote_base() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void JumpToFromRequest::clear_has_remote_base() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void JumpToFromRequest::clear_remote_base() {
+  remote_base_ = GOOGLE_ULONGLONG(0);
+  clear_has_remote_base();
+}
+inline ::google::protobuf::uint64 JumpToFromRequest::remote_base() const {
+  // @@protoc_insertion_point(field_get:rpc.JumpToFromRequest.remote_base)
+  return remote_base_;
+}
+inline void JumpToFromRequest::set_remote_base(::google::protobuf::uint64 value) {
+  set_has_remote_base();
+  remote_base_ = value;
+  // @@protoc_insertion_point(field_set:rpc.JumpToFromRequest.remote_base)
+}
+
+// -------------------------------------------------------------------
+
+// JumpToFromResult
+
+// required .rpc.JumpToFromResult.JUMP_RESULT result = 1;
+inline bool JumpToFromResult::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void JumpToFromResult::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void JumpToFromResult::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void JumpToFromResult::clear_result() {
+  result_ = 1;
+  clear_has_result();
+}
+inline ::rpc::JumpToFromResult_JUMP_RESULT JumpToFromResult::result() const {
+  // @@protoc_insertion_point(field_get:rpc.JumpToFromResult.result)
+  return static_cast< ::rpc::JumpToFromResult_JUMP_RESULT >(result_);
+}
+inline void JumpToFromResult::set_result(::rpc::JumpToFromResult_JUMP_RESULT value) {
+  assert(::rpc::JumpToFromResult_JUMP_RESULT_IsValid(value));
+  set_has_result();
+  result_ = value;
+  // @@protoc_insertion_point(field_set:rpc.JumpToFromResult.result)
+}
+
+// optional uint64 va = 2;
+inline bool JumpToFromResult::has_va() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void JumpToFromResult::set_has_va() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void JumpToFromResult::clear_has_va() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void JumpToFromResult::clear_va() {
+  va_ = GOOGLE_ULONGLONG(0);
+  clear_has_va();
+}
+inline ::google::protobuf::uint64 JumpToFromResult::va() const {
+  // @@protoc_insertion_point(field_get:rpc.JumpToFromResult.va)
+  return va_;
+}
+inline void JumpToFromResult::set_va(::google::protobuf::uint64 value) {
+  set_has_va();
+  va_ = value;
+  // @@protoc_insertion_point(field_set:rpc.JumpToFromResult.va)
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -8681,6 +9176,16 @@ template <> struct is_proto_enum< ::rpc::AnalyzeExternalRefsResult_RefData_RefTy
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::rpc::AnalyzeExternalRefsResult_RefData_RefType>() {
   return ::rpc::AnalyzeExternalRefsResult_RefData_RefType_descriptor();
+}
+template <> struct is_proto_enum< ::rpc::JumpToFromRequest_JUMP_TYPE> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::rpc::JumpToFromRequest_JUMP_TYPE>() {
+  return ::rpc::JumpToFromRequest_JUMP_TYPE_descriptor();
+}
+template <> struct is_proto_enum< ::rpc::JumpToFromResult_JUMP_RESULT> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::rpc::JumpToFromResult_JUMP_RESULT>() {
+  return ::rpc::JumpToFromResult_JUMP_RESULT_descriptor();
 }
 
 }  // namespace google
