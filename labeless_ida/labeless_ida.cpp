@@ -811,6 +811,9 @@ bool Labeless::firstInit()
 			m_PauseNotificationMenuAction->setCheckable(true);
 			CHECKED_CONNECT(connect(m_PauseNotificationMenuAction, SIGNAL(toggled(bool)), this, SLOT(onTogglePauseNotificationHandling(bool)))); 
 			m->addSeparator();
+			m_MenuActions << m->addAction(QIcon(), tr("JUMP to IDA ea -> in <dbg>"), this, SLOT(onJumpToRequested()), Qt::SHIFT | Qt::Key_J);
+			m_MenuActions << m->addAction(QIcon(), tr("JUMP to <dbg> ea -> in IDA"), this, SLOT(onJumpFromRequested()), Qt::SHIFT | Qt::CTRL | Qt::Key_J);
+			m->addSeparator();
 			m_MenuActions << m->addAction(QIcon(":/settings.png"), tr("Settings..."), this, SLOT(onSettingsRequested()));
 		}
 	}
@@ -2129,8 +2132,6 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 
 	const uint64_t remoteBase = m_Settings.remoteModBase;
 
-	
-
 	const ea_t ea = notif->has_info64() ? notif->info64().ip() : notif->info32().ip();
 	ea_t jmpEA = ea - remoteBase + ::get_imagebase();
 
@@ -2218,6 +2219,71 @@ void Labeless::onTogglePauseNotificationHandling(bool enabled)
 			m_PauseNotificationCursor = BADADDR;
 		}
 	}
+}
+
+void Labeless::onJumpToRequested()
+{
+	ea_t ea = ::get_screen_ea();
+	if (ea == BADADDR || !ea)
+		return;
+
+	auto jumpToFromReq = std::make_shared<JumpToFrom>();
+	jumpToFromReq->to = ea;
+
+	RpcDataPtr p = addRpcData(jumpToFromReq, RpcReadyToSendHandler(), this, SLOT(onJumpToFinished()));
+}
+
+void Labeless::onJumpToFinished()
+{
+	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
+	if (!pRD)
+	{
+		msg("%s: invalid sender\n", __FUNCTION__);
+		return;
+	}
+	auto jtf = std::dynamic_pointer_cast<JumpToFrom>(pRD->iCmd);
+	if (!jtf)
+	{
+		msg("%s: Invalid type of ICommand\n", __FUNCTION__);
+		return;
+	}
+
+	if (!jtf->wasOk)
+		msg("%s: JUMP to IDA ea -> in <dbg> failed\n", __FUNCTION__);
+}
+
+void Labeless::onJumpFromRequested()
+{
+	auto jumpToFromReq = std::make_shared<JumpToFrom>();
+	RpcDataPtr p = addRpcData(jumpToFromReq, RpcReadyToSendHandler(), this, SLOT(onJumpFromFinished()));
+}
+
+void Labeless::onJumpFromFinished()
+{
+	RpcDataPtr pRD = qobject_cast<RpcData*>(sender());
+	if (!pRD)
+	{
+		msg("%s: invalid sender\n", __FUNCTION__);
+		return;
+	}
+	auto jtf = std::dynamic_pointer_cast<JumpToFrom>(pRD->iCmd);
+	if (!jtf)
+	{
+		msg("%s: Invalid type of ICommand\n", __FUNCTION__);
+		return;
+	}
+
+	if (!jtf->wasOk)
+	{
+		msg("%s: JUMP to <dbg> ea -> in IDA failed\n", __FUNCTION__);
+		return;
+	}
+
+	const ea_t ea = static_cast<ea_t>(jtf->va);
+	if (compat::get_flags(ea))
+		::jumpto(ea);
+	else
+		msg("%s: JUMP to <dbg> ea -> in IDA cannot find given address\n", __FUNCTION__);
 }
 
 bool Labeless::isDbgBackendNotificatiosAllowed(const std::string& backendId)

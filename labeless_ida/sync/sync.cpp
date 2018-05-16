@@ -501,7 +501,6 @@ bool GetBackendInfo::parseResponse(QPointer<RpcData> rd)
 
 bool AutoCompleteCode::serialize(QPointer<RpcData> rd) const
 {
-	rd->script.clear();
 	rpc::RpcRequest rpcRequest;
 	rpcRequest.set_request_type(rpc::RpcRequest::RPCT_AUTO_COMPLETE_CODE);
 
@@ -565,6 +564,54 @@ bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
 	catch (...)
 	{
 		msg("%s: Unable to parse AutoCompleteCode response\n", __FUNCTION__);
+	}
+	return false;
+}
+
+bool JumpToFrom::serialize(QPointer<RpcData> rd) const
+{
+	rpc::RpcRequest rpcRequest;
+	rpcRequest.set_request_type(rpc::RpcRequest::RPCT_JUMP_TO_FROM);
+
+	rpc::JumpToFromRequest* const request = rpcRequest.mutable_jump_to_from_req();
+	request->set_base(base);
+	request->set_remote_base(remoteBase);
+
+	request->set_jump_type(to ? rpc::JumpToFromRequest_JUMP_TYPE_JT_TO : rpc::JumpToFromRequest_JUMP_TYPE_JT_FROM);
+	if (to)
+		request->set_to(to);
+
+	rd->script.clear();
+	rd->params = rpcRequest.SerializeAsString();
+	return true;
+}
+
+bool JumpToFrom::parseResponse(QPointer<RpcData> rd)
+{
+	if (!ICommand::parseResponse(rd))
+		return false;
+	try
+	{
+		rpc::JumpToFromResult result;
+		if (!util::protobuf::parseBigMessage(result, rd->response->rpc_result()))
+		{
+			msg("%s: util::protobuf::parseBigMessage() failed\n", __FUNCTION__);
+			return false;
+		}
+
+		wasOk = result.result() == rpc::JumpToFromResult_JUMP_RESULT_JR_OK;
+		if (result.has_va())
+			va = result.va();
+
+		return true;
+	}
+	catch (const std::runtime_error& e)
+	{
+		msg("%s: Runtime error: %s\n", __FUNCTION__, e.what());
+	}
+	catch (...)
+	{
+		msg("%s: Unable to parse JumpToFrom response\n", __FUNCTION__);
 	}
 	return false;
 }

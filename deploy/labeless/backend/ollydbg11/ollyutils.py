@@ -495,6 +495,27 @@ def get_backend_info():
     return rv
 
 
+def jump_to_from(is_to, base, remote_base, to=None):
+    rv = rpc.JumpToFromResult()
+    ptrdiff = 0
+    if base != remote_base:
+        ptrdiff = remote_base - base
+    if is_to:
+        api.Setcpu(0, int(to + ptrdiff), 0, 0, api.CPU_ASMHIST | api.CPU_ASMCENTER | api.CPU_ASMFOCUS | api.CPU_REDRAW)
+        rv.result = rpc.JumpToFromResult.JR_OK
+        return rv
+
+    dmp = api.pluginvalue_to_t_dump(api.Plugingetvalue(api.VAL_CPUDASM))
+    va = int(dmp.sel0)
+    if va:
+        rv.va = va - ptrdiff
+        rv.result = rpc.JumpToFromResult.JR_OK
+    else:
+        rv.result = rpc.JumpToFromResult.JR_FAILED
+
+    return rv
+
+
 def auto_complete_code(source, zline, zcol, call_sig_only):
     rv = rpc.AutoCompleteCodeResult()
 

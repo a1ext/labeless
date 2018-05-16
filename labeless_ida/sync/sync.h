@@ -256,3 +256,22 @@ struct AutoCompleteCode : public ICommand
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
+
+struct JumpToFrom : public ICommand
+{
+	JumpToFrom()
+		: to(0)
+		, wasOk(false)
+		, va(0)
+	{}
+
+	// params
+	uint64_t to;
+
+	// result
+	bool wasOk;
+	uint64_t va;
+
+	virtual bool serialize(QPointer<RpcData> rd) const override;
+	virtual bool parseResponse(QPointer<RpcData> rd) override;
+};

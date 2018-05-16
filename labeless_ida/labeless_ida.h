@@ -145,6 +145,10 @@ public slots:
 	void onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r);
 	void onPauseNotificationReceived(void*);
 	void onTogglePauseNotificationHandling(bool enabled);
+	void onJumpToRequested();
+	void onJumpToFinished();
+	void onJumpFromRequested();
+	void onJumpFromFinished();
 
 private:
 	static SOCKET connectToHost(const std::string& host, uint16_t port, QString& errorMsg, bool keepAlive = true, quint32 recvtimeout = 30 * 60 * 1000);

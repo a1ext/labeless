@@ -12,6 +12,7 @@ message RpcRequest {
 		RPCT_CHECK_PE_HEADERS			= 6;
 		RPCT_GET_BACKEND_INFO			= 7;
 		RPCT_AUTO_COMPLETE_CODE			= 8;
+		RPCT_JUMP_TO_FROM				= 9;
 	}
 
 	required RequestType request_type								= 1;
@@ -21,6 +22,7 @@ message RpcRequest {
 	optional AnalyzeExternalRefsRequest analyze_external_refs_req	= 5;
 	optional CheckPEHeadersRequest check_pe_headers_req				= 6;
 	optional AutoCompleteCodeRequest auto_complete_code_req			= 7;
+	optional JumpToFromRequest jump_to_from_req						= 8;
 }
 
 message Execute {
@@ -219,4 +221,25 @@ message PausedNotification {
     required bytes backend_id = 1;
     optional PausedNotification32 info32 = 2;
     optional PausedNotification64 info64 = 3;
+}
+
+message JumpToFromRequest {
+	enum JUMP_TYPE {
+		JT_TO = 1;
+		JT_FROM = 2;
+	}
+	
+	required JUMP_TYPE jump_type = 1;
+	optional uint64 to = 2;
+	required uint64 base		= 3;
+	required uint64 remote_base	= 4;
+}
+
+message JumpToFromResult {
+	enum JUMP_RESULT {
+		JR_OK = 1;
+		JR_FAILED = 2;
+	}
+	required JUMP_RESULT result = 1;
+	optional uint64 va = 2;
 }
