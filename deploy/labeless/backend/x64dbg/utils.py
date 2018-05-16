@@ -628,3 +628,25 @@ def auto_complete_code(source, zline, zcol, call_sig_only):
         py_olly.olly_log('Exception occurred while trying to auto-complete the code')
         py_olly.olly_log(traceback.format_exc())
     return rv
+
+
+def jump_to_from(is_to, base, remote_base, to=None):
+    rv = rpc.JumpToFromResult()
+    ptrdiff = 0
+    if base != remote_base:
+        ptrdiff = remote_base - base
+    if is_to:
+        v = int(to + ptrdiff)
+        result = api.Gui_Disassembly_SelectionSet(v, v)
+        api.GuiDisasmAt(v, 0)
+        rv.result = rpc.JumpToFromResult.JR_OK if result else rpc.JumpToFromResult.JR_FAILED
+        return rv
+
+    va = int(api.Gui_Disassembly_SelectionGetStart())
+    if va:
+        rv.va = va - ptrdiff
+        rv.result = rpc.JumpToFromResult.JR_OK
+    else:
+        rv.result = rpc.JumpToFromResult.JR_FAILED
+
+    return rv
