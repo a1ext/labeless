@@ -154,6 +154,7 @@ extc int __cdecl ODBG2_Plugininit(void)
 	Addtolist(0, 2, L"  BackendID: %s", backendId);
 	
 	// 
+#if 0 // testing code
 	HINSTANCE hInst = GetModuleHandle(nullptr);
 	g_hOptionsBtn = CreateWindowExA(0, "BUTTON", 0, WS_CHILDWINDOW | WS_VISIBLE | BS_PUSHBUTTON /*| BS_TEXT*/ | BS_BITMAP, 686, 2, 18, 18, hwollymain, 0, hInst, 0);
 	if (!g_hOptionsBtn)
@@ -167,6 +168,7 @@ extc int __cdecl ODBG2_Plugininit(void)
 
 		g_oldWndProc = (WNDPROC)SetWindowLongA(hwollymain, GWL_WNDPROC, (LONG)wndProc);
 	}
+#endif // 0
 	return 0;
 }
 
