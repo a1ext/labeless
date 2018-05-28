@@ -12,7 +12,7 @@ set PYTHON_SCRIPTS_DIR=%PYTHON_DIR%\Scripts
 set TWINE_PATH=%PYTHON_SCRIPTS_DIR%\twine.exe
 shift
 
-%PYTHON_INTERP% setup.py sdist --formats=gztar
+%PYTHON_INTERP% setup.py sdist --formats=zip
 if %ERRORLEVEL% == 0 (
 	echo [OK] the package built succesfully
 ) else (
