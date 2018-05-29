@@ -85,7 +85,7 @@ setup(
     version=_get_version(),
     description='Labels/Comments synchronization between IDA PRO and dbg backend (OllyDbg1.10, OllyDbg 2.01, x64dbg)'
                 ' , Remote memory dumping tool (including x64-bit), Python scripting tool',
-    long_description=_get_long_description(),
+    # long_description=_get_long_description(),
     author="Aliaksandr Trafimchuk",
     author_email='a13x4nd3r.t@gmail.com',
     url='https://github.com/a1ext/labeless',
