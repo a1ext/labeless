@@ -12,7 +12,7 @@ import os
 import re
 import sys
 from os import path
-from distutils.core import setup
+from setuptools import setup
 
 
 curr_dir = path.abspath(path.dirname(path.realpath(__file__)))
@@ -52,6 +52,7 @@ def _get_version():
 
 
 requirements = [
+    'setuptools',
     'protobuf==2.6.1'
 ]
 
@@ -92,7 +93,7 @@ setup(
     packages=[
          'labeless',
          'labeless.backend'
-     ] + _get_backends(),
+    ] + _get_backends(),
     install_requires=requirements,
     license="CC-BY-NC-4.0",
     keywords=['labeless', 'IDA PRO', 'OllyDbg', 'x64dbg', 'dumping', 'tracing', 'strings decryption', 'API resolving'],
