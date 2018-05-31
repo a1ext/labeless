@@ -49,3 +49,4 @@
 /deploy/MANIFEST
 /deploy/README.rst
 /deploy/dist
+/deploy/labeless.egg-info

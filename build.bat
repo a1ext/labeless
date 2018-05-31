@@ -4,7 +4,7 @@
 @set MSB="c:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
 @set SLN=labeless.sln
 
-@goto ida
+::@goto ida
 @echo building labeless for OllyDbg [1.1, 2.01]...
 @call %MSB% %SLN% /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err
@@ -44,6 +44,10 @@
 @IF /I "%ERRORLEVEL%" neq "0" goto err
 @call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err
+
+@cd deploy
+@call build_and_upload_pkg.bat c:\Python27
+@cd ..
 
 @echo All targets buit successfully, enjoy them :3
 
