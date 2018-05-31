@@ -1142,7 +1142,7 @@ void Labeless::onLoadStubDBRequested()
 	}
 	if (!::is_temp_database())
 	{
-		const auto rv = QMessageBox::question(util::ida::findIDAMainWindow(), tr("?"), tr("Do you really want to load sample DB?"),
+		const auto rv = QMessageBox::question(util::ida::findIDAMainWindow(), tr("?"), tr("Do you really want to create stub DB?"),
 				QMessageBox::Yes, QMessageBox::No);
 		if (rv != QMessageBox::Yes)
 			return;

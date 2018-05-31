@@ -1556,5 +1556,5 @@ bool Labeless::onClientSockClose(ClientData& cd)
 
 std::wstring Labeless::lastChangeTimestamp()
 {
-	return util::to_xstr(__TIMESTAMP__);
+	return util::to_xstr(__TIME__) + L" " + util::to_xstr(__DATE__);
 }

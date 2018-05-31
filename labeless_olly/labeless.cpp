@@ -1439,7 +1439,7 @@ bool Labeless::onClientSockClose(ClientData& cd)
 
 std::string Labeless::lastChangeTimestamp()
 {
-	return __TIMESTAMP__;
+	return std::string(__TIME__) + " " + std::string(__DATE__);
 }
 
 std::string Labeless::storeBadCommand(const std::string& rawCommand)
