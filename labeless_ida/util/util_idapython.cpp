@@ -92,11 +92,11 @@ bool runScript(const std::string& script, std::string& externObj, std::string& e
 	{
 		if (!qerrbuff.empty())
 			error = qerrbuff.c_str();
-		msg("%s: unable to execute Python script, error: %s", __FUNCTION__, qerrbuff.c_str());
+		msg("%s: unable to execute Python script, error: %s\n", __FUNCTION__, qerrbuff.c_str());
 		return false;
 	}
 #endif
-	const std::string pyJsonDumpsStmt = "json.dumps(" + kExternKeyword + ")";
+	const std::string pyJsonDumpsStmt = "json.dumps(" + kExternKeyword + ") if '" + kExternKeyword + "' in globals() else ''";
 	idc_value_t rv;
 #if (IDA_SDK_VERSION < 700)
 	if (elng->calcexpr(BADADDR, pyJsonDumpsStmt.c_str(), &rv, errbuff, sizeof(errbuff)))
