@@ -51,8 +51,13 @@ namespace compat {
 	inline bool is_stroff(flags_t F, int n) { return ::isStroff(F, n); }
 	inline bool is_stroff0(flags_t F) { return ::isStroff0(F); }
 	inline bool is_stroff1(flags_t F) { return ::isStroff1(F); }
+	inline bool is_off(flags_t F, int n) { return ::isOff(F, n); }
+	inline bool is_off0(flags_t F) { return ::isOff0(F); }
+	inline bool is_off1(flags_t F) { return ::isOff1(F); }
 	inline bool is_code(flags_t F) { return ::isCode(F); }
 	inline bool is_data(flags_t F) { return ::isData(F); }
+	inline bool is_tail(flags_t F) { return ::isTail(F); }
+	inline bool is_head(flags_t F) { return ::isHead(F); }
 	inline ea_t to_ea(sel_t reg_cs, ea_t reg_ip) { return ::toEA(reg_cs, reg_ip); }
 	inline bool is_enabled(ea_t ea) { return ::isEnabled(ea); }
 	inline const char* get_idb_path() { return ::database_idb; }
@@ -184,6 +189,7 @@ namespace compat {
 	inline bool is_qword(flags_t F) { return ::isQwrd(F); }
 	inline bool create_dword(ea_t ea, asize_t length) { return ::doDwrd(ea, length); }
 	inline bool create_qword(ea_t ea, asize_t length) { return ::doQwrd(ea, length); }
+	inline opinfo_t* get_opinfo(opinfo_t *buf, ea_t ea, int n, flags_t flags) { return ::get_opinfo(ea, n, flags, buf); }
 
 #define PROCESSOR_T_NEWFILE (::processor_t::newfile)
 #define PROCESSOR_T_OLDFILE (::processor_t::oldfile)
@@ -224,8 +230,13 @@ namespace compat {
 	using ::is_stroff;
 	using ::is_stroff0;
 	using ::is_stroff1;
+	using ::is_off;
+	using ::is_off0;
+	using ::is_off1;
 	using ::is_code;
 	using ::is_data;
+	using ::is_tail;
+	using ::is_head;
 	using ::to_ea;
 	inline bool get_member_name(qstring *out, tid_t mid) { return ::get_member_name(out, mid) > 0; }
 	inline bool is_enabled(ea_t ea) { return ::is_mapped(ea); }
@@ -239,7 +250,15 @@ namespace compat {
 	using ::get_cmt;
 	using ::auto_wait;
 	using ::is_call_insn;
-	using ::print_operand;
+	inline bool print_operand(qstring *out, ea_t ea, int n, int getn_flags = 0, printop_t *newtype = NULL) {
+		if (!::print_operand(out, ea, n, getn_flags, newtype))
+			return false;
+
+		if (!tag_remove(out))
+			return false;
+
+		return true;
+	}
 	inline bool do_unknown(ea_t ea, int flags) { return ::del_items(ea, flags); }
 	inline void do_unknown_range(ea_t ea, size_t size, int flags) {
 		::del_items(ea, flags, static_cast<::asize_t>(size));
@@ -256,6 +275,7 @@ namespace compat {
 	using ::is_qword;
 	using ::create_dword;
 	using ::create_qword;
+	using ::get_opinfo;
 
 #define PROCESSOR_T_NEWFILE (::processor_t::ev_newfile)
 #define PROCESSOR_T_OLDFILE (::processor_t::ev_oldfile)

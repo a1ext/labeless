@@ -406,7 +406,56 @@ void enumerateLocalVars(EA2CommentHash& ea2commentHash, bool allLocalVars)
 						addComment(ea2commentHash, ea, strucName.c_str());
 				}
 			}
+#if 0
+			else if (compat::is_off0(flags) || compat::is_off1(flags))
+			{
+				// TODO
+				for (int opNum = 0; opNum < 2 /* UA_MAXOP */; ++opNum)
+				{
+					if (!compat::is_off(flags, opNum))
+						continue;					
 
+					ea_t opTarget = INSN_T_OPNDS(&insn)[opNum].value;
+					if (!opTarget)
+						continue;
+
+					flags_t targetFlags = compat::get_flags(opTarget);
+					struc_t* pStruc = nullptr;
+					opinfo_t ti = {};
+
+					if (!compat::is_struct(targetFlags) && compat::is_tail(targetFlags))
+					{
+						opTarget = ::prev_not_tail(opTarget);
+						targetFlags = compat::get_flags(opTarget);
+						if (!compat::is_struct(targetFlags))
+							continue;
+
+						if (!::get_opinfo(&ti, targetFlags, 0, targetFlags))
+							continue;
+
+						pStruc = ::get_struc(ti.tid);
+						if (!pStruc)
+							continue;
+
+						const asize_t strucSize = get_struc_size(pStruc);
+						if (opTarget - INSN_T_OPNDS(&insn)[opNum].value >= strucSize)
+							continue;
+					}
+
+					// TODO
+					/*if (!pStruc)
+					{
+						if (!::get_opinfo(&ti, targetFlags, 0, targetFlags))
+							continue;
+
+						pStruc = ::get_struc(ti.tid);
+						if (!pStruc)
+							continue;
+
+					}*/
+				}
+			}
+#endif // 0
 			/*if (isEnum0(flags) | isEnum1(flags))
 			{
 				for (int opNum = 0; opNum < 2 /* UA_MAXOP *\/; ++opNum)
@@ -489,6 +538,50 @@ void enumerateComments(EA2CommentHash& ea2commentHash)
 					cmt.resize(OLLY_TEXTLEN - 1);
 				addComment(ea2commentHash, ea, cmt.c_str());
 			}
+		}
+	}
+}
+
+void enumerateGlobalVars(EA2CommentHash& ea2comment)
+{
+	const int segsn = get_segm_qty();
+
+	auto handleRef = [&ea2comment](::ea_t seg_ea, ::flags_t seg_ea_flags, const ::xrefblk_t& ref) {
+		const ::ea_t ref_ea = ref.from;
+		const ::flags_t ref_flags = compat::get_flags(ref_ea);
+		int opNum = -1;
+
+		if (compat::is_stroff0(ref_flags) || compat::is_off0(ref_flags))
+			opNum = 0;
+		else if (compat::is_stroff1(ref_flags) || compat::is_off1(ref_flags))
+			opNum = 1;
+		else
+			return;
+
+		qstring qoperand;
+		if (!compat::print_operand(&qoperand, ref_ea, opNum) || qoperand.empty())
+			return;
+
+		// low priority
+		if (!ea2comment.contains(ref_ea))
+			addComment(ea2comment, ref_ea, qoperand.c_str());
+	};
+
+	for (int segnum = 0; segnum < segsn; ++segnum)
+	{
+		segment_t* const segm = getnseg(segnum);
+		if (!segm || segm->type != SEG_DATA)
+			continue;
+		
+		for (ea_t ea = START_RANGE_EA(segm), segEnd = END_RANGE_EA(segm); ea < segEnd; ++ea)
+		{
+			flags_t flags = compat::get_flags(ea);
+			if (!compat::is_head(flags) || !compat::is_struct(flags))
+				continue;
+
+			::xrefblk_t xref = {};
+			for (bool ok = xref.first_to(ea, XREF_DATA); ok; ok = xref.next_to())
+				handleRef(ea, flags, xref);
 		}
 	}
 }
@@ -655,6 +748,8 @@ void Labeless::onSyncronizeAllRequested()
 	{
 		enumerateComments(ea2comment);
 	}
+
+	enumerateGlobalVars(ea2comment);
 
 	CommentsSync::DataList commentPoints;
 
@@ -1784,7 +1879,7 @@ bool Labeless::createSegment(const compat::IDARange& area, uchar perm, uchar typ
 	memset(&result, 0, sizeof(result));
 	static_cast<compat::IDARange&>(result) = area;
 
-	result.bitness = ::inf.is_64bit() ? 2 : 1;
+	result.bitness = ::inf.is_64bit() ? 2 : 1; // TODO: name them
 	result.sel = setup_selector(0);
 	result.perm = perm;
 	result.type = type;
