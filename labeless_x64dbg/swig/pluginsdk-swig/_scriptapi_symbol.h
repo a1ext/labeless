@@ -9,9 +9,9 @@ namespace Script
     {
         enum SymbolType
         {
-            Function,
-            Import,
-            Export
+            Function, //user-defined function
+            Import, //IAT entry
+            Export //export
         };
 
         struct SymbolInfo
@@ -23,7 +23,8 @@ namespace Script
             SymbolType type;
         };
 
-        extern bool GetList(ListOf(SymbolInfo) list); //caller has the responsibility to free the list
+        %rename(Symbol_GetList) GetList;
+        extern bool GetList(ListInfo* list); //caller has the responsibility to free the list
     }; //Symbol
 }; //Script
 

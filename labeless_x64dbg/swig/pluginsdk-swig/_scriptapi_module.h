@@ -24,32 +24,88 @@ namespace Script
             char name[MAX_SECTION_SIZE * 5];
         };
 
-        SCRIPT_EXPORT bool InfoFromAddr(duint addr, ModuleInfo* info);
-        SCRIPT_EXPORT bool InfoFromName(const char* name, ModuleInfo* info);
-        SCRIPT_EXPORT duint BaseFromAddr(duint addr);
-        SCRIPT_EXPORT duint BaseFromName(const char* name);
-        SCRIPT_EXPORT duint SizeFromAddr(duint addr);
-        SCRIPT_EXPORT duint SizeFromName(const char* name);
-        SCRIPT_EXPORT bool NameFromAddr(duint addr, char* name); //name[MAX_MODULE_SIZE]
-        SCRIPT_EXPORT bool PathFromAddr(duint addr, char* path); //path[MAX_PATH]
-        SCRIPT_EXPORT bool PathFromName(const char* name, char* path); //path[MAX_PATH]
-        SCRIPT_EXPORT duint EntryFromAddr(duint addr);
-        SCRIPT_EXPORT duint EntryFromName(const char* name);
-        SCRIPT_EXPORT int SectionCountFromAddr(duint addr);
-        SCRIPT_EXPORT int SectionCountFromName(const char* name);
-        SCRIPT_EXPORT bool SectionFromAddr(duint addr, int number, ModuleSectionInfo* section);
-        SCRIPT_EXPORT bool SectionFromName(const char* name, int number, ModuleSectionInfo* section);
-        SCRIPT_EXPORT bool SectionListFromAddr(duint addr, ListOf(ModuleSectionInfo) list);
-        SCRIPT_EXPORT bool SectionListFromName(const char* name, ListOf(ModuleSectionInfo) list);
-        SCRIPT_EXPORT bool GetMainModuleInfo(ModuleInfo* info);
-        SCRIPT_EXPORT duint GetMainModuleBase();
-        SCRIPT_EXPORT duint GetMainModuleSize();
-        SCRIPT_EXPORT duint GetMainModuleEntry();
-        SCRIPT_EXPORT int GetMainModuleSectionCount();
-        SCRIPT_EXPORT bool GetMainModuleName(char* name); //name[MAX_MODULE_SIZE]
-        SCRIPT_EXPORT bool GetMainModulePath(char* path); //path[MAX_PATH]
-        SCRIPT_EXPORT bool GetMainModuleSectionList(ListOf(ModuleSectionInfo) list); //caller has the responsibility to free the list
-        SCRIPT_EXPORT bool GetList(ListOf(ModuleInfo) list); //caller has the responsibility to free the list
+        %rename(Module_InfoFromAddr) InfoFromAddr;
+        extern bool InfoFromAddr(duint addr, ModuleInfo* info);
+        
+        %rename(Module_InfoFromName) InfoFromName;
+        extern bool InfoFromName(const char* name, ModuleInfo* info);
+        
+        %rename(Module_BaseFromAddr) BaseFromAddr;
+        extern duint BaseFromAddr(duint addr);
+        
+        %rename(Module_BaseFromName) BaseFromName;
+        extern duint BaseFromName(const char* name);
+        
+        %rename(Module_SizeFromAddr) SizeFromAddr;
+        extern duint SizeFromAddr(duint addr);
+        
+        %rename(Module_SizeFromName) SizeFromName;
+        extern duint SizeFromName(const char* name);
+        
+        %rename(Module_NameFromAddr) NameFromAddr;
+        %pybuffer_string(char* name)
+        extern bool NameFromAddr(duint addr, char* name); //name[MAX_MODULE_SIZE]
+        
+        %rename(Module_PathFromAddr) PathFromAddr;
+        %pybuffer_string(char* path)
+        extern bool PathFromAddr(duint addr, char* path); //path[MAX_PATH]
+        
+        %rename(Module_PathFromName) PathFromName;
+        %pybuffer_string(char* path)
+        extern bool PathFromName(const char* name, char* path); //path[MAX_PATH]
+        
+        %rename(Module_EntryFromAddr) EntryFromAddr;
+        extern duint EntryFromAddr(duint addr);
+        
+        %rename(Module_EntryFromName) EntryFromName;
+        extern duint EntryFromName(const char* name);
+        
+        %rename(Module_SectionCountFromAddr) SectionCountFromAddr;
+        extern int SectionCountFromAddr(duint addr);
+        
+        %rename(Module_SectionCountFromName) SectionCountFromName;
+        extern int SectionCountFromName(const char* name);
+        
+        %rename(Module_SectionFromAddr) SectionFromAddr;
+        extern bool SectionFromAddr(duint addr, int number, ModuleSectionInfo* section);
+        
+        %rename(Module_SectionFromName) SectionFromName;
+        extern bool SectionFromName(const char* name, int number, ModuleSectionInfo* section);
+        
+        %rename(Module_SectionListFromAddr) SectionListFromAddr;
+        extern bool SectionListFromAddr(duint addr, ListInfo* list);
+        
+        %rename(Module_SectionListFromName) SectionListFromName;
+        extern bool SectionListFromName(const char* name, ListInfo* list);
+        
+        %rename(Module_GetMainModuleInfo) GetMainModuleInfo;
+        extern bool GetMainModuleInfo(ModuleInfo* info);
+        
+        %rename(Module_GetMainModuleBase) GetMainModuleBase;
+        extern duint GetMainModuleBase();
+        
+        %rename(Module_GetMainModuleSize) GetMainModuleSize;
+        extern duint GetMainModuleSize();
+        
+        %rename(Module_GetMainModuleEntry) GetMainModuleEntry;
+        extern duint GetMainModuleEntry();
+        
+        %rename(Module_GetMainModuleSectionCount) GetMainModuleSectionCount;
+        extern int GetMainModuleSectionCount();
+        
+        %rename(Module_GetMainModuleName) GetMainModuleName;
+        %pybuffer_string(char* name)
+        extern bool GetMainModuleName(char* name); //name[MAX_MODULE_SIZE]
+        
+        %rename(Module_GetMainModulePath) GetMainModulePath;
+        %pybuffer_string(char* path)
+        extern bool GetMainModulePath(char* path); //path[MAX_PATH]
+        
+        %rename(Module_GetMainModuleSectionList) GetMainModuleSectionList;
+        extern bool GetMainModuleSectionList(ListInfo* list); //caller has the responsibility to free the list
+        
+        %rename(Module_GetList) GetList;
+        extern bool GetList(ListInfo* list); //caller has the responsibility to free the list
     }; //Module
 }; //Script
 

@@ -15,15 +15,32 @@ namespace Script
             bool manual;
         };
 
-        SCRIPT_EXPORT bool Set(duint addr, const char* text, bool manual = false);
-        SCRIPT_EXPORT bool Set(const LabelInfo* info);
-        SCRIPT_EXPORT bool FromString(const char* label, duint* addr);
-        SCRIPT_EXPORT bool Get(duint addr, char* text); //text[MAX_LABEL_SIZE]
-        SCRIPT_EXPORT bool GetInfo(duint addr, LabelInfo* info);
-        SCRIPT_EXPORT bool Delete(duint addr);
-        SCRIPT_EXPORT void DeleteRange(duint start, duint end);
-        SCRIPT_EXPORT void Clear();
-        SCRIPT_EXPORT bool GetList(ListOf(LabelInfo) list); //caller has the responsibility to free the list
+        %rename(Label_Set) Set;
+        extern bool Set(duint addr, const char* text, bool manual = false);
+        
+        %rename(Label_SetByLabelInfo) Set;
+        extern bool Set(const LabelInfo* info);
+        
+        %rename(Label_FromString) FromString;
+        extern bool FromString(const char* label, duint* addr);
+        
+        %rename(Label_Get) Get;
+        extern bool Get(duint addr, char* text); //text[MAX_LABEL_SIZE]
+        
+        %rename(Label_GetInfo) GetInfo;
+        extern bool GetInfo(duint addr, LabelInfo* info);
+        
+        %rename(Label_Delete) Delete;
+        extern bool Delete(duint addr);
+        
+        %rename(Label_DeleteRange) DeleteRange;
+        extern void DeleteRange(duint start, duint end);
+        
+        %rename(Label_Clear) Clear;
+        extern void Clear();
+        
+        %rename(Label_GetList) GetList;
+        extern bool GetList(ListInfo* list); //caller has the responsibility to free the list
     }; //Label
 }; //Script
 

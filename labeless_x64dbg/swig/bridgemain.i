@@ -14,6 +14,7 @@
 %typemap(out) HWND {
     $result = PyInt_FromLong((long)$1);
 }
+#define DECLSPEC_ALIGN(x) __declspec(align(x))
 
 %include "pluginsdk-swig/bridgelist.h"
 %include "pluginsdk-swig/bridgemain_swig.h"
@@ -218,5 +219,61 @@
     
     const char* DbgGetDebuggeeInitScript_()
     { return $self->DbgGetDebuggeeInitScript(); }
+
+    bool EnumWindows_(ListInfo* windows)    
+    { return $self->EnumWindows(windows); }
+
+    bool EnumHeaps_(ListInfo* heaps)
+    { return $self->EnumHeaps(heaps); }
+
+    %pybuffer_mutable_string(char* name)
+    bool ThreadGetName_(DWORD tid, char* name)
+    { return $self->ThreadGetName(tid, name); }
+    %typemap(in) char* name;
+
+    bool IsDepEnabled_()
+    { return $self->IsDepEnabled(); }
+
+    void GetCallStackEx_(DBGCALLSTACK* callstack, bool cache)
+    { return $self->GetCallStackEx(callstack, cache); }
+
+    %pybuffer_mutable_string(char* comment)
+    bool GetUserComment_(duint addr, char* comment)
+    { return $self->GetUserComment(addr, comment); }
+    %typemap(in) char* comment;
+
+    void EnumConstants_(ListInfo* constants)
+    { return $self->EnumConstants(constants); }
+
+    void EnumErrorCodes_(ListInfo* constants)
+    { return $self->EnumErrorCodes(constants); }
+
+    void EnumExceptions_(ListInfo* constants) 
+    { return $self->EnumExceptions(constants); }
+
+    duint MemBpSize_(duint addr)
+    { return $self->MemBpSize(addr); }
+
+    bool ModRelocationsFromAddr_(duint addr, ListInfo* relocations)
+    { return $self->ModRelocationsFromAddr(addr, relocations); }
+
+    bool ModRelocationAtAddr_(duint addr, DBGRELOCATIONINFO* relocation)
+    { return $self->ModRelocationAtAddr(addr, relocation); }
+
+    bool ModRelocationsInRange_(duint addr, duint size, ListInfo* relocations)
+    { return $self->ModRelocationsInRange(addr, size, relocations); }
+
+    duint DbGetHash_()
+    { return $self->DbGetHash(); }
+
+    int SymAutoComplete_(const char* Search, char** Buffer, int MaxSymbols)
+    { return $self->SymAutoComplete(Search, Buffer, MaxSymbols); }
+
+    void RefreshModuleList_()
+    { return $self->RefreshModuleList(); }
+
+    duint GetAddrFromLineEx_(duint mod, const char* szSourceFile, int line)
+    { return $self->GetAddrFromLineEx(mod, szSourceFile, line); }
+
 }
 
