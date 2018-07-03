@@ -6,13 +6,14 @@
 
 QT       += widgets
 
-TARGET = labeless_ida_690
+TARGET = labeless_ida_70
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG -= debug
-CONFIG *= release force_debug_info
+CONFIG *= release force_debug_info x64
 
 # CONFIG += is64
+CONFIG += is_ida7
 QT_NAMESPACE = QT
 
 # FIXME: adjust right paths below
@@ -24,8 +25,8 @@ win32 {
     LIBS += -L$${SDK_PATH}/lib/x86_win_qt
 }
 else:unix {
-    SDK_PATH = $$PWD/../idasdk695/
-    IDA_PATH = $$PWD/../idademo695/
+    SDK_PATH = $$PWD/../idasdk70/
+    IDA_PATH = $$PWD/../idademo70/
     QMAKE_CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
     QMAKE_CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
 }
@@ -50,11 +51,19 @@ win32 {
     LIBS += -L$$PWD/../3rdparty/libs -llibprotobuf_v140 -lws2_32
 }
 else:!mac:unix {
-    is64 {
-        TARGET_EXT = .plx64
+    is_ida7 {
+        TARGET_EXT = .so
+        is64 {
+            TARGET = $${TARGET}_64
+        }
     }
     else {
-        TARGET_EXT = .plx
+        is64 {
+            TARGET_EXT = .plx64
+        }
+        else {
+            TARGET_EXT = .plx
+        }
     }
     DEFINES += __LINUX__ \
                _FORTIFY_SOURCE=0
@@ -84,6 +93,7 @@ DEFINES += __IDP__ \
     NO_OBSOLETE_FUNCS \
     LL_LIBRARY \
     __QT__ \
+    __X64__ \
     QT_NO_UNICODE_LITERAL
 
 
@@ -93,7 +103,7 @@ CONFIG(debug, debug|release) {
 
 x64 {
     TARGET_PROCESSOR_NAME = x64
-    DEFINES += __EA64__ __X64__
+    DEFINES += __EA64__
     SUFF64 = 64x
     ADRSIZE = 64
 }
@@ -111,7 +121,7 @@ else {
 
 SYSDIR = $${TARGET_PROCESSOR_NAME}_$${SYSNAME}_$${COMPILER_NAME}_$${ADRSIZE}
 OBJDIR = obj/$${SYSDIR}/
-
+# message($$SYSDIR)
 # set rpath on linux
 linux:LIBS += -z \
     defs \
@@ -137,8 +147,9 @@ else:!mac:unix {
         IDA_LIB = ida
     }
     INCLUDEPATH += /usr/include/python2.7
+    INCLUDEPATH += $${PWD}/../protobuf-2.6.0/src/
     LIBS += -lpython2.7
-    LIBS += -L$${IDA_PATH} -l$${IDA_LIB} -lprotobuf
+    LIBS += -L$${IDA_PATH} -l$${IDA_LIB} -L$${SDK_PATH}/lib/$${SYSDIR}/ -lprotobuf
 }
 
 # message($$LIBS)

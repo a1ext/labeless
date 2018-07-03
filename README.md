@@ -70,12 +70,21 @@ If you want to use both x86 and x86_64 targets, then you should do the following
 cd c:\deploy
 c:\Python27\python.exe setup_protobuf.py
 ```
-* Install "labeless" python module using the following commands:
+* Install "labeless" python module, there are two ways to archive that, the first one is to use PyPI in case you have an Internet connection on the debug machine:
+
+```bat
+pip install --upgrade labeless
+
+```
+
+In case you don't have an Internet connection, you could install prebuilt module from releae archive:
 
 ```bat
 cd c:\deploy
-c:\Python27\python.exe setup.py install
+c:\Python27\Scripts\pip.exe install labeless-1.1.2.65-py2.py3-none-any.whl
 ```
+
+**Note**: If you have already used Labeless before and you want to update it, don't forget to reinstall python module each time you have new release
 
 * Configure your debugger backend: set up `plugins` directory
 
