@@ -22,6 +22,7 @@
 #include <QElapsedTimer>
 #include <QFocusEvent>
 #include <QKeyEvent>
+#include <QPainter>
 #include <QScrollBar>
 #include <QStringListModel>
 #include <QTimer>
@@ -38,13 +39,17 @@ static const QStringList kAdditionalKeyWords = QStringList()
 
 
 TextEdit::TextEdit(QWidget* parent)
-	: QTextEdit(parent)
+	: QPlainTextEdit(parent)
 	, m_CompletionModel(new QStringListModel(this))
 	, m_CompletionTimer(new QTimer(this))
 	, m_SignatureToolTip(new PySignatureToolTip(this))
 	, m_CompletionType(CT_Unknown)
 	, m_IsIDASide(false)
 {
+	m_LineNumberArea = new TELineNumberArea(this);
+	CHECKED_CONNECT(connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int))));
+	CHECKED_CONNECT(connect(this, SIGNAL(updateRequest(const QRect&, int)), this, SLOT(updateLineNumberArea(const QRect&, int))));
+
 	m_Highlighter = new Highlighter(document());
 	m_InternalNames
 		<< kkwExtern << kkwResult;
@@ -66,8 +71,8 @@ TextEdit::TextEdit(QWidget* parent)
 	m_CompletionTimer->setSingleShot(true);
 	m_CompletionTimer->setInterval(1200);
 	CHECKED_CONNECT(connect(m_CompletionTimer, SIGNAL(timeout()), this, SLOT(onAutoCompletionRequested())));
-	
-	setAcceptRichText(false);
+
+	updateLineNumberAreaWidth(0);
 }
 
 TextEdit::~TextEdit()
@@ -102,7 +107,7 @@ void TextEdit::focusInEvent(QFocusEvent* e)
 {
 	if (m_Completer)
 		m_Completer->setWidget(this);
-	QTextEdit::focusInEvent(e);
+	QPlainTextEdit::focusInEvent(e);
 }
 
 QString TextEdit::textUnderCursor() const
@@ -150,7 +155,7 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
 	const bool isCompletionsRequested = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_Space);
 	const bool isCallSignaturesRequested = isCompletionsRequested && (e->modifiers() & Qt::ShiftModifier) == Qt::ShiftModifier;
 	if (!m_Completer || !isCompletionsRequested)
-		QTextEdit::keyPressEvent(e);
+		QPlainTextEdit::keyPressEvent(e);
 
 	if (!isCompletionsRequested && e->text().isEmpty())
 		return;
@@ -205,19 +210,27 @@ void TextEdit::focusOutEvent(QFocusEvent *e)
 
 	m_SignatureToolTip->hide();
 
-	QTextEdit::focusOutEvent(e);
+	QPlainTextEdit::focusOutEvent(e);
 }
 
 void TextEdit::mousePressEvent(QMouseEvent* e)
 {
 	m_SignatureToolTip->hide();
-	QTextEdit::mousePressEvent(e);
+	QPlainTextEdit::mousePressEvent(e);
 }
 
 void TextEdit::mouseMoveEvent(QMouseEvent* e)
 {
 	m_SignatureToolTip->hide();
-	QTextEdit::mouseMoveEvent(e);
+	QPlainTextEdit::mouseMoveEvent(e);
+}
+
+void TextEdit::resizeEvent(QResizeEvent *e)
+{
+	QPlainTextEdit::resizeEvent(e);
+
+	QRect cr = contentsRect();
+	m_LineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
 void TextEdit::colorSchemeChanged()
@@ -311,5 +324,61 @@ void TextEdit::markAsIDASideEditor(bool v)
 	{
 		CHECKED_CONNECT(connect(this, SIGNAL(autoCompleteThis(QSharedPointer<jedi::Request>)),
 			&Labeless::instance(), SLOT(onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request>))));
+	}
+}
+
+int TextEdit::lineNumberAreaWidth()
+{
+	int digits = 1;
+	int max = qMax(1, blockCount());
+	while (max >= 10) {
+		max /= 10;
+		++digits;
+	}
+
+	int space = 3 + fontMetrics().width(QLatin1Char('9')) * digits; // workaround
+
+	return space;
+}
+
+void TextEdit::updateLineNumberAreaWidth(int /* newBlockCount */)
+{
+	setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
+}
+
+void TextEdit::updateLineNumberArea(const QRect& rect, int dy)
+{
+	if (dy)
+		m_LineNumberArea->scroll(0, dy);
+	else
+		m_LineNumberArea->update(0, rect.y(), m_LineNumberArea->width(), rect.height());
+
+	if (rect.contains(viewport()->rect()))
+		updateLineNumberAreaWidth(0);
+}
+
+void TextEdit::lineNumberAreaPaintEvent(QPaintEvent* event)
+{
+	QPainter painter(m_LineNumberArea);
+	painter.fillRect(event->rect(), Qt::lightGray);
+
+	QTextBlock block = firstVisibleBlock();
+	int blockNumber = block.blockNumber();
+	int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
+	int bottom = top + (int)blockBoundingRect(block).height();
+
+	while (block.isValid() && top <= event->rect().bottom())
+	{
+		if (block.isVisible() && bottom >= event->rect().top())
+		{
+			QString number = QString::number(blockNumber + 1);
+			painter.setPen(Qt::black);
+			painter.drawText(0, top, m_LineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+		}
+
+		block = block.next();
+		top = bottom;
+		bottom = top + (int)blockBoundingRect(block).height();
+		++blockNumber;
 	}
 }

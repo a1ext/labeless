@@ -371,7 +371,7 @@
  <customwidgets>
   <customwidget>
    <class>TextEdit</class>
-   <extends>QTextEdit</extends>
+   <extends>QPlainTextEdit</extends>
    <header location="global">textedit.h</header>
   </customwidget>
  </customwidgets>

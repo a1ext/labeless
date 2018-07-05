@@ -9,7 +9,7 @@
 #pragma once
 
 #include <QPointer>
-#include <QTextEdit>
+#include <QPlainTextEdit>
 
 #include "jedi.h"
 
@@ -20,9 +20,9 @@ QT_FORWARD_DECLARE_CLASS(QTimer)
 class Highlighter;
 class PySignatureToolTip;
 struct PythonPalette;
+class TELineNumberArea;
 
-
-class TextEdit : public QTextEdit
+class TextEdit : public QPlainTextEdit
 {
 	Q_OBJECT
 public:
@@ -34,6 +34,9 @@ public:
 	void markAsIDASideEditor(bool v);
 	inline bool isIDASideEditor() const { return m_IsIDASide; }
 
+	void lineNumberAreaPaintEvent(QPaintEvent *event);
+	int lineNumberAreaWidth();
+
 signals:
 	void autoCompleteThis(QSharedPointer<jedi::Request>);
 
@@ -44,6 +47,8 @@ public slots:
 private slots:
 	void insertCompletion(const QString& completion);
 	void onAutoCompletionRequested();
+	void updateLineNumberAreaWidth(int newBlockCount);
+	void updateLineNumberArea(const QRect&, int);
 
 protected:
 	void focusInEvent(QFocusEvent* e) override;
@@ -51,6 +56,7 @@ protected:
 	void focusOutEvent(QFocusEvent *e) override;
 	void mousePressEvent(QMouseEvent* e) override;
 	void mouseMoveEvent(QMouseEvent* e) override;
+	void resizeEvent(QResizeEvent *event) override;
 
 private:
 	QString textUnderCursor() const;
@@ -71,7 +77,31 @@ private:
 	QPointer<QTimer> m_CompletionTimer;
 	QPointer<PySignatureToolTip> m_SignatureToolTip;
 	CompletionType m_CompletionType;
+	QPointer<TELineNumberArea> m_LineNumberArea;
 
 	bool m_IsIDASide;
 };
 
+class TELineNumberArea : public QWidget
+{
+public:
+	TELineNumberArea(TextEdit *editor)
+		: QWidget(editor)
+	{
+		m_Editor = editor;
+	}
+
+	QSize sizeHint() const override
+	{
+		return QSize(m_Editor->lineNumberAreaWidth(), 0);
+	}
+
+protected:
+	void paintEvent(QPaintEvent *event) override
+	{
+		m_Editor->lineNumberAreaPaintEvent(event);
+	}
+
+private:
+	TextEdit* m_Editor;
+};
