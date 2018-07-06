@@ -29,6 +29,7 @@
 // fwd
 QT_FORWARD_DECLARE_CLASS(QAction)
 QT_FORWARD_DECLARE_CLASS(QMainWindow)
+QT_FORWARD_DECLARE_CLASS(QToolBar)
 struct form_actions_t;
 
 class PyOllyView;
@@ -218,6 +219,8 @@ private:
 	QMap<uint64_t, LogItem>			m_LogItems;
 	QList<QAction*>					m_MenuActions;
 	QAction*						m_PauseNotificationMenuAction;
+	QPointer<QToolBar>				m_Toolbar;
+	QPointer<QMainWindow>			m_MainWindow;
 
 	// auto-completion vars
 	mutable QMutex					m_AutoCompletionLock;

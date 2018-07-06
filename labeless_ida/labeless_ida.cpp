@@ -54,8 +54,9 @@
 #include <QProcess>
 #include <QRegExp>
 #include <QSettings>
-#include <QThread>
 #include <QTextCodec>
+#include <QThread>
+#include <QToolBar>
 #include <QVariant>
 
 #include <google/protobuf/stubs/common.h>
@@ -878,9 +879,11 @@ void Labeless::onAutoanalysisFinished()
 
 bool Labeless::firstInit()
 {
-	if (QMainWindow* mw = util::ida::findIDAMainWindow())
+	if (!m_MainWindow)
+		m_MainWindow = util::ida::findIDAMainWindow();
+	if (m_MainWindow)
 	{
-		if (QMenu* m = mw->menuBar()->addMenu("Labeless"))
+		if (QMenu* m = m_MainWindow->menuBar()->addMenu("Labeless"))
 		{
 			m->setObjectName(kLabelessMenuObjectName);
 #ifdef __EA64__
@@ -896,11 +899,13 @@ bool Labeless::firstInit()
 			m_MenuActions << actLoadStub;
 #endif // __EA64__
 			m->addSeparator();
-			m_MenuActions << m->addAction(QIcon(":/run.png"), tr("Remote Python execution"), this, SLOT(onShowRemotePythonExecutionViewRequested()));
+			QAction* actRemotePyExec = m->addAction(QIcon(":/run.png"), tr("Remote Python execution"), this, SLOT(onShowRemotePythonExecutionViewRequested()));
+			m_MenuActions << actRemotePyExec;
 			QMenu* dumpMenu = m->addMenu(QIcon(":/dump.png"), tr("IDADump"));
 			m_MenuActions << dumpMenu->addAction(tr("Wipe all and import..."), this, SLOT(onWipeAndImportRequested()));
 			m_MenuActions << dumpMenu->addAction(tr("Keep existing and import..."), this, SLOT(onKeepAndImportRequested()));
-			m_MenuActions << m->addAction(QIcon(":/sync.png"), tr("Sync labels now"), this, SLOT(onSyncronizeAllRequested()), Qt::ALT | Qt::SHIFT | Qt::Key_R);
+			QAction* actDoSyncAllNow = m->addAction(QIcon(":/sync.png"), tr("Sync labels now"), this, SLOT(onSyncronizeAllRequested()), Qt::ALT | Qt::SHIFT | Qt::Key_R);
+			m_MenuActions << actDoSyncAllNow;
 			m->addSeparator();
 			m_MenuActions << (m_PauseNotificationMenuAction = m->addAction(QIcon(":/pause_notif.png"), kEnablePauseNotifAction));
 			m_PauseNotificationMenuAction->setCheckable(true);
@@ -909,7 +914,20 @@ bool Labeless::firstInit()
 			m_MenuActions << m->addAction(QIcon(), tr("JUMP to IDA ea -> in <dbg>"), this, SLOT(onJumpToRequested()), Qt::SHIFT | Qt::Key_J);
 			m_MenuActions << m->addAction(QIcon(), tr("JUMP to <dbg> ea -> in IDA"), this, SLOT(onJumpFromRequested()), Qt::SHIFT | Qt::CTRL | Qt::Key_J);
 			m->addSeparator();
-			m_MenuActions << m->addAction(QIcon(":/settings.png"), tr("Settings..."), this, SLOT(onSettingsRequested()));
+			QAction* actSettings = m->addAction(QIcon(":/settings.png"), tr("Settings..."), this, SLOT(onSettingsRequested()));
+			m_MenuActions << actSettings;
+
+			// init toolbar
+			m_Toolbar = new QToolBar("Labeless"); // FIXME: rewrite this with ::create_toolbar(), requires drop support of IDA68
+			m_Toolbar->setObjectName("LabelessToolbar");
+			m_Toolbar->setIconSize(QSize(16, 16));
+			m_Toolbar->addAction(actSettings);
+			m_Toolbar->addSeparator();
+			m_Toolbar->addAction(actRemotePyExec);
+			m_Toolbar->addSeparator();
+			m_Toolbar->addAction(actDoSyncAllNow);
+			   
+			m_MainWindow->addToolBar(Qt::TopToolBarArea, m_Toolbar);
 		}
 	}
 	static const action_desc_t sync_all_action = ACTION_DESC_LITERAL(
@@ -1022,8 +1040,20 @@ void Labeless::shutdown()
 	static bool shutdownCalled = false;
 	if (shutdownCalled)
 		return;
+
 	shutdownCalled = true;
+
 	terminate();
+	
+	if (m_Toolbar)
+	{
+		if (m_MainWindow)
+			m_MainWindow->removeToolBar(m_Toolbar); // FIXME: rewrite this with ::delete_toolbar(), requires drop support of IDA68
+		m_Toolbar->setParent(nullptr);
+		delete m_Toolbar.data();
+		m_Toolbar = nullptr;
+	}
+
 #ifdef __NT__
 	WSACleanup();
 #endif // __NT__
