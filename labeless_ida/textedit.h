@@ -43,6 +43,7 @@ signals:
 public slots:
 	void colorSchemeChanged();
 	void onAutoCompleteFinished(QSharedPointer<jedi::Result> r);
+	void selectLine(int line);
 
 private slots:
 	void insertCompletion(const QString& completion);

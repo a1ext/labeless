@@ -85,6 +85,7 @@
 #include "jedi.h"
 #include "jedicompletionworker.h"
 #include "pausenotificationlistener.h"
+#include "textedit.h"
 
 
 namespace {
@@ -207,6 +208,9 @@ static const QString kEnablePauseNotifAction = QObject::tr("Enable pause notific
 static const QString kDisablePauseNotifAction = QObject::tr("Disable pause notification handling");
 static const uint32 kPauseNotificationCursorColor = 0x305500;
 static const WORD kDefaultPauseNotificationPort = 12344;
+
+static const QString kLogItemActionLoad = "load";
+static const QString kLogItemActionNavigate = "nav";
 
 typedef QHash<ea_t, std::string> EA2CommentHash;
 
@@ -626,6 +630,34 @@ bool parseBackendId(const ::qstring& qid, std::string& result)
 	}
 	result.assign(reinterpret_cast<const char*>(&backendId), sizeof(backendId));
 	return true;
+}
+
+QString supplyStdErrWithNavigationLinks(const LogItem& logItem)
+{
+	static const QString kErrorNavigatorFmt = QObject::tr("<a href=\"%1/%2/%3\" title=\"Click to navigate\">%4</a>");
+	const QRegExp reTracebackFilePosition = QRegExp("^\\s*File \"<string>\", line (\\d+), in (.+)$", Qt::CaseInsensitive);
+
+	auto items = logItem.textStdErr.split("\n");
+	QStringList rvList;
+	foreach (QString line, items)
+	{
+		const bool matches = reTracebackFilePosition.exactMatch(line);
+		line = line.replace("\r", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\\s", "&nbsp;"); // kludge
+		if (!matches)
+		{
+			rvList << line;
+		}
+		else
+		{
+			rvList << kErrorNavigatorFmt
+				.arg(kLogItemActionNavigate)
+				.arg(logItem.number)
+				.arg(reTracebackFilePosition.cap(1))
+				.arg(line);
+		}
+	}
+
+	return rvList.join("<br>");
 }
 
 } // anonymous
@@ -3045,10 +3077,11 @@ void Labeless::addLogItem(LogItem& logItem)
 
 	m_LogItems.insert(logItem.number, logItem);
 
-	static const QString stdOutFmt = tr("<a href=\"%1\" title=\"Click to load into editors\">request #%2</a> %3<br>");
+	static const QString stdOutFmt = tr("<a href=\"%1/%2\" title=\"Click to load into editors\">request #%3</a> %4<br>");
 
 	m_PyOllyView->prependStdoutLog("-------------------------------------------------------------------<br>", true);
 	m_PyOllyView->prependStdoutLog(stdOutFmt
+		.arg(kLogItemActionLoad)
 		.arg(logItem.number)
 		.arg(logItem.number)
 		.arg(logItem.textStdErr.isEmpty() ? QString::null : tr("(has std_err |&gt;)")), true);
@@ -3060,13 +3093,14 @@ void Labeless::addLogItem(LogItem& logItem)
 
 	m_PyOllyView->prependStderrLog("-------------------------------------------------------------------<br>", true);
 	m_PyOllyView->prependStderrLog(stdOutFmt
+		.arg(kLogItemActionLoad)
 		.arg(logItem.number)
 		.arg(logItem.number)
 		.arg(logItem.textStdOut.isEmpty() ? QString::null : tr("(has std_out &lt;|)")), true);
 	if (!logItem.textStdErr.isEmpty())
 	{
 		m_PyOllyView->prependStderrLog("<br>", true);
-		m_PyOllyView->prependStderrLog(logItem.textStdErr);
+		m_PyOllyView->prependStderrLog(supplyStdErrWithNavigationLinks(logItem), true);
 	}
 }
 
@@ -3076,21 +3110,44 @@ void Labeless::onLogAnchorClicked(const QString& value)
 		return;
 
 	bool ok = false;
-	const uint64_t number = value.toULongLong(&ok);
+	QStringList items = value.split("/", QString::SkipEmptyParts);
+	if (items.length() < 2)
+		return;
+
+	const bool isLoad = items[0] == kLogItemActionLoad;
+	const bool isNavigate = items[0] == kLogItemActionNavigate;
+	if (!isLoad && !isNavigate)
+		return;
+
+	if (isNavigate && items.length() < 3)
+		return;
+
+	const uint64_t number = items[1].toULongLong(&ok);
 	if (!ok || !m_LogItems.contains(number))
 		return;
 
 	const LogItem& li = m_LogItems[number];
 
-	if (li.idaScript.isEmpty() && li.ollyScript.isEmpty())
-		return;
+	if (isLoad)
+	{
+		if (li.idaScript.isEmpty() && li.ollyScript.isEmpty())
+			return;
 
-	if (ASKBTN_YES != ASK_YN(ASKBTN_NO, "Do you want to load IDA & Olly scripts related to that request into editors?\n"
+		if (ASKBTN_YES != ASK_YN(ASKBTN_NO, "Do you want to load IDA & Olly scripts related to that request into editors?\n"
 			"All changes made will be lost!"))
+			return;
+
+		m_PyOllyView->setIDAScript(li.idaScript);
+		m_PyOllyView->setOllyScript(li.ollyScript);
+		return;
+	}
+
+	// navigate
+	const auto lineNumber = items[2].toLong(&ok);
+	if (!ok || lineNumber <= 0)
 		return;
 
-	m_PyOllyView->setIDAScript(li.idaScript);
-	m_PyOllyView->setOllyScript(li.ollyScript);
+	m_PyOllyView->jumpAndSelectLine(false, lineNumber - 1);
 }
 
 void Labeless::onClearLogsRequested()

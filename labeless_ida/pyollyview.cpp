@@ -166,6 +166,19 @@ void PyOllyView::setUpGUI()
 
 		CHECKED_CONNECT(connect(pb, SIGNAL(clicked()), this, SLOT(onFastActionRequested())));
 	}
+
+	auto cornerWidget = new QWidget();
+	auto cornerVBoxLayout = new QVBoxLayout();
+	
+	auto logTabBarLabel = new QLabel(tr("Debugger's "));
+	logTabBarLabel->setAlignment(Qt::AlignVCenter);
+	cornerVBoxLayout->addWidget(logTabBarLabel, 1);
+	cornerVBoxLayout->setContentsMargins(0, 0, 0, 4);
+
+	cornerWidget->setLayout(cornerVBoxLayout);
+	m_UI->tbLogPane->setCornerWidget(cornerWidget, Qt::TopLeftCorner);
+	m_UI->teIDAScript->setProperty("placeholderText", tr("Put IDA script here...")); // workaround for Qt 4, it doesn't have placeholder text for QPlainTextEdit
+	m_UI->teOllyScript->setProperty("placeholderText", tr("Put Debugger's script here..."));
 }
 
 void PyOllyView::setUpConnections()
@@ -245,6 +258,16 @@ QString PyOllyView::getIDAScript(bool html) const
 	return m_UI->teIDAScript->toPlainText();
 }
 
+TextEdit* PyOllyView::idaScriptWidget() const
+{
+	return m_UI->teIDAScript;
+}
+
+TextEdit* PyOllyView::ollyScriptWidget() const
+{
+	return m_UI->teOllyScript;
+}
+
 void PyOllyView::onColorSchemeChanged()
 {
 	const int index = m_UI->cbColorScheme->currentIndex();
@@ -259,6 +282,14 @@ void PyOllyView::onColorSchemeChanged()
 	m_UI->teOllyScript->colorSchemeChanged();
 
 	GlobalSettingsManger::instance().setValue(GSK_ColorScheme, sel);
+}
+
+void PyOllyView::jumpAndSelectLine(bool isIDA, int line)
+{
+	TextEdit* te = isIDA ? m_UI->teIDAScript : m_UI->teOllyScript;
+
+	te->selectLine(line);
+	te->setFocus();
 }
 
 bool PyOllyView::eventFilter(QObject* obj, QEvent* event)

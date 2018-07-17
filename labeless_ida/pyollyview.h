@@ -25,6 +25,8 @@ class PyOllyView;
 }
 QT_END_NAMESPACE
 
+class TextEdit;
+
 class PyOllyView : public QWidget
 {
 	Q_OBJECT
@@ -39,11 +41,15 @@ public:
 	QString getOllyScript(bool html = false) const;
 	QString getIDAScript(bool html = false) const;
 
+	TextEdit* idaScriptWidget() const;
+	TextEdit* ollyScriptWidget() const;
+
 public slots:
 	void enableRunScriptButton(bool enabled);
 	void setOllyScript(const QString& text);
 	void setIDAScript(const QString& text);
 	void onColorSchemeChanged();
+	void jumpAndSelectLine(bool isIDA, int line);
 
 private slots:
 	void onScriptEditContextMenuRequested(const QPoint& pt);

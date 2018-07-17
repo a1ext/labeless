@@ -341,6 +341,17 @@ int TextEdit::lineNumberAreaWidth()
 	return space;
 }
 
+void TextEdit::selectLine(int line)
+{
+	auto block = document()->findBlockByLineNumber(line);
+	if (!block.isValid())
+		return;
+
+	QTextCursor cursor(block);
+	cursor.select(QTextCursor::LineUnderCursor);
+	setTextCursor(cursor);	
+}
+
 void TextEdit::updateLineNumberAreaWidth(int /* newBlockCount */)
 {
 	setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);

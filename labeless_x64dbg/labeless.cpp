@@ -225,7 +225,7 @@ static PyObject* stdOutHandler(PyObject* self, PyObject* arg)
 
 	auto& cd = Labeless::instance().clientData();
 	recursive_lock_guard lock(cd.stdOutLock);
-	cd.stdOut << str << "\n";
+	cd.stdOut << str;
 
 	Py_RETURN_NONE;
 }
@@ -235,7 +235,7 @@ static PyObject* stdErrHandler(PyObject*, PyObject* arg)
 	const char* str = PyString_AsString(arg);
 	auto& cd = Labeless::instance().clientData();
 	recursive_lock_guard lock(cd.stdErrLock);
-	cd.stdErr << str << "\n";
+	cd.stdErr << str;
 
 	Py_RETURN_NONE;
 }
@@ -502,12 +502,22 @@ bool pySerializeObjectToJson(PyObject* o, std::string& rv)
 		(PyDict_Contains(pyModuleDict, pyLLstr) == 1) &&
 		(pyLL = PyDict_GetItem(pyModuleDict, pyLLstr)) &&
 		(pySerializeResultFn = PyObject_GetAttrString(pyLL, kLabelessSerializeResultFuncName.c_str())) &&
-		(pyArgs = PyTuple_Pack(1, o)) &&
-		(result = PyObject_Call(pySerializeResultFn, pyArgs, NULL)) &&
-		PyString_Check(result))
+		(pyArgs = PyTuple_Pack(1, o)))
 	{
-		rv = PyString_AsString(result);
-		isOk = true;
+		result = PyObject_Call(pySerializeResultFn, pyArgs, NULL);
+		if (!result)
+		{
+			PyErr_Print();
+		}
+		else if (!PyString_Check(result))
+		{
+			PySys_WriteStderr("[!] Unable to serialize `__result__`, check that it serializes to json without errors\n");
+		}
+		else
+		{
+			rv = PyString_AsString(result);
+			isOk = true;
+		}
 	}
 
 	Py_XDECREF(result);
