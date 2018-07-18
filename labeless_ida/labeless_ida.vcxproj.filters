@@ -62,6 +62,9 @@
     <Filter Include="Generated Files\IDA7">
       <UniqueIdentifier>{c7b838ae-ed57-4140-855e-e42e113bc13c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{890273d1-fd63-497a-a6b6-b2994e73c98c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="types.h">
@@ -528,8 +531,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\wres.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <Natvis Include="qt5_qt_namespace.natvis">
+      <Filter>other</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>
