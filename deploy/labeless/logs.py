@@ -19,8 +19,7 @@ class MyStdOut(object):
 
     def write(self, text):
         fixed = text.replace('\r', '')
-        if fixed.strip():
-            self._func(fixed)
+        self._func(fixed)
 
     def flush(self):
         pass
