@@ -642,7 +642,7 @@ QString supplyStdErrWithNavigationLinks(const LogItem& logItem)
 	foreach (QString line, items)
 	{
 		const bool matches = reTracebackFilePosition.exactMatch(line);
-		line = line.replace("\r", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\\s", "&nbsp;"); // kludge
+		line = line.replace("\r", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace(QRegExp("\\s"), "&nbsp;"); // kludge
 		if (!matches)
 		{
 			rvList << line;
