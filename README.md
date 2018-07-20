@@ -1,7 +1,7 @@
 Contributed By Check Point Software Technologies LTD.
 
 [![PyPI](https://img.shields.io/pypi/v/labeless.svg)](https://pypi.org/project/labeless)
-[![Join the chat at https://gitter.im/labeless/Lobby](https://badges.gitter.im/labeless/Lobby.svg)](https://gitter.im/labeless/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build status](https://ci.appveyor.com/api/projects/status/044s4pxyk250233y?svg=true)](https://ci.appveyor.com/project/a1ext/labeless) 
+[![Build status](https://ci.appveyor.com/api/projects/status/044s4pxyk250233y?svg=true)](https://ci.appveyor.com/project/a1ext/labeless) 
 [![Discord Channel](https://img.shields.io/discord/464757367553130501.svg)](https://discord.gg/XfRPu9X)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=plastic)](https://twitter.com/a14xt)
 [![Donate to this project using Patreon](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/a1ext)
