@@ -19,8 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import ollyapi2 as api
+import ctypes as C
+import sys
 import threads
 import utils
+
+from labeless import pehelper_decl as D
 
 from struct import unpack as u
 from binascii import unhexlify
@@ -188,3 +192,29 @@ def PatchCode(s, address=None):
 
     # patch the code
     WriteMemory(bin, address)
+
+
+def RemoteAllocRWE(addr, size, alloc_type='commit'):
+    """ Allocate memory in debuggee as RWE
+    :param addr: Address or None or 0
+    :param size: Size, must be greater than 0
+    :param alloc_type: 'commit' or 'reserve'
+    :return: Address of new allocated memory or None if failed
+    """
+    at = {'commit': D.MEM_COMMIT, 'reserve': D.MEM_RESERVE}.get(alloc_type)
+    if at is None:
+        raise Exception('Invalid argument: `alloc_type`')
+    rv = C.windll.kernel32.VirtualAllocEx(api.cvar.process, addr, size, at, D.PAGE_EXECUTE_READWRITE)
+    if not rv:
+        last_error = C.windll.kernel32.GetLastError()
+        if last_error:
+            print >> sys.stderr, '[-] VirtualAllocEx failed with error: %x' % last_error
+
+    return rv
+
+
+def RemoteFree(addr, size):
+    if not addr:
+        raise Exception('Invalid argument: `addr`')
+
+    return C.windll.kernel32.VirtualFreeEx(api.cvar.process, addr, size, D.MEM_RELEASE)

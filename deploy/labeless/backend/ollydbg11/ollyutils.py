@@ -550,3 +550,30 @@ def auto_complete_code(source, zline, zcol, call_sig_only):
         py_olly.olly_log('Exception occurred while trying to auto-complete the code')
         py_olly.olly_log(traceback.format_exc())
     return rv
+
+
+def RemoteAllocRWE(addr, size, alloc_type='commit'):
+    """ Allocate memory in debuggee as RWE
+    :param addr: Address or None or 0
+    :param size: Size, must be greater than 0
+    :param alloc_type: 'commit' or 'reserve'
+    :return: Address of new allocated memory or None if failed
+    """
+    at = {'commit': D.MEM_COMMIT, 'reserve': D.MEM_RESERVE}.get(alloc_type)
+    if at is None:
+        raise Exception('Invalid argument: `alloc_type`')
+    rv = C.windll.kernel32.VirtualAllocEx(api.Plugingetvalue(api.VAL_HPROCESS), addr, size, at, D.PAGE_EXECUTE_READWRITE)
+    if not rv:
+        last_error = C.windll.kernel32.GetLastError()
+        if last_error:
+            print >> sys.stderr, '[-] VirtualAllocEx failed with error: %x' % last_error
+
+    return rv
+
+
+def RemoteFree(addr, size):
+    if not addr:
+        raise Exception('Invalid argument: `addr`')
+
+    return C.windll.kernel32.VirtualFreeEx(api.Plugingetvalue(api.VAL_HPROCESS), addr, size, D.MEM_RELEASE)
+
