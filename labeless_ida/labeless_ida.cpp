@@ -2905,7 +2905,7 @@ hook_cb_t_ret_type_t Labeless::idp_callback(void* /*user_data*/, int notificatio
 	case PROCESSOR_T_NEWFILE:
 	case PROCESSOR_T_OLDFILE:
 		do {
-			const bool compat = ph.id == PLFM_386 && inf.filetype == f_PE;
+			const bool compat = ph.id == PLFM_386 && (inf.filetype == f_PE || inf.filetype == f_BIN);
 			if (compat)
 			{
 				ll.setEnabled();
