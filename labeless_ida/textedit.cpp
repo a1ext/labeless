@@ -343,7 +343,7 @@ int TextEdit::lineNumberAreaWidth()
 
 void TextEdit::selectLine(int line)
 {
-	auto block = document()->findBlockByLineNumber(line);
+	auto block = document()->findBlockByNumber(line);
 	if (!block.isValid())
 		return;
 
