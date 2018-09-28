@@ -2437,7 +2437,7 @@ void Labeless::onJumpFromFinished()
 	}
 
 	const ea_t ea = static_cast<ea_t>(jtf->va);
-	if (compat::get_flags(ea))
+	if (compat::is_enabled(ea))
 		::jumpto(ea);
 	else
 		msg("%s: JUMP to <dbg> ea -> in IDA cannot find given address\n", __FUNCTION__);
