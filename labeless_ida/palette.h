@@ -29,7 +29,8 @@ enum PythonPaletteEntryType FORCE_ENUM_SIZE_INT
 	PPET_String2,
 	PPET_Comment,
 	PPET_Self,
-	PPET_Number
+	PPET_Number,
+	PPET_Highlight
 };
 
 struct PythonPalette

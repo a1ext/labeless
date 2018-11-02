@@ -138,7 +138,8 @@ void SettingsDialog::setUpPalette()
 		{ tr("String between triple quotes '''' and \"\"\""),	PPET_String2 },
 		{ tr("Comment"),										PPET_Comment },
 		{ tr("Self"),											PPET_Self },
-		{ tr("Number"),											PPET_Number }
+		{ tr("Number"),											PPET_Number },
+		{ tr("Highlight bground"),								PPET_Highlight }
 	};
 
 	QTableWidgetItem* const light = new QTableWidgetItem(tr("light"));

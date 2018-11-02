@@ -78,7 +78,7 @@ bool fromVariant(const QVariant& vPalette, PythonPalette& result)
 	const QVariantMap vm = vmPalette[kPalette].toMap();
 	static const QList<PythonPaletteEntryType> kValidEntryTypes = QList<PythonPaletteEntryType>() <<
 		PPET_Keyword << PPET_Operator << PPET_Reserved << PPET_Brace << PPET_Defclass << PPET_String <<
-		PPET_String2 << PPET_Comment << PPET_Self << PPET_Number;
+		PPET_String2 << PPET_Comment << PPET_Self << PPET_Number << PPET_Highlight;
 
 	foreach(auto type, kValidEntryTypes)
 	{
@@ -134,7 +134,8 @@ PythonPalette PythonPaletteManager::getDefaultLightPalette()
 		{ { QColor("#009800"),		FormatSpec::MOD_Normal },	PPET_String2 },
 		{ { QColor("#808080"),		FormatSpec::MOD_Italic },	PPET_Comment },
 		{ { QColor("#94558d"),		FormatSpec::MOD_Normal },	PPET_Self },
-		{ { QColor("#0000ff"),		FormatSpec::MOD_Normal },	PPET_Number }
+		{ { QColor("#0000ff"),		FormatSpec::MOD_Normal },	PPET_Number },
+		{ { QColor(179, 119, 214, 70), FormatSpec::MOD_Normal }, PPET_Highlight },
 	};
 
 	static PythonPalette defaultPalette;
@@ -170,7 +171,8 @@ PythonPalette PythonPaletteManager::getDefaultDarkPalette()
 		{ { QColor("#a5c261"), FormatSpec::MOD_Normal }, PPET_String2 },
 		{ { QColor(Qt::darkGreen), FormatSpec::MOD_Italic }, PPET_Comment },
 		{ { QColor("#94558d"), FormatSpec::MOD_Normal }, PPET_Self },
-		{ { QColor("#6897bb"), FormatSpec::MOD_Normal }, PPET_Number }
+		{ { QColor("#6897bb"), FormatSpec::MOD_Normal }, PPET_Number },
+		{ { QColor(250, 221, 255, 50), FormatSpec::MOD_Normal }, PPET_Highlight },
 	};
 	
 	static PythonPalette defaultPalette;

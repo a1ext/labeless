@@ -168,7 +168,7 @@ void Highlighter::updatePalette(bool invalidate)
 {
 	static const QList<PythonPaletteEntryType> kTypes = QList<PythonPaletteEntryType>()
 		<< PPET_Keyword << PPET_Operator << PPET_Reserved << PPET_Brace << PPET_Defclass << PPET_String << PPET_String2
-		<< PPET_Comment << PPET_Self << PPET_Number;
+		<< PPET_Comment << PPET_Self << PPET_Number << PPET_Highlight;
 	if (invalidate)
 		*m_Palette = PythonPaletteManager::instance().palette();
 

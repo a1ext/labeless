@@ -8,12 +8,14 @@
 
 #include "textedit.h"
 #include "types.h"
+#include "globalsettingsmanager.h"
 #include "highlighter.h"
+#include "palette.h"
 #include "pythonpalettemanager.h"
+#include "pysignaturetooltip.h"
 #include "util/util_python.h"
 #include "jedi.h"
 #include "labeless_ida.h"
-#include "pysignaturetooltip.h"
 
 #include <QAbstractItemView>
 #include <QCompleter>
@@ -72,6 +74,7 @@ TextEdit::TextEdit(QWidget* parent)
 	m_CompletionTimer->setInterval(1200);
 	CHECKED_CONNECT(connect(m_CompletionTimer, SIGNAL(timeout()), this, SLOT(onAutoCompletionRequested())));
 
+	CHECKED_CONNECT(connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(onCursorPositionChanged())));
 	updateLineNumberAreaWidth(0);
 }
 
@@ -392,4 +395,51 @@ void TextEdit::lineNumberAreaPaintEvent(QPaintEvent* event)
 		bottom = top + (int)blockBoundingRect(block).height();
 		++blockNumber;
 	}
+}
+
+void TextEdit::highlightAllWords(const QString& what)
+{
+	QList<QTextEdit::ExtraSelection> extraSel;
+	if (what.isEmpty())
+	{
+		setExtraSelections(extraSel);
+		return;
+	}
+	
+	const QString& text = toPlainText();
+	const QRegExp& rWhat = QRegExp(QString("\\b%1\\b").arg(QRegExp::escape(what)));
+	int index = text.indexOf(rWhat);
+	if (index < 0)
+	{
+		setExtraSelections(extraSel);
+		return;
+	}
+	QTextEdit::ExtraSelection extra;
+	extra.cursor = textCursor();
+	extra.format.setBackground(PythonPaletteManager::instance().palette().palette[PPET_Highlight].color);
+
+	for (;index >= 0; index = text.indexOf(rWhat, index + what.length()))
+	{
+		extra.cursor.setPosition(index);
+		extra.cursor.setPosition(index + what.length(), QTextCursor::KeepAnchor);
+		extraSel.append(extra);
+	}
+	setExtraSelections(extraSel);
+}
+
+void TextEdit::onCursorPositionChanged()
+{
+	QTextCursor p = textCursor();	
+	if (p.hasSelection())
+	{
+		QString selected = p.selectedText();
+		static QRegExp kReWord("[\\w\\d]", Qt::CaseInsensitive);
+		if (selected.indexOf(kReWord) != -1)
+		{
+			highlightAllWords(selected);
+			return;
+		}
+	}
+
+	highlightAllWords(); // clear extra selection
 }
