@@ -83,7 +83,7 @@ static struct HighlightingRules
 		rules.append(HighlightingRule("\\b[+-]?[0-9]+[lL]?\\b", 0, PPET_Number));
 		rules.append(HighlightingRule("\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b", 0, PPET_Number));
 		rules.append(HighlightingRule("\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b", 0, PPET_Number));
-		rules.append(HighlightingRule("^[\\s]*(#[^\\n]*)", 0, PPET_Comment));
+		rules.append(HighlightingRule("[\\s]*(#[^\\n]*)", 0, PPET_Comment));
 
 		triSingle = HighlightingRule("'''", 1, PPET_String2);
 		triDouble = HighlightingRule("\"\"\"", 2, PPET_String2);
