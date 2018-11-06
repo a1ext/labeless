@@ -51,7 +51,7 @@ bool toVariant(const PythonPalette& palette, QVariant& result)
 	for (auto it = palette.palette.constBegin(), end = palette.palette.constEnd(); it != end; ++it)
 	{
 		QVariantMap vmItem;
-		vmItem[kPaletteColor] = it.value().color.name();
+		vmItem[kPaletteColor] = it.value().color;
 		vmItem[kPaletteModifiers] = it.value().modifiers;
 
 		vm[QString::number(it.key())] = vmItem;
@@ -71,24 +71,35 @@ bool fromVariant(const QVariant& vPalette, PythonPalette& result)
 	if (vPalette.isNull() || !vPalette.isValid())
 		return false;
 
+	static const QStringList kPaletteFields = QStringList() << kPalette;
 	const QVariantMap vmPalette = vPalette.toMap();
-	if (!checkFieldsExists(vmPalette, QStringList() << kPalette))
+	if (!checkFieldsExists(vmPalette, kPaletteFields))
 		return false;
 
 	const QVariantMap vm = vmPalette[kPalette].toMap();
 	static const QList<PythonPaletteEntryType> kValidEntryTypes = QList<PythonPaletteEntryType>() <<
 		PPET_Keyword << PPET_Operator << PPET_Reserved << PPET_Brace << PPET_Defclass << PPET_String <<
 		PPET_String2 << PPET_Comment << PPET_Self << PPET_Number << PPET_Highlight;
+	static const QStringList kSpecFields = QStringList() << kPaletteColor << kPaletteModifiers;
 
 	foreach(auto type, kValidEntryTypes)
 	{
 		const auto name = QString::number(type);
-		if (vm.contains(name) && checkFieldsExists(vm[name].toMap(), QStringList() << kPaletteColor << kPaletteModifiers))
+		if (vm.contains(name) && checkFieldsExists(vm[name].toMap(), kSpecFields));
 		{
 			const auto vmSpec = vm[name].toMap();
-
+			const QVariant& vCol = vmSpec[kPaletteColor];
+			if (!vCol.isValid() || vCol.isNull())
+				continue;
+			QString sCol = vCol.toString();
 			FormatSpec spec;
-			spec.color = QColor(vmSpec[kPaletteColor].toString());
+			if (vCol.canConvert<QColor>())
+				spec.color = vmSpec[kPaletteColor].value<QColor>();
+			else
+				spec.color = QColor(vmSpec[kPaletteColor].toString());
+
+			if (!spec.color.isValid())
+				continue;
 			spec.modifiers = static_cast<FormatSpec::Modifiers>(vmSpec[kPaletteModifiers].toInt());
 			result.palette[type] = spec;
 		}
@@ -192,8 +203,9 @@ PythonPalette PythonPaletteManager::getDefaultDarkPalette()
 }
 
 PythonPaletteManager::PythonPaletteManager()
+	: m_Specs(m_SpecsLight)
 {
-	m_SpecsLight = m_Specs = getDefaultLightPalette();
+	m_SpecsLight = getDefaultLightPalette();
 	m_SpecsDark = getDefaultDarkPalette();
 	loadSettings();
 }

@@ -51,7 +51,7 @@ private:
 	void updateWithModifier(QTextCharFormat& fmt, FormatSpec::Modifiers mods) const;
 
 private:
-	PythonPalette m_Specs;
+	PythonPalette& m_Specs;
 	PythonPalette m_SpecsLight;
 	PythonPalette m_SpecsDark;
 };

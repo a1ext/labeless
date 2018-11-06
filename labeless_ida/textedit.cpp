@@ -416,7 +416,10 @@ void TextEdit::highlightAllWords(const QString& what)
 	}
 	QTextEdit::ExtraSelection extra;
 	extra.cursor = textCursor();
-	extra.format.setBackground(PythonPaletteManager::instance().palette().palette[PPET_Highlight].color);
+	QColor highlightColor = m_Highlighter
+		? m_Highlighter->palette().palette[PPET_Highlight].color
+		: PythonPaletteManager::instance().palette().palette[PPET_Highlight].color;
+	extra.format.setBackground(highlightColor);
 
 	for (;index >= 0; index = text.indexOf(rWhat, index + what.length()))
 	{
