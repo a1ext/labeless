@@ -143,7 +143,7 @@ PythonPalette PythonPaletteManager::getDefaultLightPalette()
 		{ { QColor(Qt::black),		FormatSpec::MOD_Bold },		PPET_Defclass },
 		{ { QColor("#009800"),		FormatSpec::MOD_Normal },	PPET_String },
 		{ { QColor("#009800"),		FormatSpec::MOD_Normal },	PPET_String2 },
-		{ { QColor("#808080"),		FormatSpec::MOD_Italic },	PPET_Comment },
+		{ { QColor(128, 128, 128, 200),	FormatSpec::MOD_Italic },	PPET_Comment },
 		{ { QColor("#94558d"),		FormatSpec::MOD_Normal },	PPET_Self },
 		{ { QColor("#0000ff"),		FormatSpec::MOD_Normal },	PPET_Number },
 		{ { QColor(179, 119, 214, 70), FormatSpec::MOD_Normal }, PPET_Highlight },
@@ -180,7 +180,7 @@ PythonPalette PythonPaletteManager::getDefaultDarkPalette()
 		{ { QColor("#a9b7c6"), FormatSpec::MOD_Bold }, PPET_Defclass },
 		{ { QColor("#a5c261"), FormatSpec::MOD_Normal }, PPET_String },
 		{ { QColor("#a5c261"), FormatSpec::MOD_Normal }, PPET_String2 },
-		{ { QColor(Qt::darkGreen), FormatSpec::MOD_Italic }, PPET_Comment },
+		{ { QColor(128, 128, 128, 200), FormatSpec::MOD_Italic }, PPET_Comment },
 		{ { QColor("#94558d"), FormatSpec::MOD_Normal }, PPET_Self },
 		{ { QColor("#6897bb"), FormatSpec::MOD_Normal }, PPET_Number },
 		{ { QColor(250, 221, 255, 50), FormatSpec::MOD_Normal }, PPET_Highlight },
@@ -203,7 +203,7 @@ PythonPalette PythonPaletteManager::getDefaultDarkPalette()
 }
 
 PythonPaletteManager::PythonPaletteManager()
-	: m_Specs(m_SpecsLight)
+	: m_Specs(&m_SpecsLight)
 {
 	m_SpecsLight = getDefaultLightPalette();
 	m_SpecsDark = getDefaultDarkPalette();
@@ -218,12 +218,12 @@ PythonPaletteManager& PythonPaletteManager::instance()
 
 QTextCharFormat PythonPaletteManager::getTextCharFormat(PythonPaletteEntryType t) const
 {
-	return ::getTextCharFormat(t, m_Specs);
+	return ::getTextCharFormat(t, *m_Specs);
 }
 
 void PythonPaletteManager::switchScheme(bool isDark)
 {
-	m_Specs = isDark ? m_SpecsDark : m_SpecsLight;
+	m_Specs = isDark ? &m_SpecsDark : &m_SpecsLight;
 }
 
 void PythonPaletteManager::storeSettings()
@@ -259,5 +259,5 @@ void PythonPaletteManager::loadSettings()
 	PythonPalette dark = getDefaultDarkPalette();
 	if (fromVariant(vDark, dark))
 		m_SpecsDark = dark;
-	m_Specs = scheme == kColorSchemeLight ? m_SpecsLight : m_SpecsDark;
+	m_Specs = scheme == kColorSchemeLight ? &m_SpecsLight : &m_SpecsDark;
 }

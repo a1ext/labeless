@@ -414,7 +414,7 @@ void SettingsDialog::on_bResetPalette_clicked()
 	if (!itLight || !itDark)
 		return;
 	PythonPalette* const lightPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>());
-	PythonPalette* const darkPalette = static_cast<PythonPalette*>(itLight->data(PIR_PPalette).value<void*>());
+	PythonPalette* const darkPalette = static_cast<PythonPalette*>(itDark->data(PIR_PPalette).value<void*>());
 	if (!lightPalette || !darkPalette)
 		return;
 	*lightPalette = PythonPaletteManager::getDefaultLightPalette();
