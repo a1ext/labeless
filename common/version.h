@@ -23,7 +23,7 @@
 #define VERSION_MAJOR               1
 #define VERSION_MINOR               1
 #define VERSION_REVISION            2
-#define VERSION_BUILD               85
+#define VERSION_BUILD               95
 
 
 #define VER_FILE_VERSION            VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, VERSION_BUILD

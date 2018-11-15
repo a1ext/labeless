@@ -88,7 +88,7 @@ def make_comments(comments, base, remote_base):
     for cmt in comments:
         if not is_valid_addr(cmt.ea + ptrdiff):
             continue
-        api.Comment_Set(cmt.ea + ptrdiff, str(cmt.name), False)
+        api.Comment_Set(cmt.ea + ptrdiff, cmt.name.encode('utf8'), False)
 
     api.GuiUpdateAllViews()
 
