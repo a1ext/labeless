@@ -76,7 +76,7 @@ def make_names(names, base, remote_base):
     for n in names:
         if not is_valid_addr(n.ea + ptrdiff):
             continue
-        api.Label_Set(n.ea + ptrdiff, str(n.name))
+        api.Label_Set(n.ea + ptrdiff, n.name.encode('utf8'))
 
     api.GuiUpdateAllViews()
 
