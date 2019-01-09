@@ -11,11 +11,13 @@
 
 #include <strsafe.h>
 #include <intsafe.h>
+#include <sstream>
 
 #include "labeless_olly2.h"
 #include "sdk/Plugin.h"
 
 #include "labeless.h"
+#include "util.h"
 #include "../common/version.h"
 
 namespace {
@@ -80,6 +82,7 @@ static t_menu kMainMenu [] =
 
 static WNDPROC g_oldWndProc;
 static HWND g_hOptionsBtn;
+static bool g_pythonInitialized;
 
 LRESULT CALLBACK wndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -100,10 +103,41 @@ static const std::wstring kSettingsLabelessPort = L"labeless-port";
 static const std::wstring kSettingsLabelessFilterIP = L"labeless-filter-ip";
 
 
-} // anonymous
-
 static HWND hwMain = nullptr;
 static HINSTANCE g_hInstance;
+
+void showConfig()
+{
+	const auto port = Labeless::instance().port();
+
+	std::wstringstream ss;
+	ss << L"Listening at:\n";
+
+	auto ifaces = util::getNetworkInterfacess();
+	for (auto it = ifaces.begin(), end = ifaces.end(); it != end; ++it)
+		ss << L"  " << *it << L':' << port << std::endl;
+
+	ss
+		<< L"Allowed connect from IP: "
+		<< (Labeless::instance().filterIP().empty() ? L"any" : Labeless::instance().filterIP())
+		<< std::endl;
+
+	ss << "Python initialized: " << (g_pythonInitialized ? L"OK" : L"FAILED");
+
+	if (!ifaces.empty())
+		ss << "\n\nCopy the first address to clipboard?";
+
+	const int rv = MessageBoxW(hwMain, ss.str().c_str(), L"Labeless config", ifaces.empty()
+		? MB_ICONINFORMATION
+		: MB_ICONQUESTION | MB_YESNO);
+
+	if (!ifaces.empty() && rv == IDYES)
+		util::copyToClipboard(hwMain, ifaces.front());
+
+}
+
+} // anonymous
+
 
 #define UDD_ID 0xC4A86984;
 
@@ -141,7 +175,7 @@ extc int __cdecl ODBG2_Plugininit(void)
 		L"%s", buff);
 	ll.setFilterIP(buff);
 
-	if (!Labeless::instance().init())
+	if (!(g_pythonInitialized = Labeless::instance().init()))
 	{
 		log_r("labeless::init() failed.");
 		return -1;
@@ -211,13 +245,7 @@ int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 		Labeless::instance().onDisablePauseNotificationsBroadcast();
 		break;
 	case MA_ShowConfig:
-		do {
-			wchar_t buff[MAX_PATH] = {};
-			StringCchPrintfW(buff, MAX_PATH, L"Listening port: %u\r\nAllowed connect from IP: %s",
-				Labeless::instance().port(),
-				Labeless::instance().filterIP().empty() ? L"any" : Labeless::instance().filterIP().c_str());
-			MessageBoxW(hwMain, buff, L"Labeless config", MB_ICONINFORMATION);
-		} while (0);
+		showConfig();		
 		break;
 	case MA_About:
 		do {

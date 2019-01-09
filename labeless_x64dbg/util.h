@@ -41,6 +41,9 @@ inline xstring to_xstr(const wchar_t* v)
 	return w2mb(v);
 }
 
+std::deque<std::string> getNetworkInterfacess();
+bool copyToClipboard(HWND h, const std::string& data);
+
 /*#ifdef _UNICODE
 #	define to_xstr(X) mb2w((X))
 #else // _UNICODE

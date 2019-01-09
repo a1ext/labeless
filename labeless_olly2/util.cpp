@@ -12,6 +12,7 @@
 #include <sstream>
 #include <vector>
 #include <WinSock2.h>
+#include <IPHlpApi.h>
 #include "../common/cpp/rpc.pb.h"
 
 namespace util {
@@ -179,6 +180,74 @@ bool broadcastPaused(const PausedInfo& info, const GUID& instanceId)
 	const bool ok = SOCKET_ERROR != sendto(s, reinterpret_cast<const char*>(serialized.c_str()), serialized.size(), 0, reinterpret_cast<const sockaddr*>(&sin), sizeof(sin));
 	closesocket(s);
 	return ok;
+}
+
+
+std::deque<xstring> getNetworkInterfacess()
+{
+	std::deque<xstring> rv;
+
+	ULONG infoLen = 0;
+	ULONG erradapt = ::GetAdaptersInfo(nullptr, &infoLen);
+	if (ERROR_BUFFER_OVERFLOW != erradapt)
+		return rv;
+
+	std::string buff(infoLen, '\0');
+	erradapt = ::GetAdaptersInfo(PIP_ADAPTER_INFO(&buff[0]), &infoLen);
+	if (ERROR_SUCCESS != erradapt)
+		return rv;
+
+	PIP_ADAPTER_INFO pInfo = PIP_ADAPTER_INFO(&buff[0]);
+
+	do
+	{
+		IP_ADDR_STRING* pNext = &pInfo->IpAddressList;
+		while (pNext)
+		{
+			rv.push_back(mb2w(pNext->IpAddress.String));
+			pNext = pNext->Next;
+		}
+		pInfo = pInfo->Next;
+	} while (pInfo);
+
+	return rv;
+}
+
+bool copyToClipboard(HWND h, const xstring& data)
+{
+	if (data.empty())
+		return false;
+
+	if (!OpenClipboard(h))
+	{
+		Addtolist(0, RED, L"LL: Cannot open clipboard");
+		return false;
+	}
+
+	EmptyClipboard();
+	bool rv = false;
+	if (HGLOBAL hGlob = GlobalAlloc(GMEM_MOVEABLE, (data.length() + 1) * sizeof(wchar_t)))
+	{
+		wchar_t* pOut = reinterpret_cast<wchar_t*>(GlobalLock(hGlob));
+		if (pOut)
+		{
+			wcsncpy_s(pOut, data.length() + 1, data.c_str(), data.length());
+			SetClipboardData(CF_UNICODETEXT, pOut);
+			GlobalUnlock(hGlob);
+			rv = true;
+		}
+		else
+		{
+			Addtolist(0, RED, L"LL: GlobalLock failed");
+		}
+	}
+	else
+	{
+		Addtolist(0, RED, L"LL: GlobalAlloc failed");
+	}
+	CloseClipboard();
+
+	return rv;
 }
 
 } // util

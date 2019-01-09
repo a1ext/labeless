@@ -71,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>shlwapi.lib;ws2_32.lib;libprotobuf_v120xp.lib;pluginsdk\x32dbg.lib;pluginsdk\x32bridge.lib;pluginsdk\TitanEngine\TitanEngine_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;ws2_32.lib;libprotobuf_v120xp.lib;pluginsdk\x32dbg.lib;pluginsdk\x32bridge.lib;pluginsdk\TitanEngine\TitanEngine_x86.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)\pluginsdk;$(SolutionDir)\3rdparty\Python27\libs;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(OutDir)$(TargetName)-$(PlatformTarget).pdb</ProgramDatabaseFile>
     </Link>
@@ -96,7 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>shlwapi.lib;ws2_32.lib;libprotobuf_v120_xp_64.lib;pluginsdk\x64dbg.lib;pluginsdk\x64bridge.lib;pluginsdk\TitanEngine\TitanEngine_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>shlwapi.lib;ws2_32.lib;libprotobuf_v120_xp_64.lib;pluginsdk\x64dbg.lib;pluginsdk\x64bridge.lib;pluginsdk\TitanEngine\TitanEngine_x64.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)\pluginsdk;$(SolutionDir)\3rdparty\Python27x64\libs;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(OutDir)$(TargetName)-$(PlatformTarget).pdb</ProgramDatabaseFile>
     </Link>

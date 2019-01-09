@@ -11,8 +11,10 @@
 #include "../common/version.h"
 #include "pluginsdk/_scriptapi_memory.h"
 #include "types.h"
+#include "util.h"
 
 #include <tchar.h>
+#include <sstream>
 #include <strsafe.h>
 #include <intsafe.h>
 #include <TlHelp32.h>
@@ -27,6 +29,7 @@ int g_hMenu = 0;
 int g_hMenuDisasm = 0;
 int g_hMenuDump = 0;
 int g_hMenuStack = 0;
+bool g_pythonInitialized = false;
 
 PROCESS_INFORMATION g_pi = {};
 
@@ -77,11 +80,32 @@ bool cbCommandSetIpFilter(int argc, char* argv [])
 
 bool cbCommandShowConfig(int argc, char* argv [])
 {
-	char buff[MAX_PATH] = {};
-	StringCchPrintf(buff, MAX_PATH, "Listening port: %u\r\nAllowed connect from IP: %s",
-		Labeless::instance().port(),
-		Labeless::instance().filterIP().empty() ? "any" : Labeless::instance().filterIP().c_str());
-	MessageBox(g_hwndDlg, buff, "Labeless config", MB_ICONINFORMATION);
+	const auto port = Labeless::instance().port();
+
+	std::stringstream ss;
+	ss << "Listening at:\n";
+
+	auto ifaces = util::getNetworkInterfacess();
+	for (auto it = ifaces.begin(), end = ifaces.end(); it != end; ++it)
+		ss << "  " << *it << ':' << port << std::endl;
+
+	ss 
+		<< "Allowed connect from IP: "
+		<< (Labeless::instance().filterIP().empty() ? "any" : Labeless::instance().filterIP())
+		<< std::endl;
+
+	ss << "Python initialized: " << (g_pythonInitialized ? "OK" : "FAILED");
+
+	if (!ifaces.empty())
+		ss << "\n\nCopy the first address to clipboard?";
+
+	const int rv = MessageBox(g_hwndDlg, ss.str().c_str(), "Labeless config", ifaces.empty()
+		? MB_ICONINFORMATION
+		: MB_ICONQUESTION | MB_YESNO);
+
+	if (!ifaces.empty() && rv == IDYES)
+		util::copyToClipboard(g_hwndDlg, ifaces.front());	
+	
 	return true;
 }
 
@@ -174,7 +198,7 @@ DLL_EXPORT bool pluginit(PLUG_INITSTRUCT* initStruct)
 	Labeless& ll = Labeless::instance();
 	ll.setHInstance(g_hInstance);
 
-	if (!ll.initPython())
+	if (!(g_pythonInitialized = ll.initPython()))
 	{
 		log_r("Labeless::initPython() failed");
 		return false;

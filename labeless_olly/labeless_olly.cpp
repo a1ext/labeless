@@ -14,6 +14,7 @@
 #include "sdk/Plugin.h"
 
 #include "labeless.h"
+#include "util.h"
 #include "../common/version.h"
 
 #if FOFF_BUILD == 1
@@ -33,8 +34,42 @@
 #pragma comment(linker, "/export:__FOFF_Plugincmd=__ODBG_Plugincmd")
 #endif // FOFF_BUILD
 
-static HWND hwMain = nullptr;
+namespace {
 
+static HWND hwMain = nullptr;
+static bool g_pythonInitialized = false;
+
+
+void showConfig()
+{
+	const auto port = Labeless::instance().port();
+
+	std::stringstream ss;
+	ss << "Listening at:\n";
+
+	auto ifaces = util::getNetworkInterfacess();
+	for (auto it = ifaces.begin(), end = ifaces.end(); it != end; ++it)
+		ss << "  " << *it << ':' << port << std::endl;
+
+	ss
+		<< "Allowed connect from IP: "
+		<< (Labeless::instance().filterIP().empty() ? "any" : Labeless::instance().filterIP())
+		<< std::endl;
+
+	ss << "Python initialized: " << (g_pythonInitialized ? "OK" : "FAILED");
+
+	if (!ifaces.empty())
+		ss << "\n\nCopy the first address to clipboard?";
+
+	const int rv = MessageBox(hwMain, ss.str().c_str(), "Labeless config", ifaces.empty()
+		? MB_ICONINFORMATION
+		: MB_ICONQUESTION | MB_YESNO);
+
+	if (!ifaces.empty() && rv == IDYES)
+		util::copyToClipboard(hwMain, ifaces.front());
+}
+
+}
 #define UDD_ID 0xC4A86984;
 
 enum MenuAction
@@ -77,7 +112,7 @@ extc int  _export cdecl ODBG_Plugininit(int ollydbgversion, HWND hw, ulong* feat
 	Pluginreadstringfromini(ll.hInstance(), "filer_ip", buff, "");
 	ll.setFilterIP(buff);
 
-	if (!Labeless::instance().init())
+	if (!(g_pythonInitialized = Labeless::instance().init()))
 	{
 		log_r("labeless::init() failed.");
 		return -1;
@@ -140,13 +175,7 @@ extc void _export cdecl ODBG_Pluginaction(int origin, int action, void* item)
 			Labeless::instance().onSetIPFilter();
 			break;
 		case MA_ShowConfig:
-			do {
-				char buff[MAX_PATH] = {};
-				StringCchPrintf(buff, MAX_PATH, "Listening port: %u\r\nAllowed connect from IP: %s",
-					Labeless::instance().port(),
-					Labeless::instance().filterIP().empty() ? "any" : Labeless::instance().filterIP().c_str());
-				MessageBox(hwMain, buff, "Labeless config", MB_ICONINFORMATION);
-			} while (0);
+			showConfig();
 			break;
 		case MA_About:
 			do {
