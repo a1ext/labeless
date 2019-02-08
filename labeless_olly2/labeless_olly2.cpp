@@ -31,7 +31,8 @@ enum MenuAction
 	MA_ShowConfig,
 	MA_About,
 	MA_SetBroadcastPort,
-	MA_DisableBroadcast
+	MA_DisableBroadcast,
+	MA_JumpInIDA
 };
 
 
@@ -76,6 +77,16 @@ static t_menu kMainMenu [] =
 		L"|About",
 		L"Fire the about dialog.",
 		K_NONE, handle_menu, NULL, MA_About
+	},
+	{ NULL, NULL, K_NONE, NULL, NULL, 0 }
+};
+
+static t_menu kJumpInIDAMenu[] =
+{
+	{
+		L"LL: Jump In IDA",
+		L"Jump to the address in IDA",
+		K_NONE, handle_menu, NULL, MA_JumpInIDA
 	},
 	{ NULL, NULL, K_NONE, NULL, NULL, 0 }
 };
@@ -220,7 +231,16 @@ extc int __cdecl ODBG2_Pluginquery(int ollydbgversion, ulong *features, wchar_t 
 int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 {
 	if (nMode == MENU_VERIFY)
+	{
+		if (static_cast<MenuAction>(index) == MA_JumpInIDA)
+		{
+			if (::run.status == STAT_IDLE)
+				return MENU_ABSENT;
+			if (!Labeless::instance().pauseNotificationsEnabled())
+				return MENU_GRAYED;
+		}
 		return MENU_NORMAL;
+	}
 	if (nMode != MENU_EXECUTE)
 		return MENU_ABSENT;
 
@@ -259,6 +279,9 @@ int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 			break;
 		} while (0);
 		break;
+	case MA_JumpInIDA:
+		Labeless::instance().notifyPaused(Labeless::PauseOrigin::CPUMenu);
+		break;
 	}
 
 	return MENU_NOREDRAW;
@@ -268,6 +291,8 @@ extc t_menu* __cdecl ODBG2_Pluginmenu(wchar_t* type)
 {
 	if (wcscmp(type, PWM_MAIN) == 0)
 		return kMainMenu;
+	if (wcscmp(type, PWM_DISASM) == 0 || wcscmp(type, PWM_DUMP) == 0)
+		return kJumpInIDAMenu;
 
 	return NULL;
 }
@@ -282,7 +307,7 @@ extc void cdecl ODBG2_Pluginnotify(int code, void *data, ulong parm1, ulong parm
 	if (code != PN_STATUS || parm1 != STAT_PAUSED)
 		return;
 
-	Labeless::instance().notifyPaused();
+	Labeless::instance().notifyPaused(Labeless::PauseOrigin::Debug);
 }
 
 void storePort(WORD port)

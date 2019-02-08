@@ -99,7 +99,13 @@ public:
 
 	inline bool pauseNotificationsEnabled() const { return m_PauseNotificationsEnabled; }
 
-	void notifyPaused();
+	enum class PauseOrigin
+	{
+		Debug,
+		CPUMenu,
+	};
+
+	void notifyPaused(PauseOrigin origin);
 
 private:
 	void logInitPythonFail(const xstring& info) const;

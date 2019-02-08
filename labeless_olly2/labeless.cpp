@@ -945,17 +945,22 @@ void Labeless::onDisablePauseNotificationsBroadcast()
 	log_r("Pause Notifications broadcasting DISABLED");
 }
 
-void Labeless::notifyPaused()
+void Labeless::notifyPaused(PauseOrigin origin)
 {
 	if (!m_PauseNotificationsEnabled)
 		return;
 
-	t_reg* regs = Threadregisters(::run.threadid);
+	auto thrId = ::run.threadid;
+	if (!thrId)
+		thrId = ::Getcputhreadid();
+
+	t_reg* regs = Threadregisters(thrId);
 	if (!regs)
 		return;
 
 	util::PausedInfo tmp;
-	tmp.ip = regs->ip;
+	tmp.ip = origin == PauseOrigin::Debug ? regs->ip : ::Getcpudisasmselection();
+	t_table* cpuTable = ::Getcpudisasmtable();
 	memcpy(tmp.r, regs->r, sizeof(tmp.r));
 	tmp.flags = regs->flags;
 	memcpy(tmp.s, regs->s, sizeof(tmp.s));
@@ -963,14 +968,14 @@ void Labeless::notifyPaused()
 	// TODO
 	uchar cmd[MAXCMDSIZE] = {};
 	uchar udec[TEXTLEN] = {};
-	auto len = Readmemory(cmd, regs->ip, MAXCMDSIZE, MM_FAILGUARD | MM_PARTIAL | MM_SILENT);
+	auto len = Readmemory(cmd, tmp.ip, MAXCMDSIZE, MM_FAILGUARD | MM_PARTIAL | MM_SILENT);
 	t_disasm dis = {};
 	t_predict predict = {};
 	ulong decodeSize = 0;
-	uchar* d = Finddecode(regs->ip, &decodeSize);
+	uchar* d = Finddecode(tmp.ip, &decodeSize);
 	if (len > decodeSize)
 		d = udec;
-	len = Disasm(cmd, len, regs->ip, d, &dis, DA_TEXT | DA_OPCOMM | DA_MEMORY | DA_SHOWARG, regs, &predict);
+	len = Disasm(cmd, len, tmp.ip, d, &dis, DA_TEXT | DA_OPCOMM | DA_MEMORY | DA_SHOWARG, regs, &predict);
 	if (len)
 	{
 		for (BYTE i = 0; i < NOPERAND && (dis.op[i].features /* & 0x808FF*/); ++i)
