@@ -23,13 +23,16 @@ It can be useful in the following cases:
 
 * When debugged process has extracted/temporary/injected module which doesn't appear in modules list
 * When it doesn't have a valid PE header
-* When it have corrupted import table, etc.
+* When it has corrupted import table, etc.
+* When it contains unpacked memory regions inside a binary, you can easily merge these new memory regions with the ones that are already present in your database
+* When reconstructing chain of memory chunks which are used by malware (and not only, if you know what we mean) so that the picture of its behaviour is complete
 
 ## 3. Python scripting
 
 We support the following list of debug backends for now:
 
-* [OllyDbg 1.10](http://www.ollydbg.de/), DeFixed 1.10 (FOFF's team mod)
+* [OllyDbg 1.10](http://www.ollydbg.de/)
+* DeFixed 1.10 (FOFF's team mod)
 * [OllyDbg 2.01](http://www.ollydbg.de/)
 * [x64dbg](https://github.com/x64dbg/x64dbg) (x32, x64) 
 
@@ -51,11 +54,11 @@ As a result we have a lot of memory regions that may represent even different mo
 
 * [Presentation](https://www.youtube.com/watch?v=bMQlu-lL6oY)
 * [Slides](https://github.com/a1ext/labeless/blob/master/vb2015_presentation/vb2015_labeless.pptx)
-* Dumping multiple injections video on [YouTube](https://youtu.be/M5K5Ldaq284)
+* Dumping multiple injections into a signle database video on [YouTube](https://youtu.be/M5K5Ldaq284)
 * Python scripting video on [YouTube](https://youtu.be/SkcM8Hz2dT4)
 * Basic labels sync video on [YouTube](https://youtu.be/iqipmqE2Znk)
 
-## Help videos
+## Videos
 * [Labeless setup on Win10 x64 (with x64dbg)](https://youtu.be/r5JsDk1SYoM)
 * [Resolving APIs dynamically with Labeless & OllyDbg2](https://youtu.be/Dv8YlzXJ5x8)
 * [Resolving APIs dynamically with Labeless & x64dbg](https://youtu.be/hMWuWVRkpB0)
