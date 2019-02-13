@@ -112,16 +112,17 @@ Copy Labeless plugins to your IDA's `plugins` directory, for example `c:\IDA68\p
 * If you have IDA for Linux, please, use `.plx`/`.plx64` plugins. Also, copy `IDA[XX]/libprotobuf.so.9` to your IDA home directory (for example `/home/alex/ida695/`), it's an important library.
 
 ## Configuring of debug backends
+
 ### 1. OllyDbg 1.10
 You may find prepared debugger in the following directory `OllyDbg110`. (Note!: Don't forget to set up debugger's `plugins` directory).
 
-### 1.1 DeFixed 1.10 (FOFF's team mod)
+### 2. DeFixed 1.10 (FOFF's team mod)
 Copy `DeFixed110\plugins\labeless_olly_foff.dll` to DeFixed `plugins` directory (Note!: Don't forget to set up debugger's `plugins` directory)
 
-### 2. OllyDbg 2.01
+### 3. OllyDbg 2.01
 You may find prepared debugger in the following directory `OllyDbg201`. (Note!: Don't forget to set up debugger's `plugins` directory).
 
-### 3. x64dbg (x32,x64)
+### 4. x64dbg (x32,x64)
 You may find prepared debugger in the following directory `x64dbg`.
 
 # Checking if everything works
