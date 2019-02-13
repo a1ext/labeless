@@ -180,10 +180,10 @@
          <bool>false</bool>
         </attribute>
         <attribute name="verticalHeaderDefaultSectionSize">
-         <number>22</number>
+         <number>18</number>
         </attribute>
         <attribute name="verticalHeaderMinimumSectionSize">
-         <number>22</number>
+         <number>18</number>
         </attribute>
         <column>
          <property name="text">
