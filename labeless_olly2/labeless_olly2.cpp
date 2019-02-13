@@ -265,7 +265,7 @@ int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 		Labeless::instance().onDisablePauseNotificationsBroadcast();
 		break;
 	case MA_ShowConfig:
-		showConfig();		
+		showConfig();
 		break;
 	case MA_About:
 		do {

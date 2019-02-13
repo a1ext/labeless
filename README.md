@@ -34,12 +34,12 @@ We support the following list of debug backends for now:
 * [OllyDbg 1.10](http://www.ollydbg.de/)
 * DeFixed 1.10 (FOFF's team mod)
 * [OllyDbg 2.01](http://www.ollydbg.de/)
-* [x64dbg](https://github.com/x64dbg/x64dbg) (x32, x64) 
+* [x64dbg](https://github.com/x64dbg/x64dbg) (x32, x64)
 
 Overview
 ========
 
-Labeless is a plugin system for **dynamic, seamless and realtime synchronization between IDA Database and debug backend**.
+Labeless is a multipurpose IDA Pro plugin system for **labels/comments synchronization with a debug backend, with complex memory dumping and interactive Python scripting capabilities**.
 It consists of two parts: IDA plugin and debug backend's plugin.
 
 Labeless significantly reduces time that researcher spends on transferring already reversed/documented code information from IDA (static) to debugger (dynamic). It saves time, preventing from doing the same job twice. Also, you can document and add data to the IDB on the fly and your changes will be automatically propagated to debug backend, even if you will restart the virtual machine or instance of debug backend will crash. So, you will never lose your research.
@@ -54,7 +54,7 @@ As a result we have a lot of memory regions that may represent even different mo
 
 * [Presentation](https://www.youtube.com/watch?v=bMQlu-lL6oY)
 * [Slides](https://github.com/a1ext/labeless/blob/master/vb2015_presentation/vb2015_labeless.pptx)
-* Dumping multiple injections into a signle database video on [YouTube](https://youtu.be/M5K5Ldaq284)
+* Dumping multiple injections into a single database video on [YouTube](https://youtu.be/M5K5Ldaq284)
 * Python scripting video on [YouTube](https://youtu.be/SkcM8Hz2dT4)
 * Basic labels sync video on [YouTube](https://youtu.be/iqipmqE2Znk)
 
@@ -70,18 +70,17 @@ Installation
 If you want to use both x86 and x86_64 targets, then you should do the following steps for each python distro.
 
 * Set up Python 2.7 (x86/x86_64)
-* Copy `deploy` direcotry to target machine, where you want to use a debugger backend
-* Set up protobuf 2.6.1 using the following commands:
+* Copy `deploy` directory to target machine, where you want to use a debugger backend
+* Set up `protobuf 2.6.1` using the following commands:
 
 ```bat
 cd c:\deploy
 c:\Python27\python.exe setup_protobuf.py
 ```
-* Install "labeless" python module, there are two ways to archive that, the first one is to use PyPI in case you have an Internet connection on the debug machine:
+* Install `labeless` python module, there are two ways to archive that, the first one is to use PyPI in case you have an Internet connection on the debug machine:
 
 ```bat
 pip install --upgrade labeless
-
 ```
 
 In case you don't have an Internet connection, you could install prebuilt module from release archive:
