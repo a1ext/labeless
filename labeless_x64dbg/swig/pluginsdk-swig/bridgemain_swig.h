@@ -121,6 +121,12 @@ extern bool BridgeSettingRead(int* errorLine);
 /// <returns>25</returns>
 extern int BridgeGetDbgVersion();
 
+/// <summary>
+/// Checks if the current process is elevated.
+/// </summary>
+/// <returns>true if the process is elevated, false otherwise.</returns>
+extern bool BridgeIsProcessElevated();
+
 #ifdef __cplusplus
 }
 #endif
@@ -608,6 +614,7 @@ typedef struct SYMBOLINFO_
     SYMBOLTYPE type;
     bool freeDecorated;
     bool freeUndecorated;
+    DWORD ordinal;
 } SYMBOLINFO;
 
 typedef struct
