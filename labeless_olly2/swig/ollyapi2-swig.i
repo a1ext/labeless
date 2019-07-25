@@ -8,6 +8,10 @@
 // http://www.swig.org/Doc1.3/Library.html#Library_nn7
 %include <cdata.i>
 %include <cpointer.i>
+%pointer_functions(int, int_p);
+%pointer_functions(ulong, ulong_p);
+
+
 // http://www.swig.org/Doc1.3/Python.html#Python_nn75 && http://swig.10945.n7.nabble.com/Functions-writing-binary-data-into-buffer-td10714.html
 // For Readmemory
 %include <pybuffer.i>

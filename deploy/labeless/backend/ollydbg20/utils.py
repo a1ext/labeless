@@ -18,6 +18,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+import ctypes
 import ollyapi2 as api
 import threads
 import memory
@@ -551,3 +552,49 @@ def display_seh_chain():
     for entry in seh_entries:
         print '#%.2d - Handler: %s (%#.8x) - Next @ %#.8x' % (i, entry['symbol'], entry['handler'], entry['next'])
         i += 1
+
+
+def get_user_labels(start=0, end=0xffffffff):
+    """
+    Get User-defined labels list
+    :param start: Address of a start range
+    :param end: Address of an end
+    :return: list of dict(ea=xx, v=yy)
+    """
+    p = api.new_ulong_p()
+    try:
+        api.ulong_p_assign(p, start)
+        arr = ctypes.create_unicode_buffer(api.TEXTLEN)
+
+        api.Startnextdata(start, end, api.NM_LABEL)
+        rv = []
+        while api.FindnextnameW(p, arr, api.NM_LABEL):
+            s = arr.value.rstrip('\0')
+            rv.append({'ea': api.ulong_p_value(p), 'v': s.decode('utf8', 'ignore')})
+        return rv
+    finally:
+        if p:
+            api.delete_ulong_p(p)
+
+
+def get_user_comments(start=0, end=0xffffffff):
+    """
+    Get User-defined comments list
+    :param start: Address of a start range
+    :param end: Address of an end
+    :return: list of dict(ea=xx, v=yy)
+    """
+    p = api.new_ulong_p()
+    try:
+        api.ulong_p_assign(p, start)
+        arr = ctypes.create_unicode_buffer(api.TEXTLEN)
+
+        api.Startnextdata(start, end, api.NM_COMMENT)
+        rv = []
+        while api.FindnextnameW(p, arr, api.NM_COMMENT):
+            s = arr.value.rstrip('\0')
+            rv.append({'ea': api.ulong_p_value(p), 'v': s.decode('utf8', 'ignore')})
+        return rv
+    finally:
+        if p:
+            api.delete_ulong_p(p)

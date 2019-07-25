@@ -3395,155 +3395,25 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
 }
 
 
-#if PY_VERSION_HEX >= 0x03020000
-# define SWIGPY_UNICODE_ARG(obj) ((PyObject*) (obj))
-#else
-# define SWIGPY_UNICODE_ARG(obj) ((PyUnicodeObject*) (obj))
-#endif
-
-
-typedef ulong ulongArray;
-
-SWIGINTERN ulongArray *new_ulongArray(size_t nelements){
-    return (ulong *)malloc((nelements)*sizeof(ulong));
+  static int *new_int_p() { 
+    return (int *)malloc(sizeof(int));
   }
-SWIGINTERN void delete_ulongArray(ulongArray *self){
-    free((char*)self);
-  }
-SWIGINTERN ulong ulongArray___getitem__(ulongArray *self,size_t index){
-    return self[index];
+  
+  static int *copy_int_p(int value) { 
+    return (int *)memcpy((int *)malloc(sizeof(int)),&value,sizeof(int));
   }
 
-  #define SWIG_From_long   PyLong_FromLong 
-
-
-SWIGINTERNINLINE PyObject* 
-SWIG_From_unsigned_SS_long  (unsigned long value)
-{
-  return (value > LONG_MAX) ?
-    PyLong_FromUnsignedLong(value) : PyLong_FromLong((long)(value)); 
-}
-
-SWIGINTERN void ulongArray___setitem__(ulongArray *self,size_t index,ulong value){
-    self[index] = value;
-  }
-SWIGINTERN ulong *ulongArray_cast(ulongArray *self){
-    return self;
-  }
-SWIGINTERN ulongArray *ulongArray_frompointer(ulong *t){
-    return (ulongArray *)(t);
+  static void delete_int_p(int *obj) { 
+    if (obj) free((char*)obj);
   }
 
-typedef t_asmmod t_asmmodArray;
-
-SWIGINTERN t_asmmodArray *new_t_asmmodArray(size_t nelements){
-    return (t_asmmod *)malloc((nelements)*sizeof(t_asmmod));
-  }
-SWIGINTERN void delete_t_asmmodArray(t_asmmodArray *self){
-    free((char*)self);
-  }
-SWIGINTERN t_asmmod t_asmmodArray___getitem__(t_asmmodArray *self,size_t index){
-    return self[index];
-  }
-SWIGINTERN void t_asmmodArray___setitem__(t_asmmodArray *self,size_t index,t_asmmod value){
-    self[index] = value;
-  }
-SWIGINTERN t_asmmod *t_asmmodArray_cast(t_asmmodArray *self){
-    return self;
-  }
-SWIGINTERN t_asmmodArray *t_asmmodArray_frompointer(t_asmmod *t){
-    return (t_asmmodArray *)(t);
+  static void int_p_assign(int *obj, int value) {
+    *obj = value;
   }
 
-typedef t_secthdr t_secthdrArray;
-
-SWIGINTERN t_secthdrArray *new_t_secthdrArray(size_t nelements){
-    return (t_secthdr *)malloc((nelements)*sizeof(t_secthdr));
+  static int int_p_value(int *obj) {
+    return *obj;
   }
-SWIGINTERN void delete_t_secthdrArray(t_secthdrArray *self){
-    free((char*)self);
-  }
-SWIGINTERN t_secthdr t_secthdrArray___getitem__(t_secthdrArray *self,size_t index){
-    return self[index];
-  }
-SWIGINTERN void t_secthdrArray___setitem__(t_secthdrArray *self,size_t index,t_secthdr value){
-    self[index] = value;
-  }
-SWIGINTERN t_secthdr *t_secthdrArray_cast(t_secthdrArray *self){
-    return self;
-  }
-SWIGINTERN t_secthdrArray *t_secthdrArray_frompointer(t_secthdr *t){
-    return (t_secthdrArray *)(t);
-  }
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_int  (int value)
-{
-  return PyInt_FromLong((long) value);
-}
-
-
-#include <wchar.h>
-#include <limits.h>
-#ifndef WCHAR_MIN
-#  define WCHAR_MIN 0
-#endif
-#ifndef WCHAR_MAX
-#  define WCHAR_MAX 65535
-#endif
-
-
-SWIGINTERN swig_type_info*
-SWIG_pwchar_descriptor()
-{
-  static int init = 0;
-  static swig_type_info* info = 0;
-  if (!init) {
-    info = SWIG_TypeQuery("_p_wchar_t");
-    init = 1;
-  }
-  return info;
-}
-
-
-SWIGINTERN int
-SWIG_AsWCharPtrAndSize(PyObject *obj, wchar_t **cptr, size_t *psize, int *alloc)
-{
-  PyObject *tmp = 0;
-  int isunicode = PyUnicode_Check(obj);
-#if PY_VERSION_HEX < 0x03000000
-  if (!isunicode && PyString_Check(obj)) {
-    obj = tmp = PyUnicode_FromObject(obj);
-    isunicode = 1;
-  }
-#endif
-  if (isunicode) {
-    Py_ssize_t len = PyUnicode_GetSize(obj);
-    if (cptr) {
-      *cptr = (wchar_t *)malloc((len + 1)*sizeof(wchar_t));
-      PyUnicode_AsWideChar(SWIGPY_UNICODE_ARG(obj), *cptr, len);
-      (*cptr)[len] = 0;
-    }
-    if (psize) *psize = (size_t) len + 1;
-    if (alloc) *alloc = cptr ? SWIG_NEWOBJ : 0;
-    Py_XDECREF(tmp);
-    return SWIG_OK;
-  } else {
-    swig_type_info* pwchar_descriptor = SWIG_pwchar_descriptor();
-    if (pwchar_descriptor) {
-      void * vptr = 0;
-      if (SWIG_ConvertPtr(obj, &vptr, pwchar_descriptor, 0) == SWIG_OK) {
-	if (cptr) *cptr = (wchar_t *)vptr;
-	if (psize) *psize = vptr ? (wcslen((wchar_t *)vptr) + 1) : 0;
-	return SWIG_OK;
-      }
-    }
-  }
-  return SWIG_TypeError;
-}
-
-
-
 
 
 #include <limits.h>
@@ -3609,6 +3479,178 @@ SWIG_AsVal_int (PyObject * obj, int *val)
   }  
   return res;
 }
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_int  (int value)
+{
+  return PyInt_FromLong((long) value);
+}
+
+
+  static ulong *new_ulong_p() { 
+    return (ulong *)malloc(sizeof(ulong));
+  }
+  
+  static ulong *copy_ulong_p(ulong value) { 
+    return (ulong *)memcpy((ulong *)malloc(sizeof(ulong)),&value,sizeof(ulong));
+  }
+
+  static void delete_ulong_p(ulong *obj) { 
+    if (obj) free((char*)obj);
+  }
+
+  static void ulong_p_assign(ulong *obj, ulong value) {
+    *obj = value;
+  }
+
+  static ulong ulong_p_value(ulong *obj) {
+    return *obj;
+  }
+
+
+  #define SWIG_From_long   PyLong_FromLong 
+
+
+SWIGINTERNINLINE PyObject* 
+SWIG_From_unsigned_SS_long  (unsigned long value)
+{
+  return (value > LONG_MAX) ?
+    PyLong_FromUnsignedLong(value) : PyLong_FromLong((long)(value)); 
+}
+
+
+#if PY_VERSION_HEX >= 0x03020000
+# define SWIGPY_UNICODE_ARG(obj) ((PyObject*) (obj))
+#else
+# define SWIGPY_UNICODE_ARG(obj) ((PyUnicodeObject*) (obj))
+#endif
+
+
+typedef ulong ulongArray;
+
+SWIGINTERN ulongArray *new_ulongArray(size_t nelements){
+    return (ulong *)malloc((nelements)*sizeof(ulong));
+  }
+SWIGINTERN void delete_ulongArray(ulongArray *self){
+    free((char*)self);
+  }
+SWIGINTERN ulong ulongArray___getitem__(ulongArray *self,size_t index){
+    return self[index];
+  }
+SWIGINTERN void ulongArray___setitem__(ulongArray *self,size_t index,ulong value){
+    self[index] = value;
+  }
+SWIGINTERN ulong *ulongArray_cast(ulongArray *self){
+    return self;
+  }
+SWIGINTERN ulongArray *ulongArray_frompointer(ulong *t){
+    return (ulongArray *)(t);
+  }
+
+typedef t_asmmod t_asmmodArray;
+
+SWIGINTERN t_asmmodArray *new_t_asmmodArray(size_t nelements){
+    return (t_asmmod *)malloc((nelements)*sizeof(t_asmmod));
+  }
+SWIGINTERN void delete_t_asmmodArray(t_asmmodArray *self){
+    free((char*)self);
+  }
+SWIGINTERN t_asmmod t_asmmodArray___getitem__(t_asmmodArray *self,size_t index){
+    return self[index];
+  }
+SWIGINTERN void t_asmmodArray___setitem__(t_asmmodArray *self,size_t index,t_asmmod value){
+    self[index] = value;
+  }
+SWIGINTERN t_asmmod *t_asmmodArray_cast(t_asmmodArray *self){
+    return self;
+  }
+SWIGINTERN t_asmmodArray *t_asmmodArray_frompointer(t_asmmod *t){
+    return (t_asmmodArray *)(t);
+  }
+
+typedef t_secthdr t_secthdrArray;
+
+SWIGINTERN t_secthdrArray *new_t_secthdrArray(size_t nelements){
+    return (t_secthdr *)malloc((nelements)*sizeof(t_secthdr));
+  }
+SWIGINTERN void delete_t_secthdrArray(t_secthdrArray *self){
+    free((char*)self);
+  }
+SWIGINTERN t_secthdr t_secthdrArray___getitem__(t_secthdrArray *self,size_t index){
+    return self[index];
+  }
+SWIGINTERN void t_secthdrArray___setitem__(t_secthdrArray *self,size_t index,t_secthdr value){
+    self[index] = value;
+  }
+SWIGINTERN t_secthdr *t_secthdrArray_cast(t_secthdrArray *self){
+    return self;
+  }
+SWIGINTERN t_secthdrArray *t_secthdrArray_frompointer(t_secthdr *t){
+    return (t_secthdrArray *)(t);
+  }
+
+#include <wchar.h>
+#include <limits.h>
+#ifndef WCHAR_MIN
+#  define WCHAR_MIN 0
+#endif
+#ifndef WCHAR_MAX
+#  define WCHAR_MAX 65535
+#endif
+
+
+SWIGINTERN swig_type_info*
+SWIG_pwchar_descriptor()
+{
+  static int init = 0;
+  static swig_type_info* info = 0;
+  if (!init) {
+    info = SWIG_TypeQuery("_p_wchar_t");
+    init = 1;
+  }
+  return info;
+}
+
+
+SWIGINTERN int
+SWIG_AsWCharPtrAndSize(PyObject *obj, wchar_t **cptr, size_t *psize, int *alloc)
+{
+  PyObject *tmp = 0;
+  int isunicode = PyUnicode_Check(obj);
+#if PY_VERSION_HEX < 0x03000000
+  if (!isunicode && PyString_Check(obj)) {
+    obj = tmp = PyUnicode_FromObject(obj);
+    isunicode = 1;
+  }
+#endif
+  if (isunicode) {
+    Py_ssize_t len = PyUnicode_GetSize(obj);
+    if (cptr) {
+      *cptr = (wchar_t *)malloc((len + 1)*sizeof(wchar_t));
+      PyUnicode_AsWideChar(SWIGPY_UNICODE_ARG(obj), *cptr, len);
+      (*cptr)[len] = 0;
+    }
+    if (psize) *psize = (size_t) len + 1;
+    if (alloc) *alloc = cptr ? SWIG_NEWOBJ : 0;
+    Py_XDECREF(tmp);
+    return SWIG_OK;
+  } else {
+    swig_type_info* pwchar_descriptor = SWIG_pwchar_descriptor();
+    if (pwchar_descriptor) {
+      void * vptr = 0;
+      if (SWIG_ConvertPtr(obj, &vptr, pwchar_descriptor, 0) == SWIG_OK) {
+	if (cptr) *cptr = (wchar_t *)vptr;
+	if (psize) *psize = vptr ? (wcslen((wchar_t *)vptr) + 1) : 0;
+	return SWIG_OK;
+      }
+    }
+  }
+  return SWIG_TypeError;
+}
+
+
+
 
 
 
@@ -3955,6 +3997,222 @@ SWIGINTERN PyObject *_wrap_memmove(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   arg3 = (size_t)(size2);
   memmove(arg1,(void const *)arg2,arg3);
   resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_int_p(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_int_p",0,0)) SWIG_fail;
+  result = (int *)new_int_p();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_int, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_copy_int_p(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"copy_int_p",1,1,&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "copy_int_p" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  result = (int *)copy_int_p(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_int, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_int_p(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int *arg1 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_int_p",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_int_p" "', argument " "1"" of type '" "int *""'"); 
+  }
+  arg1 = (int *)(argp1);
+  delete_int_p(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_int_p_assign(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int *arg1 = (int *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"int_p_assign",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "int_p_assign" "', argument " "1"" of type '" "int *""'"); 
+  }
+  arg1 = (int *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "int_p_assign" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  int_p_assign(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_int_p_value(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int *arg1 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"int_p_value",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "int_p_value" "', argument " "1"" of type '" "int *""'"); 
+  }
+  arg1 = (int *)(argp1);
+  result = (int)int_p_value(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ulong_p(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ulong *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_ulong_p",0,0)) SWIG_fail;
+  result = (ulong *)new_ulong_p();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_unsigned_long, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_copy_ulong_p(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ulong arg1 ;
+  unsigned long val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ulong *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"copy_ulong_p",1,1,&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "copy_ulong_p" "', argument " "1"" of type '" "ulong""'");
+  } 
+  arg1 = (ulong)(val1);
+  result = (ulong *)copy_ulong_p(arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_unsigned_long, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ulong_p(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ulong *arg1 = (ulong *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_ulong_p",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_unsigned_long, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ulong_p" "', argument " "1"" of type '" "ulong *""'"); 
+  }
+  arg1 = (ulong *)(argp1);
+  delete_ulong_p(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ulong_p_assign(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ulong *arg1 = (ulong *) 0 ;
+  ulong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"ulong_p_assign",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_unsigned_long, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ulong_p_assign" "', argument " "1"" of type '" "ulong *""'"); 
+  }
+  arg1 = (ulong *)(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ulong_p_assign" "', argument " "2"" of type '" "ulong""'");
+  } 
+  arg2 = (ulong)(val2);
+  ulong_p_assign(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ulong_p_value(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  ulong *arg1 = (ulong *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ulong result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"ulong_p_value",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_unsigned_long, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ulong_p_value" "', argument " "1"" of type '" "ulong *""'"); 
+  }
+  arg1 = (ulong *)(argp1);
+  result = (ulong)ulong_p_value(arg1);
+  resultobj = SWIG_From_unsigned_SS_long((unsigned long)(result));
   return resultobj;
 fail:
   return NULL;
@@ -21120,7 +21378,7 @@ SWIGINTERN PyObject *_wrap_Readmemory(PyObject *SWIGUNUSEDPARM(self), PyObject *
       PyErr_Clear();
       SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Readmemory" "', argument " "1"" of type '" "(char *buf1, SIZE)""'");
     }
-    arg1 = (char *) buf1;
+    arg1 = (char*) buf1;
   }
   ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -66879,6 +67137,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"cdata", _wrap_cdata, METH_VARARGS, NULL},
 	 { (char *)"memmove", _wrap_memmove, METH_VARARGS, NULL},
+	 { (char *)"new_int_p", _wrap_new_int_p, METH_VARARGS, NULL},
+	 { (char *)"copy_int_p", _wrap_copy_int_p, METH_VARARGS, NULL},
+	 { (char *)"delete_int_p", _wrap_delete_int_p, METH_VARARGS, NULL},
+	 { (char *)"int_p_assign", _wrap_int_p_assign, METH_VARARGS, NULL},
+	 { (char *)"int_p_value", _wrap_int_p_value, METH_VARARGS, NULL},
+	 { (char *)"new_ulong_p", _wrap_new_ulong_p, METH_VARARGS, NULL},
+	 { (char *)"copy_ulong_p", _wrap_copy_ulong_p, METH_VARARGS, NULL},
+	 { (char *)"delete_ulong_p", _wrap_delete_ulong_p, METH_VARARGS, NULL},
+	 { (char *)"ulong_p_assign", _wrap_ulong_p_assign, METH_VARARGS, NULL},
+	 { (char *)"ulong_p_value", _wrap_ulong_p_value, METH_VARARGS, NULL},
 	 { (char *)"new_ulongArray", _wrap_new_ulongArray, METH_VARARGS, NULL},
 	 { (char *)"delete_ulongArray", _wrap_delete_ulongArray, METH_VARARGS, NULL},
 	 { (char *)"ulongArray___getitem__", _wrap_ulongArray___getitem__, METH_VARARGS, NULL},

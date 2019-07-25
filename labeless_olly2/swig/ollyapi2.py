@@ -87,6 +87,46 @@ cdata = _ollyapi2.cdata
 def memmove(*args):
   return _ollyapi2.memmove(*args)
 memmove = _ollyapi2.memmove
+
+def new_int_p():
+  return _ollyapi2.new_int_p()
+new_int_p = _ollyapi2.new_int_p
+
+def copy_int_p(*args):
+  return _ollyapi2.copy_int_p(*args)
+copy_int_p = _ollyapi2.copy_int_p
+
+def delete_int_p(*args):
+  return _ollyapi2.delete_int_p(*args)
+delete_int_p = _ollyapi2.delete_int_p
+
+def int_p_assign(*args):
+  return _ollyapi2.int_p_assign(*args)
+int_p_assign = _ollyapi2.int_p_assign
+
+def int_p_value(*args):
+  return _ollyapi2.int_p_value(*args)
+int_p_value = _ollyapi2.int_p_value
+
+def new_ulong_p():
+  return _ollyapi2.new_ulong_p()
+new_ulong_p = _ollyapi2.new_ulong_p
+
+def copy_ulong_p(*args):
+  return _ollyapi2.copy_ulong_p(*args)
+copy_ulong_p = _ollyapi2.copy_ulong_p
+
+def delete_ulong_p(*args):
+  return _ollyapi2.delete_ulong_p(*args)
+delete_ulong_p = _ollyapi2.delete_ulong_p
+
+def ulong_p_assign(*args):
+  return _ollyapi2.ulong_p_assign(*args)
+ulong_p_assign = _ollyapi2.ulong_p_assign
+
+def ulong_p_value(*args):
+  return _ollyapi2.ulong_p_value(*args)
+ulong_p_value = _ollyapi2.ulong_p_value
 class ulongArray(object):
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
