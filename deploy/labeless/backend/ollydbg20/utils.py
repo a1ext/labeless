@@ -570,7 +570,7 @@ def get_user_labels(start=0, end=0xffffffff):
         rv = []
         while api.FindnextnameW(p, arr, api.NM_LABEL):
             s = arr.value.rstrip('\0')
-            rv.append({'ea': api.ulong_p_value(p), 'v': s.decode('utf8', 'ignore')})
+            rv.append({'ea': api.ulong_p_value(p), 'v': s})
         return rv
     finally:
         if p:
@@ -593,7 +593,7 @@ def get_user_comments(start=0, end=0xffffffff):
         rv = []
         while api.FindnextnameW(p, arr, api.NM_COMMENT):
             s = arr.value.rstrip('\0')
-            rv.append({'ea': api.ulong_p_value(p), 'v': s.decode('utf8', 'ignore')})
+            rv.append({'ea': api.ulong_p_value(p), 'v': s})
         return rv
     finally:
         if p:
