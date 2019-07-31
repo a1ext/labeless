@@ -19,9 +19,9 @@ from labeless.logs import MyStdOut
 
 # Redirect stderr and stdout to the backend's log window
 if not isinstance(sys.stdout, MyStdOut):
-    sys.stdout = MyStdOut(py_olly.std_out_handler)
+    sys.stdout = MyStdOut(py_olly.std_out_handler, sys.stdout)
 if not isinstance(sys.stderr, MyStdOut):
-    sys.stderr = MyStdOut(py_olly.std_err_handler)
+    sys.stderr = MyStdOut(py_olly.std_err_handler, sys.stderr)
 
 # Assign a default sys.argv
 sys.argv = [""]

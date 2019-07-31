@@ -13,24 +13,34 @@ from os import path
 
 
 class MyStdOut(object):
-    def __init__(self, func):
+    def __init__(self, func, orig):
         super(MyStdOut, self).__init__()
         self._func = func
+        self._orig = orig
 
     def write(self, text):
         fixed = text.replace('\r', '')
         self._func(fixed)
+        try:
+            self._orig.write(fixed)
+        except:
+            pass
 
     def flush(self):
-        pass
+        try:
+            self._orig.flush()
+        except:
+            pass
 
     def isatty(self):
         return False
 
 
+# noinspection PyDefaultArgument
 def make_logger(fn=None, default=True, dummy={}):
     """ Make logger
     :param fn: filename
+    :param default: flag indicates it is a default logger
     :param dummy: should not be passed, used as static loggers map
     :return: logger instance
     """
@@ -45,7 +55,6 @@ def make_logger(fn=None, default=True, dummy={}):
         return dummy[fn]['instance']
 
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S',
-                        #stream=sys.stdout)
                         filename=fn, filemode='a', level=logging.DEBUG)
     logger = logging.getLogger(__name__)
     dummy[fn] = {'fn': fn, 'instance': logger}
