@@ -55,7 +55,7 @@ def long_xrange(start, stop=None, inc=1):
     inc = long(inc)
     if stop - start < inc:
         stop = start + inc
-    while start != stop:
+    while start < stop:
         yield start
         start += inc
 
