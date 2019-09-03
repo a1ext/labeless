@@ -733,6 +733,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA7|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA7_x64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA69X_x64|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA69X|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120_x64|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_choosememorydialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|Win32'">true</ExcludedFromBuild>
@@ -1309,7 +1312,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7\moc_textedit.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA7|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA7_x64|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA7_x64|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA69X_x64|x64'">true</ExcludedFromBuild>
