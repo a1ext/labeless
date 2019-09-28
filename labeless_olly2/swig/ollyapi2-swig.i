@@ -27,11 +27,24 @@
 %typemap(in) const void* = const char*;
 // Useful for Expression
 %typemap(in) uchar* = char*;
+%typemap(in) COLORREF = DWORD;
 
 // From http://www.swig.org/Doc1.3/Library.html#Library_carrays
 %array_class(ulong, ulongArray);
 %array_class(t_asmmod, t_asmmodArray);
 %array_class(t_secthdr, t_secthdrArray);
+%array_class(t_operand, t_operandArray);
+%array_class(t_metadata, t_metadataArray);
+%array_class(t_netstream, t_netstreamArray);
+%array_class(t_scheme, t_schemeArray);
+%array_class(t_font, t_fontArray);
+%array_class(COLORREF, COLORREFArray);
+%array_class(t_memfield, t_memfieldArray);
+%array_class(t_opinfo, t_opinfoArray);
+%array_class(t_modop, t_modopArray);
+%array_class(t_histrec, t_histrecArray);
+%array_class(t_range, t_rangeArray);
+%array_class(t_bincmd, t_bincmdArray);
 #define HANDLE ulong
 %feature("autodoc", "1");
 %include "..\sdk\plugin-swig.h"

@@ -206,21 +206,35 @@ message AutoCompleteCodeResult {
 }
 
 message PausedNotification {
-    message PausedNotification32 {
-        required uint32 ip = 1;
-        repeated uint32 r = 2 [packed=true];
-        required uint32 flags = 3;
-        repeated uint32 s = 4 [packed=true];
-    }
-    message PausedNotification64 {
-        required uint64 ip = 1;
-        repeated uint64 r = 2 [packed=true];
-        required uint64 flags = 3;
-        repeated uint64 s = 4 [packed=true];
-    }
-    required bytes backend_id = 1;
-    optional PausedNotification32 info32 = 2;
-    optional PausedNotification64 info64 = 3;
+	message PausedNotification32 {
+		required uint32 ip = 1;
+		repeated uint32 r = 2 [packed=true];
+		required uint32 flags = 3;
+		repeated uint32 s = 4 [packed=true];
+	}
+	message PausedNotification64 {
+		required uint64 ip = 1;
+		repeated uint64 r = 2 [packed=true];
+		required uint64 flags = 3;
+		repeated uint64 s = 4 [packed=true];
+	}
+	message PairItem {
+		required string name = 1;
+		optional string value = 2;
+	}
+	message Operand {
+		required string name = 1; // text
+		optional string comment = 2;
+		optional uint64 addr = 3;
+		optional uint64 value = 4;
+		optional uint32 opnum = 5;
+	}
+	required bytes backend_id = 1;
+	optional PausedNotification32 info32 = 2;
+	optional PausedNotification64 info64 = 3;
+	repeated PairItem resolved = 4;
+	repeated Operand operands = 5;
+	optional bytes dump = 6;
 }
 
 message JumpToFromRequest {

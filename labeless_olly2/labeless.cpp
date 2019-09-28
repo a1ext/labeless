@@ -11,6 +11,7 @@
 #include <fstream>
 #include <intsafe.h>
 #include <inttypes.h>
+#include <list>
 #include <memory>
 #include <mstcpip.h>
 #include <regex>
@@ -644,6 +645,30 @@ void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename
 	server_log(_T("protobuf: %s %s:%u %s"), levelStr.c_str(), util::to_xstr(filename).c_str(), line, util::to_xstr(message.c_str()).c_str());
 }
 
+bool broadcastPaused(const rpc::PausedNotification& pn)
+{
+	SOCKET s = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
+	if (INVALID_SOCKET == s)
+		return false;
+
+	int bTrue = 1;
+	if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<const char*>(&bTrue), sizeof(bTrue)))
+	{
+		closesocket(s);
+		return false;
+	}
+
+	sockaddr_in sin = {};
+	sin.sin_port = ntohs(12344); // TODO
+	sin.sin_family = AF_INET;
+	sin.sin_addr.S_un.S_addr = INADDR_BROADCAST;
+
+	const std::string& serialized = pn.SerializeAsString();
+	const bool ok = SOCKET_ERROR != sendto(s, reinterpret_cast<const char*>(serialized.c_str()), serialized.size(), 0,
+		reinterpret_cast<const sockaddr*>(&sin), sizeof(sin));
+	closesocket(s);
+	return ok;
+}
 
 } // anonymous
 
@@ -929,14 +954,22 @@ void Labeless::onSetIPFilter()
 	storeFilterIP(m_FilterIP);
 }
 
-void Labeless::onSetPauseNotificationBroadcastPort()
+void Labeless::askPortAndTurnOnPauseNotificationBroadcasting()
 {
 	ulong port = m_NotificationPort;
 	if (Getdword(hwollymain, _T("Enter notification port value"), &port, 2, 0, 0, 0, DIA_DWORD | DIA_DATAVALID) != 0)
 		return;
 	m_NotificationPort = static_cast<WORD>(port);
+	turnOnPauseNotificationBroadcasting();
+}
+
+void Labeless::turnOnPauseNotificationBroadcasting()
+{
+	if (m_PauseNotificationsEnabled)
+		return;
+
 	m_PauseNotificationsEnabled = true;
-	log_r("Pause Notifications broadcasting ENABLED and set to port: %u.", port);
+	log_r("Pause Notifications broadcasting ENABLED and set to port: %u.", m_NotificationPort);
 }
 
 void Labeless::onDisablePauseNotificationsBroadcast()
@@ -958,40 +991,111 @@ void Labeless::notifyPaused(PauseOrigin origin)
 	if (!regs)
 		return;
 
-	util::PausedInfo tmp;
-	tmp.ip = origin == PauseOrigin::Debug ? regs->ip : ::Getcpudisasmselection();
+	rpc::PausedNotification pn;
+	pn.set_backend_id(&m_InstanceId, sizeof(m_InstanceId));
+
+	auto info32 = pn.mutable_info32();
+	
+	//util::PausedInfo tmp;
+	info32->set_ip(origin == PauseOrigin::Debug ? regs->ip : ::Getcpudisasmselection());
+	info32->set_flags(regs->flags);
+	
+	for (unsigned i = 0; i < NREG; ++i)
+		info32->add_r(regs->r[i]);
+
+	for (unsigned i = 0; i < NSEG; ++i)
+		info32->add_s(regs->s[i]);
+
 	t_table* cpuTable = ::Getcpudisasmtable();
-	memcpy(tmp.r, regs->r, sizeof(tmp.r));
-	tmp.flags = regs->flags;
-	memcpy(tmp.s, regs->s, sizeof(tmp.s));
 
 	// TODO
 	uchar cmd[MAXCMDSIZE] = {};
 	uchar udec[TEXTLEN] = {};
-	auto len = Readmemory(cmd, tmp.ip, MAXCMDSIZE, MM_FAILGUARD | MM_PARTIAL | MM_SILENT);
+	auto len = Readmemory(cmd, info32->ip(), MAXCMDSIZE, MM_FAILGUARD | MM_PARTIAL | MM_SILENT);
 	t_disasm dis = {};
 	t_predict predict = {};
 	ulong decodeSize = 0;
-	uchar* d = Finddecode(tmp.ip, &decodeSize);
+	uchar* d = Finddecode(info32->ip(), &decodeSize);
 	if (len > decodeSize)
 		d = udec;
-	len = Disasm(cmd, len, tmp.ip, d, &dis, DA_TEXT | DA_OPCOMM | DA_MEMORY | DA_SHOWARG, regs, &predict);
+	len = Disasm(cmd, len, info32->ip(), d, &dis, DA_TEXT | DA_OPCOMM | DA_MEMORY | DA_SHOWARG | DA_HILITE | DA_DUMP, regs, &predict);
 	if (len)
 	{
-		for (BYTE i = 0; i < NOPERAND && (dis.op[i].features /* & 0x808FF*/); ++i)
+		std::wstring resultStr = dis.result;
+		std::transform(resultStr.begin(), resultStr.end(), resultStr.begin(), ::towlower);
+
+		bool skipOperands = false;
+		const auto cmdtype = dis.cmdtype & D_CMDTYPE;
+		if ((cmdtype == D_TEST) && // skip test reg, reg
+			dis.op[0].features && dis.op[1].features &&
+			dis.op[0].reg != REG_UNDEF && dis.op[1].reg != REG_UNDEF &&
+			dis.op[0].reg == dis.op[1].reg)
 		{
-			const auto& op = dis.op[i];
-			Addtolist(0, BLACK, L"LL: opnd%u = %s, %s, addr: %08x, u: %08x, features: %08x",
-				i,
-				op.comment[0] ? op.comment : L"<none>",
-				op.text[0] ? op.text : L"<none>",
-				op.addr,
-				op.u,
-				op.features
-				);
+			skipOperands = true;
 		}
+		static const std::list<std::wstring> kIgnoreInsns = {
+			L"test ",
+			L"inc ",
+			L"cmp ",
+			L"xor ",
+			L"or ",
+			L"div ",
+			L"add ",
+			L"sub "
+		};
+		for (const auto &insn : kIgnoreInsns)
+		{
+			if (resultStr.find(insn) == 0)
+			{
+				skipOperands = true;
+				break;
+			}
+		}
+//		if (cmdtype == D_JMP && dis.)
+
+		if (!skipOperands)
+		{
+			for (BYTE i = 0; i < NOPERAND && (dis.op[i].features /* & 0x808FF*/); ++i)
+			{
+				const auto& op = dis.op[i];
+				Addtolist(0, BLACK, L"LL: opnd%u = %s, %s, addr: %08x, u: %08x, features: %08x",
+					i,
+					op.comment[0] ? op.comment : L"<none>",
+					op.text[0] ? op.text : L"<none>",
+					op.addr,
+					op.u,
+					op.features
+				);
+
+				std::wstring comment = op.comment;
+
+				if (cmdtype == D_PUSH && i > 0 && comment.find(L"Stack ") == 0) // don't add stack operand
+					continue;
+				if (cmdtype == D_MOV && i == 0) // don't add destination
+					continue;
+				if (resultStr.find(L"lea ") == 0 && i == 0)
+					continue;
+				if (resultStr.find(L"pop ") == 0 && i == 0)
+					continue;
+
+				auto operand = pn.add_operands();
+				operand->set_opnum(i);
+				operand->set_name(util::w2mb(op.text[0] ? op.text : L"").c_str());
+				operand->set_comment(util::w2mb(op.comment[0] ? op.comment : L"").c_str());
+				operand->set_addr(op.addr);
+				operand->set_value(op.u);
+			}
+		}
+		if (dis.comment && wcslen(dis.comment))
+		{
+			auto pairItem = pn.mutable_resolved()->Add();
+			pairItem->set_name("comment");
+			const auto &val = util::w2mb(dis.comment);
+			pairItem->set_value(val.data(), val.size());
+		}
+		pn.set_dump(cmd, len);
 	}
-	const bool ok = util::broadcastPaused(tmp, m_InstanceId);
+	const bool ok = broadcastPaused(pn);
 	if (!ok)
 		Addtolist(0, BLACK, L"LL: %s: paused at %x, send failed, le: %x", __FUNCTION__, ::run.eip, GetLastError());
 }

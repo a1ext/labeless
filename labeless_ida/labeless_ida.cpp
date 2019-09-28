@@ -2270,6 +2270,7 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 	std::shared_ptr<void> guard(nullptr, [notif](void*) {
 		delete notif;
 	});
+	(void)guard;
 
 	const bool compatible = ::inf.is_64bit() && notif->has_info64() || !::inf.is_64bit() && notif->has_info32() || !notif->has_backend_id();
 	if (!compatible)
@@ -2299,6 +2300,63 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 	}
 	m_PauseNotificationCursor = jmpEA;
 	set_item_color(m_PauseNotificationCursor, kPauseNotificationCursorColor);
+	// format comment:
+	qstring cmt;
+	compat::get_cmt(&cmt, jmpEA, false);
+	QString scmt = cmt.c_str();
+	auto chunks = scmt.split("\n", QString::SkipEmptyParts);
+	QString operandsStr;
+	// compare bytes from request and form db
+	//get_bytes()
+	for (int opNum = 0; opNum < notif->operands_size(); ++opNum)
+	{
+		const auto &op = notif->operands(opNum);
+		if (!op.comment().empty())
+		{
+			operandsStr += QStringLiteral("op%1{%2}")
+				.arg(op.opnum())
+				.arg(QString::fromStdString(op.comment()));
+		}
+	}
+	std::string resolvedStringComment;
+	static const std::string kComment = "comment";
+	for (int i = 0; i < notif->resolved_size(); ++i)
+	{
+		if (notif->resolved(i).name() == kComment)
+		{
+			resolvedStringComment = notif->resolved(i).value();
+			break;
+		}
+	}
+
+	std::string resolvedStringReference;
+
+	if (!resolvedStringComment.empty() && operandsStr.indexOf(QString::fromStdString(resolvedStringComment)) == -1)
+	{
+		static const std::string kASCIIPrefix = "ASCII \"";
+		static const std::string kUNICODEPrefix = "UNICODE \"";
+
+		bool isUnicodeStr = false;
+		if (resolvedStringComment.find(kASCIIPrefix) == 0)
+			resolvedStringReference = resolvedStringComment.substr(kASCIIPrefix.length(), resolvedStringComment.length() - kASCIIPrefix.length() - 1);
+		else if (isUnicodeStr = (resolvedStringComment.find(kUNICODEPrefix) == 0))
+			resolvedStringReference = resolvedStringComment.substr(kUNICODEPrefix.length(), resolvedStringComment.length() - kUNICODEPrefix.length() - 1); // TODO: decode?
+
+		if (!resolvedStringReference.empty())
+		{
+			operandsStr += QStringLiteral("%1str{\"%2\"}")
+				.arg(isUnicodeStr ? QStringLiteral("w") : QString{})
+				.arg(QString::fromStdString(resolvedStringReference));
+		}
+	}
+
+	if (!chunks.contains(operandsStr))
+	{
+		chunks << operandsStr;
+		const auto &newCmt = chunks.join("\n");
+		if (newCmt != scmt)
+			set_cmt(jmpEA, newCmt.toUtf8().data(), false);
+	}
 	QEventLoop loop; // kludge: if ::jumpto goes after set_item_color then IDA will scroll the disasm view to make m_PausedNotificationCursor be the 5th line
 	loop.processEvents(QEventLoop::AllEvents, 10);
 	::jumpto(m_PauseNotificationCursor, 0, UIJMP_IDAVIEW);

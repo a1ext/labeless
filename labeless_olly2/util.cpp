@@ -145,44 +145,6 @@ std::string randStr(int len)
 	return rv;
 }
 
-bool broadcastPaused(const PausedInfo& info, const GUID& instanceId)
-{
-	SOCKET s = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
-	if (INVALID_SOCKET == s)
-		return false;
-
-	int bTrue = 1;
-	if (SOCKET_ERROR == setsockopt(s, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<const char*>(&bTrue), sizeof(bTrue)))
-	{
-		closesocket(s);
-		return false;
-	}
-
-	sockaddr_in sin = {};
-	sin.sin_port = ntohs(12344); // TODO
-	sin.sin_family = AF_INET;
-	sin.sin_addr.S_un.S_addr = INADDR_BROADCAST;
-
-	rpc::PausedNotification pn;
-	pn.set_backend_id(&instanceId, sizeof(instanceId));
-
-	auto info32 = pn.mutable_info32();
-	info32->set_ip(info.ip);
-	info32->set_flags(info.flags);
-
-	for (unsigned i = 0; i < NREG; ++i)
-		info32->add_r(info.r[i]);
-
-	for (unsigned i = 0; i < NSEG; ++i)
-		info32->add_s(info.s[i]);
-
-	const std::string& serialized = pn.SerializeAsString();
-	const bool ok = SOCKET_ERROR != sendto(s, reinterpret_cast<const char*>(serialized.c_str()), serialized.size(), 0, reinterpret_cast<const sockaddr*>(&sin), sizeof(sin));
-	closesocket(s);
-	return ok;
-}
-
-
 std::deque<xstring> getNetworkInterfacess()
 {
 	std::deque<xstring> rv;

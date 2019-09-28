@@ -32,7 +32,8 @@ enum MenuAction
 	MA_About,
 	MA_SetBroadcastPort,
 	MA_DisableBroadcast,
-	MA_JumpInIDA
+	MA_JumpInIDA,
+	MA_CopyBackendId,
 };
 
 
@@ -69,7 +70,12 @@ static t_menu kMainMenu [] =
 		K_NONE, handle_menu, NULL, MA_DisableBroadcast
 	},
 	{
-		L"|Show config",
+		L"|Copy BackendId",
+		L"Copy BackendId for Pause Notification.",
+		K_NONE, handle_menu, NULL, MA_CopyBackendId
+	},
+	{
+		L"Show config",
 		L"Shows configuration dialog.",
 		K_NONE, handle_menu, NULL, MA_ShowConfig
 	},
@@ -145,6 +151,23 @@ void showConfig()
 	if (!ifaces.empty() && rv == IDYES)
 		util::copyToClipboard(hwMain, ifaces.front());
 
+}
+
+void copyBackendId()
+{
+	wchar_t backendId[50] = {};
+	StringFromGUID2(Labeless::instance().instanceId(), backendId, _countof(backendId));
+
+	util::copyToClipboard(hwMain, backendId);
+
+	const auto port = Labeless::instance().port();
+
+	const int rv = MessageBoxW(hwMain,
+		L"Backend ID copied to the Clipboard.\r\nDo you want to turn on Pause Notifications sending?",
+		L"", MB_ICONQUESTION | MB_YESNO);
+
+	if (rv == IDYES)
+		Labeless::instance().turnOnPauseNotificationBroadcasting();
 }
 
 } // anonymous
@@ -259,7 +282,7 @@ int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 		Labeless::instance().onSetIPFilter();
 		break;
 	case MA_SetBroadcastPort:
-		Labeless::instance().onSetPauseNotificationBroadcastPort();
+		Labeless::instance().askPortAndTurnOnPauseNotificationBroadcasting();
 		break;
 	case MA_DisableBroadcast:
 		Labeless::instance().onDisablePauseNotificationsBroadcast();
@@ -281,6 +304,9 @@ int handle_menu(t_table* pTable, wchar_t* pName, ulong index, int nMode)
 		break;
 	case MA_JumpInIDA:
 		Labeless::instance().notifyPaused(Labeless::PauseOrigin::CPUMenu);
+		break;
+	case MA_CopyBackendId:
+		copyBackendId();
 		break;
 	}
 

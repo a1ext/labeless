@@ -34,7 +34,7 @@ public:
 
 	static PythonPaletteManager& instance();
 
-	inline const PythonPalette& const palette() const { return *m_Specs; }
+	inline const PythonPalette& palette() const { return *m_Specs; }
 	inline PythonPalette& lightPalette() { return m_SpecsLight; }
 	inline PythonPalette& darkPalette() { return m_SpecsDark; }
 

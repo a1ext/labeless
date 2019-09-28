@@ -21,6 +21,7 @@ def get_backend(name):
         return module
     except:
         print >> sys.stderr, traceback.format_exc()
+        raise
 
 
 # __all__ = ['get_backend']

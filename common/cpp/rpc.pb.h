@@ -64,6 +64,8 @@ class AutoCompleteCodeResult_CallSignature_Param;
 class PausedNotification;
 class PausedNotification_PausedNotification32;
 class PausedNotification_PausedNotification64;
+class PausedNotification_PairItem;
+class PausedNotification_Operand;
 class JumpToFromRequest;
 class JumpToFromResult;
 
@@ -3688,6 +3690,234 @@ class PausedNotification_PausedNotification64 : public ::google::protobuf::Messa
 };
 // -------------------------------------------------------------------
 
+class PausedNotification_PairItem : public ::google::protobuf::Message {
+ public:
+  PausedNotification_PairItem();
+  virtual ~PausedNotification_PairItem();
+
+  PausedNotification_PairItem(const PausedNotification_PairItem& from);
+
+  inline PausedNotification_PairItem& operator=(const PausedNotification_PairItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PausedNotification_PairItem& default_instance();
+
+  void Swap(PausedNotification_PairItem* other);
+
+  // implements Message ----------------------------------------------
+
+  PausedNotification_PairItem* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PausedNotification_PairItem& from);
+  void MergeFrom(const PausedNotification_PairItem& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional string value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline const ::std::string& value() const;
+  inline void set_value(const ::std::string& value);
+  inline void set_value(const char* value);
+  inline void set_value(const char* value, size_t size);
+  inline ::std::string* mutable_value();
+  inline ::std::string* release_value();
+  inline void set_allocated_value(::std::string* value);
+
+  // @@protoc_insertion_point(class_scope:rpc.PausedNotification.PairItem)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_value();
+  inline void clear_has_value();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* name_;
+  ::std::string* value_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static PausedNotification_PairItem* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class PausedNotification_Operand : public ::google::protobuf::Message {
+ public:
+  PausedNotification_Operand();
+  virtual ~PausedNotification_Operand();
+
+  PausedNotification_Operand(const PausedNotification_Operand& from);
+
+  inline PausedNotification_Operand& operator=(const PausedNotification_Operand& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PausedNotification_Operand& default_instance();
+
+  void Swap(PausedNotification_Operand* other);
+
+  // implements Message ----------------------------------------------
+
+  PausedNotification_Operand* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PausedNotification_Operand& from);
+  void MergeFrom(const PausedNotification_Operand& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional string comment = 2;
+  inline bool has_comment() const;
+  inline void clear_comment();
+  static const int kCommentFieldNumber = 2;
+  inline const ::std::string& comment() const;
+  inline void set_comment(const ::std::string& value);
+  inline void set_comment(const char* value);
+  inline void set_comment(const char* value, size_t size);
+  inline ::std::string* mutable_comment();
+  inline ::std::string* release_comment();
+  inline void set_allocated_comment(::std::string* comment);
+
+  // optional uint64 addr = 3;
+  inline bool has_addr() const;
+  inline void clear_addr();
+  static const int kAddrFieldNumber = 3;
+  inline ::google::protobuf::uint64 addr() const;
+  inline void set_addr(::google::protobuf::uint64 value);
+
+  // optional uint64 value = 4;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 4;
+  inline ::google::protobuf::uint64 value() const;
+  inline void set_value(::google::protobuf::uint64 value);
+
+  // optional uint32 opnum = 5;
+  inline bool has_opnum() const;
+  inline void clear_opnum();
+  static const int kOpnumFieldNumber = 5;
+  inline ::google::protobuf::uint32 opnum() const;
+  inline void set_opnum(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:rpc.PausedNotification.Operand)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_comment();
+  inline void clear_has_comment();
+  inline void set_has_addr();
+  inline void clear_has_addr();
+  inline void set_has_value();
+  inline void clear_has_value();
+  inline void set_has_opnum();
+  inline void clear_has_opnum();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* name_;
+  ::std::string* comment_;
+  ::google::protobuf::uint64 addr_;
+  ::google::protobuf::uint64 value_;
+  ::google::protobuf::uint32 opnum_;
+  friend void  protobuf_AddDesc_rpc_2eproto();
+  friend void protobuf_AssignDesc_rpc_2eproto();
+  friend void protobuf_ShutdownFile_rpc_2eproto();
+
+  void InitAsDefaultInstance();
+  static PausedNotification_Operand* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class PausedNotification : public ::google::protobuf::Message {
  public:
   PausedNotification();
@@ -3741,6 +3971,8 @@ class PausedNotification : public ::google::protobuf::Message {
 
   typedef PausedNotification_PausedNotification32 PausedNotification32;
   typedef PausedNotification_PausedNotification64 PausedNotification64;
+  typedef PausedNotification_PairItem PairItem;
+  typedef PausedNotification_Operand Operand;
 
   // accessors -------------------------------------------------------
 
@@ -3774,6 +4006,42 @@ class PausedNotification : public ::google::protobuf::Message {
   inline ::rpc::PausedNotification_PausedNotification64* release_info64();
   inline void set_allocated_info64(::rpc::PausedNotification_PausedNotification64* info64);
 
+  // repeated .rpc.PausedNotification.PairItem resolved = 4;
+  inline int resolved_size() const;
+  inline void clear_resolved();
+  static const int kResolvedFieldNumber = 4;
+  inline const ::rpc::PausedNotification_PairItem& resolved(int index) const;
+  inline ::rpc::PausedNotification_PairItem* mutable_resolved(int index);
+  inline ::rpc::PausedNotification_PairItem* add_resolved();
+  inline const ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_PairItem >&
+      resolved() const;
+  inline ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_PairItem >*
+      mutable_resolved();
+
+  // repeated .rpc.PausedNotification.Operand operands = 5;
+  inline int operands_size() const;
+  inline void clear_operands();
+  static const int kOperandsFieldNumber = 5;
+  inline const ::rpc::PausedNotification_Operand& operands(int index) const;
+  inline ::rpc::PausedNotification_Operand* mutable_operands(int index);
+  inline ::rpc::PausedNotification_Operand* add_operands();
+  inline const ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_Operand >&
+      operands() const;
+  inline ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_Operand >*
+      mutable_operands();
+
+  // optional bytes dump = 6;
+  inline bool has_dump() const;
+  inline void clear_dump();
+  static const int kDumpFieldNumber = 6;
+  inline const ::std::string& dump() const;
+  inline void set_dump(const ::std::string& value);
+  inline void set_dump(const char* value);
+  inline void set_dump(const void* value, size_t size);
+  inline ::std::string* mutable_dump();
+  inline ::std::string* release_dump();
+  inline void set_allocated_dump(::std::string* dump);
+
   // @@protoc_insertion_point(class_scope:rpc.PausedNotification)
  private:
   inline void set_has_backend_id();
@@ -3782,6 +4050,8 @@ class PausedNotification : public ::google::protobuf::Message {
   inline void clear_has_info32();
   inline void set_has_info64();
   inline void clear_has_info64();
+  inline void set_has_dump();
+  inline void clear_has_dump();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -3790,6 +4060,9 @@ class PausedNotification : public ::google::protobuf::Message {
   ::std::string* backend_id_;
   ::rpc::PausedNotification_PausedNotification32* info32_;
   ::rpc::PausedNotification_PausedNotification64* info64_;
+  ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_PairItem > resolved_;
+  ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_Operand > operands_;
+  ::std::string* dump_;
   friend void  protobuf_AddDesc_rpc_2eproto();
   friend void protobuf_AssignDesc_rpc_2eproto();
   friend void protobuf_ShutdownFile_rpc_2eproto();
@@ -8839,6 +9112,390 @@ PausedNotification_PausedNotification64::mutable_s() {
 
 // -------------------------------------------------------------------
 
+// PausedNotification_PairItem
+
+// required string name = 1;
+inline bool PausedNotification_PairItem::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PausedNotification_PairItem::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PausedNotification_PairItem::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PausedNotification_PairItem::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& PausedNotification_PairItem::name() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.PairItem.name)
+  return *name_;
+}
+inline void PausedNotification_PairItem::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.PairItem.name)
+}
+inline void PausedNotification_PairItem::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.PausedNotification.PairItem.name)
+}
+inline void PausedNotification_PairItem::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.PausedNotification.PairItem.name)
+}
+inline ::std::string* PausedNotification_PairItem::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.PairItem.name)
+  return name_;
+}
+inline ::std::string* PausedNotification_PairItem::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PausedNotification_PairItem::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.PairItem.name)
+}
+
+// optional string value = 2;
+inline bool PausedNotification_PairItem::has_value() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PausedNotification_PairItem::set_has_value() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PausedNotification_PairItem::clear_has_value() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PausedNotification_PairItem::clear_value() {
+  if (value_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    value_->clear();
+  }
+  clear_has_value();
+}
+inline const ::std::string& PausedNotification_PairItem::value() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.PairItem.value)
+  return *value_;
+}
+inline void PausedNotification_PairItem::set_value(const ::std::string& value) {
+  set_has_value();
+  if (value_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    value_ = new ::std::string;
+  }
+  value_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.PairItem.value)
+}
+inline void PausedNotification_PairItem::set_value(const char* value) {
+  set_has_value();
+  if (value_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    value_ = new ::std::string;
+  }
+  value_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.PausedNotification.PairItem.value)
+}
+inline void PausedNotification_PairItem::set_value(const char* value, size_t size) {
+  set_has_value();
+  if (value_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    value_ = new ::std::string;
+  }
+  value_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.PausedNotification.PairItem.value)
+}
+inline ::std::string* PausedNotification_PairItem::mutable_value() {
+  set_has_value();
+  if (value_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    value_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.PairItem.value)
+  return value_;
+}
+inline ::std::string* PausedNotification_PairItem::release_value() {
+  clear_has_value();
+  if (value_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = value_;
+    value_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PausedNotification_PairItem::set_allocated_value(::std::string* value) {
+  if (value_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete value_;
+  }
+  if (value) {
+    set_has_value();
+    value_ = value;
+  } else {
+    clear_has_value();
+    value_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.PairItem.value)
+}
+
+// -------------------------------------------------------------------
+
+// PausedNotification_Operand
+
+// required string name = 1;
+inline bool PausedNotification_Operand::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PausedNotification_Operand::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PausedNotification_Operand::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PausedNotification_Operand::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& PausedNotification_Operand::name() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.Operand.name)
+  return *name_;
+}
+inline void PausedNotification_Operand::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.Operand.name)
+}
+inline void PausedNotification_Operand::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.PausedNotification.Operand.name)
+}
+inline void PausedNotification_Operand::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.PausedNotification.Operand.name)
+}
+inline ::std::string* PausedNotification_Operand::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.Operand.name)
+  return name_;
+}
+inline ::std::string* PausedNotification_Operand::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PausedNotification_Operand::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.Operand.name)
+}
+
+// optional string comment = 2;
+inline bool PausedNotification_Operand::has_comment() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PausedNotification_Operand::set_has_comment() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PausedNotification_Operand::clear_has_comment() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PausedNotification_Operand::clear_comment() {
+  if (comment_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    comment_->clear();
+  }
+  clear_has_comment();
+}
+inline const ::std::string& PausedNotification_Operand::comment() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.Operand.comment)
+  return *comment_;
+}
+inline void PausedNotification_Operand::set_comment(const ::std::string& value) {
+  set_has_comment();
+  if (comment_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    comment_ = new ::std::string;
+  }
+  comment_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.Operand.comment)
+}
+inline void PausedNotification_Operand::set_comment(const char* value) {
+  set_has_comment();
+  if (comment_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    comment_ = new ::std::string;
+  }
+  comment_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.PausedNotification.Operand.comment)
+}
+inline void PausedNotification_Operand::set_comment(const char* value, size_t size) {
+  set_has_comment();
+  if (comment_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    comment_ = new ::std::string;
+  }
+  comment_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.PausedNotification.Operand.comment)
+}
+inline ::std::string* PausedNotification_Operand::mutable_comment() {
+  set_has_comment();
+  if (comment_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    comment_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.Operand.comment)
+  return comment_;
+}
+inline ::std::string* PausedNotification_Operand::release_comment() {
+  clear_has_comment();
+  if (comment_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = comment_;
+    comment_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PausedNotification_Operand::set_allocated_comment(::std::string* comment) {
+  if (comment_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete comment_;
+  }
+  if (comment) {
+    set_has_comment();
+    comment_ = comment;
+  } else {
+    clear_has_comment();
+    comment_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.Operand.comment)
+}
+
+// optional uint64 addr = 3;
+inline bool PausedNotification_Operand::has_addr() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void PausedNotification_Operand::set_has_addr() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void PausedNotification_Operand::clear_has_addr() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void PausedNotification_Operand::clear_addr() {
+  addr_ = GOOGLE_ULONGLONG(0);
+  clear_has_addr();
+}
+inline ::google::protobuf::uint64 PausedNotification_Operand::addr() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.Operand.addr)
+  return addr_;
+}
+inline void PausedNotification_Operand::set_addr(::google::protobuf::uint64 value) {
+  set_has_addr();
+  addr_ = value;
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.Operand.addr)
+}
+
+// optional uint64 value = 4;
+inline bool PausedNotification_Operand::has_value() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PausedNotification_Operand::set_has_value() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PausedNotification_Operand::clear_has_value() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void PausedNotification_Operand::clear_value() {
+  value_ = GOOGLE_ULONGLONG(0);
+  clear_has_value();
+}
+inline ::google::protobuf::uint64 PausedNotification_Operand::value() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.Operand.value)
+  return value_;
+}
+inline void PausedNotification_Operand::set_value(::google::protobuf::uint64 value) {
+  set_has_value();
+  value_ = value;
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.Operand.value)
+}
+
+// optional uint32 opnum = 5;
+inline bool PausedNotification_Operand::has_opnum() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void PausedNotification_Operand::set_has_opnum() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void PausedNotification_Operand::clear_has_opnum() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void PausedNotification_Operand::clear_opnum() {
+  opnum_ = 0u;
+  clear_has_opnum();
+}
+inline ::google::protobuf::uint32 PausedNotification_Operand::opnum() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.Operand.opnum)
+  return opnum_;
+}
+inline void PausedNotification_Operand::set_opnum(::google::protobuf::uint32 value) {
+  set_has_opnum();
+  opnum_ = value;
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.Operand.opnum)
+}
+
+// -------------------------------------------------------------------
+
 // PausedNotification
 
 // required bytes backend_id = 1;
@@ -8997,6 +9654,142 @@ inline void PausedNotification::set_allocated_info64(::rpc::PausedNotification_P
     clear_has_info64();
   }
   // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.info64)
+}
+
+// repeated .rpc.PausedNotification.PairItem resolved = 4;
+inline int PausedNotification::resolved_size() const {
+  return resolved_.size();
+}
+inline void PausedNotification::clear_resolved() {
+  resolved_.Clear();
+}
+inline const ::rpc::PausedNotification_PairItem& PausedNotification::resolved(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.resolved)
+  return resolved_.Get(index);
+}
+inline ::rpc::PausedNotification_PairItem* PausedNotification::mutable_resolved(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.resolved)
+  return resolved_.Mutable(index);
+}
+inline ::rpc::PausedNotification_PairItem* PausedNotification::add_resolved() {
+  // @@protoc_insertion_point(field_add:rpc.PausedNotification.resolved)
+  return resolved_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_PairItem >&
+PausedNotification::resolved() const {
+  // @@protoc_insertion_point(field_list:rpc.PausedNotification.resolved)
+  return resolved_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_PairItem >*
+PausedNotification::mutable_resolved() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.PausedNotification.resolved)
+  return &resolved_;
+}
+
+// repeated .rpc.PausedNotification.Operand operands = 5;
+inline int PausedNotification::operands_size() const {
+  return operands_.size();
+}
+inline void PausedNotification::clear_operands() {
+  operands_.Clear();
+}
+inline const ::rpc::PausedNotification_Operand& PausedNotification::operands(int index) const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.operands)
+  return operands_.Get(index);
+}
+inline ::rpc::PausedNotification_Operand* PausedNotification::mutable_operands(int index) {
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.operands)
+  return operands_.Mutable(index);
+}
+inline ::rpc::PausedNotification_Operand* PausedNotification::add_operands() {
+  // @@protoc_insertion_point(field_add:rpc.PausedNotification.operands)
+  return operands_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_Operand >&
+PausedNotification::operands() const {
+  // @@protoc_insertion_point(field_list:rpc.PausedNotification.operands)
+  return operands_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::rpc::PausedNotification_Operand >*
+PausedNotification::mutable_operands() {
+  // @@protoc_insertion_point(field_mutable_list:rpc.PausedNotification.operands)
+  return &operands_;
+}
+
+// optional bytes dump = 6;
+inline bool PausedNotification::has_dump() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void PausedNotification::set_has_dump() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void PausedNotification::clear_has_dump() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void PausedNotification::clear_dump() {
+  if (dump_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dump_->clear();
+  }
+  clear_has_dump();
+}
+inline const ::std::string& PausedNotification::dump() const {
+  // @@protoc_insertion_point(field_get:rpc.PausedNotification.dump)
+  return *dump_;
+}
+inline void PausedNotification::set_dump(const ::std::string& value) {
+  set_has_dump();
+  if (dump_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dump_ = new ::std::string;
+  }
+  dump_->assign(value);
+  // @@protoc_insertion_point(field_set:rpc.PausedNotification.dump)
+}
+inline void PausedNotification::set_dump(const char* value) {
+  set_has_dump();
+  if (dump_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dump_ = new ::std::string;
+  }
+  dump_->assign(value);
+  // @@protoc_insertion_point(field_set_char:rpc.PausedNotification.dump)
+}
+inline void PausedNotification::set_dump(const void* value, size_t size) {
+  set_has_dump();
+  if (dump_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dump_ = new ::std::string;
+  }
+  dump_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:rpc.PausedNotification.dump)
+}
+inline ::std::string* PausedNotification::mutable_dump() {
+  set_has_dump();
+  if (dump_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    dump_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:rpc.PausedNotification.dump)
+  return dump_;
+}
+inline ::std::string* PausedNotification::release_dump() {
+  clear_has_dump();
+  if (dump_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = dump_;
+    dump_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void PausedNotification::set_allocated_dump(::std::string* dump) {
+  if (dump_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete dump_;
+  }
+  if (dump) {
+    set_has_dump();
+    dump_ = dump;
+  } else {
+    clear_has_dump();
+    dump_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:rpc.PausedNotification.dump)
 }
 
 // -------------------------------------------------------------------
