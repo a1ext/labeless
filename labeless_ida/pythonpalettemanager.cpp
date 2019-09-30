@@ -85,7 +85,7 @@ bool fromVariant(const QVariant& vPalette, PythonPalette& result)
 	foreach(auto type, kValidEntryTypes)
 	{
 		const auto name = QString::number(type);
-		if (vm.contains(name) && checkFieldsExists(vm[name].toMap(), kSpecFields));
+		if (vm.contains(name) && checkFieldsExists(vm[name].toMap(), kSpecFields))
 		{
 			const auto vmSpec = vm[name].toMap();
 			const QVariant& vCol = vmSpec[kPaletteColor];
