@@ -125,7 +125,6 @@ def unsafe_read_process_memory(addr, size):
     if not api.DbgMemRead(addr, b, size):
         return
 
-    # n = oa.Readmemory(b, addr, size, oa.MM_RESTORE | oa.MM_SILENT)
     return size, b
 
 
@@ -135,7 +134,7 @@ def mem_is_allocated(addr):
     VirtualQueryEx = C.windll.kernel32.VirtualQueryEx
 
     h_process = wintypes.HANDLE(py_olly.get_hprocess())
-    queried = VirtualQueryEx(h_process, C.c_void_p(addr), C.byref(mbi), C.sizeof(mbi))
+    queried = VirtualQueryEx(h_process, C.c_void_p(addr), C.byref(mbi), C.c_size_t(C.sizeof(mbi)))
     return queried > 0
 
 
@@ -157,7 +156,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
     gpoints = dict()
     protect = 0
 
-    queried = VirtualQueryEx(h_process, C.c_void_p(base), C.byref(mbi), C.sizeof(mbi))
+    queried = VirtualQueryEx(h_process, C.c_void_p(base), C.byref(mbi), C.c_size_t(C.sizeof(mbi)))
     if queried:
         protect = mbi.Protect
     else:
@@ -169,7 +168,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
         ea = base
         while True:
             ea -= GRANULARITY
-            if VirtualQueryEx(h_process, C.c_void_p(ea), C.byref(mbi), C.sizeof(mbi)) and\
+            if VirtualQueryEx(h_process, C.c_void_p(ea), C.byref(mbi), C.c_size_t(C.sizeof(mbi))) and\
                     (mbi.Protect & D.PAGE_GUARD) != 0 and g['p'] == mbi.Protect:
                 g['ea'] -= GRANULARITY
                 g['size'] += GRANULARITY
@@ -180,8 +179,8 @@ def safe_read_chunked_memory_region_as_one(base, size):
 
     for i in long_xrange(base + GRANULARITY, base + size, GRANULARITY):
         p_addr = C.c_void_p(i)
-        if VirtualQueryEx(h_process, p_addr, C.byref(mbi), C.sizeof(mbi)) and\
-                        mbi.Protect & D.PAGE_GUARD:
+        if VirtualQueryEx(h_process, p_addr, C.byref(mbi), C.c_size_t(C.sizeof(mbi))) and\
+                mbi.Protect & D.PAGE_GUARD:
             prevaddr = i - GRANULARITY
             if prevaddr in gpoints and guarded[gpoints[prevaddr]]['p'] == mbi.Protect:
                 idx = gpoints[prevaddr]
@@ -195,8 +194,8 @@ def safe_read_chunked_memory_region_as_one(base, size):
     if ea in gpoints:
         while True:
             ea += GRANULARITY
-            if VirtualQueryEx(h_process, C.c_void_p(ea), C.byref(mbi), C.sizeof(mbi)) and\
-                        mbi.Protect & D.PAGE_GUARD:
+            if VirtualQueryEx(h_process, C.c_void_p(ea), C.byref(mbi), C.c_size_t(C.sizeof(mbi))) and\
+                    mbi.Protect & D.PAGE_GUARD:
                 guarded[-1]['size'] += GRANULARITY
             else:
                 break
@@ -205,12 +204,12 @@ def safe_read_chunked_memory_region_as_one(base, size):
     dummy = C.c_long()
     for g in guarded:
         for off in range(0, g['size'], GRANULARITY):
-            g['ok'] = VirtualProtectEx(h_process, C.c_void_p(g['ea'] + off), GRANULARITY,
+            g['ok'] = VirtualProtectEx(h_process, C.c_void_p(g['ea'] + off), C.c_size_t(GRANULARITY),
                                        C.c_long(g['p'] & ~D.PAGE_GUARD), C.byref(dummy))
 
     for i in long_xrange(base, base + size, GRANULARITY):
         p_addr = C.c_void_p(i)
-        if VirtualQueryEx(h_process, p_addr, C.byref(mbi), C.sizeof(mbi)):
+        if VirtualQueryEx(h_process, p_addr, C.byref(mbi), C.c_size_t(C.sizeof(mbi))):
             if mbi.Protect & D.PAGE_GUARD:
                 # TODO
                 pass
@@ -226,7 +225,8 @@ def safe_read_chunked_memory_region_as_one(base, size):
         for off in range(0, g['size'], GRANULARITY):
             if not g['ok']:
                 continue
-            if not VirtualProtectEx(h_process, C.c_void_p(g['ea'] + off), GRANULARITY, C.c_long(g['p']), C.byref(dummy)):
+            if not VirtualProtectEx(h_process, C.c_void_p(g['ea'] + off), C.c_size_t(GRANULARITY),
+                                    C.c_long(g['p']), C.byref(dummy)):
                 print >> sys.stderr, 'VirtualProtectEx(ptr 0x%08X, size 0x%08X, protect 0x%08X) failed' %\
                                      (g['ea'] + off, GRANULARITY, g['p'])
     if rv and len(rv) > size:
