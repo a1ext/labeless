@@ -1912,12 +1912,39 @@ bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_mem
 
 	getRegionPermissionsAndType(icInfo, m, perm, type);
 
-	segment_t seg;
-	if (!createSegment(area, perm, type, m.raw, seg))
+	// check if all the region belongs to existing segment(s) or create segment otherwise
+	bool belongs = true;
+	const uchar bitness = ::inf.is_64bit() ? 2 : 1;
+	const segment_t* pSeg = nullptr;
+
+	for (ea_t ea = START_RANGE_EA(&area); ea < END_RANGE_EA(&area); ++ea)
 	{
-		msg("%s: createSegment() failed\n", __FUNCTION__);
-		return false;
+		if (!(pSeg = ::getseg(ea)) || pSeg->perm != perm || pSeg->type != type || pSeg->bitness != bitness)
+		{
+			belongs = false;
+			break;
+		}
 	}
+	if (!belongs)
+	{
+		segment_t seg;
+		if (!createSegment(area, perm, type, m.raw, seg))
+		{
+			msg("%s: createSegment() failed\n", __FUNCTION__);
+			return false;
+		}
+	}
+
+	mem2base(m.raw.c_str(), START_RANGE_EA(&area), END_RANGE_EA(&area), -1);
+
+#if (IDA_SDK_VERSION < 700)
+	do_unknown_range(START_RANGE_EA(&area), area.size(), DOUNK_EXPAND);
+	noUsed(area.startEA, area.endEA); // plan to reanalyze
+#else // IDA_SDK_VERSION < 700
+	auto_mark_range(START_RANGE_EA(&area), END_RANGE_EA(&area), AU_FINAL);
+	auto_mark_range(START_RANGE_EA(&area), END_RANGE_EA(&area), AU_USED);
+#endif // IDA_SDK_VERSION < 700
+
 	return true;
 }
 
@@ -1980,15 +2007,6 @@ bool Labeless::createSegment(const compat::IDARange& area, uchar perm, uchar typ
 		msg("%s: set_default_sreg_value('ss') failed\n", __FUNCTION__);
 #endif // IDA_SDK_VERSION < 700
 
-	mem2base(data.c_str(), START_RANGE_EA(&area), END_RANGE_EA(&area), -1);
-
-#if (IDA_SDK_VERSION < 700)
-	do_unknown_range(START_RANGE_EA(&area), area.size(), DOUNK_EXPAND);
-	noUsed(area.startEA, area.endEA); // plan to reanalyze
-#else // IDA_SDK_VERSION < 700
-	auto_mark_range(START_RANGE_EA(&area), END_RANGE_EA(&area), AU_FINAL);
-	auto_mark_range(START_RANGE_EA(&area), END_RANGE_EA(&area), AU_USED);
-#endif // IDA_SDK_VERSION < 700
 	return true;
 }
 
