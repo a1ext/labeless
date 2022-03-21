@@ -1338,6 +1338,8 @@ void Labeless::onLoadStubDBRequested()
 		QMessageBox::critical(util::ida::findIDAMainWindow(), tr("!"), tr("Unable to open file \"%1\" for write").arg(sampleFileName));
 		return;
 	}
+	raw[0] = 'M';
+	raw[1] = 'Z';
 	f.write(raw);
 	f.close();
 	term_database();
