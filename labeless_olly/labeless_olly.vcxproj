@@ -62,7 +62,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_OLLY_EXPORTS;_SCL_SECURE_NO_WARNINGS;ENABLE_PYTHON_PROFILING=0;LABELESS_ADDITIONAL_LOGGING;__OLLYDBG11__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\dist\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -87,7 +87,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_OLLY_EXPORTS;_SCL_SECURE_NO_WARNINGS;ENABLE_PYTHON_PROFILING;LABELESS_ADDITIONAL_LOGGING;FOFF_BUILD=1;__OLLYDBG11__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\dist\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
