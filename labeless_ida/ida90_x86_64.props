@@ -4,7 +4,7 @@
   <PropertyGroup Label="UserMacros">
     <IDA_DIR>m:\!re\IDA Free 9.0sp1\</IDA_DIR>
     <SDK_DIR>m:\!re\idasdk90sp1\</SDK_DIR>
-    <IDA_SUFFIX>70</IDA_SUFFIX>
+    <IDA_SUFFIX>90</IDA_SUFFIX>
     <QTDIR>t:\Qt\qt5.6.0_msvc2015_x64_qt_namespace\qtbase</QTDIR>
   </PropertyGroup>
   <PropertyGroup />

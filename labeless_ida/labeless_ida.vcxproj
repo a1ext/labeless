@@ -346,7 +346,7 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;$(QTDIR)\qtbase\include\QtCore;$(QTDIR)\qtbase\include\QtGui;$(QTDIR)\qbtase\include\QtWidgets;$(IncludePath)</IncludePath>
     <LibraryPath>$(SDK_DIR)\lib\x86_win_qt;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_83</TargetName>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA9|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -355,7 +355,7 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;$(QTDIR)\qtbase\include\QtCore;$(QTDIR)\qtbase\include\QtGui;$(QTDIR)\qbtase\include\QtWidgets;$(IncludePath)</IncludePath>
     <LibraryPath>$(SDK_DIR)\lib\x86_win_qt;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_90</TargetName>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA7|x64'">
     <TargetExt>.dll</TargetExt>
@@ -370,7 +370,7 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;$(QTDIR)\qtbase\include\QtCore;$(QTDIR)\qtbase\include\QtGui;$(QTDIR)\qbtase\include\QtWidgets;$(IncludePath)</IncludePath>
     <LibraryPath>$(SDK_DIR)\lib\x86_win_qt;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_83</TargetName>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)</TargetName>
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
@@ -379,7 +379,7 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;$(QTDIR)\qtbase\include\QtCore;$(QTDIR)\qtbase\include\QtGui;$(QTDIR)\qbtase\include\QtWidgets;$(IncludePath)</IncludePath>
     <LibraryPath>$(SDK_DIR)\lib\x64_win_vc_32;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_90</TargetName>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)</TargetName>
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
@@ -444,7 +444,7 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SDK_DIR)\lib\x86_win_qt;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_90_64</TargetName>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)_64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA7_x64|x64'">
     <TargetExt>.dll</TargetExt>
@@ -468,7 +468,7 @@
     <TargetExt>.dll</TargetExt>
     <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SDK_DIR)\lib\x64_win_qt;$(LibraryPath)</LibraryPath>
-    <TargetName>$(ProjectName)_90_64</TargetName>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)_64</TargetName>
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
@@ -646,7 +646,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;__DEFINE_PLUGIN_RETURN_CODES__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -671,7 +671,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;__DEFINE_PLUGIN_RETURN_CODES__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -891,7 +891,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;__EA64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;__DEFINE_PLUGIN_RETURN_CODES__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)include;$(SolutionDir)3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -916,7 +916,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;__EA64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;__DEFINE_PLUGIN_RETURN_CODES__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SDK_DIR)include;$(SolutionDir)3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SDK_DIR)\include;$(SolutionDir)3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFiles\$(ConfigurationName);$(ProjectDir);$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
