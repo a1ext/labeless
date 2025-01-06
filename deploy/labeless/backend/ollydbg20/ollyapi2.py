@@ -187,6 +187,286 @@ def t_secthdrArray_frompointer(*args):
   return _ollyapi2.t_secthdrArray_frompointer(*args)
 t_secthdrArray_frompointer = _ollyapi2.t_secthdrArray_frompointer
 
+class t_operandArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_operandArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_operandArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_operandArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_operandArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_operandArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_operandArray_frompointer)
+t_operandArray_swigregister = _ollyapi2.t_operandArray_swigregister
+t_operandArray_swigregister(t_operandArray)
+
+def t_operandArray_frompointer(*args):
+  return _ollyapi2.t_operandArray_frompointer(*args)
+t_operandArray_frompointer = _ollyapi2.t_operandArray_frompointer
+
+class t_metadataArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_metadataArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_metadataArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_metadataArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_metadataArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_metadataArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_metadataArray_frompointer)
+t_metadataArray_swigregister = _ollyapi2.t_metadataArray_swigregister
+t_metadataArray_swigregister(t_metadataArray)
+
+def t_metadataArray_frompointer(*args):
+  return _ollyapi2.t_metadataArray_frompointer(*args)
+t_metadataArray_frompointer = _ollyapi2.t_metadataArray_frompointer
+
+class t_netstreamArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_netstreamArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_netstreamArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_netstreamArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_netstreamArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_netstreamArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_netstreamArray_frompointer)
+t_netstreamArray_swigregister = _ollyapi2.t_netstreamArray_swigregister
+t_netstreamArray_swigregister(t_netstreamArray)
+
+def t_netstreamArray_frompointer(*args):
+  return _ollyapi2.t_netstreamArray_frompointer(*args)
+t_netstreamArray_frompointer = _ollyapi2.t_netstreamArray_frompointer
+
+class t_schemeArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_schemeArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_schemeArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_schemeArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_schemeArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_schemeArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_schemeArray_frompointer)
+t_schemeArray_swigregister = _ollyapi2.t_schemeArray_swigregister
+t_schemeArray_swigregister(t_schemeArray)
+
+def t_schemeArray_frompointer(*args):
+  return _ollyapi2.t_schemeArray_frompointer(*args)
+t_schemeArray_frompointer = _ollyapi2.t_schemeArray_frompointer
+
+class t_fontArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_fontArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_fontArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_fontArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_fontArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_fontArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_fontArray_frompointer)
+t_fontArray_swigregister = _ollyapi2.t_fontArray_swigregister
+t_fontArray_swigregister(t_fontArray)
+
+def t_fontArray_frompointer(*args):
+  return _ollyapi2.t_fontArray_frompointer(*args)
+t_fontArray_frompointer = _ollyapi2.t_fontArray_frompointer
+
+class COLORREFArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_COLORREFArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_COLORREFArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.COLORREFArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.COLORREFArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.COLORREFArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.COLORREFArray_frompointer)
+COLORREFArray_swigregister = _ollyapi2.COLORREFArray_swigregister
+COLORREFArray_swigregister(COLORREFArray)
+
+def COLORREFArray_frompointer(*args):
+  return _ollyapi2.COLORREFArray_frompointer(*args)
+COLORREFArray_frompointer = _ollyapi2.COLORREFArray_frompointer
+
+class t_memfieldArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_memfieldArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_memfieldArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_memfieldArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_memfieldArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_memfieldArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_memfieldArray_frompointer)
+t_memfieldArray_swigregister = _ollyapi2.t_memfieldArray_swigregister
+t_memfieldArray_swigregister(t_memfieldArray)
+
+def t_memfieldArray_frompointer(*args):
+  return _ollyapi2.t_memfieldArray_frompointer(*args)
+t_memfieldArray_frompointer = _ollyapi2.t_memfieldArray_frompointer
+
+class t_opinfoArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_opinfoArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_opinfoArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_opinfoArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_opinfoArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_opinfoArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_opinfoArray_frompointer)
+t_opinfoArray_swigregister = _ollyapi2.t_opinfoArray_swigregister
+t_opinfoArray_swigregister(t_opinfoArray)
+
+def t_opinfoArray_frompointer(*args):
+  return _ollyapi2.t_opinfoArray_frompointer(*args)
+t_opinfoArray_frompointer = _ollyapi2.t_opinfoArray_frompointer
+
+class t_modopArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_modopArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_modopArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_modopArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_modopArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_modopArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_modopArray_frompointer)
+t_modopArray_swigregister = _ollyapi2.t_modopArray_swigregister
+t_modopArray_swigregister(t_modopArray)
+
+def t_modopArray_frompointer(*args):
+  return _ollyapi2.t_modopArray_frompointer(*args)
+t_modopArray_frompointer = _ollyapi2.t_modopArray_frompointer
+
+class t_histrecArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_histrecArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_histrecArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_histrecArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_histrecArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_histrecArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_histrecArray_frompointer)
+t_histrecArray_swigregister = _ollyapi2.t_histrecArray_swigregister
+t_histrecArray_swigregister(t_histrecArray)
+
+def t_histrecArray_frompointer(*args):
+  return _ollyapi2.t_histrecArray_frompointer(*args)
+t_histrecArray_frompointer = _ollyapi2.t_histrecArray_frompointer
+
+class t_rangeArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_rangeArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_rangeArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_rangeArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_rangeArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_rangeArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_rangeArray_frompointer)
+t_rangeArray_swigregister = _ollyapi2.t_rangeArray_swigregister
+t_rangeArray_swigregister(t_rangeArray)
+
+def t_rangeArray_frompointer(*args):
+  return _ollyapi2.t_rangeArray_frompointer(*args)
+t_rangeArray_frompointer = _ollyapi2.t_rangeArray_frompointer
+
+class t_bincmdArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_bincmdArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_bincmdArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_bincmdArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_bincmdArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_bincmdArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_bincmdArray_frompointer)
+t_bincmdArray_swigregister = _ollyapi2.t_bincmdArray_swigregister
+t_bincmdArray_swigregister(t_bincmdArray)
+
+def t_bincmdArray_frompointer(*args):
+  return _ollyapi2.t_bincmdArray_frompointer(*args)
+t_bincmdArray_frompointer = _ollyapi2.t_bincmdArray_frompointer
+
+class t_argdecArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_argdecArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_argdecArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_argdecArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_argdecArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_argdecArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_argdecArray_frompointer)
+t_argdecArray_swigregister = _ollyapi2.t_argdecArray_swigregister
+t_argdecArray_swigregister(t_argdecArray)
+
+def t_argdecArray_frompointer(*args):
+  return _ollyapi2.t_argdecArray_frompointer(*args)
+t_argdecArray_frompointer = _ollyapi2.t_argdecArray_frompointer
+
+class t_strdecArray(object):
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _ollyapi2.new_t_strdecArray(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _ollyapi2.delete_t_strdecArray
+    __del__ = lambda self : None;
+    def __getitem__(self, *args): return _ollyapi2.t_strdecArray___getitem__(self, *args)
+    def __setitem__(self, *args): return _ollyapi2.t_strdecArray___setitem__(self, *args)
+    def cast(self): return _ollyapi2.t_strdecArray_cast(self)
+    frompointer = staticmethod(_ollyapi2.t_strdecArray_frompointer)
+t_strdecArray_swigregister = _ollyapi2.t_strdecArray_swigregister
+t_strdecArray_swigregister(t_strdecArray)
+
+def t_strdecArray_frompointer(*args):
+  return _ollyapi2.t_strdecArray_frompointer(*args)
+t_strdecArray_frompointer = _ollyapi2.t_strdecArray_frompointer
+
 PLUGIN_VERSION = _ollyapi2.PLUGIN_VERSION
 TEXTLEN = _ollyapi2.TEXTLEN
 DATALEN = _ollyapi2.DATALEN
@@ -425,7 +705,7 @@ def Devicenametodosname(*args):
   return _ollyapi2.Devicenametodosname(*args)
 
 def Filenamefromhandle(*args):
-  """Filenamefromhandle(ulong hfile, wchar_t * path) -> int"""
+  """Filenamefromhandle(void * hfile, wchar_t * path) -> int"""
   return _ollyapi2.Filenamefromhandle(*args)
 
 def Quicktimerstart(*args):
@@ -546,7 +826,7 @@ MI_PATCH = _ollyapi2.MI_PATCH
 MI_PLUGIN = _ollyapi2.MI_PLUGIN
 MI_END = _ollyapi2.MI_END
 class t_nameinfo(object):
-    """Proxy of C t_nameinfo struct"""
+    """Proxy of C++ t_nameinfo class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     offs = _swig_property(_ollyapi2.t_nameinfo_offs_get, _ollyapi2.t_nameinfo_offs_set)
@@ -562,7 +842,7 @@ t_nameinfo_swigregister = _ollyapi2.t_nameinfo_swigregister
 t_nameinfo_swigregister(t_nameinfo)
 
 class t_uddsave(object):
-    """Proxy of C t_uddsave struct"""
+    """Proxy of C++ t_uddsave class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     file = _swig_property(_ollyapi2.t_uddsave_file_get, _ollyapi2.t_uddsave_file_set)
@@ -622,7 +902,7 @@ SCAN_INVALID = _ollyapi2.SCAN_INVALID
 SCAN_SYNTAX = _ollyapi2.SCAN_SYNTAX
 SCAN_USER = _ollyapi2.SCAN_USER
 class t_scan(object):
-    """Proxy of C t_scan struct"""
+    """Proxy of C++ t_scan class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     mode = _swig_property(_ollyapi2.t_scan_mode_get, _ollyapi2.t_scan_mode_set)
@@ -630,8 +910,6 @@ class t_scan(object):
     length = _swig_property(_ollyapi2.t_scan_length_get, _ollyapi2.t_scan_length_set)
     caret = _swig_property(_ollyapi2.t_scan_caret_get, _ollyapi2.t_scan_caret_set)
     line = _swig_property(_ollyapi2.t_scan_line_get, _ollyapi2.t_scan_line_set)
-    ival = _swig_property(_ollyapi2.t_scan_ival_get, _ollyapi2.t_scan_ival_set)
-    uval = _swig_property(_ollyapi2.t_scan_uval_get, _ollyapi2.t_scan_uval_set)
     mask = _swig_property(_ollyapi2.t_scan_mask_get, _ollyapi2.t_scan_mask_set)
     fval = _swig_property(_ollyapi2.t_scan_fval_get, _ollyapi2.t_scan_fval_set)
     text = _swig_property(_ollyapi2.t_scan_text_get, _ollyapi2.t_scan_text_set)
@@ -1005,7 +1283,7 @@ PWM_TRACE = _ollyapi2.PWM_TRACE
 PWM_WATCH = _ollyapi2.PWM_WATCH
 PWM_WINDOWS = _ollyapi2.PWM_WINDOWS
 class t_menu(object):
-    """Proxy of C t_menu struct"""
+    """Proxy of C++ t_menu class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_menu_name_get, _ollyapi2.t_menu_name_set)
@@ -1013,8 +1291,6 @@ class t_menu(object):
     shortcutid = _swig_property(_ollyapi2.t_menu_shortcutid_get, _ollyapi2.t_menu_shortcutid_set)
     menufunc = _swig_property(_ollyapi2.t_menu_menufunc_get, _ollyapi2.t_menu_menufunc_set)
     submenu = _swig_property(_ollyapi2.t_menu_submenu_get, _ollyapi2.t_menu_submenu_set)
-    index = _swig_property(_ollyapi2.t_menu_index_get, _ollyapi2.t_menu_index_set)
-    hsubmenu = _swig_property(_ollyapi2.t_menu_hsubmenu_get, _ollyapi2.t_menu_hsubmenu_set)
     def __init__(self): 
         """__init__(t_menu self) -> t_menu"""
         this = _ollyapi2.new_t_menu()
@@ -1143,7 +1419,7 @@ NMOFS_COND = _ollyapi2.NMOFS_COND
 NMOFS_EXPR = _ollyapi2.NMOFS_EXPR
 NMOFS_TYPE = _ollyapi2.NMOFS_TYPE
 class dt_iord(object):
-    """Proxy of C dt_iord struct"""
+    """Proxy of C++ dt_iord class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     ord = _swig_property(_ollyapi2.dt_iord_ord_get, _ollyapi2.dt_iord_ord_set)
@@ -1169,7 +1445,7 @@ CASE_MSG = _ollyapi2.CASE_MSG
 CASE_EXCPTN = _ollyapi2.CASE_EXCPTN
 CASE_SIGNED = _ollyapi2.CASE_SIGNED
 class dt_switch(object):
-    """Proxy of C dt_switch struct"""
+    """Proxy of C++ dt_switch class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     casemin = _swig_property(_ollyapi2.dt_switch_casemin_get, _ollyapi2.dt_switch_casemin_set)
@@ -1188,7 +1464,7 @@ dt_switch_swigregister = _ollyapi2.dt_switch_swigregister
 dt_switch_swigregister(dt_switch)
 
 class dt_case(object):
-    """Proxy of C dt_case struct"""
+    """Proxy of C++ dt_case class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     swbase = _swig_property(_ollyapi2.dt_case_swbase_get, _ollyapi2.dt_case_swbase_set)
@@ -1208,7 +1484,7 @@ dt_case_swigregister(dt_case)
 MF_JZ = _ollyapi2.MF_JZ
 MF_JC = _ollyapi2.MF_JC
 class dt_mnemo(object):
-    """Proxy of C dt_mnemo struct"""
+    """Proxy of C++ dt_mnemo class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     flags = _swig_property(_ollyapi2.dt_mnemo_flags_get, _ollyapi2.dt_mnemo_flags_set)
@@ -1311,7 +1587,7 @@ def FindaddressW(*args):
   """FindaddressW(wchar_t * name, t_module pmod, ulong * addr, wchar_t * errtxt) -> int"""
   return _ollyapi2.FindaddressW(*args)
 class t_simple(object):
-    """Proxy of C t_simple struct"""
+    """Proxy of C++ t_simple class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     heap = _swig_property(_ollyapi2.t_simple_heap_get, _ollyapi2.t_simple_heap_set)
@@ -1374,7 +1650,7 @@ PRED_ORIG = _ollyapi2.PRED_ORIG
 PRED_OMASK = _ollyapi2.PRED_OMASK
 PRED_ESPKNOWN = _ollyapi2.PRED_ESPKNOWN
 class sd_pred(object):
-    """Proxy of C sd_pred struct"""
+    """Proxy of C++ sd_pred class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.sd_pred_addr_get, _ollyapi2.sd_pred_addr_set)
@@ -1504,7 +1780,7 @@ SRC_ABSENT = _ollyapi2.SRC_ABSENT
 NL_EORD = _ollyapi2.NL_EORD
 NL_IORD = _ollyapi2.NL_IORD
 class t_sorthdr(object):
-    """Proxy of C t_sorthdr struct"""
+    """Proxy of C++ t_sorthdr class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_sorthdr_addr_get, _ollyapi2.t_sorthdr_addr_set)
@@ -1521,7 +1797,7 @@ t_sorthdr_swigregister = _ollyapi2.t_sorthdr_swigregister
 t_sorthdr_swigregister(t_sorthdr)
 
 class t_sorthdr_nosize(object):
-    """Proxy of C t_sorthdr_nosize struct"""
+    """Proxy of C++ t_sorthdr_nosize class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_sorthdr_nosize_addr_get, _ollyapi2.t_sorthdr_nosize_addr_set)
@@ -1538,7 +1814,7 @@ t_sorthdr_nosize_swigregister(t_sorthdr_nosize)
 NBLOCK = _ollyapi2.NBLOCK
 BLOCKSIZE = _ollyapi2.BLOCKSIZE
 class t_sorted(object):
-    """Proxy of C t_sorted struct"""
+    """Proxy of C++ t_sorted class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     n = _swig_property(_ollyapi2.t_sorted_n_get, _ollyapi2.t_sorted_n_set)
@@ -1659,7 +1935,7 @@ BAR_SPELL = _ollyapi2.BAR_SPELL
 BAR_SPHEX = _ollyapi2.BAR_SPHEX
 BAR_SPNONE = _ollyapi2.BAR_SPNONE
 class t_bar(object):
-    """Proxy of C t_bar struct"""
+    """Proxy of C++ t_bar class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     nbar = _swig_property(_ollyapi2.t_bar_nbar_get, _ollyapi2.t_bar_nbar_set)
@@ -1759,7 +2035,7 @@ DRAW_INACTIVE = _ollyapi2.DRAW_INACTIVE
 DRAW_RAWDATA = _ollyapi2.DRAW_RAWDATA
 DRAW_NEW = _ollyapi2.DRAW_NEW
 class t_drawheader(object):
-    """Proxy of C t_drawheader struct"""
+    """Proxy of C++ t_drawheader class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     line = _swig_property(_ollyapi2.t_drawheader_line_get, _ollyapi2.t_drawheader_line_set)
@@ -1787,7 +2063,7 @@ TSC_KEY = _ollyapi2.TSC_KEY
 TSC_MOUSE = _ollyapi2.TSC_MOUSE
 TSC_CALL = _ollyapi2.TSC_CALL
 class t_table(object):
-    """Proxy of C t_table struct"""
+    """Proxy of C++ t_table class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_table_name_get, _ollyapi2.t_table_name_set)
@@ -1922,7 +2198,7 @@ BLK_HDIV = _ollyapi2.BLK_HDIV
 BLK_VDIV = _ollyapi2.BLK_VDIV
 BLK_TABLE = _ollyapi2.BLK_TABLE
 class t_block(object):
-    """Proxy of C t_block struct"""
+    """Proxy of C++ t_block class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     index = _swig_property(_ollyapi2.t_block_index_get, _ollyapi2.t_block_index_set)
@@ -1950,7 +2226,7 @@ t_block_swigregister = _ollyapi2.t_block_swigregister
 t_block_swigregister(t_block)
 
 class t_frame(object):
-    """Proxy of C t_frame struct"""
+    """Proxy of C++ t_frame class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_frame_name_get, _ollyapi2.t_frame_name_set)
@@ -2109,7 +2385,7 @@ G_LA = _ollyapi2.G_LA
 G_RA = _ollyapi2.G_RA
 G_DA = _ollyapi2.G_DA
 class t_font(object):
-    """Proxy of C t_font struct"""
+    """Proxy of C++ t_font class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     logfont = _swig_property(_ollyapi2.t_font_logfont_get, _ollyapi2.t_font_logfont_set)
@@ -2133,7 +2409,7 @@ t_font_swigregister = _ollyapi2.t_font_swigregister
 t_font_swigregister(t_font)
 
 class t_scheme(object):
-    """Proxy of C t_scheme struct"""
+    """Proxy of C++ t_scheme class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_scheme_name_get, _ollyapi2.t_scheme_name_set)
@@ -2189,7 +2465,7 @@ MSP_SHDATA = _ollyapi2.MSP_SHDATA
 MSP_PROCPAR = _ollyapi2.MSP_PROCPAR
 MSP_ENV = _ollyapi2.MSP_ENV
 class t_memory(object):
-    """Proxy of C t_memory struct"""
+    """Proxy of C++ t_memory class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_memory_base_get, _ollyapi2.t_memory_base_set)
@@ -2273,7 +2549,7 @@ JT_NETCOND = _ollyapi2.JT_NETCOND
 JT_NETSW = _ollyapi2.JT_NETSW
 JT_NOSORT = _ollyapi2.JT_NOSORT
 class t_jmp(object):
-    """Proxy of C t_jmp struct"""
+    """Proxy of C++ t_jmp class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     _from = _swig_property(_ollyapi2.t_jmp__from_get, _ollyapi2.t_jmp__from_set)
@@ -2290,7 +2566,7 @@ t_jmp_swigregister = _ollyapi2.t_jmp_swigregister
 t_jmp_swigregister(t_jmp)
 
 class t_exe(object):
-    """Proxy of C t_exe struct"""
+    """Proxy of C++ t_exe class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_exe_base_get, _ollyapi2.t_exe_base_set)
@@ -2308,7 +2584,7 @@ t_exe_swigregister = _ollyapi2.t_exe_swigregister
 t_exe_swigregister(t_exe)
 
 class t_jmpdata(object):
-    """Proxy of C t_jmpdata struct"""
+    """Proxy of C++ t_jmpdata class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     modbase = _swig_property(_ollyapi2.t_jmpdata_modbase_get, _ollyapi2.t_jmpdata_modbase_set)
@@ -2333,12 +2609,10 @@ t_jmpdata_swigregister = _ollyapi2.t_jmpdata_swigregister
 t_jmpdata_swigregister(t_jmpdata)
 
 class t_jmpcall(object):
-    """Proxy of C t_jmpcall struct"""
+    """Proxy of C++ t_jmpcall class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_jmpcall_addr_get, _ollyapi2.t_jmpcall_addr_set)
-    type = _swig_property(_ollyapi2.t_jmpcall_type_get, _ollyapi2.t_jmpcall_type_set)
-    swcase = _swig_property(_ollyapi2.t_jmpcall_swcase_get, _ollyapi2.t_jmpcall_swcase_set)
     def __init__(self): 
         """__init__(t_jmpcall self) -> t_jmpcall"""
         this = _ollyapi2.new_t_jmpcall()
@@ -2382,7 +2656,7 @@ def Findglobaljumpscallsto(*args):
   """Findglobaljumpscallsto(ulong dest, t_jmpcall jmpcall, int njmpcall) -> int"""
   return _ollyapi2.Findglobaljumpscallsto(*args)
 class t_range(object):
-    """Proxy of C t_range struct"""
+    """Proxy of C++ t_range class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     rmin = _swig_property(_ollyapi2.t_range_rmin_get, _ollyapi2.t_range_rmin_set)
@@ -2445,7 +2719,7 @@ ND_NESTGRAY = _ollyapi2.ND_NESTGRAY
 ND_MOREVARS = _ollyapi2.ND_MOREVARS
 MAXNEST = _ollyapi2.MAXNEST
 class t_nesthdr(object):
-    """Proxy of C t_nesthdr struct"""
+    """Proxy of C++ t_nesthdr class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr0 = _swig_property(_ollyapi2.t_nesthdr_addr0_get, _ollyapi2.t_nesthdr_addr0_set)
@@ -2463,7 +2737,7 @@ t_nesthdr_swigregister = _ollyapi2.t_nesthdr_swigregister
 t_nesthdr_swigregister(t_nesthdr)
 
 class t_nested(object):
-    """Proxy of C t_nested struct"""
+    """Proxy of C++ t_nested class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     n = _swig_property(_ollyapi2.t_nested_n_get, _ollyapi2.t_nested_n_set)
@@ -2574,7 +2848,7 @@ MDT_CONSTR = _ollyapi2.MDT_CONSTR
 MDT_UNUSED = _ollyapi2.MDT_UNUSED
 MDTCOUNT = _ollyapi2.MDTCOUNT
 class t_secthdr(object):
-    """Proxy of C t_secthdr struct"""
+    """Proxy of C++ t_secthdr class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     sectname = _swig_property(_ollyapi2.t_secthdr_sectname_get, _ollyapi2.t_secthdr_sectname_set)
@@ -2595,7 +2869,7 @@ t_secthdr_swigregister = _ollyapi2.t_secthdr_swigregister
 t_secthdr_swigregister(t_secthdr)
 
 class t_premod(object):
-    """Proxy of C t_premod struct"""
+    """Proxy of C++ t_premod class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_premod_base_get, _ollyapi2.t_premod_base_set)
@@ -2614,7 +2888,7 @@ t_premod_swigregister = _ollyapi2.t_premod_swigregister
 t_premod_swigregister(t_premod)
 
 class t_netstream(object):
-    """Proxy of C t_netstream struct"""
+    """Proxy of C++ t_netstream class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_netstream_base_get, _ollyapi2.t_netstream_base_set)
@@ -2630,7 +2904,7 @@ t_netstream_swigregister = _ollyapi2.t_netstream_swigregister
 t_netstream_swigregister(t_netstream)
 
 class t_metadata(object):
-    """Proxy of C t_metadata struct"""
+    """Proxy of C++ t_metadata class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_metadata_base_get, _ollyapi2.t_metadata_base_set)
@@ -2649,7 +2923,7 @@ t_metadata_swigregister = _ollyapi2.t_metadata_swigregister
 t_metadata_swigregister(t_metadata)
 
 class t_module(object):
-    """Proxy of C t_module struct"""
+    """Proxy of C++ t_module class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_module_base_get, _ollyapi2.t_module_base_set)
@@ -2709,7 +2983,7 @@ t_module_swigregister = _ollyapi2.t_module_swigregister
 t_module_swigregister(t_module)
 
 class t_aqueue(object):
-    """Proxy of C t_aqueue struct"""
+    """Proxy of C++ t_aqueue class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_aqueue_base_get, _ollyapi2.t_aqueue_base_set)
@@ -2762,7 +3036,7 @@ def Getexportfrommemory(*args):
   """Getexportfrommemory(ulong addr, wchar_t * s) -> int"""
   return _ollyapi2.Getexportfrommemory(*args)
 class t_window(object):
-    """Proxy of C t_window struct"""
+    """Proxy of C++ t_window class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     hwnd = _swig_property(_ollyapi2.t_window_hwnd_get, _ollyapi2.t_window_hwnd_set)
@@ -2799,7 +3073,7 @@ NA_UPDATE = _ollyapi2.NA_UPDATE
 NA_CLOSE = _ollyapi2.NA_CLOSE
 NA_CLOSEALL = _ollyapi2.NA_CLOSEALL
 class t_namecast(object):
-    """Proxy of C t_namecast struct"""
+    """Proxy of C++ t_namecast class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_namecast_base_get, _ollyapi2.t_namecast_base_set)
@@ -2815,7 +3089,7 @@ t_namecast_swigregister = _ollyapi2.t_namecast_swigregister
 t_namecast_swigregister(t_namecast)
 
 class t_namelist(object):
-    """Proxy of C t_namelist struct"""
+    """Proxy of C++ t_namelist class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_namelist_addr_get, _ollyapi2.t_namelist_addr_set)
@@ -2832,7 +3106,7 @@ t_namelist_swigregister = _ollyapi2.t_namelist_swigregister
 t_namelist_swigregister(t_namelist)
 
 class t_string(object):
-    """Proxy of C t_string struct"""
+    """Proxy of C++ t_string class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     id = _swig_property(_ollyapi2.t_string_id_get, _ollyapi2.t_string_id_set)
@@ -2856,7 +3130,7 @@ def Getmodulestring(*args):
   return _ollyapi2.Getmodulestring(*args)
 SAVEMAGIC = _ollyapi2.SAVEMAGIC
 class t_savearea(object):
-    """Proxy of C t_savearea struct"""
+    """Proxy of C++ t_savearea class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     magic = _swig_property(_ollyapi2.t_savearea_magic_get, _ollyapi2.t_savearea_magic_set)
@@ -2904,7 +3178,7 @@ FLAG_D = _ollyapi2.FLAG_D
 FLAG_O = _ollyapi2.FLAG_O
 NMEMFIELD = _ollyapi2.NMEMFIELD
 class t_memfield(object):
-    """Proxy of C t_memfield struct"""
+    """Proxy of C++ t_memfield class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_memfield_addr_get, _ollyapi2.t_memfield_addr_set)
@@ -2921,7 +3195,7 @@ t_memfield_swigregister = _ollyapi2.t_memfield_swigregister
 t_memfield_swigregister(t_memfield)
 
 class t_reg(object):
-    """Proxy of C t_reg struct"""
+    """Proxy of C++ t_reg class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     status = _swig_property(_ollyapi2.t_reg_status_get, _ollyapi2.t_reg_status_set)
@@ -2957,7 +3231,7 @@ t_reg_swigregister = _ollyapi2.t_reg_swigregister
 t_reg_swigregister(t_reg)
 
 class t_thread(object):
-    """Proxy of C t_thread struct"""
+    """Proxy of C++ t_thread class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     threadid = _swig_property(_ollyapi2.t_thread_threadid_get, _ollyapi2.t_thread_threadid_set)
@@ -3336,7 +3610,7 @@ NSTACK = _ollyapi2.NSTACK
 NSTKMOD = _ollyapi2.NSTKMOD
 NMEM = _ollyapi2.NMEM
 class t_modrm(object):
-    """Proxy of C t_modrm struct"""
+    """Proxy of C++ t_modrm class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     size = _swig_property(_ollyapi2.t_modrm_size_get, _ollyapi2.t_modrm_size_set)
@@ -3361,7 +3635,7 @@ t_modrm_swigregister = _ollyapi2.t_modrm_swigregister
 t_modrm_swigregister(t_modrm)
 
 class t_predict(object):
-    """Proxy of C t_predict struct"""
+    """Proxy of C++ t_predict class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_predict_addr_get, _ollyapi2.t_predict_addr_set)
@@ -3374,11 +3648,9 @@ class t_predict(object):
     jmpconst = _swig_property(_ollyapi2.t_predict_jmpconst_get, _ollyapi2.t_predict_jmpconst_set)
     espatpushbp = _swig_property(_ollyapi2.t_predict_espatpushbp_get, _ollyapi2.t_predict_espatpushbp_set)
     nstack = _swig_property(_ollyapi2.t_predict_nstack_get, _ollyapi2.t_predict_nstack_set)
-    stack = _swig_property(_ollyapi2.t_predict_stack_get)
     nstkmod = _swig_property(_ollyapi2.t_predict_nstkmod_get, _ollyapi2.t_predict_nstkmod_set)
     stkmod = _swig_property(_ollyapi2.t_predict_stkmod_get, _ollyapi2.t_predict_stkmod_set)
     nmem = _swig_property(_ollyapi2.t_predict_nmem_get, _ollyapi2.t_predict_nmem_set)
-    mem = _swig_property(_ollyapi2.t_predict_mem_get)
     resstate = _swig_property(_ollyapi2.t_predict_resstate_get, _ollyapi2.t_predict_resstate_set)
     resconst = _swig_property(_ollyapi2.t_predict_resconst_get, _ollyapi2.t_predict_resconst_set)
     def __init__(self): 
@@ -3391,42 +3663,8 @@ class t_predict(object):
 t_predict_swigregister = _ollyapi2.t_predict_swigregister
 t_predict_swigregister(t_predict)
 
-class t_predict_mem(object):
-    """Proxy of C t_predict_mem struct"""
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    maddr = _swig_property(_ollyapi2.t_predict_mem_maddr_get, _ollyapi2.t_predict_mem_maddr_set)
-    mstate = _swig_property(_ollyapi2.t_predict_mem_mstate_get, _ollyapi2.t_predict_mem_mstate_set)
-    mconst = _swig_property(_ollyapi2.t_predict_mem_mconst_get, _ollyapi2.t_predict_mem_mconst_set)
-    def __init__(self): 
-        """__init__(t_predict_mem self) -> t_predict_mem"""
-        this = _ollyapi2.new_t_predict_mem()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _ollyapi2.delete_t_predict_mem
-    __del__ = lambda self : None;
-t_predict_mem_swigregister = _ollyapi2.t_predict_mem_swigregister
-t_predict_mem_swigregister(t_predict_mem)
-
-class t_predict_stack(object):
-    """Proxy of C t_predict_stack struct"""
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    soffset = _swig_property(_ollyapi2.t_predict_stack_soffset_get, _ollyapi2.t_predict_stack_soffset_set)
-    sstate = _swig_property(_ollyapi2.t_predict_stack_sstate_get, _ollyapi2.t_predict_stack_sstate_set)
-    sconst = _swig_property(_ollyapi2.t_predict_stack_sconst_get, _ollyapi2.t_predict_stack_sconst_set)
-    def __init__(self): 
-        """__init__(t_predict_stack self) -> t_predict_stack"""
-        this = _ollyapi2.new_t_predict_stack()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _ollyapi2.delete_t_predict_stack
-    __del__ = lambda self : None;
-t_predict_stack_swigregister = _ollyapi2.t_predict_stack_swigregister
-t_predict_stack_swigregister(t_predict_stack)
-
 class t_callpredict(object):
-    """Proxy of C t_callpredict struct"""
+    """Proxy of C++ t_callpredict class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_callpredict_addr_get, _ollyapi2.t_callpredict_addr_set)
@@ -3481,7 +3719,7 @@ OP_ACTVALID = _ollyapi2.OP_ACTVALID
 OP_ANYMEM = _ollyapi2.OP_ANYMEM
 OP_ANY = _ollyapi2.OP_ANY
 class t_operand(object):
-    """Proxy of C t_operand struct"""
+    """Proxy of C++ t_operand class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_operand_features_get, _ollyapi2.t_operand_features_set)
@@ -3499,9 +3737,6 @@ class t_operand(object):
     offset = _swig_property(_ollyapi2.t_operand_offset_get, _ollyapi2.t_operand_offset_set)
     selector = _swig_property(_ollyapi2.t_operand_selector_get, _ollyapi2.t_operand_selector_set)
     addr = _swig_property(_ollyapi2.t_operand_addr_get, _ollyapi2.t_operand_addr_set)
-    u = _swig_property(_ollyapi2.t_operand_u_get, _ollyapi2.t_operand_u_set)
-    s = _swig_property(_ollyapi2.t_operand_s_get, _ollyapi2.t_operand_s_set)
-    value = _swig_property(_ollyapi2.t_operand_value_get, _ollyapi2.t_operand_value_set)
     actual = _swig_property(_ollyapi2.t_operand_actual_get, _ollyapi2.t_operand_actual_set)
     text = _swig_property(_ollyapi2.t_operand_text_get, _ollyapi2.t_operand_text_set)
     comment = _swig_property(_ollyapi2.t_operand_comment_get, _ollyapi2.t_operand_comment_set)
@@ -3569,7 +3804,7 @@ DAF_TRUE = _ollyapi2.DAF_TRUE
 DAF_FALSE = _ollyapi2.DAF_FALSE
 DAF_ANYCOND = _ollyapi2.DAF_ANYCOND
 class t_disasm(object):
-    """Proxy of C t_disasm struct"""
+    """Proxy of C++ t_disasm class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     hilitereg = _swig_property(_ollyapi2.t_disasm_hilitereg_get, _ollyapi2.t_disasm_hilitereg_set)
@@ -3608,7 +3843,7 @@ t_disasm_swigregister = _ollyapi2.t_disasm_swigregister
 t_disasm_swigregister(t_disasm)
 
 class t_opinfo(object):
-    """Proxy of C t_opinfo struct"""
+    """Proxy of C++ t_opinfo class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_opinfo_features_get, _ollyapi2.t_opinfo_features_set)
@@ -3629,7 +3864,7 @@ t_opinfo_swigregister = _ollyapi2.t_opinfo_swigregister
 t_opinfo_swigregister(t_opinfo)
 
 class t_cmdinfo(object):
-    """Proxy of C t_cmdinfo struct"""
+    """Proxy of C++ t_cmdinfo class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     ip = _swig_property(_ollyapi2.t_cmdinfo_ip_get, _ollyapi2.t_cmdinfo_ip_set)
@@ -3654,7 +3889,7 @@ t_cmdinfo_swigregister = _ollyapi2.t_cmdinfo_swigregister
 t_cmdinfo_swigregister(t_cmdinfo)
 
 class t_emu(object):
-    """Proxy of C t_emu struct"""
+    """Proxy of C++ t_emu class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     operand = _swig_property(_ollyapi2.t_emu_operand_get, _ollyapi2.t_emu_operand_set)
@@ -3673,7 +3908,7 @@ t_emu_swigregister = _ollyapi2.t_emu_swigregister
 t_emu_swigregister(t_emu)
 
 class t_bincmd(object):
-    """Proxy of C t_bincmd struct"""
+    """Proxy of C++ t_bincmd class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     name = _swig_property(_ollyapi2.t_bincmd_name_get, _ollyapi2.t_bincmd_name_set)
@@ -3711,7 +3946,7 @@ AMP_IMPRECISE = _ollyapi2.AMP_IMPRECISE
 AMP_ANYMEM = _ollyapi2.AMP_ANYMEM
 AMP_ANYOP = _ollyapi2.AMP_ANYOP
 class t_modop(object):
-    """Proxy of C t_modop struct"""
+    """Proxy of C++ t_modop class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     features = _swig_property(_ollyapi2.t_modop_features_get, _ollyapi2.t_modop_features_set)
@@ -3729,7 +3964,7 @@ t_modop_swigregister = _ollyapi2.t_modop_swigregister
 t_modop_swigregister(t_modop)
 
 class t_asmmod(object):
-    """Proxy of C t_asmmod struct"""
+    """Proxy of C++ t_asmmod class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     code = _swig_property(_ollyapi2.t_asmmod_code_get, _ollyapi2.t_asmmod_code_set)
@@ -3751,7 +3986,7 @@ t_asmmod_swigregister = _ollyapi2.t_asmmod_swigregister
 t_asmmod_swigregister(t_asmmod)
 
 class t_asmlist(object):
-    """Proxy of C t_asmlist struct"""
+    """Proxy of C++ t_asmlist class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     pasm = _swig_property(_ollyapi2.t_asmlist_pasm_get, _ollyapi2.t_asmlist_pasm_set)
@@ -3888,7 +4123,7 @@ A_FLOAT8 = _ollyapi2.A_FLOAT8
 A_NOLIST = _ollyapi2.A_NOLIST
 A_ALIGN = _ollyapi2.A_ALIGN
 class t_netasm(object):
-    """Proxy of C t_netasm struct"""
+    """Proxy of C++ t_netasm class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     ip = _swig_property(_ollyapi2.t_netasm_ip_get, _ollyapi2.t_netasm_ip_set)
@@ -3934,7 +4169,7 @@ AO_NOTFORMAT = _ollyapi2.AO_NOTFORMAT
 AO_ISCOUNT = _ollyapi2.AO_ISCOUNT
 AO_NOTCOUNT = _ollyapi2.AO_NOTCOUNT
 class t_procdata(object):
-    """Proxy of C t_procdata struct"""
+    """Proxy of C++ t_procdata class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_procdata_addr_get, _ollyapi2.t_procdata_addr_set)
@@ -3962,7 +4197,7 @@ t_procdata_swigregister = _ollyapi2.t_procdata_swigregister
 t_procdata_swigregister(t_procdata)
 
 class t_argnest(object):
-    """Proxy of C t_argnest struct"""
+    """Proxy of C++ t_argnest class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr0 = _swig_property(_ollyapi2.t_argnest_addr0_get, _ollyapi2.t_argnest_addr0_set)
@@ -3981,7 +4216,7 @@ t_argnest_swigregister(t_argnest)
 
 NLOOPVAR = _ollyapi2.NLOOPVAR
 class t_loopnest(object):
-    """Proxy of C t_loopnest struct"""
+    """Proxy of C++ t_loopnest class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr0 = _swig_property(_ollyapi2.t_loopnest_addr0_get, _ollyapi2.t_loopnest_addr0_set)
@@ -3989,7 +4224,6 @@ class t_loopnest(object):
     type = _swig_property(_ollyapi2.t_loopnest_type_get, _ollyapi2.t_loopnest_type_set)
     aprev = _swig_property(_ollyapi2.t_loopnest_aprev_get, _ollyapi2.t_loopnest_aprev_set)
     eoffs = _swig_property(_ollyapi2.t_loopnest_eoffs_get, _ollyapi2.t_loopnest_eoffs_set)
-    loopvar = _swig_property(_ollyapi2.t_loopnest_loopvar_get)
     def __init__(self): 
         """__init__(t_loopnest self) -> t_loopnest"""
         this = _ollyapi2.new_t_loopnest()
@@ -3999,23 +4233,6 @@ class t_loopnest(object):
     __del__ = lambda self : None;
 t_loopnest_swigregister = _ollyapi2.t_loopnest_swigregister
 t_loopnest_swigregister(t_loopnest)
-
-class t_loopnest_loopvar(object):
-    """Proxy of C t_loopnest_loopvar struct"""
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    type = _swig_property(_ollyapi2.t_loopnest_loopvar_type_get, _ollyapi2.t_loopnest_loopvar_type_set)
-    espoffset = _swig_property(_ollyapi2.t_loopnest_loopvar_espoffset_get, _ollyapi2.t_loopnest_loopvar_espoffset_set)
-    increment = _swig_property(_ollyapi2.t_loopnest_loopvar_increment_get, _ollyapi2.t_loopnest_loopvar_increment_set)
-    def __init__(self): 
-        """__init__(t_loopnest_loopvar self) -> t_loopnest_loopvar"""
-        this = _ollyapi2.new_t_loopnest_loopvar()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _ollyapi2.delete_t_loopnest_loopvar
-    __del__ = lambda self : None;
-t_loopnest_loopvar_swigregister = _ollyapi2.t_loopnest_loopvar_swigregister
-t_loopnest_loopvar_swigregister(t_loopnest_loopvar)
 
 
 def Getpackednetint(*args):
@@ -4033,7 +4250,7 @@ SF_FMUNREL = _ollyapi2.SF_FMUNREL
 SF_BPUNREL = _ollyapi2.SF_BPUNREL
 SF_VIRTUAL = _ollyapi2.SF_VIRTUAL
 class t_sframe(object):
-    """Proxy of C t_sframe struct"""
+    """Proxy of C++ t_sframe class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     eip = _swig_property(_ollyapi2.t_sframe_eip_get, _ollyapi2.t_sframe_eip_set)
@@ -4109,7 +4326,7 @@ FN_FUNCTION = _ollyapi2.FN_FUNCTION
 FN_STDFUNC = _ollyapi2.FN_STDFUNC
 FN_STDC = _ollyapi2.FN_STDC
 class t_argdec(object):
-    """Proxy of C t_argdec struct"""
+    """Proxy of C++ t_argdec class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     mode = _swig_property(_ollyapi2.t_argdec_mode_get, _ollyapi2.t_argdec_mode_set)
@@ -4129,7 +4346,7 @@ t_argdec_swigregister = _ollyapi2.t_argdec_swigregister
 t_argdec_swigregister(t_argdec)
 
 class t_strdec(object):
-    """Proxy of C t_strdec struct"""
+    """Proxy of C++ t_strdec class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     size = _swig_property(_ollyapi2.t_strdec_size_get, _ollyapi2.t_strdec_size_set)
@@ -4153,7 +4370,7 @@ t_strdec_swigregister = _ollyapi2.t_strdec_swigregister
 t_strdec_swigregister(t_strdec)
 
 class t_rawdata(object):
-    """Proxy of C t_rawdata struct"""
+    """Proxy of C++ t_rawdata class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     size = _swig_property(_ollyapi2.t_rawdata_size_get, _ollyapi2.t_rawdata_size_set)
@@ -4170,7 +4387,7 @@ t_rawdata_swigregister = _ollyapi2.t_rawdata_swigregister
 t_rawdata_swigregister(t_rawdata)
 
 class t_argloc(object):
-    """Proxy of C t_argloc struct"""
+    """Proxy of C++ t_argloc class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     fntype = _swig_property(_ollyapi2.t_argloc_fntype_get, _ollyapi2.t_argloc_fntype_set)
@@ -4178,7 +4395,6 @@ class t_argloc(object):
     retsize = _swig_property(_ollyapi2.t_argloc_retsize_get, _ollyapi2.t_argloc_retsize_set)
     rettype = _swig_property(_ollyapi2.t_argloc_rettype_get, _ollyapi2.t_argloc_rettype_set)
     argvalid = _swig_property(_ollyapi2.t_argloc_argvalid_get, _ollyapi2.t_argloc_argvalid_set)
-    arg = _swig_property(_ollyapi2.t_argloc_arg_get)
     def __init__(self): 
         """__init__(t_argloc self) -> t_argloc"""
         this = _ollyapi2.new_t_argloc()
@@ -4188,24 +4404,6 @@ class t_argloc(object):
     __del__ = lambda self : None;
 t_argloc_swigregister = _ollyapi2.t_argloc_swigregister
 t_argloc_swigregister(t_argloc)
-
-class t_argloc_arg(object):
-    """Proxy of C t_argloc_arg struct"""
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    features = _swig_property(_ollyapi2.t_argloc_arg_features_get, _ollyapi2.t_argloc_arg_features_set)
-    size = _swig_property(_ollyapi2.t_argloc_arg_size_get, _ollyapi2.t_argloc_arg_size_set)
-    name = _swig_property(_ollyapi2.t_argloc_arg_name_get, _ollyapi2.t_argloc_arg_name_set)
-    type = _swig_property(_ollyapi2.t_argloc_arg_type_get, _ollyapi2.t_argloc_arg_type_set)
-    def __init__(self): 
-        """__init__(t_argloc_arg self) -> t_argloc_arg"""
-        this = _ollyapi2.new_t_argloc_arg()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _ollyapi2.delete_t_argloc_arg
-    __del__ = lambda self : None;
-t_argloc_arg_swigregister = _ollyapi2.t_argloc_arg_swigregister
-t_argloc_arg_swigregister(t_argloc_arg)
 
 
 def Getconstantbyname(*args):
@@ -4242,8 +4440,8 @@ def Decodeknownbyname(*args):
 
 def Decodeknownbyaddr(*args):
   """
-    Decodeknownbyaddr(ulong addr, t_procdata pd, t_argdec adec, wchar_t * rettype, wchar_t * name, int nexp, 
-        int follow) -> int
+    Decodeknownbyaddr(ulong addr, t_procdata pd, t_argdec adec, wchar_t * rettype, wchar_t * name, int nexp=-1, 
+        int follow=0) -> int
     """
   return _ollyapi2.Decodeknownbyaddr(*args)
 
@@ -4294,14 +4492,13 @@ EXPR_REG = _ollyapi2.EXPR_REG
 EXPR_SIGNED = _ollyapi2.EXPR_SIGNED
 EXPR_SIGDWORD = _ollyapi2.EXPR_SIGDWORD
 class t_result(object):
-    """Proxy of C t_result struct"""
+    """Proxy of C++ t_result class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     lvaltype = _swig_property(_ollyapi2.t_result_lvaltype_get, _ollyapi2.t_result_lvaltype_set)
     lvaladdr = _swig_property(_ollyapi2.t_result_lvaladdr_get, _ollyapi2.t_result_lvaladdr_set)
     datatype = _swig_property(_ollyapi2.t_result_datatype_get, _ollyapi2.t_result_datatype_set)
     repcount = _swig_property(_ollyapi2.t_result_repcount_get, _ollyapi2.t_result_repcount_set)
-    u = _swig_property(_ollyapi2.t_result_u_get)
     value = _swig_property(_ollyapi2.t_result_value_get, _ollyapi2.t_result_value_set)
     def __init__(self): 
         """__init__(t_result self) -> t_result"""
@@ -4313,26 +4510,8 @@ class t_result(object):
 t_result_swigregister = _ollyapi2.t_result_swigregister
 t_result_swigregister(t_result)
 
-class t_result_u(object):
-    """Proxy of C t_result_u struct"""
-    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
-    __repr__ = _swig_repr
-    data = _swig_property(_ollyapi2.t_result_u_data_get, _ollyapi2.t_result_u_data_set)
-    u = _swig_property(_ollyapi2.t_result_u_u_get, _ollyapi2.t_result_u_u_set)
-    l = _swig_property(_ollyapi2.t_result_u_l_get, _ollyapi2.t_result_u_l_set)
-    f = _swig_property(_ollyapi2.t_result_u_f_get, _ollyapi2.t_result_u_f_set)
-    def __init__(self): 
-        """__init__(t_result_u self) -> t_result_u"""
-        this = _ollyapi2.new_t_result_u()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _ollyapi2.delete_t_result_u
-    __del__ = lambda self : None;
-t_result_u_swigregister = _ollyapi2.t_result_u_swigregister
-t_result_u_swigregister(t_result_u)
-
 class t_watch(object):
-    """Proxy of C t_watch struct"""
+    """Proxy of C++ t_watch class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_watch_addr_get, _ollyapi2.t_watch_addr_set)
@@ -4513,7 +4692,7 @@ DFM_FIXALL = _ollyapi2.DFM_FIXALL
 HEXLEN = _ollyapi2.HEXLEN
 NSEARCHCMD = _ollyapi2.NSEARCHCMD
 class t_control(object):
-    """Proxy of C t_control struct"""
+    """Proxy of C++ t_control class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     type = _swig_property(_ollyapi2.t_control_type_get, _ollyapi2.t_control_type_set)
@@ -4537,7 +4716,7 @@ t_control_swigregister = _ollyapi2.t_control_swigregister
 t_control_swigregister(t_control)
 
 class t_dialog(object):
-    """Proxy of C t_dialog struct"""
+    """Proxy of C++ t_dialog class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     controls = _swig_property(_ollyapi2.t_dialog_controls_get, _ollyapi2.t_dialog_controls_set)
@@ -4572,7 +4751,7 @@ t_dialog_swigregister = _ollyapi2.t_dialog_swigregister
 t_dialog_swigregister(t_dialog)
 
 class t_hexstr(object):
-    """Proxy of C t_hexstr struct"""
+    """Proxy of C++ t_hexstr class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     n = _swig_property(_ollyapi2.t_hexstr_n_get, _ollyapi2.t_hexstr_n_set)
@@ -4946,7 +5125,7 @@ SCH_SEL1 = _ollyapi2.SCH_SEL1
 CDS_TITLES = _ollyapi2.CDS_TITLES
 CDS_NOGRAPH = _ollyapi2.CDS_NOGRAPH
 class t_dump(object):
-    """Proxy of C t_dump struct"""
+    """Proxy of C++ t_dump class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_dump_base_get, _ollyapi2.t_dump_base_set)
@@ -5069,7 +5248,7 @@ SRCH_MEM = _ollyapi2.SRCH_MEM
 CSEQ_IGNORECMD = _ollyapi2.CSEQ_IGNORECMD
 CSEQ_ALLOWJMP = _ollyapi2.CSEQ_ALLOWJMP
 class t_found(object):
-    """Proxy of C t_found struct"""
+    """Proxy of C++ t_found class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_found_addr_get, _ollyapi2.t_found_addr_set)
@@ -5085,7 +5264,7 @@ t_found_swigregister = _ollyapi2.t_found_swigregister
 t_found_swigregister(t_found)
 
 class t_search(object):
-    """Proxy of C t_search struct"""
+    """Proxy of C++ t_search class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_search_addr_get, _ollyapi2.t_search_addr_set)
@@ -5119,7 +5298,7 @@ def Comparesequence(*args):
   return _ollyapi2.Comparesequence(*args)
 PATCHSIZE = _ollyapi2.PATCHSIZE
 class t_patch(object):
-    """Proxy of C t_patch struct"""
+    """Proxy of C++ t_patch class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_patch_addr_get, _ollyapi2.t_patch_addr_set)
@@ -5140,7 +5319,7 @@ t_patch_swigregister(t_patch)
 BA_PERMANENT = _ollyapi2.BA_PERMANENT
 BA_PLUGIN = _ollyapi2.BA_PLUGIN
 class t_bpoint(object):
-    """Proxy of C t_bpoint struct"""
+    """Proxy of C++ t_bpoint class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_bpoint_addr_get, _ollyapi2.t_bpoint_addr_set)
@@ -5163,7 +5342,7 @@ t_bpoint_swigregister = _ollyapi2.t_bpoint_swigregister
 t_bpoint_swigregister(t_bpoint)
 
 class t_bpmem(object):
-    """Proxy of C t_bpmem struct"""
+    """Proxy of C++ t_bpmem class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_bpmem_addr_get, _ollyapi2.t_bpmem_addr_set)
@@ -5182,7 +5361,7 @@ t_bpmem_swigregister = _ollyapi2.t_bpmem_swigregister
 t_bpmem_swigregister(t_bpmem)
 
 class t_bppage(object):
-    """Proxy of C t_bppage struct"""
+    """Proxy of C++ t_bppage class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     base = _swig_property(_ollyapi2.t_bppage_base_get, _ollyapi2.t_bppage_base_set)
@@ -5201,7 +5380,7 @@ t_bppage_swigregister = _ollyapi2.t_bppage_swigregister
 t_bppage_swigregister(t_bppage)
 
 class t_bphard(object):
-    """Proxy of C t_bphard struct"""
+    """Proxy of C++ t_bphard class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     index = _swig_property(_ollyapi2.t_bphard_index_get, _ollyapi2.t_bphard_index_set)
@@ -5309,7 +5488,7 @@ ASR_EVENT = _ollyapi2.ASR_EVENT
 ASR_ALWAYS = _ollyapi2.ASR_ALWAYS
 NHISTORY = _ollyapi2.NHISTORY
 class t_histrec(object):
-    """Proxy of C t_histrec struct"""
+    """Proxy of C++ t_histrec class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     threadid = _swig_property(_ollyapi2.t_histrec_threadid_get, _ollyapi2.t_histrec_threadid_set)
@@ -5328,7 +5507,7 @@ t_histrec_swigregister = _ollyapi2.t_histrec_swigregister
 t_histrec_swigregister(t_histrec)
 
 class t_history(object):
-    """Proxy of C t_history struct"""
+    """Proxy of C++ t_history class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     h = _swig_property(_ollyapi2.t_history_h_get, _ollyapi2.t_history_h_set)
@@ -5452,7 +5631,7 @@ HTNC_TRACE = _ollyapi2.HTNC_TRACE
 SFM_RUNTRACE = _ollyapi2.SFM_RUNTRACE
 SFM_HITTRACE = _ollyapi2.SFM_HITTRACE
 class t_rtcond(object):
-    """Proxy of C t_rtcond struct"""
+    """Proxy of C++ t_rtcond class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     options = _swig_property(_ollyapi2.t_rtcond_options_get, _ollyapi2.t_rtcond_options_set)
@@ -5482,7 +5661,7 @@ t_rtcond_swigregister = _ollyapi2.t_rtcond_swigregister
 t_rtcond_swigregister(t_rtcond)
 
 class t_rtprot(object):
-    """Proxy of C t_rtprot struct"""
+    """Proxy of C++ t_rtprot class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     tracelogtype = _swig_property(_ollyapi2.t_rtprot_tracelogtype_get, _ollyapi2.t_rtprot_tracelogtype_set)
@@ -5560,7 +5739,7 @@ def Isguid(*args):
   """Isguid(ulong addr, wchar_t * name, int nname) -> int"""
   return _ollyapi2.Isguid(*args)
 class t_srcline(object):
-    """Proxy of C t_srcline struct"""
+    """Proxy of C++ t_srcline class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     offset = _swig_property(_ollyapi2.t_srcline_offset_get, _ollyapi2.t_srcline_offset_set)
@@ -5577,7 +5756,7 @@ t_srcline_swigregister = _ollyapi2.t_srcline_swigregister
 t_srcline_swigregister(t_srcline)
 
 class t_srcext(object):
-    """Proxy of C t_srcext struct"""
+    """Proxy of C++ t_srcext class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     amin = _swig_property(_ollyapi2.t_srcext_amin_get, _ollyapi2.t_srcext_amin_set)
@@ -5593,7 +5772,7 @@ t_srcext_swigregister = _ollyapi2.t_srcext_swigregister
 t_srcext_swigregister(t_srcext)
 
 class t_source(object):
-    """Proxy of C t_source struct"""
+    """Proxy of C++ t_source class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     addr = _swig_property(_ollyapi2.t_source_addr_get, _ollyapi2.t_source_addr_set)
@@ -5638,7 +5817,7 @@ AE_NONE = _ollyapi2.AE_NONE
 AE_APP = _ollyapi2.AE_APP
 AE_SYS = _ollyapi2.AE_SYS
 class t_run(object):
-    """Proxy of C t_run struct"""
+    """Proxy of C++ t_run class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
     __repr__ = _swig_repr
     status = _swig_property(_ollyapi2.t_run_status_get, _ollyapi2.t_run_status_set)

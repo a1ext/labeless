@@ -69,8 +69,9 @@ Installation
 ### Debug-backend setup:
 If you want to use both x86 and x86_64 targets, then you should do the following steps for each python distro.
 
-* Set up Python 2.7 (x86/x86_64)
-* Copy `deploy` directory to target machine, where you want to use a debugger backend
+* Set up Python 3.10 (x86/x86_64) into separate folders like `c:\Python310` and `c:\Python310x64` for 32 and 64 bit accordingly
+* do `pip install labeless` and that's it (if your machine has Internet)
+* otherwise Copy `deploy` directory to target machine, where you want to use a debugger backend
 * Set up `protobuf 2.6.1` using the following commands:
 
 ```bat
@@ -192,3 +193,5 @@ Issue with Python 2.7.11 is described [here](http://bugs.python.org/issue26998?)
 # Credits
 * **Axel Souchet** aka [0vercl0k](https://github.com/0vercl0k)
 * **Duncan Ogilvie** aka [mrexodia](https://github.com/mrexodia)
+* **Alexey Bukhteyev**
+* **Bohdan Melnykov** 

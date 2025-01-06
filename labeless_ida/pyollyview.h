@@ -50,6 +50,7 @@ public slots:
 	void setIDAScript(const QString& text);
 	void onColorSchemeChanged();
 	void jumpAndSelectLine(bool isIDA, int line);
+	void saveScriptsData();
 
 private slots:
 	void onScriptEditContextMenuRequested(const QPoint& pt);
@@ -61,6 +62,7 @@ private slots:
 private:
 	void setUpConnections();
 	void setUpGUI();
+	void setUpLastInputScripts();
 
 signals:
 	void showAllResponsesInLogToggled(bool);
@@ -71,7 +73,7 @@ signals:
 	void clearLogsRequested();
 
 protected:
-	virtual void changeEvent(QEvent* e);
+	virtual void changeEvent(QEvent* e) override;
 	virtual bool eventFilter(QObject* obj, QEvent* event);
 
 private:

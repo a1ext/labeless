@@ -8,6 +8,7 @@
 
 __author__ = 'a1ex_t'
 
+from io import StringIO
 import _py_olly
 
 

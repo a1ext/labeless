@@ -122,7 +122,8 @@ QString GlobalSettingsManger::keyToString(GlobalSettingsKey key)
 			{ GSK_LightPalette, "light_palette" },
 			{ GSK_DarkPalette, "dark_palette" },
 			{ GSK_OverwriteWarning, "overwrite_warning" },
-			{ GSK_CodeCompletion, "code_completion"}
+			{ GSK_CodeCompletion, "code_completion"},
+			{ GSK_ScriptsInput, "scripts_data" },
 		};
 		for (unsigned i = 0; i < _countof(kNames); ++i)
 			names[kNames[i].k] = kNames[i].name;

@@ -10,6 +10,7 @@
 
 #include <string>
 #include <QString>
+#include "../jedi.h"
 
 namespace util {
 namespace idapython {
@@ -17,6 +18,21 @@ namespace idapython {
 bool init();
 bool runScript(const std::string& script, std::string& externObj, std::string& error);
 bool setResultObject(const std::string& obj, std::string& error);
+
+
+namespace jedi {
+
+bool init(QString& error);
+bool is_available();
+bool get_completions(const QString& script,
+	int line,
+	int col,
+	::jedi::CompletionType ct,
+	QStringList& completions,
+	::jedi::SignatureMatchList& signatureMatches,
+	QString& error);
+
+} // jedi
 
 
 namespace github {

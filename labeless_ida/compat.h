@@ -9,8 +9,13 @@
 #include <auto.hpp>
 #include <entry.hpp>
 #include <loader.hpp>
-#include <struct.hpp>
+#if (IDA_SDK_VERSION < 900)
+#	include <struct.hpp>
+#else // IDA_SDK_VERSION < 900
+#	include  <typeinf.hpp>
+#endif // IDA_SDK_VERSION < 900
 #include <name.hpp>
+#include <ida.hpp>
 #ifdef __NT__
 #pragma warning(pop)
 #endif // __NT__
@@ -238,7 +243,14 @@ namespace compat {
 	using ::is_tail;
 	using ::is_head;
 	using ::to_ea;
-	inline bool get_member_name(qstring *out, tid_t mid) { return ::get_member_name(out, mid) > 0; }
+	inline bool get_member_name(qstring *out, tid_t mid) {
+#if (IDA_SDK_VERSION < 900)
+		return ::get_member_name(out, mid) > 0; 
+#else
+
+
+#endif
+	}
 	inline bool is_enabled(ea_t ea) { return ::is_mapped(ea); }
 	inline const char* get_idb_path() { return ::get_path(::PATH_TYPE_IDB); }
 	using ::get_struct_operand;
@@ -292,4 +304,14 @@ namespace compat {
 #define HOOK_CB_T_RET_TYPE ::ssize_t;
 
 #endif // IDA_SDK_VERSION < 700
+
+#if (IDA_SDK_VERSION < 800)
+	inline bool inf_is_64bit() { return ::inf.is_64bit(); }
+	inline filetype_t inf_get_filetype() { return static_cast<filetype_t>(::inf.filetype); }
+	inline processor_t* get_ph() { return &::ph; }
+#else // IDA_SDK_VERSION < 800
+	using ::inf_is_64bit;
+	using ::inf_get_filetype;
+	using ::get_ph;
+#endif // IDA_SDK_VERSION < 800
 } // compat

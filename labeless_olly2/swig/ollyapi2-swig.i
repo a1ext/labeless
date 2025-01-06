@@ -3,6 +3,7 @@
     #include "..\sdk\plugin.h"
 %}
 
+
 // http://www.swig.org/Doc1.3/Library.html#Library_carrays
 %include <carrays.i>
 // http://www.swig.org/Doc1.3/Library.html#Library_nn7
@@ -15,6 +16,7 @@
 // http://www.swig.org/Doc1.3/Python.html#Python_nn75 && http://swig.10945.n7.nabble.com/Functions-writing-binary-data-into-buffer-td10714.html
 // For Readmemory
 %include <pybuffer.i>
+%include "cwstring.i"
 
 // For types like HANDLE
 %include <windows.i>
@@ -27,7 +29,7 @@
 %typemap(in) const void* = const char*;
 // Useful for Expression
 %typemap(in) uchar* = char*;
-%typemap(in) COLORREF = DWORD;
+//%typemap(in) COLORREF = DWORD;
 
 // From http://www.swig.org/Doc1.3/Library.html#Library_carrays
 %array_class(ulong, ulongArray);
@@ -45,6 +47,61 @@
 %array_class(t_histrec, t_histrecArray);
 %array_class(t_range, t_rangeArray);
 %array_class(t_bincmd, t_bincmdArray);
-#define HANDLE ulong
+%array_class(t_argdec, t_argdecArray);
+%array_class(t_strdec, t_strdecArray);
+#define HANDLE void *
 %feature("autodoc", "1");
+
+
+//%clear wchar_t*;
+// Typemap for wchar_t* -> Python string conversion
+//%typemap(in) wchar_t* {
+//    if (PyObject_TypeCheck($input, &PyUnicode_Type)) {
+//        wchar_t *temp = PyUnicode_AsWideCharString($input, NULL);
+//        if (!temp) {
+//            SWIG_exception_fail(SWIG_TypeError, "Failed to convert Python string to wchar_t*");
+//        }
+//        $1 = temp;
+//    } else if (PyObject_TypeCheck($input, &PyCapsule_Type)) {
+//        $1 = (wchar_t*)PyCapsule_GetPointer($input, NULL);
+//    } else {
+//        SWIG_exception_fail(SWIG_TypeError, "Expected a string, None, or ctypes buffer");
+//    }
+//}
+
+%typemap(out) wchar_t* {
+    if ($1 == NULL) {
+        $result = Py_None;
+        Py_INCREF($result);
+    } else {
+        $result = PyUnicode_FromWideChar($1, wcslen($1));
+    }
+}
+
+%define %pybuffer_mutable_string_optional(TYPEMAP)
+%typemap(in) (TYPEMAP)
+  (int res, Py_ssize_t size = 0, void *buf = 0) {
+  if ($input == Py_None) {
+    $1 = ($1_ltype) NULL;
+  }
+  else {
+    res = PyObject_AsWriteBuffer($input, &buf, &size);
+    if (res<0) {
+      PyErr_Clear();
+      %argument_fail(res, "(TYPEMAP, SIZE)", $symname, $argnum);
+    }
+    $1 = ($1_ltype) buf;
+  }
+}
+%enddef
+
+%define %pointer_cast_cpp(TYPE1,TYPE2,NAME)
+%inline %{
+TYPE2 NAME(TYPE1 x) {
+   return %reinterpret_cast(x, TYPE2);
+}
+%}
+%enddef
+
+
 %include "..\sdk\plugin-swig.h"

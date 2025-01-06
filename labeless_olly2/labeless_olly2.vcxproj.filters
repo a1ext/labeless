@@ -50,9 +50,6 @@
     <ClCompile Include="labeless_olly2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="swig\ollyapi2_wrap.c">
-      <Filter>generated</Filter>
-    </ClCompile>
     <ClCompile Include="util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="..\common\cpp\rpc.pb.cc">
       <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="swig\ollyapi2_wrap.cpp">
+      <Filter>generated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

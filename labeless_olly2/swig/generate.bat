@@ -1,5 +1,5 @@
 @echo off
-..\..\3rdparty\swigwin-3.0.2\swig.exe -modern -cpperraswarn -python -I. -o ollyapi2_wrap.c ollyapi2-swig.i
-c:\python27\python.exe correct_cdecl_fpointers.py ollyapi2_wrap.c
+..\..\3rdparty\swigwin-3.0.2\swig.exe -modern -cpperraswarn -python -c++ -I. -o ollyapi2_wrap.cpp ollyapi2-swig.i
+c:\python27\python.exe correct_cdecl_fpointers.py ollyapi2_wrap.cpp
 @copy /Y .\ollyapi2.py ..\..\deploy\labeless\backend\ollydbg20\
 pause

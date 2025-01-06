@@ -9,8 +9,8 @@
 __author__ = 'a1ex_t'
 
 
-from utils import *
 from . import api
+from .utils import *
 
 # import _plugins
 # import bridgemain

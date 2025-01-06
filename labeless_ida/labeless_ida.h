@@ -29,6 +29,7 @@
 // fwd
 QT_FORWARD_DECLARE_CLASS(QAction)
 QT_FORWARD_DECLARE_CLASS(QMainWindow)
+QT_FORWARD_DECLARE_CLASS(QMenu)
 QT_FORWARD_DECLARE_CLASS(QToolBar)
 struct form_actions_t;
 
@@ -68,7 +69,9 @@ public:
 	bool isEnabled() const { return m_Enabled; }
 	bool setEnabled();
 	void enableMenuActions(bool enabled);
+	void ensureLMenuPresent();
 
+	void setUpMainWindowShowupHook();
 	bool firstInit();
 	bool initialize();
 	void terminate();
@@ -142,6 +145,7 @@ public slots:
 	void onLogMessage(const QString& message, const QString& prefix);
 	void onTestConnectFinished(bool ok, const QString& error);
 	void onAutoCompletionFinished();
+	void onAutoCompletionFailed(const QString& error);
 	void onAutoCompleteRequested(QSharedPointer<jedi::Request> r);
 	void onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r);
 	void onPauseNotificationReceived(void*);
@@ -173,7 +177,7 @@ private:
 	bool isDbgBackendNotificatiosAllowed(const std::string& backendId);
 
 private:
-	bool addAPIEnumValue(const std::string& name, uval_t value);
+	ea_t addAPIEnumValue(const std::string& name, uval_t value);
 	void addAPIConst(const AnalyzeExternalRefs::PointerData& pd);
 	bool mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size);
 	//segment_t* getFirstOverlappedSegment(const area_t& area, segment_t* exceptThisSegment);
@@ -182,6 +186,9 @@ private:
 	bool askForSnapshotBeforeOverwrite(const compat::IDARange* area, const segment_t* seg, bool& snapshotTaken);
 
 	bool make_dword_ptr(ea_t ea, asize_t size);
+
+	bool eventFilter(QObject* watched, QEvent* event) override;
+
 public:
 	QAtomicInt						m_Enabled;
 	bool							m_Initialized;
@@ -221,6 +228,7 @@ private:
 	QAction*						m_PauseNotificationMenuAction;
 	QPointer<QToolBar>				m_Toolbar;
 	QPointer<QMainWindow>			m_MainWindow;
+	QPointer<QMenu>					m_LMenu;
 
 	// auto-completion vars
 	mutable QMutex					m_AutoCompletionLock;
@@ -239,3 +247,16 @@ private:
 	WORD							m_PauseNotificationPort;
 	std::set<std::string>			m_PauseNotificationAllowedClients;
 };
+
+/*
+class FirstShownEventFilter : public QObject {
+	Q_OBJECT
+
+public:
+	explicit FirstShownEventFilter(QObject* parent);
+
+protected:
+
+private:
+	bool firstShow_;
+};*/

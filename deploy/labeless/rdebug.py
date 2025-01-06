@@ -13,5 +13,5 @@ egg_location = r'c:\windows\Python27\Lib\site-packages\pycharm-debug.egg'
 if egg_location not in sys.path:
     sys.path.append(egg_location)
 
-import pydevd
-pydevd.settrace('localhost', port=12321, stdoutToServer=False, stderrToServer=False) # , stdoutToServer=True, stderrToServer=True
+import pydevd_pycharm
+pydevd_pycharm.settrace('localhost', port=11111) #, stdoutToServer=False, stderrToServer=False, suspend=True) # , stdoutToServer=True, stderrToServer=True

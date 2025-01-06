@@ -16,12 +16,12 @@
 #include <QTableWidgetItem>
 #include <QTextCharFormat>
 
+#include "compat.h"
 #include "types.h"
 #include "globalsettingsmanager.h"
 #include "pythonpalettemanager.h"
 #include "util/util_ida.h"
 #include "util/util_idapython.h"
-#include "util/util_python.h"
 #include "../common/version.h"
 
 
@@ -67,8 +67,8 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->cbOllyIP->setCurrentIndex(m_UI->cbOllyIP->findText(currHostVal));
 
 	m_UI->sbOllyPort->setValue(settings.port);
-	m_UI->leRemoteModuleBase->setText(QString("0x%1").arg(settings.remoteModBase, sizeof(ea_t) * 2, 16, QChar('0')));
-	m_UI->leRemoteModuleBase->setToolTip(QString("Current IDA DB's module base is 0x%1.").arg(currModBase, sizeof(ea_t) * 2, 16, QChar('0')));
+	m_UI->leRemoteModuleBase->setText(QString("0x%1").arg(settings.remoteModBase, compat::inf_is_64bit() ? sizeof(ea_t) * 2 : sizeof(ea_t), 16, QChar('0')));
+	m_UI->leRemoteModuleBase->setToolTip(QString("Current IDA DB's module base is 0x%1.").arg(currModBase, compat::inf_is_64bit() ? sizeof(ea_t) * 2 : sizeof(ea_t), 16, QChar('0')));
 	m_UI->cbAutoSync->setChecked(settings.enabled);
 	m_UI->chDemangleNames->setChecked(settings.demangle);
 	m_UI->chLocalLabels->setChecked(settings.localLabels);
@@ -94,7 +94,7 @@ SettingsDialog::SettingsDialog(const Settings& settings, qulonglong currModBase,
 	m_UI->fcbFont->setFontFilters(QFontComboBox::MonospacedFonts);
 
 	m_UI->bgAutoCompletion->setChecked(settings.codeCompletion);
-	const bool jediAvailable = util::python::jedi::is_available();
+	const bool jediAvailable = util::idapython::jedi::is_available();
 	m_UI->lbJediStatus->setText(QString("<p style=\"color: %1\">%2</p>").arg(jediAvailable ? "green": "red").arg(jediAvailable ? tr("available") : tr("not available")));
 
 	setUpPalette();

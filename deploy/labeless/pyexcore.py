@@ -9,13 +9,13 @@
 __author__ = 'a1ex_t'
 
 import sys
-import py_olly
+
 import traceback
 import labeless
-from labeless import api
+from labeless import api, py_olly
 
 try:
-    import rpc_pb2 as rpc
+    from labeless import rpc_pb2 as rpc
 except ImportError as e:
     py_olly.olly_log('protobuf is not installed in python')
     raise e
@@ -34,7 +34,7 @@ class binary_result(object):
             serialized = v.SerializeToString()
             v1 = v.__class__()
             v1.ParseFromString(serialized)
-            print 'verify: %r, len: %u, name: %s' % (v1 == v, len(serialized), v.__class__.__name__)
+            print('verify: %r, len: %u, name: %s' % (v1 == v, len(serialized), v.__class__.__name__))
             py_olly.set_binary_result(job_id, serialized)
 
 
@@ -56,16 +56,16 @@ class PyExCore(object):
         try:
             raw_command = py_olly.get_params(job_id)
             if raw_command is None:
-                print >> sys.stderr, 'Invalid rpc params'
+                print('Invalid rpc params', file=sys.stderr)
                 return
             r = rpc.RpcRequest()
             r.ParseFromString(raw_command)
 
             if not labeless.is_paused():
-                print >> sys.stderr, 'Warn! calling RPC on non-paused debuggee may cause an unpredictable results'
+                print('Warn! calling RPC on non-paused debuggee may cause an unpredictable results', file=sys.stderr)
 
             if r.request_type not in cls.ROUTES:
-                print >> sys.stderr, 'Invalid request type: ', r.request_type
+                print('Invalid request type: ', r.request_type, file=sys.stderr)
                 return  # TODO: return error
 
             call_meta = cls.ROUTES[r.request_type]
@@ -75,7 +75,7 @@ class PyExCore(object):
 
             getattr(cls, call_meta[1])(req, job_id)
         except Exception as exc:
-            print >> sys.stderr, 'Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n'))
+            print('Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n')), file=sys.stderr)
             py_olly.set_error(job_id, '%r' % exc)
 
     @classmethod
@@ -102,7 +102,7 @@ class PyExCore(object):
     @binary_result
     def _rpc_analyze_external_refs(cls, req, job_id):
         #py_olly.olly_log('_rpc_analyze_external_refs: %08X-%08X inc by %08X' % (req.ea_from, req.ea_to, req.increment))
-        return job_id, labeless.analyze_external_refs(req.ea_from, req.ea_to, long(req.increment), req.analysing_base, req.analysing_size)
+        return job_id, labeless.analyze_external_refs(req.ea_from, req.ea_to, int(req.increment), req.analysing_base, req.analysing_size)
 
     @classmethod
     @binary_result
@@ -124,7 +124,7 @@ class PyExCore(object):
     def _rpc_jump_to_from(cls, req, job_id):
         is_to = req.jump_type == rpc.JumpToFromRequest.JT_TO
         if is_to and not req.to:
-            print >> sys.stderr, 'the VA is not set'
+            print('the VA is not set', file=sys.stderr)
             rv = rpc.JumpToFromResult()
             rv.result = rpc.JumpToFromResult.JR_FAILED
             return job_id, rv

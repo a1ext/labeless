@@ -9,5 +9,5 @@
 __author__ = 'a1ex_t'
 
 
-from ollyutils import *
-import ollyapi2 as api
+from .ollyutils import *
+from . import ollyapi2 as api

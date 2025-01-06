@@ -52,7 +52,7 @@
 
 #ifdef __NT__
 #pragma warning(push)
-#pragma warning(disable:4309 4244 4267)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
+#pragma warning(disable:4309 4244 4267 4146)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
 #endif // __NT__
 #include <pro.h>
 #include <ida.hpp>
@@ -241,7 +241,13 @@ qlist<T> qlistFromInitializerList(const std::initializer_list<T>& il)
 
 inline ea_t targetPtrSize()
 {
-	return ::inf.is_64bit() ? sizeof(uint64_t) : sizeof(uint32_t);
+	return
+#if (IDA_SDK_VERSION < 800)
+		::inf.is_64bit()
+#else // IDA_SDK_VERSION < 800
+		::inf_is_64bit()
+#endif // IDA_SDK_VERSION < 800
+		? sizeof(uint64_t) : sizeof(uint32_t);
 }
 
 typedef std::unordered_map<uint64_t, std::string> ExternRefDataMap;

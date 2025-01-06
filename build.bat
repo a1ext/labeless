@@ -5,8 +5,8 @@
 @set MSB="c:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"
 @set SLN=labeless.sln
 
-@goto ida
-@echo building labeless for OllyDbg [1.1, 2.01]...
+::@goto ida
+@echo building labeless for OllyDbg [1.1 + DeFixed, 2.01]...
 @call %MSB% %SLN% /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err
 
@@ -29,11 +29,11 @@
     @move /Y labeless_ida\labeless_ida.vcxproj.user labeless_ida\labeless_ida.vcxproj.user_
 )
 
-@echo building labeless for IDA 6.9X...
-@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA69X /p:Platform=Win32 /v:m
-@IF /I "%ERRORLEVEL%" neq "0" goto err
-@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA69X_x64 /p:Platform=Win32 /v:m
-@IF /I "%ERRORLEVEL%" neq "0" goto err
+::@echo building labeless for IDA 6.9X...
+::@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA69X /p:Platform=Win32 /v:m
+::@IF /I "%ERRORLEVEL%" neq "0" goto err
+::@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA69X_x64 /p:Platform=Win32 /v:m
+::@IF /I "%ERRORLEVEL%" neq "0" goto err
 
 @echo building labeless for IDA 7.0 x64...
 @call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA7 /p:Platform=x64 /v:m
@@ -41,8 +41,18 @@
 @call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err
 
+@echo building labeless for IDA 8.3 x64...
+@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA8 /p:Platform=x64 /v:m
+@IF /I "%ERRORLEVEL%" neq "0" goto err
+@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m
+@IF /I "%ERRORLEVEL%" neq "0" goto err
+
+@echo building labeless for IDA 9.0 x64...
+@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m
+@IF /I "%ERRORLEVEL%" neq "0" goto err
+
 @cd deploy
-@call build_and_upload_pkg.bat c:\Python27
+@call build_and_upload_pkg.bat c:\Python310-32
 @cd ..
 
 @echo All targets buit successfully, enjoy them :3

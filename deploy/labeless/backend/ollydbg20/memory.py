@@ -18,16 +18,15 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-import ollyapi2 as api
+
 import ctypes as C
 import sys
-import threads
-import utils
-
-from labeless import pehelper_decl as D
 
 from struct import unpack as u
 from binascii import unhexlify
+
+from labeless import pehelper_decl as D
+from . import ollyapi2 as api, threads, utils
 
 # Wrappers
 
@@ -187,7 +186,7 @@ def PatchCode(s, address=None):
     bin = ''
     try:
         bin, s = utils.Assemble__(s)
-    except Exception, e:
+    except Exception as e:
         raise e
 
     # patch the code

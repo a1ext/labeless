@@ -8,7 +8,7 @@
 
 #include "jedicompletionworker.h"
 #include "labeless_ida.h"
-#include "util/util_python.h"
+#include "util/util_idapython.h"
 #include "util/util_ida.h"
 #include "jedi.h"
 
@@ -37,17 +37,12 @@ void JediCompletionWorker::main()
 	Q_UNUSED(threadGuard);
 
 	QString error;
-	if (!util::python::init(error))
-	{
-		util::ida::addLogMsg("util::python::init() failed, error: %s\n", error.toStdString().c_str());
-		return;
-	}
-
-	if (!util::python::jedi::init(error))
+	if (!util::idapython::jedi::init(error))
 	{
 		util::ida::addLogMsg("util::python::jedi::init() failed, error: %s\n", error.toStdString().c_str());
 		return;
 	}
+
 
 	util::ida::addLogMsg("Python auto-completer initialized successfully\n");
 
@@ -67,7 +62,7 @@ void JediCompletionWorker::main()
 
 		QSharedPointer<jedi::Result> result(new jedi::Result);
 
-		if (!util::python::jedi::get_completions(request.script, request.zline, request.zcol, result->completions, result->sigMatches, error))
+		if (!util::idapython::jedi::get_completions(request.script, request.zline, request.zcol, request.comp_type, result->completions, result->sigMatches, error))
 		{
 			util::ida::addLogMsg("jedi::get_completions() failed, error: %s\n", error.toStdString().c_str());
 			lock.relock();

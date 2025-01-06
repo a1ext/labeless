@@ -21,7 +21,9 @@
 #include <dbg.hpp>
 #include <demangle.hpp>
 #include <entry.hpp>
-#include <enum.hpp>
+#if (IDA_SDK_VERSION < 900)
+#	include <enum.hpp>
+#endif // IDA_SDK_VERSION < 900
 #include <fixup.hpp>
 #include <frame.hpp>
 #include <kernwin.hpp>
@@ -30,7 +32,9 @@
 #include <name.hpp>
 #include <offset.hpp>
 #include <segment.hpp>
-#include <struct.hpp>
+#if (IDA_SDK_VERSION < 900)
+#	include <struct.hpp>
+#endif // IDA_SDK_VERSION < 900
 #include <typeinf.hpp>
 #include <../ldr/idaldr.h>
 #pragma warning(pop)
@@ -87,6 +91,9 @@
 #include "pausenotificationlistener.h"
 #include "textedit.h"
 
+struct plugin_ctx_t;
+extern plugin_t PLUGIN;
+extern plugin_ctx_t* plugmod;
 
 namespace {
 
@@ -161,20 +168,7 @@ void protobufLogHandler(::google::protobuf::LogLevel level, const char* filename
 		Q_ARG(QString, kPrefix));
 }
 
-static struct SyncAllNowActionHandler_t : public action_handler_t
-{
-	virtual int idaapi activate(action_activation_ctx_t *)
-	{
-		if (Labeless::instance().isEnabled())
-			QMetaObject::invokeMethod(&Labeless::instance(), "onSyncronizeAllRequested", Qt::QueuedConnection);
-		return 1;
-	}
 
-	virtual action_state_t idaapi update(action_update_ctx_t *)
-	{
-		return AST_ENABLE_ALWAYS;
-	}
-} g_SyncAllNowActionHandler;
 
 
 class PingThread : public QThread
@@ -203,7 +197,6 @@ static const qstring kReturnAddrStackStructFieldName = " r";
 static const QString kLabelessMenuObjectName = "labeless_menu";
 static const QString kLabelessMenuLoadStubItemName = "act-load-stub-x86";
 static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
-static const std::string kSyncAllNowActionName = "Labeless: Sync all now";
 static const QString kEnablePauseNotifAction = QObject::tr("Enable pause notifications handling");
 static const QString kDisablePauseNotifAction = QObject::tr("Disable pause notification handling");
 static const uint32 kPauseNotificationCursorColor = 0x305500;
@@ -350,11 +343,12 @@ void enumerateLocalVars(EA2CommentHash& ea2commentHash, bool allLocalVars)
 				for (int opNum = 0; opNum < 2 /* UA_MAXOP */; ++opNum)
 				{
 					sval_t v = 0;
-#if (IDA_SDK_VERSION < 700)
+#if (IDA_SDK_VERSION < 900)
+#	if (IDA_SDK_VERSION < 700)
 					member_t* member = get_stkvar(INSN_T_OPNDS(&insn)[opNum], INSN_T_OPNDS(&insn)[opNum].addr, &v);
-#else
+#	else
 					member_t* member = get_stkvar(&v, insn, INSN_T_OPNDS(&insn)[opNum], INSN_T_OPNDS(&insn)[opNum].addr);
-#endif 
+#	endif 
 					if (!member)
 						continue;
 
@@ -382,6 +376,50 @@ void enumerateLocalVars(EA2CommentHash& ea2commentHash, bool allLocalVars)
 
 					if (allLocalVars)
 						addComment(ea2commentHash, ea, memberName.c_str());
+#else // IDA_SDK_VERSION < 900
+					const auto& op = INSN_T_OPNDS(&insn)[opNum];
+					const sval_t value = op.type == o_imm ? op.value : op.addr;
+
+					tinfo_t frame;
+					ssize_t stkvar_idx = frame.get_stkvar(&v, insn, &op, value);
+					if (stkvar_idx == -1)
+						continue;
+					udm_t udm;
+					if (frame.empty() || -1 == frame.get_udm(&udm, stkvar_idx))
+						continue;
+					memberName = udm.name.c_str();
+
+					if (is_dummy_member_name(memberName.c_str()) && !allLocalVars)
+						continue;
+
+					if (memberName == kReturnAddrStackStructFieldName)
+						continue;
+
+					if (udm.type.is_struct() /* is_stroff(insn.flags, opNum)*/)
+					{
+						udt_type_data_t details;
+						if (!udm.type.get_udt_details(&details)) continue;
+						for (const auto& detail : details) {
+
+						}
+						
+						// FIXME: implement
+						/*						
+						adiff_t disp;
+						path.len = compat::get_struct_operand(&disp, &path.delta, path.ids, ea, opNum);
+						if (path.len > 0 && (insn.itype != NN_lea || disp != 0))
+						{
+							compat::append_struct_fields(&memberName, &disp, opNum, path.ids, path.len, compat::byte_flag(), path.delta, true);
+							if (!memberName.empty())
+								addComment(ea2commentHash, ea, memberName.c_str());
+							continue;
+						}*/
+					}
+
+					if (allLocalVars) {
+						addComment(ea2commentHash, ea, memberName.c_str());
+					}
+#endif // IDA_SDK_VERSION < 900
 				}
 			}
 
@@ -397,9 +435,13 @@ void enumerateLocalVars(EA2CommentHash& ea2commentHash, bool allLocalVars)
 					adiff_t disp = INSN_T_OPNDS(&insn)[opNum].addr;
 
 					qstring strucName;
+#if (IDA_SDK_VERSION < 900)
 					if (get_struc_name(&strucName, path.ids[0]) < 0)
 						break;
-
+#else
+					if (!get_tid_name(&strucName, path.ids[0]))
+						break;
+#endif
 					compat::append_struct_fields(&strucName, &disp, opNum, path.ids, path.len, compat::byte_flag(), path.delta, true);
 
 					qstring qdisp;
@@ -812,11 +854,25 @@ bool Labeless::setEnabled()
 
 void Labeless::enableMenuActions(bool enabled)
 {
+	msg("%s: %s\n", __FUNCTION__, enabled ? "t" : "f");
 	for (int i = 0, e = m_MenuActions.length(); i < e; ++i)
 	{
 		const bool isLoadStubItem = m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemName ||
 			m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemNameX64;
 		m_MenuActions.at(i)->setEnabled(isLoadStubItem ? !enabled : enabled);
+	}
+	
+}
+
+void Labeless::ensureLMenuPresent() {
+	if (!m_LMenu || !m_MainWindow) {
+		return;
+	}
+	const auto lmenuAction = m_LMenu->menuAction();
+
+	QList<QAction*> acts = m_MainWindow->menuBar()->actions();
+	if (!acts.contains(lmenuAction)) {
+		m_MainWindow->menuBar()->addAction(lmenuAction);
 	}
 }
 
@@ -909,44 +965,132 @@ void Labeless::onAutoanalysisFinished()
 	dump.nextState(nullptr);
 }
 
+struct TestHandler_t : public action_handler_t
+{
+	virtual int idaapi activate(action_activation_ctx_t*) override
+	{
+		msg("%s: test action triggered\n", __FUNCTION__);
+		return 1;
+	}
+
+	virtual action_state_t idaapi update(action_update_ctx_t*) override
+	{
+		return AST_ENABLE_ALWAYS;
+	}
+};
+
+/*FirstShownEventFilter::FirstShownEventFilter(QObject* parent)
+	: QObject(parent)
+	, firstShow_{ true }
+{
+
+}*/
+
+bool Labeless::eventFilter(QObject* watched, QEvent* event)
+{
+	static bool firstShown = true;
+	if (firstShown && event->type() == QEvent::Show &&
+		m_MainWindow->menuBar()->findChildren<QMenu*>().size() >= 1) {
+		
+		firstShown = false; // Ensure this is triggered only once
+		m_MainWindow->removeEventFilter(this);
+
+		firstInit();
+	}
+	return QObject::eventFilter(watched, event);
+}
+
+
+void Labeless::setUpMainWindowShowupHook()
+{
+	if (!m_MainWindow)
+		m_MainWindow = util::ida::findIDAMainWindow();
+	if (!m_MainWindow)
+		return;
+
+	//static QPointer<QObject> firstShownEventFilter;
+	//if (!firstShownEventFilter) {
+	//	firstShownEventFilter = new FirstShownEventFilter(m_MainWindow);
+	//	m_MainWindow->installEventFilter(firstShownEventFilter);
+	//}
+	m_MainWindow->installEventFilter(this); // !!!
+}
+
 bool Labeless::firstInit()
 {
 	if (!m_MainWindow)
 		m_MainWindow = util::ida::findIDAMainWindow();
 	if (m_MainWindow)
 	{
-		if (QMenu* m = m_MainWindow->menuBar()->addMenu("Labeless"))
+#if 0
+		if (!create_menu("LLS", "LSS")) {
+			msg("%s: failed to create menu\n", __FUNCTION__);
+		}
+		if (!create_toolbar("TTB", "TTB", nullptr, CREATETB_ADV)) {
+			msg("%s: create test toolbar failed\n", __FUNCTION__);
+		}
+
+		static TestHandler_t testHandler;
+		const action_desc_t test_action = ACTION_DESC_LITERAL_PLUGMOD(
+			"test_action_1",
+			"test action",
+			&testHandler,
+			this,
+			"Alt+Shift+M",
+			NULL,
+			-1);
+		if (!register_action(test_action)) {
+			msg("%s: failed to create test action\n", __FUNCTION__);
+		}
+		if (!attach_action_to_menu("LSS", "test_action_1", SETMENU_APP)) {
+			msg("%s: failed to attach test action\n", __FUNCTION__);
+		}
+		if (!attach_action_to_toolbar("TTB", "test_action_1")) {
+			msg("%s: failed to attach test action to toolbar\n", __FUNCTION__);
+		}
+		QList<QMenu*> found = m_MainWindow->menuBar()->findChildren<QMenu*>();
+		for (int i = 0; i < found.size(); ++i) {
+			QMenu* m = found.at(i);
+			for (const auto action : m->actions()) {
+				std::string name = action->objectName().toStdString() + ": " + action->text().toStdString();
+				msg("%s: %s\n", __FUNCTION__, name.c_str());
+			}
+		}
+#endif // 0
+
+		if (m_LMenu = m_MainWindow->menuBar()->addMenu("Labeless"))
 		{
-			m->setObjectName(kLabelessMenuObjectName);
+			m_LMenu->setObjectName(kLabelessMenuObjectName);
+			
 #ifdef __EA64__
-			QMenu* loadStubMenu = m->addMenu(tr("Load stub database"));
+			QMenu* loadStubMenu = m_LMenu->addMenu(tr("Load stub database"));
 			QAction* actLoadStub_x86 = loadStubMenu->addAction(tr("x86"), this, SLOT(onLoadStubDBRequested()));
 			actLoadStub_x86->setObjectName(kLabelessMenuLoadStubItemName);
 			QAction* actLoadStub_x64 = loadStubMenu->addAction(tr("x64"), this, SLOT(onLoadStubDBRequested()));
 			actLoadStub_x64->setObjectName(kLabelessMenuLoadStubItemNameX64);
 			m_MenuActions << actLoadStub_x86 << actLoadStub_x64;
 #else // __EA64__
-			QAction* actLoadStub = m->addAction(tr("Load stub database..."), this, SLOT(onLoadStubDBRequested()));
+			QAction* actLoadStub = m_LMenu->addAction(tr("Load stub database..."), this, SLOT(onLoadStubDBRequested()));
 			actLoadStub->setObjectName(kLabelessMenuLoadStubItemName);
 			m_MenuActions << actLoadStub;
 #endif // __EA64__
-			m->addSeparator();
-			QAction* actRemotePyExec = m->addAction(QIcon(":/run.png"), tr("Remote Python execution"), this, SLOT(onShowRemotePythonExecutionViewRequested()));
+			m_LMenu->addSeparator();
+			QAction* actRemotePyExec = m_LMenu->addAction(QIcon(":/run.png"), tr("Remote Python execution"), this, SLOT(onShowRemotePythonExecutionViewRequested()));
 			m_MenuActions << actRemotePyExec;
-			QMenu* dumpMenu = m->addMenu(QIcon(":/dump.png"), tr("IDADump"));
+			QMenu* dumpMenu = m_LMenu->addMenu(QIcon(":/dump.png"), tr("IDADump"));
 			m_MenuActions << dumpMenu->addAction(tr("Wipe all and import..."), this, SLOT(onWipeAndImportRequested()));
 			m_MenuActions << dumpMenu->addAction(tr("Keep existing and import..."), this, SLOT(onKeepAndImportRequested()));
-			QAction* actDoSyncAllNow = m->addAction(QIcon(":/sync.png"), tr("Sync labels now"), this, SLOT(onSyncronizeAllRequested()), Qt::ALT | Qt::SHIFT | Qt::Key_R);
+			QAction* actDoSyncAllNow = m_LMenu->addAction(QIcon(":/sync.png"), tr("Sync labels now"), this, SLOT(onSyncronizeAllRequested()), Qt::ALT | Qt::SHIFT | Qt::Key_R);
 			m_MenuActions << actDoSyncAllNow;
-			m->addSeparator();
-			m_MenuActions << (m_PauseNotificationMenuAction = m->addAction(QIcon(":/pause_notif.png"), kEnablePauseNotifAction));
+			m_LMenu->addSeparator();
+			m_MenuActions << (m_PauseNotificationMenuAction = m_LMenu->addAction(QIcon(":/pause_notif.png"), kEnablePauseNotifAction));
 			m_PauseNotificationMenuAction->setCheckable(true);
 			CHECKED_CONNECT(connect(m_PauseNotificationMenuAction, SIGNAL(toggled(bool)), this, SLOT(onTogglePauseNotificationHandling(bool)))); 
-			m->addSeparator();
-			m_MenuActions << m->addAction(QIcon(), tr("JUMP to IDA ea -> in <dbg>"), this, SLOT(onJumpToRequested()), Qt::SHIFT | Qt::Key_J);
-			m_MenuActions << m->addAction(QIcon(), tr("JUMP to <dbg> ea -> in IDA"), this, SLOT(onJumpFromRequested()), Qt::SHIFT | Qt::CTRL | Qt::Key_J);
-			m->addSeparator();
-			QAction* actSettings = m->addAction(QIcon(":/settings.png"), tr("Settings..."), this, SLOT(onSettingsRequested()));
+			m_LMenu->addSeparator();
+			m_MenuActions << m_LMenu->addAction(QIcon(), tr("JUMP to IDA ea -> in <dbg>"), this, SLOT(onJumpToRequested()), Qt::SHIFT | Qt::Key_J);
+			m_MenuActions << m_LMenu->addAction(QIcon(), tr("JUMP to <dbg> ea -> in IDA"), this, SLOT(onJumpFromRequested()), Qt::SHIFT | Qt::CTRL | Qt::Key_J);
+			m_LMenu->addSeparator();
+			QAction* actSettings = m_LMenu->addAction(QIcon(":/settings.png"), tr("Settings..."), this, SLOT(onSettingsRequested()));
 			m_MenuActions << actSettings;
 
 			// init toolbar
@@ -962,17 +1106,24 @@ bool Labeless::firstInit()
 			m_MainWindow->addToolBar(Qt::TopToolBarArea, m_Toolbar);
 		}
 	}
-	static const action_desc_t sync_all_action = ACTION_DESC_LITERAL(
+	/*static const action_desc_t sync_all_action = ACTION_DESC_LITERAL_PLUGMOD(
 		kSyncAllNowActionName.c_str(),
 		"Sync labels now",
 		&g_SyncAllNowActionHandler,
+		plugmod,
 		"Alt+Shift+R",
 		NULL,
 		-1);
-	if (!register_action(sync_all_action))
+	if (!register_action(plugmod->sync_all_action))
 		msg("%s: unable to register %s action\n", __FUNCTION__, kSyncAllNowActionName.c_str());
+	*/
+	enableMenuActions(m_Enabled);
 
-	enableMenuActions(false);
+	static const std::string kIDAPython = "IDAPython";
+	if (find_plugin(kIDAPython.c_str())) {
+		Labeless::instance().initIDAPython();
+	}
+
 	return true;
 }
 
@@ -1005,6 +1156,7 @@ bool Labeless::initialize()
 		CHECKED_CONNECT(connect(worker, SIGNAL(destroyed()), m_AutoCompletionThread.data(), SLOT(quit()), Qt::QueuedConnection));
 		//CHECKED_CONNECT(connect(m_AutoCompletionThread.data(), SIGNAL(finished()), worker, SLOT(deleteLater())));
 		CHECKED_CONNECT(connect(worker, SIGNAL(completeFinished()), this, SLOT(onAutoCompletionFinished()), Qt::QueuedConnection));
+		CHECKED_CONNECT(connect(worker, SIGNAL(onAutoCompletionFailed(QString)), this, SLOT(onAutoCompletionFailed(QString)), Qt::QueuedConnection));
 		worker->moveToThread(m_AutoCompletionThread.data());
 		m_AutoCompletionThread->start();
 	}
@@ -1027,7 +1179,6 @@ void Labeless::terminate()
 	if (m_Enabled)
 		m_Enabled = 0;
 
-	unregister_action(kSyncAllNowActionName.c_str());
 
 	do {
 		QMutexLocker lock(&m_ThreadLock);
@@ -1253,8 +1404,10 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 
 void Labeless::onPyOllyFormClose()
 {
-	if (m_PyOllyView)
+	if (m_PyOllyView) {
+		m_PyOllyView->saveScriptsData();
 		m_PyOllyView->deleteLater();
+	}
 	m_PyOllyView = nullptr;
 	m_EditorTForm = nullptr;
 }
@@ -1368,11 +1521,21 @@ void Labeless::onShowRemotePythonExecutionViewRequested()
 		compat::activate_widget(m_EditorTForm, true);
 		return;
 	}
+
+#ifndef WOPN_MENU
+#define WOPN_MENU        0x10 // no-op
+#endif // WOPN_MENU
+
 	const int flags =
 #if (IDA_SDK_VERSION < 700)
 		FORM_TAB | FORM_MENU | FORM_RESTORE | FORM_QWIDGET | FORM_NOT_CLOSED_BY_ESC
-#else
-		WOPN_TAB | WOPN_MENU | WOPN_RESTORE | WOPN_NOT_CLOSED_BY_ESC
+#else // (IDA_SDK_VERSION < 700)
+#	if (IDA_SDK_VERSION < 800)
+		WOPN_TAB
+#	else // (IDA_SDK_VERSION < 800)
+		WOPN_DP_TAB
+#	endif // (IDA_SDK_VERSION < 800)
+		| WOPN_MENU | WOPN_RESTORE | WOPN_NOT_CLOSED_BY_ESC
 #endif
 		;
 	openPythonEditorForm(flags);
@@ -1546,13 +1709,13 @@ void Labeless::onGetBackendInfoFinished()
 			.arg(QString::fromLatin1(LABELESS_VER_STR))
 			.arg(QString::fromStdString(req->labeless_ver));
 	}
-	if ((::inf.is_64bit() && req->bitness != 64) ||
-		(!::inf.is_64bit() && req->bitness != 32))
+	if ((compat::inf_is_64bit() && req->bitness != 64) ||
+		(!compat::inf_is_64bit() && req->bitness != 32))
 	{
 		error += tr("Database bitness mismatch, IDA DB bitness: %1, remote app bitness: %2.<br>"
 			"To dump remote application, you should load stub database.<br>"
 			"Use menu [Labeless] -> [Load stub database] -> [x%3] and then try again.")
-			.arg(::inf.is_64bit() ? 64: 32)
+			.arg(compat::inf_is_64bit() ? 64: 32)
 			.arg(req->bitness)
 			.arg(req->bitness);
 	}
@@ -1916,7 +2079,7 @@ bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_mem
 
 	// check if all the region belongs to existing segment(s) or create segment otherwise
 	bool belongs = true;
-	const uchar bitness = ::inf.is_64bit() ? 2 : 1;
+	const uchar bitness = compat::inf_is_64bit() ? 2 : 1;
 	const segment_t* pSeg = nullptr;
 
 	for (ea_t ea = START_RANGE_EA(&area); ea < END_RANGE_EA(&area); ++ea)
@@ -1970,7 +2133,7 @@ bool Labeless::createSegment(const compat::IDARange& area, uchar perm, uchar typ
 	memset(&result, 0, sizeof(result));
 	static_cast<compat::IDARange&>(result) = area;
 
-	result.bitness = ::inf.is_64bit() ? 2 : 1; // TODO: name them
+	result.bitness = compat::inf_is_64bit() ? 2 : 1; // TODO: name them
 	result.sel = setup_selector(0);
 	result.perm = perm;
 	result.type = type;
@@ -2048,7 +2211,7 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	}
 	IDADump& icInfo = m_DumpList.back();
 
-	const unsigned targetPtrSize = ::inf.is_64bit() ? sizeof(uint64_t) : sizeof(uint32_t);
+	const unsigned targetPtrSize = compat::inf_is_64bit() ? sizeof(uint64_t) : sizeof(uint32_t);
 
 	if (gdp->rip >= gdp->req.eaFrom && gdp->rip <= gdp->req.eaTo - targetPtrSize)
 	{
@@ -2188,19 +2351,24 @@ void Labeless::addAPIConst(const AnalyzeExternalRefs::PointerData& pd)
 	}
 
 	// add enum value
+#if (IDA_SDK_VERSION < 900)
+	enum_t enumId = get_enum(kAPIEnumName.c_str());
+#else // IDA_SDK_VERSION < 900
 	const std::string enumValueName = pd.module + "_" + pd.procName;
-	bool enumValExists = true;
-
-	if (BADNODE == get_enum_member_by_name(enumValueName.c_str()))
-	{
-		const uval_t val = ::inf.is_64bit() ? get_qword(pd.ea) : compat::get_dword(pd.ea);
-		enumValExists = addAPIEnumValue(enumValueName, val);
-		if (!enumValExists)
+	tid_t enumId = true;
+	tinfo_t info;
+	if (-1 != info.get_by_edm_name(enumValueName.c_str())) {
+		enumId = info.get_tid();
+	} else {
+		const uval_t val = compat::inf_is_64bit() ? get_qword(pd.ea) : compat::get_dword(pd.ea);
+		enumId = addAPIEnumValue(enumValueName, val);
+		if (BADADDR == enumId) {
 			msg("%s: addAPIEnumValue() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
+		}
 	}
-
+#endif // IDA_SDK_VERSION < 900
 	// set name of old entry to be pointed to our APIs enum
-	if (enumValExists && !op_enum(pd.ea, 0, get_enum(kAPIEnumName.c_str()), 0))
+	if (BADADDR != enumId && !op_enum(pd.ea, 0, enumId, 0))
 		msg("%s: op_enum() failed for ea: %08llX\n", __FUNCTION__, pd.ea);
 }
 
@@ -2254,6 +2422,15 @@ void Labeless::onAutoCompletionFinished()
 	m_AutoCompletionState->state = jedi::State::RS_DONE;
 }
 
+void Labeless::onAutoCompletionFailed(const QString& error)
+{
+	QMutexLocker lock(&m_AutoCompletionLock);
+	msg("%s: jedi's Auto-complete failed, %s\n", __FUNCTION__, error.data());
+	m_AutoCompletionRequest.clear();
+	m_AutoCompletionResult.clear();
+	m_AutoCompletionState->state = jedi::State::RS_DONE;
+}
+
 void Labeless::onAutoCompleteRequested(QSharedPointer<jedi::Request> r)
 {
 	QMutexLocker lock(&m_AutoCompletionLock);
@@ -2265,7 +2442,8 @@ void Labeless::onAutoCompleteRequested(QSharedPointer<jedi::Request> r)
 		m_AutoCompletionState->state = jedi::State::RS_ASKED;
 	}
 	lock.unlock();
-	m_AutoCompletionCond.wakeOne();
+	if (m_AutoCompletionState->state == jedi::State::RS_DONE)
+		m_AutoCompletionCond.wakeOne();
 }
 
 void Labeless::onAutoCompleteRemoteRequested(QSharedPointer<jedi::Request> r)
@@ -2292,11 +2470,11 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 	});
 	(void)guard;
 
-	const bool compatible = ::inf.is_64bit() && notif->has_info64() || !::inf.is_64bit() && notif->has_info32() || !notif->has_backend_id();
+	const bool compatible = compat::inf_is_64bit() && notif->has_info64() || !compat::inf_is_64bit() && notif->has_info32();
 	if (!compatible)
 	{
 #if 0
-		msg("%s: database is %u-bit, but received %u-bit info\n", __FUNCTION__, ::inf.is_64bit() ? 64 : 32, notif->has_info64() ? 64 : 32);
+		msg("%s: database is %u-bit, but received %u-bit info\n", __FUNCTION__, compat::inf_is_64bit() ? 64 : 32, notif->has_info64() ? 64 : 32);
 #endif // 0
 		return;
 	}
@@ -2549,8 +2727,8 @@ bool Labeless::testConnect(const std::string& host, uint16_t port, QString& erro
 	command.set_script(
 		"import sys\n"
 		"from labeless.py_olly import labeless_ver\n"
-		"print 'pong'\n"
-		"print >> sys.stderr, 'v:%s' % labeless_ver()");
+		"print('pong')\n"
+		"print('v:%s' % labeless_ver(), file=sys.stderr)");
 
 	const std::string& message = command.SerializeAsString();
 	const uint64_t messageLen = static_cast<uint64_t>(message.length());
@@ -2678,7 +2856,7 @@ bool Labeless::createImportSegments(const std::map<uint64_t, AnalyzeExternalRefs
 			ns.comb = scPub;
 			ns.align = saRelPara;
 			ns.color = DEFCOLOR;
-			if (::inf.is_64bit())
+			if (compat::inf_is_64bit())
 				ns.bitness = kIDASDKBitness64;
 			else
 				ns.bitness = kIDASDKBitness32;
@@ -2807,22 +2985,63 @@ qstring Labeless::getNewNameOfEntry() const
 	return qstring();
 }
 
-bool Labeless::addAPIEnumValue(const std::string& name, uval_t value)
-{
-	begin_type_updating(UTP_ENUM);
-
+#if (IDA_SDK_VERSION < 900)
+enum_t createAPIEnumIfNotExists() {
 	enum_t id = get_enum(kAPIEnumName.c_str());
-	if (id == BADNODE)
-	{
+	if (id == BADNODE) {
 		id = add_enum(-1, kAPIEnumName.c_str(), DEFMASK);
 		if (id == BADNODE)
-			return false;
+			return BADNODE;
 		set_enum_bf(id, false);
 		set_enum_hidden(id, true);
 	}
+	return id;
+}
+#else
+tid_t createAPIEnumIfNotExists() {
+	tinfo_t info;
+	if (info.get_named_type(kAPIEnumName.c_str())) {
+		return info.get_tid();
+	}
+	
+	if (!info.create_enum()) {
+		msg("%s: Labeless: failed to create enum\n", __FUNCTION__);
+		return BADADDR;
+	}
+	const auto rv = info.set_named_type(nullptr, kAPIEnumName.c_str(), NTF_REPLACE);
+	if (TERR_OK != rv) {
+		msg("%s: failed to set struct name, code: %d\n", __FUNCTION__, static_cast<int>(rv));
+		return BADADDR;
+	}
+	return info.get_tid();
+}
+
+#endif // IDA_SDK_VERSION < 900
+
+ea_t Labeless::addAPIEnumValue(const std::string& name, uval_t value)
+{
+	begin_type_updating(UTP_ENUM);
+	
+#if (IDA_SDK_VERSION < 900)
+	enum_t id = createAPIEnumIfNotExists();
 	add_enum_member(id, ("OAEC_" + name).c_str(), value);
+#else // 
+	auto id = createAPIEnumIfNotExists();
+	bool rv = true;
+	if (id != BADADDR) {
+		tinfo_t info;
+		if (!info.get_type_by_tid(id) || !info.is_enum()) {
+			msg("%s: failed to get API enum by id\n", __FUNCTION__);
+		} else {
+			info.add_edm(("OAEC_" + name).c_str(), value);
+			info.save_type();
+		}
+	} else {
+		msg("%s: Labeless: createAPIEnumIfNotExists() failed\n", __FUNCTION__);
+	}
+#endif // 
 	end_type_updating(UTP_ENUM);
-	return true;
+	return id;
 }
 
 void Labeless::onMakeCode(ea_t ea, ::asize_t size)
@@ -2844,12 +3063,12 @@ void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 	Q_UNUSED(len);
 	if (m_IgnoreMakeData)
 		return;
-	if ((!inf.is_64bit() && !compat::is_dword(flags)) || (inf.is_64bit() && !compat::is_qword(flags)))
+	if ((!compat::inf_is_64bit() && !compat::is_dword(flags)) || (compat::inf_is_64bit() && !compat::is_qword(flags)))
 		return;
 
 	//msg("on make_data: ea: %08" LL_FMT_EA_T ", flags: %08X, len: %08" LL_FMT_EA_T "\n", ea, flags, len);
 
-	const uval_t val = ::inf.is_64bit() ? get_qword(ea) : compat::get_dword(ea);
+	const uval_t val = compat::inf_is_64bit() ? get_qword(ea) : compat::get_dword(ea);
 
 	auto it = m_ExternRefsMap.find(val);
 	if (it == m_ExternRefsMap.end())
@@ -2873,7 +3092,13 @@ void Labeless::onMakeData(ea_t ea, ::flags_t flags, ::tid_t, ::asize_t len)
 		set_cmt(ea, procName.c_str(), false);
 	}
 
-	if (!op_enum(ea, 0, get_enum(kAPIEnumName.c_str()), 0))
+#if (IDA_SDK_VERSION < 900)
+	enum_t enumId = get_enum(kAPIEnumName.c_str());
+#else
+	tid_t enumId = get_named_type_tid(kAPIEnumName.c_str());
+#endif
+
+	if (!op_enum(ea, 0, enumId, 0))
 		msg("%s: op_enum() failed for ea: %08" LL_FMT_EA_T "\n", __FUNCTION__, ea);
 }
 
@@ -2896,7 +3121,7 @@ void Labeless::onAddDref(ea_t from, ea_t to, dref_t type)
 bool Labeless::make_dword_ptr(ea_t ea, asize_t size)
 {
 	ScopedEnabler enabler(m_IgnoreMakeData);
-	if (::inf.is_64bit())
+	if (compat::inf_is_64bit())
 		return compat::create_qword(ea, size);
 
 	return compat::create_dword(ea, size);
@@ -2904,6 +3129,7 @@ bool Labeless::make_dword_ptr(ea_t ea, asize_t size)
 
 hook_cb_t_ret_type_t Labeless::ui_callback(void*, int notification_code, va_list va)
 {
+	//msg("%s: %d\n" __FUNCTION__, notification_code);
 	if (notification_code == 
 #if (IDA_SDK_VERSION < 700)
 		ui_tform_visible
@@ -2972,6 +3198,35 @@ hook_cb_t_ret_type_t Labeless::ui_callback(void*, int notification_code, va_list
 			return -1;
 		return 0;
 	}
+#if 0
+	if (notification_code == ui_create_menu || notification_code == ui_create_toolbar) {
+		const char* name = va_arg(va, const char*);
+		const char* label = va_arg(va, const char*);
+		const char* menu_path = va_arg(va, const char*);
+		msg("%s: create menu|toolbar hook received: (%s, %s, %s)\n", __FUNCTION__, name, label, menu_path);
+
+	}
+#endif // 0
+
+	if (notification_code == ui_ready_to_run) {
+		Labeless::instance().ensureLMenuPresent();
+	}
+	/*if (notification_code == ui_updated_actions)
+	{
+		static bool inited;
+		if (!inited) {
+			inited = true;
+			if (!create_menu("LLS3", "LSS3")) {
+				msg("%s: failed to create menu\n", __FUNCTION__);
+			}
+		}
+		return 0;
+	}*/
+	static volatile bool e = false;
+	if (e) {
+		const QString& s = QString("%1: notification received:  %2\n").arg(__FUNCTION__).arg((int)notification_code, 0, 16);
+		OutputDebugStringA(s.toStdString().c_str());
+	}
 	return 0;
 }
 
@@ -2983,7 +3238,7 @@ hook_cb_t_ret_type_t Labeless::idp_callback(void* /*user_data*/, int notificatio
 	case PROCESSOR_T_NEWFILE:
 	case PROCESSOR_T_OLDFILE:
 		do {
-			const bool compat = ph.id == PLFM_386 && (inf.filetype == f_PE || inf.filetype == f_BIN);
+			const bool compat = compat::get_ph()->id == PLFM_386 && (compat::inf_get_filetype() == f_PE || compat::inf_get_filetype() == f_BIN);
 			if (compat)
 			{
 				ll.setEnabled();

@@ -44,7 +44,7 @@ def make_logger(fn=None, default=True, dummy={}):
     :param dummy: should not be passed, used as static loggers map
     :return: logger instance
     """
-    if isinstance(fn, basestring):
+    if isinstance(fn, str):
         if fn.find('/') == -1:
             fn = path.join(path.dirname(path.realpath(__file__)), '..', fn)
     else:

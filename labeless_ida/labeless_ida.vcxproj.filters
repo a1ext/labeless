@@ -103,9 +103,6 @@
     <ClInclude Include="jedi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="util\util_python.h">
-      <Filter>util</Filter>
-    </ClInclude>
     <ClInclude Include="util\util_idapython.h">
       <Filter>util</Filter>
     </ClInclude>
@@ -179,9 +176,6 @@
     </ClCompile>
     <ClCompile Include="jedi.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\util_python.cpp">
-      <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="util\util_idapython.cpp">
       <Filter>util</Filter>
@@ -528,6 +522,9 @@
     </None>
     <None Include="res\stub64.exe.bin">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\common\rpc.proto">
+      <Filter>proto</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

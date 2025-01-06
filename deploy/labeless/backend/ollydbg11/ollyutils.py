@@ -23,7 +23,7 @@ from labeless.logs import make_logger
 from labeless.pehelper import PEHelper
 logger = make_logger()
 
-import ollyapi as api
+from . import ollyapi as api
 try:
     import labeless.rpc_pb2 as rpc
 except ImportError as e:
@@ -55,7 +55,7 @@ def make_names(names, base, remote_base):
     for n in names:
         if not is_valid_addr(n.ea + ptrdiff):
             continue
-        api.Insertname(n.ea + ptrdiff, api.NM_LABEL, truncate_text_to_max(n.name.encode('mbcs')))
+        api.Insertname(n.ea + ptrdiff, api.NM_LABEL, truncate_text_to_max(n.name.encode('mbcs')).decode('mbcs'))
     api.Redrawdisassembler()
 
 
@@ -66,7 +66,7 @@ def make_comments(comments, base, remote_base):
     for cmt in comments:
         if not is_valid_addr(cmt.ea + ptrdiff):
             continue
-        api.Insertname(cmt.ea + ptrdiff, api.NM_COMMENT, truncate_text_to_max(cmt.name.encode('mbcs')))
+        api.Insertname(cmt.ea + ptrdiff, api.NM_COMMENT, truncate_text_to_max(cmt.name.encode('mbcs')).decode('mbcs'))
     api.Redrawdisassembler()
 
 
@@ -75,7 +75,7 @@ def get_memory_map():
     t = api.pluginvalue_to_t_table(api.Plugingetvalue(api.VAL_MEMORY))
     rv = rpc.GetMemoryMapResult()
 
-    for i in xrange(t.data.n):
+    for i in range(t.data.n):
         mi = rv.memories.add()
         m = api.void_to_t_memory(api.Getsortedbyselection(t.data, i))
         module = api.Findmodule(m.base)
@@ -114,7 +114,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
     if queried:
         protect = mbi.Protect
     else:
-        print >> sys.stderr, 'safe_read_chunked_memory_region_as_one: VirtualQueryEx() failed'
+        print('safe_read_chunked_memory_region_as_one: VirtualQueryEx() failed', file=sys.stderr)
     if queried and mbi.Protect & D.PAGE_GUARD:
         g = {'ea': base, 'size': GRANULARITY, 'p': mbi.Protect}
         gpoints[base] = 0
@@ -179,8 +179,8 @@ def safe_read_chunked_memory_region_as_one(base, size):
             if not g['ok']:
                 continue
             if not VirtualProtectEx(h_process, C.c_void_p(g['ea'] + off), GRANULARITY, C.c_long(g['p']), C.byref(dummy)):
-                print >> sys.stderr, 'VirtualProtectEx(ptr 0x%08X, size 0x%08X, protect 0x%08X) failed' %\
-                                     (g['ea'] + off, GRANULARITY, g['p'])
+                print('VirtualProtectEx(ptr 0x%08X, size 0x%08X, protect 0x%08X) failed' %\
+                                     (g['ea'] + off, GRANULARITY, g['p']), file=sys.stderr)
     if rv and len(rv) > size:
         rv = rv[:size]
     return size, rv, protect
@@ -190,7 +190,7 @@ def disasm(ea, mem=None, size=api.MAXCMDSIZE):
     if mem is None:
         mem = safe_read_chunked_memory_region_as_one(ea, size)
         if not mem:
-            print >> sys.stderr, 'Unable to read specified memory (0x%08X of size 0x%08X)' % (ea, size)
+            print('Unable to read specified memory (0x%08X of size 0x%08X)' % (ea, size), file=sys.stderr)
             return None, None
         mem = buffer(mem[1])
     cmd = bytearray(mem[:min(api.MAXCMDSIZE, len(mem))])
@@ -212,29 +212,29 @@ def read_memory_regions(regions):
 
         m = safe_read_chunked_memory_region_as_one(mem.addr, mem.size)
         if m is None:
-            print >> sys.stderr, 'safe_read_chunked_memory_region_as_one() failed for (0x%08X, 0x%08X)' % (mem.addr, mem.size)
+            print('safe_read_chunked_memory_region_as_one() failed for (0x%08X, 0x%08X)' % (mem.addr, mem.size), file=sys.stderr)
             continue
-        mem.mem = str(m[1])
+        mem.mem = bytes(m[1])
         mem.protect = int(m[2])
     return rv
 
 
 def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_size):
-    # print >> sys.stderr, 'analyze_external_refs(%08X, %08X, %08X, %08X, %08X)' % \
-    #                      (ea_from, ea_to, increment, analysing_base, analysing_size)
+    # print('analyze_external_refs(%08X, %08X, %08X, %08X, %08X)' % \
+    #                      (ea_from, ea_to, increment, analysing_base, analysing_size), file=sys.stderr)
 
     update_modules_meta()
 
     rv = rpc.AnalyzeExternalRefsResult()
     if ea_from > ea_to:
-        print >> sys.stderr, 'Invalid arguments passed'
+        print('Invalid arguments passed', file=sys.stderr)
         return rv
 
     mem = safe_read_chunked_memory_region_as_one(ea_from, ea_to - ea_from)
     if not mem:
-        print >> sys.stderr, 'Unable to read specified memory (0x%08X - 0x%08X)' % (ea_from, ea_to)
+        print('Unable to read specified memory (0x%08X - 0x%08X)' % (ea_from, ea_to), file=sys.stderr)
         return rv
-    mem = buffer(mem[1])
+    mem = bytes(mem[1])
     intptr_size = struct.calcsize("<I")
     main_module_name = api.Findmodule(analysing_base)
     if main_module_name is None:
@@ -259,7 +259,7 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
     scan_for_ref_api_calls(ea_from, ea_to, increment, rv=rv, mem=mem, base=analysing_base)
     used_addrs = set([])
 
-    for ea in xrange(ea_from, ea_to, increment):
+    for ea in range(ea_from, ea_to, increment):
         try:
             if ea in used_addrs:
                 continue
@@ -282,16 +282,16 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
             v.proc = proc_name
 
         except Exception as exc:
-            print >> sys.stderr, 'Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n'))
-    print 'AnalyzeExternalRefs: found %u' % len(rv.api_constants)
-    print rv
+            print('Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n')), file=sys.stderr)
+    print('AnalyzeExternalRefs: found %u' % len(rv.api_constants))
+    print(rv)
     return rv
 
 
 def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
     # import inspect
     if ea_from > ea_to:
-        print >> sys.stderr, 'Invalid arguments passed'
+        print('Invalid arguments passed', file=sys.stderr)
         return None
     logger.info(('scan_for_ref_api_calls(ea_from=0x%08X, ea_to=0x%08X, increment=0x%08X, base=0x%08X)\n' +
                 'getting modules meta') % (ea_from, ea_to, increment, base))
@@ -302,10 +302,10 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
 
     this_module_exports = set()
     for name, info in modules_meta.items():
-        for i in xrange(len(info['base'])):
+        for i in range(len(info['base'])):
             if info['base'][i] <= ea_from < info['base'][i] + info['size'][i]:
                 this_module_exports = set(map(lambda x: x['ea'], info['apis'][i]))
-                print 'module found: %s, len of exports: %u' % (name, len(this_module_exports))
+                print('module found: %s, len of exports: %u' % (name, len(this_module_exports)))
                 break
 
     def isPointsToExternalDll(addr):
@@ -313,7 +313,7 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
             return modules_exports[addr]
         return False
 
-    for ea in xrange(ea_from, ea_to, increment):
+    for ea in range(ea_from, ea_to, increment):
         try:
             l = ea_to - ea
             offs = ea - ea_from
@@ -332,7 +332,7 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
                     ref.ea = ea
                     ref.len = n
                     ref.dis = dis.result
-                    print 'dis.immconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
+                    print('dis.immconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump))
                 continue
             if dis.adrconst:
                 v = isPointsToExternalDll(dis.adrconst)
@@ -344,7 +344,7 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
                     ref.ea = ea
                     ref.len = n
                     ref.dis = dis.result
-                    print 'dis.adrconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
+                    print('dis.adrconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump))
                 continue
             if dis.jmpconst:
                 v = isPointsToExternalDll(dis.jmpconst)
@@ -356,14 +356,15 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, mem):
                     ref.ea = ea
                     ref.len = n
                     ref.dis = dis.result
-                    print 'dis.jmpconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump)
+                    print('dis.jmpconst points to %s at %08X as %s bytes: %s' % (v, ea, dis.result, dis.dump))
                 continue
 
                 #for k, v in inspect.getmembers(dis):
                 #    if '_' not in k:
-                #        print "%r: %r" % (k, v)
+                #        print("%r: %r" % (k, v))
         except Exception as exc:
-            print >> sys.stderr, 'Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n'))
+            print('Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n')),
+                  file=sys.stderr)
 
 
 def update_modules_meta():
@@ -378,7 +379,7 @@ def update_modules_meta():
     pid = api.Plugingetvalue(api.VAL_PROCESSID)
     h_snap = C.windll.kernel32.CreateToolhelp32Snapshot(D.TH32CS_SNAPMODULE, pid)
     if h_snap == 0xFFFFFFFF:
-        print >> sys.stderr, 'get_modules_meta(): Unable to open Toolhelp32 snapshot'
+        print('get_modules_meta(): Unable to open Toolhelp32 snapshot', file=sys.stderr)
         return modules_meta
 
     # available_modules = set()
@@ -386,14 +387,14 @@ def update_modules_meta():
     ret = C.windll.kernel32.Module32First(h_snap, C.pointer(me32))
     if ret == 0:
         C.windll.kernel32.CloseHandle(h_snap)
-        print >> sys.stderr, 'get_modules_meta(): Module32First() failed'
+        print('get_modules_meta(): Module32First() failed', file=sys.stderr)
         return modules_meta
 
     while ret:
-        modname = path.splitext(path.basename(me32.szExePath))[0].lower()
+        modname = path.splitext(path.basename(me32.szExePath.decode()))[0].lower()
         if modname not in modules_meta or modules_meta[modname]['base'] != me32.modBaseAddr:
             mem = safe_read_chunked_memory_region_as_one(me32.modBaseAddr, me32.modBaseSize)
-            print 'get_modules_meta(): %s at 0x%08X' % (modname, me32.modBaseAddr)
+            print('get_modules_meta(): %s at 0x%08X' % (modname, me32.modBaseAddr))
             if mem:
                 pe = PEHelper(me32.modBaseAddr, modname, mem[1])
                 exps = pe.get_exports()
@@ -420,14 +421,14 @@ def update_modules_meta():
 
     # t = oa.pluginvalue_to_t_table(oa.Plugingetvalue(oa.VAL_MODULES))
     #
-    # for i in xrange(t.data.n):
+    # for i in range(t.data.n):
     #     m = oa.void_to_t_module(oa.Getsortedbyselection(t.data, i))
     #     modname = path.splitext(path.basename(m.path))[0].lower()
     #     if modname in modules_meta and modules_meta[modname]['base'] == m.base:
     #         continue
     #     available_modules.add(modname)
     #     externals = list()
-    #     for off in xrange(m.codesize):
+    #     for off in range(m.codesize):
     #         name = bytearray(oa.TEXTLEN)
     #         if oa.Findname(m.codebase + off, oa.NM_EXPORT, name):
     #             name = str(name.replace('\x00', ''))
@@ -452,13 +453,13 @@ def check_pe_headers(base, size):
     rv.pe_valid = False
     mem = safe_read_chunked_memory_region_as_one(base, size)
     if not mem:
-        print >> sys.stderr, 'unable to read memory: 0x%08X, size: 0x%08X' % (base, size)
+        print('unable to read memory: 0x%08X, size: 0x%08X' % (base, size))
         return rv
     mem = mem[1]
     p = PEHelper(base, '', data=mem)
     rv.pe_valid = p.parse_headers(True)
     if not rv.pe_valid:
-        print >> sys.stderr, 'PE headers are invalid'
+        print('PE headers are invalid', file=sys.stderr)
         return rv
 
     exports = p.get_exports()
@@ -566,7 +567,7 @@ def RemoteAllocRWE(addr, size, alloc_type='commit'):
     if not rv:
         last_error = C.windll.kernel32.GetLastError()
         if last_error:
-            print >> sys.stderr, '[-] VirtualAllocEx failed with error: %x' % last_error
+            print('[-] VirtualAllocEx failed with error: %x' % last_error, file=sys.stderr)
 
     return rv
 

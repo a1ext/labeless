@@ -32,10 +32,10 @@ doesn't work for all valid c/c++ declarations"""
 
 def convert_cdef_to_structure(cdef, name, data_dict=C.__dict__):
     """\
-convert_cdef_to_structure(struct_definition_from_c_header_file)
-  -> python class derived from ctypes.Structure
+    convert_cdef_to_structure(struct_definition_from_c_header_file)
+      -> python class derived from ctypes.Structure
 
-limited support for c/c++ syntax"""
+    limited support for c/c++ syntax"""
     py_str = '[\n'
     for line in cdef.split('\n'):
         field = convert_cdef_to_pydef(line)
@@ -141,7 +141,7 @@ winnt = (
     DWORD       SizeOfUninitializedData;
     DWORD       AddressOfEntryPoint;
     DWORD       BaseOfCode;
-    c_ulonglong   ImageBase;
+    HANDLE      ImageBase;
     DWORD       SectionAlignment;
     DWORD       FileAlignment;
     WORD        MajorOperatingSystemVersion;
@@ -156,10 +156,10 @@ winnt = (
     DWORD       CheckSum;
     WORD        Subsystem;
     WORD        DllCharacteristics;
-    c_ulonglong   SizeOfStackReserve;
-    c_ulonglong   SizeOfStackCommit;
-    c_ulonglong   SizeOfHeapReserve;
-    c_ulonglong   SizeOfHeapCommit;
+    HANDLE      SizeOfStackReserve;
+    HANDLE      SizeOfStackCommit;
+    HANDLE      SizeOfHeapReserve;
+    HANDLE      SizeOfHeapCommit;
     DWORD       LoaderFlags;
     DWORD       NumberOfRvaAndSizes;
     IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
@@ -211,7 +211,7 @@ del winnt
 IMAGE_DOS_SIGNATURE = 0x5A4D
 IMAGE_NT_SIGNATURE = 0x00004550
 IMAGE_NUMBEROF_DIRECTORY_ENTRIES = 16
-IMAGE_ORDINAL_FLAG = 0x80000000L
+IMAGE_ORDINAL_FLAG = 0x80000000
 OPTIONAL_HEADER_MAGIC_PE = 0x10b
 OPTIONAL_HEADER_MAGIC_PE_PLUS = 0x20b
 

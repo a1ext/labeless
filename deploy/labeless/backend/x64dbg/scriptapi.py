@@ -127,7 +127,7 @@ class Bookmark(object):
             count = info.count
             # size_bytes = info.size
             arr = api.BookmarkInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'mod': str(item.mod).replace('\0', ''),
@@ -207,7 +207,7 @@ class Comment(object):
             count = info.count
             # size_bytes = info.size
             arr = api.CommentInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'mod': str(item.mod).replace('\0', ''),
@@ -366,7 +366,7 @@ class Function(object):
             count = info.count
             # size_bytes = info.size
             arr = api.FunctionInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'mod': str(item.mod).replace('\0', ''),
@@ -459,7 +459,7 @@ class Label(object):
             count = info.count
             # size_bytes = info.size
             arr = api.LabelInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'mod': str(item.mod).replace('\0', ''),
@@ -611,7 +611,7 @@ class Module(object):
             count = info.count
             # size_bytes = info.size
             arr = api.ModuleSectionInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'addr': long(item.addr),
@@ -639,7 +639,7 @@ class Module(object):
             count = info.count
             # size_bytes = info.size
             arr = api.ModuleSectionInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'addr': long(item.addr),
@@ -715,7 +715,7 @@ class Module(object):
             count = info.count
             # size_bytes = info.size
             arr = api.ModuleSectionInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'addr': long(item.addr),
@@ -748,7 +748,7 @@ class Module(object):
             count = info.count
             # size_bytes = info.size
             arr = api.ModuleInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'base': long(item.base),
@@ -778,7 +778,7 @@ class Symbol(object):
             count = info.count
             # size_bytes = info.size
             arr = api.SymbolInfoArray_frompointer(info.data)
-            for _ in xrange(count):
+            for _ in range(count):
                 item = arr[_]
                 rv.append({
                     'mod': str(item.mod).replace('\0', ''),

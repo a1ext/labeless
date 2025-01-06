@@ -12,7 +12,7 @@ import ctypes as C
 import sys
 import traceback
 
-import pehelper_decl as D
+from . import pehelper_decl as D
 
 
 class PEHelper(object):
@@ -43,7 +43,7 @@ class PEHelper(object):
 
     def cast_rva(self, rva, type_, isPtr):
         self.check_rva_inside_buffer(rva)
-        if isPtr and not isinstance(type_._type_, basestring):
+        if isPtr and not isinstance(type_._type_, str):
             s = C.sizeof(type_._type_)
         else:
             s = C.sizeof(type_)
@@ -56,30 +56,30 @@ class PEHelper(object):
     def _parse_dos_header(self):
         self._dos_header = self.cast_rva(0, D.PIMAGE_DOS_HEADER, True)[0]
         if self._dos_header.e_magic != D.IMAGE_DOS_SIGNATURE:
-            print >> sys.stderr, 'Invalid PE header (invalid DOS magic)'
+            print('Invalid PE header (invalid DOS magic)', file=sys.stderr)
             raise Exception('Invalid PE header (invalid DOS magic)')
 
     def _parse_nt_headers(self):
         self._nt_headers = self.cast_rva(self._dos_header.e_lfanew, D.PIMAGE_NT_HEADERS, True)[0]
         if self._nt_headers.Signature != D.IMAGE_NT_SIGNATURE:
-            print >> sys.stderr, 'Invalid PE header (invalid nt signature)'
+            print('Invalid PE header (invalid nt signature)', file=sys.stderr)
             raise Exception('Invalid PE header (invalid nt signature)')
         if self._nt_headers.FileHeader.Machine not in (D.IMAGE_FILE_MACHINE_I386, D.IMAGE_FILE_MACHINE_AMD64):
-            print >> sys.stderr, 'Invalid PE header (Invalid machine type, supported only i386 and amd64)'
+            print('Invalid PE header (Invalid machine type, supported only i386 and amd64)', file=sys.stderr)
             raise Exception('Invalid PE header (Invalid machine type, supported only i386 and amd64)')
         self._is_x64 = self._nt_headers.FileHeader.Machine == D.IMAGE_FILE_MACHINE_AMD64
         if self._is_x64:
             self._nt_headers = self.cast_rva(self._dos_header.e_lfanew, D.PIMAGE_NT_HEADERS64, True)[0]
         self._opt_header = self._nt_headers.OptionalHeader
         if not self._is_x64 and self._opt_header.Magic != D.OPTIONAL_HEADER_MAGIC_PE:
-            print >> sys.stderr, 'Invalid PE header (invalid optional header signature)'
+            print('Invalid PE header (invalid optional header signature)', file=sys.stderr)
             raise Exception('Invalid PE header (invalid optional header signature)')
         if self._is_x64 and self._opt_header.Magic != D.OPTIONAL_HEADER_MAGIC_PE_PLUS:
-            print >> sys.stderr, 'Invalid PE header (invalid optional header signature)'
+            print('Invalid PE header (invalid optional header signature)', file=sys.stderr)
             raise Exception('Invalid PE header (invalid optional header signature)')
 
         if self._opt_header.NumberOfRvaAndSizes <= 0 or self._opt_header.NumberOfRvaAndSizes > 0x10:
-            print >> sys.stderr, 'Invalid PE header (NumberOfRvaAndSizes has invalid value)'
+            print('Invalid PE header (NumberOfRvaAndSizes has invalid value)', file=sys.stderr)
             raise Exception('Invalid PE header (NumberOfRvaAndSizes has invalid value)')
 
     def _parse_exports_dir(self):
@@ -116,10 +116,10 @@ class PEHelper(object):
                 if nameOrdinal < 0 or nameOrdinal >= len(funcs):
                     continue
 
-                self._exports[nameOrdinal]['name'] = name
+                self._exports[nameOrdinal]['name'] = name.decode()
             for exp in self._exports:
                 self._ea_to_long_name[exp['ea']] = '%s.%s' % (self._modname, exp['name'])
-            #print self._exports
+            #print(self._exports)
 
     # def _parse_imports_dir(self):
     #     self._imports_dir_entry = self._opt_header.DataDirectory[D.IMAGE_DIRECTORY_ENTRY_IMPORT]
@@ -139,8 +139,8 @@ class PEHelper(object):
         sections = self.cast_rva(offset, PSections, True)[0]
         for sec in sections:
             name = bytearray(sec.Name)
-            if '\x00' in name:
-                name = name[:name.index('\x00')]
+            if b'\x00' in name:
+                name = name[:name.index(b'\x00')]
             section = {
                 'name': str(name),
                 'va': sec.VirtualAddress,
@@ -165,7 +165,7 @@ class PEHelper(object):
             self._parsed = True
             return True
         except Exception as e:
-            print >> sys.stderr, 'Exception: %r\r\n%s' % (e, traceback.format_exc().replace('\n', '\r\n'))
+            print('Exception: %r\r\n%s' % (e, traceback.format_exc().replace('\n', '\r\n')), file=sys.stderr)
         return False
 
     def get_exports(self):

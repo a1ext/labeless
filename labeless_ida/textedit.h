@@ -66,12 +66,7 @@ private:
 	QString textTillCursor() const;
 
 private:
-	enum CompletionType
-	{
-		CT_Unknown,
-		CT_Completions,
-		CT_CallSignature
-	};
+
 
 	QPointer<Highlighter> m_Highlighter;
 	QPointer<QCompleter> m_Completer;
@@ -79,7 +74,7 @@ private:
 	QStringList m_InternalNames;
 	QPointer<QTimer> m_CompletionTimer;
 	QPointer<PySignatureToolTip> m_SignatureToolTip;
-	CompletionType m_CompletionType;
+	jedi::CompletionType m_CompletionType;
 	QPointer<TELineNumberArea> m_LineNumberArea;
 
 	bool m_IsIDASide;

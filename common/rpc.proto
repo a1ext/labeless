@@ -1,4 +1,4 @@
-syntax = "proto2";
+syntax = "proto3";
 package rpc;
 
 message RpcRequest {
@@ -15,7 +15,7 @@ message RpcRequest {
 		RPCT_JUMP_TO_FROM				= 9;
 	}
 
-	required RequestType request_type								= 1;
+	RequestType request_type										= 1;
 	optional MakeNamesRequest make_names_req						= 2;
 	optional MakeCommentsRequest make_comments_req					= 3;
 	optional ReadMemoryRegionsRequest read_memory_regions_req		= 4;
@@ -29,17 +29,18 @@ message Execute {
 	optional string script				= 1;
 	optional string script_extern_obj	= 2;
 	optional bytes rpc_request			= 3;
-	optional bool background			= 4 [default = false];
+	optional bool background			= 4;
 	optional uint64 job_id				= 5;
 }
 
 message Response {
 	enum JobStatus {
+		JS_UNKNOWN  = 0;
 		JS_FINISHED	= 1;
 		JS_PENDING	= 2;
 	}
 
-	required uint64 job_id				= 1;
+	uint64 job_id						= 1;
 	optional string std_out				= 2;
 	optional string std_err				= 3;
 	optional string error				= 4;
@@ -50,93 +51,94 @@ message Response {
 
 message MakeNamesRequest {
 	message Name {
-		required uint64 ea		= 1;
-		required string name	= 2;
+		uint64 ea		= 1;
+		string name		= 2;
 	}
-	repeated Name names			= 1;
-	required uint64 base		= 2;
-	required uint64 remote_base	= 3;
+	repeated Name names	= 1;
+	uint64 base			= 2;
+	uint64 remote_base	= 3;
 }
 
 message MakeCommentsRequest {
 	message Name {
-		required uint64 ea		= 1;
-		required string name	= 2;
+		uint64 ea		= 1;
+		string name		= 2;
 	}
-	repeated Name names			= 1;
-	required uint64 base		= 2;
-	required uint64 remote_base	= 3;
+	repeated Name names	= 1;
+	uint64 base			= 2;
+	uint64 remote_base	= 3;
 }
 
 message GetMemoryMapResult {
 	message Memory {
-		required uint64 base	= 1;
-		required uint64 size	= 2;
-		required uint32 access	= 3;
-		required string name	= 4;
+		uint64 base		= 1;
+		uint64 size		= 2;
+		uint32 access	= 3;
+		string name		= 4;
 	}
 	repeated Memory memories	= 1;
 }
 
 message ReadMemoryRegionsRequest {
 	message Region {
-		required uint64 addr	= 1;
-		required uint64 size	= 2;
+		uint64 addr				= 1;
+		uint64 size				= 2;
 	}
 	repeated Region regions		= 1;
 }
 
 message ReadMemoryRegionsResult {
 	message Memory {
-		required uint64 addr	= 1;
-		required uint64 size	= 2;
-		required bytes mem		= 3;
-		required uint32 protect	= 4;
+		uint64 addr				= 1;
+		uint64 size				= 2;
+		bytes mem				= 3;
+		uint32 protect			= 4;
 	}
 	repeated Memory memories	= 1;
 }
 
 message AnalyzeExternalRefsRequest {
-	required uint64 ea_from			= 1;
-	required uint64 ea_to			= 2;
-	required uint32 increment		= 3;
-	required uint64 analysing_base	= 4;
-	required uint64 analysing_size	= 5;
+	uint64 ea_from				= 1;
+	uint64 ea_to				= 2;
+	uint32 increment			= 3;
+	uint64 analysing_base		= 4;
+	uint64 analysing_size		= 5;
 }
 
 message AnalyzeExternalRefsResult {
 	message PointerData {
-		required uint64 ea							= 1;
-		required string module						= 2;
-		required string proc						= 3;
+		uint64 ea									= 1;
+		string module								= 2;
+		string proc									= 3;
 		optional string ordinal_collision_dll_path	= 4;
 	}
 	message RefData {
 		enum RefType {
+			REFT_UNKNOWN	= 0;
 			REFT_JMPCONST	= 1;
 			REFT_IMMCONST	= 2;
 			REFT_ADDRCONST 	= 3;
 		}
 
-		required uint64 ea							= 1;
-		required uint64 len							= 2;
-		required string dis							= 3;
-		required uint64 v							= 4;
-		required RefType ref_type					= 5;
-		required string module						= 6;
-		required string proc						= 7;
+		uint64 ea									= 1;
+		uint64 len									= 2;
+		string dis									= 3;
+		uint64 v									= 4;
+		RefType ref_type							= 5;
+		string module								= 6;
+		string proc									= 7;
 		optional string ordinal_collision_dll_path	= 8;
 	}
 	message reg_t {
-		required uint32 eax = 1;
-		required uint32 ecx = 2;
-		required uint32 edx = 3;
-		required uint32 ebx = 4;
-		required uint32 esp = 5;
-		required uint32 ebp = 6;
-		required uint32 esi = 7;
-		required uint32 edi = 8;
-		required uint64 rip = 9;
+		uint32 eax		  = 1;
+		uint32 ecx		  = 2;
+		uint32 edx		  = 3;
+		uint32 ebx		  = 4;
+		uint32 esp		  = 5;
+		uint32 ebp		  = 6;
+		uint32 esi		  = 7;
+		uint32 edi		  = 8;
+		uint64 rip		  = 9;
 		optional uint64 rax = 10;
 		optional uint64 rbx = 11;
 		optional uint64 rcx = 12;
@@ -148,19 +150,19 @@ message AnalyzeExternalRefsResult {
 	}
 	repeated PointerData api_constants	= 1;
 	repeated RefData refs				= 2;
-	required reg_t context				= 3;
+	reg_t context						= 3;
 }
 
 message CheckPEHeadersRequest {
-	required uint64 base = 1;
-	required uint64 size = 2;
+	uint64 base = 1;
+	uint64 size = 2;
 }
 
 message CheckPEHeadersResult {
 	message Exports {
-		required uint64 ea		= 1;
-		required uint64 ord		= 2;
-		optional string name	= 3;
+		uint64 ea						= 1;
+		uint64 ord						= 2;
+		optional string name			= 3;
 	}
 	message Section {
 		optional string name			= 1;
@@ -170,34 +172,34 @@ message CheckPEHeadersResult {
 		optional uint64 raw_size		= 5;
 		optional uint32 characteristics	= 6;
 	}
-	required bool pe_valid		= 1;
-	repeated Exports exps		= 2;
-	repeated Section sections	= 3;
+	bool pe_valid						= 1;
+	repeated Exports exps				= 2;
+	repeated Section sections			= 3;
 }
 
 message GetBackendInfoResult {
-	required uint32 bitness			= 1;
-	required string dbg_name		= 2;
+	uint32 bitness					= 1;
+	string dbg_name					= 2;
 	optional string dbg_ver			= 3;
-	required string labeless_ver	= 4;
+	string labeless_ver				= 4;
 }
 
 message AutoCompleteCodeRequest {
-	required string source			= 1;
-	required uint32 zline			= 2;
-	required uint32 zcol			= 3;
-	required bool call_sig_only		= 4;
+	string source					= 1;
+	uint32 zline					= 2;
+	uint32 zcol						= 3;
+	bool call_sig_only				= 4;
 }
 
 message AutoCompleteCodeResult {
 	message CallSignature {
 		message Param {
-			required string name		= 1;
+			string name					= 1;
 			optional string description	= 2;
 		}
 		optional string cs_type			= 1;
-		required string name			= 2;
-		required int32 index			= 3;
+		string name						= 2;
+		int32 index						= 3;
 		optional string raw_doc			= 4;
 		repeated Param params			= 5;
 	}
@@ -207,53 +209,55 @@ message AutoCompleteCodeResult {
 
 message PausedNotification {
 	message PausedNotification32 {
-		required uint32 ip = 1;
+		uint32 ip		 = 1;
 		repeated uint32 r = 2 [packed=true];
-		required uint32 flags = 3;
+		uint32 flags	  = 3;
 		repeated uint32 s = 4 [packed=true];
 	}
 	message PausedNotification64 {
-		required uint64 ip = 1;
+		uint64 ip		 = 1;
 		repeated uint64 r = 2 [packed=true];
-		required uint64 flags = 3;
+		uint64 flags	  = 3;
 		repeated uint64 s = 4 [packed=true];
 	}
 	message PairItem {
-		required string name = 1;
-		optional string value = 2;
+		string name				= 1;
+		optional string value	= 2;
 	}
 	message Operand {
-		required string name = 1; // text
+		string name			 = 1; // text
 		optional string comment = 2;
-		optional uint64 addr = 3;
-		optional uint64 value = 4;
-		optional uint32 opnum = 5;
+		optional uint64 addr	= 3;
+		optional uint64 value	= 4;
+		optional uint32 opnum	= 5;
 	}
-	required bytes backend_id = 1;
-	optional PausedNotification32 info32 = 2;
-	optional PausedNotification64 info64 = 3;
-	repeated PairItem resolved = 4;
-	repeated Operand operands = 5;
-	optional bytes dump = 6;
+	bytes backend_id						= 1;
+	optional PausedNotification32 info32	= 2;
+	optional PausedNotification64 info64	= 3;
+	repeated PairItem resolved				= 4;
+	repeated Operand operands				= 5;
+	optional bytes dump						= 6;
 }
 
 message JumpToFromRequest {
 	enum JUMP_TYPE {
-		JT_TO = 1;
-		JT_FROM = 2;
+		JT_UNKNOWN	= 0;
+		JT_TO		= 1;
+		JT_FROM		= 2;
 	}
 	
-	required JUMP_TYPE jump_type = 1;
-	optional uint64 to = 2;
-	required uint64 base		= 3;
-	required uint64 remote_base	= 4;
+	JUMP_TYPE jump_type = 1;
+	optional uint64 to	= 2;
+	uint64 base			= 3;
+	uint64 remote_base	= 4;
 }
 
 message JumpToFromResult {
 	enum JUMP_RESULT {
-		JR_OK = 1;
-		JR_FAILED = 2;
+		JR_UNKNOWN	= 0;
+		JR_OK		= 1;
+		JR_FAILED	= 2;
 	}
-	required JUMP_RESULT result = 1;
+	JUMP_RESULT result = 1;
 	optional uint64 va = 2;
 }

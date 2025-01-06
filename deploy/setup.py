@@ -53,7 +53,7 @@ def _get_version():
 
 requirements = [
     'setuptools',
-    'protobuf==2.6.1'
+    'protobuf==3.20.3'
 ]
 
 

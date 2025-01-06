@@ -17,6 +17,13 @@ struct extlang_t;
 
 namespace jedi {
 
+enum CompletionType
+{
+	CT_Unknown,
+	CT_Completions,
+	CT_CallSignature
+};
+
 struct FuncArg
 {
 	QString name;
@@ -59,6 +66,7 @@ struct Request
 	QString script;
 	quint32 zline;
 	quint32 zcol;
+	CompletionType comp_type;
 	
 	QObject* rcv;
 

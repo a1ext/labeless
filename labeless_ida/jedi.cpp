@@ -21,6 +21,7 @@ Request::Request()
 	: zline(0)
 	, zcol(0)
 	, rcv(nullptr)
+	, comp_type(CT_Unknown)
 {
 }
 

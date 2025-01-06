@@ -25,12 +25,9 @@ bool ICommand::parseResponse(QPointer<RpcData> rd)
 	{
 		stdOut = rd->response->std_out();
 		stdErr = rd->response->std_err();
-		if (rd->response->has_job_id())
-		{
-			jobId = rd->response->job_id();
-			if (!rd->jobId)
-				rd->jobId = jobId;
-		}
+		jobId = rd->response->job_id();
+		if (!rd->jobId)
+			rd->jobId = jobId;
 		if (rd->response->has_job_status())
 			pending = rd->response->job_status() == rpc::Response::JS_PENDING;
 

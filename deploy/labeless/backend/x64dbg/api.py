@@ -10,6 +10,6 @@ __author__ = 'a1ex_t'
 
 from labeless import py_olly
 if int(py_olly.get_backend_info()['bitness']) == 32:
-    from x64dbgapi import *
+    from .x64dbgapi import *
 else:
-    from x64dbgapi64 import *
+    from .x64dbgapi64 import *

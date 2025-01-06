@@ -12,8 +12,10 @@ import datetime
 import sys
 import json
 
+# import pydevd_pycharm
+# pydevd_pycharm.settrace('127.0.0.1', port=11111, stdoutToServer=False, stderrToServer=False)
 # import rdebug
-import py_olly
+from . import py_olly
 from labeless.logs import MyStdOut
 
 
@@ -29,7 +31,7 @@ sys.argv = [""]
 # Have to make sure Python finds our modules
 
 backend_name = py_olly.get_backend_info()['name']
-from backend import get_backend
+from .backend import get_backend
 LB = get_backend(backend_name)
 all_names = getattr(LB, '__all__') if hasattr(LB, '__all__') else (key for key in LB.__dict__ if not key.startswith('_'))
 

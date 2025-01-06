@@ -46,6 +46,9 @@ static const std::string kPropText = "p_text";
 static const std::string kPropType = "p_type";
 static const std::string kPropNumber = "p_num";
 
+static const QString kIdaScript = "ida_script";
+static const QString kOllyScript = "olly_script";
+
 enum StoredTemplateType
 {
 	STT_IDA,
@@ -100,6 +103,7 @@ PyOllyView::PyOllyView(bool isShowAllResponsesInLog, bool isCodeCompletionEnable
 
 	setUpGUI();
 	setUpConnections();
+	setUpLastInputScripts();
 }
 
 PyOllyView::~PyOllyView()
@@ -205,6 +209,20 @@ void PyOllyView::setUpConnections()
 	}
 }
 
+void PyOllyView::setUpLastInputScripts()
+{
+	const auto& scriptsData = GlobalSettingsManger::instance().value(GSK_ScriptsInput);
+	if (scriptsData.isValid() && !scriptsData.isNull()) {
+		const QVariantMap& vm = scriptsData.toMap();
+		if (vm.contains(kIdaScript)) {
+			m_UI->teIDAScript->setPlainText(vm.value(kIdaScript).toString());
+		}
+		if (vm.contains(kOllyScript)) {
+			m_UI->teOllyScript->setPlainText(vm.value(kOllyScript).toString());
+		}
+	}
+}
+
 void PyOllyView::changeEvent(QEvent* e)
 {
 	QWidget::changeEvent(e);
@@ -292,6 +310,16 @@ void PyOllyView::jumpAndSelectLine(bool isIDA, int line)
 	te->setFocus();
 }
 
+void PyOllyView::saveScriptsData()
+{
+	// save editors text
+	const QVariantMap& vm = {
+		{kIdaScript, m_UI->teIDAScript->toPlainText()},
+		{kOllyScript, m_UI->teOllyScript->toPlainText()},
+	};
+	GlobalSettingsManger::instance().setValue(GSK_ScriptsInput, vm);
+}
+
 bool PyOllyView::eventFilter(QObject* obj, QEvent* event)
 {
 	if (event->type() != QEvent::MouseButtonPress)
@@ -302,7 +330,7 @@ bool PyOllyView::eventFilter(QObject* obj, QEvent* event)
 		return QObject::eventFilter(obj, event);
 
 	QMouseEvent* const me = static_cast<QMouseEvent*>(event);
-	const QString anchor = textEdit->anchorAt(me->pos());
+	const QString& anchor = textEdit->anchorAt(me->pos());
 	if (!anchor.isEmpty())
 	{
 		emit anchorClicked(anchor);

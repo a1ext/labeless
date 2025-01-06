@@ -25,7 +25,7 @@ RpcThreadWorker::RpcThreadWorker(QObject* parent)
 
 RpcThreadWorker::~RpcThreadWorker()
 {
-	msg("%s\n", Q_FUNC_INFO);
+	//msg("%s\n", Q_FUNC_INFO);
 }
 
 void RpcThreadWorker::main()

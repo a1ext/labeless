@@ -19,10 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import ctypes
-import ollyapi2 as api
-import threads
-import memory
-import sym
+from . import ollyapi2 as api
+from . import threads, memory, sym
 
 # Wrappers
 
@@ -104,7 +102,7 @@ def Assemble_(s, address=0):
 
     # you submit invalid x86 assembly
     # XXX: doesn't it exist a proper way to do that ??
-    if error_msg.startswith('U\x00n\x00k\x00n\x00o\x00w\x00n'):
+    if error_msg.startswith(b'U\x00n\x00k\x00n\x00o\x00w\x00n'):
         return 0, 0, str(error_msg.replace('\x00', ''))
 
     return str(code[:sizeof_assembled]), sizeof_assembled
@@ -169,7 +167,7 @@ def GetAnalyserComment(addr):
         256
     )
 
-    return str(buf.replace('\x00', ''))
+    return buf.replace(b'\x00', b'').decode(errors='replace')
 
 
 def GetProcComment(addr, acall=0, argonly=0):
@@ -188,7 +186,7 @@ def GetProcComment(addr, acall=0, argonly=0):
         argonly
     )
 
-    return str(buf.replace('\x00', ''))
+    return buf.replace(b'\x00', b'').decode(errors='replace')
 
 
 def IsDebuggeeFinished():
@@ -360,7 +358,7 @@ def FindInstr(instr, address_start=None):
     try:
         # XXX: fix the ip parameter to be able of finding eip-dependent instruction
         asmmod, nmodel = AssembleAllForms(instr, 0)
-    except Exception, e:
+    except Exception as e:
         raise(e)
 
     # get information about the memory block
@@ -421,16 +419,16 @@ def FindHexInPage(s, address_start=None):
             byte_to_compare = ord(data[idx_data])
 
             # have we a wildcard ?
-            if '?' in b_str:
+            if b'?' in b_str:
 
                 # wildcard on the high nibble
-                if b_str[0] == '?' and b_str[1] != '?':
+                if b_str[0] == b'?' and b_str[1] != b'?':
                     low_nibble = (byte_to_compare & 0x0f)
                     if low_nibble != int(b_str[1], 16):
                         does_it_matched = False
 
                 # wildcard on the low nibble
-                elif b_str[1] == '?' and b_str[0] != '?':
+                elif b_str[1] == b'?' and b_str[0] != b'?':
                     high_nibble = ((byte_to_compare & 0xf0) >> 4)
                     if high_nibble != int(b_str[0], 16):
                         does_it_matched = False
@@ -514,12 +512,12 @@ def display_call_stack(nb_max_frame=100):
         ebp = sebp
 
     eip = threads.GetEip()
-    print "#%.2d %#.8x : %s" % (len(frames_info), eip, sym.GetSymbolFromAddress(eip))
+    print("#%.2d %#.8x : %s" % (len(frames_info), eip, sym.GetSymbolFromAddress(eip)))
     
     for i in range(len(frames_info)):
         c = frames_info[i]
         ri = len(frames_info) - i - 1
-        print '#%.2d %#.8x : %s (found @%#.8x)' % (ri, c['return-address'], c['symbol'], c['address'])
+        print('#%.2d %#.8x : %s (found @%#.8x)' % (ri, c['return-address'], c['symbol'], c['address']))
 
 
 def display_seh_chain():
@@ -550,7 +548,7 @@ def display_seh_chain():
 
     i = 0
     for entry in seh_entries:
-        print '#%.2d - Handler: %s (%#.8x) - Next @ %#.8x' % (i, entry['symbol'], entry['handler'], entry['next'])
+        print('#%.2d - Handler: %s (%#.8x) - Next @ %#.8x' % (i, entry['symbol'], entry['handler'], entry['next']))
         i += 1
 
 

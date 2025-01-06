@@ -18,9 +18,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-import ollyapi2 as api
+
 import ctypes as C
-import threads
+from . import ollyapi2 as api
+from . import threads
 
 # Structures
 
@@ -214,15 +215,16 @@ def resolve_api(n, mod):
     by OllyDbg
     """
     addr = C.windll.kernel32.GetProcAddress(
-        C.windll.kernel32.GetModuleHandleA(mod),
-        n
+        C.windll.kernel32.GetModuleHandleW(mod),
+        n.encode('ascii')
     )
 
-    assert(addr != 0)
+    assert addr != 0, f'Failed to resolve {n} from {mod}'
     return addr
 
-if not C.windll.kernel32.GetModuleHandleA(DBG_HELP_DLL):
-    C.windll.kernel32.LoadLibraryA(DBG_HELP_DLL)
+if not C.windll.kernel32.GetModuleHandleW(DBG_HELP_DLL):
+    mod = C.windll.kernel32.LoadLibraryW(DBG_HELP_DLL)
+    assert mod is not None, f'Failed to load {DBG_HELP_DLL}'
 
 # XXX: ctypes.wintypes doesn't exist in python 2.6
 # BOOL WINAPI SymInitialize(
@@ -351,7 +353,7 @@ def DecodeAddress(addr):
     if r <= 0:
         return None
 
-    return str(buf.replace('\x00', ''))
+    return buf.replace(b'\x00', b'').decode(errors='ignore')
 
 
 def DecodeRelativeOffset(addr):
@@ -368,7 +370,7 @@ def DecodeRelativeOffset(addr):
     if r <= 0:
         return None
 
-    return str(buf.replace('\x00', ''))
+    return buf.replace(b'\x00', b'').decode(errors='ignore')
 
 # Abstraction
 
@@ -389,9 +391,9 @@ def GetSymbolFromAddressMS(address):
         module_info = SymGetModuleInfo64(handle_process, address)
 
         if module_info != None:
-            s = '%s.%s+%#.8x' % (module_info.ModuleName, symbol_name, offset)
+            s = '%s.%s+%#.8x' % (module_info.ModuleName.decode(), symbol_name.decode(), offset)
         else:
-            s = '%s+%#.8x' % (symbol_name, offset)
+            s = '%s+%#.8x' % (symbol_name.decode(), offset)
 
     return s
 

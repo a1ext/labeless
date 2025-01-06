@@ -24,10 +24,10 @@
 #include "../common/version.h"
 
 extern "C" {
-	void init_ollyapi();
+	PyObject* PyInit__ollyapi();
 };
 
-#ifdef ENABLE_PYTHON_PROFILING
+#if (ENABLE_PYTHON_PROFILING == 1)
 #include <compile.h>
 #include <frameobject.h>
 #endif
@@ -42,10 +42,10 @@ static struct StaticConfig
 	UINT		hlpPortChanged = 0;
 } gConfig;
 
-static const char kBackendName[] {"ollydbg11"};
+static const char kBackendName[] {"labeless.backend.ollydbg11"};
 
 
-#ifdef ENABLE_PYTHON_PROFILING
+#if ENABLE_PYTHON_PROFILING
 int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
 {
 	if (what != PyTrace_LINE)
@@ -53,7 +53,7 @@ int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
 
 	if (PyObject* str = PyObject_Str(frame->f_code->co_filename))
 	{
-		std::string s = PyString_AsString(str);
+		std::string s = PyUnicode_AsUTF8(str);
 		Addtolist(0, -1, "PROFILING: %s:%d", s.c_str(), frame->f_lineno);
 		Py_DECREF(str);
 		std::ofstream of("c:\\labeless_trace.log", std::ios_base::app);
@@ -71,18 +71,6 @@ int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
 }
 #endif // ENABLE_PYTHON_PROFILING
 
-bool execFile(const std::string& fileName)
-{
-	PyObject* const pyFileObject = PyFile_FromString(const_cast<char*>(fileName.c_str()), "r");
-
-	if (!pyFileObject)
-		return false;
-
-	const bool rv = PyRun_SimpleFile(PyFile_AsFile(pyFileObject), const_cast<char*>(fileName.c_str())) == 0;
-	Py_DECREF(pyFileObject);
-	return rv;
-}
-
 /* Obtains a string from a Python traceback.
 This is the exact same string as "traceback.print_exc" would return.
 
@@ -93,7 +81,6 @@ bool pyTraceback_AsString(PyObject* exc_tb, std::string& result)
 {
 #define TRACEBACK_FETCH_ERROR(what) { errMsg = what; break; }
 
-	result.clear();
 	char* errMsg = NULL; /* holds a local error message */
 	PyObject* modStringIO = NULL;
 	PyObject* modTB = NULL;
@@ -105,7 +92,7 @@ bool pyTraceback_AsString(PyObject* exc_tb, std::string& result)
 
 	do {
 		/* Import the modules we need - cStringIO and traceback */
-		modStringIO = PyImport_ImportModule("cStringIO");
+		modStringIO = PyImport_ImportModule("io");
 		if (modStringIO == NULL)
 			TRACEBACK_FETCH_ERROR("cant import cStringIO\n");
 
@@ -118,7 +105,7 @@ bool pyTraceback_AsString(PyObject* exc_tb, std::string& result)
 			TRACEBACK_FETCH_ERROR("cant find cStringIO.StringIO\n");
 		obStringIO = PyObject_CallObject(obFuncStringIO, NULL);
 		if (obStringIO == NULL)
-			TRACEBACK_FETCH_ERROR("cStringIO.StringIO() failed\n");
+			TRACEBACK_FETCH_ERROR("io.StringIO() failed\n");
 		/* Get the traceback.print_exception function, and call it. */
 		obFuncTB = PyObject_GetAttrString(modTB, "print_tb");
 		if (obFuncTB == NULL)
@@ -142,12 +129,12 @@ bool pyTraceback_AsString(PyObject* exc_tb, std::string& result)
 			TRACEBACK_FETCH_ERROR("getvalue() failed.\n");
 
 		/* And it should be a string all ready to go - duplicate it. */
-		if (!PyString_Check(obResult))
+		if (!PyUnicode_Check(obResult))
 			TRACEBACK_FETCH_ERROR("getvalue() did not return a string\n");
 
-		char* tempResult = PyString_AsString(obResult);
+		const char* tempResult = PyUnicode_AsUTF8(obResult);
 		if (tempResult)
-			result = tempResult;
+			result += tempResult;
 	} while (0);
 
 	/* All finished - first see if we encountered an error */
@@ -157,7 +144,7 @@ bool pyTraceback_AsString(PyObject* exc_tb, std::string& result)
 		if (result != NULL)
 			// if it does, not much we can do! 
 			strcpy_s(result, len, errMsg);*/
-		result = errMsg;
+		result += errMsg;
 	}
 	Py_XDECREF(modStringIO);
 	Py_XDECREF(modTB);
@@ -186,7 +173,7 @@ inline void server_log(const char* fmt, ...)
 
 static PyObject* stdOutHandler(PyObject* self, PyObject* arg)
 {
-	const char* str = PyString_AsString(arg);
+	const char* str = PyUnicode_AsUTF8(arg);
 
 	auto& cd = Labeless::instance().clientData();
 	recursive_lock_guard lock(cd.stdOutLock);
@@ -197,7 +184,7 @@ static PyObject* stdOutHandler(PyObject* self, PyObject* arg)
 
 static PyObject* stdErrHandler(PyObject*, PyObject* arg)
 {
-	const char* str = PyString_AsString(arg);
+	const char* str = PyUnicode_AsUTF8(arg);
 	auto& cd = Labeless::instance().clientData();
 	recursive_lock_guard lock(cd.stdErrLock);
 	cd.stdErr << str;
@@ -220,11 +207,7 @@ static PyObject* setBinaryResult(PyObject*, PyObject* arg)
 	}
 
 	uint64_t jobId = 0;
-	if (PyInt_Check(pyJobId))
-	{
-		jobId = static_cast<uint64_t>(PyInt_AsLong(pyJobId));
-	}
-	else if (PyLong_Check(pyJobId))
+	if (PyLong_Check(pyJobId))
 	{
 		jobId = PyLong_AsUnsignedLongLong(pyJobId);
 	}
@@ -243,16 +226,18 @@ static PyObject* setBinaryResult(PyObject*, PyObject* arg)
 
 	Py_ssize_t size = 0;
 	const char* buff = nullptr;
+	Py_buffer view;
 
-	if (PyObject_AsCharBuffer(pyBuff, &buff, &size) >= 0 && buff)
+	if (PyObject_GetBuffer(pyBuff, &view, PyBUF_SIMPLE) >= 0)
 	{
 		auto& cd = Labeless::instance().clientData();
 		recursive_lock_guard lock(cd.commandsLock);
 		Request* r = cd.find(jobId);
 		if (r)
-			r->binaryResult = std::string(buff, size);
+			r->binaryResult = std::string(static_cast<char*>(view.buf), view.len);
 		else
 			log_r("Unable to set bynary result, no commands found for jobId: %" PRIu64, jobId);
+		PyBuffer_Release(&view);
 	}
 	Py_RETURN_NONE;
 }
@@ -260,11 +245,7 @@ static PyObject* setBinaryResult(PyObject*, PyObject* arg)
 static PyObject* get_params(PyObject*, PyObject* arg)
 {
 	uint64_t jobId = 0;
-	if (PyInt_Check(arg))
-	{
-		jobId = static_cast<uint64_t>(PyInt_AsLong(arg));
-	}
-	else if (PyLong_Check(arg))
+	if (PyLong_Check(arg))
 	{
 		jobId = PyLong_AsUnsignedLongLong(arg);
 	}
@@ -284,7 +265,7 @@ static PyObject* get_params(PyObject*, PyObject* arg)
 	for (const Request& r : cd.commands)
 	{
 		if (r.id == jobId)
-			return PyString_FromStringAndSize(r.params.c_str(), r.params.size());
+			return PyBytes_FromStringAndSize(r.params.c_str(), r.params.size());
 	}
 
 	Py_RETURN_NONE;
@@ -292,8 +273,8 @@ static PyObject* get_params(PyObject*, PyObject* arg)
 
 static PyObject* olly_log(PyObject*, PyObject* arg)
 {
-	if (PyString_Check(arg))
-		server_log("%s", PyString_AsString(arg));
+	if (PyUnicode_Check(arg))
+		server_log("%s", PyUnicode_AsUTF8(arg));
 	Py_RETURN_NONE;
 }
 
@@ -312,11 +293,7 @@ static PyObject* olly_set_error(PyObject*, PyObject* arg)
 	}
 
 	uint64_t jobId = 0;
-	if (PyInt_Check(pyJobId))
-	{
-		jobId = static_cast<uint64_t>(PyInt_AsLong(pyJobId));
-	}
-	else if (PyLong_Check(pyJobId))
+	if (PyLong_Check(pyJobId))
 	{
 		jobId = PyLong_AsUnsignedLongLong(pyJobId);
 	}
@@ -328,13 +305,13 @@ static PyObject* olly_set_error(PyObject*, PyObject* arg)
 		Py_RETURN_NONE;
 	}
 
-	if (!PyString_Check(pyErrorStr))
+	if (!PyUnicode_Check(pyErrorStr))
 		Py_RETURN_NONE;
 
 	Py_ssize_t size = 0;
 	const char* buff = nullptr;
 
-	auto errorStr = PyString_AsString(pyErrorStr);
+	auto errorStr = PyUnicode_AsUTF8(pyErrorStr);
 	if (!errorStr)
 		Py_RETURN_NONE;
 
@@ -350,7 +327,7 @@ static PyObject* olly_set_error(PyObject*, PyObject* arg)
 
 static PyObject* olly_get_ver(PyObject*, PyObject* arg)
 {
-	PyObject* rv = PyString_FromString(LABELESS_VER_STR);
+	PyObject* rv = PyUnicode_FromString(LABELESS_VER_STR);
 	return rv;
 }
 
@@ -358,7 +335,7 @@ static PyObject* olly_get_hprocess(PyObject*, PyObject*)
 {
 	const t_status status = Getstatus();
 	if (status == STAT_EVENT || status == STAT_RUNNING || status == STAT_CLOSING)
-		return PyInt_FromSize_t(static_cast<size_t>(Plugingetvalue(VAL_HPROCESS)));
+		return PyLong_FromSize_t(static_cast<size_t>(Plugingetvalue(VAL_HPROCESS)));
 	Py_RETURN_NONE;
 }
 
@@ -366,20 +343,20 @@ static PyObject* olly_get_pid(PyObject*, PyObject*)
 {
 	const t_status status = Getstatus();
 	if (status == STAT_EVENT || status == STAT_RUNNING || status == STAT_CLOSING)
-		return PyInt_FromLong(Plugingetvalue(VAL_PROCESSID));
+		return PyLong_FromLong(Plugingetvalue(VAL_PROCESSID));
 	Py_RETURN_NONE;
 }
 
 static PyObject* olly_get_backend_name(PyObject*, PyObject*)
 {
-	return PyString_FromString(kBackendName);
+	return PyUnicode_FromString(kBackendName);
 }
 
 static PyObject* olly_get_backend_info(PyObject*, PyObject*)
 {
 	PyObject* const rv = PyDict_New();
-	PyDict_SetItemString(rv, "bitness", PyString_FromString("32")); // FIXME
-	PyDict_SetItemString(rv, "name", PyString_FromString(kBackendName));
+	PyDict_SetItemString(rv, "bitness", PyUnicode_FromString("32")); // FIXME
+	PyDict_SetItemString(rv, "name", PyUnicode_FromString(kBackendName));
 	return rv;
 }
 
@@ -399,6 +376,14 @@ static PyMethodDef PyOllyMethods [] =
 	{ NULL, NULL, 0, NULL }
 };
 
+static PyModuleDef PyOllyModule = {
+	PyModuleDef_HEAD_INIT,
+	"_py_olly",
+	NULL,
+	-1,
+	PyOllyMethods
+};
+
 static const std::string kExternKeyword = "__extern__";
 static const std::string kResultKeyword = "__result__";
 static const std::string kJsonModuleName = "json";
@@ -406,9 +391,15 @@ static const std::string kJsonLoadsFuncName = "loads";
 static const std::string kLabelessPythonModuleName = "labeless";
 static const std::string kLabelessSerializeResultFuncName = "serialize_result";
 
+static PyObject*
+PyInit__py_olly()
+{
+	return PyModule_Create(&PyOllyModule);
+}
+
 DWORD pyExecExceptionFilter(DWORD code, _EXCEPTION_POINTERS* ep)
 {
-	PyObject* msg = PyString_FromFormat("An exception occurred, code: 0x%x", code);
+	PyObject* msg = PyUnicode_FromFormat("An exception occurred, code: 0x%x", code);
 	stdErrHandler(nullptr, msg);
 	Py_XDECREF(msg);
 	return EXCEPTION_EXECUTE_HANDLER;
@@ -424,7 +415,7 @@ PyObject* pyDeserializeObjectFromJsonString(const std::string& jsonStr)
 
 	if ((pyJson = PyImport_ImportModule(kJsonModuleName.c_str())) &&
 		(pyJsonLoads = PyObject_GetAttrString(pyJson, kJsonLoadsFuncName.c_str())) &&
-		(pyJsonStr = PyString_FromString(jsonStr.c_str())) &&
+		(pyJsonStr = PyUnicode_FromString(jsonStr.c_str())) &&
 		(pyArgs = PyTuple_Pack(1, pyJsonStr)))
 	{
 		result = PyObject_Call(pyJsonLoads, pyArgs, NULL);
@@ -451,7 +442,7 @@ bool pySerializeObjectToJson(PyObject* o, std::string& rv)
 	bool isOk = false;
 	
 	if ((pyModuleDict = PyImport_GetModuleDict()) &&
-		(pyLLstr = PyString_FromString(kLabelessPythonModuleName.c_str())) &&
+		(pyLLstr = PyUnicode_FromString(kLabelessPythonModuleName.c_str())) &&
 		(PyDict_Contains(pyModuleDict, pyLLstr) == 1) &&
 		(pyLL = PyDict_GetItem(pyModuleDict, pyLLstr)) &&
 		(pySerializeResultFn = PyObject_GetAttrString(pyLL, kLabelessSerializeResultFuncName.c_str())) &&
@@ -462,13 +453,13 @@ bool pySerializeObjectToJson(PyObject* o, std::string& rv)
 		{
 			PyErr_Print();
 		}
-		else if (!PyString_Check(result))
+		else if (!PyUnicode_Check(result))
 		{
 			PySys_WriteStderr("[!] Unable to serialize `__result__`, check that it serializes to JSON without errors\n");
 		}
 		else
 		{
-			rv = PyString_AsString(result);
+			rv = PyUnicode_AsUTF8(result);
 			isOk = true;
 		}
 	}
@@ -508,7 +499,7 @@ static bool safePyRunSimpleString(const std::string& script, const std::string& 
 		}
 		else
 		{
-			PyObject* pyExternKey = PyString_FromString(kExternKeyword.c_str());
+			PyObject* pyExternKey = PyUnicode_FromString(kExternKeyword.c_str());
 			if (PyDict_Contains(d, pyExternKey) == 1)
 			{
 				PyDict_DelItemString(d, kExternKeyword.c_str());
@@ -525,7 +516,7 @@ static bool safePyRunSimpleString(const std::string& script, const std::string& 
 		rv &= true;
 
 		// retrieve __result__ object and try to serialize it...
-		PyObject* pyResultKey = PyString_FromString(kResultKeyword.c_str());
+		PyObject* pyResultKey = PyUnicode_FromString(kResultKeyword.c_str());
 		if (PyDict_Contains(d, pyResultKey) == 1)
 		{
 			if (PyObject* pyResultObj = PyDict_GetItem(d, pyResultKey))
@@ -536,8 +527,8 @@ static bool safePyRunSimpleString(const std::string& script, const std::string& 
 		Py_XDECREF(pyResultKey);
 
 		Py_DECREF(v);
-		if (Py_FlushLine())
-			PyErr_Clear();
+		//if (Py_FlushLine())
+		PyErr_Clear();
 	}
 	__except (pyExecExceptionFilter(GetExceptionCode(), GetExceptionInformation()))
 	{
@@ -705,41 +696,55 @@ bool Labeless::initPython()
 #endif // ENABLE_PYTHON_ZIP
 	Py_InteractiveFlag = 0;
 
-	Py_SetProgramName("");
+	PyImport_AppendInittab("_py_olly", &PyInit__py_olly);
+	PyImport_AppendInittab("_ollyapi", &PyInit__ollyapi);
+
+	Py_SetProgramName(L"");
 	Py_InitializeEx(0);
 
-#ifdef ENABLE_PYTHON_PROFILING
-	//PyEval_SetTrace(tracefunc, NULL);
-#endif
+#if (ENABLE_PYTHON_PROFILING == 1)
+	PyEval_SetTrace(tracefunc, NULL);
+#endif // ENABLE_PYTHON_PROFILING == 1
 
 	if (!Py_IsInitialized())
 	{
 		Addtolist(0, -1, "  Could not initialize Python");
 		return false;
 	}
-	PyEval_InitThreads();
+	//PyEval_InitThreads();
 
 #ifdef ENABLE_PYTHON_ZIP
 	PyRun_SimpleString("import sys\nsys.path.extend(['.', 'python_dlls', 'python27.zip', 'python27.zip/site-packages'])");
 #endif // ENABLE_PYTHON_ZIP
 
-	Py_InitModule("_py_olly", PyOllyMethods);
 	PyRun_SimpleString("import site");
-
-	init_ollyapi();
 
 	pythonDir += "\\labeless_scripts";
 	const std::string addLoacalFolderToPath = "import sys\nsys.path.extend([r\"\"\"" + pythonDir + "\"\"\"])";
 	PyRun_SimpleString(addLoacalFolderToPath.c_str());
-
-	const auto labelessOk = PyRun_SimpleString("import labeless as ll") == 0;
-	if (!labelessOk)
-	{
+	auto err = PyRun_SimpleString("import _py_olly");
+	if (err != 0) {
+		logInitPythonFail("\"import _py_olly\" failed.");
+		return false;
+	}
+	err = PyRun_SimpleString("import _ollyapi");
+	if (err != 0) {
+		logInitPythonFail("\"import _ollyapi\" failed.");
+		return false;
+	}
+	PyObject* lmodule = PyImport_ImportModule("labeless");
+	if (!lmodule) {
+		logInitPythonFail("\"import labeless\" failed.");
+		return false;
+	}
+	err = PyRun_SimpleString("import labeless as ll");
+	const auto labelessOk = err == 0;
+	if (!labelessOk) {
 		logInitPythonFail("\"import labeless as ll\" failed.");
 		return false;
 	}
 
-	const auto pyexcoreOk = PyRun_SimpleString("from labeless import pyexcore") == 0;
+	const auto pyexcoreOk = (err = PyRun_SimpleString("from labeless import pyexcore")) == 0;
 	if (!pyexcoreOk)
 	{
 		logInitPythonFail("\"from labeless import pyexcore\" failed.");
@@ -757,8 +762,25 @@ void Labeless::logInitPythonFail(const std::string& info) const
 	if (PyErr_Occurred())
 	{
 		PyObject* ptTB = nullptr;
-		PyErr_Fetch(nullptr, nullptr, &ptTB);
+		PyObject* ptype = nullptr, *pvalue = nullptr;
+		PyErr_Fetch(&ptype, &pvalue, &ptTB);
+		if (ptype) {
+			PyObject* ptype_str = PyObject_Str(ptype);
+			error += "Exception type: " + std::string(PyUnicode_AsUTF8(ptype_str)) + "\n";
+			Py_XDECREF(ptype_str);
+		}
+
+		if (pvalue) {
+			PyObject* pvalue_str = PyObject_Str(pvalue);
+			error += "Exception value: " + std::string(PyUnicode_AsUTF8(pvalue_str)) + "\n";
+			Py_XDECREF(pvalue_str);
+		}
 		pyTraceback_AsString(ptTB, error);
+		if (ptTB) {
+			Py_DECREF(ptTB);
+		}
+		Py_XDECREF(ptype);
+		Py_XDECREF(pvalue);
 	}
 	const std::string& sErr = clientData().stdErr.str();
 	const std::string& sOut = clientData().stdOut.str();

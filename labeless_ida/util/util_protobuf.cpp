@@ -20,7 +20,7 @@ bool parseBigMessage(::google::protobuf::Message& msg, const std::string& data)
 	static const int kProtobufMessageLimit = 0x40000000;
 
 	::google::protobuf::io::CodedInputStream input(reinterpret_cast<const ::google::protobuf::uint8*>(data.c_str()), data.size());
-	input.SetTotalBytesLimit(kProtobufMessageLimit, kProtobufMessageLimit);
+	input.SetTotalBytesLimit(kProtobufMessageLimit);
 	return msg.ParseFromCodedStream(&input);
 }
 

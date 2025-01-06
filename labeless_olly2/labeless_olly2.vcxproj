@@ -15,7 +15,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -39,9 +39,9 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_OLLY_EXPORTS;ENABLE_PYTHON_PROFILING;LABELESS_ADDITIONAL_LOGGING;__OLLYDBG20__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_OLLY_EXPORTS;ENABLE_PYTHON_PROFILING=0;LABELESS_ADDITIONAL_LOGGING;__OLLYDBG20__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python27\include;$(SolutionDir)\3rdparty\protobuf-2.6.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>
       <CompileAs>Default</CompileAs>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
@@ -51,8 +51,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ollydbg.lib;shlwapi.lib;ws2_32.lib;libprotobuf_v120_xp_uni.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)\sdk;$(SolutionDir)\3rdparty\Python27\libs;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ollydbg.lib;shlwapi.lib;ws2_32.lib;libprotobuf_v140_xp_uni.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\sdk;$(SolutionDir)\3rdparty\Python310\libs;$(SolutionDir)\3rdparty\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(OutDir)$(TargetName)-$(PlatformTarget).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
@@ -72,7 +72,7 @@
     <ClCompile Include="..\common\cpp\rpc.pb.cc" />
     <ClCompile Include="labeless.cpp" />
     <ClCompile Include="labeless_olly2.cpp" />
-    <ClCompile Include="swig\ollyapi2_wrap.c" />
+    <ClCompile Include="swig\ollyapi2_wrap.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>

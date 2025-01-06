@@ -13,7 +13,7 @@
 #include "palette.h"
 #include "pythonpalettemanager.h"
 #include "pysignaturetooltip.h"
-#include "util/util_python.h"
+#include "util/util_idapython.h"
 #include "jedi.h"
 #include "labeless_ida.h"
 
@@ -45,7 +45,7 @@ TextEdit::TextEdit(QWidget* parent)
 	, m_CompletionModel(new QStringListModel(this))
 	, m_CompletionTimer(new QTimer(this))
 	, m_SignatureToolTip(new PySignatureToolTip(this))
-	, m_CompletionType(CT_Unknown)
+	, m_CompletionType(::jedi::CT_Unknown)
 	, m_IsIDASide(false)
 {
 	m_LineNumberArea = new TELineNumberArea(this);
@@ -56,7 +56,7 @@ TextEdit::TextEdit(QWidget* parent)
 	m_InternalNames
 		<< kkwExtern << kkwResult;
 
-	if (!util::python::jedi::is_available())
+	if (!util::idapython::jedi::is_available())
 	{
 		m_InternalNames += kAdditionalKeyWords;
 	}
@@ -98,6 +98,7 @@ void TextEdit::onAutoCompletionRequested()
 {
 	QSharedPointer<jedi::Request> req(new jedi::Request);
 	req->script = textTillCursor();
+	req->comp_type = m_CompletionType;
 	// std::string s = req->script.toStdString();
 	QTextCursor tc = textCursor();
 	req->zline = tc.blockNumber();
@@ -139,6 +140,11 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
 
 	m_SignatureToolTip->hide();
 
+	if (e->key() == Qt::Key_Escape) {
+		e->accept();
+		return;
+	}
+
 	if (m_Completer && m_Completer->popup()->isVisible())
 	{
 		switch (e->key())
@@ -178,9 +184,9 @@ void TextEdit::keyPressEvent(QKeyEvent* e)
 		return;
 	}
 
-	if (util::python::jedi::is_available())
+	if (util::idapython::jedi::is_available())
 	{
-		m_CompletionType = isCallSignaturesRequested ? CT_CallSignature : CT_Completions;
+		m_CompletionType = isCallSignaturesRequested ? jedi::CT_CallSignature : jedi::CT_Completions;
 		if (isCompletionsRequested || isCallSignaturesRequested)
 		{
 			// don't wait, just ask worker for completion
@@ -249,7 +255,7 @@ void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
 
 	m_SignatureToolTip->hide();
 
-	if (m_CompletionType == CT_CallSignature)
+	if (m_CompletionType == ::jedi::CT_CallSignature)
 	{
 		QStringList signatureList;
 		if (!r->sigMatches.isEmpty())

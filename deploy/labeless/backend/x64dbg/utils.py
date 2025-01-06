@@ -23,9 +23,7 @@ logger = make_logger()
 from labeless import py_olly
 
 # x64dbg specific stuff
-from . import api
-import bridgemain
-import scriptapi
+from . import api, bridgemain, scriptapi
 
 try:
     import labeless.rpc_pb2 as rpc
@@ -46,13 +44,9 @@ def is_valid_addr(ea):
 
 
 def long_xrange(start, stop=None, inc=1):
-    start = long(start)
     if stop is None:
         stop = start
-        start = 0L
-    else:
-        stop = long(stop)
-    inc = long(inc)
+        start = 0
     if stop - start < inc:
         stop = start + inc
     while start < stop:
@@ -76,7 +70,7 @@ def make_names(names, base, remote_base):
     for n in names:
         if not is_valid_addr(n.ea + ptrdiff):
             continue
-        api.Label_Set(n.ea + ptrdiff, n.name.encode('utf8'))
+        api.Label_Set(n.ea + ptrdiff, n.name)
 
     api.GuiUpdateAllViews()
 
@@ -88,7 +82,7 @@ def make_comments(comments, base, remote_base):
     for cmt in comments:
         if not is_valid_addr(cmt.ea + ptrdiff):
             continue
-        api.Comment_Set(cmt.ea + ptrdiff, cmt.name.encode('utf8'), False)
+        api.Comment_Set(cmt.ea + ptrdiff, cmt.name, False)
 
     api.GuiUpdateAllViews()
 
@@ -102,16 +96,16 @@ def get_memory_map():
         return rv
 
     arr = api.MEMPAGEArray.frompointer(api.void_to_MEMPAGE(mm.page))
-    for i in xrange(mm.count):
+    for i in range(mm.count):
         info = arr[i]
         mbi = info.mbi
         mi = rv.memories.add()
 
-        ba = long(mbi.BaseAddress)
+        ba = int(mbi.BaseAddress)
         module_name = ''
         mod_name = scriptapi.Module.NameFromAddr(ba)
         if mod_name:
-            module_name = str(mod_name).replace('\0', '')  # ("'%s'" % module.name) if module else ''
+            module_name = mod_name.decode().replace('\0', '')  # ("'%s'" % module.name) if module else ''
         mi.access = int(mbi.Protect)
         mi.base = int(mbi.BaseAddress)
         mi.name = str(module_name)
@@ -185,7 +179,7 @@ def safe_read_chunked_memory_region_as_one(base, size):
             if prevaddr in gpoints and guarded[gpoints[prevaddr]]['p'] == mbi.Protect:
                 idx = gpoints[prevaddr]
             else:
-                guarded.append({'ea': i, 'size': 0L, 'p': mbi.Protect})
+                guarded.append({'ea': i, 'size': 0, 'p': mbi.Protect})
                 idx = len(guarded) - 1
             guarded[idx]['size'] += GRANULARITY
             gpoints[i] = idx
@@ -262,7 +256,7 @@ def read_memory_regions(regions):
         if m is None:
             print >> sys.stderr, 'safe_read_chunked_memory_region_as_one() failed for (0x%08X, 0x%08X)' % (mem.addr, mem.size)
             continue
-        mem.mem = str(m[1])
+        mem.mem = bytes(m[1])
         mem.protect = int(m[2])
     return rv
 
@@ -276,14 +270,14 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
 
     rv = rpc.AnalyzeExternalRefsResult()
     if ea_from > ea_to:
-        print >> sys.stderr, 'Invalid arguments passed'
+        print('Invalid arguments passed', file=sys.stderr)
         return rv
 
     mem = safe_read_chunked_memory_region_as_one(ea_from, ea_to - ea_from)
     if not mem:
-        print >> sys.stderr, 'Unable to read specified memory (0x%08X - 0x%08X)' % (ea_from, ea_to)
+        print('Unable to read specified memory (0x%08X - 0x%08X)' % (ea_from, ea_to), file=sys.stderr)
         return rv
-    mem = buffer(mem[1])
+    mem = bytes(mem[1])
 
     unpack_fmt = '<I' if int(py_olly.get_backend_info()['bitness']) == 32 else '<Q'
     intptr_size = struct.calcsize(unpack_fmt)
@@ -361,8 +355,8 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
             v.proc = proc_name
 
         except Exception as exc:
-            print >> sys.stderr, 'Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n'))
-    print 'AnalyzeExternalRefs(ea_from=0x%x, ea_to=0x%x): api consts found %u, refs found: %u' % (ea_from, ea_to, len(rv.api_constants), len(rv.refs))
+            print('Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n')), file=sys.stderr)
+    print('AnalyzeExternalRefs(ea_from=0x%x, ea_to=0x%x): api consts found %u, refs found: %u' % (ea_from, ea_to, len(rv.api_constants), len(rv.refs)))
     # print rv
     return rv
 
@@ -370,7 +364,7 @@ def analyze_external_refs(ea_from, ea_to, increment, analysing_base, analysing_s
 def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, size, mem):
     # import inspect
     if ea_from > ea_to:
-        print >> sys.stderr, 'Invalid arguments passed'
+        print('Invalid arguments passed', file=sys.stderr)
         return None
     logger.info(('scan_for_ref_api_calls(ea_from=0x%08X, ea_to=0x%08X, increment=0x%08X, base=0x%08X)\n' +
                 'getting modules meta') % (ea_from, ea_to, increment, base))
@@ -381,10 +375,10 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, size, mem):
 
     this_module_exports = set()
     for name, info in modules_meta.items():
-        for i in xrange(len(info['base'])):
+        for i in range(len(info['base'])):
             if info['base'][i] <= ea_from < info['base'][i] + info['size'][i]:
                 this_module_exports = set(map(lambda x: x['ea'], info['apis'][i]))
-                print 'module found: %s, len of exports: %u' % (name, len(this_module_exports))
+                print('module found: %s, len of exports: %u' % (name, len(this_module_exports)))
                 break
 
     unpack_fmt = '<I' if int(py_olly.get_backend_info()['bitness']) == 32 else '<Q'
@@ -423,8 +417,8 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, size, mem):
                     ref.v = dis.value.value
                     ref.ea = ea
                     ref.len = dis.size
-                    ref.dis = str(dis.instruction.replace('\0', ''))
-                    print 'api.TYPE_VALUE points to %s at %08X as %s' % (v, ea, ref.dis)
+                    ref.dis = dis.instruction.replace(b'\0', b'').decode()
+                    print('api.TYPE_VALUE points to %s at %08X as %s' % (v, ea, ref.dis))
                 continue
             if dis.type == api.TYPE_ADDR:
                 v = isPointsToExternalDll(dis.addr)
@@ -435,8 +429,8 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, size, mem):
                     ref.v = dis.addr
                     ref.ea = ea
                     ref.len = dis.size
-                    ref.dis = str(dis.instruction.replace('\0', ''))
-                    print 'api.TYPE_ADDR points to %s at %08X as %s' % (v, ea, ref.dis)
+                    ref.dis = dis.instruction.replace(b'\0', b'').decode()
+                    print('api.TYPE_ADDR points to %s at %08X as %s' % (v, ea, ref.dis))
                 continue
             if dis.type == api.TYPE_MEMORY:
                 v = isPointsToExternalDll(dis.memory.value)
@@ -451,15 +445,15 @@ def scan_for_ref_api_calls(ea_from, ea_to, increment, rv, base, size, mem):
                     ref.v = dis.memory.value
                     ref.ea = ea
                     ref.len = dis.size
-                    ref.dis = str(dis.instruction.replace('\0', ''))
-                    print 'api.TYPE_MEMORY points to %s at %08X as %s' % (v, ea, ref.dis)
+                    ref.dis = dis.instruction.replace(b'\0', b'').decode()
+                    print('api.TYPE_MEMORY points to %s at %08X as %s' % (v, ea, ref.dis))
                 continue
 
                 #for k, v in inspect.getmembers(dis):
                 #    if '_' not in k:
                 #        print "%r: %r" % (k, v)
         except Exception as exc:
-            print >> sys.stderr, 'Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n'))
+            print('Exception: %r\r\n%s' % (exc, traceback.format_exc().replace('\n', '\r\n')), file=sys.stderr)
 
 
 def update_modules_meta():
@@ -474,7 +468,7 @@ def update_modules_meta():
     pid = py_olly.get_pid()
     h_snap = C.windll.kernel32.CreateToolhelp32Snapshot(D.TH32CS_SNAPMODULE, pid)
     if h_snap in (0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF):
-        print >> sys.stderr, 'get_modules_meta(): Unable to open Toolhelp32 snapshot'
+        print('get_modules_meta(): Unable to open Toolhelp32 snapshot', file=sys.stderr)
         return modules_meta
 
     # available_modules = set()
@@ -482,14 +476,14 @@ def update_modules_meta():
     ret = C.windll.kernel32.Module32First(h_snap, C.pointer(me32))
     if ret == 0:
         C.windll.kernel32.CloseHandle(h_snap)
-        print >> sys.stderr, 'get_modules_meta(): Module32First() failed'
+        print('get_modules_meta(): Module32First() failed', file=sys.stderr)
         return modules_meta
 
     while ret:
-        modname = path.splitext(path.basename(me32.szExePath))[0].lower()
+        modname = path.splitext(path.basename(me32.szExePath.decode()))[0].lower()
         if modname not in modules_meta or modules_meta[modname]['base'] != me32.modBaseAddr:
             mem = safe_read_chunked_memory_region_as_one(me32.modBaseAddr, me32.modBaseSize)
-            print 'get_modules_meta(): %s at 0x%08X' % (modname, me32.modBaseAddr)
+            print('get_modules_meta(): %s at 0x%08X' % (modname, me32.modBaseAddr))
             if mem:
                 pe = PEHelper(me32.modBaseAddr, modname, mem[1])
                 exps = pe.get_exports()
@@ -516,14 +510,14 @@ def update_modules_meta():
 
     # t = oa.pluginvalue_to_t_table(oa.Plugingetvalue(oa.VAL_MODULES))
     #
-    # for i in xrange(t.data.n):
+    # for i in range(t.data.n):
     #     m = oa.void_to_t_module(oa.Getsortedbyselection(t.data, i))
     #     modname = path.splitext(path.basename(m.path))[0].lower()
     #     if modname in modules_meta and modules_meta[modname]['base'] == m.base:
     #         continue
     #     available_modules.add(modname)
     #     externals = list()
-    #     for off in xrange(m.codesize):
+    #     for off in range(m.codesize):
     #         name = bytearray(oa.TEXTLEN)
     #         if oa.Findname(m.codebase + off, oa.NM_EXPORT, name):
     #             name = str(name.replace('\x00', ''))
@@ -548,14 +542,14 @@ def check_pe_headers(base, size):
     rv.pe_valid = False
     mem = safe_read_chunked_memory_region_as_one(base, size)
     if not mem:
-        print >> sys.stderr, 'unable to read memory: 0x%08X, size: 0x%08X' % (base, size)
+        print('unable to read memory: 0x%08X, size: 0x%08X' % (base, size), file=sys.stderr)
         return rv
     mem = mem[1]
     p = PEHelper(base, '', data=mem)
 
     rv.pe_valid = p.parse_headers(True)
     if not rv.pe_valid:
-        print >> sys.stderr, 'PE headers are invalid'
+        print('PE headers are invalid', file=sys.stderr)
         return rv
 
     exports = p.get_exports()

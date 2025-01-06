@@ -14,13 +14,13 @@ import traceback
 
 def get_backend(name):
     try:
-        module = __import__(name, globals(), locals(), ["dummy"], -1)
+        module = __import__(name, globals(), locals(), ["dummy"], 0)
 
         # TODO
 
         return module
     except:
-        print >> sys.stderr, traceback.format_exc()
+        print(traceback.format_exc(), file=sys.stderr)
         raise
 
 

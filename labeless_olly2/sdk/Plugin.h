@@ -129,7 +129,7 @@ typedef unsigned long  ulong;          // Unsigned long
   #define extc         extern "C" _export
   #define stdapi(type) extern "C"               type __cdecl
   #define varapi(type) extern "C"               type __cdecl
-  #define oddata(type) extern "C" const _import type
+  #define oddata(type) extern "C" _import type
   #define pentry(type) extern "C" _export       type __cdecl
 #else
   #define extc         extern     _export

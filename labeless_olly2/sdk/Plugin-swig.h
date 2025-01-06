@@ -127,7 +127,7 @@ typedef unsigned long  ulong;          // Unsigned long
   #define extc         extern "C" _export
   #define stdapi(type) extern "C"               type __cdecl
   #define varapi(type) extern "C"               type __cdecl
-  #define oddata(type) extern "C" const _import type
+  #define oddata(type) extern "C" _import type
   #define pentry(type) extern "C" _export       type __cdecl
 #else
   #define extc         extern     _export
@@ -287,8 +287,12 @@ stdapi (void)    Heapsortex(void *data,const int count,const int size,
                    int (_USERENTRY *compareex)(const void *,const void *,ulong),
                    ulong lp);
 stdapi (uchar *) Readfile(wchar_t *path,ulong fixsize,ulong *psize);
+%pybuffer_mutable_string(wchar_t *dosname)
 stdapi (int)     Devicenametodosname(wchar_t *devname,wchar_t *dosname);
+
+%pybuffer_mutable_string(wchar_t *path)
 stdapi (int)     Filenamefromhandle(HANDLE hfile,wchar_t *path);
+
 stdapi (void)    Quicktimerstart(int timer);
 stdapi (void)    Quicktimerstop(int timer);
 stdapi (void)    Quicktimerflush(int timer);
@@ -3332,20 +3336,28 @@ typedef struct t_argloc {              // Information about stack args & locals
 } t_argloc;
 
 stdapi (int)     Getconstantbyname(wchar_t *name,ulong *value);
+%pybuffer_mutable_string(wchar_t* name);
 stdapi (int)     Getconstantbyvalue(wchar_t *groupname,
                    ulong value,wchar_t *name);
+%pybuffer_mutable_string(wchar_t* text);
 stdapi (int)     Decodetype(ulong data,wchar_t *type,wchar_t *text,int ntext);
 stdapi (int)     Fillcombowithgroup(HWND hw,wchar_t *groupname,
                    int sortbyname,ulong select);
 stdapi (int)     Fillcombowithstruct(HWND hw,wchar_t *prefix,wchar_t *select);
 stdapi (t_rawdata *) Getrawdata(wchar_t *name);
 stdapi (int)     Substitutehkeyprefix(wchar_t *key);
+%pybuffer_mutable_string_optional(wchar_t* rettype);
 stdapi (int)     Decodeknownbyname(wchar_t *name,t_procdata *pd,
                    t_argdec adec[NARG],wchar_t *rettype,int nexp);
+%pybuffer_mutable_string_optional(wchar_t* rettype);
+%pybuffer_mutable_string_optional(wchar_t* name);
 stdapi (int)     Decodeknownbyaddr(ulong addr,t_procdata *pd,
-                   t_argdec adec[NARG],wchar_t *rettype,wchar_t *name,
-                   int nexp,int follow);
+                   t_argdec adec[NARG],wchar_t* rettype,wchar_t* name,
+                   int nexp = -1, int follow = 0);
+
 stdapi (int)     Isnoreturn(ulong addr);
+%pybuffer_mutable_string(wchar_t* prtype);
+%pybuffer_mutable_string(wchar_t* text);
 stdapi (int)     Decodeargument(t_module *pmod,wchar_t *prtype,void *data,
                    int ndata,wchar_t *text,int ntext,int *nontriv);
 stdapi (int)     Getstructureitemcount(wchar_t *name,ulong *size);
@@ -4435,16 +4447,16 @@ oddata (t_sorted) procdata;            // Descriptions of analyzed procedures
 oddata (t_table) source;               // List of source files
 oddata (t_table) srccode;              // Source code
 
-%pointer_cast(int, t_table*, pluginvalue_to_t_table);
-%pointer_cast(int, t_dump*, pluginvalue_to_t_dump);
-%pointer_cast(int, t_sorted*, pluginvalue_to_t_sorted);
+%pointer_cast_cpp(int, t_table*, pluginvalue_to_t_table);
+%pointer_cast_cpp(int, t_dump*, pluginvalue_to_t_dump);
+%pointer_cast_cpp(int, t_sorted*, pluginvalue_to_t_sorted);
 
-%pointer_cast(void*, t_memory*, void_to_t_memory);
-%pointer_cast(void*, t_module*, void_to_t_module);
-%pointer_cast(void*, t_thread*, void_to_t_thread);
-%pointer_cast(void*, t_bpoint*, void_to_t_bpoint);
-%pointer_cast(void*, t_patch*, void_to_t_patch);
-%pointer_cast(void*, t_rtcond*, void_to_t_rtcond);
-%pointer_cast(void*, t_rtprot*, void_to_t_rtprot);
+%pointer_cast_cpp(void*, t_memory*, void_to_t_memory);
+%pointer_cast_cpp(void*, t_module*, void_to_t_module);
+%pointer_cast_cpp(void*, t_thread*, void_to_t_thread);
+%pointer_cast_cpp(void*, t_bpoint*, void_to_t_bpoint);
+%pointer_cast_cpp(void*, t_patch*, void_to_t_patch);
+%pointer_cast_cpp(void*, t_rtcond*, void_to_t_rtcond);
+%pointer_cast_cpp(void*, t_rtprot*, void_to_t_rtprot);
 
 

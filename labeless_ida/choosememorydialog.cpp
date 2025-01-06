@@ -18,13 +18,14 @@
 #include <QButtonGroup>
 #include <QMenu>
 
+#include "compat.h"
 #include "util/util_ida.h"
 
 namespace {
 
 QString ollyStyleFormatHex(ea_t v)
 {
-	return QString("%1").arg(v, sizeof(ea_t) * 2, 16, QChar('0')).replace("0x", "").toUpper();
+	return QString("%1").arg(v, compat::inf_is_64bit() ? sizeof(ea_t) * 2 : sizeof(ea_t), 16, QChar('0')).replace("0x", "").toUpper();
 }
 
 enum

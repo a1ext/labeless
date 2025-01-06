@@ -27,7 +27,8 @@ enum GlobalSettingsKey
 	GSK_LightPalette = 8,
 	GSK_DarkPalette = 9,
 	GSK_OverwriteWarning = 10,
-	GSK_CodeCompletion = 11
+	GSK_CodeCompletion = 11,
+	GSK_ScriptsInput = 12,
 
 	// NOTE: don't forget to update GlobalSettingsManger::keyToString(...)
 };
