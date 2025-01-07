@@ -19,8 +19,20 @@
 #include <QWidget>
 
 // IDA
+#if defined(__NT__)
+#	pragma warning(push)
+#	pragma warning(disable:4018 4267)  // 4244 4146
+#elif defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#endif // defined(__GNUC__)
 #include <expr.hpp>
 #include <../ldr/idaldr.h>
+#if defined(__NT__)
+#	pragma warning(pop)
+#elif defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(__GNUC__)
 
 
 namespace util {

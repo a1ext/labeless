@@ -10,7 +10,6 @@
 
 #include <memory>
 #include <string>
-#include <pro.h>
 
 #include "../types.h"
 #include "../jedi.h"

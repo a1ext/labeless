@@ -10,8 +10,13 @@
 #include "labeless_ida.h"
 
 // IDA
-#pragma warning(push)
-#pragma warning(disable: 4267 4244 4267) // disable warning like "sdk\include\typeinf.hpp(2642): warning C4267: 'return': conversion from 'size_t' to 'cm_t', possible loss of data"
+#if defined(_MSC_VER)
+#	pragma warning(push)
+#	pragma warning(disable: 4018 4267 4244) // disable warning like "sdk\include\typeinf.hpp(2642): warning C4267: 'return': conversion from 'size_t' to 'cm_t', possible loss of data"
+#elif defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wsign-compare"
+#endif //
 #include <ida.hpp>
 #include <idp.hpp>
 
@@ -37,7 +42,11 @@
 #endif // IDA_SDK_VERSION < 900
 #include <typeinf.hpp>
 #include <../ldr/idaldr.h>
-#pragma warning(pop)
+#if defined(_MSC_VER)
+#	pragma warning(pop)
+#elif defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(_MSC_VER)
 
 // std
 #include <algorithm>
@@ -61,6 +70,7 @@
 #include <QTextCodec>
 #include <QThread>
 #include <QToolBar>
+#include <QUuid>
 #include <QVariant>
 
 #include <google/protobuf/stubs/common.h>
@@ -77,7 +87,14 @@
 #include "util/util_idapython.h"
 #include "util/util_net.h"
 #include "rpcthreadworker.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif // defined(__GNUC__)
 #include "../common/cpp/rpc.pb.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(__GNUC__)
 #include "../common/version.h"
 #include "choosememorydialog.h"
 #include "globalsettingsmanager.h"
@@ -200,7 +217,7 @@ static const QString kLabelessMenuLoadStubItemNameX64 = "act-load-stub-x64";
 static const QString kEnablePauseNotifAction = QObject::tr("Enable pause notifications handling");
 static const QString kDisablePauseNotifAction = QObject::tr("Disable pause notification handling");
 static const uint32 kPauseNotificationCursorColor = 0x305500;
-static const WORD kDefaultPauseNotificationPort = 12344;
+static const quint16 kDefaultPauseNotificationPort = 12344;
 
 static const QString kLogItemActionLoad = "load";
 static const QString kLogItemActionNavigate = "nav";
@@ -320,7 +337,6 @@ void enumerateLocalVars(EA2CommentHash& ea2commentHash, bool allLocalVars)
 
 	qstring memberName;
 	strpath_t path;
-	char stroffBuff[OLLY_TEXTLEN] = {};
 
 	for (size_t i = 0; i < funcCnt; ++i)
 	{
@@ -594,6 +610,8 @@ void enumerateGlobalVars(EA2CommentHash& ea2comment)
 	const int segsn = get_segm_qty();
 
 	auto handleRef = [&ea2comment](::ea_t seg_ea, ::flags_t seg_ea_flags, const ::xrefblk_t& ref) {
+		Q_UNUSED(seg_ea);
+		Q_UNUSED(seg_ea_flags);
 		const ::ea_t ref_ea = ref.from;
 		const ::flags_t ref_flags = compat::get_flags(ref_ea);
 		int opNum = -1;
@@ -639,36 +657,38 @@ bool parseBackendId(const ::qstring& qid, std::string& result)
 		return false;
 
 	result.clear();
+	QUuid qbackendId = QUuid(qid.c_str());
+	if (qbackendId.isNull())
+		return false;
+
+#if !defined(GUID)
+#   if defined(_MSC_VER)
+#       pragma pack(push, 1)
+#   endif //  defined(_MSC_VER)
+	struct
+#if defined(__GNUC__) || defined(__clang__)
+		__attribute__((packed))
+#endif
+		GUID
+	{
+		ulong   Data1;
+		ushort  Data2;
+		ushort  Data3;
+		uchar   Data4[8];
+	};
+#   if defined(_MSC_VER)
+#       pragma pack(pop)
+#   endif // defined(_MSC_VER)
+#endif //  !defined(GUID)
+	static_assert(sizeof(GUID) == 16, "Invalid sizeof of GUID struct");
 
 	GUID backendId = {};
-	const QRegExp reGUID("\\{([\\da-f]{8})-([\\da-f]{4})-([\\da-f]{4})-([\\da-f]{4})-([\\da-f]{12})\\}", Qt::CaseInsensitive);
-	if (!reGUID.exactMatch(qid.c_str()))
-		return false;
+	backendId.Data1 = qbackendId.data1;
+	backendId.Data2 = qbackendId.data2;
+	backendId.Data3 = qbackendId.data3;
 
-	bool ok = true;
-	backendId.Data1 = reGUID.cap(1).toUInt(&ok, 16);
-	if (!ok)
-		return false;
-	backendId.Data2 = reGUID.cap(2).toUShort(&ok, 16);
-	if (!ok)
-		return false;
-	backendId.Data3 = reGUID.cap(3).toUShort(&ok, 16);
-	if (!ok)
-		return false;
-
-	for (unsigned i = 0; i < 2; ++i)
-	{
-		backendId.Data4[i] = static_cast<BYTE>(reGUID.cap(4).mid(i * 2, 2).toUShort(&ok, 16));
-		if (!ok)
-			return false;
-	}
-	for (unsigned i = 0; i < _countof(backendId.Data4) - 2; ++i)
-	{
-		auto t = reGUID.cap(5).mid(i * 2, 2);
-		// auto c = t.toStdString();
-		backendId.Data4[i + 2] = static_cast<BYTE>(t.toUShort(&ok, 16));
-		if (!ok)
-			return false;
+	for (unsigned i = 0; i < _countof(backendId.Data4); ++i) 	{
+		backendId.Data4[i] = qbackendId.data4[i];
 	}
 	result.assign(reinterpret_cast<const char*>(&backendId), sizeof(backendId));
 	return true;
@@ -854,14 +874,11 @@ bool Labeless::setEnabled()
 
 void Labeless::enableMenuActions(bool enabled)
 {
-	msg("%s: %s\n", __FUNCTION__, enabled ? "t" : "f");
-	for (int i = 0, e = m_MenuActions.length(); i < e; ++i)
-	{
+	for (int i = 0, e = m_MenuActions.length(); i < e; ++i) {
 		const bool isLoadStubItem = m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemName ||
 			m_MenuActions.at(i)->objectName() == kLabelessMenuLoadStubItemNameX64;
 		m_MenuActions.at(i)->setEnabled(isLoadStubItem ? !enabled : enabled);
 	}
-	
 }
 
 void Labeless::ensureLMenuPresent() {
@@ -873,6 +890,9 @@ void Labeless::ensureLMenuPresent() {
 	QList<QAction*> acts = m_MainWindow->menuBar()->actions();
 	if (!acts.contains(lmenuAction)) {
 		m_MainWindow->menuBar()->addAction(lmenuAction);
+	}
+	if (m_Toolbar) {
+		m_MainWindow->addToolBar(Qt::TopToolBarArea, m_Toolbar);
 	}
 }
 
@@ -1156,7 +1176,7 @@ bool Labeless::initialize()
 		CHECKED_CONNECT(connect(worker, SIGNAL(destroyed()), m_AutoCompletionThread.data(), SLOT(quit()), Qt::QueuedConnection));
 		//CHECKED_CONNECT(connect(m_AutoCompletionThread.data(), SIGNAL(finished()), worker, SLOT(deleteLater())));
 		CHECKED_CONNECT(connect(worker, SIGNAL(completeFinished()), this, SLOT(onAutoCompletionFinished()), Qt::QueuedConnection));
-		CHECKED_CONNECT(connect(worker, SIGNAL(onAutoCompletionFailed(QString)), this, SLOT(onAutoCompletionFailed(QString)), Qt::QueuedConnection));
+		CHECKED_CONNECT(connect(worker, SIGNAL(completeError(QString)), this, SLOT(onAutoCompletionFailed(QString)), Qt::QueuedConnection));
 		worker->moveToThread(m_AutoCompletionThread.data());
 		m_AutoCompletionThread->start();
 	}
@@ -2093,7 +2113,7 @@ bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_mem
 	if (!belongs)
 	{
 		segment_t seg;
-		if (!createSegment(area, perm, type, m.raw, seg))
+		if (!createSegment(area, perm, type, seg))
 		{
 			msg("%s: createSegment() failed\n", __FUNCTION__);
 			return false;
@@ -2127,7 +2147,7 @@ bool Labeless::mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_mem
 	return nullptr;
 }*/
 
-bool Labeless::createSegment(const compat::IDARange& area, uchar perm, uchar type, const std::string& data, segment_t& result)
+bool Labeless::createSegment(const compat::IDARange& area, uchar perm, uchar type, segment_t& result)
 {
 	result = m_CreatedSegments.push_back();
 	memset(&result, 0, sizeof(result));
@@ -2425,7 +2445,7 @@ void Labeless::onAutoCompletionFinished()
 void Labeless::onAutoCompletionFailed(const QString& error)
 {
 	QMutexLocker lock(&m_AutoCompletionLock);
-	msg("%s: jedi's Auto-complete failed, %s\n", __FUNCTION__, error.data());
+	msg("%s: jedi's Auto-complete failed, %s\n", __FUNCTION__, error.toStdString().c_str());
 	m_AutoCompletionRequest.clear();
 	m_AutoCompletionResult.clear();
 	m_AutoCompletionState->state = jedi::State::RS_DONE;
@@ -2470,7 +2490,7 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 	});
 	(void)guard;
 
-	const bool compatible = compat::inf_is_64bit() && notif->has_info64() || !compat::inf_is_64bit() && notif->has_info32();
+	const bool compatible = (compat::inf_is_64bit() && notif->has_info64()) || (!compat::inf_is_64bit() && notif->has_info32());
 	if (!compatible)
 	{
 #if 0
@@ -2537,7 +2557,7 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 		bool isUnicodeStr = false;
 		if (resolvedStringComment.find(kASCIIPrefix) == 0)
 			resolvedStringReference = resolvedStringComment.substr(kASCIIPrefix.length(), resolvedStringComment.length() - kASCIIPrefix.length() - 1);
-		else if (isUnicodeStr = (resolvedStringComment.find(kUNICODEPrefix) == 0))
+		else if ((isUnicodeStr = (resolvedStringComment.find(kUNICODEPrefix) == 0)))
 			resolvedStringReference = resolvedStringComment.substr(kUNICODEPrefix.length(), resolvedStringComment.length() - kUNICODEPrefix.length() - 1); // TODO: decode?
 
 		if (!resolvedStringReference.empty())
@@ -2591,9 +2611,9 @@ void Labeless::onTogglePauseNotificationHandling(bool enabled)
 			}
 			return;
 		}
-		msg("%s: enabled for port: %u and client: %s\n", __FUNCTION__, unsigned(WORD(port)), allowedClient.empty() ? "<all>" : allowedClient.c_str());
+		msg("%s: enabled for port: %u and client: %s\n", __FUNCTION__, unsigned(quint16(port)), allowedClient.empty() ? "<all>" : allowedClient.c_str());
 	}
-	m_PauseNotificationPort = static_cast<WORD>(port);
+	m_PauseNotificationPort = static_cast<quint16>(port);
 	if (QAction* action = qobject_cast<QAction*>(sender()))
 	{
 		action->setText(enabled ? kDisablePauseNotifAction : kEnablePauseNotifAction);
@@ -2963,7 +2983,7 @@ void Labeless::updateImportsNode()
 		existingAPIs.insert(ie.proc);
 	}
 	storeImportTable();
-	msg("import mods after update: %u\n", import_node.altval(-1));
+	msg("import mods after update: %llu\n", import_node.altval(-1));
 }
 
 qstring Labeless::getNewNameOfEntry() const
@@ -3027,7 +3047,6 @@ ea_t Labeless::addAPIEnumValue(const std::string& name, uval_t value)
 	add_enum_member(id, ("OAEC_" + name).c_str(), value);
 #else // 
 	auto id = createAPIEnumIfNotExists();
-	bool rv = true;
 	if (id != BADADDR) {
 		tinfo_t info;
 		if (!info.get_type_by_tid(id) || !info.is_enum()) {
@@ -3222,11 +3241,13 @@ hook_cb_t_ret_type_t Labeless::ui_callback(void*, int notification_code, va_list
 		}
 		return 0;
 	}*/
+#if defined(__NT__)
 	static volatile bool e = false;
 	if (e) {
 		const QString& s = QString("%1: notification received:  %2\n").arg(__FUNCTION__).arg((int)notification_code, 0, 16);
 		OutputDebugStringA(s.toStdString().c_str());
 	}
+#endif // defined(__NT__)
 	return 0;
 }
 

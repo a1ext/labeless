@@ -3,9 +3,24 @@
 #include <memory>
 #include <QApplication>
 
+#if defined(__unix__) || defined(__linux__)
+#   include <errno.h>
+#   include <netinet/in.h>
+
+#   define SOCKADDR_IN sockaddr_in
+#endif // defined(__unix__) || defined(__linux__)
+
+
 #include "labeless_ida.h"
 #include "util/util_protobuf.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif // defined(__GNUC__)
 #include "../common/cpp/rpc.pb.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(__GNUC__)
 
 PauseNotificationListener::PauseNotificationListener(QObject* parent)
 	: QObject(parent)
@@ -32,11 +47,16 @@ bool PauseNotificationListener::handlePacket(const std::string& packet)
 
 void PauseNotificationListener::main()
 {
+	// linux: sudo iptables -A INPUT -p udp --dport 12345 -j ACCEPT
 	int bTrue = 1;
 	SOCKADDR_IN sinBCast = {};
 	sinBCast.sin_family = AF_INET;
 	sinBCast.sin_port = ntohs(Labeless::instance().pauseNotificationPort());
+#if defined(__NT__)
 	sinBCast.sin_addr.S_un.S_addr = INADDR_ANY;
+#elif defined(__unix__) || defined(__linux__)
+	sinBCast.sin_addr.s_addr = INADDR_ANY;
+#endif
 
 	SOCKET s = socket(AF_INET, SOCK_DGRAM, IPPROTO_IP);
 	if (INVALID_SOCKET == s ||
@@ -44,7 +64,14 @@ void PauseNotificationListener::main()
 		SOCKET_ERROR == setsockopt(s, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char*>(&bTrue), sizeof(bTrue)) ||
 		SOCKET_ERROR == bind(s, reinterpret_cast<const sockaddr*>(&sinBCast), sizeof(sinBCast)))
 	{
-		msg("%s: cannot create UDP socket, le: %x\n", Q_FUNC_INFO, GetLastError());
+		msg("%s: cannot create UDP socket, le: %x\n",
+			Q_FUNC_INFO,
+#if defined(__NT__)
+			GetLastError()
+#elif defined(__unix__) || defined(__linux__)
+			(int)errno
+#endif // defined(__unix__) || defined(__linux__)
+		);
 		moveToThread(qApp->thread());
 		deleteLater();
 		return;
@@ -62,7 +89,12 @@ void PauseNotificationListener::main()
 	fd_set readSet;
 	char buff[1024] = {};
 	SOCKADDR_IN sin;
-	int sinLen;
+#if defined(__NT__)
+    int
+#elif defined(__unix__) || defined(__linux__)
+    socklen_t
+#endif // defined(__unix__) || defined(__linux__)
+        sinLen;
 
 	Labeless& ll = Labeless::instance();
 	while (ll.m_Enabled == 1 && ll.pauseNotificationHanlingEnabled())
@@ -70,7 +102,13 @@ void PauseNotificationListener::main()
 		FD_ZERO(&readSet);
 		FD_SET(s, &readSet);
 
-		if (select(1, &readSet, nullptr, nullptr, &timeout) >= 0 &&
+		if (select(
+#if defined(__NT__)
+			s,
+#elif defined(__GNUC__)
+			s + 1,
+#endif // 
+			&readSet, nullptr, nullptr, &timeout) >= 0 &&
 			FD_ISSET(s, &readSet))
 		{
 			sinLen = static_cast<int>(sizeof(sin));
@@ -79,7 +117,7 @@ void PauseNotificationListener::main()
 			{
 				if (!handlePacket(std::string(buff, static_cast<size_t>(cnt))))
 				{
-					msg("%s: handlePacket() failed\n"); // remove from release
+					msg("%s: handlePacket() failed\n", __FUNCTION__); // remove from release
 				}
 			}
 		}

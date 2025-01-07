@@ -113,7 +113,7 @@ bool sendAll(SOCKET s, const std::string& buff, std::string& error)
 	int sent;
 	while (total_sent < buff.length())
 	{
-		if (SOCKET_ERROR == (sent = send(s, buff.c_str() + total_sent, buff.length() - total_sent, 0)))
+		if (SOCKET_ERROR == (sent = send(s, buff.c_str() + total_sent, static_cast<int>(buff.length() - total_sent), 0)))
 		{
 			error = wsaErrorToString().toStdString();
 			return false;

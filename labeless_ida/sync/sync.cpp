@@ -12,8 +12,14 @@
 
 #include "../util/util_protobuf.h"
 #include "../rpcdata.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif // defined(__GNUC__)
 #include "../../common/cpp/rpc.pb.h"
-
+#if defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(__GNUC__)
 
 
 bool ICommand::parseResponse(QPointer<RpcData> rd)
@@ -526,11 +532,11 @@ bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
 		}
 
 		const auto& completions = result.completions();
-		foreach (const auto& compl, completions)
-			jresult->completions.append(QString::fromStdString(compl));
+		for (auto it = completions.cbegin(), end = completions.cend(); it != end; ++it)
+			jresult->completions.append(QString::fromStdString(*it));
 
 		const auto& callSigs = result.call_sigs();
-		foreach (const auto& cs, callSigs)
+		for (const auto& cs : callSigs)
 		{
 			jedi::SignatureMatch sm;
 			if (cs.has_cs_type())

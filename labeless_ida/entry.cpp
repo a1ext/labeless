@@ -75,7 +75,7 @@ struct plugin_ctx_t : public ::plugmod_t {
 	}
 
 	virtual bool idaapi run(size_t) override {
-		msg("%s: called\n", __FUNCTION__);
+		/*msg("%s: called\n", __FUNCTION__);
 		auto mb = util::ida::findIDAMainWindow()->menuBar();
 		for (const auto act : mb->actions()) {
 			msg("%s: top action: %s\n", __FUNCTION__, act->text().toStdString().c_str());
@@ -92,7 +92,11 @@ struct plugin_ctx_t : public ::plugmod_t {
 				msg("%s: %s\n", __FUNCTION__, name.c_str());
 			}
 			
-		}
+		}*/
+		if (!Labeless::instance().isEnabled())
+			QMessageBox::information(nullptr, QObject::tr("Info"), QObject::tr("Open some database first"));
+		else
+			Labeless::instance().onSettingsRequested();
 		return true;
 	}
 
@@ -204,10 +208,10 @@ static init_ret_t idaapi init()
 	register_addon(&addon_info);
 
 	// from run()
-	qstrvec_t acts;
-	get_registered_actions(&acts);
-	for (int i = 0; i < acts.size(); ++i)
-		msg("%s: action \"%s\"\n", __FUNCTION__, acts[i].c_str());
+	// qstrvec_t acts;
+	// get_registered_actions(&acts);
+	// for (int i = 0; i < acts.size(); ++i)
+	// 	msg("%s: action \"%s\"\n", __FUNCTION__, acts[i].c_str());
 	
 	/*if (!Labeless::instance().isEnabled())
 		QMessageBox::information(nullptr, QObject::tr("Info"), QObject::tr("Open some database first"));

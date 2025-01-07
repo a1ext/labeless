@@ -50,15 +50,22 @@
 #define FORCE_ENUM_SIZE_INT : int
 #endif
 
-#ifdef __NT__
-#pragma warning(push)
-#pragma warning(disable:4309 4244 4267 4146)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
+#if defined(__NT__)
+#	pragma warning(push)
+#	pragma warning(disable:4309 4244 4267 4146)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
+#elif defined(__GNUC__)
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#	pragma GCC diagnostic ignored "-Wsign-compare"
+#	pragma GCC diagnostic ignored "-Wparentheses"
 #endif // __NT__
 #include <pro.h>
 #include <ida.hpp>
 #include <idp.hpp>
-#ifdef __NT__
-#pragma warning(pop)
+#if defined(__NT__)
+#   pragma warning(pop)
+#elif defined(__GNUC__)
+#   pragma GCC diagnostic pop
 #endif // __NT__
 
 #undef wait // Stupid undef 'wait' (added by IDA SDK) to allow to call m_QueueCond.wait(lock)

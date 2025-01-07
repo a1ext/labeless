@@ -5,6 +5,11 @@
 #ifdef __NT__
 #pragma warning(push)
 #pragma warning(disable:4309 4244 4267)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
+#elif defined(__GNUC__)
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wdeprecated-copy"
+#	pragma GCC diagnostic ignored "-Wsign-compare"
+#	pragma GCC diagnostic ignored "-Wparentheses"
 #endif // __NT__
 #include <auto.hpp>
 #include <entry.hpp>
@@ -17,7 +22,9 @@
 #include <name.hpp>
 #include <ida.hpp>
 #ifdef __NT__
-#pragma warning(pop)
+#	pragma warning(pop)
+#elif defined(__GNUC__)
+#	pragma GCC diagnostic pop
 #endif // __NT__
 
 namespace compat {
@@ -247,8 +254,9 @@ namespace compat {
 #if (IDA_SDK_VERSION < 900)
 		return ::get_member_name(out, mid) > 0; 
 #else
-
-
+		Q_UNUSED(out);
+		Q_UNUSED(mid);
+		return false;
 #endif
 	}
 	inline bool is_enabled(ea_t ea) { return ::is_mapped(ea); }

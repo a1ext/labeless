@@ -12,7 +12,14 @@
 #include "util/util_ida.h"
 #include "util/util_net.h"
 #include "util/util_protobuf.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif // suppress warnings
 #include "../common/cpp/rpc.pb.h"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(__GNUC__)
 
 #include <QApplication>
 

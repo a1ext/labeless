@@ -260,12 +260,12 @@ bool SettingsDialog::validate() const
 	const QString hostOrIP = m_UI->cbOllyIP->currentText();
 	if (!kRxIpAddress.exactMatch(hostOrIP) && !kRxHostname.exactMatch(hostOrIP))
 	{
-		info(tr("Invalid debugger's hostname/IP address entered").toStdString().c_str());
+		info("%s", tr("Invalid debugger's hostname/IP address entered").toStdString().c_str());
 		return false;
 	}
 	if (m_UI->sbOllyPort->value() <= 0 || m_UI->sbOllyPort->value() >= UINT16_MAX)
 	{
-		info(tr("Invalid debugger's Port entered").toStdString().c_str());
+		info("%s", tr("Invalid debugger's Port entered").toStdString().c_str());
 		return false;
 	}
 

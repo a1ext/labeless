@@ -12,7 +12,15 @@
 #include "../../common/version.h"
 
 // IDA
+#if defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#endif // defined(__GNUC__)
 #include <expr.hpp>
+#if defined(__GNUC__)
+#   pragma GCC diagnostic pop
+#endif // defined(__GNUC__)
+
 
 namespace util {
 

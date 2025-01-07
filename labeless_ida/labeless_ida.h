@@ -114,7 +114,7 @@ public:
 
 	inline const Settings& settings() const { return m_Settings; }
 	inline bool pauseNotificationHanlingEnabled() const { return m_PauseNotificationHandlingEnabled; }
-	inline WORD pauseNotificationPort() const { return m_PauseNotificationPort; }
+	inline quint16 pauseNotificationPort() const { return m_PauseNotificationPort; }
 
 private slots:
 	void onRunPythonScriptFinished();
@@ -181,7 +181,7 @@ private:
 	void addAPIConst(const AnalyzeExternalRefs::PointerData& pd);
 	bool mergeMemoryRegion(IDADump& icInfo, const ReadMemoryRegions::t_memory& m, ea_t region_base, uint64_t region_size);
 	//segment_t* getFirstOverlappedSegment(const area_t& area, segment_t* exceptThisSegment);
-	bool createSegment(const compat::IDARange& area, uchar perm, uchar type, const std::string& data, segment_t& result);
+	bool createSegment(const compat::IDARange& area, uchar perm, uchar type, segment_t& result);
 	void getRegionPermissionsAndType(const IDADump& icInfo, const ReadMemoryRegions::t_memory& m, uchar& perm, uchar& type) const;
 	bool askForSnapshotBeforeOverwrite(const compat::IDARange* area, const segment_t* seg, bool& snapshotTaken);
 
@@ -244,7 +244,7 @@ private:
 	QPointer<QThread>				m_PauseNotificationThread;
 	QMutex							m_PauseNotificationThreadLock;
 	ea_t							m_PauseNotificationCursor;
-	WORD							m_PauseNotificationPort;
+	quint16							m_PauseNotificationPort;
 	std::set<std::string>			m_PauseNotificationAllowedClients;
 };
 
