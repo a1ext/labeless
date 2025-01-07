@@ -6,29 +6,77 @@
 
 QT       += widgets
 
-TARGET = labeless_ida_70
+ TARGET = labeless_ida_70
+# TARGET = labeless_ida_83
+# TARGET = labeless_ida_90
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG -= debug
-CONFIG *= release force_debug_info x64
+CONFIG *= release force_debug_info
 
-# CONFIG += is64
-CONFIG += is_ida7
+# configuration options meaning:
+# - ea64 - bitness of opened targets
+#SCONFIG += ea64
+
+
+# `x64` deprecated
+#CONFIG += x64
+
+# `is_ida7` deprecated
+#CONFIG += is_ida7
 QT_NAMESPACE = QT
+
+equals(TARGET, "labeless_ida_695") {
+    error("not supported")
+    win32 {
+        error("Don't use .pro file for windows build. Use Visual Studio project instead.")
+        SDK_PATH = $$PWD/sdk/
+        IDA_PATH = $$PWD/../../IDA695/
+        INCLUDEPATH += $$PWD/../3rdparty/protobuf-3.20.3/dist/include
+        LIBS += -L$${SDK_PATH}/lib/x86_win_qt
+    }
+}
+equals(TARGET, "labeless_ida_70") {
+    SDK_PATH = $$PWD/../../idasdk70
+    IDA_PATH = $$PWD/../../idafree-7.0
+}
+equals(TARGET, "labeless_ida_83") {
+    SDK_PATH = $$PWD/../../idasdk_pro83
+    IDA_PATH = $$PWD/../../idafree-8.4
+}
+equals(TARGET, "labeless_ida_90") {
+    SDK_PATH = $$PWD/../../idasdk90
+    IDA_PATH = $$PWD/../../ida-free-pc-9.0
+}
+
+# add IDA SDK paths
+INCLUDEPATH += $${SDK_PATH}/include
+DEFINES += __IDP__ \
+    NO_OBSOLETE_FUNCS \
+    LL_LIBRARY \
+    __QT__ \
+    __X64__ \
+    QT_NO_UNICODE_LITERAL
+
+TARGET_PROCESSOR_NAME = x64
+
+# set rpath on linux
+linux:LIBS += -z \
+    defs \
+    -z \
+    origin \
+    -z \
+    now \
+    -Wl,-rpath=\'\$\$ORIGIN\'
+
 
 # FIXME: adjust right paths below
 win32 {
-    error("Don't use .pro file for windows build. Use Visual Studio project instead.")
-    SDK_PATH = $$PWD/sdk/
-    IDA_PATH = $$PWD/../../IDA695/
-    INCLUDEPATH += $$PWD/../3rdparty/protobuf-2.6.1/src
-    LIBS += -L$${SDK_PATH}/lib/x86_win_qt
+    
 }
 else:unix {
-    SDK_PATH = $$PWD/../idasdk70/
-    IDA_PATH = $$PWD/../idademo70/
-    QMAKE_CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
-    QMAKE_CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+    #QMAKE_CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+    #QMAKE_CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
 }
 else:mac {
     error("mac platform doesn't supported right now")
@@ -36,41 +84,31 @@ else:mac {
 }
 
 
-# add include path
-INCLUDEPATH += $${SDK_PATH}/include
+ea64 {
+    TARGET = $${TARGET}_64
+}
+
+!ea64:equals(TARGET, "labeless_ida_90") {
+    error("IDA 9 should have ea64 config set for both 32 and 64-bit targets")
+}
+
+
 win32 {
-    is64 {
-        TARGET_EXT = .p64
-    }
-    else {
-        TARGET_EXT = .plw
-    }
+    TARGET_EXT = .dll
     DEFINES += __NT__
     SYSNAME = win
     COMPILER_NAME = vc
     LIBS += -L$$PWD/../3rdparty/libs -llibprotobuf_v140 -lws2_32
 }
 else:!mac:unix {
-    is_ida7 {
-        TARGET_EXT = .so
-        is64 {
-            TARGET = $${TARGET}_64
-        }
-    }
-    else {
-        is64 {
-            TARGET_EXT = .plx64
-        }
-        else {
-            TARGET_EXT = .plx
-        }
-    }
+    TARGET_EXT = .so
+    
     DEFINES += __LINUX__ \
                _FORTIFY_SOURCE=0
     SYSNAME = linux
     COMPILER_NAME = gcc
     # avoid linking GLIBC_2.11 symbols (longjmp_chk)
-    CFLAGS += -D_FORTIFY_SOURCE=0
+    # CFLAGS += -D_FORTIFY_SOURCE=0
 }
 mac { # scope name must be 'mac'
     TARGET_EXT = .pmc
@@ -82,55 +120,43 @@ mac { # scope name must be 'mac'
     QMAKE_INFO_PLIST = Info.plist
 
     # we compile and link a 32-bit application:
-    !x64 {
-      CFLAGS = -m32
-      QMAKE_LFLAGS_DEBUG += -m32
-      QMAKE_LFLAGS_RELEASE += -m32
-    }
+    # !x64 {
+    #   CFLAGS = -m32
+    #   QMAKE_LFLAGS_DEBUG += -m32
+    #   QMAKE_LFLAGS_RELEASE += -m32
+    # }
 }
-
-DEFINES += __IDP__ \
-    NO_OBSOLETE_FUNCS \
-    LL_LIBRARY \
-    __QT__ \
-    __X64__ \
-    QT_NO_UNICODE_LITERAL
 
 
 CONFIG(debug, debug|release) {
   DEFINES += _DEBUG
 }
 
-x64 {
-    TARGET_PROCESSOR_NAME = x64
+ea64 {
     DEFINES += __EA64__
     SUFF64 = 64x
     ADRSIZE = 64
 }
 else {
-    TARGET_PROCESSOR_NAME = x86
-    is64 {
-        DEFINES += __EA64__
-        SUFF64 = 64
-        ADRSIZE = 64
-    }
-    else {
-        ADRSIZE = 32
-    }
+    # TARGET_PROCESSOR_NAME = x86
+    # is64 {
+    #     DEFINES += __EA64__
+    #     SUFF64 = 64
+    #     ADRSIZE = 64
+    # }
+    # else {
+    #     ADRSIZE = 32
+    # }
+    ADRSIZE = 32
 }
 
 SYSDIR = $${TARGET_PROCESSOR_NAME}_$${SYSNAME}_$${COMPILER_NAME}_$${ADRSIZE}
+equals(TARGET, "labeless_ida_83") {
+    # sh1tf*ck
+    SYSDIR = $${SYSDIR}_pro
+}
 OBJDIR = obj/$${SYSDIR}/
 # message($$SYSDIR)
-# set rpath on linux
-linux:LIBS += -z \
-    defs \
-    -z \
-    origin \
-    -z \
-    now \
-    -Wl,-rpath=\'\$\$ORIGIN\' 
-
 
 
 # add library directory
@@ -140,16 +166,21 @@ win32 {
     LIBS += -L$${SDK_PATH}/lib/$${SYSDIR}/ -lida
 }
 else:!mac:unix {
-    is64 {
+    ea64:!equals(TARGET, "labeless_ida_90_64") {
         IDA_LIB = ida64
     }
     else {
         IDA_LIB = ida
     }
-    INCLUDEPATH += /usr/include/python2.7
-    INCLUDEPATH += $${PWD}/../protobuf-2.6.0/src/
-    LIBS += -lpython2.7
-    LIBS += -L$${IDA_PATH} -l$${IDA_LIB} -L$${SDK_PATH}/lib/$${SYSDIR}/ -lprotobuf
+    PROTOBUF_BUILD_DIR = $${PWD}/../3rdparty/protobuf-3.20.3/dist
+    #INCLUDEPATH += /usr/include/python2.7
+    INCLUDEPATH += $${PROTOBUF_BUILD_DIR}/include
+    #LIBS += -lpython2.7
+    !equals(TARGET, "labeless_ida_70_64") {
+        # seems like IDA FREE 7.0 has obfuscated exports so link with it will fail, so don't add IDA dir as a lib dir
+        LIBS += -L$${IDA_PATH}
+    }
+    LIBS +=  -l$${IDA_LIB} -L$${SDK_PATH}/lib/$${SYSDIR}/ -L$${PROTOBUF_BUILD_DIR}/lib -lprotobuf
 }
 
 # message($$LIBS)
@@ -174,6 +205,7 @@ unix {
     COPY_TARGET2 = $(COPY_FILE) $$MY_TARGET $${IDA_PATH}/plugins/;
     QMAKE_POST_LINK += $$COPY_TARGET
     QMAKE_POST_LINK += $$COPY_TARGET2
+    QMAKE_CXXFLAGS += -Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error
 }
 
 SOURCES += \
@@ -189,6 +221,7 @@ SOURCES += \
     jedi.cpp \
     jedicompletionworker.cpp \
     labeless_ida.cpp \
+    pausenotificationlistener.cpp \
     pyollyview.cpp \
     pysignaturetooltip.cpp \
     pythonpalettemanager.cpp \
@@ -200,8 +233,7 @@ SOURCES += \
     util/util_ida.cpp \
     util/util_idapython.cpp \
     util/util_net.cpp \
-    util/util_protobuf.cpp \
-    util/util_python.cpp
+    util/util_protobuf.cpp
 
 HEADERS += \
     ../common/cpp/rpc.pb.h \
@@ -217,6 +249,7 @@ HEADERS += \
     jedicompletionworker.h \
     labeless_ida.h \
     palette.h \
+    pausenotificationlistener.h \
     pyollyview.h \
     pysignaturetooltip.h \
     pythonpalettemanager.h \
@@ -228,8 +261,7 @@ HEADERS += \
     util/util_ida.h \
     util/util_idapython.h \
     util/util_net.h \
-    util/util_protobuf.h \
-    util/util_python.h
+    util/util_protobuf.h
 
 unix {
     target.path = /usr/lib
@@ -243,3 +275,6 @@ FORMS += \
 
 RESOURCES += \
     res/res.qrc
+
+message($${INCLUDEPATH})
+message($${LIBS})
