@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>dt_case</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">dt_case</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Describes
+exit&nbsp;of <a href="i_Analysis.htm">recognized switch</a>. Kept as a <a href="i_Data.htm">data record</a> of type <span style="font-weight: bold;">DT_DATA</span> at the address of case destination.</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct dt_case { &nbsp; &nbsp; &nbsp; &nbsp;// Switch
+exit descriptor DT_CASE<br>
+&nbsp; ulong swbase; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; // Address of switch
+descriptor<br>
+&nbsp; ulong type; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Switch type,
+set of CASE_xxx<br>
+&nbsp; int ncase; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;//
+Number of cases (1..64, 0: default)<br>
+&nbsp; ulong value[NSWCASE]; &nbsp; &nbsp; &nbsp;
+&nbsp; // List of cases for exit<br>
+} dt_case;
+</span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">swbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the switch to which this <span style="font-weight: bold;">dt_case</span> belongs. Switch is described by the structure&nbsp;<a href="dt_switch.htm"><span style="font-weight: bold;">dt_switch</span></a> which is kept as a data record of type <span style="font-weight: bold;">DT_SWITCH</span> at address <span style="font-weight: bold;">swbase</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of switch exit, combination of the following constants:<br><span style="font-weight: bold;">CASE_HUGE</span> - exit contains more than <span style="font-weight: bold;">NSWCASE</span> cases, some of them are not included into the <span style="font-weight: bold;">value[]</span><br><span style="font-weight: bold;">CASE_DEFAULT</span> - this is a default case of the switch, list of cases is empty<br><span style="font-weight: bold;">CASE_ASCII</span> - most probably, switch cases correspond to ASCII characters<br><span style="font-weight: bold;">CASE_MSG</span> - most probably, switch cases can be interpreted as Windows messages <span style="font-weight: bold;">WM_xxx</span><br><span style="font-weight: bold;">CASE_EXCPTN</span> - most probably, switch cases can be intrepreted as exception codes (like 0xC0000005, <span style="font-weight: bold;">ACCESSS_VIOLATION</span>)<br><span style="font-weight: bold;">CASE_SIGNED</span> - if set, case values should be interpreted as signed numbers, otherwise as unsigned<br></span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ncase</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"><br></span></span><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of cases in exit (1..<span style="font-weight: bold;">NSWCASE</span>). <span style="font-weight: bold;">ncase</span>=0 means default exit. If number of cases exceeds <span style="font-weight: bold;">NSWCASE</span>, analyser limits <span style="font-weight: bold;">ncase</span>&nbsp;to <span style="font-weight: bold;">NSWCASE</span> and sets flag <span style="font-weight: bold;">CASE_HUGE</span>&nbsp;in <span style="font-weight: bold;">type</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ncase</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"><br></span></span><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of switch cases that end on this exit</span></small><br></div><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="dt_switch.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">dt_switch</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

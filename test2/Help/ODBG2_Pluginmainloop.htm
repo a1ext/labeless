@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Pluginmainloop</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginmainloop</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, called each time when OllyDbg passes
+main Windows loop (more accurately, each time it calls
+<span style="font-style: italic;">WaitForDebugEvent()</span>.
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>In
+general, plugins should not set or
+remove breakpoints at the address of debug event,&nbsp;directly
+call
+functions from Windows debugging API like <span style="font-weight: bold;">ContinueDebugEvent()</span>,
+modify <span style="font-weight: bold;">debugevent</span>
+or call OllyDbg functions like <a href="Run.htm"><span style="font-weight: bold;">Run()</span></a> or <a href="Setstatus.htm"><span style="font-weight: bold;">Setstatus()</span></a>.
+Any of the listed actions may make the internal OllyDbg debugging
+engine unstable.<br>
+<br>When OllyDbg executes run trace and emulates commands of the debugged application internally </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>(option <span style="font-weight: bold;">Debugging
+| Allow fast command emulation</span> is checked), </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">ODBG2_Pluginmainloop()</span>
+is&nbsp;called only occasionally. To receive
+notifications on every command, use </small></span><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="ODBG2_Pluginexception.htm">ODBG2_Pluginexception()</a></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>.<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If
+defined by plugin, <span style="font-weight: bold;">ODBG2_Pluginmainloop()</span>
+may slow down the debugging.<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: monospace; font-weight: bold;">void
+ODBG2_Pluginmainloop(DEBUG_EVENT *debugevent);<br>
+<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">debugevent</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+If there is a pending debug event, pointer to the structure of type <span style="font-weight: bold;">DEBUG_EVENT</span>
+containing event information. Otherwise, NULL</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Debug.htm">Debugging</a>,
+<a href="i_Plugins.htm">plugins</a>,&nbsp;</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="ODBG2_Pluginevent.htm"><span style="font-weight: bold;"></span></a></small></span><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="ODBG2_Pluginexception.htm">ODBG2_Pluginexception()</a>, <a href="ODBG2_Pluginnotify.htm">ODBG2_Pluginnotify()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Disasm</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Disasm</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">ulong Disasm(uchar *cmd,ulong cmdsize,ulong&nbsp;ip,uchar *dec,t_disasm *da,int&nbsp;mode,t_reg *reg,t_predict *predict);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Probably the most important and one of the most complex OllyDbg functions. Given 80x86 command in binary form, <span style="font-weight: bold;">Disasm()</span>
+decodes it to the text, creates dump and comments, extracts operands
+and calculates their values. For some frequently used commands it's
+even able to predict their results.<br><br><span style="font-weight: bold;"></span>If mode is 0 (basic information and length of the command), a call to <span style="font-weight: bold;">Disasm()</span>
+takes 0.2 .. 0.3 microseconds on a 3-GHz Athlon. If you request
+mnemonics, dump and comments, it may take more than 1 microsecond to
+produce results.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In) Pointer to the binary code of the 80x86 command, <span style="font-weight: bold;">cmdsize</span> bytes long</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In) Size of the data pointed to by&nbsp;<span style="font-weight: bold;">cmd</span>, bytes. Length of valid 80x86 command is limited to <span style="font-weight: bold;">MAXCMDSIZE</span> bytes, therefore if you need to disassemble single command, it's always safe to read <span style="font-weight: bold;">MAXCMDSIZE</span> bytes. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(In fact,&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">maximal command length is&nbsp;15 bytes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> and <span style="font-weight: bold;">MAXCMDSIZE</span> is defined as 16. But <span style="font-weight: bold;">Disasm()</span> can also decode data recognized by the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>, and maximal portion of data is 16 bytes)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> Address of the command. necessary to decode destinations of relative jumps and calls. </span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dec</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> Pointer to decoding information produced by </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>, or NULL if decoding is missing or unavailable. If present, decoding data must start at <span style="font-weight: bold;">ip</span> and its length must be at least <span style="font-weight: bold;">cmdsize</span> bytes.</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">da</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In/out) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the structure of type <a href="t_disasm.htm"><span style="font-weight: bold;">t_disasm</span></a>
+that receives results of the disassembly. Whether this structure should
+be pre-initialized and which members will be filled depends on the <span style="font-weight: bold;">mode</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In)&nbsp;Disassembling mode, a combination of zero or more of the&nbsp;bit flags listed below. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Italic names in parentheses specify members of </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="t_disasm.htm"><span style="font-weight: bold;">t_disasm</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> that will be filled if&nbsp;flag is set</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">:<br><span style="font-weight: bold;">DA_TEXT</span> - decode command to text and comment it (<span style="font-weight: bold; font-style: italic;">result</span>, <span style="font-weight: bold; font-style: italic;">comment</span>, <span style="font-weight: bold; font-style: italic;">op-&gt;text</span>)<br><span style="font-weight: bold;">DA_HILITE</span> - (only in the combination with <span style="font-weight: bold;">DA_TEXT</span>) - use syntax highlighting. In this case first three members of <span style="font-weight: bold;">da</span> (<span style="font-weight: bold; font-style: italic;">hilitereg</span>, <span style="font-weight: bold; font-style: italic;">hiregindex</span>, <span style="font-weight: bold; font-style: italic;">hiliteindex</span>) must be initialized. See</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> <a href="t_disasm.htm"><span style="font-weight: bold;">t_disasm</span></a> for details</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> (<span style="font-weight: bold; font-style: italic;">mask</span>, <span style="font-weight: bold; font-style: italic;">maskvalid</span>)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_OPCOMM</span> - comment operands (<span style="font-weight: bold; font-style: italic;">op-&gt;comment</span>, improves <span style="font-weight: bold; font-style: italic;">comment</span>)<br><span style="font-weight: bold;">DA_DUMP</span> - create hexadecimal dump (<span style="font-weight: bold; font-style: italic;">dump</span>)<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_MEMORY</span> - allows <span style="font-weight: bold;">Disasm()</span> to read memory of the debugged process and use label names<br><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_NOSTACKP</span> - hide "Stack"&nbsp;in comments<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_NOPSEUDO</span> - don't decode&nbsp;pseudooperands (like implicit ESP in PUSH EAX)<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_SHOWARG</span> - use prediction data&nbsp;if address is ESP- or&nbsp;EBP-based<span style="font-weight: bold;"></span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_STEPINTO</span> - enter CALL when predicting registers<br><span style="font-weight: bold;"></span>Some flags are not intended for use by plugins:<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_NOIMPORT</span> - when reading memory, don't rely on the value of&nbsp;imports<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_RTLOGMEM</span> - use contents of memory saved by the run trace<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_FORHELP</span> - decode operands for command help<br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">reg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the structure of type <a href="t_reg.htm"><span style="font-weight: bold;">t_reg</span></a>
+describing contents of registers before the command was executed, or
+NULL if registers are unavailable or not necessary. Registers are
+necessary to calculate the values of the operands, like in EAX or
+[ESI*4+EDX+4]</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">predict</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in,out) Pointer to the structure of type <a href="t_predict.htm"><span style="font-weight: bold;">t_predict</span></a> or NULL. If <span style="font-weight: bold;">predict</span> is supplied, <span style="font-weight: bold;">Diasm()</span>
+will attempt to calculate the contents of registers,&nbsp;stack and
+accessed memory after execution of the command. For example, simple
+case: predict-&gt;rstate[REG_EAX]=PST_VALID,
+predict-&gt;rconst[REG_EAX]=4 and command is ADD EAX,EAX. <span style="font-weight: bold;">Disasm()</span> will change predict-&gt;rconst[REG_EAX] to 8. If command is not supported by prediction, <span style="font-weight: bold;">Disasm()</span>
+will invalidate registers and memory locations modified by the command.
+Prediction is not intended for use in plugins, use this feature at your
+own risk</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If
+command is fully recognized, returns length of the binary command in
+bytes. If command is longer than cmdsize bytes, returns cmdsize. If
+command is not recognized, returns 1 (indicating that at least 1 byte
+must be skipped). In the case of invalid parameters, like <span style="font-weight: bold;">cmd</span>==NULL or <span style="font-weight: bold;">cmdlen</span>&lt;=0, returns 0.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small></small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">ulong Disassemble(ulong addr,ulong threadid,wchar_t *command,wchar_t *comment) {<br>&nbsp; ulong length,&amp;declength;<br>&nbsp; uchar cmd[MAXCMDSIZE],*decode;<br>&nbsp; t_disasm da;<br>&nbsp; t_reg *reg;<br>&nbsp; length=Readmemory(cmd,addr,MAXCMDSIZE,MM_SILENT|MM_PARTIAL);<br>&nbsp; if (length==0) return 0;<br>&nbsp; decode=Finddecode(addr,&amp;declength);<br>&nbsp; if (decode!=NULL &amp;&amp; declength&lt;length) <br>&nbsp; &nbsp; decode=NULL;<br>&nbsp;&nbsp;reg=Threadregisters(threadid);<br>&nbsp; length=Disasm(cmd,length,addr,decode,&amp;da,DA_TEXT|DA_OPCOMM|DA_MEMORY,reg,NULL);<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; if (length==0) return 0;<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"> &nbsp; StrcopyW(command,TEXTLEN,da.result);<br>&nbsp; StrcopyW(comment,TEXTLEN,da.comment);<br>&nbsp; return length;<br>}<br></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analysis</a>, <a href="t_disasm.htm">t_disasm</a>, <a href="t_predict.htm">t_predict</a>, <a href="t_reg.htm">t_reg</a>, <a href="Assemble.htm">Assemble()</a>, <a href="Assembleallforms.htm">Assembleallforms()</a>, <a href="Cmdinfo.htm">Cmdinfo()</a>, <a href="Cmdinfo.htm">Disassembleback()</a>, <a href="Disassembleforward.htm">Disassembleforward()</a>, <a href="Ndisasm.htm">Ndisasm()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

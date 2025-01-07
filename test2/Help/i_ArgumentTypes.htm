@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>Types of arguments</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Types of
+arguments<br>
+</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>A
+type in the sense of OllyDbg is the way to decode doubleword to text.
+Internal OllyDbg database contains descriptions of hundreds&nbsp;of
+known functions, types and structures. For example, a function may
+have&nbsp;several arguments. Each argument can be a number, a constant,
+a
+combination of flags or binary fields, or a pointer to type or
+structure. Value returned by the function in register EAX&nbsp;also
+has some type.<br>
+<br>Here is a typical Windows API function: <br><br></small></span><span style="font-family: monospace; font-weight: bold;">HPEN CreatePen(int fnPenStyle, int nWidth,&nbsp;COLORREF crColor);</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>It
+has three arguments: pen style, which is one of the&nbsp;constants
+PS_xxx defined somewhere in the API headers, integer pen width, and
+color, which is the combination of three components (red, green and
+blue) together with some additional information. CreatePen() returns
+GDI handle. And here is the description in the database:<br><br></small></span><span style="font-family: monospace; font-weight: bold;">STDFUNC GDI32.CreatePen</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;PS_X&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;Style</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; INT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Width</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;COLORREF &nbsp; Color</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; RETURNS&nbsp;&nbsp;&nbsp;&nbsp;HGDI</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">END</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>This is a standard API function that preserves EBX, EBP, ESI and EDI and removes its argument from the stack (<span style="font-weight: bold;">STDFUNC</span>). It is defined in GDI32.dll, so there is no change of confusion if function with the same name is defined elsewhere. <br><br>Type <span style="font-weight: bold;">PS_X</span> is just an enumeration. If value is unknown, it will be displayed as an integer:<br><br></small></span><span style="font-family: monospace; font-weight: bold;">TYPE PS_X</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; IF&nbsp;&nbsp;&nbsp;&nbsp; 0.&nbsp;&nbsp;&nbsp;"PS_SOLID"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 1.&nbsp;&nbsp;&nbsp;"PS_DASH"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 2.&nbsp;&nbsp;&nbsp;"PS_DOT"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 3.&nbsp;&nbsp;&nbsp;"PS_DASHDOT"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 4.&nbsp;&nbsp;&nbsp;"PS_DASHDOTDOT"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 5.&nbsp;&nbsp;&nbsp;"PS_NULL"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 6.&nbsp;&nbsp;&nbsp;"PS_INSIDEFRAME"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 7.&nbsp;&nbsp;&nbsp;"PS_USERSTYLE"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 8.&nbsp;&nbsp;&nbsp;"PS_ALTERNATE"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INT</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ENDIF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">END</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Width of the pen is just an integer. Type <span style="font-weight: bold;">COLORREF</span>
+is more complicated. First, there are several subfields that must be
+decoded separately. Second, it would be nice to decode frequently used
+colours as a plain text instead of cryptical RGB(128,128,0):<br><br></small></span><span style="font-family: monospace; font-weight: bold;">TYPE COLORREF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; IF&nbsp;&nbsp;&nbsp;&nbsp; 0x00000000&nbsp; "&lt;BLACK&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00FFFFFF&nbsp; "&lt;WHITE&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00800000&nbsp; "&lt;BLUE&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00008000&nbsp; "&lt;GREEN&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00808000&nbsp; "&lt;CYAN&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00000080&nbsp; "&lt;RED&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00800080&nbsp; "&lt;MAGENTA&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00008080&nbsp; "&lt;BROWN&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00C0C0C0&nbsp; "&lt;GRAY&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00808080&nbsp; "&lt;DARKGRAY&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00FF0000&nbsp; "&lt;LIGHTBLUE&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x0000FF00&nbsp; "&lt;LIGHTGREEN&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00FFFF00&nbsp; "&lt;LIGHTCYAN&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x000000FF&nbsp; "&lt;LIGHTRED&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x00FF00FF&nbsp; "&lt;LIGHTMAGENTA&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSEIF 0x0000FFFF&nbsp; "&lt;YELLOW&gt;"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ELSE</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; SELECT FIELD&nbsp;&nbsp;&nbsp;&nbsp; 0xFF000000</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IF EQ 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "PALETTERGB"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ELSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "RGB"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ENDIF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; ENDSEL</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; SELECT FIELD&nbsp;&nbsp;&nbsp;&nbsp; 0x000000FF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT "("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; ENDSEL</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; SELECT FIELD&nbsp;&nbsp;&nbsp;&nbsp; 0x0000FF00</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT ","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; ENDSEL</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; SELECT FIELD&nbsp;&nbsp;&nbsp;&nbsp; 0x00FF0000</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT ","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; ENDSEL</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; TEXT ")"</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; SELECT FIELD&nbsp;&nbsp;&nbsp;&nbsp; 0xFF000000</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IF NE 0</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IF NE 2</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT ", flags = "</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HEX</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ENDIF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ENDIF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; ENDSEL</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; ENDIF</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">END</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Finally, function returns <span style="font-weight: bold;">HGDI</span>. This is the GDI handle that will be decoded by OllyDbg in a special way. And here is the result:<br><br></small></span><span style="font-family: monospace; font-weight: bold;">0042437C&nbsp;
+6A 00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PUSH 0 &nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;&nbsp;Color = &lt;BLACK&gt;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">0042437D&nbsp;
+6A 00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PUSH
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;&nbsp;Width = 0</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">0042437F&nbsp;
+6A 00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PUSH
+0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;&nbsp;Style = PS_SOLID</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">00424381&nbsp; E8 5EC40300&nbsp; CALL &lt;JMP.&amp;GDI32.CreatePen&gt;&nbsp;&nbsp; ;&nbsp;GDI32.CreatePen</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Prefixed names</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+To describe the type internally, OllyDbg uses prefixed names. A prefixed name is a
+UNICODE string, at most SHORTNAME wide characters long, where first
+character (prefix) is a combination of flags <span style="font-weight: bold;">ARG_xxx</span> and
+remaining characters are the name of this&nbsp;type in the
+database. By the way, the database is extendable and users may add
+their own descriptions.<br>
+<br>Prefix consists of the following bits:<br>
+<br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>ARG_VALID</small></td>
+<td><small>Always set to avoid zero prefix, but
+otherwise ignored by decoding routines</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_POINTER</small></td>
+<td><small>Type is a pointer to another type
+or&nbsp;structure</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_TYPE</small></td>
+<td><small>Type. Can't be used together with <span style="font-weight: bold;">ARG_STRUCT</span> or <span style="font-weight: bold;">ARG_DIRECT</span></small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_STRUCT</small></td>
+<td><small>(Only allowed if <span style="font-weight: bold;">ARG_POINTER</span> is also set) Pointer to the structure. Can't be used together with <span style="font-weight: bold;">ARG_TYPE</span> or <span style="font-weight: bold;">ARG_DIRECT</span></small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_DIRECT</small></td>
+<td><small>Direct ASCII string, used only inside the .NET streams. Can't be used together with <span style="font-weight: bold;">ARG_TYPE</span> or <span style="font-weight: bold;">ARG_STRUCT</span></small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_OUT</small></td>
+<td><small>(Only allowed if <span style="font-weight: bold;">ARG_POINTER</span> is also set) Output parameter of the function, undefined on call</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_MARK</small></td>
+<td><small>Important parameter of the function, used to comment the function</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ARG_ELLIPSYS</small></td>
+<td><small>Last obligatory argument of the function with variable number of arguments</small></td>
+</tr>
+
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Prefix bits always form valid ASCII/UNICODE character. In the above example, prefixed names have encodings <span style="font-weight: bold;">@COLORREF</span>, <span style="font-weight: bold;">@INT</span>, <span style="font-weight: bold;">@PS_X</span> and <span style="font-weight: bold;">@HGDI</span>.<br></small></span><br></body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Swprintf</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Swprintf</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Swprintf(wchar_t *s,wchar_t *format,...);<br></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>Borland&nbsp;defines swprintf() as </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-style: italic;">swprintf(s,format,...)</span>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Microsoft (Visual C) defines it as <span style="font-style: italic;">swprintf(s,count,format,...)</span>.
+While the&nbsp;second form is more safe, code that uses swprintf()
+can't be compiled&nbsp;everywhere. To solve this problem, use <span style="font-weight: bold;">Swprintf()</span> that uses the lowest common form (without the count).</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">s</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Pointer to the output UNICODE string, at least <span style="font-weight: bold;">TEXTLEN</span> wide characters long</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">format</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the UNICODE string that obeys <span style="font-weight: bold;">swprintf()</span> rules</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">...</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) List of parameters that follow <span style="font-weight: bold;">format</span>, may be empty</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Number
+of the wide characters written to <span style="font-weight: bold;">s</span>, not including the terminal null character</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Setcase.htm">SetcaseA()</a>, <a href="Setcase.htm">SetcaseW()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">,
+<a href="StrcmpW.htm">StrcmpW()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">,
+</span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Strcopycase.htm">StrcopycaseA()</a>, <a href="Strcopycase.htm">StrcopycaseW()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Strlen.htm">StrlenA()</a>, <a href="Strlen.htm">StrlenW()</a>, <a href="Strnstr.htm">StrnstrA()</a>, <a href="Strnstr.htm">StrnstrW()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

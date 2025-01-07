@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Getanalysercomment</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Getanalysercomment</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Getanalysercomment(struct t_module *pmod,ulong addr,wchar_t *comment,int len);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Given memory address in the contents of the debugged application, returns&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>comment (of type <a href="NM_xxx.htm"><span style="font-weight: bold;">NM_ANALYSE</span></a>) added by the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a> to this address.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pmod</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the descriptor of the <a href="t_module.htm"><span style="font-weight: bold;">module</span></a> that contains address <span style="font-weight: bold;">addr</span>,
+or NULL as a request to find the module automatically. Treat this
+parameter as a hint and supply this pointer only if module is already
+known.</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the memory location in the contents of the debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">comment</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) UNICODE string of length at least <span style="font-weight: bold;">len</span> wide characters that receives comment with resolved control fields, see explanation below</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">len</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length, in wide characters, of the buffer pointed to by <span style="font-weight: bold;">comment</span></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Explanation:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><small><span style="font-family: Helvetica,Arial,sans-serif;">Comments
+produced by the Analyser may contain memory addresses. As modules are
+relocatable, these addresses are saved as&nbsp;offsets to the base of
+the module in form &lt;+XXXX&gt;, where XXXX is the&nbsp;offset encoded
+as a hexadecimal text string. Getanalysercomment() replaces offsets by
+the actual addresses. Note that if plugin creates its own comments of
+type <span style="font-weight: bold;">NM_ANALYSE</span>, it must encode each occurence of '&lt;' which does not start the control field as '&lt;&lt;'.<br></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Length of comment in wide characters, not including the terminal null, or 0 if there is no analyser comment associated with <span style="font-weight: bold;">addr</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Commentaddress.htm"></a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

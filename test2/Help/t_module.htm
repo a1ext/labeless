@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_module</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_module</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>One of the most important structures, describes executable module (.exe or DLL of any kind<span style="font-style: italic;"></span>) loaded into the memory of the&nbsp;debugged application. Modules&nbsp;are listed in the <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a> of <span style="font-weight: bold;"><a href="i_Tables.htm">table</a> module</span>. Plugins should not attempt to modify module descriptions directly.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_module
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of executable module<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+base;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of module<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of memory occupied by module<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Service information, TY_xxx+MOD_xxx<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; modname[SHORTNAME];&nbsp;&nbsp; // Short name of the module<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+path[MAXPATH];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Full name
+of the module<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; version[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp; // Version of executable file<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+fixupbase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base of image in executable file<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+codebase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of module code block<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+codesize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of module code block<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+entry;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of &lt;ModuleEntryPoint&gt; or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sfxentry;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of SFX-packed entry or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+winmain;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of WinMain or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+database;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of module data block<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+edatabase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of export data table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+edatasize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of export data table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+idatatable;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of import data table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+iatbase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base of Import Address Table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+iatsize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of IAT<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+relocbase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of relocation table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+relocsize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of relocation table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+resbase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of resources<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ressize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of resources<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tlsbase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of TLS directory table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tlssize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of TLS directory table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tlscallback;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Address of first TLS callback or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+netentry;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// .NET entry (MOD_NETAPP only)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+clibase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// .NET CLI header base (MOD_NETAPP)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+clisize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// .NET CLI header base (MOD_NETAPP)<br>&nbsp; t_netstream&nbsp;&nbsp;&nbsp; netstr[NETSTREAM];&nbsp;&nbsp;&nbsp; // Locations of default .NET streams<br>&nbsp; t_metadata&nbsp;&nbsp;&nbsp;&nbsp; metadata[MDTCOUNT];&nbsp;&nbsp; // Descriptors of .NET MetaData tables<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sfxbase;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base of memory block with SFX<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sfxsize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of memory block with SFX<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+rawhdrsize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of PE header in file<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+memhdrsize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of PE header in memory<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nsect;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Number of sections in the module<br>&nbsp;
+t_secthdr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*sect;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Extract from section headers<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nfixup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Number of 32-bit fixups<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*fixup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Array of 32-bit fixups<br>&nbsp;
+t_jmpdata&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+jumps;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Jumps and calls from this module<br>&nbsp;
+t_nested&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+loopnest;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Loop brackets<br>&nbsp; t_nested&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+argnest;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Call argument brackets<br>&nbsp;
+t_simple&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+predict;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Predicted ESP, EBP &amp; results (sd_pred)<br>&nbsp;
+t_sorted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+strings;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Resource strings (t_string)<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+saveudd;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// UDD-relevant data is changed<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ncallmod;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// No. of called modules (max. NCALLMOD)<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; callmod[NCALLMOD][SHORTNAME]; // List of called modules<br>} t_module;<br></span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Base
+address of the module in the memory space of debugged application.
+Usually, but not necessarily, modules are aligned at 0x10000</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size
+of the module in the memory space of debugged application, in bytes.
+Note that the memory occupied by module may be (and frequently is)
+non-continuous</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Module a</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">ttributes, a set of flags <span style="font-weight: bold;">TY_xxx</span> combined with the following module-specific flags:<br><span style="font-weight: bold;">MOD_MAIN</span> - indicates main module (usually <span style="font-style: italic;">.exe</span>)<br><span style="font-weight: bold;">MOD_SFX</span> - module is recognized as</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> self-extractable</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> by OllyDbg<br><span style="font-weight: bold;">MOD_SFXDONE</span> - original entry point of the self-extractable module was successfully found<br><span style="font-weight: bold;">MOD_RUNDLL</span> - module is a&nbsp;DLL loaded by <span style="font-style: italic;">LOADDLL.EXE</span><br><span style="font-weight: bold;">MOD_SYSTEMDLL</span> -&nbsp;system DLL (resides in the system directory)<br><span style="font-weight: bold;">MOD_SUPERSYS</span> - system DLL with special rights. OllyDbg treats following DLLs as supersystem: <span style="font-style: italic;">ntdll</span>, <span style="font-style: italic;">kernel32</span>, <span style="font-style: italic;">user32</span>, <span style="font-style: italic;">advapi32</span>, <span style="font-style: italic;">shell32</span>, <span style="font-style: italic;">gdi32</span><br><span style="font-weight: bold;">MOD_DBGDATA</span> - debugging data (extracted and used by <span style="font-style: italic;">dbghelp.dll</span>) is available<br><span style="font-weight: bold;">MOD_ANALYSED</span> - module is already analysed<br><span style="font-weight: bold;">MOD_NODATA</span> - module data is not yet available, most of&nbsp;t_module members are undefined<br><span style="font-weight: bold;">MOD_HIDDEN</span> - module is loaded in stealth mode and is not reported by <span style="font-style: italic;">ToolHelp32</span>&nbsp;or similar APIs<br><span style="font-weight: bold;">MOD_NETAPP</span> - .NET or mixed-mode application<br><span style="font-weight: bold;">MOD_RESOLVED</span> - all static imports in the module are&nbsp;resolved. This flag is used internally by the Analyser and is not very reliable</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">modname</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Short
+module name, as used by OllyDbg, derived from the name of the
+executable file (and usually coincides with it). Hidden modules with
+unknown executable get names Mod_XXXX, where XXXX is the 16 most
+significant bits of the module <span style="font-weight: bold;">base</span> in hexadecimal format</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">path</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Fully qualified path to the executable file on the disk, or empty string if path is unknown</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">version</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Version of the executable file, as returned by <a href="Getexeversion.htm"><span style="font-weight: bold;">Getexeversion()</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">fixupbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Defaut
+load address of the module. Fixups in the executable file are adjusted
+to this address. In most cases, main executable file is loaded on <span style="font-weight: bold;">fixupbase</span>, but DLLs are frequently reallocated</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">codebase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the code section mapped into memory, as reported in PE header. If necessary, OllyDbg may adjust or guess it</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">codesize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">code
+section in the memory of the debugged process. If necessary, OllyDbg
+may adjust or guest it. Note that code section may&nbsp;consist of
+several PE sections which are not necessarily continuous in the memory</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">entry</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address
+of the module entry point in the memory of the debugged application. In
+the main executable file linker usually points this address to the
+initialization routine that makes compiler-dependent preparations and
+calls <span style="font-weight: bold;">WinMain()</span> or <span style="font-weight: bold;">main()</span>. For DLLs, initialization routine calls&nbsp;<span style="font-weight: bold;">DllEntryPoint()</span> (also known as <span style="font-weight: bold;">DllMain()</span>)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sfxentry</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address
+of the real entry point of the original executable&nbsp;restored by
+self-extractor, or 0 if module is not self-extractable or real entry
+point is not yet known</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">winmain</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of <span style="font-weight: bold;">WinMain()</span> in the memory of the debugged application, or 0 if&nbsp;address is unknown or this is not the main module</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">database</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Base
+address of the data section mapped into the memory of the debugged
+application, as reported in PE header. If data base is not declared in
+the&nbsp;header, OllyDbg attempts to guess it using section names and
+attributes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">edatabase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the export table in the memory of the debugged application. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Note that export table does not necessarily start at the beginning of the&nbsp;section</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">edatasize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the export table in bytes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">idatatable</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Base
+address of the import data in the memory of the debugged application.
+Note that import data does not necessarily start at the beginning of
+the&nbsp;section</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">iatbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the Import Address Table (IAT)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">iatsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the Import Address Table in bytes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">relocbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the&nbsp;fixup table in the memory of the debugged application. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Note
+that fixup table does not necessarily start at the beginning of
+the&nbsp;section. Format of the fixup table is less than intuitive,
+OllyDbg extracts fixup data to a separate array (<span style="font-weight: bold;">nfixup</span>/<span style="font-weight: bold;">fixup</span> pair described below). Preferrable way to locate fixups is by calling <a href="Findfixup.htm"><span style="font-weight: bold;">Findfixup()</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">relocsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the fixup table in bytes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">resbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the resources&nbsp;in the memory of the debugged application</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ressize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the resources in bytes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tlsbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the TLS directory (<span style="font-weight: bold;">IMAGE_TLS_DIRECTORY</span>)
+in the memory of the debugged application. TLS stays for Thread Local
+Storage and may specify one or more callback functions which are
+executed <span style="font-style: italic; font-weight: bold;">before</span> entry point of the application is called</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tlssize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the TLS directory in bytes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tlscallback</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the first TLL callback function or 0 if there are no TLS callbacks in the debugged application</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">netentry</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the entry point of the .NET application</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">clibase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the <span style="font-weight: bold;">IMAGE_COR20_HEADER</span>&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">in the memory of the debugged application, or 0 if this is not a&nbsp;.NET/mixed module. <span style="font-weight: bold;">IMAGE_COR20_HEADER</span> defines layout of the .NET executable</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">clisize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">IMAGE_COR20_HEADER</span>, as specified in the PE header. Ignored by OllyDbg</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">netstr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Locations&nbsp;of
+default .NET streams (ASCII strings, GUIDs, Blob, UNICODE strings,
+MetaData tables) in the memory of the debugged application. Filled with
+zeros if this is not a .NET/mixed module. See <a href="t_netstream.htm"><span style="font-weight: bold;">t_netstream</span></a> for details</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">metadata</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptors of .NET MetaData tables</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. Filled with zeros if this is not a .NET/mixed module. See <a href="t_metadata.htm"><span style="font-weight: bold;">t_metadata</span></a> for details</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sfxbase</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the memory block containing self-extracting routine, or 0 if self-extractor was not detected</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sfxsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the memory block containing&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">self-extracting routine, or 0 if self-extractor was not detected</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">rawhdrsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of PE headers (DOS, PE, sections) as declared in the PE Optional Header (member SizeOfHeaders)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">memhdrsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of PE headers rounded to the next multiple of the page size</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nsect</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of sections in the module</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sect</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of sections defined in the executable file,&nbsp;array of <span style="font-weight: bold;">nsect</span> structures of type <a href="t_secthdr.htm"><span style="font-weight: bold;">t_secthdr</span></a>.
+Note that PE header is not a section. Note also that OllyDbg may merge
+two or more sections with similar attributes into the single memory
+block</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nfixup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of fixups (adjustable absolute addresses)&nbsp;in the module. If <span style="font-weight: bold;">nfixup</span> is 0, probably&nbsp;fixups were stripped from the executable file</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">fixup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Array of 32-bit fixup locations, nfixup+1 doublewords long. Last element is set to 0. If <span style="font-weight: bold;">nfixup</span> is 0, <span style="font-weight: bold;">fixup</span> may be NULL. Preferrable way to </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">locate fixups is by calling <a href="Findfixup.htm"><span style="font-weight: bold;">Findfixup()</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">jumps</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> of type <a href="t_jmpdata.htm"><span style="font-weight: bold;">t_jmpdata</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> to the table of jumps and calls found in the module. Use <a href="Findjumpfrom.htm"><span style="font-weight: bold;">Findjumpfrom()</span></a>, <a style="font-weight: bold;" href="Findlocaljumpscallsto.htm">Findlocaljumpscallsto()</a> and similar functions to access this data</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">loopnest</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptor of <a href="i_Nesteddata.htm"><span style="font-weight: bold;">nested data</span></a> containing list of loops found in the module</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> by the Analyser. Each item in the list is of type <a href="t_loopnest.htm"><span style="font-weight: bold;">t_loopnest</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. Loops may be nested</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">argnest</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptor of <a href="i_Nesteddata.htm"><span style="font-weight: bold;">nested data</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> containing list of</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> argument brackets that indicate the scope of the call parameters. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Each item in the list is of type&nbsp;<a href="t_loopnest.htm"><span style="font-weight: bold;"></span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="t_argnest.htm"><span style="font-weight: bold;">t_argnest</span></a>. Argument brackets may be nested</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">predict</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptor of <a style="font-weight: bold;" href="i_Simple.htm">simple data</a> table that keeps&nbsp;values of registers ESP and&nbsp;EBP and&nbsp;results of command execution predicted by the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>. Each item in the data is a structure of type <a href="sd_pred.htm"><span style="font-weight: bold;">sd_pred</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="sd_pred.htm"><span style="font-weight: bold;"></span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">strings</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptor of <a href="t_sorted.htm"><span style="font-weight: bold;">sorted data</span></a> containing addresses of resource strings in the memory of the debugged application. Each data element is a structure of type <a href="t_string.htm"><span style="font-weight: bold;">t_string</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">saveudd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Flag&nbsp;indicating
+that some data kept in the .udd file was changed and OllyDbg should
+save it back to the disk when module unloads</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ncallmod</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of valid items in <span style="font-weight: bold;">callmod</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">callmod</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of the short names of the modules statically referenced by the given module. Length of this list is limited to <span style="font-weight: bold;">NCALLMOD</span>,
+remaining names are ignored. OllyDbg uses this otherwise unreliable
+information to optimize the order in which the modules are analysed</span><br>
+</small></div><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Nesteddata.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analyser</a></span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Nesteddata.htm">nested data</a>, <a href="i_Simple.htm">simple data</a>,&nbsp;<a href="i_Sorteddata.htm">sorted data</a>, <a href="sd_pred.htm">sd_pred</a>, <a href="i_Tables.htm">table</a>, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="t_argnest.htm"><span style="font-weight: bold;">t_argnest</span></a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"> <a href="t_jmpdata.htm">t_jmpdata</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">,</span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"> <a href="t_loopnest.htm">t_loopnest</a>, <a href="t_metadata.htm">t_metadata</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_metadata.htm">,</a> <a href="t_nested.htm">t_nested</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_nested.htm">,</a> <a href="t_netstream.htm">t_netstream</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_netstream.htm">,</a> </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_premod.htm">t_premod</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_secthdr.htm">t_secthdr</a>, <a href="t_simple.htm">t_simple</a>, <a href="t_sorted.htm">t_sorted</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="t_string.htm">t_string</a>, <a href="Backupusercode.htm">Backupusercode()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="Findfileoffset.htm">Findfileoffset()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="Findfixup.htm">Findfixup()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="Findmainmodule.htm">Findmainmodule()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="Findmodule.htm">Findmodule()</a>, <a href="Findmodulebyname.htm">Findmodulebyname()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Getexeversion.htm">Getexeversion()</a>, <a href="Getmodulestring.htm">Getmodulestring()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Issystem.htm">Issystem()</a>, <a href="Ndisasm.htm">Ndisasm()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Strcopy</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">StrcopyA,
+StropyW</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+StrcopyA(char *dest,int n,const char *src);<br>
+int StrcopyW(wchar_t *dest,int n,const wchar_t *src);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Replaces
+unsafe calls to strcpy()/wcscpy(). Copies at most n-1 characters from
+the null-terminated ASCII (<span style="font-weight: bold;">StrcopyA</span>)
+or UNICODE (<span style="font-weight: bold;">StrcopyW</span>)
+string <span style="font-weight: bold;">src</span>
+to&nbsp;<span style="font-weight: bold;">dest</span>
+and assures that <span style="font-weight: bold;">dest</span>
+is null-terminated. Returns number of actually copied characters, not
+including the terminal null.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dest</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Pointer to the output string, at least <span style="font-weight: bold;">n</span> characters long</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">n</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length
+of <span style="font-weight: bold;">dest</span>,
+characters</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">src</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the input string</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Number
+of the characters copied from src to dest, or 0 on error</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;">
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">#define VERSION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; L"2.00.00"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Plugin version<br><br>int Getpluginversion(wchar *s,int nmax) {<br>&nbsp; int n;<br>&nbsp; n=StrcopyW(s,nmax,L"Plugin v");<br>&nbsp; n+=StrcopyW(s+n,nmax-n,VERSION);<br>&nbsp; return n;<br>}</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Setcase.htm">SetcaseA()</a>, <a href="Setcase.htm">SetcaseW()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="StrcmpW.htm">StrcmpW()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Strcopycase.htm">StrcopycaseA()</a>, <a href="Strcopycase.htm">StrcopycaseW()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Strlen.htm">StrlenA()</a>, <a href="Strlen.htm">StrlenW()</a>, <a href="Strnstr.htm">StrnstrA()</a>, <a href="Strnstr.htm">StrnstrW()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Initizlization file functions</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Initialization
+file&nbsp;functions</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif;"><br>
+OllyDbg keeps its global settings in the initialization file. They include
+options, file history, layout and placement of windows, fonts and
+colour schemes. In my personal opinion, initialization file has many
+advantages over the registry. First of all, it's portable. You can
+easily backup it. You can copy <span style="font-style: italic;">ollydbg.ini</span>
+to the flash drive and use your favourite options everywhere. It's
+compact, human-readable and easily editable. And, you can delete it
+anytime and be sure that there are no dead keys remaining in the registry.<br><br>Initialization file is located in the same directory as OllyDbg executable and is named <span style="font-style: italic;">xxxxx.ini</span>, where <span style="font-style: italic;">xxxxx</span> is the current name of the OllyDbg. Thus, if you rename <span style="font-style: italic;">d:\ollydbg\ollydbg.exe</span> into <span style="font-style: italic;">quark.exe</span> and start it, it will create its own initialization file, <span style="font-style: italic;">d:\ollydbg\quark.ini</span>. This is the easiest way to switch between the different configurations.<br><br>Initialization functions take care of the UNICODE characters and quoted file names.<br><br>Note
+that child debugger (copy of the OllyDbg thar was automatically started
+when debugged process started child process) is not allowed to save any
+data to the initialization file. This behaviour is by design to prevent
+interference with the main instance. <br><br><br></span></small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">API
+functions:</span><br><small><span style="font-family: Helvetica,Arial,sans-serif;">
+<br>
+</span></small><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int <a href="Stringfromini.htm">Stringfromini</a>(wchar_t
+*section,wchar_t *key,wchar_t *s,int length);<br>
+int
+<a href="Filefromini.htm">Filefromini</a>(wchar_t *key,wchar_t *name,wchar_t *defname);<br>
+int <a href="Getfromini.htm">Getfromini</a>(wchar_t
+*file,wchar_t *section,wchar_t *key,wchar_t *format,...);<br>
+int <a href="Writetoini.htm">Writetoini</a>(wchar_t
+*file,wchar_t *section,wchar_t *key,wchar_t *format,...);<br>
+int <a href="Filetoini.htm">Filetoini</a>(wchar_t
+*key,wchar_t *name);<br>
+void <a href="Deleteinisection.htm">Deleteinisection</a>(wchar_t
+*file,wchar_t *section);<br>
+int
+<a href="Getfromsettings.htm">Getfromsettings</a>(wchar_t *key,int defvalue);<br>
+void <a href="Addtosettings.htm">Addtosettings</a>(wchar_t
+*key,int value);<br>
+</span><br>
+<small><span style="font-family: Helvetica,Arial,sans-serif;"><br>
+</span></small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

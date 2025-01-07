@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>DRAWFUNC</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">DRAWFUNC</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Mandatory callback function that draws contenst of&nbsp;table cells. See <a style="font-weight: bold;" href="i_Tables.htm">Tables</a> for the&nbsp;detailed description.<br>
+</small><br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef int DRAWFUNC(wchar_t *s,uchar *mask,int *select,struct t_table *pt,t_sorthdr *ps,int column,void *cache);<br></span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">s</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(Out)
+Pointer to the UNICODE string, at least <span style="font-weight: bold;">TEXTLEN</span> wide characters long,
+that receives contents of the string to be drawn in the cell. This
+buffer is not initialized. Null character at the end of the string is not required</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mask</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(Out)
+Pointer to the byte array, at least <span style="font-weight: bold;">TEXTLEN</span> bytes long, that receives
+individual drawing attributes of the corresponding characters in <span style="font-weight: bold;">s</span>
+as a combinations of flags <span style="font-weight: bold;">DRAW_xxx</span> with numerical values not exceeding
+0xFF.&nbsp;This buffer is not initialized. To use <span style="font-weight: bold;">mask</span>, set flag <span style="font-weight: bold;">DRAW_MASK</span> in <span style="font-weight: bold;">*select</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">select</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(Out)
+Pointer to drawing attributes that apply to the string as a whole as a
+combination of flags <span style="font-weight: bold;">DRAW_xxx</span>. On input, pointed variable is zeroed</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pt</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In) Pointer to the table descriptor, a structure of type <a href="t_table.htm"><span style="font-weight: bold;">t_table</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ps</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In,out) For standard tables, pointer to the displayed element of sorted data. For tables of type <span style="font-weight: bold;">TABLE_USERDEF</span> and <span style="font-weight: bold;">TABLE_SIMPLE</span>, pointer to the structure <a href="t_drawheader.htm"><span style="font-weight: bold;">t_drawheader</span></a> that tells drawing function which line is currently painted. Dedicated parts of <a href="t_drawheader.htm"><span style="font-weight: bold;">t_drawheader</span></a> may be used as a&nbsp;cache of fixed size</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">column</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In) Either zero-based index of the column to which the processed cell belongs (<span style="font-weight: bold;">column</span>&gt;=0), or one of the constants <span style="font-weight: bold;">DF_xxx</span> indicating requests to prepare for drawing. See <a href="i_Tables.htm"><span style="font-weight: bold;">Tables</span></a> for details</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cache</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In,out) Pointer to the cache. Its size was determined by the drawing function during the first call with <span style="font-weight: bold;">column</span>=<span style="font-weight: bold;">DF_CACHESIZE</span>.
+OllyDbg preserves contents of the cache during the whole drawing sequence and
+guarantees that there is no interference with other tables, even if
+they use the same drawing function. Note that cache may be <span style="font-weight: bold;">NULL</span> if&nbsp;requested&nbsp;cache size is 0</span><br>
+</small></div><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If <span style="font-weight: bold;">column</span> is <span style="font-weight: bold;">DF_CACHESIZE</span>, this function must return the requested size of the data cache. If <span style="font-weight: bold;">column</span> is&nbsp;<span style="font-weight: bold;">DF_FILLCACHE</span>,&nbsp;<span style="font-weight: bold;">DF_FREECACHE</span> or <span style="font-weight: bold;">DF_NEWROW</span>, it must return 0. In all other cases, it must return the length of the displayed string <span style="font-weight: bold;">s</span> </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>in wide characters </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>(and, if mask is used,&nbsp;the length of the <span style="font-weight: bold;">mask</span> in bytes)<br></small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This
+is the slightly modified drawing function of the INT3 Breakpoints window:<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"><br>typedef
+struct
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Structure of internal draw cache<br>&nbsp;
+t_disasm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+da;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Disassembled command<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+length;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Length of command (0: invalid)<br>} t_bpointcache;<br><br>int Bpointdraw(wchar *s,uchar *mask,int *select,t_table *pt,t_drawheader *ph,int column,void *cache) {<br>&nbsp; int n,mode;<br>&nbsp; ulong length;<br>&nbsp; uchar cmd[MAXCMDSIZE];<br>&nbsp; t_bpoint *pbrk;<br>&nbsp; t_bpointcache *pc;<br>&nbsp; t_module *pmod;<br>&nbsp; pbrk=(t_bpoint *)ph;<br>&nbsp; pc=(t_bpointcache *)cache;<br>&nbsp; n=0;<br>&nbsp; switch (column) {<br>&nbsp;&nbsp;&nbsp;
+case
+DF_CACHESIZE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request for draw cache size<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return sizeof(t_bpointcache);<br>&nbsp;&nbsp;&nbsp;
+case
+DF_FILLCACHE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request to fill draw cache<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+DF_FREECACHE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request to free cached resources<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+DF_NEWROW:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request to start new row in window<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; length=Readmemory(cmd,pbrk-&gt;addr,sizeof(cmd),MM_SILENT|MM_PARTIAL);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (length&gt;0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; length=Disasm(cmd,length,pbrk-&gt;addr,Finddecode(pbrk-&gt;addr,NULL),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;(pc-&gt;da),DA_TEXT|DA_OPCOMM|DA_MEMORY,NULL,NULL);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pc-&gt;length=length;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+0:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of INT3 breakpoint<br>&nbsp; &nbsp; &nbsp; n=Simpleaddress(</span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">s,pbrk-&gt;addr,mask,select);</span><br><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Module name<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pmod=Findmodule(pbrk-&gt;addr);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (pmod==NULL) break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,pmod-&gt;modname);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Breakpoint status<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (pbrk-&gt;type &amp; BP_MANUAL) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (pbrk-&gt;type &amp; BP_DISABLED)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,T(L"Disabled"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (pbrk-&gt;type &amp; BP_COND)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,T(L"Cond"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,T(L"Active"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (pbrk-&gt;type &amp; BP_ONESHOT)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,T(L"One-shot"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (pbrk-&gt;type &amp; BP_TEMP)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,T(L"Temporary"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (pbrk-&gt;type &amp; BP_TRACE)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,T(L"Trace"));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+3:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Disassembly<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (pc-&gt;length&gt;0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,pc-&gt;da.result);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+4:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Comment<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=Commentaddress(pbrk-&gt;addr,COMM_ALL,s,TEXTLEN);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (n==0) n=StrcopyW(s,TEXTLEN,pc-&gt;da.comment);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *select|=DRAW_VARWIDTH;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp; default: break;<br>&nbsp; };<br>&nbsp; return n;<br>};<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:<br>
+<br>
+</span>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="i_Tables.htm">table</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>DESTFUNC</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">DESTFUNC</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Type
+of callback function used to free resources owned by the item of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>.
+Destructor is called for each data item that is removed from the sorted
+data, either implicitly (when existing item overlaps with the newly
+added) or explicitly (when corresponding API function is called).<br>
+</small><br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+void DESTFUNC(t_sorthdr *sh);<br>
+</span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sh</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(In)
+Pointer to the&nbsp;data item that will be removed from the data</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:<br>
+<br>
+</span>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="t_sorthdr.htm">t_sorthdr</a>, <a href="Addsorteddata.htm">Addsorteddata()</a>, <a href="Deletenonconfirmedsorteddata.htm">Deletenonconfirmedsorteddata()</a>, <a href="Deletesorteddata.htm">Deletesorteddata()</a>, <a href="Deletesorteddatarange.htm">Deletesorteddatarange()</a>, <a href="Destroysorteddata.htm">Destroysorteddata()</a>, <a href="Replacesorteddatarange.htm">Replacesorteddatarange()</a></span></small><a href="Replacesorteddatarange.htm"><br></a>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

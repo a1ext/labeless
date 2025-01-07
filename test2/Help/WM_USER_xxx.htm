@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>WM_USER_xxx</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">WM_USER_xxx</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Constants&nbsp;<span style="font-weight: bold;">WM_USER_xxx</span> define
+custom messages, notifications and <a href="Broadcast.htm"><span style="font-weight: bold;">broadcasts</span></a>
+that OllyDbg posts to
+the table functions of <a style="font-weight: bold;" href="i_Tables.htm">table
+windows</a>.<br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Messages
+and notifications:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="font-weight: bold; width: 110px;"><small>WM_USER_CREATE</small></td>
+<td><small>Called when OllyDbg creates table child window, right after
+call to CreateWindowEx(). This message has no parameters. Return value
+is ignored.</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_HSCR</small></td>
+<td><small>(Passed to the custom table function
+only if <span style="font-weight: bold;">TABLE_NOHSCR</span>
+is cleared) - called to update horizontal scroll bar. <span style="font-weight: bold;">wparam</span> contains
+total width of table in pixels and <span style="font-weight: bold;">lparam</span>
+- width of client area, also in pixels. Recommended action is to return
+0, passing processing to the default table function. Otherwise, custom
+table function must redraw horizontal scrollbar and return 1. Note that
+default table function doesn't support this message</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_VSCR</small></td>
+<td><small>(Passed to the custom table function
+only if <span style="font-weight: bold;">TABLE_NOVSCR</span>
+is cleared) - called to update vertical scroll bar.&nbsp;<span style="font-weight: bold;">wparam</span> is
+the&nbsp;number of completely visible lines in the
+window.&nbsp;Returns 1 if message is processed. It is recommended
+that user-defined tables process this message.&nbsp;Alternatively,
+they can set <span style="font-weight: bold;">t_table.sorted.n</span>
+to the total&nbsp;number of lines in the table, <span style="font-weight: bold;">t_table.offset</span> to
+the index of the&nbsp;first visible line and return 0. Note that
+default
+table function doesn't support this message</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_MOUSE</small></td>
+<td><small>Called when table window receives <span style="font-weight: bold;">WM_MOUSEMOVE</span> and
+mouse is not captured by some table action, like selection or resizing.
+LOWORD(<span style="font-weight: bold;">wparam</span>)
+is the horizontal (X) offset within the column in characters, HIWORD(<span style="font-weight: bold;">wparam</span>) - zero-based
+column index, <span style="font-weight: bold;">lparam</span>
+- row in the window. Returns 1 if custom function sets mouse pointer
+and 0 in all other cases. Note that default table function doesn't
+support this message</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_VINC</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables, i.e. of type <span style="font-weight: bold;">TABLE_USERDEF</span>) -
+scrolls contents of the window by the number of lines specified in
+lparam (treated as a signed number,&nbsp;negative value means
+scrolling upwards). <span style="font-weight: bold;">wparam</span>
+is the number of completely visible lines in the window. Returns 0 if
+custom function doesn't process this message, 1 if window must be
+updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_VPOS</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables) - scrolls contents of the window
+vertically by the position of scrollbar. <span style="font-weight: bold;">wparam</span> is number of
+completely visible lines in window, <span style="font-weight: bold;">lparam</span>
+- zero-based index of the first displayed line (assuming
+that&nbsp;total number of lines is </small><small><span style="font-weight: bold;">t_table.sorted.n</span></small><small>).
+Returns 0 if custom function doesn't process this message, 1 if window
+must be updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_VBYTE</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables) </small><small>- scrolls
+contents of the window by the number of bytes specified in <span style="font-weight: bold;">lparam</span> (treated as
+a&nbsp;signed number, negative value means scrolling upwards). If
+byte scrolling is not supported, process this message&nbsp;as <span style="font-weight: bold;">WM_USER_VINC</span>. <span style="font-weight: bold;">wparam</span> is the number
+of completely visible lines in window. Returns 0 if custom function
+doesn't process this message (neither as VBYTE nor VINC), 1 if window
+must be updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_SETS</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables)</small><small> - starts
+mouse selection. LOWORD(<span style="font-weight: bold;">wparam</span>)
+is the horizontal (X) offset within the column in characters, HIWORD(<span style="font-weight: bold;">wparam</span>) - column,
+lparam - row in the window where selection must start. Returns 0 if
+custom function doesn't process message,1 if window must be updated and
+-1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_CNTS</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables</small><small>, and only if
+table is neither <span style="font-weight: bold;">TABLE_MMOVX</span>
+nor <span style="font-weight: bold;">TABLE_MMOVY</span>)
+- continues mouse selection. LOWORD(<span style="font-weight: bold;">wparam</span>)
+is the horizontal (X) offset within the column in characters, HIWORD(<span style="font-weight: bold;">wparam</span>) - column, <span style="font-weight: bold;">lparam</span> - row in the
+window where selection ends. Returns 0 if custom function doesn't
+process message, 1 if window must be updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_MMOV</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables, and only if table is </small><small><span style="font-weight: bold;">TABLE_MMOVX</span>&nbsp;and/or
+<span style="font-weight: bold;">TABLE_MMOVY</span>
+instead of <span style="font-weight: bold;">WM_USER_CNTS</span>)
+- scrolls window by mouse. <span style="font-weight: bold;">wparam</span>
+is the signed horizontal (X) offset in pixels, lparam - signed Y offset
+in pixels since the most recent <span style="font-weight: bold;">WM_USER_SETS</span>.
+A sequence of <span style="font-weight: bold;">WM_USER_MMOV</span>
+is always preceeded by WM_USER_SETS. Note that if table function
+returns 0 on <span style="font-weight: bold;">WM_USER_SETS</span>,
+<span style="font-weight: bold;">WM_USER_MMOV</span>
+is not processed. If custom table processes this message by itself, it
+must return 1 if window must be updated and -1 if not. Alternatively,
+custom table function must set <span style="font-weight: bold;">t_table.sorted.n</span>
+to the total number of lines in the table, <span style="font-weight: bold;">t_table.offset</span> to
+the index of the first visible line and return 0</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_MOVS</small></td>
+<td><small>Keyboard interface to window
+scrolling and selection. LOWORD(<span style="font-weight: bold;">wparam</span>)
+contains number of completely visible lines in the window, HIWORD(<span style="font-weight: bold;">wparam</span>) - state of
+Ctrl and Shift keys as a set of flags <span style="font-weight: bold;">KEY_xxx</span>, LOINT(<span style="font-weight: bold;">lparam</span>) - signed
+number of lines to move in the vertical (Y) direction, or <span style="font-weight: bold;">MOVETOP</span> to move to
+the topmost element and <span style="font-weight: bold;">MOVEBOTTOM</span>
+to the last. HIINT(<span style="font-weight: bold;">lparam</span>)
+contains signed number of elements to move in the horizontal (X)
+direction. X and Y movements can't be set simultaneously. If custom
+table function doesn't support this message (for example, when window
+must scroll in X insteand of changing selection), it must return 0.
+Otherwise, it moves or extends selection, if necessary scrolls window
+so that the end of selection is visible and returns 1 if window must be
+updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_KEY</small></td>
+<td><small>Called when table window receives <span style="font-weight: bold;">WM_KEYDOWN</span>
+or&nbsp;<span style="font-weight: bold;">WM_SYSKEYDOWN</span>.
+LOWORD(<span style="font-weight: bold;">wparam</span>)
+contains number of completely visible lines in the window,
+HIWORD(wparam) is the state of keys Alt, Ctrl and Shift as a set of
+flags <span style="font-weight: bold;">KEY_xxx</span>,
+LOWORD(<span style="font-weight: bold;">lparam</span>)
+- key value. Returns 0 if custom function doesn't process this message,
+1 if window must be updated and -1 if not. Note that table function has
+higher priority than <a href="i_Menu.html"><span style="font-weight: bold;">shortcuts</span></a>.
+Also note that some keys or key combinations, like arrows, are
+processed internally and are not passed to the table function</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_BAR</small></td>
+<td><small>Called when user releases button (of
+type <span style="font-weight: bold;">BAR_BUTTON</span>)
+in the table bar. <span style="font-weight: bold;">wparam</span>
+is the 0-based column index. Returns 0 if custom function doesn't
+process this message, 1 if window must be updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_DBLCLK</small></td>
+<td><small>Called when user doubleclicks data.
+LOWORD(<span style="font-weight: bold;">wparam</span>)
+is the horizontal (X) offset within the column in characters, HIWORD(<span style="font-weight: bold;">wparam</span>) - zero-based
+column index, <span style="font-weight: bold;">lparam</span>
+- row in the window. Returns 0 if custom function doesn't process this
+message, 1 if window must be updated and -1 if not</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_SELXY</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables)</small><small> - called to
+query position where selection-related dialog box or menu called via
+the keyboard shortcut will appear. (For pure tables, <a href="Gettableselectionxy.htm"><span style="font-weight: bold;">Gettableselectionxy()</span></a>
+selects top right corner of selected line in the specified column). <span style="font-weight: bold;">wparam</span> contains
+0-based column index, lparam - number of visible lines. Returns
+MAKELONG(x,y), where x and y are coordinates in characters, or 0 if
+message is not supported. OllyDbg automatically clips coordinates to
+the column/window size. Note that default table function doesn't
+support this message</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_UPD</small></td>
+<td><small>(Passed only to the custom table
+function of user-defined tables)</small><small> - called on
+automatic update. Table must actualize and update its contents. For
+example, dump windows must read the actual contents of the memory by
+flushing the memory cache. Returned value is ignored</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_MTAB</small></td>
+<td><small>Called when user clicks middle mouse
+button on the tab in the parent window of tab collection.&nbsp;<span style="font-weight: bold;">wparam</span> contains
+zero-based tab index.&nbsp;</small><small>Expected
+standard reaction is to close the tab </small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Broadcasts
+(passed to all table windows):</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>WM_USER_CHGALL</small></td>
+<td><small>Request to update the contents of
+the window</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_CHGMEM</small></td>
+<td><small>Request to update the contents of
+the window due to changed memory layout or memory contents of the
+debugged process</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_BKUP</small></td>
+<td><small>Informs table that global memory
+backup of the memory block with base <span style="font-weight: bold;">wparam</span> was created,
+deleted or changed</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_SAVE</small></td>
+<td><small>Called when user requests to close
+OllyDbg. If table decides
+that closing is not possible (usually it must ask user whether he
+really wants to discard data), it should return <span style="font-weight: bold;">STOP_BROADCAST</span>,
+otherwise <span style="font-weight: bold;">CONT_BROADCAST</span></small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_USER_CLEAN</small></td>
+<td><small>Informs table that new process is
+loaded and old data must
+be discarded. For example, standalone memory dump windows close when
+they receive&nbsp;this message</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

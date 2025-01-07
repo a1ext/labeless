@@ -299,8 +299,8 @@ namespace compat {
 #ifdef __NT__
 #	define PROCESSOR_T_ADD_DREF (::processor_t::ev_add_dref)
 #endif // __NT__
-#define ASK_FORM(X, ...) ::ask_form((X), __VA_ARGS__)
-#define ASK_YN(DFLT, X, ...) ::ask_yn((DFLT), (X), __VA_ARGS__)
+#define ASK_FORM(X, ...) ::ask_form((X), ##__VA_ARGS__)
+#define ASK_YN(DFLT, X, ...) ::ask_yn((DFLT), (X), ##__VA_ARGS__)
 #define HOOK_CB_T_RET_TYPE ::ssize_t;
 
 #endif // IDA_SDK_VERSION < 700

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>dt_switch</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">dt_switch</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Describes
+<a href="i_Analysis.htm">recognized
+switch</a>. Kept as a <a href="i_Data.htm">data
+record</a> of type <span style="font-weight: bold;">DT_SWITCH</span>
+at the base address of the switch (i.e. address of the command that
+starts decoding of the switch variable).</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef struct dt_switch { &nbsp; &nbsp; &nbsp;// Switch descriptor DT_SWITCH<br>&nbsp; ulong casemin; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Minimal case<br>&nbsp; ulong casemax; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Maximal case<br>&nbsp; ulong type; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Switch type, set of CASE_xxx<br>&nbsp; int nexit; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Number of exits including default<br>&nbsp; ulong exitaddr[NSWEXIT]; &nbsp; &nbsp; &nbsp;// List of exits (point to dt_case)<br>
+} dt_switch;
+</span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br>casemin</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Minimal switch case</span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">casemax</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Maximal switch case. For signed switches, <span style="font-weight: bold;">casemin</span>, treated as an unsigned number, may be larger than <span style="font-weight: bold;">casemax</span></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type<br>
+</span></small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Switch type, combination of the following constants:<br><span style="font-weight: bold;">CASE_CASCADED</span> - switch is a cascaded IF, see note below <br><span style="font-weight: bold;">CASE_HUGE</span> - either switch contains more than&nbsp;<span style="font-weight: bold;">NSWEXIT</span> exits, or some exit contains more than <span style="font-weight: bold;">NSWCASE</span>
+cases, therefore switch decoding is incomplete<span style="font-weight: bold;"></span><br>
+<span style="font-weight: bold;">CASE_DEFAULT</span>
+- switch contains&nbsp;default case<br>
+<span style="font-weight: bold;">CASE_ASCII</span> -
+most probably, switch cases correspond to ASCII characters<br>
+<span style="font-weight: bold;">CASE_MSG</span> -
+most probably, switch cases can be interpreted as Windows messages <span style="font-weight: bold;">WM_xxx</span><br>
+<span style="font-weight: bold;">CASE_EXCPTN</span>
+- most probably, switch cases can be intrepreted as exception codes
+(like 0xC0000005, <span style="font-weight: bold;">ACCESSS_VIOLATION</span>)<br>
+<span style="font-weight: bold;">CASE_SIGNED</span>
+- if set, case values should be interpreted as signed numbers,
+otherwise as unsigned<br>
+</span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nexit</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"><br>
+</span></span>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of
+switch exits (not cases, see explanation below), including default. If number of exits&nbsp;exceeds <span style="font-weight: bold;">NSWEXIT</span>, analyser
+limits <span style="font-weight: bold;">nexit</span>&nbsp;to
+<span style="font-weight: bold;">NSWEXIT</span> and
+sets flag <span style="font-weight: bold;">CASE_HUGE</span>&nbsp;in
+<span style="font-weight: bold;">type</span></span></small><br>
+<small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">exitaddr</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"><br>
+</span></span>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of
+<span style="font-weight: bold;">nexit</span> switch exits. Each item contains address of exit described by the structure <a href="dt_case.htm"><span style="font-weight: bold;">dt_case</span></a>. Exits are not necessarily ordered</span></small><br>
+</div>
+<br><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Note:</span><br>
+<a href="file:///C:/Oleg/Odbg2/PLUGINS/Help/dt_switch.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><small><span style="font-family: Helvetica,Arial,sans-serif;"><br>Analyser distinguishes between classical switches and cascaded IFs. Here is an example of the classical switch:<br><br></span></small><span style="font-family: monospace; font-size: 12px; font-weight: bold;">switch (i) {<br>&nbsp; case 0: do_something(); break;<br>&nbsp; case 1: do_anything(); break;<br>...<br>&nbsp; default: do_default();<br>}<br><br></span><small><span style="font-family: Helvetica,Arial,sans-serif;">In
+this case, compiler&nbsp;creates highly effective sequence of the
+commands that decode all mentioned values of i. Corresponding cascaded
+IF&nbsp;<br></span></small><br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">if (i==0)&nbsp;<br>&nbsp;&nbsp;do_something();<br>else if (i==1)<br>&nbsp; do_anything();<br>...<br>else<br>&nbsp;&nbsp;do_default();<br></span><br><small><span style="font-family: Helvetica,Arial,sans-serif;">has identical functionality, but compiler is forced to make all comparisons sequentially.<br><br>Note the difference between switch cases and switch exits. In the following example <br></span></small><br><span style="font-family: monospace; font-size: 12px; font-weight: bold;">switch (i) {<br>&nbsp; case 0: <br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; case 1: <br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; case 2: <br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; &nbsp; do_something(); break;<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; case 3: <br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; case 4:<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; case 5: <br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; &nbsp; do_anything(); break;<br>&nbsp; default: <br>&nbsp; &nbsp; do_default();<br>}<br></span><br><small><span style="font-family: Helvetica,Arial,sans-serif;">there are 7 cases (0, 1, 2, 3, 4, 5, default) but only three switch exits (0,1,2; 3,4,5; default).<br></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="dt_case.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">dt_case</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_dump</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_dump</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Descriptor of dump window. Dump window is a custom <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a> that displays contents of memory block or file in some human-readable format&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>(integer, hexadecimal, text, float,&nbsp;disassembly or structure). Plugins
+should not attempt to modify this structure directly.</small><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_dump
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of dump data and window<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+base;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Start of memory block or file<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of memory block or file<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dumptype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Dump type, DU_xxx+count+size=DUMP_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+menutype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Menu type, set of DMT_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+itemwidth;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Width of one item, characters<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+threadid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Use decoding and registers if not 0<br>&nbsp;
+t_table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+table;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Dump window is a custom table<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of first visible byte<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sel0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of first selected byte<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sel1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Last selected byte (not included!)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selstart;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Addr of first byte of selection start<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selend;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Addr of first byte of selection end<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*filecopy;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Copy of the file or NULL<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+path[MAXPATH];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Name of
+displayed file<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*backup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Old backup of memory/file or NULL<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strname[SHORTNAME];&nbsp;&nbsp; // Name of the structure to decode<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*decode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Local decoding information or NULL<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+bkpath[MAXPATH];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Name of last used
+backup file<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+relreg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Addresses relative to register<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+reladdr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Addresses relative to this address<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hilitereg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// One of OP_SOMEREG if reg highlighting<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hiregindex;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Index of register to highlight<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+graylimit;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Gray data below this address<br>&nbsp; DUMPSELFUNC&nbsp;&nbsp;&nbsp;
+*dumpselfunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Callback indicating change of sel0<br>} t_dump;<br></span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Start address of the displayed memory block. For files, this item is always 0. For memory dumps, this item <span style="font-style: italic;">may</span> be 0! To distinguish whether dump displays file or memory, use <span style="font-weight: bold;">filecopy</span> (NULL: memory, not NULL: file dump)</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the displayed memory block or file, bytes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dumptype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the dump, combination of flags <span style="font-weight: bold;">DU_xxx</span> + item count + item size, or one of the predefined combinations <span style="font-weight: bold;">DUMP_xxx</span>. Use <a href="Setdumptype.htm"><span style="font-weight: bold;">Setdumptype()</span></a> to change:<br><span style="font-weight: bold;">DU_SMALL</span>
+- specifies small-footprint&nbsp;embedded dump window, like in Call
+DLL. Set of allowed menu commands is trimmed for this purpose<br><span style="font-weight: bold;">DU_FIXADDR</span> - first visible address is fixed and can be changed only by the user. Implements Lock stack in stack dumps<br><span style="font-weight: bold;">DU_BACKUP</span> - window displays backup instead of the real data<br><span style="font-weight: bold;">DU_USEDEC</span> - requests to use <a href="i_Analysis.htm"><span style="font-weight: bold;">decoding data</span></a>, if available. Applies only to the memory dumps of type <span style="font-weight: bold;">DU_DISASM</span> or <span style="font-weight: bold;">DU_DECODE</span><br><span style="font-weight: bold;">DU_COMMENT</span> - requests memory dumps of type <span style="font-weight: bold;">DU_DISASM</span> or <span style="font-weight: bold;">DU_DECODE</span> to display comments in the Comments column (default)<br><span style="font-weight: bold;">DU_SOURCE</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - requests memory dumps of type <span style="font-weight: bold;">DU_DISASM</span> or <span style="font-weight: bold;">DU_DECODE</span> to display source code in the Comments column</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DU_DISCARD</span> - dump window is temporary and will be closed of Esc is pressed. Any nontrivial operation resets this flag<br><span style="font-weight: bold;">DU_PROFILE</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">requests memory dumps of type <span style="font-weight: bold;">DU_DISASM</span> to display <a href="i_Runtrace.htm"><span style="font-weight: bold;">profiling data</span></a></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DU_TYPEMASK</span> - mask for dump type:<br>&nbsp;&nbsp;<span style="font-weight: bold;">&nbsp;DU_HEXTEXT</span> - hexadecimal byte dump with ASCII text<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_HEXUNI</span> - hexadecimal byte dump with UNICODE text<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_TEXT</span> - ASCII character dump<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_UNICODE</span> - UNICODE character dump<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_INT</span> - signed integer&nbsp;dump<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_UINT</span> - unsigned integer dump<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_IHEX</span> - hexadecimal integer dump<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_FLOAT</span> - floating-point dump<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_ADDR</span> - address dump</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> with comments</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;">&nbsp;&nbsp; <span style="font-weight: bold;">DU_ADRASC</span> - address dump with ASCII text</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> and comments</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;">&nbsp;&nbsp; <span style="font-weight: bold;">DU_ADRUNI</span> - address dump with UNICODE text and comments<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_DISASM</span> - disassembly<br>&nbsp;&nbsp; <span style="font-weight: bold;">DU_DECODE</span> -&nbsp;decoded data (similar to <span style="font-weight: bold;">DU_DISASM</span>, used for example for structure dumps)<br><span style="font-weight: bold;">DU_COUNTMASK</span> - mask to extract number of items displayed on the line. Set to 1 for </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DU_DISASM</span> or <span style="font-weight: bold;">DU_DECODE</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DU_SIZEMASK</span> - mask to extract size&nbsp;of single item. Set to&nbsp;<span style="font-weight: bold;">MAXCMDSIZE</span> (16) for </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DU_DISASM</span> or <span style="font-weight: bold;">DU_DECODE</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;">For the list of available shortcuts <span style="font-weight: bold;">DUMP_xxx</span>, see <span style="font-style: italic;">plugin.h</span><br></span>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">menutype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Set of flags <span style="font-weight: bold;">DMT_xxx</span> that enable or disable some menu items:<br><span style="font-weight: bold;">DMT_FIXTYPE</span> - type of the dump is fixed and can't be changed<br><span style="font-weight: bold;">DMT_STRUCT</span> - this is the dump of the structure<br><span style="font-weight: bold;">DMT_CPUMASK</span> - dump belongs to CPU window pane, namely:<br>&nbsp;&nbsp; <span style="font-weight: bold;">DMT_CPUDASM</span> -&nbsp;CPU Disassembler pane<br>&nbsp;&nbsp; <span style="font-weight: bold;">DMT_CPUDUMP</span> -&nbsp;CPU Dump pane<br>&nbsp;&nbsp; <span style="font-weight: bold;">DMT_CPUSTACK</span> - CPU Stack pane</span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">itemwidth</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Width of the single dump item in the main column on the screen, characters. Frequently ignored by OllyDbg</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Identifier of the associated thread, or 0 if there is no associated thread</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">table</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Custom <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a> associated with the dump window</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address (memory) or offset (file) of the first visible byte displayed in the dump window</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sel0</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(memory) or offset (file) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">of the first selected byte (included)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sel1</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(memory) or offset (file) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">of the last selected byte (not included). If <span style="font-weight: bold;">sel0</span>==<span style="font-weight: bold;">sel1</span>, there is no selection</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">selstart</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(memory) or offset (file) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">where selection was started. Used when user changes selection with mouse or keyboard</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">selend</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Address </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(memory) or offset (file) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">where selection was ended. Used when user changes selection with mouse or keyboard</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">filecopy</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">NULL if dump displays contents of memory. Otherwise, points to the buffer of size <span style="font-weight: bold;">size</span> which contains internal copy of the displayed file. Comparing <span style="font-weight: bold;">filecopy</span> with NULL is the only way to distinguish whether dump displays memory or file</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">path</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Name of the displayed file on the disk</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">backup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the memory block of size <span style="font-weight: bold;">size</span>
+containing local backup (previous contents) of the memory or file, or
+NULL if there is no local backup. Note that backups declared here are
+local to the dump and used only if <span style="font-weight: bold;">threadid</span> is 0. Dumps with associated threads use global backups which are kept in the&nbsp;<a href="t_memory.htm"><span style="font-weight: bold;">memory descriptors</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">strname</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If
+dump decodes contents of the structure, name of the structure.
+Otherwise, empty string. This item is ignored if dump type is not&nbsp;<span style="font-weight: bold;">DU_DECODE</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">decode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the memory block of size <span style="font-weight: bold;">size</span> containing local decoding information (a sequence of bytes <a href="def_DEC_xxx.html"><span style="font-weight: bold;">DEC_xxx</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">,
+one for each corresponding data byte) or NULL if local decoding
+information is unavailable. Local decoding is used mostly by the
+structure dumps. There is also global decoding data which is kept in <a href="t_memory.htm"><span style="font-weight: bold;">memory descriptors</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">bkpath</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Name of the last selected backup file, or empty string if dump has not yet accessed backup files</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">relreg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of the&nbsp;register (one of <span style="font-weight: bold;">REG_xxx</span>) used to display relative addresses, or <span style="font-weight: bold;">REG_UNDEF</span> if register-relative addressing is turned off. Applies only to memory dumps with associated thread. Has priority over <span style="font-weight: bold;">reladdr</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">reladdr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address or offset used to display relative addresses, or 0 if relative addressing is turned off</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hilitereg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the register that must be highlighted in the Disassembler dump, one of the constants <span style="font-weight: bold;">OP_xxx</span> or 0 if regiser highlighting is turned off</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. Register highlighting has priority over the syntax highlighting specified in <span style="font-weight: bold;">t_dump.table.hilite</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hiliteindex</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of the register of type <span style="font-weight: bold;">hilitereg</span> that must be highlighted in the Disassembler dump. If hilitereg is <span style="font-weight: bold;">OP_REGISTER</span>, use constants <span style="font-weight: bold;">REG_xxx</span>. Note that partial registers are also highlighted (for example, DH and DX will be highlighted if EDX is specified)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">graylimit</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the limit of reliable data. Bytes with addresses below <span style="font-weight: bold;">graylimit</span> will be grayed. Used in stack dumps to indicate that addresses below ESP are volatile</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dumpselfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the callback function of type <a href="DUMPSELFUNC.htm"><span style="font-weight: bold;">DUMPSELFUNC</span></a> that receives notifications whenever selection in dump window&nbsp;changes, or NULL if notification is not necessary</span><br>
+</small></div><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Dump.htm">Dumps</a>, <a href="i_Tables.htm">tables</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

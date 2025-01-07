@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_bar</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_bar</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Describes
+layout of the columns in the <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a> and
+properties of its optional bar. <br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_bar
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of columns in table window<br>
+&nbsp; // These variables must be filled before table window is
+created.<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nbar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Number of columns<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+visible;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Bar visible<br>
+&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*name[NBAR];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Column names (may be NULL)<br>
+&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*expl[NBAR];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Explanations of columns<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mode[NBAR];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Combination of bits BAR_xxx<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+defdx[NBAR];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Default widths of columns, chars<br>
+&nbsp; // These variables are initialized by window creation
+function.<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dx[NBAR];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Actual widths of columns, pixels<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+captured;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// One of CAPT_xxx<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+active;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Info about where mouse was captured<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+scrollvx;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// X scrolling speed<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+scrollvy;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Y scrolling speed<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+prevx;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Previous X mouse coordinate<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+prevy;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Previous Y mouse coordinate<br>
+} t_bar;<br>
+</span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nbar</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of
+the columns displayed in the table, 1..<span style="font-weight: bold;">NBAR</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">visible</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Whether the
+bar is hidden (visible=0) or displayed on the top of the table</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Array of pointers to
+the names of the columns. If dollar sign ('$') is present in the name, it
+will be replaced by the space in the bar and interpreted as end-of-text
+marker in the Sort by menu. For example, the name of the Size column in
+the Modules window is&nbsp;</span><big style="font-weight: bold;"><span style="font-family: monospace;">"Size$&nbsp;&nbsp;&nbsp;
+(Decimal)"</span></big><span style="font-family: Helvetica,Arial,sans-serif;">.
+&nbsp;The column is titled </span></small><small><big style="font-weight: bold;"><span style="font-family: monospace;">"Size&nbsp;&nbsp;&nbsp;&nbsp;
+(Decimal)"</span></big></small><small><span style="font-family: Helvetica,Arial,sans-serif;">,
+&nbsp;and sort menu item is </span></small><small><big style="font-weight: bold;"><span style="font-family: monospace;">"Size"</span></big></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">expl</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Array of pointers&nbsp;to
+the help texts displayed in the tooltip when user moves mouse pointer
+over the corresponding bar segment</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">A
+combination of flags <span style="font-weight: bold;">BAR_xxx</span> that determine&nbsp;properties of bar
+segment and column. First group of flags specifies what happens when
+bar segment is pressed, select only one: <br>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>BAR_FLAT</small></td>
+<td><small>(default) Segment is flat and can't be pressed</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_BUTTON</small></td>
+<td><small>Segment is a button. When pressed and
+released, it
+sends <span style="font-weight: bold;">WM_USER_BAR</span>
+to the table function</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SORT</small></td>
+<td><small>Segment is a button. When pressed and
+released, it&nbsp;sorts&nbsp;data according to the index of the
+bar segment. See <a href="SORTFUNC.htm"><span style="font-weight: bold;">SORTFUNC</span> </a>for
+details</small></td>
+</tr>
+</tbody>
+</table>
+<br>
+Flags in the second group can be&nbsp;freely conbined:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>BAR_DISABLED</small></td>
+<td><small>When set, disables bar segment</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_NORESIZE</small></td>
+<td><small>Specifies that column is not resizable and
+always has width <span style="font-weight: bold;">defdx[]</span></small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SHIFTSEL</small></td>
+<td><small>Shifts background 1/2 character to the
+left for all characters displayed&nbsp;in the column. Used in
+hexadecimal dumps and Registers window to make selection better visible</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_WIDEFONT</small></td>
+<td><small>Doubles the width of character cells in
+the column. Used in UNICODE dump to avoid truncation of&nbsp;</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>Kanji,
+Chinese and Hangul ideographs</small></span></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SEP</small></td>
+<td><small>Tells OllyDbg to intreprete vertical bars
+('|') as separators. For example, hexadecimal dumps place separators
+after each fourth byte</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_ARROWS</small></td>
+<td><small>Adds left arrow (currently this is a
+combination '&lt;&lt;') at the right side of the segment if
+this segment is shifted to the left. Used in Registers window</small></td>
+</tr>
+</tbody>
+</table>
+<br>
+The last group gives hints to the speech engine, select only one:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>BAR_SPSTD</small></td>
+<td><small>(default) Default speech mode. OllyDbg makes some translations, like '/' &#8594; 'slash'</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SPASM</small></td>
+<td><small>Disassembler-oriented speech mode, some mnemonics and operands will be substituted. For example, INC will be read as INCREMENT</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SPEXPR</small></td>
+<td><small>Expression-oriented speech, similar to BAR_SPSTD, but some translation are different, like&nbsp;'&gt;' &#8594; 'greater than'</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SPEXACT</small></td>
+<td><small>Text will be passed to speech engine "as is"</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SPELL</small></td>
+<td><small>Column contains sequence of characters, spell symbol by symbol</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SPHEX</small></td>
+<td><small>Column contains hexadecimal data, spell symbol by symbol</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BAR_SPNONE</small></td>
+<td><small>Column is excluded from speech</small></td>
+</tr>
+</tbody>
+</table>
+</span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">defdx</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Array of default column widths in characters. For tables of type <span style="font-weight: bold;">TABLE_PROPWID</span>, width of each column is proportional to the corresponding <span style="font-weight: bold;">defdx[]</span>.</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+The remaining parameters are used internally by the OllyDbg, don't
+change them!<br>
+</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+See <a style="font-weight: bold;" href="i_Tables.htm">here</a>.</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+</small></span><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Tables.htm">Table</a>, <a href="t_table.htm">t_table</a>, <a href="Defaultbar.htm">Defaultbar()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

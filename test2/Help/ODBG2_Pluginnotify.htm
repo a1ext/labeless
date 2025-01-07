@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>ODBG2_Pluginnotify</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginnotify</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, receives notifications on relatively
+infrequent events that may be of interest to plugin.<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: monospace; font-weight: bold;">void
+ODBG2_Pluginnotify(int code,void *data,ulong parm1,ulong parm2);<br>
+<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">code</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Notification code, one of the constants</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> <span style="font-weight: bold;">PN_xxx</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. See
+detailed explanation below<font size="-2">&nbsp;</font><br>
+</span></small>
+</div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the internal OllyDbg structure associated with this
+notification or
+NULL</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">parm1</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+First parameter</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">parm2</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Second
+parameter</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+<span style="font-weight: bold;">ODBG2_Pluginnotify()</span>
+may receive following notifications:<br>
+<br>
+<table style="text-align: left; font-family: Helvetica,Arial,sans-serif; width: 100%;" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 120px; text-align: left; font-weight: bold;"><font size="-1">code</font></td>
+<td style="width: 95px; text-align: left;"><font size="-1"><span style="font-weight: bold;">data</span></font></td>
+<td style="width: 80px; text-align: left;"><font size="-1"><span style="font-weight: bold;">parm1</span></font></td>
+<td style="width: 80px; text-align: left;"><font size="-1"><span style="font-weight: bold;">parm2</span></font></td>
+<td style="text-align: left;"><font size="-1">Comments</font></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_NEWPROC</span></font></td>
+<td style="font-weight: bold;"><font size="-1">NULL</font></td>
+<td><font size="-1">Process ID</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">OllyDbg starts new
+process.&nbsp;</font><span style="font-family: Helvetica,Arial,sans-serif;"><small><font size="-1">This notification is sent while processing <span style="font-weight: bold;">CREATE_PROCESS_DEBUG_EVENT</span></font><span style="font-family: Helvetica,Arial,sans-serif;"><font size="-1"><span style="font-weight: bold;"></span></font></span></small></span></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_ENDPROC</span></font></td>
+<td style="font-weight: bold;"><font size="-1">NULL</font></td>
+<td><font size="-1">Process ID</font></td>
+<td><font size="-1">Exit code</font></td>
+<td><font size="-1">Debugged process
+terminated but is still in the memory.</font><span style="font-family: Helvetica,Arial,sans-serif;"><small><font size="-1">&nbsp;</font><span style="font-family: Helvetica,Arial,sans-serif;"><small><font size="-1">This notification is sent while processing <span style="font-weight: bold;">EXIT_PROCESS_DEBUG_EVENT</span></font><span style="font-family: Helvetica,Arial,sans-serif;"><font size="-1"><span style="font-weight: bold;"></span></font></span></small></span></small></span></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_NEWTHR</span></font></td>
+<td style="font-weight: bold;"><font size="-1"><a href="t_thread.htm">t_thread</a>
+*</font></td>
+<td><font size="-1">Thread ID</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">New thread is created and
+about to start. This notification is sent while processing&nbsp;</font><span style="font-family: Helvetica,Arial,sans-serif;"><font size="-1"><span style="font-weight: bold;">CREATE_PROCESS_DEBUG_EVENT</span></font></span><font size="-1"> (main thread)
+or <span style="font-weight: bold;">CREATE_THREAD_DEBUG_EVENT</span>
+before thread begins to execute in
+user mode. Note that thread may be temporary (created by Windows to
+pause debugged application). Such threads have <span style="font-weight: bold;">t_thread.ordinal</span> set
+to 0</font></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_ENDTHR</span></font></td>
+<td style="font-weight: bold;"><font size="-1"><a href="t_thread.htm">t_thread</a></font><font size="-1">&nbsp;*</font></td>
+<td><font size="-1">Thread ID</font></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small><font size="-1">Exit code</font></small></span></td>
+<td><font size="-1">Thread&nbsp;terminated,
+but
+related data is still in the OllyDbg tables. This notification is never
+sent for the last&nbsp;thread that remains active when process
+terminates (<span style="font-weight: bold;">PN_ENDPROC</span>)</font></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_PREMOD</span></font></td>
+<td style="font-weight: bold;"><font size="-1"><a href="t_premod.htm">t_premod</a> *</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">New module is reported by
+Windows (<span style="font-weight: bold;">CREATE_PROCESS_DEBUG_EVENT</span>,
+<span style="font-weight: bold;">LOAD_DLL_DEBUG_EVENT</span>),
+reported by .NET debugging API, or hidden module is detected by
+OllyDbg.
+Module </font><span style="font-family: Helvetica,Arial,sans-serif;"><small>may
+still be missing in the memory and OllyDbg may be unable
+to restore breakpoints or analyse code. Therefore it adds it to the
+table of preliminary modules (<span style="font-weight: bold;">premod</span>)
+and if necessary, sets single-step trap and postpones module processing
+till the next debug event. Most probably, notification <span style="font-weight: bold;">PN_NEWMOD</span> will follow</small></span></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_NEWMOD</span></font></td>
+<td style="font-weight: bold;"><font size="-1"><a href="t_module.htm">t_module</a> *</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">Module is already in the
+memory and OllyDbg has attempted to restore .udd data. (If module is
+self-extractable, restoration may be postponed till module is
+extracted).&nbsp;<span style="font-weight: bold;">PN_NEWMOD</span>
+may be missing if DLL fails to initialize</font></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_ENDMOD</span></font></td>
+<td style="font-weight: bold;"><font size="-1"><a href="t_module.htm">t_module</a> *</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">Module is removed from the
+memory or is about to be removed. Plugin&nbsp;receives this
+notification when module-related data is saved to the .udd file but is
+not yet removed from the OllyDbg tables.&nbsp;</font><span style="font-family: Helvetica,Arial,sans-serif;"><small><font size="-1"><span style="font-weight: bold;">PN_ENDMOD</span>
+may be missing if DLL fails to initialize</font></small></span></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_STATUS</span></font></td>
+<td style="font-weight: bold;"><font size="-1">NULL</font></td>
+<td><font size="-1">Status</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">Debuggee's execution status has changed. <span style="font-weight: bold;">parm1</span>
+contains new status (enumeration of type <a href="t_status.htm"><span style="font-weight: bold;">t_status</span></a>). This notification
+comes when debugging engine is in the stable state and plugins are allowed
+to use all available API functions </font><span style="font-family: Helvetica,Arial,sans-serif;"></span></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_RUN</span></font></td>
+<td style="font-weight: bold;"><font size="-1"><a href="t_status.htm">t_status</a> *</font></td>
+<td><font size="-1">Pass flag</font></td>
+<td><font size="-1">0</font></td>
+<td><font size="-1">User requests to continue execution. <span style="font-weight: bold;">data</span> points&nbsp;to the requested status (for example, <span style="font-weight: bold;">STAT_RUNNING</span> if all threads should run at full speed). Plugin can change this value.<span style="font-weight: bold;">&nbsp;parm1</span> is the same as the parameter <span style="font-weight: bold;">pass</span> in the call to <a href="Run.htm"><span style="font-weight: bold;">Run()</span></a> </font><span style="font-family: Helvetica,Arial,sans-serif;"></span></td>
+</tr>
+<tr>
+<td><font size="-1"><span style="font-weight: bold;">PN_REMOVE</span></font></td>
+<td style="font-weight: bold;"><font size="-1">NULL</font></td>
+<td><font size="-1">Address</font></td>
+<td><font size="-1">Size</font></td>
+<td><font size="-1">OllyDbg removes analysis
+data from the&nbsp;memory range <span style="font-weight: bold;">parm1</span>
+.. <span style="font-weight: bold;">parm1+parm2</span>
+(the last byte is not included). This notification is sent, for
+example, when user modifies memory contents or starts new analysis, but
+not when module or memory block is removed from the memory</font></td>
+</tr>
+</tbody>
+</table>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Plugins.htm">Plugins</a>, <a href="t_module.htm">t_module</a>, <a href="t_premod.htm">t_premod</a>, <a href="t_thread.htm">t_thread</a>, <a href="ODBG2_Pluginexception.htm">ODBG2_Pluginexception()</a>,
+<a href="ODBG2_Pluginmainloop.htm">ODBG2_Pluginmainloop()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

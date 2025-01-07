@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Finddecode</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Finddecode</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">uchar *Finddecode(ulong addr,ulong *psize);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Retrieves&nbsp;decoding information associated with the address <span style="font-weight: bold;">addr</span> of
+the Debuggee's memory. If decoding information is available, sets&nbsp;<span style="font-weight: bold;">psize</span> to the length of the continuous decoding information following <span style="font-weight: bold;">addr</span> and returns pointer to decoding data. If there is no decoding information, returns NULL.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Decoding data is an array of bytes <a href="def_DEC_xxx.html"><span style="font-weight: bold;">DEC_xxx</span></a>, one for the each byte of the Debuggee's memory. Data is produced by the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>.<br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the memory in the context of the debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">psize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Pointer to the integer variable that will receive the length of the decoding data, or NULL if length is not important</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Pointer to the decoding data (a sequence of bytes <a href="def_DEC_xxx.html"><span style="font-weight: bold;">DEC_xxx</span></a>, one for each covered byte of the Debuggee's memory), or NULL if there is no decoding information associated with address <span style="font-weight: bold;">addr</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analyser</a>, <a href="Disasm.htm">Disasm()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

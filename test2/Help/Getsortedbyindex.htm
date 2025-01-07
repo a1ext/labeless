@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Getsortedbyindex</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Getsortedbyindex</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void *Getsortedbyindex(t_sorted *sd,int index);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Locates
+<span style="font-weight: bold;">index</span>-th
+item in the table of the <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>
+sorted by address.<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a style="font-weight: bold;" href="t_sorted.htm">t_sorted</a>, descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted
+data</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">index</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) 0-based index
+of the item in the sorted data<span style="font-weight: bold;"></span></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On
+success, returns pointer to the element of sorted data. On error,
+returns NULL.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Here
+is the slightly modified code of the API function <a href="Findthreadbyordinal.htm"><span style="font-weight: bold;">Findthreadbyordinal()</span></a></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>.<br><br>
+</small></span><span style="font-family: monospace; font-weight: bold;">// Searches for thread with specified ordinal (1 for main, incremented by 1 for<br>// each new thread). Returns pointer to thread descriptor, or NULL on error.<br>// Uses linear search, but usually very fast because number of threads is<br>// limited.<br>stdapi (t_thread *) Findthreadbyordinal(int ordinal) {<br>&nbsp; int i;<br>&nbsp; t_thread *pthr;<br>&nbsp; for (i=0; i&lt;thread.sorted.n; i++) {<br>&nbsp;&nbsp;&nbsp; pthr=(t_thread *)Getsortedbyindex(&amp;(thread.sorted),i);<br>&nbsp;&nbsp;&nbsp; if (pthr==NULL) continue;<br>&nbsp;&nbsp;&nbsp; if (pthr-&gt;ordinal==ordinal) return pthr; };<br>&nbsp;
+return
+NULL;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// No thread with given ordinal<br>};</span><span style="font-family: monospace; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="t_sorted.htm">t_sorted</a>, <a href="Createsorteddata.htm">Createsorteddata()</a>, <a href="Findsorteddata.htm">Findsorteddata()</a>,&nbsp;<a href="Findsorteddatarange.htm">Findsorteddatarange()</a>,
+<a href="Findsortedindexrange.htm">Findsortedindexrange()</a>,
+<a href="Getsortedbyselection.htm">Getsortedbyselection()</a>,&nbsp;<a href="Sortsorteddata.htm">Sortsorteddata()</a></span></small>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

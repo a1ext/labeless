@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Getfromini</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Getfromini</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+Getfromini(wchar_t *file,wchar_t *section,wchar_t *key,wchar_t
+*format,...);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Reads formatted information from&nbsp;the specified&nbsp;initialization file. <span style="font-style: italic;"></span><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">file</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the null-terminated UNICODE string containing path to the
+initialization file, or NULL if data to be restored from the main OllyDbg
+initialization file (usually <span style="font-style: italic;">ollydbg.ini</span>)</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">section</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the null-terminated UNICODE string, section of the
+initialization file where data is saved</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">key</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the null-terminated UNICODE string, name of the key
+associated with the data</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">format</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the null-terminated UNICODE&nbsp;string. Has the same
+syntax as vswscanf() or swscanf(). The&nbsp;arguments that follow format must match
+format specifiers</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">...</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+List of pointers to arguments</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>. <span style="font-weight: bold;">Getfromini()</span>
+does not change arguments that are missing in the initialization
+file.&nbsp;Set all arguments to&nbsp;default values before the call</small></span><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Number
+of the arguments extracted from the initialization file (may be less
+than specified), or 0 on error or if record is absent</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Inifile.htm">Initialization file functions</a>,
+<a href="Addtosettings.htm">Addtosettings()</a>, <a href="Deleteinisection.htm">Deleteinisection()</a>, <a href="Filefromini.htm">Filefromini()</a>, <a href="Filetoini.htm">Filetoini()</a>, <a href="Getfromsettings.htm">Getfromsettings()</a>, <a href="Stringfromini.htm">Stringfromini()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="Writetoini.htm">Writetoini()</a></span></small>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

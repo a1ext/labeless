@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_sorted</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_sorted</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Descriptor
+of the <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>,
+a collection of items of the fixed size that have address and size.
+Never change this descriptor directly!</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_sorted
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of sorted data<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+n;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Actual number of entries<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nmax;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Maximal number of entries<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+itemsize;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of single entry<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Storage mode, set of SDM_xxx<br>
+&nbsp;
+void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*data;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Sorted data, NULL if SDM_INDEXED<br>
+&nbsp;
+void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+**block;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// NBLOCK sorted data blocks, or NULL<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nblock;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Number of allocated blocks<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+version;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Changes on each modification<br>
+&nbsp;
+void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+**dataptr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Pointers to data, sorted by address<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selected;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Index of selected entry<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+seladdr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of selected entry<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selsubaddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Subaddress of selected entry<br>
+&nbsp;
+SORTFUNC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*sortfunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Function which sorts data or NULL<br>
+&nbsp;
+DESTFUNC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*destfunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Destructor function or NULL<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sort;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Sorting criterium (column)<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sorted;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Whether indexes are sorted<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*sortindex;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Indexes, sorted by criterium<br>
+} t_sorted;<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><span style="font-family: Helvetica,Arial,sans-serif;"><small>&nbsp;<br><br></small></span>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">n</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of
+items in the sorted data. It is save to use this member as an
+enumeration limit in the series of calls to <a href="Getsortedbyindex.htm"><span style="font-weight: bold;">Getsortedbyindex()</span></a></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nmax</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Maximal
+number of entries that fit into the allocated buffers. If necessary,
+OllyDbg automatically extends data size, up to the full memory
+available to the OllyDbg process</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">itemsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of the
+sorted data items, including obligatory header (<span style="font-weight: bold;">t_sorthdr</span> or <span style="font-weight: bold;">t_sorthdr_nosize</span>)</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Storage
+mode, a combination of the following flags:<br>
+<span style="font-weight: bold;">SDM_INDEXED</span>
+- if cleared, all data items are kept in a single memory block pointed
+to by <span style="font-weight: bold;">data</span>.
+Allows for the fastest possible access, but adding or removing items
+may be time-consuming. If set, items are kept in the multiple large <span style="font-weight: bold;">block</span>s, and only
+pointers to the items <span style="font-weight: bold;">dataptr</span>
+are physically moved<br>
+<span style="font-weight: bold;">SDM_EXTADDR</span>
+- if set, item's address is 40 bits long. 8 least significant bits are
+kept in the <span style="font-weight: bold;">t_sorthdr.type</span>,
+within <span style="font-weight: bold;">TY_AEXTMASK</span>.
+If </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">SDM_EXTADDR</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">&nbsp;is
+set, <span style="font-weight: bold;">t_sorthdr.size</span>
+must be 1<br>
+<span style="font-weight: bold;">SDM_NOSIZE</span> -
+if cleared, data items must begin with <span style="font-weight: bold;">t_sorthdr</span>. If set,
+data items begin with </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">t_sorthdr_nosize</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> and size
+of each item is assumed to be 1<br>
+<span style="font-weight: bold;">SDM_NOEXTEND</span>
+- if flag is set and initially allocated storage is full, calls to
+<a href="Addsorteddata.htm"><span style="font-weight: bold;">Addsorteddata()</span></a> and similar functions fail</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Storage
+for data items, contiguous memory block where all data items are kept,
+unaligned and sorted by address. NULL if descriptor is uninitialized or
+mode is <span style="font-weight: bold;">SDM_INDEXED</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">block</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Storage for data items, <span style="font-weight: bold;">nblock</span> large blocks where items are kept in the order defined by dataptr. NULL if </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">descriptor is uninitialized or mode is not <span style="font-weight: bold;">SDM_INDEXED</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nblock</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number of storage blocks in block, or 0&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">if </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">descriptor is uninitialized or mode is not <span style="font-weight: bold;">SDM_INDEXED</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">version</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Version
+of the sorted data. Changed each time some items are
+added,&nbsp;removed or replaced. May be used to make secure data caching</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dataptr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointers to data items in <span style="font-weight: bold;">block</span>, or </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">NULL if </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">descriptor is uninitialized or mode is not <span style="font-weight: bold;">SDM_INDEXED</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">selected</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of selected item, 0..<span style="font-weight: bold;">n</span>-1, or -1 if selection is not defined or removed</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">seladdr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address (or 32 most significant bits of extended address in the <span style="font-weight: bold;">SDM_EXTADDR</span> mode) of the selected item. Undefined if <span style="font-weight: bold;">selected</span> is -1</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">selsubaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">8 least&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">significant bits of extended address of the selected item. Undefined if <span style="font-weight: bold;">selected</span> is -1</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sortfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the <a href="SORTFUNC.htm"><span style="font-weight: bold;">sorting function</span></a> that compares two items and reports </span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">destfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the <a href="DESTFUNC.htm"><span style="font-weight: bold;">data destructor</span></a> or NULL. When <span style="font-weight: bold;">destfunc</span> is defined,&nbsp;OllyDbg passes each data item to this function before it will be removed from the data</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sort</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Sorting criterium, passed to the <span style="font-weight: bold;">sortfunc</span> each time OllyDbg needs to sort the <span style="font-weight: bold;">sortindex</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sorted</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Flag that indicates whether pointers in sortindex are sorted or not</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sortindex</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of pointers to the data items sorted according to the criterium <span style="font-weight: bold;">sort</span>. Allocated but invalid if <span style="font-weight: bold;">sorted</span> is 0. NULL if <span style="font-weight: bold;">sortfunc</span> is NULL</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="i_Tables.htm">tables</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_module.htm">t_module</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"> <a href="t_table.htm">t_table</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="DESTFUNC.htm">DESTFUNC</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="SORTFUNC.htm">SORTFUNC</a>, <a href="Addsorteddata.htm">Addsorteddata()</a>, <a href="Createsorteddata.htm">Createsorteddata()</a>, <a href="Deletesorteddata.htm">Deletesorteddata()</a>, <a href="Destroysorteddata.htm">Destroysorteddata()</a>, <a href="Findsorteddata.htm">Findsorteddata()</a>, <a href="Getsortedbyindex.htm">Getsortedbyindex()</a>, <a href="Getsortedbyselection.htm">Getsortedbyselection()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Pluginmenu</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginmenu</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, called each time when
+user&nbsp;opens menu in the main OllyDbg window or in one of the
+standard OllyDbg windows, like CPU or Memory. Allows plugins to insert their
+own menu items.<br><br><br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">t_menu *ODBG2_Pluginmenu(wchar_t *type);<br><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the UNICODE string describing&nbsp;the window that opens menu. Available strings are defined as constants <span style="font-weight: bold;">PWM_xxx</span>&nbsp;in the file <span style="font-style: italic;">plugin.h:<br></span><span style="font-weight: bold;">PWM_ATTACH</span> - list of processes in the Attach window<br><span style="font-weight: bold;">PWM_BPHARD</span> - hardware breakpoints<br><span style="font-weight: bold;">PWM_BPMEM</span> - memory breakpoints<br><span style="font-weight: bold;">PWM_BPOINT</span> -&nbsp;INT3 breakpoints<br><span style="font-weight: bold;">PWM_DISASM</span> -&nbsp;CPU Disassembler pane<br><span style="font-weight: bold;">PWM_DUMP</span> - all dump windows&nbsp;except CPU disassembler&nbsp;and CPU stack<br><span style="font-weight: bold;">PWM_INFO</span> -&nbsp;CPU Info pane<br><span style="font-weight: bold;">PWM_LOG</span> - Log window<br><span style="font-weight: bold;">PWM_MAIN</span> - main OllyDbg menu<br><span style="font-weight: bold;">PWM_MEMORY</span> - Memory window<br><span style="font-weight: bold;">PWM_MODULES</span> - Modules window<br><span style="font-weight: bold;">PWM_NAMELIST</span> - list of names (labels)<br><span style="font-weight: bold;">PWM_PATCHES</span> - list of patches<br><span style="font-weight: bold;">PWM_PROFILE</span> - Profile window<br><span style="font-weight: bold;">PWM_REGISTERS</span> - registers, including CPU window<br><span style="font-weight: bold;">PWM_SEARCH</span> - search tabs<br><span style="font-weight: bold;">PWM_SOURCE</span> - Source code<br><span style="font-weight: bold;">PWM_SRCLIST</span> - list of source files<br><span style="font-weight: bold;">PWM_STACK</span> -&nbsp;CPU Stack pane<br><span style="font-weight: bold;">PWM_THREADS</span> - Threads window<br><span style="font-weight: bold;">PWM_TRACE</span> - Run trace window<br><span style="font-weight: bold;">PWM_WATCH</span> - Watches window<br><span style="font-weight: bold;">PWM_WINDOWS</span> - list of windows owned by&nbsp;the debugged application<span style="font-style: italic;"><br></span></span>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If
+there are no items that plugin would like to insert into menu, it must
+return NULL. Otherwise, it must return pointer to the array of
+structures of type <a href="t_menu.htm"><span style="font-weight: bold;">t_menu</span></a>.Last element in the array must have <span style="font-weight: bold;">t_menu.name</span> set to NULL. Forwarders to standard OllyDbg menus are not allowed. OllyDbg menus are described <a style="font-weight: bold;" href="i_Menu.html">here</a><span style="font-weight: bold;">.</span><br><br>Menu
+arrays are usually static. They list all possible menu items, even
+those that&nbsp;apply only under certain conditions. When OllyDbg
+builds the menu, it calls <a href="MENUFUNC.htm"><span style="font-weight: bold;">menu function</span></a> associated with each item, asking whether this item should be included or not (mode=<span style="font-weight: bold;">MENU_VERIFY</span>).<br><br>If user selects menu item belonging to the plugin, OllyDbg will call menu function again, this time passing mode=<span style="font-weight: bold;">MENU_EXECUTE</span>.
+Note that all threads of the debugged application at this moment are
+suspended. If processing is lengthy and application should continue
+execution, </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>call&nbsp;<a href="Resumeallthreads.htm"><span style="font-weight: bold;">Resumeallthreads()</span></a> at the entry to the <span style="font-weight: bold;">MENU_EXECUTE</span> block and <a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a> on exit.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>If
+array&nbsp;consists of the single item, it will appear directly.
+Otherwise, OllyDbg will create a submenu with the name of plugin. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Therefore if there is only one menu item, make its name as descriptive as possible.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>See annotated copy of <a href="bookmark.htm"><span style="font-weight: bold;">bookmark.c</span></a></small></span><br></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Analysis</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="i_Menu.html">menus</a>,
+<a href="i_Plugins.htm">plugins</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

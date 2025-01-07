@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Setcpu</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Setcpu</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void
+Setcpu(ulong threadid,ulong asmaddr,ulong dumpaddr,ulong selsize,ulong
+stackaddr,int mode);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Sets
+code and memory areas that will be displayed in the CPU window. If
+necessary, creates or restores CPU.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Identifier of the thread that should be selected in the CPU window. If <span style="font-weight: bold;">threadid</span> is 0 or
+invalid, thread remains unchanged</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">asmaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address of the first selected command to be displayed in the
+Disassembler pane. If address is currently not visible, Disassembler is
+scrolled according to the <span style="font-weight: bold;">mode</span>.
+If <span style="font-weight: bold;">asmaddr</span>
+is 0 and <span style="font-weight: bold;">threadid</span>
+is 0, Disassembler selection remains unchanged. If <span style="font-weight: bold;">asmaddr</span> is 0 and <span style="font-weight: bold;">threadid</span> is valid,
+selection is moved to the EIP&nbsp;of the specified thread. If flag
+<span style="font-weight: bold;">CPU_RUNTRACE</span>
+is set, asmaddr is interpreted as the step </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">back </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">in the run
+trace</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dumpaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address of the first byte to be displayed in the CPU Dump pane. If <span style="font-weight: bold;">dumpaddr</span> is 0,
+current selection remains unchanged</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">selsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If <span style="font-weight: bold;">asmaddr</span> is not 0,
+determines size, in bytes, of the selection in the Disassembler
+pane.&nbsp;If <span style="font-weight: bold;">asmaddr</span>
+is not 0 and <span style="font-weight: bold;">selsize</span>
+is 0, OllyDbg selects single command at address <span style="font-weight: bold;">asmaddr</span>. If <span style="font-weight: bold;">dumpaddr</span> is not 0,
+specifies size of the selection in the Dump pane. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">If <span style="font-weight: bold;">dumpaddr</span> is not 0
+and <span style="font-weight: bold;">selsize</span>
+is 0, OllyDbg selects single dump item.<span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">stackaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address of the </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">selected
+Stack doubleword. If address
+is currently not visible, Stack is scrolled according to the <span style="font-weight: bold;">mode</span>.</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">A
+combination of the following flags:<br>
+<br>
+</span></small>
+<table style="text-align: left; width: 100%; font-family: Helvetica,Arial,sans-serif;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="font-weight: bold; width: 130px;"><small>CPU_ASMHIST</small></td>
+<td><small>Add <span style="font-weight: bold;">asmaddr</span>
+to the Disassembler history. User can walk history back and forth using
+menu items "Go to | Previous location", "Go to | Next location",
+or&nbsp;corresponding shortcuts</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_ASMCENTER</small></td>
+<td><small>If possible, places <span style="font-weight: bold;">asmaddr</span> in the
+middle of the CPU pane. If&nbsp;</small><small><span style="font-weight: bold;">CPU_ASMCENTER</span> is not
+set, <span style="font-weight: bold;">asmaddr</span>
+appears in the first displayed line</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_ASMFOCUS</small></td>
+<td><small>Moves focus to the Disassembler pane of
+the CPU window. Not compatible with&nbsp;</small><small><span style="font-weight: bold;">CPU_DUMPFOCUS</span>
+and&nbsp;</small><small style="font-weight: bold;">CPU_STACKFOCUS</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_DUMPHIST</small></td>
+<td><small>Add <span style="font-weight: bold;">dumpaddr</span>
+to the
+CPU Dump history. User can walk history back and forth using menu
+items "Go to | Previous location", "Go to | Next location",
+or&nbsp;corresponding shortcuts</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_DUMPFOCUS</small></td>
+<td><small>M</small><small>oves focus to
+the Dump pane of the CPU window. Not compatible with&nbsp;</small><small><span style="font-weight: bold;">CPU_ASMFOCUS</span>
+and&nbsp;</small><small style="font-weight: bold;">CPU_STACKFOCUS</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_STACKFOCUS</small></td>
+<td><small>Moves focus to the Stack pane of the CPU
+window. Not compatible with&nbsp;</small><small><span style="font-weight: bold;">CPU_ASMFOCUS</span>
+and&nbsp;</small><small style="font-weight: bold;">CPU_DUMPFOCUS</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_STACKCTR</small></td>
+<td><small>If possible, places <span style="font-weight: bold;">stackaddr</span> in the
+middle of the Stack pane. Necessary, for example for stack walk.
+If&nbsp;</small><small><span style="font-weight: bold;">CPU_STACKCTR</span> is not
+set,&nbsp;<span style="font-weight: bold;">stackaddr</span>
+appears in the first displayed line</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_REGAUTO</small></td>
+<td><small>Asks to switch FPU register display to
+FPU, MMX or 3DNow! mode depending on the command pointed to by asmaddr.
+If pointed command does not access FPU registers, display mode remains
+unchanged</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_NOCREATE</small></td>
+<td><small>If CPU window is absent, it
+will&nbsp;not be created</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_REDRAW</small></td>
+<td><small>Asks to redraw all panes of CPU window
+immediately. If <span style="font-weight: bold;">CPU_REDRAW</span>
+is not specified, OllyDbg only invalidates all panes of the CPU window</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_NOFOCUS</small></td>
+<td><small>Asks to not restore CPU window if it's
+minimized and to not move keyboard focus to the CPU<br>
+</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_RUNTRACE</small></td>
+<td><small>Asks to switch to the run trace display. <span style="font-weight: bold;">asmaddr</span> is
+interpreted as the step back in the run trace</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CPU_NOTRACE</small></td>
+<td><small>Asks to stop run trace display if
+currently active</small></td>
+</tr>
+</tbody>
+</table>
+</div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+This
+is the adapted menu function of the Dump window&nbsp;that executes command "Go to expression"</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>:<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Mgotoexpression(t_table *pt,wchar *name,ulong index,int mode) {<br>&nbsp; int answer;<br>&nbsp; ulong addr;<br>&nbsp; t_dump menudump;<br>&nbsp; POINT coord;<br>&nbsp; if (process==NULL)<br>&nbsp;&nbsp;&nbsp; return MENU_ABSENT;<br>&nbsp; menudump=(t_dump *)pt-&gt;customdata;<br>&nbsp; if (menudump==NULL)<br>&nbsp; &nbsp; return MENU_ABSENT; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// In fact, internal error<br>&nbsp; if (menudump-&gt;menutype &amp; DMT_STRUCT)<br>&nbsp;&nbsp;&nbsp;
+return MENU_ABSENT; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;// Not allowed for the structure dumps<br>&nbsp; if (mode==MENU_VERIFY)<br>&nbsp;&nbsp;&nbsp;
+return MENU_NORMAL; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;// In all other cases, allowed operation<br>&nbsp; else if (mode==MENU_EXECUTE) {<br>&nbsp;&nbsp;&nbsp; if (Gettableselectionxy(&amp;(menudump-&gt;table),2,&amp;coord)&lt;0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+coord.x=coord.y=-1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Unknown selection coordinates, use defaults<br>&nbsp;&nbsp;&nbsp; if (menudump-&gt;filecopy!=NULL)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; answer=Getdwordexpression(pt-&gt;hw,T(L"Enter expression to follow"),&amp;addr,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0,NM_GOTOSAV,coord.x,coord.y,menudump-&gt;table.font,0);<br>&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; answer=Getgotoexpression(pt-&gt;hw,T(L"Enter expression to follow"),&amp;addr,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Getcputhreadid(),NM_GOTOSAV,coord.x,coord.y,menudump-&gt;table.font,0);<br>&nbsp;&nbsp;&nbsp; if (answer!=0)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return MENU_NOREDRAW;<br>&nbsp;&nbsp;&nbsp; // Now we have address to follow. The action strongly depends on the dump type.<br>&nbsp;&nbsp;&nbsp; if (menudump-&gt;filecopy!=NULL &amp;&amp; addr&gt;=menudump-&gt;size) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flash(T(L"Offset beyond the end of file")); return MENU_NOREDRAW; }<br>&nbsp;&nbsp;&nbsp; else if (menudump-&gt;filecopy==NULL &amp;&amp; Findmemory(addr)==NULL) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flash(T(L"No memory at the specified address")); return MENU_NOREDRAW; }<br>&nbsp;&nbsp;&nbsp; else if (menudump-&gt;menutype &amp; DMT_CPUDASM)<br>&nbsp; &nbsp; &nbsp; // This is the CPU Disassembler pane.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Setcpu(0,addr,0,0,0,CPU_ASMHIST|CPU_ASMCENTER);<br>&nbsp;&nbsp;&nbsp; else if (menudump-&gt;menutype &amp; DMT_CPUDUMP)<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; &nbsp; &nbsp; // This is the CPU Dump pane.<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Setcpu(0,0,addr,0,0,CPU_DUMPHIST);<br>&nbsp;&nbsp;&nbsp; else if (menudump-&gt;menutype &amp; DMT_CPUSTACK)<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; &nbsp; &nbsp; // This is the CPU stack.<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Setcpu(0,0,0,0,addr,0);<br>&nbsp;&nbsp;&nbsp; else<br>&nbsp; &nbsp; &nbsp; // This is the standalone dump window.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Newdumpselection(menudump,addr,0);<br>&nbsp;&nbsp;&nbsp; return MENU_REDRAW; };<br>&nbsp; return MENU_ABSENT;<br>};</span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Getcputhreadid.htm">Getcputhreadid()</a>, <a href="Redrawcpudisasm.htm">Redrawcpudisasm()</a>, <a href="Redrawcpureg.htm">Redrawcpureg()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Plugindump</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Plugindump</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, called when OllyDbg redraws any <a href="i_Dump.htm"><span style="font-weight: bold;">dump window</span></a>. Extends&nbsp;<a style="font-weight: bold;" href="DRAWFUNC.htm">table drawing function</a> of the dump windows.<br><br>OllyDbg makes first call to this function with the parameter <span style="font-weight: bold;">column</span> set to <span style="font-weight: bold;">DF_FILLCACHE</span>.
+Plugin must decide whether it wants to modify the dump window. If it
+retuns
+0, there will be no modifications and this time plugin will get no
+other calls. If plugin returns 1 (or any other non-zero value), it will
+be able to change contents or appearance of some cells in the dump
+table. This is the best opportunity for plugin to&nbsp;allocate
+resources or cache data.<br><br>Then, for each visible table line and each visible column, OllyDbg calls <span style="font-weight: bold;">ODBG2_Plugindump()</span> with <span style="font-weight: bold;">column</span>
+set to the 0-based index of the column. Note that
+invisible&nbsp;columns (minimized or completely&nbsp;outside the
+window) are excluded from the sequence. Plugin must
+update displayed text <span style="font-weight: bold;">s</span>,&nbsp;text attributes <span style="font-weight: bold;">mask</span> and cell appearance <span style="font-weight: bold;">select</span> and return new length of the text. If no modifications are necessary, it must return <span style="font-weight: bold;">n</span>.<br><br>After dump is processed, plugin receives final call with <span style="font-weight: bold;">column</span> set to <span style="font-weight: bold;">DF_FREECACHE</span>. Plugin must free resources allocated for the drawing. Returned value is ignored.<br><br>Note that calls to </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">ODBG2_Plugindump()</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+may significantly slow down OllyDbg, therefore don't declare this
+callback unnecessarily. Maximal number of simultaneously loaded plugins
+that export <span style="font-weight: bold;">ODBG2_Plugindump()</span> is limited to 32. <br><br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int ODBG2_Plugindump(t_dump *pd,wchar_t *s,uchar *mask,int n,int *select,ulong addr,int column);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a href="t_dump.htm"><span style="font-weight: bold;">t_dump</span></a>, descriptor of the dump window</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">s</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in/out) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the UNICODE string, <span style="font-weight: bold;">n</span> wide
+characters long,
+that contains the contents of the dump cell (possibly modified by other
+plugins). Null character at the end of this string is not required.
+Maximal length of the string is limited to TEXTLEN wide characters</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mask</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in/out) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the byte array, <span style="font-weight: bold;">n</span> bytes long<span style="font-weight: bold;"></span>, that contains
+individual drawing attributes of the corresponding characters in <span style="font-weight: bold;">s</span>
+as a combinations of flags <span style="font-weight: bold;">DRAW_xxx</span> with numerical values not exceeding
+0xFF.&nbsp;<span style="font-weight: bold;">mask</span> is in effect only if&nbsp;flag <span style="font-weight: bold;">DRAW_MASK</span>&nbsp;in&nbsp;<span style="font-weight: bold;">*select</span> is set. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Maximal length of the mask is limited to TEXTLEN bytes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">n</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length of <span style="font-weight: bold;">s</span> and <span style="font-weight: bold;">mask</span> at entry to <span style="font-weight: bold;">ODBG2_Plugindump()</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">select</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in/out) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the drawing attributes that apply to the string as a whole, as a
+combination of flags <span style="font-weight: bold;">DRAW_xxx</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the first byte displayed in the dump row</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">column</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> <span style="font-weight: bold;">DF_FILLCACHE</span> on the first call,&nbsp;zero-based index of the column to which the processed cell belongs (<span style="font-weight: bold;">column</span>&gt;=0), or <span style="font-weight: bold;">DF_FREECACHE</span> when drawing is finished. See <a href="i_Tables.htm"><span style="font-weight: bold;">Tables</span></a> for details</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If <span style="font-weight: bold;">column</span> is <span style="font-weight: bold;">DF_FILLCACHE</span>, 0 means that dump window is not influenced by plugin and 1 - that plugin wants to modify its contents. If <span style="font-weight: bold;">column</span> is non-negative, this is the length of the text <span style="font-weight: bold;">s</span> (and optional <span style="font-weight: bold;">mask</span>) that will be displayed in the cell of the dump window. Ignored if column is&nbsp;<span style="font-weight: bold;">DF_FREECACHE</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>See annotated copy of <a href="bookmark.htm"><span style="font-weight: bold;">bookmark.c</span></a></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Dump.htm">Dump windows</a>, <a href="i_Plugins.htm">plugins</a>, <a href="i_Tables.htm">tables</a>, <a href="DRAWFUNC.htm">DRAWFUNC</a></span></small><a href="DRAWFUNC.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

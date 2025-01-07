@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Createsorteddata</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Createsorteddata</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Createsorteddata(t_sorted *sd,ulong itemsize,int nexp,SORTFUNC *sortfunc,DESTFUNC *destfunc,int mode);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Initializes descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a> and allocates resources. If <span style="font-weight: bold;">sd</span> describes existing sorted data, it will be deleted. Returns 0 if sorted data is correctly initialized and -1 otherwise.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in,out) Pointer to the descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>, structure of type <a style="font-weight: bold;" href="t_sorted.htm">t_sorted</a>.&nbsp;When&nbsp;descriptor is used for the first time, set it to 0</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">itemsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Size of the item of sorted data, at least sizeof(t_sorthdr) if <span style="font-weight: bold;">mode</span> flag <span style="font-weight: bold;">SDM_NOSIZE</span> is cleared and </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">sizeof(t_sorthdr_nosize) if <span style="font-weight: bold;">SDM_NOSIZE</span> is set</span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nexp</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Initial estimated capacity of the data buffer, items. If necessary, OllyDbg automatically extends buffer size</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sortfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the callback function of type <a href="SORTFUNC.htm"><span style="font-weight: bold;">SORTFUNC</span></a> if data must be sorted by custom criteria, <span style="font-weight: bold;">AUTOARRANGE</span> to create autoarrangeable sorted data or <span style="font-weight: bold;">NULL</span> if custom sorting is not necessary</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">destfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the&nbsp;destructor function of type <a href="DESTFUNC.htm"><span style="font-weight: bold;">DESTFUNC</span></a> or <span style="font-weight: bold;">NULL</span> if items of sorted data contain no resources that must be freed. <span style="font-weight: bold;">destfunc</span>
+is called when API function deletes item of sorted data, either
+implicitly or due to the explicit call, separately for each data item</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Combination of zero or more of the following flag that determine the type of the sorted data:<br><span style="font-weight: bold;">SDM_INDEXED</span> - creates indexed sorted data. Use when </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>data items are large and
+numerous. Indexed data is effective when total data size exceeds several megabytes</small></span><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">SDM_EXTADDR</span> - Item address is extended by 8 additional least significant bits in <span style="font-weight: bold;">TY_AEXTMASK</span><br><span style="font-weight: bold;">SDM_NOSIZE</span> - items of&nbsp;sorted data contain neither&nbsp;size&nbsp;nor type, size is assumed to be 1<br></span>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br><br><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>0 if sorted data is initialized and ready to use, and -1 on any error</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br><div style="margin-left: 40px;"><a style="font-weight: bold;" href="i_Sorteddata.htm"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Here</small></span></a><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="t_sorted.htm">t_sorted</a>, <a href="DESTFUNC.htm">DESTFUNC</a>, <a href="SORTFUNC.htm">SORTFUNC</a>, <a href="Destroysorteddata.htm">Destroysorteddata()</a>, <a href="Issortedinit.htm">Issortedinit()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

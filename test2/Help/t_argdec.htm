@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_argdec</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_argdec</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Used to decode stack arguments of <a href="i_Knownfunctions.htm">known function</a>, usually as an&nbsp;array with <span style="font-weight: bold;">NARG</span> elements, in calls to <a href="Decodeknownbyname.htm"><span style="font-weight: bold;">Decodeknownbyname()</span></a> and <a href="Decodeknownbyaddr.htm"><span style="font-weight: bold;">Decodeknownbyaddr()</span></a>. On entry, only <span style="font-weight: bold;">mode</span>,&nbsp;<span style="font-weight: bold;">value</span> and <span style="font-weight: bold;">pushaddr</span> must be set (undefined <span style="font-weight: bold;">pushaddr</span> must be zeroed).<br></small><br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_argdec
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of function argument<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (in/out) Value descriptor, set of ADEC_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+value;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (in) Value on the stack<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+pushaddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (in) Address of command that pushed data<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+prtype[SHORTNAME];&nbsp;&nbsp;&nbsp; // (out) Type of argument with
+ARG_xxx prefix<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+name[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // (out)
+Decoded name of argument<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+text[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // (out)
+Decoded value (if valid or predicted)<br>} t_argdec;<br></span>&nbsp;<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter,&nbsp;describes state of the stack argument. Combines following bits:<br><span style="font-weight: bold;">ADEC_VALID</span> - value is valid<br><span style="font-weight: bold;">ADEC_PREDICTED</span> - value is not the actual stack doubleword but was predicted by the <a href="i_Analysis.htm">Analyser</a><br><span style="font-weight: bold;">ADEC_CHGNAME</span> - allows for name substitution (for example, generic <span style="font-style: italic;">wParam</span> and <span style="font-style: italic;">lParam</span> may be replaced by the more meaningful identifiers or decoded as a bit fields according to <span style="font-style: italic;">Msg</span>)<br>On output, following bit may be additionally set:<br><span style="font-weight: bold;">ADEC_MARK</span>
+- parameter is declared as important in internal OllyDbg database.
+Important parameters are usually displayed as comments in search results<br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">value</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input parameter, value of the function parameter pushed onto the stack or known from analysis. If unknown, set this member to 0</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pushaddr</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input parameter, address of command that placed <span style="font-weight: bold;">value</span>
+of the function parameter onto the stack. Usually this command is a
+PUSH, but different forms of MOV may be used, too. If several
+doublewords are modified at once (FSTP [QWORD] or similar), name will
+be modified to take this fact into account. It is always safe to set <span style="font-weight: bold;">pushaddr</span> to 0</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">prtype</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the argument, zero-terminated UNICODE string preceded by prefix <span style="font-weight: bold;">ARG_xxx</span>. See <a href="i_ArgumentTypes.htm">Argument types</a> for details</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Decoded name of the argument, zero-terminated UNICODE string. If function is only guessed, OllyDbg uses generic names, like ARG1</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">text</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Decoded value of the argument, zero-terminated UNICODE string. Empty if value is absent </span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Decodeknownbyname.htm">Decodeknownbyname()</a>, <a href="Decodeknownbyaddr.htm">Decodeknownbyaddr()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

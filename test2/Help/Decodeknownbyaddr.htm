@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Decodeknownbyaddr</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Decodeknownbyaddr</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int&nbsp;Decodeknownbyaddr(ulong addr,t_procdata *pd,t_argdec adec[NARG],wchar_t *rettype,wchar_t *name,int nexp,int follow);<br><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If function with entry point <span style="font-weight: bold;">addr</span>
+is known to OllyDbg, determines characteristics of this function
+like&nbsp;type of return, preserved registers, number of stack
+arguments and number of bytes discarded from stack on return, and
+decodes arguments passed to this function in the stack.<br><br>If you want to decode function's arguments to text, you must read these arguments from the stack and supply them to <span style="font-weight: bold;">Decodeknownbyaddr()</span>.&nbsp;On entry, </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>you only need to set </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">adec[].mode</span> and <span style="font-weight: bold;">adec[].value</span> and zero </small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>adec[].</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">pushaddr</span>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">adec[0]</span>
+corresponds to the first argument (pushed last, with the lowest stack
+address). Note that ESP at the entry&nbsp;points to the address of
+return and first argument is at ESP+4. <br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Why may </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">Decodeknownbyaddr()</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>&nbsp;need <span style="font-weight: bold;">pushaddr</span>
+at all? There is one special case. Push address is the address of the
+command that writes data to the stack. Frequently, but not always, this
+is the command PUSH. Instead of pushing long arguments in parts,
+compiler may use sequences like SUB ESP,8; FSTP [QWORD ESP] to save
+large&nbsp;items at once. In this case two consecutive <span style="font-weight: bold;">pushaddr</span>s in <span style="font-weight: bold;">adec</span>
+will point to the same FSTP.&nbsp;When OllyDbg decodes call brackets,
+it takes this into account and corrects the name of such argument.
+Without correction, you might get the names Arg1, Arg3, Arg4 with no
+explanation why Arg2 is missing. But if the name is decoded as Arg1_2,
+this question will not arise. (Except that&nbsp;you may&nbsp;ask what
+Arg1_2 means). In other words, in practically all cases plugins may set
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>adec[].</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">pushaddr</span> to 0.</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If function has variable number of arguments and uses <span style="font-style: italic;">printf()</span>-like format, parameter <span style="font-weight: bold;">nexp</span>
+can be set to the expected number of doublewords following format, or
+to -1 if this number is unknown. If nexp is positive and format string
+specified in the function is not obtainable, format specifiers will be
+decoded in the "blind" mode.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the entry point of known function or, if <span style="font-weight: bold;">follow</span> is set and function at <span style="font-weight: bold;">addr</span> is not known,&nbsp;address of the sequence of jumps that end on the known function</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Optional pointer to the descriptor of the procedure, structure of type <a href="t_procdata.htm"><span style="font-weight: bold;">t_procdata</span></a>, or NULL if description is not necessary. <span style="font-weight: bold;">Decodeknownbyaddr()</span> fills only the following members of this artificial descriptor:<br><span style="font-weight: bold;">t_procdata.addr</span> is set to 0<br><span style="font-weight: bold;">t_procdata.size</span> is set to 1<br><span style="font-weight: bold;">t_procdata.type</span> (only flags <span style="font-weight: bold;">PD_RETSIZE</span>, <span style="font-weight: bold;">PD_FIXARG</span>, <span style="font-weight: bold;">PD_FORMATA</span> / <span style="font-weight: bold;">PD_FORMATW</span> / <span style="font-weight: bold;">PD_SCANA</span> / <span style="font-weight: bold;">PD_SCANW</span>) if&nbsp;apply<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">t_procdata.retsize</span> (only if <span style="font-weight: bold;">PD_RETSIZE</span> is set)<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">t_procdata.narg</span>&nbsp;(only if&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">PD_FIXARG</span>, <span style="font-weight: bold;">PD_FORMATA</span>, <span style="font-weight: bold;">PD_FORMATW</span>, <span style="font-weight: bold;">PD_SCANA</span> or <span style="font-weight: bold;">PD_SCANW</span> is set)<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">t_procdata.preserved</span> (if known)</span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">adec</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in/out) Optional pointer to the list of arguments, array of at least <span style="font-weight: bold;">NARG</span> structures of type <a href="t_argdec.htm"><span style="font-weight: bold;">t_argdec</span></a>, or NULL if decoding of arguments is not necessary. Calling routine must fill members&nbsp;<span style="font-weight: bold;">adec[].mode</span> and&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">adec[].value</span> and zero <span style="font-weight: bold;">adec[].pushaddr</span> in all elements of this array. (See explanation above to learn when you may need <span style="font-weight: bold;">pushaddr</span>). If function is known, </span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">Decodeknownbyaddr()</span></small></span><small><span style="font-family: Helvetica,Arial,sans-serif;"> fills <span style="font-weight: bold;">adec[].prtype</span> (prefixed type of the argument), </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">adec[].name</span> (name of the argument) and </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">adec[].text</span> (<span style="font-weight: bold;">adec[].value</span> decoded to text according to its type)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">rettype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Optional pointer to the UNICODE buffer, at least <span style="font-weight: bold;">SHORTNAME</span> wide characters long, that receives prefixed type of the answer that procedure returns in EAX. May be NULL</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Optional pointer to the UNICODE buffer, at least <span style="font-weight: bold;">TEXTLEN</span> wide characters long, that receives the name of the function . May be NULL</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nexp</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If function includes&nbsp;<span style="font-style: italic;">printf()</span>-like
+format followed by a variable number of arguments, number of the
+doublewords that follow format on the stack (-1 if this number is
+unknown or format is defined). Ignored in all other cases. The safest
+"don't care" way is to set this parameter to -1</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">follow</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If this flag is set and <span style="font-weight: bold;">addr</span> points to JMP, follows the sequence of jumps till it reaches entry point of known function or any non-jump command</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On success, returns number of function arguments (may be 0). Otherwise, returns -1</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analysis</a>, <a href="Decodeargument.htm">Decodeargument()</a>, <a href="Decodeknownbyname.htm">Decodeknownbyname()</a>, <a href="Decodetype.htm">Decodetype()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

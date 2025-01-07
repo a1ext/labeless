@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_drawheader</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_drawheader</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>User-defined <a href="i_Tables.htm"><span style="font-weight: bold;">tables</span></a> (of type <span style="font-weight: bold;">TABLE_USERDEF</span>) have no associated sorted data. Instead of&nbsp;data item, <a href="DRAWFUNC.htm"><span style="font-weight: bold;">drawing functions</span></a> of user-defined tables receive pointer to the synthetic structure <span style="font-weight: bold;">t_drawheader</span>:<br></small><br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef struct t_drawheader {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Draw descriptor for TABLE_USERDEF<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+line;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Line in window<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+n;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Total number of visible lines<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nextaddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// First address on next line, or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Custom data<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+s[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Custom data<br>} t_drawheader;<br></span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">line</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Zero-based index of the line in the window. First visible line has index 0. Note that for tables of type <span style="font-weight: bold;">TABLE_DIR</span> this line is placed on the bottom of the window</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">n</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Total
+number of lines visible in the window, including those that are only
+partially visible. Drawing function may use this information to
+estimate size of the cache</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nextaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used by dump windows. Plugins may use <span style="font-weight: bold;">nextaddr</span> for any purposes. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Its contents does not change between the calls during the drawing sequence</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Custom variable, may be used as a cache. Its contents does not change between the calls during the drawing sequence</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">s</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Custom variable, may be used as a cache. Its contents does not change between the calls during the drawing sequence</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:<br><br></span>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Tables.htm">Tables</a>, <a href="DRAWFUNC.htm">DRAWFUNC</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>Expressions</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Expressions</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Evaluation
+of expressions is done in two steps. First,&nbsp;OllyDbg compiles
+expression into the intermediate binary form. On the second step, it
+calculates its value. The evaluation is&nbsp;usually orders of
+magnitude faster than compilation.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Expressions
+may be roughly divided in two classes: those used to make a decision
+(for example, conditional breakpoints) and those used to display data.
+In the first case you need only one value. In the second case, user may
+want to see multiple values and expressions at once. <br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Basic
+elements</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Expressions
+may include:<br>
+</small></span>
+<ul>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Byte
+registers <span style="font-weight: bold;">AL</span>,
+<span style="font-weight: bold;">BL</span>, <span style="font-weight: bold;">CL</span>, <span style="font-weight: bold;">DL</span>, <span style="font-weight: bold;">AH</span>, <span style="font-weight: bold;">BH</span>, <span style="font-weight: bold;">CH</span>, <span style="font-weight: bold;">DH</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Word
+registers <span style="font-weight: bold;">AX</span>,
+<span style="font-weight: bold;">BX</span>, <span style="font-weight: bold;">CX</span>, <span style="font-weight: bold;">DX</span>, <span style="font-weight: bold;">SP</span>, <span style="font-weight: bold;">BP</span>, <span style="font-weight: bold;">SI</span>, <span style="font-weight: bold;">DI</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Doubleword
+registers <span style="font-weight: bold;">EAX</span>,
+<span style="font-weight: bold;">E</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">BX</span>, <span style="font-weight: bold;">ECX</span>, <span style="font-weight: bold;">EDX</span>, <span style="font-weight: bold;">ESP</span>, <span style="font-weight: bold;">EBP</span>, <span style="font-weight: bold;">ESI</span>, <span style="font-weight: bold;">EDI</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Segment
+registers&nbsp;<span style="font-weight: bold;">CS</span>,
+<span style="font-weight: bold;">DS</span>, <span style="font-weight: bold;">ES</span>, <span style="font-weight: bold;">SS</span>, <span style="font-weight: bold;">FS</span>, <span style="font-weight: bold;">GS</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>FPU
+registers&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">ST0</span>,&nbsp;<span style="font-weight: bold;">ST1</span>,&nbsp;<span style="font-weight: bold;">ST2</span>,&nbsp;<span style="font-weight: bold;">ST3</span>,&nbsp;<span style="font-weight: bold;">ST4</span>,&nbsp;<span style="font-weight: bold;">ST5</span>,&nbsp;<span style="font-weight: bold;">ST6</span>,&nbsp;<span style="font-weight: bold;">ST7</span> or alternative
+forms</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<span style="font-weight: bold;">ST</span>, <span style="font-weight: bold;">ST(0)</span>,&nbsp;<span style="font-weight: bold;">ST(1)</span>,&nbsp;<span style="font-weight: bold;">ST(2)</span>,&nbsp;<span style="font-weight: bold;">ST(3)</span>,&nbsp;<span style="font-weight: bold;">ST(4)</span>,&nbsp;<span style="font-weight: bold;">ST(5)</span>,&nbsp;<span style="font-weight: bold;">ST(6)</span>,&nbsp;<span style="font-weight: bold;">ST(7)</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Index
+pointer <span style="font-weight: bold;">EIP</span></small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>CPU flags <span style="font-weight: bold;">EFL</span> or alternative form <span style="font-weight: bold;">FLAGS<br></span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Simple
+labels, like <span style="font-weight: bold;">GetWindowTextA</span>
+or <span style="font-weight: bold;">userdefinedlabel1</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Known
+constants, like <span style="font-weight: bold;">WM_PAINT</span>
+or <span style="font-weight: bold;">ERROR_FILE_NOT_FOUND</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Labels
+with prepended module name, like <span style="font-weight: bold;">user32.GetWindowTextA</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Immediate
+integer numbers, like <span style="font-weight: bold;">ABCDEF01</span>, <span style="font-weight: bold;">123</span>, <span style="font-weight: bold;">0x123</span>
+(all hexadecimal) or <span style="font-weight: bold;">123.</span>
+(decimal)</small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Immediate
+floating point numbers, like <span style="font-weight: bold;">123.456e-33</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Immediate
+strings, like <span style="font-weight: bold;">"String"</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Parameters
+<span style="font-weight: bold;">%A</span> and <span style="font-weight: bold;">%B</span></small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Thread
+identifier <span style="font-weight: bold;">%THR</span>
+(or alternative form <span style="font-weight: bold;">%THREAD</span>)</small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Ordinal
+number of the current thread <span style="font-weight: bold;">%ORD</span>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>(or
+alternative form <span style="font-weight: bold;">%ORDINAL</span>)</small></span></li>
+<li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Contents
+of memory (requires square brackets <span style="font-weight: bold;">[
+]</span>, see detailed description below)<br>
+</small></span></li>
+</ul>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Elements
+are processed in the listed order. Therefore AH is always interpreted
+as a 8-bit register and not as a hexadecimal constant 0Ah. For the same
+reason, label EBP can't be used in expressions (but mymodule.EBP would
+be OK). If there is a label named ABCD, ABCD&nbsp;will be
+interpreted
+as address of this label and not as the hexadecimal number 0x0000ABCD.<br>
+<br>
+When
+OS creates new thread, this thread gets more or less random thread
+identifier.
+One can use expressions like %THREAD==0x00000172, but they will be
+meaningless&nbsp;in the next debugging session. To overcome this
+problem, at least partially, OllyDbg assigns each new thread its unique
+ordinal number. Main thread gets number 1, next thread created by the
+application has ordinal 2 etc. Temporary threads created by OS are not
+numbered (their ordinal is 0). If you want that breakpoint pauses
+application only in the main thread, you may set condition to %ORD==1.<br>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Signed
+vs. unsigned data</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+By default, all integer variables and constants are unsigned. To
+interprete item as signed, prepend it with unary sign </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>('<span style="font-weight: bold;">+</span>' or '<span style="font-weight: bold;">-</span>') or with modifier
+<span style="font-weight: bold;">SIGNED</span>. To
+convert signed item to unsigned, use <span style="font-weight: bold;">UNSIGNED</span>. Examples:<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<table style="text-align: left;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 180px; font-weight: bold;"><small>Unsigned<br>
+</small></td>
+<td style="width: 180px; font-weight: bold;"><small>Signed</small></td>
+</tr>
+<tr>
+<td><small>0xFFFFFFFF</small></td>
+<td><small>+0xFFFFFFFF (-1.)</small></td>
+</tr>
+<tr>
+<td><small>EAX</small></td>
+<td><small>+EAX</small></td>
+</tr>
+<tr>
+<td><small>ECX</small></td>
+<td><small>SIGNED ECX</small></td>
+</tr>
+<tr>
+<td><small>[DWORD 4F5024]</small></td>
+<td><small>[SIGNED DWORD 4F5024]</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+Floating-point items are always signed.<br>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Contents
+of memory</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+To
+access memory, take address into the square brackets and optionally
+specify type and size of the item. OllyDbg supports following modifiers:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px;"><small>Modifier</small></td>
+<td><small>How the contents of memory is
+interpreted</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>BYTE</small></td>
+<td><small>Unsigned 8-bit integer</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CHAR</small></td>
+<td><small>Signed 8-bit integer</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WORD</small></td>
+<td><small>Unsigned 16-bit&nbsp;integer</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>SHORT</small></td>
+<td><small>Signed 16-bit integer</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DWORD</small></td>
+<td><small>Unsigned 32-bit integer (default)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>INT,
+LONG</small></td>
+<td><small>Signed 32-bit integer</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>FLOAT</small></td>
+<td><small>32-bit floating-point number</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DOUBLE</small></td>
+<td><small>64-bit floating-point number</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>LONG
+DOUBLE</small></td>
+<td><small>80-bit floating-point number</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>ASCII</small></td>
+<td><small>Address inside the brackets will be
+interpreted as a pointer to ASCII string, but&nbsp;numerical value
+of expression remains unchanged</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>UNICODE</small></td>
+<td><small>Address inside the brackets will be
+interpreted as a pointer to UNICODE string, but&nbsp;numerical value
+of expression remains unchanged</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Syntax
+rules are relatively loose. The following five expressions have the
+same meaning: <br>
+<br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>[400000+EAX*32]</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>DWORD
+[400000+EAX*32]</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>[DWORD
+32*EAX+400000]</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>DS:[DWORD
+32*EAX+400000]</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>[DWORD
+DS:32*EAX+400000]</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Multiple
+expressions</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+In the <span style="font-weight: bold;">EMOD_MULTI</span>
+evaluation mode, expression string may contain several subexpressions
+in the form text1=expr1,text2=expr2... Number of subexpressions is
+limited to <span style="font-weight: bold;">NEXPR</span>.
+Optional explanations (text1, text2) are pseudoidentifiers that comment
+subexpressions. If explanation is missing, OllyDbg creates one
+automatically. Example:<br>
+<br>
+Expression compiled in <span style="font-weight: bold;">EMOD_MULTI</span>
+mode:<br>
+<br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: monospace;"><span style="font-family: mon;"><span style="font-weight: bold;"></span></span><span style="font-weight: bold;">EAX,counter=ECX,[ESP],second=[ESP+4],third=[ESP+8]
+</span></span><br style="font-family: monospace;">
+</div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Output of <a href="Eexpression.htm"><span style="font-weight: bold;">Eexpression()</span></a>
+with specified index:<br>
+<br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: monospace; font-weight: bold;">index=0:
+EAX = 12EBB8 (1239992.)</span><br style="font-family: monospace; font-weight: bold;">
+<span style="font-family: monospace; font-weight: bold;"></span><big style="font-weight: bold;"><span style="font-family: monospace;"><small>index=1: </small><small>counter
+= 1BD9 (7129.)</small></span></big><br>
+<big style="font-weight: bold;"><span style="font-family: monospace;"><small>index=2: </small><small>[ESP]
+= 7C9011A7 (2089816487.)</small></span></big><br>
+<big style="font-weight: bold;"><span style="font-family: monospace;"><small>index=3: </small><small>second
+= 7</small></span></big><br>
+<big style="font-weight: bold;"><span style="font-family: monospace;"><small>index=4: </small></span></big><span style="font-family: monospace; font-weight: bold;">third = 1</span><br style="font-family: monospace; font-weight: bold;">
+</div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Outermost memory bracket&nbsp;may contain repeat count, like
+[DWORD*10 EAX]. Modifier is obligatory, standalone repeat count *10 is
+treated as a syntax error. Repeat count tells OllyDbg to display the
+specified number of consecutive memory locations. Note that, according
+to OllyDbg syntax rules, constant 10 is hexadecimal. If you want
+decimal count, append a point:&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>[DWORD*16.
+EAX].</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+Example:<br>
+<br>
+Location [400000] contains<br></small></span><div style="margin-left: 40px;"><span style="font-family: monospace; font-weight: bold;">
+400000: 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F</span><br style="font-family: monospace; font-weight: bold;"></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 150px;"><small>Expression</small></td>
+<td><small>Output</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>[BYTE*16.
+400000]</small></td>
+<td style="font-family: monospace; font-weight: bold;">0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0A, 0B, 0C, 0D, 0E, 0F</td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>[WORD*8 400000]</small></td>
+<td style="font-family: monospace; font-weight: bold;">100, 302, 504, 706, 908, 0B0A, 0D0C, 0F0E</td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>[DWORD*4 400000]</small></td>
+<td style="font-family: monospace; font-weight: bold;">3020100, 7060504, 0B0A0908, 0F0E0D0C</td>
+</tr>
+
+
+
+
+
+
+
+
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">String
+operations</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+Operations with strings are very limited. You may:<br></small></span><ul><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>add or subtract integer to the string (C rules apply): [UNICODE EAX]+5</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>compare
+string with immediate string, ignoring case: [ASCII ESI]=="ABC".
+Comparison is limited to the length of the immediate string, so
+expression is true if ESI points to "ABCDE", "aBc" or "abc---" and
+false if ESI points to "AB" or "AABC"</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>compare pointer (doubleword) with immediate string, ignoring case, first assuming ASCII pointer and then UNICODE: ESI=="ABC" </small></span></li></ul><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">API
+functions:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Cexpression.htm">Cexpression</a>(wchar_t
+*expression,uchar *cexpr,int nexpr,int *explen,wchar_t *err,ulong mode);<br>
+int <a href="Exprcount.htm">Exprcount</a>(uchar
+*cexpr);<br>
+int <a href="Eexpression.htm">Eexpression</a>(t_result
+*result,wchar_t *expl,uchar *cexpr,int index,uchar *data,ulong
+base,ulong size,ulong threadid,ulong a,ulong b,ulong mode);<br>
+int <a href="Expression.htm">Expression</a>(t_result
+*result,wchar_t *expression,uchar *data,ulong base,ulong size,ulong
+threadid,ulong a,ulong b,ulong mode);<br>
+int <a href="Fastexpression.htm">Fastexpression</a>(t_result
+*result,ulong addr,int type,ulong threadid);<br>
+</small></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span>
+</body></html>

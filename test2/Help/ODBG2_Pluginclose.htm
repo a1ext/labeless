@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Pluginanclose</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginclose</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, called when user wants to terminate
+OllyDbg. Function must return 0 if it is safe to terminate. Any
+non-zero value stops termination.<br><br>Do
+not misuse this possibility. Always inform user about the reasons why
+termination is not good ("You have unsaved data, OK to discard?") and
+always ask for user decision. Attention, don't make any unrecoverable
+actions like closing plugin windows, because some other plugin may
+decide that OllyDbg should continue.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int ODBG2_Pluginclose(void);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<br><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">None</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>0 if OllyDbg is allowed to terminate, any non-zero value if OllyDbg should continue execution</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Plugins.htm">Plugins</a>, <a href="ODBG2_Plugininit.htm">ODBG2_Plugininit()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

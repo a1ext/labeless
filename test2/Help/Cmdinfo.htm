@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Cmdinfo</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Cmdinfo</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">ulong Cmdinfo(uchar *cmd,ulong cmdsize,ulong cmdip,t_cmdinfo *ci,int cmdmode,t_reg *cmdreg);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>A stripped-down and accelerated version of <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>. Reports basic information about the pointed binary command, like command length, list of prefixes and list of operands.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the binary code of the 80x86 command, <span style="font-weight: bold;">cmdsize</span> bytes long</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Size of the data pointed to by&nbsp;<span style="font-weight: bold;">cmd</span>,
+bytes. May be significantly longer than the length of the processed
+command. Note that the length of valid 80x86 command is limited to <span style="font-weight: bold;">MAXCMDSIZE</span> bytes. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(In fact,&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">maximal command length is&nbsp;15 bytes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> and <span style="font-weight: bold;">MAXCMDSIZE</span> is rounded up to 16)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> Address of the command. necessary to decode destinations of relative jumps and calls. </span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ci</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the structure of type <a href="t_cmdinfo.htm"><span style="font-weight: bold;">t_cmdinfo</span></a> that receives information<span style="font-weight: bold;"></span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdmode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)&nbsp;Disassembling mode, a combination of zero or more of the flags listed below</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">:<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DA_MEMORY</span> - allows&nbsp;<span style="font-weight: bold;">Cmdinfo()</span> to read memory of the debugged process in order to extract&nbsp;destinations of indirect jumps<span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdreg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the structure of type <a href="t_reg.htm"><span style="font-weight: bold;">t_reg</span></a>
+describing contents of registers before the command was executed, or
+NULL if registers are unavailable or not necessary. Registers may be&nbsp;necessary to calculate the jump destination</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Returns length of the command in bytes, or 0 in the case of invalid input parameters</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Disasm.htm">Assembler and disassembler</a>, <a href="t_cmdinfo.htm">t_cmdinfo</a>, <a href="t_opinfo.htm">t_opinfo</a>, <a href="Disasm.htm">Disasm()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

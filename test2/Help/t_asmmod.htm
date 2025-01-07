@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_asmmod</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_asmmod</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Describes binary command produced by <a href="Assembleallforms.htm"><span style="font-weight: bold;">Assembleallforms()</span></a>. If command was compiled in&nbsp;<span style="font-weight: bold;">AM_IMPRECISE</span>
+mode, contains information necessary to find all variations of this
+command. In fact, plugins don't need to know the internal
+layout&nbsp;of this structure. They call <a href="Assembleallforms.htm"><span style="font-weight: bold;">Assembleallforms()</span></a> or </small></span><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Getasmsearchmodel.htm">Getasmsearchmodel()</a></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small> to produce set of models and </small></span><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Comparecommand.htm">Comparecommand()</a></span><span style="font-family: Helvetica,Arial,sans-serif;"> or </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Comparesequence.htm">Comparesequence()</a></span><span style="font-family: Helvetica,Arial,sans-serif;"> to find command.</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_asmmod
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Description of assembled command<br>&nbsp; uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; code[MAXCMDSIZE];&nbsp;&nbsp;&nbsp;&nbsp; // Binary code<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mask[MAXCMDSIZE];&nbsp;&nbsp;&nbsp;&nbsp; // Mask for binary code (0:
+bit ignored)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+prefixes;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// List of prefixes, set of PF_xxx<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ncode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Length of code w/o prefixes, bytes<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+features;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Code features, set of AMF_xxx<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+postbyte;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Postbyte (if AMF_POSTBYTE set)<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+noperand;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Number of operands (no pseudooperands)<br>&nbsp;
+t_modop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+op[NOPERAND];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Description of operands<br>} t_asmmod;</span><br>
+<br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">code</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Binary code of the command. In precise mode, this is the complete command of length <span style="font-weight: bold;">ncode</span> that includes&nbsp;prefixes and postbyte. </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>If command was compiled in&nbsp;<span style="font-weight: bold;">AM_IMPRECISE</span> mode,&nbsp;</small></span><small><span style="font-family: Helvetica,Arial,sans-serif;">usually contains only opcode without prefixes and postbyte</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mask</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Comparison mask, marks significant bits of <span style="font-weight: bold;">code</span>. In precise mode, all bits in the mask are set</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">prefixes</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of prefixes as a combination of flags <span style="font-weight: bold;">ASP_xxx</span>. In precise mode, prefixes are included in the code</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ncode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Length of the significant part of the <span style="font-weight: bold;">code</span> and <span style="font-weight: bold;">mask</span>. In precise mode, this is the length of the complete command</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">features</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Combination of zero or more of the following flags. Always zero in precise mode:<br><span style="font-weight: bold;">AMF_SAMEORDER</span> - set if command accesses memory using SIB and registers (index, base) appear in the same order as in the source<br><span style="font-weight: bold;">AMF_ANYSEG</span> - set if command must possess segment prefix, but it does not matter which<br><span style="font-weight: bold;">AMF_POSTBYTE</span> - command includes postbyte<br><span style="font-weight: bold;">AMF_IMPRECISE</span>
+- model is imprecise in the sense that binary code alone is not
+sufficient to locate the command and operands must be analysed. This
+flag does not influence the comparion of prefixes<br><span style="font-weight: bold;">AMF_ANYSIZE</span> - size of the operands does not matter, so optional data size prefix is acceptable<br><span style="font-weight: bold;">AMF_NOSMALL</span> - 16-bit addressing is not allowed</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">postbyte</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Postbyte as a last byte in the command,&nbsp;valid only if&nbsp;<span style="font-weight: bold;">AMF_POSTBYTE</span> is set</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">noperand</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number
+of&nbsp;operands in op that must be taken into account when comparing
+two commands. May differ from the real number of operands in the found
+command</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">op</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to array of structures <a href="t_modop.htm"><span style="font-weight: bold;">t_modop</span></a> that describe operands. Not used in precise mode</span><br>
+</small></div><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Disasm.htm">Assembler and disassembler</a>, <a href="t_asmlist.htm">t_asmlist</a>, <a href="t_modop.htm">t_modop</a>, <a href="Assembleallforms.htm">Assembleassforms()</a>, <a href="Comparecommand.htm">Comparecommand()</a>, <a href="Comparesequence.htm">Comparesequence()</a>, <a href="Getasmsearchmodel.htm">Getasmsearchmodel()</a>, <a href="Getseqsearchmodel.htm">Getseqsearchmodel()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

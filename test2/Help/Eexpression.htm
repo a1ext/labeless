@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Eexpression</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Eexpression</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+Eexpression(t_result *result,wchar_t *expl,uchar *cexpr,int index,uchar
+*data,ulong base,ulong size,ulong threadid,ulong a,ulong b,ulong mode);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Evaluates precompiled
+<a href="i_Expressions.htm"><span style="font-weight: bold;">expression</span></a>
+or subexpression to numerical and/or text value.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">result</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Structure of type <a href="t_result.htm"><span style="font-weight: bold;">t_result</span></a>
+that receives results of the evaluation</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">expl</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Pointer to the UNICODE buffer that receives the explanation, or NULL if
+explanation is not necessary. Explanations are allowed only if
+expression was compiled with flag <span style="font-weight: bold;">EMOD_MULTI</span>. The syntax
+of &nbsp;expressions is described <a href="i_Expressions.htm"><span style="font-weight: bold;">here</span></a>; its most general form is&nbsp;"<span style="font-style: italic;">&lt;explanation0&gt;=&lt;subexpression0&gt;,
+&lt;explanation1&gt;=&lt;subexpression1&gt;, ...</span>"</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cexpr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Precompiled expression produced by the preceding call to <a href="Cexpression.htm"><span style="font-weight: bold;">Cexpression()</span></a></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">index</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Index of&nbsp;subexpression </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">if expression was compiled with flag <span style="font-weight: bold;">EMOD_MULTI</span>, otherwise ignored. To find the number of subexpressions in the precompiled expression, use&nbsp;<a href="Exprcount.htm"><span style="font-weight: bold;">Exprcount()</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the optional copy of memory contents. If <span style="font-weight: bold;">data</span> is NULL, flag <span style="font-weight: bold;">EMOD_NOMEMORY</span> is not
+set and expression includes contents of memory, <span style="font-weight: bold;">Eexpression()</span> reads
+memory of debugged process. If <span style="font-weight: bold;">data</span>
+is not NULL and expression accesses memory in the range [<span style="font-weight: bold;">base</span>..<span style="font-weight: bold;">base</span>+<span style="font-weight: bold;">size</span>-1], contents of
+memory is taken from the <span style="font-weight: bold;">data</span>.
+In all other cases attempt to access memory will result in the failure</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Base
+address of the supplied data block, ignored if <span style="font-weight: bold;">data</span> is NULL</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Size&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">of the
+supplied data block, ignored if <span style="font-weight: bold;">data</span>
+is NULL</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Identifier of the thread containing CPU registers used in the
+evaluation of the expression.
+If expression
+specifies register and <span style="font-weight: bold;">threadid</span>
+is 0, <span style="font-weight: bold;">Eexpression()</span>
+will fail</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">a</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) First
+parameter, determines value of the pseudovariable %A in original expression</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">b</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Second
+parameter, determines value of the pseudovariable %B in original expression</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Evaluation mode, combination of zero or more of the following flags:<br>
+<span style="font-weight: bold;"></span><span style="font-weight: bold;">EMOD_NOVALUE</span>
+- requests not&nbsp;to convert the binary value of the expression (<span style="font-weight: bold;">result-&gt;data</span>)
+to&nbsp;text (<span style="font-weight: bold;">result-&gt;value</span>)<br>
+<span style="font-weight: bold;">EMOD_NOMEMORY</span>
+- forbids reading of the Debuggee's memory. If <span style="font-weight: bold;">expression</span> includes
+contents of memory and <span style="font-weight: bold;">data</span>
+is not supplied, evaluation will fail<span style="font-weight: bold;"><br></span></span></small></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If evaluation was successful, returns 0. If evaluation failed, writes error message to <span style="font-weight: bold;">result.value</span> and returns -1.<span style="font-weight: bold;"></span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This
+is the slightly modified code of <a href="Expression.htm"><span style="font-weight: bold;">Expression()</span></a>. It compiles the supplied expression and immeadiately estimates its value.<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Expression(t_result *result,wchar_t *expression,uchar *data,<br>&nbsp; ulong base,ulong size,ulong threadid,ulong a,ulong b,ulong mode) {<br>&nbsp; int n;<br>&nbsp; uchar cexpr[TEXTLEN];<br>&nbsp; if (result==NULL)<br>&nbsp;&nbsp;&nbsp;
+return
+0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Error in input parameters<br>&nbsp; memset(result,0,sizeof(t_result));<br>&nbsp; if (expression==NULL || expression[0]==L'\0') {<br>&nbsp;&nbsp;&nbsp; StrcopyW(result-&gt;value,TEXTLEN,L"No expression");<br>&nbsp;&nbsp;&nbsp; result-&gt;lvaltype=result-&gt;datatype=EXPR_INVALID;<br>&nbsp;&nbsp;&nbsp; return 0; };<br>&nbsp; if (mode &amp; EMOD_MULTI) {<br>&nbsp;&nbsp;&nbsp; StrcopyW(result-&gt;value,TEXTLEN,L"Multiple expressions are not allowed");<br>&nbsp;&nbsp;&nbsp; result-&gt;lvaltype=result-&gt;datatype=EXPR_INVALID;<br>&nbsp;&nbsp;&nbsp; return 0; };<br>&nbsp; // Compile and estimate expression.<br>&nbsp; n=Cexpression(expression,cexpr,TEXTLEN,NULL,result-&gt;value,mode);<br>&nbsp; if (result-&gt;value[0]!=0)<br>&nbsp;&nbsp;&nbsp; result-&gt;lvaltype=result-&gt;datatype=EXPR_INVALID;<br>&nbsp; else<br>&nbsp;&nbsp;&nbsp; Eexpression(result,NULL,cexpr,0,data,base,size,threadid,a,b,mode);<br>&nbsp; return n;<br>};&nbsp;</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Expressions.htm">Expressions</a>, <a href="t_result.htm">t_result</a>, <a href="t_watch.htm">t_watch</a>, <a href="Cexpression.htm">Cexpression()</a>, <a href="Expression.htm">Expression()</a>, <a href="Exprcount.htm">Exprcount()</a>, <a href="Fastexpression.htm">Fastexpression()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Plugintempbreakpoint</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Plugintempbreakpoint</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Plugintempbreakpoint(ulong addr,ulong type,int forceint3);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Sets temporary INT3 or hardware&nbsp;<a href="i_Breakpoints.htm"><span style="font-weight: bold;">breakpoint</span></a> on behalf of plugin. If <span style="font-weight: bold;">forceint3</span> is not 0, always sets INT3 breakpoint. Only temporary breakpoints (<span style="font-weight: bold;">BP_TEMP</span>) are allowed.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the breakpoint in the context of the debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Type of the breakpoint. Currently only temporary breakpoints (<span style="font-weight: bold;">BP_TEMP</span>) are allowed. If <span style="font-weight: bold;">type</span> is combined with <span style="font-weight: bold;">BP_CONFIRM</span> and OllyDbg suspects that <span style="font-weight: bold;">addr</span> may point to data, it will ask for confirmation</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">forceint3</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If set to nonzero value, forces OllyDbg to set INT3 breakpoint, even if hardware breakpoint were possible</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Returns 0 on success and -1 on any error</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Breakpoints.htm">Breakpoints</a>, <a href="Confirmint3breakpoint.htm">Confirmint3breakpoint()</a>, <a href="Sethardbreakpoint.htm">Sethardbreakpoint()</a>, <a href="Setint3breakpoint.htm">Setint3breakpoint()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

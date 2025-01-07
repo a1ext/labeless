@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_cmdinfo</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_cmdinfo</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Keeps basic information about the 80x86 command extracted by&nbsp;<a href="Cmdinfo.htm"><span style="font-weight: bold;">Cmdinfo()</span></a>.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef struct t_cmdinfo {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Information on command<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ip;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of first command byte<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Full length of command, bytes<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cmdtype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type of command, D_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+prefixes;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// List of prefixes, set of PF_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nprefix;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Number of prefixes, including SSE2<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+memfixup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Offset of first 4-byte fixup or -1<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+immfixup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Offset of second 4-byte fixup or -1<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+errors;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Set of DAE_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+jmpaddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Jump/call destination or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+stackinc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Data size in ENTER/RETN/RETF<br>&nbsp; t_opinfo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; op[NOPERAND];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Operands<br>} t_cmdinfo;</span><br><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the command, repeats parameter <span style="font-weight: bold;">cmdip</span> in the call to <a href="Cmdinfo.htm"><span style="font-weight: bold;">Cmdinfo()</span></a><a href="Disasm.htm"><span style="font-weight: bold;"></span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Length of the&nbsp;command, bytes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdtype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the&nbsp;command as a combination of flags <a href="def_D_xxx.htm"><span style="font-weight: bold;">D_xxx</span></a><span style="font-weight: bold;"></span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">prefixes</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of prefixes in the&nbsp;command as a combination of flags <span style="font-weight: bold;">PF_xxx</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nprefix</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number
+of prefixes in the command, including SSE prefixes 0x66, 0xF2 and 0xF3.
+Note that OllyDbg treats code 0x0F as part of the command</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">memfixup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Offset of the first possible 4-byte&nbsp;fixup (memory offset) within the command or 0xFFFFFFFF if none</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">immfixup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Offset of the second possible 4-byte&nbsp;fixup (immediate constant) within the command or 0xFFFFFFFF if none</span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">errors</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of detected errors, or <span style="font-weight: bold;">DAE_NOERR</span> if no errors were detected. Several&nbsp;flags may be set at once:<br><span style="font-weight: bold;">DAE_BADCMD</span> - unknown or unrecognized command<br><span style="font-weight: bold;">DAE_CROSS</span> - command is longer than memory block passed to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a><br><span style="font-weight: bold;">DAE_MEMORY</span> - command specifies register&nbsp;where only memory is allowed<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DAE_BADSEG</span> - invalid segment register<br><span style="font-weight: bold;">DAE_SAMEPREF</span> - two explicit prefixes from the same group are specified simultaneously<br><span style="font-weight: bold;">DAE_MANYPREF</span> - command contains more than 4&nbsp;prefixes<br><span style="font-weight: bold;"></span><span style="font-weight: bold;">DAE_INTERN</span> - internal&nbsp;error<br>Note that some errors remain unnoticed by</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> <a href="Cmdinfo.htm"><span style="font-weight: bold;">Cmdinfo()</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">jmpaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If command is jump or call and its destination is known or can be calculated, <span style="font-weight: bold;">jmpaddr</span>
+is set to the destination address. Otherwise, it's 0. It may be
+necessary to supply registers and/or allow memory access by setting
+flag <span style="font-weight: bold;">DA_MEMORY</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">stackinc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Data size, bytes, specified in commands ENTER, RETN and RETF</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">op</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptions of operands, includes implicit operands (pseudooperands). See&nbsp;<a href="t_opinfo.htm"><span style="font-weight: bold;">t_opinfo</span></a> for details</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Disasm.htm">Assembling and disassembling</a>, <a href="t_cmdinfo.htm">t_cmdinfo</a>, <a href="t_disasm.htm">t_disasm</a>, <a href="t_opinfo.htm">t_opinfo</a>,&nbsp;<a href="Disasm.htm">Disasm()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

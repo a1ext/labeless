@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Writememory</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Writememory</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">ulong Writememory(const void *buf,ulong addr,ulong size,int mode);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Writes data to the&nbsp;memory of the debugged process. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>As
+this operation is time-consuming, OllyDbg caches write requests and
+flushes them when process resumes&nbsp;or on explicit call to <a href="Flushmemorycache.htm"><span style="font-weight: bold;">Flushmemorycache()</span></a>.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">Writememory()</span> checks whether memory exists and guesses whether it is writable or not.&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If requested memory is missing or only partially writable, <span style="font-weight: bold;">Writememory()</span>
+stops on the first error. It neither restores the already modified
+data, nor attempts to write the remaining data. Due to the caching, it
+may happen that <span style="font-weight: bold;">Writememory()</span> returns success but </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> <a href="Flushmemorycache.htm"><span style="font-weight: bold;">Flushmemorycache()</span></a> will fail, reporting error "Unable to flush cache at XXXXXXXX".</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>If
+range contains active INT3 breakpoints, they will be overwritten. Even
+if breakpoints are deactivated or disabled, there is usually no
+guarantee that they will point to the first bytes of&nbsp;new commands,
+or that commands are not replaced by the data. To avoid problems,
+always set <span style="font-weight: bold;">MM_REMOVEINT3</span> (removes all INT3 breakpoints) or <span style="font-weight: bold;">MM_ADJUSTINT3</span> (adjusts and reapplies INT3 breakpoint at address <span style="font-weight: bold;">addr</span> and removes all remaining breakpoints).<br><br>If code is modified, associated analysis data is usually no longer valid. Call <a href="Removeanalysis.htm"><span style="font-weight: bold;">Removeanalysis()</span></a> to discard analysis, predictions and comments from the addressed memory range.<br><br>In
+most cases, write requests are preceded by memory reads. To assure
+memory consistency in a read-modify-write sequence, put this
+sequence inside the pair&nbsp;<a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a>
+/&nbsp;<a href="Resumeallthreads.htm"><span style="font-weight: bold;">Resumeallthreads()</span></a>.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">buf</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Data to be written,&nbsp;<span style="font-weight: bold;">size</span> bytes long</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Start
+address of the memory block in the context of debugged process</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Data size, bytes</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Memory write options, a combination of the following flags:<br>
+<span style="font-weight: bold;">MM_REPORT</span> -
+display error message if memory is not writable (default). Can't be
+combined with <span style="font-weight: bold;">MM_SILENT</span><br>
+<span style="font-weight: bold;">MM_SILENT</span> -
+don't display error message if memory is not writable. Can't be
+combined with <span style="font-weight: bold;">MM_REPORT</span><br>
+<span style="font-weight: bold;">MM_WRITETHRU</span> - writes directly
+to memory without caching. If several write requests point to the same
+memory page, direct writing may be significantly slower than cached<br><span style="font-weight: bold;">MM_REMOVEINT3</span> - asks to remove all INT3 breakpoints from the addressed memory range, see discussion above<br><span style="font-weight: bold;">MM_ADJUSTINT3</span> - asks to adjust INT3 breakpoint at address <span style="font-weight: bold;">addr</span>, if any, and remove all INT3 breakpoints from the remaining address range. See discussion above<br><span style="font-weight: bold;"></span><span style="font-weight: bold;">MM_FAILGUARD</span>
+- requests to fail if memory&nbsp;is&nbsp;guarded or
+read-protected.
+Default action is to change for a short moment the memory attributes of
+the specified block and retry writing<br>
+</span></small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><br>
+<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Size
+of the data written to the memory of debugged process. If returned value is less than <span style="font-weight: bold;">size</span>, an error has occured.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_memory.htm">t_memory</a>, <a href="Editmemory.htm">Editmemory()</a>, <a href="Findmemory.htm">Findmemory()</a>, <a href="Flushmemorycache.htm">Flushmemorycache()</a>, <a href="Listmemory.htm">Listmemory()</a>, <a href="Readmemory.htm">Readmemory()</a>,&nbsp;<a href="Readmemoryex.htm">Readmemoryex()</a>, <a href="Removeanalysis.htm">Removeanalysis()</a>, <a href="Resumeallthreads.htm">Resumeallthreads()</a>, <a href="Suspendallthreads.htm">Suspendallthreads()</a><a href="Writememory.htm"></a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

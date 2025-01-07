@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Setcodition</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Setcondition</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">ulong Setcondition(int code,ulong flags);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>80x86
+conditional commands have one of the following binary forms:<br>
+<br>
+<span style="font-weight: bold;">&nbsp; 0111cccc
+&lt;8-bit
+offset&gt;</span> - short conditional jump commands (JNE, JC,
+...)<br>
+<span style="font-weight: bold;">&nbsp; 00001111
+1000cccc
+&lt;32-bit offset&gt;</span> - </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>long
+conditional jump commands (JNE, JC, ...)</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">&nbsp; 00001111 1001cccc r/m8</span>
+- set byte on condition (SETNE, SETC, ...)<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Given
+<span style="font-weight: bold;">cccc</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+in the 4 least significant bits of the <span style="font-weight: bold;">code</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+and the contents of the 80x86 EFL register in <span style="font-weight: bold;">flags</span>, <span style="font-weight: bold;">Setcondition()</span>
+returns new combination of flags that satisfies given condition. If
+there are several possible solutions, it&nbsp;tries to make minimal
+possible changes.<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">code</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) 80x86
+condition code in the 4 least significant bits. All remaining bits are
+ignored</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">flags</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) 80x86 flags register</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>New contents of the flags register that meets the specified condition</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Disasm.htm">Assembler and disassembler</a>, <a href="Checkcondition.htm">Checkcondition()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

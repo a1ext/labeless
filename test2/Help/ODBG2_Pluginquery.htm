@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Pluginquery</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginquery</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Obligatory plugin callback function. The presence of this function is an indication of the valid OllyDbg 2.xx plugin.<br><br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+ODBG2_Pluginquery(int ollydbgversion,unsigned long *features,wchar_t
+pluginname[SHORTNAME],wchar_t pluginversion[SHORTNAME]);<br><br></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ollydbgversion</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) OllyDbg version,&nbsp;<span style="font-weight: bold;">VERSIONHI</span>*100+<span style="font-weight: bold;">VERSIONLO</span>. For example, this parameter is 201 for OllyDbg v2.01. If plugin means that OllyDbg is too old, it must return 0</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">features</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to array of unsigned long integers. Element <span style="font-weight: bold;">features[0]</span> is always present and contains&nbsp;number of elements that follow <span style="font-weight: bold;">features[0]</span> (currently 0). They will contain some additional version-related information</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pluginname</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Null-terminated plugin name, at most <span style="font-weight: bold;">SHORTNAME</span> UNICODE characters long. OllyDbg uses <span style="font-weight: bold;">pluginname</span> to identify plugin to the user</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pluginversion</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Null-terminated plugin version, at most <span style="font-weight: bold;">SHORTNAME</span> UNICODE characters long. May be empty. OllyDbg uses <span style="font-weight: bold;">pluginversion</span> to identify plugin to the user</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>0 if plugin is not compatible with the OllyDbg and <span style="font-weight: bold;">PLUGIN_VERSION</span> otherwise. This constant will change each time I make incompatible changes to the plugin API</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> <span style="font-weight: bold;">ODBG2_Pluginquery()</span> is called once when plugin starts. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Plugin
+must check whether given OllyDbg version is correctly supported and
+return 0 if not. Then it should fill <span style="font-weight: bold;">pluginname</span> and <span style="font-weight: bold;">pluginversion</span> (note: UNICODE strings) and return version of the expected plugin interface (<span style="font-weight: bold;">PLUGIN_VERSION</span>).
+If OllyDbg decides that this plugin is not compatible, it will unload
+plugin. Plugin name identifies it in the Plugins menu. The
+name should be descriptive and correlate with the name of DLL.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Attention, </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">ODBG2_Pluginquery()</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>&nbsp;should
+avoid&nbsp;calling plugin API functions, they may be incompatible! All
+one-time initializations must be performed in <a href="ODBG2_Plugininit.htm"><span style="font-weight: bold;">ODBG2_Plugininit()</span></a>.<br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Analysis</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">,
+<a href="i_Plugins.htm">plugins</a>, <a href="ODBG2_Plugininit.htm">ODBG2_Plugininit()</a>, </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="ODBG2_Plugindestroy.htm"><span style="font-weight: bold;">ODBG2_Plugindestroy()</span></a></small></span>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

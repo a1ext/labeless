@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Commentaddress</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Commentaddress</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Commentaddress(ulong addr,int typelist,wchar_t *comment,int len);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Given memory address in the contents of the debugged application, returns&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>comment associated with this address.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the memory location in the contents of the debugged application</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">typelist</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Combination of bit flags that determine which kinds of information must be checked, in the following order:<br><span style="font-weight: bold;">COMM_USER</span> - check for&nbsp;user-defined comment<br><span style="font-weight: bold;">COMM_MARK</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">check for&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">important arguments<br><span style="font-weight: bold;">COMM_PROC</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">check for&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">procedure description<br><span style="font-weight: bold;">COMM_ALL</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">all of the above</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br><span style="font-weight: bold;">Commentaddress()</span> returns comment of the first available type. It does not attempt to concatenate several comments</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">comment</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) UNICODE string of length at least <span style="font-weight: bold;">len</span> wide characters that receives comment</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">len</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length, in wide characters, of the buffer pointed to by <span style="font-weight: bold;">comment</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Length of <span style="font-weight: bold;">comment</span> in wide characters, not including the terminal null, or 0 if there is no&nbsp;comment associated with <span style="font-weight: bold;">addr</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Commentaddress.htm"></a><a href="Decodeaddress.htm">Decodeaddress()</a>, <a href="Decoderelativeoffset.htm">Decoderelativeoffset()</a>, <a href="Getanalysercomment.htm">Getanalysercomment()</a>, <a href="Getloopcomment.htm">Getloopcomment()</a>, <a href="Getproccomment.htm">Getproccomment()</a>, <a href="Getswitchcomment.htm">Getswitchcomment()</a>, <a href="Squeezename.htm">Squeezename()</a>, <a href="Uncapitalize.htm">Uncapitalize()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

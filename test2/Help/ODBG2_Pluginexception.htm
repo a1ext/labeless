@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Pluginexception</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginexception</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, called each time when OllyDbg
+receives debugging event of type <span style="font-weight: bold;">EXCEPTION_DEBUG_EVENT</span>
+from the debugged application. In general, plugins should not set or
+remove breakpoints at the address of exception,&nbsp;directly call
+functions from Windows debugging API like <span style="font-weight: bold;">ContinueDebugEvent()</span>, or call OllyDbg functions like <a href="Run.htm"><span style="font-weight: bold;">Run()</span></a> or <a href="Setstatus.htm"><span style="font-weight: bold;">Setstatus()</span></a>. Any of the listed actions may make the internal OllyDbg debugging engine unstable.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>When OllyDbg traces debugged application in the command emulation mode (option <span style="font-weight: bold;">Debugging | Allow fast command emulation</span> is checked), </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">ODBG2_Pluginexception()</span>
+is called on each emulated command. Usually the emulation is fully
+transparent for plugins. Note&nbsp;that OllyDbg updates <span style="font-weight: bold;">CONTEXT</span> structure associated with the thread only when OllyDbg switches&nbsp;from the emulation back to the execution.<br><br>If defined by plugin, <span style="font-weight: bold;">ODBG2_Pluginexception()</span> may slow down the debugging.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int ODBG2_Pluginexception(t_run *prun,const t_disasm *da,t_thread *pthr,t_reg *preg,wchar_t *message);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">prun</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a href="t_run.htm"><span style="font-weight: bold;">t_run</span></a> containing detailed description of the debugging event. Plugin should not modify this structure directly</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">da</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a href="t_disasm.htm"><span style="font-weight: bold;">t_disasm</span></a> which contains disassembled command that caused exception. Disassembly was done in <span style="font-weight: bold;">DA_MEMORY</span> mode, text and comments are not available. Plugin should not modify this structure directly</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pthr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a href="t_thread.htm"><span style="font-weight: bold;">t_thread</span></a> that identifies thread in which exception occured. Plugin should avoid direct modifications of this structure</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">preg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in/out)
+Pointer to the structure of type <a href="t_reg.htm"><span style="font-weight: bold;">t_reg</span></a>
+containing current state of the registers in the thread where exception
+was detected. If plugin modifies this structure (CARE!), it must also
+call <a href="Registermodifiedbyuser.htm"><span style="font-weight: bold;">Registermodifiedbyuser()</span></a> and set, if necessary, flags </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_SSEMOD</span>, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_ERRMOD</span> and </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_DBGMOD</span> in&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">preg-&gt;status</span><span style="font-family: Helvetica,Arial,sans-serif;">. Attention, careless register modifications may influence the functioning of the debugging engine!</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">message</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Pointer to the UNICODE buffer of length <span style="font-weight: bold;">TEXTLEN</span> wide characters. If plugin returns <span style="font-weight: bold;">PE_PAUSE</span>, it should fill this buffer with the explanation why execution was paused</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This callback should return one of the following values:<br><span style="font-weight: bold;">&nbsp; PE_IGNORED</span> - exception was not caused by plugin and therefore was ignored<br><span style="font-weight: bold;">&nbsp; PE_CONTINUE</span> - exception caused by plugin, OllyDbg should continue execution<br><span style="font-weight: bold;">&nbsp; PE_STEP</span> - exception caused by plugin. OllyDbg should set temporary breakpoint (INT3 or hardware) with action flag <span style="font-weight: bold;">BA_PLUGIN</span> on the next command and continue execution<br><span style="font-weight: bold;">&nbsp; PE_PAUSE -&nbsp;</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>exception caused by plugin. OllyDbg should </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> pause debugged program<br></small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Plugins.htm">Plugins</a>, <a href="t_reg.htm">t_reg</a>, <a href="t_run.htm">t_run</a>, <a href="t_thread.htm">t_thread</a>, <a href="ODBG2_Pluginmainloop.htm">ODBG2_Pluginmainloop()</a>, <a href="ODBG2_Pluginnotify.htm">ODBG2_Pluginnotify()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

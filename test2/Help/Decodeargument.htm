@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Decodeargument</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Decodeargument</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Decodeargument(t_module *pmod,wchar_t *prtype,void *data,int ndata,wchar_t *text,int ntext,int *nontriv);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Decodes <span style="font-weight: bold;">data</span> of size <span style="font-weight: bold;">ndata</span> as element of <a href="i_ArgumentTypes.htm"><span style="font-weight: bold;">prefixed type</span></a> <span style="font-weight: bold;">prtype</span> to the UNICODE string <span style="font-weight: bold;">text</span> at least <span style="font-weight: bold;">ntext</span> wide characters long. Optionally sets <span style="font-weight: bold;">nontriv</span> to zero if decoding is trivial (i.e. invalid or contains only hexadecimal or decimal numbers) and to 1 otherwise.<br><br>Note that this routine ignores <span style="font-weight: bold;">ARG_OUT</span>. The burden of proof whether pointer points to the valid data&nbsp;is on the calling routine.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pmod</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Optional&nbsp;ointer to the <a href="i_Modules.htm"><span style="font-weight: bold;">module</span></a> descriptor (structure of type <a href="t_module.htm"><span style="font-weight: bold;">t_module</span></a>), necessary to decode module-dependent items, like resource strings or .NET-specific data</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">prtype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the UNICODE string, <a href="i_ArgumentTypes.htm"><span style="font-weight: bold;">prefixed type</span></a> of the information in <span style="font-weight: bold;">data</span></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the argument, <span style="font-weight: bold;">ndata</span> bytes long, that will&nbsp;be decoded to the text</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ndata</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length of the <span style="font-weight: bold;">data</span>, bytes</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">text</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) UNICODE buffer, at least <span style="font-weight: bold;">ntext</span> wide characters long, that receives decoding. The produced string is always null-terminated</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ntext</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length of the <span style="font-weight: bold;">text</span> buffer, wide characters</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nontriv</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Optional pointer to the variable that will be set to 0 if decoding is
+trivial (contains only hexadecimal or decimal number) or not possible
+due to the error, and 1 otherwise</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Returns&nbsp;length of the decoded <span style="font-weight: bold;">text</span>, in wide characters, not including the terminal zero, or 0 on any error.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Suppose we are going to decode parameter Msg of DefWindowProc(). The corresponding call may be like this:</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-weight: bold;">int msg; </span><br><span style="font-family: monospace; font-weight: bold;">wchar_t text[TEXTLEN],prefixedtype[SHORTNAME];</span><br><span style="font-family: monospace; font-weight: bold;">// Get value of the argument.</span><br><span style="font-family: monospace; font-weight: bold;">msg=32;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;"></span><span style="font-family: monospace; font-weight: bold;">// Prepare prefixed type. Internal type of&nbsp;Msg in the database is</span><br><span style="font-family: monospace; font-weight: bold;">// WM_XA (ASCII) or WM_XW (UNICODE). Names of the constants are the</span><br><span style="font-family: monospace; font-weight: bold;">// same in both cases.</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">prefixedtype[0]=(wchar_t)(ARG_VALID|ARG_TYPE);</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">wcscpy(prefixedtype+1,</span><big style="font-weight: bold;"><span style="font-family: monospace;"><small>L"WM_XA");</small></span></big><br><big style="font-weight: bold;"><span style="font-family: monospace;"></span></big><span style="font-family: monospace; font-weight: bold;">// Decoding of Msg is module-independent, I set pmod to NULL.</span><br style="font-family: monospace;"><span style="font-family: monospace; font-weight: bold;">Decodeargument(NULL,prefixedtype,&amp;msg,sizeof(msg),text,TEXTLEN,NULL);</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>On&nbsp;return, <span style="font-weight: bold;">text</span> will contain "WM_SETCURSOR", which is the name of the message with code 32 (0x20).</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analysis</a>, <a href="i_ArgumentTypes.htm">arguments</a>, <a href="i_Knownfunctions.htm">known functions</a>, <a href="Decodeknownbyaddr.htm">Decodeknownbyaddr()</a>, <a href="Decodeknownbyname.htm">Decodeknownbyname()</a>, <a href="Decodetype.htm">Decodetype()</a>, <a href="Decodestructure.htm">Decodestructure()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

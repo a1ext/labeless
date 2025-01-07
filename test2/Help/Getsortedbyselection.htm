@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Getsortedbyselection</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Getsortedbyselection</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void *Getsortedbyselection(t_sorted *sd,int index);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Locates <span style="font-weight: bold;">index</span>-th item in the table of the <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a> sorted by the currently selected criterium. Parameter <span style="font-weight: bold;">index</span> is usually the 0-based index of the selected line (<span style="font-weight: bold;">sd-&gt;selected</span>), hence the name.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the structure of type <a style="font-weight: bold;" href="t_sorted.htm">t_sorted</a>, descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">index</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Index of the item in the sorted data sorted by <span style="font-weight: bold;">sd-&gt;sort</span></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On success, returns pointer to the element of sorted data. On error, returns NULL.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Here is the slightly modified code of the function that executes command "</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Dump in CPU" in the Memory window. User selects line in the table, calls pop-up menu and clicks on "</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Dump in CPU". The function then opens pointed memory block in the CPU Dump pane.<br><br></small></span><span style="font-family: monospace; font-weight: bold;">static int Mdumpincpu(t_table *pt,wchar *name,ulong index,int mode) {</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; t_memory *pmem;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; if (pt==NULL)</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; return MENU_ABSENT;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; pmem=(t_memory *)Getsortedbyselection(&amp;(pt-&gt;sorted),pt-&gt;sorted.selected);</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; if (pmem==NULL)</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; return MENU_ABSENT;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; if (mode==MENU_VERIFY)</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; return MENU_NORMAL;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; else if (mode==MENU_EXECUTE) {</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; Setcpu(0,0,pmem-&gt;base,0,0,CPU_DUMPHIST|CPU_DUMPFOCUS);</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp; return MENU_NOREDRAW; }</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; else return MENU_ABSENT;</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">};</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="t_sorted.htm">t_sorted</a>, <a href="Createsorteddata.htm">Createsorteddata()</a>, <a href="Findsorteddata.htm">Findsorteddata()</a>,&nbsp;<a href="Findsorteddatarange.htm">Findsorteddatarange()</a>, <a href="Findsortedindexrange.htm">Findsortedindexrange()</a>, <a href="Getsortedbyindex.htm">Getsortedbyindex()</a>,&nbsp;<a href="Sortsorteddata.htm">Sortsorteddata()</a></span></small>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

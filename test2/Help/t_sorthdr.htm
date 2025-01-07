@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_sorthdr</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_sorthdr</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Header of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>
+items. May be followed by any amount of the additional data. Note that
+this header is not necessary (and is not used by the API) if sorted
+data was created with flag </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">SDM_NOSIZE</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>.</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef struct t_sorthdr {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Header of sorted data item<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of the entry<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of the entry<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type and address extension, TY_xxx<br>} t_sorthdr;<br></span><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">High
+32 bits of item's address in the address space of the described sorted
+data. For example, it can be the address of the item in the memory
+space of the Debuggee,&nbsp;Debuggee's handle,&nbsp;OllyDbg's handle,
+ordinal, or any other unique parameter</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size
+of the item, in the same units as addr. For example, if addr is the
+handle, then size should be set to 1. Size must be 1 if sorted data
+uses low 8 address bits (<span style="font-weight: bold;">SDM_EXTADDR</span>)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Item type and optional address extention. OllyDbg predefines following bits and fields:<br><br><span style="font-weight: bold;">TY_AEXTMASK</span> (0x000000FF) - address extention, used only if data was created with <span style="font-weight: bold;">SDM_EXTADDR</span><br><span style="font-weight: bold;">TY_NEW</span> (0x00000100) - item is new, intended to inducate new or modified data items. Sorted data can be purged by&nbsp;<a href="Unmarknewsorteddata.htm"><span style="font-weight: bold;">Unmarknewsorteddata()</span></a><span style="font-weight: bold;"><br>TY_CONFIRMED</span> (0x00000200) - item still exists. If you need to delete&nbsp;multiple scattered items, use the following sequence:<br>&nbsp; - &nbsp;<a href="Confirmsorteddata.htm"><span style="font-weight: bold;">Confirmsorteddata()</span></a>;<br>&nbsp; - &nbsp;clear bit on items that must be deleted;<br>&nbsp; -&nbsp; <a style="font-weight: bold;" href="Deletenonconfirmedsorteddata.htm">Deletenonconfirmedsorteddata()</a>.<br>This sequence is much faster than a set of calls to&nbsp;<a href="Deletesorteddata.htm"><span style="font-weight: bold;">Deletesorteddata()</span></a><br><span style="font-weight: bold;">TY_EXTADDR</span> (0x00000400) - address extension is active. Plugins are not allowed to modify this bit<br><span style="font-weight: bold;">TY_SELECTED</span> (0x00000800) - reserved for the future</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. Plugins are not allowed to modify this bit<br><br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">The remaining bits (mask 0xFFFFF000) can be freely used by plugins<br></span>
+</small></div><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="DESTFUNC.htm">DESTFUNC</a>, <a href="DRAWFUNC.htm">DRAWFUNC</a>, <a href="SORTFUNC.htm">SORTFUNC</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

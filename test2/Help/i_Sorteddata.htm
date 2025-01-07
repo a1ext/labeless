@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>Sorted data</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Sorted data</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Many
+kinds of internal OllyDbg data consist of homogenous items that have
+start&nbsp;address and non-zero size, and do not overlap with each
+other. A good example is the table of memory blocks. INT3 breakpoints may be
+treated as items occupying 1 byte in the memory space of the debugged
+program. Threads exist in the address space of&nbsp; thread
+identifiers and also occupy 1 address of this space. Data items usually
+can be displayed in some window and sorted using some criterium. A set of
+such elements is called sorted data.<br>
+<br>
+OllyDbg implements a powerful set of functions that allow easy
+operations with sorted data, like initilaization, adding or replacing
+of elements, removing of elements or address ranges, sorting, search
+and so on. OllyDbg automatically allocates new memory for sorted data
+if necessary. Sorted data is excellently scalable. In one (rather
+uncommon)&nbsp;case, while analysing a 70-Mb code section of VB
+program, OllyDbg gathered 1.5 Gb of register prediction data!<br>
+<br>Internally,&nbsp;data is&nbsp;always&nbsp;sorted by address. This allows
+for simple and extremely fast binary search. Adding new data is, of
+course, not so easy and may take significant time. Weighted binary
+trees may look more suitable, but in our case data is read much more
+frequently than added to the table. If you sort data by method other
+than increasing addresses, OllyDbg&nbsp;creates additional array of
+indexes pointing to data items, but their order in memory remains unchanged.<br>
+<br>
+By default, data is kept in a single contiguous&nbsp;memory block.
+When data overflows, OllyDbg allocates another block, usually twice as
+large, and copies existing data there. If data items are large or
+numerous, adding new elements or deleting existing
+results in moving&nbsp;large chunks of memory. Also, reallocation
+of large data buffers may lead to the excessive memory fragmentation. To prevent this, use indexed data (<span style="font-weight: bold;">SDM_INDEXED</span>).
+Indexing usually pays only if total data size exceeds&nbsp;3-5 Mb.<br>
+<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>This
+strategy has one significant drawback. API functions that search for
+the sorting data items return pointers to the found items in the data
+buffer. Therefore each API call that adds, removes or replaces items in
+the same sorted data invalidates all received pointers.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+If flag </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">SDM_NOSIZE</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> is not set,&nbsp;elements of&nbsp;sorted data must begin with the
+standard 12-byte header:<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_sorthdr
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Header of sorted data item<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of the entry<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of the entry<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type and address extension, TY_xxx<br>
+} t_sorthdr;<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Please don't mix the <span style="font-weight: bold;">size</span>
+specified in this header and the&nbsp;size of the element of sorted
+data. They belong to different address spaces! Size in header is the
+size of piece of virtual address space described by sorted data and
+usually belongs to debugged program. Physical size of the element is
+the size of memory ocuppied by element in the OllyDbg's memory. All
+elements have the same physical size necessary to fit all the
+characteristics and descriptions of the described object; size in the
+header is simply one (albeit most important) of the object's
+characteristics and may be different for each object.<br>
+<br>Plugins are not allowed to change <span style="font-weight: bold;">addr</span> and <span style="font-weight: bold;">size</span>
+directly. If these parameters must be changed, create temporary copy of
+the item, delete item and add copy to the data. (If new and old
+versions overlap, just add new item and it will replace the previous).
+Keep in mind that in both cases old item will be passed to destructor
+function. <br><br>
+32-bit address <span style="font-weight: bold;">addr</span>
+can be extended by another 8 least significant bits (for example, when
+you need many records associated with the single memory address). </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>They
+are kept in the field <span style="font-weight: bold;">TY_AEXTMASK</span>
+of the <span style="font-weight: bold;">type</span>.&nbsp;If
+extended addressing is active, size of all items in the sorted data is forced to 1 (that is, only exact address matches count). </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>To
+create such data, specify <span style="font-weight: bold;">SDM_EXTADDR</span>.
+An example of the sorted data that uses extended addressing is the list
+of names.<br>
+<br>
+Four other bits in the <span style="font-weight: bold;">type</span>
+are reserved for the internal purposes:<br>
+<br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>TY_NEW</small></td>
+<td><small>Indicates that item is new. Add new items with&nbsp;<span style="font-weight: bold;">TY_NEW</span> set and call <a href="Unmarknewsorteddata.htm"><span style="font-weight: bold;">Unmarknewsorteddata()</span></a> to declare all existing items as "old"</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>TY_CONFIRMED</small></td>
+<td><small>Used to delete multiple scattered data items at once. Mark items that should remain in the data as <span style="font-weight: bold;">TY_CONFIRMED</span> and clear this flag in items that must be deleted. <a href="Confirmsorteddata.htm"><span style="font-weight: bold;">Confirmsorteddata()</span></a> gives you the fast way to clear or set this bit in all data items. <a href="Deletenonconfirmedsorteddata.htm"><span style="font-weight: bold;">Deletenonconfirmedsorteddata()</span></a> deletes all items where bit is cleared and clears it in remaining items</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>TY_EXTADDR</small></td>
+<td><small>Extended address (<span style="font-weight: bold;">TY_AEXTMASK</span>) is used</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>TY_SELECTED</small></td>
+<td><small>Reserved for multiple selection (may be implemented in one of the future OllyDbg versions)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Plugins are free to use remaining <span style="font-weight: bold;">type</span>
+bits for any purposes.<br>
+<br>
+If you add new item to the sorted data and it overlaps, fully or
+partially,&nbsp;with one or more existing items, all overlapping
+items will be deleted. Note that each time an item is deleted -
+implicitly or on&nbsp;explicit request - OllyDbg calls an optional
+destructor function associated with the sorted data.<br>
+<br>
+There is a special kind of sorted data called autoarrangeable.
+Autoarrangeable data assumes that address of the element is simply its
+0-based ordinal number in the data array and size occupied by the
+element in address space is always 1. In other words, it&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>works
+as a list of items numbered 0, 1, 2... </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Even
+in this case, elements must begin with valid <span style="font-weight: bold;">t_sorthdr</span>. Data is
+declared as autoarrangeable if its sorting function is set to <span style="font-weight: bold;">AUTOARRANGE</span>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Unlike
+for standard data, insertion of item with existing address does not
+replace this item. Instead, all items with address equal or exceeding
+given will be moved one step up and automatically renumerated. To
+replace item in the autoarrangeable data, either delete existing and
+insert new one, or (faster way) get pointer to the item and modify it
+directly.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+If <span style="font-weight: bold;">size</span> is
+always&nbsp;1 and type is not necessary, you may reduce memory
+requirements by declaring sorted data as <span style="font-weight: bold;">SDM_NOSIZE</span>. In this
+case, size of the header is reduced to a single doubleword:<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_sorthdr_nosize
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Header of item
+w/o size and type <br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of the entry<br>
+} t_sorthdr_nosize;<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Each
+sorted data has a version. Data version increments by 1 each time the
+data is changed. This allows for easy implementation of small cache: if
+version is not 0 and is not changed, previously fetched data is still
+valid. In any imaginable application, wraparound of 32-bit variable is
+impossible. Of course, this works only if data is changed using API
+functions. If you access data item by pointer and use data
+caching,&nbsp;set version to 0.<br><br>There
+are many sorted data collections defined by OllyDbg that can be
+accessed by plugins. However, plugins should avoid tampering with this
+data directly, as this may influence OllyDbg stability:<br><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_sorted <span style="font-weight: bold;">premod</span> - preliminary module data</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">module</span> - loaded modules (DLLs)</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_sorted <span style="font-weight: bold;">aqueue</span>&nbsp;- modules that are not yet analysed</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">thread</span> - active threads</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">memory</span> - allocated memory blocks</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">win</span> &nbsp;- list of windows</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">bpoint</span> -&nbsp;INT3 breakpoints</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">bpmem</span> - memory breakpoints</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_sorted <span style="font-weight: bold;">bppage</span> - memory pages with changed attributes</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">bphard</span> - hardware breakpoints</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">watch</span> - watch expressions</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">patch</span> - list of patches from previous runs</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_sorted <span style="font-weight: bold;">procdata</span> - descriptions of analyzed procedures</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">source</span> - list of source files</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>t_table <span style="font-weight: bold;">srccode</span> - source code</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>To create your own table of sorted data,&nbsp;allocate data&nbsp;descriptor (structure of type <a href="t_sorted.htm"><span style="font-weight: bold;">t_sorted</span></a>) and initialize&nbsp;it to 0, then call <a href="Createsorteddata.htm"><span style="font-weight: bold;">Createsorteddata()</span></a>
+to initialize table and allocate data buffers. After initialization,
+you can use all sorted data functions to change or retrieve data. Do
+not modify items of data&nbsp;descriptor directly, this may lead to
+severe data integrity problems!<br><br>In
+the OllyDbg 1.xx it was possible to extract or walk data items by
+casting the storage to the&nbsp;type of the element, like in this
+example:<br><br></small></span><div style="margin-left: 40px;"><big style="font-weight: bold;"><span style="font-family: monospace;"><small>t_memory *pmem;</small></span><br style="font-family: monospace;"><span style="font-family: monospace;"><small>pmem=(t_memory *)memory.data.data;</small></span><br style="font-family: monospace;"><span style="font-family: monospace;"><small>for (i=0; i&lt;memory.data.n; i++,pmem++) {</small></span><br style="font-family: monospace;"><span style="font-family: monospace;"><small>&nbsp; &nbsp;// some actions</small></span><br style="font-family: monospace;"><span style="font-family: monospace;"><small>}</small></span></big><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>This is no longer allowed in the version 2.xx. Always use <span style="font-weight: bold;">Find...()</span> or <span style="font-weight: bold;">Get...()</span> instead, these functions are fast!<br><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">API functions:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int <a href="Createsorteddata.htm">Createsorteddata</a>(t_sorted *sd,ulong itemsize,int nexp,SORTFUNC *sortfunc,DESTFUNC *destfunc,int mode);<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">void <a href="Destroysorteddata.htm">Destroysorteddata</a>(t_sorted *sd);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void <a href="Deletesorteddata.htm">Deletesorteddata</a>(t_sorted *sd,ulong addr,ulong subaddr);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Deletesorteddatarange.htm">Deletesorteddatarange</a>(t_sorted *sd,ulong addr0,ulong addr1);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void * <a href="Addsorteddata.htm">Addsorteddata</a>(t_sorted *sd,void *item);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Replacesorteddatarange.htm">Replacesorteddatarange</a>(t_sorted *sd,void *data,int n,ulong addr0,ulong addr1);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void <a href="Renumeratesorteddata.htm">Renumeratesorteddata</a>(t_sorted *sd);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Confirmsorteddata.htm">Confirmsorteddata</a>(t_sorted *sd,int confirm);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Deletenonconfirmedsorteddata.htm">Deletenonconfirmedsorteddata</a>(t_sorted *sd);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void <a href="Unmarknewsorteddata.htm">Unmarknewsorteddata</a>(t_sorted *sd);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void * <a href="Findsorteddata.htm">Findsorteddata</a>(t_sorted *sd,ulong addr,ulong subaddr);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void * <a href="Findsorteddatarange.htm">Findsorteddatarange</a>(t_sorted *sd,ulong addr0,ulong addr1);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Findsortedindexrange.htm">Findsortedindexrange</a>(t_sorted *sd,ulong addr0,ulong addr1);</span><br style="font-weight: bold;"><span style="font-weight: bold;">void * <a href="Getsortedbyindex.htm">Getsortedbyindex</a>(t_sorted *sd,int index);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span><span style="font-weight: bold;">void * <a href="Getsortedbyselection.htm">Getsortedbyselection</a>(t_sorted *sd,int index);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Sortsorteddata.htm">Sortsorteddata</a>(t_sorted *sd,int sort);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Issortedinit.htm">Issortedinit</a>(t_sorted *sd);</span><br style="font-weight: bold;"><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: monospace; font-size: 12px; font-weight: bold;">// Layout of the data item. <br>typedef struct t_custom {<br>&nbsp; // Standard sorted data items begin with t_sorthdr.<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Base address of the entry<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Size of the entry<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type and address extension, TY_xxx<br>&nbsp; // Place your custom fields here.<br>&nbsp; int &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;customdata; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Custom data<br>} t_custom;<br><br>// Destructor of t_custom, called each time the data item is deleted.<br>void Customdestfunc(t_sorthdr *sh) {<br>&nbsp; t_custom *pcustom;<br>&nbsp;
+if (sh==NULL)
+return;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Error in input, must not happen<br>&nbsp; pcustom=(t_custom *)sh;<br>&nbsp; Addtolist(pcustom-&gt;addr,DRAW_HILITE,L"Deleting&nbsp;customdata=%i",pcustom-&gt;customdata);<br>}<br><br>int Playwithsorteddata(void) {<br>&nbsp; t_sorted sd;<br>&nbsp; t_custom custom,*pcustom;<br>&nbsp; // Local variable sd is filled with garbage and must be cleared.<br>&nbsp; memset(&amp;sd,o,sizeof(t_sorted));<br>&nbsp; // Let's assume that usually we need not more than 100 items<br>&nbsp; if (</span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Createsorteddata(&amp;sd,sizeof(t_custom),100,NULL,Customdestfunc,0)!=0) <br>&nbsp; &nbsp; return -1; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Low memory?</span><br><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; // Add item.<br>&nbsp; memset(&amp;custom,0,sizeof(t_custom));<br>&nbsp; custom.addr=1000;<br>&nbsp; custom.size=100;<br>&nbsp; custom.customdata=1;<br>&nbsp; // This call will succeed.<br>&nbsp; Addsorteddata(&amp;sd,&amp;custom);<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; // Add another item.<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; custom.addr=1010;<br>&nbsp; custom.size=20;<br>&nbsp; custom.customdata=2;<br>&nbsp; // This call will succeed. But, as second item overlaps with the first, first<br>&nbsp; // item will be passed to the Customdestfunc()&nbsp;and then removed from the data.<br>&nbsp; Addsorteddata(&amp;sd,&amp;custom);<br>&nbsp; // Search for data item at address 1020 will succeed because item 2 occupies<br>&nbsp; // address range&nbsp;1010..1029:<br>&nbsp; pcustom=(t_custom *)Findsorteddata(&amp;sd,1020,0);<br>&nbsp; if (pcustom!=NULL)<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; &nbsp; Addtolist(pcustom-&gt;addr,DRAW_HILITE,L"Found&nbsp;customdata=%i",pcustom-&gt;customdata);<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">&nbsp; // We no longer need sorted data, free allocated resources.<br>&nbsp; Destroysorteddata(&amp;sd);<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span> <span style="font-family: monospace; font-size: 12px; font-weight: bold;">}<br></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><a href="t_table.htm"><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>Tables</small></span></a><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br></small></span>
+</body></html>

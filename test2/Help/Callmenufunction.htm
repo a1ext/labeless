@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Callmenufunction</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Callmenufunction</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Callmenufunction(t_table *pt,t_menu *pm,MENUFUNC *menufunc,ulong index);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Executes <a href="MENUFUNC.htm"><span style="font-weight: bold;">menu function</span></a>
+directly, taking care of initializations. The call is exactly the same
+as if the user had clicked on the corresponding menu item (i.e.
+initialization function is also called; menu function is asked to
+verify whether it applies; during the second call the debugged
+application is suspended, etc. <span style="font-weight: bold;">Callmenufunction()</span> allows to avoid repeating the same code on different occasions, like menu call, doubleclick and/or automatic execution.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pt</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a> descriptor, a structure of type <a href="t_table.htm"><span style="font-weight: bold;">t_table</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pm</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the&nbsp;<a href="i_Menu.html"><span style="font-weight: bold;">menu</span></a> (an array of structures of type <a href="t_menu.htm"><span style="font-weight: bold;">t_menu</span></a>),
+necessary to find and execute the initialization function. If caller is
+sure that there is no initialization function, this item may be NULL<a href="t_table.htm"><span style="font-weight: bold;"></span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">menufunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the <a href="MENUFUNC.htm"><span style="font-weight: bold;">menu function</span></a> that should be executed<a href="t_table.htm"><span style="font-weight: bold;"></span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">index</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Index that will be passed to&nbsp;<span style="font-weight: bold;">menufunc</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="t_table.htm"><span style="font-weight: bold;"></span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small> On
+error, or if function does not apply, returns -1. On success, updates
+if necessary all windows and returns answer from the menu function
+(supposedly&nbsp;<span style="font-weight: bold;">MENU_REDRAW</span> or <span style="font-weight: bold;">MENU_NOREDRAW</span>)</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Menu.html">Menus</a>, <a href="i_Tables.htm">tables</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Findsortedindexrange</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Findsortedindexrange</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+Findsortedindexrange(t_sorted *sd,ulong addr0,ulong addr1) {<br>
+<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Searches
+for the first item in the table of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>
+that lies within the&nbsp;range <span style="font-weight: bold;">addr0</span>
+.. <span style="font-weight: bold;">addr1</span> (<span style="font-weight: bold;">addr1</span> is not
+included). Returns index of the item in the data sorted by address, or
+-1 if there is no such item. This function is very fast. Note that
+returned index is volatile, any access to <span style="font-weight: bold;">sd</span> other than plain
+search may reorder or move data. That is, you may make as many calls to
+<span style="font-weight: bold;">Findsorted...()</span>
+or <a href="Getsortedbyindex.htm"><span style="font-weight: bold;">Getsortedbyindex()</span></a>
+as you want, but <span style="font-style: italic; font-weight: bold;">any</span>
+call to <a href="Addsorteddata.htm"><span style="font-weight: bold;">Addsorteddata()</span></a>,
+<a href="Deletesorteddata.htm"><span style="font-weight: bold;">Deletesorteddata()</span></a>
+etc. on the same sorted data descriptor invalidates <span style="font-weight: bold; font-style: italic;">all</span>
+obtained data indices and pointers!<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a style="font-weight: bold;" href="t_sorted.htm">t_sorted</a>, descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted
+data</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr0</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Initial address of the data range</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr1</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address that immediately follows the data range</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On
+success, returns&nbsp;index of the item in the data&nbsp;sorted
+by address, or -1 if there is no such item</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="t_sorted.htm">t_sorted</a>, <a href="Createsorteddata.htm">Createsorteddata()</a>, <a href="Findsorteddata.htm">Findsorteddata()</a>,
+<a href="Findsorteddatarange.htm">Findsorteddatarange()</a>,
+<a href="Getsortedbyindex.htm">Getsortedbyindex()</a>,
+<a href="Getsortedbyselection.htm">Getsortedbyselection()</a>,
+<a href="Sortsorteddata.htm">Sortsorteddata()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_result</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_result</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Keeps
+result of <a href="i_Expressions.htm"><span style="font-weight: bold;">expression</span></a> evaluation.</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_result
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Result of expression evaluation<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lvaltype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type of expression, EXPR_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lvaladdr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of lvalue or 0<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+datatype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type of data, EXPR_xxx<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+repcount;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Repeat count (0..32, 0 means default)<br>&nbsp; union {<br>&nbsp;&nbsp;&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+data[10];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Value as set of bytes<br>&nbsp;&nbsp;&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+u;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Value as address or unsigned integer<br>&nbsp;&nbsp;&nbsp;
+long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+l;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Value as signed integer<br>&nbsp;&nbsp;&nbsp; long double&nbsp; f;
+};&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Value as 80-bit float<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+value[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Value decoded to
+string<br>} t_result;</span><br>
+<br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">lvaltype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the expression treated as a lvalue, one of the following flags optionally combined with <span style="font-weight: bold;">EXPR_REG</span>. If expression is not a lvalue (for example, EAX+1 is not because it can't be assigned to), lvaltype is set to <span style="font-weight: bold;">EXPR_INVALID</span>. Note that this does not indicate that the expression is invalid or can't be estimated:<br><span style="font-weight: bold;">EXPR_INVALID</span> - the result of the estimation is not a lvalue and can't be modified<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_BYTE</span> - memory byte at address <span style="font-weight: bold;">lvaladdr</span><br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_BYTE|EXPR_REG</span> - 8-bit general register with index <span style="font-weight: bold;">lvaladdr</span><br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_WORD</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">memory word at address <span style="font-weight: bold;">lvaladdr</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_WORD|EXPR_REG</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">16-bit general register with index <span style="font-weight: bold;">lvaladdr</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_DWORD</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">memory doubleword at address <span style="font-weight: bold;">lvaladdr</span><span style="font-weight: bold;"></span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_DWORD|EXPR_REG</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">32-bit general register with index <span style="font-weight: bold;">lvaladdr</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_FLOAT4</span> - 32-bit floating-point number in the memory at address <span style="font-weight: bold;">lvaladdr</span><br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_FLOAT8</span> - 64-bit floating-point number in the memory at address <span style="font-weight: bold;">lvaladdr</span><br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_FLOAT10</span> - 80-bit floating-point number in the memory at address <span style="font-weight: bold;">lvaladdr</span><br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_FLOAT10|EXPR_REG</span> - 80-bit FPU register with index <span style="font-weight: bold;">lvaladdr</span><br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_SEG|EXPR_REG</span> - 16-bit segment register with index <span style="font-weight: bold;">lvaladdr</span><br><span style="font-weight: bold;">EXPR_ASCII</span> - <span style="font-weight: bold;">lvaladdr</span> is the address of ASCII string in the memory<br><span style="font-weight: bold;">EXPR_UNICODE</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">lvaladdr</span> is the address of UNICODE string in the memory</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">lvaladdr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If <span style="font-weight: bold;">lvaltype</span> is&nbsp;<span style="font-weight: bold;">EXPR_INVALID</span>, <span style="font-weight: bold;">lvaladdr</span> is undefined. If flag <span style="font-weight: bold;">EXPR_REG</span> in <span style="font-weight: bold;">lvaltype</span> is not set, this is the address of the memory to which the supplied expression extimates. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> If&nbsp;<span style="font-weight: bold;">EXPR_REG</span>&nbsp;is set, this is the index of the register.</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">datatype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of result, one of the following combinations:<br><span style="font-weight: bold;">EXPR_INVALID</span>&nbsp;- expression is invalid or can't be evaluated,&nbsp;<span style="font-weight: bold;">value</span> contains error message<br><span style="font-weight: bold;">EXPR_DWORD</span>&nbsp;- expression evaluates to unsigned integer number <span style="font-weight: bold;">u</span><br><span style="font-weight: bold;">EXPR_DWORD|EXPR_SIGNED</span> (shortcut <span style="font-weight: bold;">EXPR_SIGDWORD</span>) - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">expression evaluates to&nbsp;signed integer number <span style="font-weight: bold;">i</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">EXPR_FLOAT10</span>&nbsp;- expression evaluates to floating-point number <span style="font-weight: bold;">f</span><br><span style="font-weight: bold;">EXPR_ASCII</span>&nbsp;- the result is a pointer to ASCII string in&nbsp;<span style="font-weight: bold;">u</span><br><span style="font-weight: bold;">EXPR_UNICODE</span>&nbsp;- the result is a pointer to UNICODE string&nbsp;<span style="font-weight: bold;">u</span><br><span style="font-weight: bold;">EXPR_TEXT</span>&nbsp;- the result is an immediate UNICODE string in&nbsp;<span style="font-weight: bold;">value</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">repcount</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Repeat count for the outermost memory expression, may differ&nbsp;from 1 only if expression was evaluated in <span style="font-weight: bold;">EMOD_MULTI</span> mode</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Binary value of the expression. If <span style="font-weight: bold;">repcount</span> is higher than 1, <span style="font-weight: bold;">data</span> contains only the first evaluated item</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">u</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Binary value if expression estimates to unsigned integer or pointer</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">l</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Binary value if expression estimates to&nbsp;signed integer</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">f</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Binary value if expression estimates to floating-point number</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">value</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Result of expression estimation in the human-readable form. If <span style="font-weight: bold;">datatype</span> is <span style="font-weight: bold;">EXPR_ASCII</span> or <span style="font-weight: bold;">EXPR_UNICODE</span>, <span style="font-weight: bold;">value</span> is the pointed string in UNICODE format. If <span style="font-weight: bold;">datatype</span> is <span style="font-weight: bold;">EXPR_INVALID</span>, <span style="font-weight: bold;">result</span> contains error message. Binary-to-human conversion may be time-consuming. To suppress it, use&nbsp;<span style="font-weight: bold;">EMOD_NOVALUE</span></span><br>
+</small></div><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Expressions.htm">Expressions</a>, <a href="Eexpression.htm">Eexpression()</a>, <a href="Expression.htm">Expression()</a>, <a href="Fastexpression.htm">Fastexpression()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

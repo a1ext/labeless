@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_bpoint</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_bpoint</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Descriptor of the <a href="i_Breakpoints.htm"><span style="font-weight: bold;">INT3 breakpoint</span></a>. Plugin are not allowed to modify this structure directly. Instead, they must call corresponding API functions.</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef struct t_bpoint {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // INT3 breakpoints<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Address of breakpoint<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Must be 1<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type of breakpoint, TY_xxx+BP_xxx<br>&nbsp;
+ushort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+fnindex;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Index of predefined function<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cmd;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// First byte of original command<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+patch;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Used only in .udd files<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+limit;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Original pass count (0 if not set)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+count;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Actual pass count<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+actions;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Actions, set of BA_xxx<br>} t_bpoint;<br><br></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the breakpoint</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Must be 1</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the breakpoint, combination of the flags BP_xxx</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> listed below</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> (and possibly <a href="i_Sorteddata.htm"><span style="font-weight: bold;">TY_xxx</span></a>).<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Basic type of the breakpoint, at least one is required. Breakpoint may have several types at once:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_MANUAL</span> - permanent breakpoint set by user</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_ONESHOT</span> - one-shot breakpoint set by debugging engine. When this breakpoint is hit, OllyDbg removes <span style="font-weight: bold;">BP_ONESHOT</span> and pauses the debugged application</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_TEMP</span> - temporary breakpoint set by debugging engine or plugins. When this breakpoint is hit, OllyDbg removes <span style="font-weight: bold;">BP_TEMP</span> (unless action <span style="font-weight: bold;">BA_PERMANENT</span> is active), performs actions associated with breakpoint and continues execution</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_TRACE</span> - used for hit trace, marks unprocessed or unsure branches</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">General breakpoint features:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_SET</span> - breakpoint is applied to memory, <span style="font-weight: bold;">cmd</span> is valid</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">Features of the permanent breakpoint (<span style="font-weight: bold;">BP_MANUAL</span>), a combination of zero or more of the following flags:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_DISABLED</span> -&nbsp;breakpoint is disabled</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_COND</span> - conditional breakpoint. Its action depends on the associated condition (<a href="i_Data.htm"><span style="font-weight: bold;">name</span></a> of type <span style="font-weight: bold;">NM_INT3COND</span>)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_PERIODICAL</span> - periodical breakpoint (pauses each <span style="font-weight: bold;">limit</span>-th break)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">When&nbsp;to pause execution when permanent breakpoint is hit, one of the following flags:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_NOBREAK</span> - no pause</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_CONDBREAK</span> - pause when condition is true</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_BREAK</span> - pause always</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">When to protocol the value of expression </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(<a href="i_Data.htm"><span style="font-weight: bold;">name</span></a> of type <span style="font-weight: bold;">NM_INT3EXPR</span>)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">, one of the following flags:</span></small><br><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_NOLOG</span> - don't protocol</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_CONDLOG</span> - protocol&nbsp;if condition is true</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_LOG</span> - protocol always</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">When to protocol the arguments of the function that is called or begins at <span style="font-weight: bold;">addr</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">, one of the following flags:</span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_NOARG</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - don't protocol</span></small><br><small style="font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;">BP_CONDARG</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - protocol&nbsp;if condition is true</span></small><br><small style="font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;">BP_ARG</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - protocol always</span></small><br></div><small><span style="font-family: Helvetica,Arial,sans-serif;">When to protocol the value returned by a call to function</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">, one of the following flags:</span></small><br><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">BP_NORET</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - don't protocol</span></small><br style="font-weight: bold;"><small style="font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;">BP_CONDRET</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - protocol&nbsp;if condition is true</span></small><br><small style="font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;">BP_RET</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - protocol always</span></small><br></div><small><span style="font-family: Helvetica,Arial,sans-serif;"></span>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">fnindex</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Internal index of the predefined function that should be used to protocol function arguments</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Copy of the first byte of the command replaced by INT3, valid only if flag <span style="font-weight: bold;">BP_SET</span> is set</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">patch</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">For internal use</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">limit</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Original pass count, or 0 if pass count is not set</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">count</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Current pass count</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">actions</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Special actions associated with breakpoint of type <span style="font-weight: bold;">BP_TEMP</span>, a combination of zero or more of the following flags:<br><span style="font-weight: bold;">BA_PERMANENT</span> - permanent temporary breakpoint. OllyDbg sets them on important system routines, like ZwContinue()<br><span style="font-weight: bold;">BA_PLUGIN</span> - when breakpoint is hit, OllyDbg passes this event to <a href="ODBG2_Plugintempbreakpoint.htm"><span style="font-weight: bold;">ODBG2_Plugintempbreakpoint()</span></a>&nbsp; <br></span>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Breakpoints.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Breakpoints</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

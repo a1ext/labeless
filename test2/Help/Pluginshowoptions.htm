@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Pluginshowoptions</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Pluginshowoptions</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void Pluginshowoptions(t_control *options);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Opens Plugin options window and displays page pointed to by the parameter <span style="font-weight: bold;">options</span>. This parameter should be the same as returned by <a href="ODBG2_Pluginoptions.htm"><span style="font-weight: bold;">ODBG2_Pluginoptions()</span></a>, or must point to the alternative <span style="font-weight: bold;">CA_COMMENT</span> within the list.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">options</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Array of structures <a href="t_control.htm"><span style="font-weight: bold;">t_control</span></a>
+that describes the option page(s). If plugin displays single options
+page, it must be equal to the descriptor that plugin&nbsp;returns in
+the call to</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>&nbsp;<a href="ODBG2_Pluginoptions.htm"><span style="font-weight: bold;">ODBG2_Pluginoptions()</span></a>. If plugin displays several pages, it also may point to one of the records of type <span style="font-weight: bold;">CA_COMMENT</span> that mark the begin of the new options page.</small></span><small><span style="font-family: Helvetica,Arial,sans-serif;"> </span>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Dialogs.htm">Dialogs</a>, <a href="i_Plugins.htm">plugins</a>, <a href="t_control.htm">t_control</a>, <a href="ODBG2_Pluginoptions.htm">ODBG2_Pluginoptions()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

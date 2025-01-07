@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Decoderelativeoffset</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Decoderelativeoffset</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Decoderelativeoffset(ulong addr,int addrmode,wchar_t *symb,int nsymb);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Decodes memory address to the text string in the form "module.procname+offset"&nbsp;or "procname+offset".&nbsp;If <span style="font-weight: bold;">DM_SYMBOL</span>
+is set, procedure must be labelled; otherwise,&nbsp;absent symbolic
+name&nbsp;will be replaced by the hexadecimal address of entry point.
+Reports error and does not attempt decoding if specified address is
+not&nbsp;part of the procedure detected by the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Memory address in the context of the debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addrmode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Decoding mode, a combination of zero or more of the following flags:<br><span style="font-weight: bold;">DM_SYMBOL</span> - decoding will succeed only if procedure has symbolic name<br><span style="font-weight: bold;">DM_NONTRIVIAL</span> - decoding will succeed only of offset within the procedure is not 0 (i.e. pointed command is not the first in the procedure)<br><span style="font-weight: bold;">DM_MODNAME</span> - string will be prefixed with the name of the <a href="i_Modules.htm"><span style="font-weight: bold;">module</span></a><br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">symb</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Pointer to the UNICODE buffer of length at least <span style="font-weight: bold;">nsymb</span> wide characters that will receive the decoded text. This text &nbsp;is always null-terminated</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nsymb</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length of the buffer <span style="font-weight: bold;">symb</span>
+in wide characters. If buffer is shorter than 24 wide characters,
+function will fail. If decoded text is longer than the buffer, it will
+be truncated and its last three significant characters will be replaced
+by synopsis ('...')</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If decoding was successful, returns length of the&nbsp;string in the wide characters. On error, returns 0</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="Decodeaddress.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Decodeaddress()</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, <a href="Decoderange.htm">Decoderange()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

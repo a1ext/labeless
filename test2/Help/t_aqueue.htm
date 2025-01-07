@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_disasm</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_aqueue</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Element of <a href="i_Sorteddata.htm">sorted data</a> <span style="font-weight: bold;">aqueue</span>. Describes module which analysis was postponed. If automatic analysis is not&nbsp;required, request may be ignored.<br></small><br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_aqueue { &nbsp; &nbsp; &nbsp; // Descriptor of module to be analysed<br>&nbsp; ulong base; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Base address of module<br>
+&nbsp; ulong size; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Size of memory occupied by module<br>
+&nbsp; ulong type; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Service information, TY_xxx+MOD_xxx<br>
+} t_aqueue;</span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br>base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Base address of the module</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span><br></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Size of memory occupied by the module, or 1 if module size is not yet known</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span><br></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Module type, set of flags <span style="font-weight: bold;">TY_xxx</span> and <span style="font-weight: bold;">MOD_xxx</span>, see <a href="t_module.htm"><span style="font-weight: bold;">t_module</span></a> for details</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="t_module.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">t_module</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

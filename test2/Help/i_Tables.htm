@@ -1,0 +1,826 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>Tables</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Tables</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Almost
+all OllyDbg windows are tables: Modules, Log data, dumps, Help, and
+even Registers. CPU window is a <a href="i_Frametab.htm"><span style="font-weight: bold;">frame</span></a> that
+embeds five
+table windows.<br>
+<br>
+Standard table displays
+contents of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>,
+which is part of the table descriptor. To
+program standard table, you set number
+of columns and their properties in <span style="font-weight: bold;">t_table.bar</span>,
+write
+drawing
+function that determines the contents of table cells, add menu that
+simultaneously defines keyboard shortcuts, supply several optional
+components like table and sorting functions and call <a href="Createtablewindow.htm"><span style="font-weight: bold;">Createtablewindow()</span></a>.<br>
+<br>
+Custom&nbsp;tables
+(of type <span style="font-weight: bold;">TABLE_USERDEF</span>)
+are similar but have no associated sorted data. If you know
+the number of displayed lines in advance, you may use existing
+selection and scrolling logic. Just set flag <span style="font-weight: bold;">TABLE_STDSCR</span>
+and&nbsp;keep </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>total
+number of lines in <span style="font-weight: bold;">t_table.sorted.n</span>,
+first visible line in <span style="font-weight: bold;">t_table.offset</span>
+and currently selected line in <span style="font-weight: bold;">t_table.sorted.selected</span>.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+Sometimes
+it's hard or impossible to count all&nbsp;lines in the table. For
+example, if dump window displays assembler code, it would need to
+disassemble each command in a code section! Even taking into account
+the high speed of <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>
+in length-only mode, this would cause an
+unacceptably long delay. Moreover, standard </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>tables
+support only single-line selection. If your
+table
+needs&nbsp;non-standard features, you must process <a href="WM_USER_xxx.htm"><span style="font-weight: bold;">WM_USER_xxx</span></a>
+messages by yourself.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Columns</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>The
+number of displayed columns and their properties are defined in the
+structure <span style="font-weight: bold;">t_table.bar</span>
+of type <a href="t_bar.htm"><span style="font-weight: bold;">t_bar</span></a>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+Maximal number of columns is limited to <span style="font-weight: bold;">NBAR</span>=17.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Sometimes it's necessary to change the number and meaning of the
+columns. To do it, modify data in <span style="font-weight: bold;">bar</span>
+(only the first 6 described members!), call <a href="Defaultbar.htm"><span style="font-weight: bold;">Defaultbar()</span></a>
+and redraw or invalidate the window. Don't modify the remaining <span style="font-weight: bold;">bar</span> members (for
+example, <span style="font-weight: bold;">dx</span>)
+directly!<br>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Drawing
+function</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Each table has mandatory&nbsp;<a href="DRAWFUNC.htm"><span style="font-weight: bold;">drawing function</span></a>.
+Given sorted data item <span style="font-weight: bold;">ps</span>&nbsp;and
+<span style="font-weight: bold;">column</span> in
+the table, this function must return string <span style="font-weight: bold;">s</span>&nbsp;which
+is&nbsp;displayed in the specified table cell:<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+int DRAWFUNC(wchar_t *s,uchar *mask,int *select,struct t_table
+*pt,t_sorthdr *ps,int column,void *cache);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+In&nbsp;the simplest case, all letters in the string have the same
+attributes</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+(colour, background,&nbsp;underlining)</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+returned in <span style="font-weight: bold;">select</span>,
+and <span style="font-weight: bold;">mask</span>
+is not used. If drawing function uses graphical elements or different
+parts of the strings have different attributes, it must set flag <span style="font-weight: bold;">DRAW_MASK</span> in <span style="font-weight: bold;">select</span> and specify
+attributes individually for each character.<br>
+<br>
+First part&nbsp;of the attribute is foreground
+and&nbsp;background colours. Note
+that colours are selected indirectly: you only specify the index of the
+requested colour pair, and OllyDbg gets corresponding RGB values from
+the colour scheme associated with the table. Use <span style="font-weight: bold;">DRAW_COLOR</span> mask to
+extract
+this index:<br>
+<br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-style: italic;"><small>Index</small></td>
+<td style="width: 40%; font-style: italic;"><small>Used
+by OllyDbg to draw</small></td>
+<td style="font-style: italic;"><small>Colours
+in the <span style="font-weight: bold;">Black on white</span>
+scheme (FG / BG)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_NORMAL</small></td>
+<td><small>Normal text</small></td>
+<td><small>black / white</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_HILITE</small></td>
+<td><small>Highlighted text</small></td>
+<td><small>light red / white</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_GRAY</small></td>
+<td><small>Grayed text</small></td>
+<td><small>dark gray / white</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_EIP</small></td>
+<td><small>Current execution point</small></td>
+<td><small>white / black</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_BREAK</small></td>
+<td><small>Unconditional breakpoint</small></td>
+<td><small>black / light red</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_COND</small></td>
+<td><small>Conditional breakpoint</small></td>
+<td><small>black / light magenta</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_BDIS</small></td>
+<td><small>Disabled breakpoint</small></td>
+<td><small>black / yellow</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_IPBREAK</small></td>
+<td><small>Breakpoint&nbsp;on the current
+execution point</small></td>
+<td><small>light red / black</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_AUX</small></td>
+<td><small>Elements of the table that are not
+controlled by the drawing function</small></td>
+<td><small>light gray / white</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_SELUL</small></td>
+<td><small>Underlining (FG) and selection (BG)</small></td>
+<td><small>black / light gray</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br>
+Another group of indices is used by OllyDbg&nbsp;to highlight
+commands and operands. Of
+course, plugins are free to use them for their own purposes. Note that
+if flag <span style="font-weight: bold;">TABLE_SYNTAX</span>
+is set, screen colours will be taken from the selected highlighting
+scheme. If highlighting scheme is absent or colour is set to
+transparent, main colour scheme will be used:</small></span><br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-style: italic;"><small>Index</small></td>
+<td style="font-style: italic;"><small>Used
+by OllyDbg to draw</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_PLAIN</small></td>
+<td><small>Commands that are not in any other
+group</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_JUMP</small></td>
+<td><small>Unconditional near and far jumps</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_CJMP</small></td>
+<td><small>Conditional jumps</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_PUSHPOP</small></td>
+<td><small>PUSH and POP commands</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_CALL</small></td>
+<td><small>Near and far calls and interrupts</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_RET</small></td>
+<td><small>Near and far returns</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_FPU</small></td>
+<td><small>FPU, MMX, 3DNow! and SSE commands</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_SUSPECT</small></td>
+<td><small>I/O, system and privileged commands</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_FILL</small></td>
+<td><small>Commands that were recognized as
+filling between the procedures</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_MOD</small></td>
+<td><small>Commands and data that differ from
+backup (higher priority than any preceding item)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_IREG</small></td>
+<td><small>Integer registers (8/16/32 bit)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_FREG</small></td>
+<td><small>FPU, MMX, 3DNow! and SSE registers</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_SYSREG</small></td>
+<td><small>Segment, control and
+debugging&nbsp;registers</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_STKMEM</small></td>
+<td><small>Memory operands accessed via ESP or
+EBP</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_MEM</small></td>
+<td><small>Other memory operands</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_MCONST</small></td>
+<td><small>Constants that&nbsp;point to
+existing memory</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_CONST</small></td>
+<td><small>Other constants</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br>
+Another part of the attribute (<span style="font-weight: bold;">DRAW_APP</span>)
+specifies underlining and graphical symbols. Choose only one item from
+this group:</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>DRAW_TEXT</small></td>
+<td><small>Plain text</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_ULTEXT</small></td>
+<td><small>Underlined plain text</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_GRAPH</small></td>
+<td><small>Characters in the text string are
+interpreted as&nbsp;graphical elements (constants&nbsp;<span style="font-weight: bold;">G_xxx</span>). For example,
+thick parentheses that mark recognized procedures and structures
+consist of <span style="font-weight: bold;">G_BEGIN</span>,
+followed by several <span style="font-weight: bold;">G_BODY</span>,
+followed by <span style="font-weight: bold;">G_END</span>.
+Full list of graphical elements is available in <span style="font-style: italic;">plugin.h</span></small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Next bit changes background to <span style="font-weight: bold;">DRAW_SELUL</span>
+and is used to select the whole cell (in <span style="font-weight: bold;">select</span>) or only part
+of the text (in <span style="font-weight: bold;">mask</span>).
+If <span style="font-weight: bold;">DRAW_SELECT</span>
+is set simultaneously in <span style="font-weight: bold;">select</span>
+and in <span style="font-weight: bold;">mask</span>,
+background is not grayed and partial selection is still visible. <span style="font-weight: bold;">DRAW_SELECT</span>
+doesn't apply if <span style="font-weight: bold;">DRAW_EIP</span>,
+<span style="font-weight: bold;">DRAW_BREAK</span>, <span style="font-weight: bold;">DRAW_COND</span>, <span style="font-weight: bold;">DRAW_BDIS</span> or <span style="font-weight: bold;">DRAW_IPBREAK</span> is
+used. When combined with <span style="font-weight: bold;">DRAW_GRAY</span>,
+it changes foreground colour to <span style="font-weight: bold;">DRAW_NORMAL</span>
+to improve the visibility of the text:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>DRAW_SELECT</small></td>
+<td><small>Selected&nbsp;text</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+The remaining flags can be set only in <span style="font-weight: bold;">select</span>:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>DRAW_MASK</small></td>
+<td><small>Informs drawing routines that <span style="font-weight: bold;">mask</span> is used</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_VARWIDTH</small></td>
+<td><small>Specifies that variable character
+width is possible. Table
+windows allow only fixed-pitch fonts, but Kanji, Chinese and some other
+characters may take double space even if font is fixed-pitch. Use this
+flag when displaying comments. If flag is not set, non-standard
+characters are truncated into the single character space. Take care
+when assigning attributes in <span style="font-weight: bold;">mask</span>,
+they may be applied to false
+positions or truncate displayed text</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_EXTSEL</small></td>
+<td><small>Extends attributes specified in the
+last element of the <span style="font-weight: bold;">mask</span>
+to the end of the cell</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_TOP</small></td>
+<td><small>Draws upper half of the character at
+the bottom of the line. When combined with the same text and <span style="font-weight: bold;">DRAW_BOTTOM</span>
+attribute on the next line, creates text shifted by half of the line
+vertically. This trick is used to display EIP and EFL in the Registers</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_BOTTOM</small></td>
+<td><small>Draws lower half of the character at
+the top of the line</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_INACTIVE</small></td>
+<td><small>Grays all text in the cell that is
+not highlighted</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_RAWDATA</small></td>
+<td><small>Outputs each character separately,
+preventing Windows API
+from interpreting ligatures, accents and surrogates. Used in ASCII and
+UNICODE dumps</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DRAW_NEW</small></td>
+<td><small>Highlights normal text. Has lower
+priority than DRAW_INACTIVE</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+Drawing is influenced by the <a href="t_bar.htm"><span style="font-weight: bold;">bar</span></a>
+attributes&nbsp;<span style="font-weight: bold;">BAR_SHIFTSEL</span>
+and <span style="font-weight: bold;">BAR_WIDEFONT</span>.
+When <span style="font-weight: bold;">BAR_SHIFTSEL</span>
+is set, character's background is shifted 1/2 character to the left
+from the character. This trick improves the appearance of the
+selection, but each selected block must be followed by the selected
+empty space. <span style="font-weight: bold;">BAR_SHIFTSEL</span>
+is used in the hexadecimal dumps. <span style="font-weight: bold;">BAR_WIDEFONT</span>
+doubles the width of the character box on the screen and prevents
+Kanji, Chinese and Hangul ideographs from being truncated. This mode
+is&nbsp;optional for UNICODE dumps.<br>
+<br>
+When drawing or copying table, OllyDbg makes the following sequence of
+calls to the drawing function:<br>
+<br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">drawfunc(DF_CACHESIZE)</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-style: italic;">if cache size is not 0</span><span style="font-weight: bold;"> drawfunc(DF_FILLCACHE)</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-style: italic;"><small>for&nbsp;each
+fully or partially visible row in the increasing order do</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<div style="margin-left: 80px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">drawfunc(DF_NEWROW)</span><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-style: italic;">for&nbsp;each
+fully or partially visible column in the increasing order do</span><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>drawfunc(column)</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-style: italic;">enddo</span><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif; font-style: italic;"><small>enddo</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-style: italic;">if cache size is not 0</span><span style="font-weight: bold;"> </span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">drawfunc(DF_FREECACHE)</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Increasing
+row order for the table of type <span style="font-weight: bold;">TABLE_DIR</span>
+means that
+rows are drawn from the bottom to the top.The sequence is
+uninterruptable: OllyDbg guarantees that no other drawing function is
+called inbetween. Here is the more detailed description:<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>DF_CACHESIZE</small></td>
+<td><small>Always the very first call to the
+drawing function. The functions must return required size of
+the&nbsp;cache in bytes (or 0 if additional cache is not
+necessary). The cache is available in all consecutive calls, and its
+contents is not modified by the API. Note that parameter <span style="font-weight: bold;">ps</span> for custom tables is pointer to <a href="t_drawheader.htm"><span style="font-weight: bold;">t_drawheader</span></a> which contains the number of fully or partially visible table rows</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DF_FILLCACHE</small></td>
+<td><small>Follows <span style="font-weight: bold;">DF_CACHESIZE</span> if
+returned cache size&nbsp;is not 0. Drawing function must fill the
+cache with the data that will be used in all subsequent calls. For
+example, dump table&nbsp;reads the contents of the whole displayed
+memory</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DF_NEWROW</small></td>
+<td><small>Informs drawing function that new
+visible table row starts, giving it cthe chance&nbsp;to make
+time-consuming operations that apply to the row as a whole. For
+example, Disassembler window calls <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a> and caches hexadecimal
+command dump, disassembled command and code-related comments for
+columns 1, 2 and 3</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>0..N-1</small></td>
+<td><small>(N is the number of columns in the table) Request to draw
+contents of the table cell. Attention, if table is scrolled in the
+horizontal direction so that column is not visible, or column is
+minimized, this call is skipped. Therefore if one column relies on the
+data calculated for other column, always make&nbsp;such calculations in
+<span style="font-weight: bold;">DF_NEWROW</span></small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>DF_FREECACHE</small></td>
+<td><small>Always the very last call to the
+drawing function. Called only if cache size is not 0. Drawing function
+must free all allocated resources, like memory or handles</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Sorting
+function</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<a href="i_Sorteddata.htm"><span style="font-weight: bold;">Sorted data</span></a>
+included into the table may contain&nbsp;<a href="SORTFUNC.htm"><span style="font-weight: bold;">sorting function</span></a>.
+Given&nbsp;pointers to the two sorted data items and sorting
+criterium, this function must compare items and decide which one should
+appear earlier in the table:<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+int SORTFUNC(const t_sorthdr&nbsp;*sh1,const t_sorthdr *sh2,const
+int sort);<br>
+</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>When
+bar segment is declared as <span style="font-weight: bold;">BAR_SORT</span>
+and user presses it, OllyDbg sorts data using either <span style="font-style: italic;">quicksort</span> or <span style="font-style: italic;">heapsort</span>.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+Criterium <span style="font-weight: bold;">sort</span>
+is the index of the column in the table. If, according to this
+criterium, item pointed to by <span style="font-weight: bold;">sh1</span>&nbsp;should
+precede&nbsp;<span style="font-weight: bold;">sh2</span>,
+sorting function must return -1. If first item must be displayed after
+the second, function must return +1. If items are "equal", it must
+return 0.</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Table
+function</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="TABFUNC.htm"><span style="font-weight: bold;">Table
+function</span></a> is&nbsp;optional, but usually it is
+defined in the table:<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+long TABFUNC(struct t_table *pt,HWND hw,UINT msg,WPARAM wParam,LPARAM
+lParam);<br>
+</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Table
+function receives following messages:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>WM_DESTROY</small></td>
+<td><small>Called when table window receives <span style="font-weight: bold;">WM_DESTROY</span>. Custom
+table function must free resources allocated by itself, for example,
+the table. Note that during this call, doubleword of extra window
+memory at <span style="font-weight: bold;">GWL_USR_TABLE</span>
+(keeps pointer to the rable) is already set to 0. Returned value is
+ignored</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_CLOSE</small></td>
+<td><small>Called when table window receives <span style="font-weight: bold;">WM_CLOSE</span>. By
+returning -1, custom table function prevents window from closing. Do
+not misuse this option!</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_SIZE</small></td>
+<td><small>(Passed only to custom table
+functions) - called when size of the window is changed to give table
+chance to update itself. Parameter lParam is replaced by the number of
+visible lines. Returned value is ignored</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>WM_CHAR</small></td>
+<td><small>(Passed to the table function only
+if flag <span style="font-weight: bold;">TABLE_WANTCHAR</span>
+is set) - called when table window receives <span style="font-weight: bold;">WM_CHAR</span> and both
+Control and Alt keys are released. Table function must return 0 when
+message was not processed, 1 if message was processed and window must
+be updated, and -1 if message was processed but update is not
+necessary.
+<span style="font-weight: bold;">WM_CHAR</span>
+has higher priority than standard shortcuts</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><a href="WM_USER_xxx.htm"><small>WM_USER_xxx</small></a></td>
+<td><small>Custom messages and notifications,
+descibed in details <a href="WM_USER_xxx.htm"><span style="font-weight: bold;">here</span></a>.
+Custom table functions in OllyDbg frequently intercept </small><small><span style="font-weight: bold;">WM_USER_BAR</span> and </small><small><span style="font-weight: bold;">WM_USER_DBLCLK</span>.&nbsp;</small><small>Other
+messages are usually processed by the default&nbsp;table function.
+To pass processing to the default function, custom function should
+return 0.<br>
+</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Selection
+change notifications</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Another optional callback function is <a href="TABSELFUNC.htm"><span style="font-weight: bold;">tableselfunc</span></a>:
+<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+void TABSELFUNC(struct t_table *pt,int selected,int reason);<br>
+</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>It
+is called whenever selection in the standard table (or custom table of
+type TABLE_STDSCR) is changed. Parameter <span style="font-weight: bold;">selected</span> is the
+index of the newly selected line, parameter <span style="font-weight: bold;">reason</span> indicates
+which action has changed the selection:<br>
+<br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 130px; font-weight: bold;"><small>TSC_KEY</small></td>
+<td><small>Selection was changed due to pressed
+keyboard key (Home, PgUp, arrow etc.)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>TSC_MOUSE</small></td>
+<td><small>Selection was changed due to the
+mouse click</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>TSC_CALL</small></td>
+<td><small>Selection was changed as a result of
+call to <a href="Movetableselection.htm"><span style="font-weight: bold;">Movetableselection()</span></a>
+or <a href="Settableselection.htm"><span style="font-weight: bold;">Settableselection()</span></a></small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Table
+creation and embedding</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Before
+table can be displayed, its descriptor (structure <a href="t_table.htm"><span style="font-weight: bold;">t_table</span></a>)
+and included
+sorted data (standard tables) must be initialized. <br>
+<br>
+To create standalone table, use <a href="Createtablewindow.htm"><span style="font-weight: bold;">Createtablewindow()</span></a>.
+If you want to create a resizable collection of tables, like CPU, or a
+collection of tabs, like in Search, have a look at the <a href="i_Frametab.htm"><span style="font-weight: bold;">frames
+and tab collections</span></a>. Also you can create table
+holder (dialog or standalone window) and integrate one or more tables
+into it by calling <a href="Createottablewindow.htm"><span style="font-weight: bold;">Createottablewindow()</span></a>.
+OllyDbg uses this technique in Attach&nbsp;dialog. To integrate
+dump, use <a href="Embeddumpwindow.htm"><span style="font-weight: bold;">Embeddumpwindow()</span></a>
+(Run DLL Export dialog).<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">API
+functions:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>HWND
+<a href="Createottablewindow.htm">Createottablewindow</a>(HWND
+hparent,t_table *pt,RECT *rpos);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>HWND
+<a href="Createtablewindow.htm">Createtablewindow</a>(t_table
+*pt,int nrow,int ncolumn,HINSTANCE hi,wchar_t *icon,wchar_t *title);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>HWND
+<a href="Activatetablewindow.htm">Activatetablewindow</a>(t_table
+*pt);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>HWND
+<a href="Createtablechild.htm">Createtablechild</a>(t_table
+*pt,wchar_t *classname,wchar_t *name,wchar_t
+*help,ulong style,int x,int y,int dx,int dy,int idalign);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Getcharacterwidth.htm">Getcharacterwidth</a>(t_table
+*pt,int column);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>void
+<a href="Defaultbar.htm">Defaultbar</a>(t_table *pt);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Linecount.htm">Linecount</a>(t_table *pt);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Gettabletext.htm">Gettabletext</a>(t_table
+*pt,int row,int column,wchar_t *text,uchar *tmask,int *tselect);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Gettableselectionxy.htm">Gettableselectionxy</a>(t_table
+*pt,int column,POINT *coord);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Maketableareavisible.htm">Maketableareavisible</a>(t_table
+*pt,int column,int x0,int y0,int x1,int y1);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Movetableselection.htm">Movetableselection</a>(t_table
+*pt,int n);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Settableselection.htm">Settableselection</a>(t_table
+*pt,int selected);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>void
+<a href="Updatetable.htm">Updatetable</a>(t_table
+*pt,int force);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>void
+<a href="Delayedtableredraw.htm">Delayedtableredraw</a>(t_table
+*pt);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>void
+<a href="Setautoupdate.htm">Setautoupdate</a>(t_table
+*pt,int autoupdate);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>HGLOBAL
+<a href="Copytableselection.htm">Copytableselection</a>(t_table
+*pt,int column);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>HGLOBAL
+<a href="Copywholetable.htm">Copywholetable</a>(t_table
+*pt,int compatible);</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This
+is the slightly modified procedure that creates INT3 Breakpoints
+window. Its&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>drawing
+function is posted&nbsp;<a href="DRAWFUNC.htm"><span style="font-weight: bold;">here</span></a>, and
+its menu - <a href="t_menu.htm"><span style="font-weight: bold;">here</span></a>. An
+example of the sorting function (Modules window) is available <a href="SORTFUNC.htm"><span style="font-weight: bold;">here</span></a>.<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">extern
+t_table bpoint;<br>
+<br>
+// Custom table function of breakpoint window.<br>
+long Bpointfunc(t_table *pt,HWND hw,UINT msg,WPARAM wp,LPARAM lp) {<br>
+&nbsp; switch (msg) {<br>
+&nbsp;&nbsp;&nbsp;
+case
+WM_USER_DBLCLK:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Doubleclick in column<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Callmenufunction(pt,pt-&gt;menu,Mfollowbreak,0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1;<br>
+&nbsp;&nbsp;&nbsp; default: break;<br>
+&nbsp; };<br>
+&nbsp; return 0;<br>
+};<br>
+<br>
+// Creates new or brings to top existing INT3 breakpoint window. Only
+one such<br>
+// window may exist at a time. Returns handle of the table window (not
+MDI<br>
+// container!) or NULL on error.<br>
+HWND Createbpointwindow(int activate) {<br>
+&nbsp; // If table is not yet initialized, initialize it now.<br>
+&nbsp; if (bpoint.bar.nbar==0) {<br>
+&nbsp;&nbsp;&nbsp; wcscpy(bpoint.name,L"INT3 breakpoints");<br>
+&nbsp;&nbsp;&nbsp; bpoint.mode=TABLE_SAVEALL;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.visible=1;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.name[0]=N(L"Address");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.expl[0]=N(L"Address of INT3
+breakpoint");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.mode[0]=BAR_SORT;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.defdx[0]=9;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.name[1]=N(L"Module");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.expl[1]=N(L"Name of the
+module this breakpoint belongs to");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.mode[1]=BAR_SORT;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.defdx[1]=9;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.name[2]=N(L"Status");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.expl[2]=N(L"Status of INT3
+breakpoint");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.mode[2]=BAR_SORT;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.defdx[2]=12;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.name[3]=N(L"Disassembly");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.expl[3]=N(L"Disassembled
+command");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.mode[3]=BAR_FLAT;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.defdx[3]=40;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.name[4]=N(L"Comment");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.expl[4]=N(L"Comment");<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.mode[4]=BAR_FLAT;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.defdx[4]=256;<br>
+&nbsp;&nbsp;&nbsp; bpoint.bar.nbar=5;<br>
+&nbsp;&nbsp;&nbsp; bpoint.tabfunc=Bpointfunc;<br>
+&nbsp;&nbsp;&nbsp; bpoint.custommode=0;<br>
+&nbsp;&nbsp;&nbsp; bpoint.customdata=NULL;<br>
+&nbsp;&nbsp;&nbsp; bpoint.updatefunc=NULL;<br>
+&nbsp;&nbsp;&nbsp; bpoint.drawfunc=(DRAWFUNC *)Bpointdraw;<br>
+&nbsp;&nbsp;&nbsp; bpoint.tableselfunc=NULL;<br>
+&nbsp;&nbsp;&nbsp; bpoint.menu=bpointmenu;<br>
+&nbsp; };<br>
+&nbsp; // Create or update INT3 breakpoint window.<br>
+&nbsp; if (bpoint.hw==NULL)<br>
+&nbsp;&nbsp;&nbsp;
+Createtablewindow(&amp;bpoint,0,bpoint.bar.nbar,hinst,L"ICO_B_YELLOW",T(L"INT3
+breakpoints"));<br>
+&nbsp; else<br>
+&nbsp;&nbsp;&nbsp; InvalidateRect(bpoint.hw,NULL,FALSE);<br>
+&nbsp; // If requested, activate INT3 breakpoint window and bring
+it in foreground.<br>
+&nbsp; if (bpoint.hparent!=NULL &amp;&amp; activate!=0) {<br>
+&nbsp;&nbsp;&nbsp; if (hwclient!=NULL)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+SendMessage(hwclient,WM_MDIACTIVATE,(WPARAM)bpoint.hparent,0);<br>
+&nbsp;&nbsp;&nbsp; if (!IsZoomed(bpoint.hparent)) <br>
+&nbsp; &nbsp; &nbsp; ShowWindow(bpoint.hparent,SW_RESTORE);<br>
+&nbsp;&nbsp;&nbsp; SetFocus(bpoint.hw); <br>
+&nbsp; };<br>
+&nbsp; return bpoint.hw;<br>
+}</span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"><br>
+</span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small><a href="i_Dialogs.htm">Dialogs</a>, <a href="i_Dump.htm">dumps</a>, <a href="i_Frametab.htm">frames and tab collections</a>, <a href="i_Sorteddata.htm">sorted data</a></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span>
+</body></html>

@@ -1,0 +1,489 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>Assembling and disassembling</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Assembling
+and disassembling<br>
+</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Disassembler
+(<a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>)
+is the main part of the OllyDbg, and one of the most complex.
+Disassembler not only converts binary code to the human-readable
+mnemonics, it also highlights and comments command and arguments,
+creates structured hexadecimal dump, determines types of operands and
+calculates their values, and even predicts results of some frequently
+used integer commands.<br>
+<br>
+Of course, there is a tradeoff between the amount of information and
+the execution time. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>OllyDbg
+disasssembler is relatively fast, it takes&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>0.2
+.. 0.3 microseconds on a 3-GHz Athlon to determine command length and
+extract the&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>basic
+information. If you request
+mnemonics, dump and comments, it may take more than 1 microsecond to
+produce results. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>There
+is a special stripped-down version, <a href="Cmdinfo.htm"><span style="font-weight: bold;">Cmdinfo()</span></a>,
+that is even faster - typically&nbsp;0.15 microseconds or less.<br>
+<br>
+Two routines, <a style="font-weight: bold;" href="Disassembleforward.htm">Disassembleforward()</a>
+and <a href="Disassembleback.htm"><span style="font-weight: bold;">Disassembleback()</span></a>
+allow you to walk executable code forward abd back by a specified
+number of commands. Whereas the first is rather straightforward,
+walking code back requires either preliminary code analysis or a lot of
+heuristics. Therefore&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="Disassembleback.htm"><span style="font-weight: bold;">Disassembleback()</span></a></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+may sporadically produce false results.<br>
+<br>
+Assembler shares code table with <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>.
+This means that any disassemled command can be assembled back (maybe to
+the different binary code, see below).&nbsp;<a href="Assembleallforms.htm"><span style="font-weight: bold;">Assembleallforms()</span></a>
+supports two code generation styles: precise (command can be executed)
+and imprecise (used by search routines). Many 80x86 operations have
+more than one possible binary encoding. For example, <span style="color: rgb(51, 51, 255);">MOV EAX,[DWORD EBX]</span>
+has <span style="font-weight: bold; font-style: italic;">sixteen</span>
+different forms:<br>
+<br>
+</small></span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B03</span>&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp;&nbsp; - the simplest
+form</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B43 00</span>
+&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp; - form without SIB with
+1-byte zero
+displacement</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B83 00000000</span>
+&nbsp;
+- form without SIB with 4-byte displacement<br>
+&nbsp;&nbsp; <span style="font-weight: bold;">8B0423</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; -
+form with SIB byte without scaled index<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B0463</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+- same<br style="font-family: monospace;">
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B04A3</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+- same<br style="font-family: monospace;">
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B04E3</span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+- same<br style="font-family: monospace;">
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B4423
+00</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; - </span><span style="font-family: monospace;">SIB byte, 1-byte
+displacement, no index</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B4463
+00</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; -
+same</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B44A3
+00</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; -
+same<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B44E3
+00</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; -
+same<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B8423
+00000000</span> - SIB byte, 4-byte displacement, no index<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B8463
+00000000</span> - same<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B84A3
+00000000</span> - same<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B84E3
+00000000</span> - same<br>
+</span><span style="font-family: monospace;">&nbsp;&nbsp;
+<span style="font-weight: bold;">8B041D
+00000000</span> - SIB byte, 4-byte displacement, scale 1, no base</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Assembler allows you to create all these encodings. In the imprecise
+mode, you even can specify&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="color: rgb(51, 51, 255);">MOV ANY,ANY</span>,
+and Assembler will return&nbsp;the list of models that match <span style="font-style: italic;">any</span> possible <span style="color: rgb(51, 51, 255);">MOV</span> command.
+If all you need is the working command, <a href="Assemble.htm"><span style="font-weight: bold;">Assemble()</span></a>
+will automatically select the shortest form.<br>
+<br>
+<a href="Ndisasm.htm"><span style="font-weight: bold;">Ndisasm()</span></a>
+is a disassembler for the Common Intermediate Language (.NET) commands.
+It is as yet very rudimentary.<br>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Imprecise
+commands</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+When searching for command or sequence of commands, you can specify
+imprecise Assembler patterns that match many different instructions.
+For example, <span style="color: rgb(51, 51, 255);">MOV
+EAX,ANY</span> will match <span style="color: rgb(51, 51, 255);">MOV EAX,ECX</span>; <span style="color: rgb(51, 51, 255);">MOV EAX,12345</span>;
+<span style="color: rgb(51, 51, 255);">MOV EAX,[FS:0]</span>
+and many other commands.<br>
+<br>
+Imprecise patterns use following keywords:<br>
+<br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 140px; font-weight: bold;"><small>Keyword</small></td>
+<td style="width: 400px; font-weight: bold;"><small>Matches</small></td>
+</tr>
+<tr>
+<td><small>R8</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+8-bit register (AL,BL, CL, DL, AH,
+BH, CH, DH)</small></span></td>
+</tr>
+<tr>
+<td><small>R16</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+16-bit register (AX, BX, CX, DX,
+SP, BP, SI, DI)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+R32</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+32-bit register (EAX, EBX, ECX,
+EDX, ESP, EBP, ESI, EDI)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>SEG</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+segment register (ES, CS, SS, DS,
+FS, GS)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+FPUREG</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+FPU register (ST0..ST7)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>MMXREG</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+MMX register (MM0..MM7)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>SSEREG</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+SSE register (XMM0..XMM7)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+CRREG</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+control register (CR0..CR7)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+DRREG</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+debug register (DR0..DR7)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+CONST</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+constant</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+ANY</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+register, constant or memory
+operand</small></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+You can freely combine these keywords in memory addresses, like in the
+following examples:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 140px; font-weight: bold;"><small>Memory
+address</small></td>
+<td style="width: 400px; font-weight: bold;"><small>Matches</small></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+[CONST]</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+fixed memory location, like
+[400000]</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+[R32]</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Memory
+locations with address
+residing in register, like [ESI]</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+[R32+1000]</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Sum
+of any 32-bit register and
+constant 1000, like [EBP+1000]</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+[R32+CONST]</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Sum
+of any 32-bit register
+and any offset, like [EAX-4] or [EBP+8]</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+[ANY]</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+memory operand, like [ESI] or
+[FS:EAX*8+ESI+1234]</small></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+If you are searching for the sequence of commands, it's important to
+emphasize the interaction of the commands in a sequence. Suppose that
+you are looking for all comparisons of two memory operands. 80x86 has
+no such instruction (except <span style="color: rgb(51, 51, 255);">CMPS</span>,
+but it's slow and requires lengthy
+preparations). Therefore compiler will generate the following code:<br>
+<br>
+<span style="color: rgb(51, 51, 255);">&nbsp; MOV
+EAX,[location 1]</span><br style="color: rgb(51, 51, 255);">
+<span style="color: rgb(51, 51, 255);">&nbsp; CMP
+EAX,[location 2]</span><br style="color: rgb(51, 51, 255);">
+<br>
+However, it is possible that compiler will choose ECX instead of EAX,
+or any other register. To take into account all such cases, OllyDbg has
+special depending registers:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 140px; font-weight: bold;"><small>Register</small></td>
+<td style="font-weight: bold;"><small>Meaning</small></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+RA, RB</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>All
+instances of 32-bit register
+RA in the command or sequence must reference the same register; the
+same for RB; but RA and RB must be different</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+R8A, R8B</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Same
+as above, but R8A and R8B
+are 8-bit registers</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+R16A, R16B</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Same
+as above, but R16A and
+R16B are 16-bit registers</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+R32A, R32B</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Same
+as RA, RB</small></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+For example, search for <span style="color: rgb(51, 51, 255);">XOR
+RA,RA</span> will find all commands that use <span style="color: rgb(51, 51, 255);">XOR</span>
+to zero 32-bit register, whereas <span style="color: rgb(51, 51, 255);">XOR RA,RB</span> will
+exclude such cases.
+By the way, correct sequence for the mentioned example is<br>
+<br>
+<span style="color: rgb(51, 51, 255);">&nbsp; MOV
+RA,[CONST]</span><br style="color: rgb(51, 51, 255);">
+<span style="color: rgb(51, 51, 255);">&nbsp; CMP
+RA,[CONST]</span><br style="color: rgb(51, 51, 255);">
+<br>
+There are also several imprecise commands:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 140px; font-weight: bold;"><small>Command</small></td>
+<td style="width: 400px; font-weight: bold;"><small>Matches</small></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>JCC</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+conditional jump (JB, JNE, JAE...)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>SETCC</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+conditional set byte command
+(SETB, SETNE...)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+CMOVCC</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+conditional move command
+(CMOVB, CMOVNE...)</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+FCMOVCC</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Any
+conditional floating-point
+move (FCMOVB, FCMOVE...) </small></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+Examples:<br>
+<br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 170px; font-weight: bold;"><small>Pattern</small></td>
+<td style="width: 370px; font-weight: bold;"><small>Found
+commands</small></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+MOV R32,ANY</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>MOV
+EBX,EAX<br>
+MOV EAX,ECX<br>
+MOV EAX,[DWORD 4591DB]<br>
+MOV EDX,[DWORD EBP+8]<br>
+MOV EDX,[DWORD EAX*4+EDX]<br>
+MOV EAX,004011BC</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+ADD R8,CONST</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>ADD
+AL,30<br>
+ADD CL,0E0<br>
+ADD DL,7</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+XOR ANY,ANY</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>XOR
+EAX,EAX<br>
+XOR AX,SI<br>
+XOR AL,01<br>
+XOR ESI,00000088<br>
+XOR [DWORD EBX+4],00000002<br>
+XOR ECX,[DWORD EBP-12C]</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+MOV EAX,[ESI+CONST]</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>MOV
+EAX,[DWORD
+ESI+0A0]<br>
+MOV EAX,[DWORD ESI+18]<br>
+MOV EAX,[DWORD ESI-30]</small></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+Note that in the last line [DWORD ESI-30] is equivalent to [DWORD
+ESI+0FFFFFFD0].<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">API
+functions:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small><br>
+ulong <a href="Disasm.htm">Disasm</a>(uchar
+*cmd,ulong cmdsize,ulong cmdip,uchar *cmddec,t_disasm *cmdda,int
+cmdmode,t_reg *cmdreg,t_predict *cmdpredict);<br>
+ulong <a href="Cmdinfo.htm">Cmdinfo</a>(uchar
+*cmd,ulong cmdsize,ulong cmdip,t_cmdinfo *ci,int cmdmode,t_reg *cmdreg);<br>
+ulong <a href="Disassembleforward.htm">Disassembleforward</a>(uchar
+*copy,ulong base,ulong size,ulong ip,ulong n,uchar *decode);<br>
+ulong <a href="Disassembleback.htm">Disassembleback</a>(uchar
+*copy,ulong base,ulong size,ulong ip,ulong n,uchar *decode);<br>
+int <a href="Checkcondition.htm">Checkcondition</a>(int
+code,ulong flags);<br>
+ulong <a href="Setcondition.htm">Setcondition</a>(int
+code,ulong flags);<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int&nbsp;<a href="Byteregtodwordreg.htm">Byteregtodwordreg</a>(int
+bytereg);<br>
+</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>int
+<a href="Assembleallforms.htm">Assembleallforms</a>(wchar
+*src,ulong ip,t_asmmod *model,int maxmodel,int mode,wchar *errtxt);<br>
+ulong <a href="Assemble.htm">Assemble</a>(wchar
+*src,ulong ip,uchar *buf,ulong nbuf,int mode,wchar *errtxt);<br>
+<br>
+ulong <a href="Ndisasm.htm">Ndisasm</a>(uchar
+*cmd,ulong size,ulong ip,t_netasm *da,int mode,t_module *pmod);<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small><a href="Dumpforward.htm">Dumpforward()</a>, <a href="Dumpback.htm">Dumpback()</a></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+</body></html>

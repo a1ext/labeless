@@ -1,0 +1,501 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Variables</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Variables
+exported by OllyDbg<br>
+</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>OllyDbg
+exports several variables and structures described below. Plugins are
+not allowed to modify these variables or structures directly.<br>
+<br>
+</small><span style="font-weight: bold;">Disassembler</span></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 100px; font-weight: bold;"><small>Name</small></td>
+<td style="width: 210px; font-weight: bold;"><small>Declaration</small></td>
+<td style="font-weight: bold;"><small>Description</small></td>
+</tr>
+<tr>
+<td><small>regname</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+* regname[3][NREG]</small></span></td>
+<td><small>Names of general purpose registers.
+regname[0] contains names of 8-bit registers (AL, CL, DL...),
+regname[1] - names of 16-bit registers (AX, CX, DX...) and regname[2] -
+32-bit (EAX, ECX, EDX...)</small></td>
+</tr>
+<tr>
+<td><small>segname</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+*
+segname[NREG]</small></span></td>
+<td><small>Names of segment registers (ES, CS,
+SS...). Note that 80x86 architecture defines only registers 0..5</small></td>
+</tr>
+<tr>
+<td><small>fpuname</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+* fpuname[2][NREG]</small></span></td>
+<td><small>Names of the floating point
+registers in the FPU stack. fpuname[0] contains names in the indexed
+format (ST(0), ST(1), ST(2)...) and fpuname[1] - direct enumeration
+(ST0, ST1, ST2...)</small></td>
+</tr>
+<tr>
+<td><small>mmxname</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+*
+mmxname[NREG]</small></span></td>
+<td><small>Names of the MMX / 3DNow! registers
+(MM0, MM1, MM2...)</small></td>
+</tr>
+<tr>
+<td><small>ssename</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+*
+ssename[NREG]</small></span></td>
+<td><small>Names of the SSE registers (XMM0,
+XMM1, XMM2...)</small></td>
+</tr>
+<tr>
+<td><small>crname</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+* crname[NREG]</small></span></td>
+<td><small>Names of the control registers (CR0,
+CR1, CR2...)</small></td>
+</tr>
+<tr>
+<td><small>drname</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+* drname[NREG]</small></span></td>
+<td><small>Names of the debug registers (DR0,
+DR1, DR2...). Note that 80x86 architecture defines only registers 0, 1,
+2, 3, 6 and 7</small></td>
+</tr>
+<tr>
+<td><small>sizename</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+*
+sizename[17]</small></span></td>
+<td><small>Data size keywords, where array
+index is intrepreted as a data size. Thus, sizename[1] points to the
+string "BYTE", sizename[2] - "WORD", sizename[10] - "TBYTE" etc.</small></td>
+</tr>
+<tr>
+<td><small>sizekey</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+*
+sizekey[17]</small></span></td>
+<td><small>Data size directives in Intel
+format,&nbsp;</small><small>where
+array index is intrepreted as a data size.&nbsp;sizekey[1] points
+to the string "DB", sizekey[2] - "DW",
+sizekey[16] - "DDQ" etc.</small></td>
+</tr>
+<tr>
+<td><small>sizeatt</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+*
+sizeatt[17]</small></span></td>
+<td><small>Data size directives in AT&amp;T
+format,&nbsp;</small><small>where array index is
+intrepreted as a data size.&nbsp;sizeatt[1] points to the string
+".BYTE", sizeatt[2] - ".WORD",
+sizeatt[16] - ".DQUAD" etc.</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">OllyDbg settings</span></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 100px; font-weight: bold;"><small>Name</small></td>
+<td style="width: 210px; font-weight: bold;"><small>Declaration</small></td>
+<td style="font-weight: bold;"><small>Description</small></td>
+</tr>
+<tr>
+<td><small>ollyfile</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+ollyfile[MAXPATH]</small></span></td>
+<td><small>Path to the OllyDbg executable file
+on
+the disk</small></td>
+</tr>
+<tr>
+<td><small>ollydir</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+ollydir[MAXPATH]</small></span></td>
+<td><small>Directory that contains running copy
+of </small><small>OllyDbg executable </small><small>on
+the disk, without backslash on the end</small></td>
+</tr>
+<tr>
+<td><small>systemdir</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+systemdir[MAXPATH]</small></span></td>
+<td><small>System directory as returned by <span style="font-weight: bold;">GetSystemDirectory()</span></small><small>,
+without backslash on the end</small></td>
+</tr>
+<tr>
+<td><small>plugindir</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+plugindir[MAXPATH]</small></span></td>
+<td><small>Plugin directory</small><small>,
+without backslash on the end</small></td>
+</tr>
+<tr>
+<td><small>hollyinst</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>HINSTANCE
+hollyinst</small></span></td>
+<td><small>Current OllyDbg instance</small></td>
+</tr>
+<tr>
+<td><small>hwollymain</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>HWND
+hwollymain</small></span></td>
+<td><small>Handle of the main OllyDbg window</small></td>
+</tr>
+<tr>
+<td><small>hwclient</small></td>
+<td><small>HWND hwclient</small></td>
+<td><small>If OllyDbg is running in the MDI
+mode, this is the handle of the MDI client window. If standard OllyDbg
+tables are standalone windows, contains NULL</small></td>
+</tr>
+<tr>
+<td><small>otable</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+ottable[SHORTNAME]</small></span></td>
+<td><small>Class of table windows. To
+facilitate parallel operation of several OllyDbg instances, this class
+depends on the name of the executable file</small></td>
+</tr>
+<tr>
+<td><small>cpufeatures</small></td>
+<td><small>ulong cpufeatures</small></td>
+<td><small>CPU feature information, contents of
+register EDX after <span style="color: rgb(51, 51, 255);">CPUID</span>
+is executed with EAX=1. Please refer to the CPU documentation for
+details. If <span style="color: rgb(51, 51, 255);">CPUID</span>
+is not supported, cpufeatures is 0</small></td>
+</tr>
+<tr>
+<td><small>ischild</small></td>
+<td><small>int ischild</small></td>
+<td><small>1 if this copy of OllyDbg was
+started by the master OllyDbg to debug child processstarted by the
+debugged application and 0 otherwise</small></td>
+</tr>
+<tr>
+<td><small>asciicodepage</small></td>
+<td><small>int asciicodepage</small></td>
+<td><small>Code page used to display ASCII
+dumps. Default code page&nbsp;</small><small>on English
+versions of Windows</small><small> is </small><small>1252
+(ANSI Latin I). C</small><small>an be changed in Appearance
+options</small></td>
+</tr>
+<tr>
+<td><small>restorewinpos</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>int
+restorewinpos</small></span></td>
+<td><small>Flag indicating whether position and
+appearance of the OllyDbg windows must be automatically restored</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">Description of
+the&nbsp;debugged application</span></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 100px; font-weight: bold;"><small>Name</small></td>
+<td style="width: 210px; font-weight: bold;"><small>Declaration</small></td>
+<td style="font-weight: bold;"><small>Description</small></td>
+</tr>
+<tr>
+<td><small>executable</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+executable[MAXPATH]</small></span></td>
+<td><small>Path to the main file of the
+debugged application (usually with extension <span style="font-style: italic;">.exe</span>) on the disk.
+If OllyDbg debugs DLL, this is the path to the DLL (not to the <span style="font-style: italic;">loaddll.exe</span>!)</small></td>
+</tr>
+<tr>
+<td><small>arguments</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>wchar_t
+arguments[ARGLEN]</small></span></td>
+<td><small>Command line passed to the debugged
+application. Attention, may be rather long!</small></td>
+</tr>
+<tr>
+<td><small>netdbg</small></td>
+<td><small>int netdbg</small></td>
+<td><small>Flag indicating that .NET debugging
+is active. Currently this option is disabled and netdbg is always 0</small></td>
+</tr>
+<tr>
+<td><small>rundll</small></td>
+<td><small>int rundll</small></td>
+<td><small>OllyDbg was asked to debug a
+stand-alone DLL. Main module is the <span style="font-style: italic;">loaddll.exe</span> that
+was automatically launched by the debugger</small></td>
+</tr>
+<tr>
+<td><small>process</small></td>
+<td><small>HANDLE process</small></td>
+<td><small>Handle of the debugged application
+or NULL</small></td>
+</tr>
+<tr>
+<td><small>processid</small></td>
+<td><small>ulong processid</small></td>
+<td><small>Unique process identifier of the
+debugged application or 0 if there is no process to debug</small></td>
+</tr>
+<tr>
+<td><small>mainthreadid</small></td>
+<td><small>ulong mainthreadid</small></td>
+<td><small>Thread identifier of the main thread
+of the debugged application, or 0 if there is no process to debug</small></td>
+</tr>
+<tr>
+<td><small>run</small></td>
+<td><small><a href="t_run.htm">t_run</a>
+run</small></td>
+<td><small>Running status of the debugged
+application</small></td>
+</tr>
+<tr>
+<td><small>skipsystembp</small></td>
+<td><small>int skipsystembp</small></td>
+<td><small>1 if debugged application is
+starting and first system breakpoint was not yet hit, and 0 otherwise</small></td>
+</tr>
+<tr>
+<td><small>debugbreak</small></td>
+<td><small>ulong debugbreak</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">DebugBreak()</span>
+in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><small>dbgbreakpoint</small></td>
+<td><small>ulong dbgbreakpoint</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">DbgBreakPoint()</span>
+in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>kiuserexcept</small></span></td>
+<td><small>ulong&nbsp;</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>kiuserexcept</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">KiUserExceptionDispatcher()</span>
+in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><small>zwcontinue</small></td>
+<td><small>ulong zwcontinue</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">ZwContinue()</span>
+in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><small>uefilter</small></td>
+<td><small>ulong uefilter</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">UnhandledExceptionFilter()</span>
+in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>ntqueryinfo</small></span></td>
+<td><small>ulong&nbsp;</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>ntqueryinfo</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">NtQueryInformationProcess()</span>
+in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><small>corexemain</small></td>
+<td><small>ulong corexemain</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of <span style="font-weight: bold;">MSCOREE:_CorExeMain()</span>
+in the address space of the debugged application, defined only for .NET
+applications</small></span></td>
+</tr>
+<tr>
+<td><small>peblock</small></td>
+<td><small>ulong peblock</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of PE block in the address space of the debugged application</small></span></td>
+</tr>
+<tr>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>kusershareddata</small></span></td>
+<td><small>ulong&nbsp;</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>kusershareddata</small></span></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Address
+of&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>KUSER_SHARED_DATA</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+in the address space of the
+debugged application</small></span></td>
+</tr>
+<tr>
+<td><small>userspacelimit</small></td>
+<td><small>ulong userspacelimit</small></td>
+<td><small>Size of the virtual memory available
+to the debugged application, usually 0x80000000. May be
+extended&nbsp;to 0xC0000000
+on&nbsp;IMAGE_FILE_LARGE_ADDRESS_AWARE systems. Memory
+above&nbsp;this limit belongs to OS and can't be modified. However,
+on Windows XP OllyDbg is able to read system memory and even trace the
+code. (Some antivirus programs put code into the system memory and call
+it directly from the application in Ring 3 mode)</small></td>
+</tr>
+<tr>
+<td><small>rtcond</small></td>
+<td><small><a href="t_rtcond.htm">t_rtcond</a>
+rtcond</small></td>
+<td><small>Run trace break condition</small></td>
+</tr>
+<tr>
+<td><small>rtprot</small></td>
+<td><small><a href="t_rtprot.htm">t_rtprot</a>
+rtprot</small></td>
+<td><small>Run trace protocolling condition</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">OllyDbg data tables</span></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 140px; font-weight: bold;"><small>Declaration</small></td>
+<td style="width: 100px; font-weight: bold;"><small>Item
+type</small></td>
+<td style="font-weight: bold;"><small>Description</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+module</small></td>
+<td><a href="t_module.htm"><small>t_module</small></a></td>
+<td><small>List of modules loaded into the
+memory space of the debugged applicationI</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+memory</small></td>
+<td><a href="t_memory.htm"><small>t_memory</small></a></td>
+<td><small>List of memory blocks allocated in
+the memory space of the debugged application</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+thread</small></td>
+<td><a href="t_thread.htm"><small>t_thread</small></a></td>
+<td><small>List of threads of the debugged
+application</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+win</small></td>
+<td><a href="t_window.htm"><small>t_window</small></a></td>
+<td><small>List of windows created by the
+debugged application</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+source</small></td>
+<td><a href="t_source.htm"><small>t_source</small></a></td>
+<td><small>List of source files</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+bpoint</small></td>
+<td><a href="t_bpoint.htm"><small>t_bpoint</small></a></td>
+<td><small>List of INT3 breakpoints set by
+OllyDbg in the debugged application</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+bpmem</small></td>
+<td><a href="t_bpmem.htm"><small>t_bpmem</small></a></td>
+<td><small>List of memory breakpoints set by
+OllyDbg in the debugged application</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+bphard</small></td>
+<td><a href="t_bphard.htm"><small>t_bphard</small></a></td>
+<td><small>List of hardware breakpoints set by
+OllyDbg in the debugged application</small></td>
+</tr>
+<tr>
+<td><small><a href="t_table.htm">t_table</a>
+watch</small></td>
+<td><a href="t_watch.htm"><small>t_watch</small></a></td>
+<td><small>List of watches</small></td>
+</tr>
+<tr>
+<td><small><a href="t_sorted.htm">t_sorted</a>
+procdata</small></td>
+<td><a href="t_procdata.htm"><small>t_procdata</small></a></td>
+<td><small>List of analysed procedures</small></td>
+</tr>
+<tr>
+<td><small><a href="t_sorted.htm">t_sorted</a>
+premod</small></td>
+<td><a href="t_premod.htm"><small>t_premod</small></a></td>
+<td><small>List of modules that are reported by
+the OS but are not yet loaded into the memory</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+</small></span><br>
+</body></html>

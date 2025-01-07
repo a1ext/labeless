@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Fastexpression</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Fastexpression</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Fastexpression(t_result *result,ulong addr,int type,ulong threadid);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Allows for fast estimation of the value of expression&nbsp;saved as a text string of given <span style="font-weight: bold;">type</span> at address <span style="font-weight: bold;">addr</span>.
+During the first call, it compiles expression and concatenates produced
+code to the string. Any modification of the string, like call to <a href="InsertnameW.htm"><span style="font-weight: bold;">InsertnameW()</span></a>, discards precompiled data, forcing recompilation during the next call to <span style="font-weight: bold;">Fastexpression()</span>.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">result</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Structure of type <a href="t_result.htm"><span style="font-weight: bold;">t_result</span></a>
+that receives results of the evaluation</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address of the text string</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Type of the text string, one of the </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">constants </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="NM_xxx.htm"><span style="font-weight: bold;">NM_xxx</span></a> or defined by plugin</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Identifier of the thread containing CPU registers used in the
+evaluation of the text string.
+If expression
+specifies register and <span style="font-weight: bold;">threadid</span>
+is 0,&nbsp;<span style="font-weight: bold;">Fastexpression()</span>
+will fail</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>0 on success (text is compiled without errors and <span style="font-weight: bold;">result</span> is valid, even if it is flagged as <span style="font-weight: bold;">EXPR_INVALID</span>) and -1 on any error.<span style="font-weight: bold;"></span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Data.htm">Data functions</a>, <a href="i_Expressions.htm">expressions</a>, <a href="t_result.htm">t_result</a>,&nbsp;<a href="t_watch.htm"></a><a href="Cexpression.htm">Cexpression()</a>, <a href="Eexpression.htm">Eexpression()</a>, <a href="Exprcount.htm">Exprcount()</a>, <a href="Expression.htm">Expression()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

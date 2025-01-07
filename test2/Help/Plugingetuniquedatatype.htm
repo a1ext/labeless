@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Plugingetuniquedatatype</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Plugingetuniquedatatype</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+Plugingetuniquedatatype(void);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>OllyDbg keeps small pieces of the data of variable size in the central depository called <a href="i_Data.htm"><span style="font-weight: bold;">data table</span></a>. Each kind of data has its own tag, or data type. For example, labels added by the Analyser are saved as <span style="font-weight: bold;">NM_ANALYSE</span> and switch cases - as records of type <span style="font-weight: bold;">DT_CASE</span>.
+Data types are scarce resource. As data table may contain tens of
+millions of records, type is kept in a 1-byte field. Of these, only 126
+may be used by plugins. They are distributed dynamically, according to
+the "first asked - first served" rule.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>During the initialization, </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>plugins should call <span style="font-weight: bold;">Plugingetuniquedatatype()</span> as many times as necessary (best of all, inside <a href="ODBG2_Plugininit.htm"><span style="font-weight: bold;">ODBG2_Plugininit()</span></a>). Received data types are valid for the whole session. Again: <span style="font-weight: bold; font-style: italic;">data types are very scarce resource! Always check whether&nbsp;there is some alternative way to keep your data!</span><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">None</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On
+success, returns data type that can be used by plugin in the calls to
+data function all the time till OllyDbg is closed. If all available
+data types are already distributed, returns <span style="font-weight: bold;">DT_NONE</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Data.htm">Data functions</a>, <a href="i_Plugins.htm">plugins</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

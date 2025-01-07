@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Addjump</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Addjump</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Addjump(t_jmpdata *pdat,ulong from,ulong dest,int type);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Adds
+jump or call to the jump table. Each module has its own jump table that
+keeps the list of all recognized jumps and calls. Initially this table
+is filled by the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>. If plugin is able to detect additional branches, it may add them to the jump table, best of all while processing <a href="ODBG2_Pluginanalyse.htm"><span style="font-weight: bold;">ODBG2_Pluginanalyse()</span></a>.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Note that <span style="font-weight: bold;">dest</span> may be 0, this means undefined jump/call destination (like in JMP&nbsp;EAX).<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Usually
+many jumps or calls are added at once. To spare time,&nbsp;items are
+added to the end of the jump table and table is marked as unsorted.
+Functions that request jump data call </small></span><a href="Sortjumpdata.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Sortjumpdata()</span></small></a><span style="font-family: Helvetica,Arial,sans-serif;"><small>&nbsp;automatically. If table is long, this may take significant time, especially if queries for existing data and calls to <span style="font-weight: bold;">Addjump()</span> are interleaved.&nbsp;To reduce time spent on sorting, one may combine&nbsp;<span style="font-weight: bold;">type</span> with <span style="font-weight: bold;">JT_NOSORT</span>. Such jumps are excluded from the search either till the explicit call to <a href="Sortjumpdata.htm"><span style="font-weight: bold;">Sortjumpdata()</span></a> or till element without <span style="font-weight: bold;">JT_NOSORT</span> is added.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pdat</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, pointer to the descriptor of the jump table (structure of
+type t_jmpdata). It resides in the module descriptor. See t_module for
+details</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">from</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, address of the jump origin (first byte of the jump or call command) in the memory of the debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dest</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, address of the jump or call destination. If destination is
+unknown or variable (as in JMP EAX), set dest to 0. If command has
+multiple fixed destinations, like table jump, add each destination
+separately</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, type of jump or call, may be set to one of the following constants:<br><span style="font-weight: bold;">JT_JUMP</span> - unconditional jump (like JMP 0x00401234)<br><span style="font-weight: bold;">JT_COND</span> - conditional jump (like JNZ 0x00401234)<br><span style="font-weight: bold;">JT_SWITCH</span> - jump via switch table<br><span style="font-weight: bold;">JT_RET</span> - return&nbsp;misused as jump (PUSH 0x00401234; RETN)<br><span style="font-weight: bold;">JT_CALL</span> - call<br><span style="font-weight: bold;">JT_SWCALL</span> - call via switch table<br><span style="font-weight: bold;">JT_NETJUMP</span> - unconditional jump in CIL code<br><span style="font-weight: bold;">JT_NETCOND</span> - conditional jump in CIL code<br><span style="font-weight: bold;">JT_NETSW</span> - switch jump in CIL code<br>Additionally, type may be combined with the flag JT_NOSORT. See explanation above</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Returns 0 on success and -1 on&nbsp;error (new data is not added to the jump table).</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Addunconditionaljump(ulong from, ulong to) {<br>&nbsp; t_jmpdata *pdat;<br>&nbsp; t_module *pmod;<br>&nbsp; pmod=Findmodule(from);<br>&nbsp; if (pmod==NULL) return -1;<br>&nbsp; pdat=pmod-&gt;jumps;<br>&nbsp; return Addjump(pdat,from,to,JT_JUMP);<br>}</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analysis</a>, <a href="t_jmp.htm">t_jmp</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_jmpcall.htm">t_jmpcall</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_jmpdata.htm">t_jmpdata</a>, <a href="t_module.htm">t_module</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Arelocaljumpscallstorange.htm">Arelocaljumpscallstorange()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Findglobalcallsto.htm">Findglobalcallsto()</a>, <a href="Findglobaljumpscallsto.htm">Findglobaljumpscallsto()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Findjumpfrom.htm">Findjumpfrom()</a>, <a href="Findlocaljumpscallsto.htm">Findlocaljumpscallsto()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Findlocaljumpsto.htm">Findlocaljumpsto()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><a href="Sortjumpdata.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Sortjumpdata()</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Findthread</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Comparesequence</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">stdapi
+(ulong) Comparesequence(uchar *cmd,ulong cmdsize,ulong cmdip,uchar
+*decode,t_asmmod *model,int nmodel,int mode,int *pa,int *pb,t_disasm
+*da,ulong *amatch,int namatch);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Takes a sequence of 80x86 binary commands <span style="font-weight: bold;">cmd</span> that starts at memory address <span style="font-weight: bold;">cmdip</span> and compares it to the supplied sequence of models <span style="font-weight: bold;">model</span>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If <span style="font-weight: bold;">mode</span> flag <span style="font-weight: bold;">CSEQ_IGNORECMD</span> is set, allows for intermediate commands that have no influence on the result. For example: one searches for<br><br><span style="color: rgb(51, 51, 255);">&nbsp; MOV RA,ANY</span><br style="color: rgb(51, 51, 255);"><span style="color: rgb(51, 51, 255);">&nbsp; ADD RA,CONST</span><br style="color: rgb(51, 51, 255);"><br>and <span style="font-weight: bold;">cmd</span> contains commands<br><br><span style="color: rgb(51, 51, 255);">&nbsp; MOV ESI,[EAX*4+12345]</span><br style="color: rgb(51, 51, 255);"><span style="color: rgb(51, 51, 255);">&nbsp; XOR EDI,EDI</span><br style="color: rgb(51, 51, 255);"><span style="color: rgb(51, 51, 255);">&nbsp; ADD ESI,10</span><br style="color: rgb(51, 51, 255);"></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>This sequence will be matched because intermediate command <span style="color: rgb(51, 51, 255);">XOR EDI,EDI</span> does not change the contents of RA = ESI. It&nbsp;changes flags, but <span style="color: rgb(51, 51, 255);">MOV</span> does not set them, so it's safe to ignore <span style="color: rgb(51, 51, 255);">XOR</span>.<br><br>To create <span style="font-weight: bold;">model</span>, for each command in the search pattern call <a href="Assembleallforms.htm"><span style="font-weight: bold;">Assembleallforms()</span></a>, concatenating output in one large buffer. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> <a href="Assembleallforms.htm"><span style="font-weight: bold;">Assembleallforms()</span></a> marks first created model with flag </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">AMF_NEWCMD</span> in the <span style="font-weight: bold;">features</span> and <span style="font-weight: bold;">Comparesequence()</span> looks for this flag to determine the borders between the commands.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If commands and model match, function updates optional indices of semi-defined registers <span style="font-weight: bold;">pa</span> and&nbsp;<span style="font-weight: bold;">pb</span>, fills optional array of addresses of matching commands <span style="font-weight: bold;">amatch</span>[<span style="font-weight: bold;">namatch</span>] and returns real length of the sequence in bytes, including intermediate non-influencing commands. Unused&nbsp;elements in <span style="font-weight: bold;">amatch</span> are zeroed. In the exampe above, if <span style="font-weight: bold;">namatch</span> is 4, <span style="font-weight: bold;">amatch</span>[0] will receive address of <span style="color: rgb(51, 51, 255);">MOV</span>, <span style="font-weight: bold;">amatch</span>[1] - address of <span style="color: rgb(51, 51, 255);">ADD</span> while&nbsp;<span style="font-weight: bold;">amatch</span>[2] and <span style="font-weight: bold;">amatch</span>[3] will be set to 0. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If there is no match or some error is detected, returns 0. In this case the contents of <span style="font-weight: bold;">amatch</span> may be spoiled.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Optional parameter <span style="font-weight: bold;">da</span> is used as a cache when <span style="font-weight: bold;">Comparesequence()</span> is called on the same <span style="font-weight: bold;">cmdip</span> with different models and keeps disassembly of the first command in <span style="font-weight: bold;">cmd</span>. When used, set <span style="font-weight: bold;">da-&gt;ip</span> to&nbsp;value that differs from <span style="font-weight: bold;">cmdip</span> before making the&nbsp;first call.</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Buffer of length <span style="font-weight: bold;">cmdsize</span> that contains binary code to compare with the <span style="font-weight: bold;">model</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdsize</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length of valid data in <span style="font-weight: bold;">cmd</span>, bytes</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Address of the&nbsp;<span style="font-weight: bold;">cmd</span> in the memory</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">decode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Optional </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">pointer to decoding information produced by </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">the <a href="i_Analysis.htm"><span style="font-weight: bold;">Analyser</span></a>, or NULL if decoding is missing or unavailable. If present, decoding data must start at&nbsp;<span style="font-weight: bold;">cmdip</span> and its length must be at least <span style="font-weight: bold;">cmdsize</span> bytes. To locate decoding data, use <a href="Finddecode.htm"><span style="font-weight: bold;">Finddecode()</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">model</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the array of <span style="font-weight: bold;">nmodel</span> structures of type <a href="t_asmmod.htm"><span style="font-weight: bold;">t_asmmod</span></a> that contain description of the model. To create model, use </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="Assembleallforms.htm"><span style="font-weight: bold;">Assembleallforms()</span></a></small></span><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nmodel</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length of <span style="font-weight: bold;">model</span></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Comparison mode, a combination of zero or more of the following flags:<br><span style="font-weight: bold;">CSEQ_IGNORECMD</span> - ignore non-influencing intermediate commands<br><span style="font-weight: bold;">CSEQ_ALLOWJMP</span>
+- allow jumps from outside. If flag is set, routine assumes that code
+is in the memory of the debugged process. Note that jumps outside the
+sequence are always allowed<br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pa</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Optional pointer to integer variable. If <span style="font-weight: bold;">pa</span>
+is not NULL and pattern is matched, this variable will receive the
+index of the register that is marked as RA in the model (REG_UNDEF if
+RA is not used). See <a href="i_Disasm.htm"><span style="font-weight: bold;">Assembling and disassembling</span></a> for details</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pb</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Optional pointer to integer variable. If <span style="font-weight: bold;">pb</span>
+is not NULL and pattern is matched, this variable will receive the
+index of the register that is marked as RB in the model (REG_UNDEF if
+RB is not used)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">da</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Optional pointer to the disassembly cache buffer, structure of type <a href="t_disasm.htm"><span style="font-weight: bold;">t_disasm</span></a>. If defined, will keep description of the first command in <span style="font-weight: bold;">cmd</span>. If you are going to compare <span style="font-weight: bold;">cmd</span> with several different models, this cache may spare significant amount of time. Set <span style="font-weight: bold;">da-&gt;ip</span> to the value that differs from <span style="font-weight: bold;">cmdip</span> before calling <span style="font-weight: bold;">Comparesequence()</span> with the first model. If <span style="font-weight: bold;">da-&gt;ip</span> and <span style="font-weight: bold;">cmdip</span> are equal, function assumes that <span style="font-weight: bold;">da</span> contains correct information</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">amatch</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Optional array of <span style="font-weight: bold;">namatch</span>
+unsigned long integers. If defined, will receive addresses of the
+matched commands from the model. Intermediate commands are not
+included. Unused entries in amatch are zeroed</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">namatch</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Number of elements in <span style="font-weight: bold;">amatch</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If <span style="font-weight: bold;">cmd</span> and <span style="font-weight: bold;">model</span>
+match, returns&nbsp;length of the command sequence in bytes, including
+intermediate commands. On error or if commands do not match, returns 0</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px; font-weight: bold;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="i_Disasm.htm">Assembling and disassembling</a>,&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="t_disasm.htm">t_disasm</a>,&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="Assembleallforms.htm">Assembleallforms()</a>, </small></span><small><span style="font-family: Helvetica,Arial,sans-serif;"> <a href="Finddecode.htm"><span style="font-weight: bold;">Finddecode()</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

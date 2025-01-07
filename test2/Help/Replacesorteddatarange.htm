@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Replacesorteddatarange</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Replacesorteddatarange</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Replacesorteddatarange(t_sorted *sd,void *data,int n,ulong addr0,ulong addr1);<br><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> Removes all items of </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> <span style="font-weight: bold;">sd</span> in the range <span style="font-weight: bold;">addr0</span>..<span style="font-weight: bold;">addr1</span> (last address is not included) and replaces them with <span style="font-weight: bold;">n</span>
+new data items. New data may be unsorted, but items must not overlap
+and must lie completely within the specified range. This procedure is
+usually much faster than n calls to Addsorteddata(). Does not work with
+autoarrangeable sorted data or with data of type <span style="font-weight: bold;">SDM_NOSIZE</span>.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a style="font-weight: bold;" href="t_sorted.htm">t_sorted</a>, descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted
+data</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to array containing <span style="font-weight: bold;">n</span> new data items. They must&nbsp;</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>not overlap and must lie completely within the&nbsp;range <span style="font-weight: bold;">addr0</span> .. <span style="font-weight: bold;">addr1</span></small></span><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">n</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Number of new items in <span style="font-weight: bold;">data</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr0</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Start address of the range</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr1</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)End address of the range (not included)</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On error, returns -1 and leaves sorted data untouched, except for the case of low memory. On success, returns 0</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><br><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="i_Sorteddata.htm"><span style="font-weight: bold;">Sorted data</span></a>, <a href="Addsorteddata.htm"><span style="font-weight: bold;">Addsorteddata()</span></a>, <a href="Deletesorteddatarange.htm"><span style="font-weight: bold;">Deletesorteddatarange()</span></a></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+</small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

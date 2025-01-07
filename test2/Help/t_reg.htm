@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_reg</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_reg</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Structure that contains working copy of registers of the thread of the debugging application<br><br></small>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_reg
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Excerpt from context<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+status;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Status of registers, set of RV_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+threadid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// ID of thread that owns registers<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ip;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Instruction pointer (EIP)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+r[NREG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+flags;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Flags<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+s[NSEG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Segment registers ES,CS,SS,DS,FS,GS<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+base[NSEG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Segment bases<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+limit[NSEG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Segment limits<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+big[NSEG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Default size (0-16, 1-32 bit)<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dummy[2];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Reserved, used for data alignment<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+top;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Index of top-of-stack<br>&nbsp; long double&nbsp;&nbsp;&nbsp;
+f[NREG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Float registers, f[top] - top of stack<br>&nbsp;
+uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tag[NREG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Float tags (0x3 - empty register)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+fst;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// FPU status word<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+fcw;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// FPU control word<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ferrseg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Selector of last detected FPU error<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+feroffs;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Offset of last detected FPU error<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dr[NREG];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Debug registers<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lasterror;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Last thread error or 0xFFFFFFFF<br>&nbsp; uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ssereg[NREG][16];&nbsp;&nbsp;&nbsp;&nbsp; // SSE registers<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mxcsr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// SSE control and status register<br>&nbsp;
+t_memfield&nbsp;&nbsp;&nbsp;&nbsp;
+mem[NMEMFIELD];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Known memory
+fields from run trace<br>} t_reg;<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">status</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Status of the structure, a combination of zero or more of the following flags:<br><span style="font-weight: bold;">RV_MODIFIED</span> - registers are modified, thread context must be updated before execution continues<br style="font-weight: bold;"><span style="font-weight: bold;">RV_USERMOD</span> - registers are modified by the user<br><span style="font-weight: bold;">RV_SSEVALID</span> - SSE registers (<span style="font-weight: bold;">ssereg</span>, <span style="font-weight: bold;">mxcsr</span>) are valid<br><span style="font-weight: bold;">RV_SSEMOD</span> - SSE registers are modified. <span style="font-weight: bold;">RV_MODIFIED</span> must also be set<br><span style="font-weight: bold;">RV_ERRVALID</span> - <span style="font-weight: bold;">lasterror</span> is valid<br><span style="font-weight: bold;">RV_ERRMOD</span> - lasterror is modified.</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> <span style="font-weight: bold;">RV_MODIFIED</span> must also be set</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_MEMVALID</span> - <span style="font-weight: bold;">mem</span> is valid<br><span style="font-weight: bold;">RV_DBGMOD</span> - debugging registers are modified</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">.</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> <span style="font-weight: bold;">RV_MODIFIED</span> must also be set</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Identifier of the thread that owns registers</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Instruction pointer (EIP)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">r</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">32-bit general purpose registers. EAX is kept in <span style="font-weight: bold;">r</span>[REG_EAX], and so on</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">flags</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">32-bit flags registers. Note that many high-order flags are hidden by Windows</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">s</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">16-bit segment registers. SS is kept in <span style="font-weight: bold;">s</span>[REG_SS} and so on</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Bases
+of the selectors chosen into the corresponding segment registers. In
+the flat Win32 model, ES, CS, SS and DS have base 0 and FS points to
+the Thread Information Block</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">limit</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Bases of the selectors chosen into the corresponding segment registers. In the flat Win32 model,</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> ES, CS, SS and DS allow access to the whole virtual memory</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">big</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Default operand and address sizes associated with&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">selectors
+chosen into the corresponding segment registers (0 - 16 bit, 1 -32
+bits). In the flat Win32 model, all selectors describe 32-bit segments</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dummy</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Reserved, used for alignment</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">top</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of the floating point register that is currently on the top of the FPU stack</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">f</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">80-bit floating point registers. Also keep MMX and 3DNow! registers, in these cases <span style="font-weight: bold;">top</span> is ignored</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tag</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Tags
+associated with the corresponding floating point registers. The only
+really important thing is whether register is marked as empty (tag 0x3)
+or not</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">fst</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">FPU status word. Among other things,&nbsp;lists of floating point exceptions </span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">fcw</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">FPU control word</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ferrseg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Selector
+part of the address of command that caused&nbsp;last unmasked floating
+point exception, ussually the same as the contents of CS.<br>Note that
+floating point unit is physically integrated with the rest of CPU but
+logically is still an independent asynchronous coprocessor. Exceptions
+are usually reported to the OS on the next FWAIT or on the next FPU
+command that uses results of the command that caused exception, and
+there may be hundreds of integer commands inbetween. To locate the real
+address of exception, use <span style="font-weight: bold;">ferrseg</span>:<span style="font-weight: bold;">ferroffs</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ferroffs</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Offset part of the address of command that caused&nbsp;last unmasked floating point
+exception, see discussion above</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Debug registers. Don't modify directly!</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">lasterror</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Last thread error (for example, 0xC0000005 means <span style="font-weight: bold;">ACCESS_VIOLATION</span>), valid only if flag </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_ERRVALID</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">&nbsp;is set. Note that <span style="font-weight: bold;">lasterror</span> has no associated register, its source is located in the Thread Information Block</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ssereg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">128-bit SSE registers, valid only if flag </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_SSEVALID</span> is set</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mxcsr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">SSE control and status register, valid only if </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">flag </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">RV_SSEVALID</span> is set</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mem</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">For internal use</span><br>
+</small></div><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Threads.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Threads</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Createtablewindow</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Createtablewindow</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">HWND Createtablewindow(t_table *pt,int nrow,int ncolumn,HINSTANCE hi,wchar_t *icon,wchar_t *title);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Creates new <a href="i_Tables.htm"><span style="font-weight: bold;">table window</span></a>&nbsp;and all necessary child windows. Initially, table will display <span style="font-weight: bold;">nrow</span> rows and at most <span style="font-weight: bold;">ncolumn</span> data columns, and will use icon defined by the pair (<span style="font-weight: bold;">hi</span>,<span style="font-weight: bold;">icon</span>).<br><br>Table window consists of:<br></small></span><ul><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>parent table window </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">hparent</span> (either standalone or MDI, depending on the global OllyDbg settings)</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>child table window <span style="font-weight: bold;">hw</span> displaying data</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>optional status bar <span style="font-weight: bold;">hstatus</span> at the bottom of the parent window</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>optional tooltip window <span style="font-weight: bold;">htooltip</span>, responsible for displaying tooltips</small></span></li></ul><span style="font-family: Helvetica,Arial,sans-serif;"><small>Additionally, table window may contain several controls created by calls to <a href="Createtablechild.htm"><span style="font-weight: bold;">Createtablechild()</span></a>. OllyDbg doesn't use&nbsp;this feature yet.<br><br>To create embedded tables, use <a href="Createottablewindow.htm"><span style="font-weight: bold;">Createottablewindow()</span></a>.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">pt</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in,out) Pointer to the <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a> descriptor, a structure of type <a href="t_table.htm"><span style="font-weight: bold;">t_table</span></a></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nrow</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Suggested
+number of rows displayed in the table window, or 0 for default value.
+Real number of rows may differ (for example, may be restored from the
+appearance data saved to the initialization file)</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ncolumn</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Suggested number of columns displayed in the table window. If number of columns specified in <span style="font-weight: bold;">pt</span> is larger, remaining columns will lie outside the visible area. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Real number of columns may differ (for example, may be restored from the appearance data saved to the initialization file)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hi</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Instance of the module containing <span style="font-weight: bold;">icon</span>. NULL means main module (<span style="font-style: italic;">ollydbg.exe</span>). Note that the instance of the main module is also available directly as exported variable <span style="font-weight: bold;">hollyinst</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">icon</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Icon assigned to the window. To use predefined OllyDbg icons, set <span style="font-weight: bold;">hi</span> to NULL (or <span style="font-weight: bold;">hollyinst</span>) and <span style="font-weight: bold;">icon</span>
+to one of the following UNICODE strings: ICO_B, ICO_C, ICO_D, ICO_E,
+ICO_H, ICO_L, ICO_M, ICO_N, ICO_P, ICO_R, ICO_S, ICO_T, ICO_W, ICO_QUEST</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">title</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Title of the table window</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On success, returns handle of the parent table window. On error, returns NULL</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Tables.htm">Tables</a>, <a href="t_table.htm">t_table</a>, <a href="Activatetablewindow.htm">Activatetablewindow()</a>, <a href="Createottablewindow.htm">Createottablewindow()</a>, <a href="Createtablechild.htm">Createtablechild()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

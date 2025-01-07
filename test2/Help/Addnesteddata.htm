@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Addnesteddata</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Addnesteddata</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void *Addnesteddata(t_nested *nd,void *item);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Inserts range into the <a style="font-weight: bold;" href="i_Nesteddata.htm">nested data</a> <span style="font-weight: bold;">nd</span>.
+On success (range is correctly added), returns pointer to the item in
+nested data. On error (invalid input parameters, low memory or new
+range partially intersects with&nbsp;existing range) returns NULL.<br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, pointer to the descriptor of nested data (structure of type <a href="t_nested.htm"><span style="font-weight: bold;">t_nested</span></a>)</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">item</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, pointer to the item that will be added to the nested data. Must begin with the structure <a href="t_nesthdr.htm"><span style="font-weight: bold;">t_nesthdr</span></a>. All items in the header&nbsp;must be initialized, aprev must be set to 0</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Pointer to the item in nested data on success and NULL on error. Note that returned pointer is valid only till the next call to <a href="Addnesteddata.htm"><span style="font-weight: bold;">Addnesteddata()</span></a>, <a style="font-weight: bold;" href="Deletenestedrange.htm">Deletenesteddatarange()</a> or any other function that modifies nested data </small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Nesteddata.htm">Nested data</a>, <a href="t_nested.htm">t_nested</a>, <a href="t_nesthdr.htm">t_nesthdr</a>, <a href="Createnesteddata.htm">Createnesteddata()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Deletenestedrange.htm">Deletenestedrange()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Destroynesteddata.htm">Destroynesteddata()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Findnesteddata.htm">Findnesteddata()</a>, </span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Getnestingdepth.htm">Getnestingdepth()</a>, </span></small><a href="Getnestingpattern.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Getnestingpattern()</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, </span></small><a href="Nesteddatatoudd.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Nesteddatatoudd()</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">, </span></small><a href="Uddtonesteddata.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Uddtonesteddata()</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Renumeratesorteddata</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Renumeratesorteddata</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void Renumeratesorteddata(t_sorted *sd);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Renumerates all items in the autoarrangeable <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a>. Does nothing for other types of sorted data.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sd</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the structure of type <a style="font-weight: bold;" href="t_sorted.htm">t_sorted</a>, descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted
+data</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>If one adds or deletes items to the autoarrangeable sorted data, OllyDbg renumerates data items automatically. Calls to <span style="font-weight: bold;">Renumeratesorteddata()</span> are necessary only if data was rearranged directly, like in the following example.<br><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This is the adapted version of the menu function that processes command "Move watch up" and "Move watch down":<br><br></small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">// Menu function that processes commands "Move up" (index=0) and "Move down"<br>// (index=1).<br>static int Mmovewatch(t_table *pt,wchar *name,ulong index,int mode) {<br>&nbsp; if (mode==MENU_VERIFY) {<br>&nbsp;&nbsp;&nbsp; if (pt-&gt;sorted.n&lt;2) return MENU_ABSENT;<br>&nbsp;&nbsp;&nbsp; if (pt-&gt;sorted.selected==watch.sorted.n-1) return MENU_ABSENT;<br>&nbsp;&nbsp;&nbsp; if (pt-&gt;sorted.selected==0 &amp;&amp; index==0) return MENU_ABSENT;<br>&nbsp;&nbsp;&nbsp; if (pt-&gt;sorted.selected==watch.sorted.n-2 &amp;&amp; index==1) return MENU_ABSENT;<br>&nbsp;&nbsp;&nbsp; return MENU_NORMAL; }<br>&nbsp; else if (mode==MENU_EXECUTE) {<br>&nbsp;&nbsp;&nbsp; Swapmem(watch.sorted.data,sizeof(t_watch),pt-&gt;sorted.selected,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (index==0?pt-&gt;sorted.selected-1:pt-&gt;sorted.selected+1));<br>&nbsp;&nbsp;&nbsp; Renumeratesorteddata(&amp;(watch.sorted));<br>&nbsp;&nbsp;&nbsp; if (index==0) pt-&gt;sorted.selected--;<br>&nbsp;&nbsp;&nbsp; else pt-&gt;sorted.selected++;<br>&nbsp;&nbsp;&nbsp; Maketableareavisible(pt,-1,0,pt-&gt;sorted.selected,0,pt-&gt;sorted.selected+1);<br>&nbsp;&nbsp;&nbsp; return MENU_REDRAW; }<br>&nbsp; else return MENU_ABSENT;<br>};<br></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Sorteddata.htm">Sorted data</a>, <a href="Addsorteddata.htm">Addsorteddata()</a>,&nbsp;<a href="Deletesorteddata.htm">Deletesorteddata()</a></span></small><br>
+</div>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

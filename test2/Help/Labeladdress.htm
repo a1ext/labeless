@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Labeladdress</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Labeladdress</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Labeladdress(wchar_t *text,ulong addr,ulong reladdr,int relreg,int index,uchar *mask,int *select,ulong mode);<br><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Converts address to UNICODE text and sets
+drawing attributes.<br>Usually it is called from the <a href="DRAWFUNC.htm"><span style="font-weight: bold;">drawing function</span></a> of&nbsp;<a href="i_Tables.htm"><span style="font-weight: bold;">table window</span></a>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> Note that zero address is decoded as empty field, unless you set </small></span><small style="font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;">ADDR_SHOWNULL</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small>. </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>If standard settings are sufficient, plugins may use <a href="Simpleaddress.htm"><span style="font-weight: bold;">Simpleaddress()</span></a> instead of <span style="font-weight: bold;">Labeladdress()</span>. <br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">text</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Unicode string, at least TEXTLEN wide characters long, that receives
+the text</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address of the memory in the context of debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">reladdr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If zero, displayed address is absolute, otherwise it is relative to <span style="font-weight: bold;">reladdr</span> (i.e. decoded as base±(signed)(<span style="font-weight: bold;">addr</span>-<span style="font-weight: bold;">reladdr</span>). The appearance of base depends on <span style="font-weight: bold;">relreg</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">relreg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Tells how to display the base of relative addresses. If <span style="font-weight: bold;">relreg</span> is a valid register index (<span style="font-weight: bold;">REG_EAX</span> .. <span style="font-weight: bold;">REG_EDI</span>), base is the name of the register. Otherwise (for example, when <span style="font-weight: bold;">relreg</span> is <span style="font-weight: bold;">REG_UNDEF</span>), base is decoded as a dollar sign ('$')</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">index</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If <span style="font-weight: bold;">index</span> is larger than 0, decoded address is preceded with the <span style="font-weight: bold;">index</span> in rectangular brackets. </span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mask</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Byte
+string, at least TEXTLEN bytes long, that receives per-character
+drawing attributes (a combination of <a href="i_Tables.htm"><span style="font-weight: bold;">DRAW_xxx</span></a>
+flags), or NULL if drawing attributes are not necessary</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">select</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Pointer to the variable that receives per-line drawing attributes </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(a
+combination of extended&nbsp;<a href="i_Tables.htm"><span style="font-weight: bold;">DRAW_xxx</span></a>
+flags), or NULL if drawing attributes are not necessary</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Drawing mode, one of the following flags:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_HEXSYM</span> - hexadecimal address followed by symbolic name, if available</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_SYMHEX</span> - symbolic name, if available, followed by the hexadecimal address</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_SINGLE</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">symbolic name, or&nbsp;hexadecimal address if name is not available</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_HEXONLY</span> - only hexadecimal address</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">Additionally, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">a combination of zero or more of the following flags can be used to refine the decoding:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_MODNAME</span> - if <span style="font-weight: bold;">addr</span> belongs to some module and symbolic name is available, precede address with&nbsp;module name</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_FORCEMOD</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">always add module name</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">if <span style="font-weight: bold;">addr</span> belongs to some module </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">(only in <span style="font-weight: bold;">ADDR_SINGLE</span> mode)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_GRAYHEX</span> - gray hexadecimal address (use <span style="font-weight: bold;">DRAW_GRAY</span> style)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_HILSYM</span> - highlight symbolic name (use <span style="font-weight: bold;">DRAW_HILITE</span> style)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_NODEFMEP</span> - don't show default name of module entry point ("&lt;ModuleEntryPoint&gt;")</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_BREAK</span> - mark address as an&nbsp;unconditional breakpoint (use <span style="font-weight: bold;">DRAW_BREAK</span> style)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_CONDBRK</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> mark address as a&nbsp;conditional breakpoint (use <span style="font-weight: bold;">DRAW_COND</span> style)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_DISBRK</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> mark address as a disabled breakpoint (use <span style="font-weight: bold;">DRAW_DISBRK</span> style)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_EIP</span> - mark address as a location of the actual EIP</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> (use <span style="font-weight: bold;">DRAW_EIP</span> style)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_CHECKEIP</span> - if addr is the same as the EIP of the thread selected in the CPU window, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">mark address as a location of the actual EIP</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">ADDR_SHOWNULL</span> - decode address 0</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Returns
+length of produced string in wide characters. On
+error,&nbsp;returns 0</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:<br>
+</span>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Tables.htm">Tables</a>, <a href="Simpleaddress.htm">Simpleaddress()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

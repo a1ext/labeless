@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_control</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_control</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_control
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of dialog control<br>
+&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type of control, CA_xxx<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+id;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Control's ID or -1 if unimportant<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+x;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// X coordinate, chars/4<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+y;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Y coordinate, chars/8<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dx;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// X size, chars/4<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dy;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Y size, chars/8<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*var;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Pointer to control variable or NULL<br>
+&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*text;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Name or contents of the control<br>
+&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*help;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Tooltip or NULL<br>
+&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+oldvar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Copy of control variable, internal<br>
+} t_control;<br>
+</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Descriptor
+of control (child window) in OllyTest dialogs and plugin options. The complete dialog
+or pane is an array of the structures of type t_control. The last
+(pseudo)control in the array must have type <span style="font-weight: bold;">CA_END</span>.<br>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the
+control, one of the constants <span style="font-weight: bold;">CA_xxx</span>.
+See table below for detailed description</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">id</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Identifier
+of the control, positive integer in the range 1..16383. Inside the
+Plugin options dialog, use only predefined identifiers <span style="font-weight: bold;">OPT_xxx</span> (<span style="font-weight: bold;">OPT_TITLE</span>, <span style="font-weight: bold;">OPT_1</span>..<span style="font-weight: bold;">OPT_24</span> etc.) Each
+identificator&nbsp;within the dialog or pane must be unique. The
+only exception: if control is unimportant, like unmodifiable text
+label, it can be set to -1</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">x</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">X
+coordinate of the top left corner of the control, measured&nbsp;in
+the dialog units, within the dialog's client area. One horizontal
+dialog unit is approximately 1/4 of the mean character width</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">y</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Y&nbsp;coordinate
+of the top left corner of the control, measured&nbsp;in the
+dialog units, within the dialog's client area. One vertical dialog
+unit is approximately 1/8 of the mean character height</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dx</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Width of
+the control, dialog units. Note that some controls, like static text or
+checkboxes, ignore this setting and determine necessary width from the
+width of the text. To force control to the specified width, negate <span style="font-weight: bold;">dx</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dy</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Height of
+the control, dialog units</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">var</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to
+the variable associated with the control, or NULL if automatic update
+is not necessary or control does not support it. Checkboxes, radio
+buttons, list boxes and combo boxes without edit use <span style="font-weight: bold;">var</span> to set their
+initial state and change it whenever selection or state of control is
+changed</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">text</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">UNICODE
+text associated with the control. For edit controls, this is also the
+buffer that receives text modified by user. </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Required
+length of the
+buffer depends on <span style="font-weight: bold;">type</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. For combo
+boxes, text is a list of strings separated by vertical line ('|') that
+are used to initialize list<span style="font-weight: bold;"></span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">help</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">UNICODE
+string, tooltip associated with the control, or NULL if tooltip is not
+required</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">oldvar</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used
+internally by OllyDbg, buffer that keeps old value of <span style="font-weight: bold;">var</span></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Supported
+types of controls</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 100px; font-style: italic;"><small>Type</small></td>
+<td style="font-style: italic;"><small>Description</small></td>
+<td style="width: 70px; font-style: italic;"><small>Auto
+width</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_COMMENT</small></td>
+<td><small>Dummy entry without the corresponding child window, ignored in the custom
+dialogs. In the plugin options, defines <span style="font-weight: bold;">text</span> that identifies
+options page in the page selection list&nbsp;</small></td>
+<td><small>No<br>
+</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_TEXT</small></td>
+<td><small>Simple left-aligned text</small></td>
+<td><small>Yes</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_TEXTC</small></td>
+<td><small>Simple centered text</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_TEXTR</small></td>
+<td><small>Simple right-aligned text</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_WARN</small></td>
+<td><small>Multiline text, highlighted when
+user changes plugin option with identifiers <span style="font-weight: bold;">OPT_W1</span> .. <span style="font-weight: bold;">OPT_W12</span>, or when
+user turns on option with identifiers <span style="font-weight: bold;">OPT_S1</span> .. <span style="font-weight: bold;">OPT_S12</span>, or when all
+options with identifiers <span style="font-weight: bold;">OPT_X1</span>
+.. <span style="font-weight: bold;">OPT_X12</span>
+are turned on. At most one control of type CA_WARN per dialog or
+options page is allowed</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_WTEXT</small></td>
+<td><small>Text with white background in sunken
+frame</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_TITLE</small></td>
+<td><small>Bold centered text of increased size</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_FRAME</small></td>
+<td><small>Etched frame. It must be defined
+after all controls that are placed inside the frame</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_SUNK</small></td>
+<td><small>Sunken frame. It must be defined
+after all controls that are placed inside the frame</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_GROUP</small></td>
+<td><small>Group box (named frame). It must be
+defined after all controls that are placed inside the frame</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_EDIT</small></td>
+<td><small>Standard edit control. Length of the
+buffer pointed to by&nbsp;<span style="font-weight: bold;">text</span>
+must be at least TEXTLEN wide characters. This buffer is used to
+initialize control and receives edited text on exit from the
+dialog&nbsp;</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_NOEDIT</small></td>
+<td><small>Read-only edit control that does not
+allow to
+edit displayed <span style="font-weight: bold;">text</span></small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_EDITHEX</small></td>
+<td><small>Edit control that accepts only
+hexadecimal digits and displays them in uppercase. Length of the
+buffer pointed to by&nbsp;<span style="font-weight: bold;">text</span>
+must be at least TEXTLEN wide characters. This buffer is used to
+initialize control and receives edited text on exit from the
+dialog
+&nbsp;</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_MULTI</small></td>
+<td><small>Multiline edit control that also
+accepts return key. Length of the
+buffer pointed to by&nbsp;<span style="font-weight: bold;">text</span>
+must be at least DATALEN wide characters. This buffer is used to
+initialize control and receives edited text on exit from the
+dialog</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_NOMULTI</small></td>
+<td><small>Multiline read-only edit control</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_BTN</small></td>
+<td><small>Standard pushbutton, requires custom
+processing</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_DEFBTN</small></td>
+<td><small>Standard default pushbutton,
+requires custom processing</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_COMBO</small></td>
+<td><small>Combo box control. <span style="font-weight: bold;">text</span> points to the
+list of items separated by a vertical line ('|'). <span style="font-weight: bold;">var</span>
+is the index of the item that will be initially selected. When user
+changes selection, OllyDbg updates <span style="font-weight: bold;">var</span></small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_COMBOFIX</small></td>
+<td><small>Combo box control, fixed-pitch font.
+<span style="font-weight: bold;">text</span>&nbsp;</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>points
+to the </small></span><small>list of items separated
+by a vertical line ('|'). <span style="font-weight: bold;">var</span>
+is the index of the item that will be initially selected. When user
+changes selection, OllyDbg updates <span style="font-weight: bold;">var</span>
+</small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_CEDIT</small></td>
+<td><small>C</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>ombo
+box with edit control, requires custom processing<span style="font-weight: bold;"></span></small></span></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_CEDITFIX</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Combo box
+with edit control (fixed-pitch font), requires custom processing</span></small></span></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_LIST</small></td>
+<td><small>Simple list box</small><small>.
+<span style="font-weight: bold;">text</span>&nbsp;</small><span style="font-family: Helvetica,Arial,sans-serif;"><small>points
+to the </small></span><small>list of items separated
+by a vertical line ('|'). <span style="font-weight: bold;">var</span>
+is the index of the item that will be initially selected. When user
+changes selection, OllyDbg updates <span style="font-weight: bold;">var</span></small></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_LISTFIX</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Simple
+list box (fixed-pitch font). <span style="font-weight: bold;">text</span>
+points to the list of items separated by a vertical line ('|'). <span style="font-weight: bold;">var</span>
+is the index of the item that will be initially selected. When user
+changes selection, OllyDbg updates <span style="font-weight: bold;">var</span></small></span></td>
+<td><small>No</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_CHECK</small></td>
+<td><small>Left-aligned auto check box. <span style="font-weight: bold;">var</span> specifies initial state of the control. When user changes state, OllyDbg updates <span style="font-weight: bold;">var</span></small></td>
+<td><small>Yes</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_CHECKR</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Right-aligned auto check box. <span style="font-weight: bold;">var</span> specifies initial state of the control. When user changes state, OllyDbg updates <span style="font-weight: bold;">var</span></small></span></td>
+<td><small>Yes</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_BIT0..<br>
+CA_BIT31</small></td>
+<td><small>Left-aligned auto check boxes. <span style="font-weight: bold;">var</span> specifies initial state of the controls, namely: <span style="font-weight: bold;">CA_BIT0</span> is checked when bit 0 (LSB) is 1, <span style="font-weight: bold;">CA_BIT1</span> - when bit 1 is set, and so on. When user changes state of the control, OllyDbg updates <span style="font-weight: bold;">var</span></small></td>
+<td><small>Yes</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>CA_RADIO0..<br>
+CA_RADIO15</small></td>
+<td><small>Left-aligned radio buttons. Dialog may contain&nbsp;several groups of radio buttons. Item <span style="font-weight: bold;">CA_RADIO0</span>
+starts new group. Buttons belonging to the same group must be defined
+in the consecutive records and have consecutive identifiers (but not
+necessarily consecutive types:&nbsp;for example, <span style="font-weight: bold;">CA_RADIO0</span> may be followed by <span style="font-weight: bold;">CA_RADIO8</span>). <span style="font-weight: bold;">var</span> determines initial state of the group. If&nbsp;<span style="font-weight: bold;">var</span> is 0, OllyDbg selects <span style="font-weight: bold;">CA_RADIO0</span>, if&nbsp;<span style="font-weight: bold;">var</span> is 1 - <span style="font-weight: bold;">CA_RADIO1</span> and so on. When user clicks some radio button, OllyDbg updates <span style="font-weight: bold;">var</span></small></td>
+<td><small>Yes</small></td>
+</tr>
+
+
+
+<tr>
+<td style="font-weight: bold;"><small>CA_END</small></td>
+<td><span style="font-family: Helvetica,Arial,sans-serif;"><small>Dummy entry without the corresponding child window, </small></span><small>must be the last record in the
+dialog descriptor. Stops dialog processing. In the custom dialogs, <span style="font-weight: bold;">dx</span> and <span style="font-weight: bold;">dy</span> define size of
+the client area (note: client area of the dialog, not the overall size of the dialog window!), <span style="font-weight: bold;">text</span>
+specifies default title. In the plugin options page all parameters are
+ignored</small></td>
+<td><small>No<br>
+</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Note that <span style="font-weight: bold;">var</span> in the table above means the variable pointed to by <span style="font-weight: bold;">var</span> or the contents of this variable.<br><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>See <a style="font-weight: bold;" href="ODBG2_Pluginoptions.htm">here</a>.</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Dialogs.htm">Dialogs</a>, <a href="t_dialog.htm">t_dialog</a>, <a href="Defaultactions.htm">Defaultactions()</a>, <a href="Findcontrol.htm">Findcontrol()</a>, <a href="ODBG2_Pluginoptions.htm">ODBG2_Pluginoptions()</a>,
+<a href="Preparedialog.htm">Preparedialog()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

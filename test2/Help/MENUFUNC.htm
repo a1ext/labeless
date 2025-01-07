@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>MENUFUNC</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">MENUFUNC</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Type of callback function that controls appearance and functioning of OllyDbg <a href="i_Menu.html"><span style="font-weight: bold;">menus</span></a> and shortcuts.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef int MENUFUNC(struct t_table *ptable,wchar_t *name,ulong index,int mode);</span><br></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ptable</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the structure of type <a href="t_table.htm"><span style="font-weight: bold;">t_table</span></a>, descriptor of the <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a> which displays menu. <span style="font-weight: bold;">ptable</span> is NULL if menu item belongs to the main OllyDbg menu</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in, out) Pointer to the UNICODE string&nbsp;<span style="font-weight: bold;">TEXTLEN</span> wide characters long.&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">When menu function is called called with <span style="font-weight: bold;">mode</span>=<span style="font-weight: bold;">MENU_VERIFY</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">, it contains text of the menu item stripped from the control characters. Menu function may change this text. When <span style="font-weight: bold;">mode</span> is <span style="font-weight: bold;">MENU_EXECUTE</span>, <span style="font-weight: bold;">name</span> is undefined and should not be used</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">index</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) The same as <span style="font-weight: bold;">index</span> in the processed <a href="t_menu.htm"><span style="font-weight: bold;">t_menu</span></a> descriptor, allows to use the same menu function with several different (but&nbsp;similar) menu items</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) One of the following constants:<br><span style="font-weight: bold;">MENU_VERIFY</span> - menu creation. Menu function should decide whether menu item applies and set its name and appearance<br><span style="font-weight: bold;">MENU_EXECUTE</span> -&nbsp;menu item was selected. Menu function should make necessary actions<br></span>
+</small></div><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return values:</span><br><br><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>When called with <span style="font-weight: bold;">mode</span>=<span style="font-weight: bold;">MENU_VERIFY</span>, menu function should return one of the following codes:<span style="font-weight: bold;"><br></span></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_ABSENT</span> -&nbsp;menu item does not apply and will not appear&nbsp;the menu</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_NORMAL</span> -&nbsp;menu item appears in the menu</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_CHECKED</span> -&nbsp;menu item appears in the menu and has attached checkmark</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_CHKPARENT</span>
+-&nbsp;menu item appears in the menu and has attached checkmark.
+Additionally, OllyDbg attaches checkmark to the parent item in
+the&nbsp;menu on the previous level. This feature will not work in the
+main menu</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_SHORTCUT</span>
+- menu item is a pure shortcut. It does not appear in the menu but is
+active and participates in the search for keyboard shortcuts</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_GRAYED</span>
+-&nbsp;item is present in the menu but is disabled. This style is&nbsp;not
+compatible with OllyDbg's look-and-feel, use it only&nbsp;if absolutely
+necessary due to the menu logic.</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small>When called with <span style="font-weight: bold;">mode</span>=<span style="font-weight: bold;">MENU_EXECUTE</span>, it should return one of the following codes:<br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_REDRAW</span> - menu&nbsp;action has global impact, all OllyDbg windows must be updated. OllyDbg broadcasts <span style="font-weight: bold;">WM_USER_CHGALL</span></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">MENU_NOREDRAW</span> -&nbsp;no redrawing is necessary</small></span><br></div><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br><br><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>See <a href="t_menu.htm"><span style="font-weight: bold;">here</span></a></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Menu.html">Menus</a>, <a href="i_Tables.htm">Tables</a>, <a href="t_menu.htm">t_menu</a>, <a href="t_table.htm">t_table</a>, <a href="ODBG2_Pluginmenu.htm">ODBG2_Pluginmenu()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Pluginoptions</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Pluginoptions</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: monospace; font-weight: bold;">t_control * ODBG2_Pluginoptions(UINT msg,WPARAM wp,LPARAM lp);</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>Optional plugin callback function, called when user opens Plugin
+options dialog, when user changes state of the controls and when dialog is closed.<br>
+<br>
+During the first call </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>(<span style="font-weight: bold;">msg</span>=WM_INITDIALOG)&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>plugin&nbsp;must return pointer to the page
+description (array of structures <a href="t_control.htm"><span style="font-weight: bold;">t_control</span></a>).&nbsp;Each
+new page in the array must begin with the record of type <span style="font-weight: bold;">CA_COMMENT</span>. Array must end with the record of type <span style="font-weight: bold;">CA_END</span>.
+Size of the options page is&nbsp;250x256 units, but left part is
+occupied withthe list of pages and there are buttons on the bottom.
+Therefore plugins may use only part of it, 80 .. 240 units horizontally
+and 0 .. 235 units vertically. If plugin returns NULL, OllyDbg will not
+bother it again.<br>
+<br>When dialog receives WM_COMMAND, it passes this message to <span style="font-weight: bold;">ODBG2_Pluginoptions()</span>. Returned value is ignored. Note that if plugin uses control variables (member <span style="font-weight: bold;">var</span> in <a href="t_control.htm"><span style="font-weight: bold;">t_control</span></a>),
+usually it does not need&nbsp;to process this message. Checkboxes,
+radio buttons and list boxes change the state of associated control
+variable automatically. Edit controls modify text. Processing of
+WM_COMMAND is necessary only if you use pushbuttons or custom controls.<br><br>Finally, when user closes dialog,&nbsp;this entry is called for the last time</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> with <span style="font-weight: bold;">msg</span>=WM_CLOSE and <span style="font-weight: bold;">wp</span>=1 on OK or 0 on Cancel<span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> Returned value is ignored.</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+This is the best time for plugin to adopt new settings. If user pressed
+Cancel, OllyDbg automatically restores control variables and edit
+texts. Plugin should restore custom controls by itself.<br><br>To open Plugin options on the page belonging to the plugin, use&nbsp;<a href="Pluginshowoptions.htm"><span style="font-weight: bold;">Pluginshowoptions()</span></a>.<br></small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br>
+</span></small>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">msg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) WM_INITDIALOG, WM_COMMAND or WM_CLOSE, see explanation above</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">wp</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) If <span style="font-weight: bold;">msg</span>=WM_COMMAND, repeats corresponding parameter of WM_COMMAND. If <span style="font-weight: bold;">msg</span>=WM_CLOSE, <span style="font-weight: bold;">wp</span> is 1 if user pressed OK and 0 if Cancel. In all other cases it is 0</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">lp</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">If <span style="font-weight: bold;">msg</span>=WM_COMMAND, repeats corresponding parameter of WM_COMMAND. In all other cases it is 0</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If <span style="font-weight: bold;">msg</span>=WM_INITDIALOG, it must return pointer to the page description. In all other cases returned value is ignored</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example of page description:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This is the description of the options in <a href="traceapi.htm"><span style="font-weight: bold;">API trace plugin</span></a>:<br><br></small></span><span style="font-family: monospace; font-weight: bold;">static
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+protocolapi;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Protocol API calls<br>static int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+skipgdi32;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Don't protocol GDI32 APIs<br>static
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+skipuser32;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Don't protocol USER32 APIs<br>static
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+skipkernel32;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Don't
+protocol KERNEL32 APIs<br>static
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+skipmsvc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Don't protocol MSVC* APIs<br>static
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+protocolret;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Protocol returned values<br>static
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+autoupdate;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Whether window in autoupdate mode<br><br>typedef
+struct t_control
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of dialog control<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Type of control, CA_xxx<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+id;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Control's ID or -1 if unimportant<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+x;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// X coordinate, chars/4<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+y;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Y coordinate, chars/8<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dx;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// X size, chars/4<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dy;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Y size, chars/8<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*var;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Pointer to control variable or NULL<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*text;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Name or contents of the control<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*help;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Tooltip or NULL<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+oldvar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Copy of control variable, internal<br>} t_control;<br><br>static t_control traceapioptions[] = {</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_COMMENT,
+-1,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0,&nbsp;&nbsp; 0,&nbsp;&nbsp; 0,&nbsp;&nbsp; 0, NULL,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PLUGINNAME,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NULL },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; { CA_TITLE,&nbsp;&nbsp; OPT_TITLE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 80,&nbsp;&nbsp; 4, 160,&nbsp; 15, NULL,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PLUGINNAME,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NULL },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_CHECK,&nbsp;&nbsp;
+OPT_1,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 90,&nbsp;
+26, 120,&nbsp; 10, &amp;protocolapi,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; L"Protocol API calls",</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Protocol calls and call arguments to the log" },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_CHECK,&nbsp;&nbsp;
+OPT_2,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 105,&nbsp; 38,
+160,&nbsp; 10, &amp;skipgdi32,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; L"Don't protocol GDI32",</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Ignore all APIs that reside in GDI32" },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_CHECK,&nbsp;&nbsp;
+OPT_3,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 105,&nbsp; 50,
+160,&nbsp; 10, &amp;skipuser32,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; L"Don't protocol USER32",</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Ignore all APIs that reside in USER32" },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_CHECK,&nbsp;&nbsp;
+OPT_4,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 105,&nbsp; 62,
+160,&nbsp; 10, &amp;skipkernel32,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Don't protocol KERNEL32",</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Ignore all APIs that reside in KERNEL32" },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_CHECK,&nbsp;&nbsp;
+OPT_5,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 105,&nbsp; 74,
+160,&nbsp; 10, &amp;skipmsvc,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; L"Don't protocol MSVC*",</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Ignore all APIs that reside in Visual C libraries" },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_CHECK,&nbsp;&nbsp;
+OPT_6,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 105,&nbsp; 86,
+160,&nbsp; 10, &amp;protocolret,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Protocol returned values",</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+L"Protocol values that called API function returned" },</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;
+{ CA_END,&nbsp;&nbsp;&nbsp;&nbsp;
+-1,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0,&nbsp;&nbsp; 0,&nbsp;&nbsp; 0,&nbsp;&nbsp; 0, NULL,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NULL,</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NULL</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">&nbsp; }</span><br style="font-family: monospace; font-weight: bold;"><span style="font-family: monospace; font-weight: bold;">};</span><br style="font-family: monospace;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>First record is <span style="font-weight: bold;">CA_COMMENT</span>. It specifies the text that will be displayed in the list of option pages. Record <span style="font-weight: bold;">CA_TITLE</span> describes the title of the page. Controls <span style="font-weight: bold;">CA_CHECK</span> are checkboxes. Their initial state is defined by the corresponding variables pointed to by <span style="font-weight: bold;">var</span>. When user changes&nbsp;state of some checkbox, OllyDbg updates the value of the variable.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Note that checkboxes and some other controls, like static texts or
+radio buttons, set their width authomatically, effectively ignoring <span style="font-weight: bold;">dx</span>. Details are described <a href="t_control.htm"><span style="font-weight: bold;">here</span></a>.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Standard controls&nbsp;should have identifiers in the range <span style="font-weight: bold;">OPT_1</span> .. <span style="font-weight: bold;">OPT_24</span>.
+Custom controls (and standard controls if you create more than 24 of them) may use identifiers from the range <span style="font-weight: bold;">OPT_CUSTMIN</span> .. <span style="font-weight: bold;">OPT_CUSTMAX</span>. Other values may conflict with the internal identifiers used by
+OllyDbg and should be avoided.<br><br>If plugin requires several option pages, start each new page with <span style="font-weight: bold;">CA_COMMENT</span>. Don't forget to place <span style="font-weight: bold;">CA_END</span> at the end, or OllyDbg may crash.<br></small></span>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Dialogs.htm">Dialogs</a>, <a href="i_Plugins.htm">plugins</a>, <a href="t_control.htm">t_control</a>, <a href="Pluginshowoptions.htm">Pluginshowoptions()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

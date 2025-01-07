@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_frame</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_frame</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_frame
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Descriptor of frame or tab window<br>&nbsp; // These variables must be filled before frame window is created.<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+name[SHORTNAME];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Name used to
+save/restore position<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+herebit;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Must be 0 for plugins<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Combination of bits TABLE_xxx<br>&nbsp;
+t_block&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*block;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Pointer to block tree<br>&nbsp;
+t_menu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*menu;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Menu descriptor (tab window only)<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+scheme;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Colour scheme used by window<br>&nbsp; // These variables are initialized by frame creation function.<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hw;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of MDI container or NULL<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+htab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of tab control<br>&nbsp;
+WNDPROC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+htabwndproc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Original WndProc of tab control<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+capturedtab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Tab captured on middle mouse click<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hstatus;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of status bar or NULL<br>&nbsp;
+t_block&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*active;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Active table (has focus) or NULL<br>&nbsp;
+t_block&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*captured;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Block that captured mouse or NULL<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+captureoffset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Offset on
+mouse capture<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+capturex;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Mouse screen X coordinate on capture<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+capturey;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Mouse screen Y coordinate on capture<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+title[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Frame or tab
+window title<br>} t_frame;<br><br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Describes&nbsp;<a href="i_Frametab.htm"><span style="font-weight: bold;">frame
+window</span></a> (parent with several resizable child tables, like CPU) or tab
+collection (parent with tab control that displays one of the several
+child tables, like Search).<br><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">UNICODE string, at most <span style="font-weight: bold;">SHORTNAME</span> wide characters long. If <span style="font-weight: bold;">mode</span> includes any of the <span style="font-weight: bold;">TABLE_SAVExxx</span>
+flags, it must be set to the unique name of the section in the main
+initialization file that will be used to save the position and
+appearance of the window</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">herebit</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Plugins must set this member to 0</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Properties of the frame or tab collection, combination of&nbsp;bits&nbsp;<span style="font-weight: bold;">TABLE_xxx</span>: similar to that used by <a href="t_table.htm"><span style="font-weight: bold;">tables</span></a>:<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_STATUS</span> - container window gets status bar <span style="font-weight: bold;">hstatus</span> at the bottom<br><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_SAVEPOS</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">when frame or tab window&nbsp;is destroyed, its size,&nbsp;position and layout are saved </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">to the main initialization&nbsp;file (section [<span style="font-weight: bold;">name</span>]) and are automatically restored next time the window is created</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_GRAYTEXT</span> - grays all tables within the frame window except for the frame with focus and frames marked as&nbsp;<span style="font-weight: bold;">TABLE_NOGRAY</span><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">block</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the linked tree of structures of type <a href="t_block.htm"><span style="font-weight: bold;">t_block</span></a> that describes layout of the frame window or tabs within the tab collection. See description <a href="i_Frametab.htm"><span style="font-weight: bold;">here</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">menu</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">For tab collections, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">pointer to the array of type <a href="t_menu.htm"><span style="font-weight: bold;">t_menu</span></a> that describes pop-up <a href="i_Menu.html"><span style="font-weight: bold;">menu</span></a> </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">associated with the tabs (invoked when user right-clicks the tab control), or NULL if such menu is not necessary</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">scheme</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of the colour scheme (0..<span style="font-weight: bold;">NSCHEMES</span>-1) used by the window</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hw</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the frame or tab parent window, or <span style="font-weight: bold;">NULL</span> if window is not displayed</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">htab</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the tab control in the tab window</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hstatus</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the optional status bar at the bottom of the parent window</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">title</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">UNICODE string, title of the frame or tab parent window</span><br>
+</small></div><span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">htabwndproc</span>
+</small>
+<span style="font-family: Helvetica,Arial,sans-serif;"><br></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">capturedtab<br></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">active</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">captured</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">captureoffset</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><br></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">capturex</span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br>capturey</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used internally by OllyDbg</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Frametab.htm">Frames and tab collections</a>, <a href="i_Menu.html">menus</a>,&nbsp;</span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Tables.htm">tables</a>, <a href="t_block.htm">t_block</a>, <a href="t_menu.htm">t_menu</a>, <a href="Createframewindow.htm">Createframewindow()</a>, <a href="Createtabwindow.htm">Createtabwindow()</a> </span></small>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

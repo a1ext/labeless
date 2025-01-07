@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Absolutizepath</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Absolutizepath</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void
+Absolutizepath(wchar_t *path);<br>
+</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Converts
+<span style="font-weight: bold;">path</span> (file
+or directory) relative to OllyDbg location to absolute path. If
+conversion is not possible (for example, different drives), <span style="font-weight: bold;">path</span> remains
+unchanged.<br><br>OllyDbg
+keeps file locations in the initialization file in the relative form
+and restores them on access. This allows user to install OllyDbg on the
+flash drive. No matter which letter will be assigned to the drive, all
+files and directories&nbsp;remain accessible on any computer.<br>
+<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">path</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">File or directory path. The buffer must be at least MAXPATH UNICODE characters long</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+None</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>OllyDbg location: "<span style="font-weight: bold;">c:\ollydbg</span>"</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Path before call: "<span style="font-weight: bold;">.\log.txt</span>"</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>Path after call: "<span style="font-weight: bold;">c:\ollydbg\log.txt</span>"</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>Path before call: "<span style="font-weight: bold;">e:\examples\test1.exe</span>"</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>Path after call: "</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><small>e:\examples\test1.exe</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>"</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"></span></div><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="Relativizepath.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Relativizepath()</span></small></a><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

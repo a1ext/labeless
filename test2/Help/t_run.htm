@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_run</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_run</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Keeps
+current status of the debugged application. Most of the fields in this
+structure are for internal use by OllyDbg. Never modify them directly,
+or this may destabilize the debugging engine</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_run
+{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Run status of debugged application<br>&nbsp;
+t_status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+status;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Operation mode, one of STAT_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+threadid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// ID of single running thread, 0 if all<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+tpausing;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Tick count when pausing was requested<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+wakestep;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// 0: wait, 1: waked, 2: warned<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+eip;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// EIP at last debugging event<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ecx;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// ECX at last debugging event<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+restoreint3addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Address of
+temporarily removed INT3<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+stepoverdest;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Destination of STAT_STEPOVER<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+updatebppage;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Update
+temporarily removed bppage's<br>&nbsp; DEBUG_EVENT&nbsp;&nbsp;&nbsp;
+de;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Information from WaitForDebugEvent()<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+indebugevent;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Paused
+on event, threads suspended<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+netevent;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Event is from .NET debugger<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+isappexception;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Exception in
+application, AE_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+lastexception;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Last
+exception in application or 0<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+suspended;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Suspension counter<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+suspendonpause;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Whether first
+suspension on pause<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+updatedebugreg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 1: set, -1:
+reset HW breakpoints<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dregmodified;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Debug
+regs modified by application<br>} t_run;<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">status</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">One of the constants of type <a href="STAT_xxx.htm"><span style="font-weight: bold;">STAT_xxx</span></a>,
+current status of the debugged application. Status is controlled by the
+debugging engine. If you really need to modify it, call <a href="Setstatus.htm"><span style="font-weight: bold;">Setstatus()</span></a></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If in the single-thread mode (run trace, stepping, etc.), the identifier of the thread; otherwise, 0</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tpausing</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Value returned by <span style="font-weight: bold;">GetTickCount()</span> when pausing (<span style="font-weight: bold;">status</span>=<span style="font-weight: bold;">STAT_PAUSING</span>) was requested, used to timeout this request and undertake additional actions</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">wakestep</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used together with <span style="font-weight: bold;">tpausing</span> to wake up sleeping application</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">eip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Value of register EIP at the moment when last&nbsp;exception was continued, used together with <span style="font-weight: bold;">ecx</span> to step over the command&nbsp;in the case that there are several breakpoints of different kind</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> (INT3, hardware and/or memory)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> set on the same location</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ecx</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Value of register ECX at the moment when last&nbsp;exception was continued, </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">used together with <span style="font-weight: bold;">eip</span> to step over the command&nbsp;in the case that there are several breakpoints of different kind</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> (INT3, hardware and/or memory)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> set on the same location</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">restoreint3addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the temporarily removed INT3 breakpoint</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">stepoverdest</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Destination of the step over, or 0 if any destination is allowed (like conditional jump)</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">updatebppage</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Request to update temporarily restored memory attributes of the memory pages containing memory breakpoints</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">de</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Structure of type <span style="font-weight: bold;">DEBUG_EVENT</span>, description of the pending debug event. In general, valid only if <span style="font-weight: bold;">status</span> is <span style="font-weight: bold;">STAT_PAUSED</span> or <span style="font-weight: bold;">STAT_FINISHED</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">indebugevent</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Application is paused on debug event, therefore <a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a> does not need to call <span style="font-weight: bold;">SuspendThread()</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">netevent</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Indicator of event reported by .NET debugging API</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">isappexception</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">One of the constants <span style="font-weight: bold;">AE_xxx</span>,
+describing exception that occured in the application and was not caused
+by the OllyDbg (like INT3 or memory breakpoint).&nbsp;Only application
+exception of type <span style="font-weight: bold;">AE_APP</span> can be passed to the application</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">lastexception</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Code of the last reported exception</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">suspended</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Suspension counter. If this counter is not 0, application was already suspended.&nbsp;<a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a> just increases the counter&nbsp;and does not call <span style="font-weight: bold;">SuspendThread()</span> again</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">suspendonpause</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used by <a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">updatedebugreg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">-1: request to remove</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">, 1:&nbsp;set hardware breakpoints</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> on request to continue execution of the paused application</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dregmodified</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Indicates that hardware breakpoints were modified by the debugged application</span><br>
+</small></div><br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

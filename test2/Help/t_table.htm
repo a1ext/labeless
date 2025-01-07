@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_table</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_table</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Describes <a href="i_Tables.htm"><span style="font-weight: bold;">table</span></a>
+- a collection of data that can be represented as a list or table on
+the screen. Most OllyDbg windows are tables. Table windows may be
+embedded into other windows or grouped into the <a href="i_Frametab.htm"><span style="font-weight: bold;">frame</span></a> or <a href="i_Frametab.htm"><span style="font-weight: bold;">tab collection</span></a>.<br><br>Note
+that tampering with the members of this structure may have undesired
+effects of lead to crash. Use API functions to manipulate <span style="font-weight: bold;">t_table</span>.</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct
+t_table&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Window with sorted data and bar<br>&nbsp; // These variables must be filled before table window is created.<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+name[SHORTNAME];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Name used to
+save/restore position<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+mode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Combination of bits TABLE_xxx<br>&nbsp;
+t_sorted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sorted;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Sorted data<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+subtype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// User-defined subtype<br>&nbsp;
+t_bar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+bar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Description of bar<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+bottomspace;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Height of free space on the bottom<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+minwidth;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Minimal width of the table, pixels<br>&nbsp;
+TABFUNC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*tabfunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Custom message function or NULL<br>&nbsp;
+UPDATEFUNC&nbsp;&nbsp;&nbsp;&nbsp;
+*updatefunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Data update function or NULL<br>&nbsp;
+DRAWFUNC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*drawfunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Drawing function<br>&nbsp; TABSELFUNC&nbsp;&nbsp;&nbsp;&nbsp;
+*tableselfunc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Callback
+indicating selection change<br>&nbsp;
+t_menu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*menu;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Menu descriptor<br>&nbsp; // Table functions neither initialize nor use these variables.<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+custommode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// User-defined custom data<br>&nbsp;
+void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*customdata;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+Pointer to more custom data<br>&nbsp; // These variables are initialized and/or used by table functions.<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hparent;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of MDI container or NULL<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hstatus;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of status bar or NULL<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hw;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of child table or NULL<br>&nbsp;
+HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+htooltip;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle of tooltip window or NULL<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+font;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Index of font used by window<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+scheme;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Colour scheme used by window<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hilite;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Highlighting scheme used by window<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hscroll;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Whether horizontal scroll visible<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+xshift;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Shift in X direction, pixels<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+offset;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// First displayed row<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+colsel;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Column in TABLE_COLSEL window<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+version;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Version of sorted on last update<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+timerdraw;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Timer redraw is active (period, ms)<br>&nbsp;
+RECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+rcprev;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Temporary storage for old position<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+rtback;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Back step in run trace, 0 - actual<br>} t_table;<br></span><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Short
+unique class name of the table, used to save and restore appearance of
+the table. OllyDbg keeps this data in the main initialization file in
+the section [<span style="font-weight: bold;">name</span>]. Which parts of appearance are preserved is determined by the <span style="font-weight: bold;">mode</span> bits <span style="font-weight: bold;">TABLE_SAVEPOS</span>, <span style="font-weight: bold;">TABLE_SAVECOL</span>, <span style="font-weight: bold;">TABLE_SAVESORT</span> and <span style="font-weight: bold;">TABLE_SAVECUST</span>. Empty name turns saving off</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Table properties, combination of&nbsp;bits&nbsp;<span style="font-weight: bold;">TABLE_xxx</span>:<br><span style="font-weight: bold;">TABLE_USERDEF</span>
+- non-standard user-defined custom table. Its sorted data is a
+placeholder without any records. Dump and register windows are custom
+tables<br><span style="font-weight: bold;">TABLE_STDSCR</span> - for user-defined tables only, automatically processes most scrolling and selection messages (</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">WM_USER_VINC</span>, <span style="font-weight: bold;">WM_USER_SETS</span> etc.)&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">when custom table function returns 0. Table must keep valid total number of lines in&nbsp;<span style="font-weight: bold;">sorted.n</span>, first visible line in&nbsp;<span style="font-weight: bold;">offset</span> and currently selected line in&nbsp;<span style="font-weight: bold;">sorted.selected</span>. Multiline selection is not supported<br><span style="font-weight: bold;">TABLE_SIMPLE</span> -&nbsp;table without sorted data, similar to <span style="font-weight: bold;">TABLE_USERDEF|TABLE_STDSCR</span>.
+Item's address is simultaneously the line number. Scrolling and
+selection are done automatically.&nbsp;Log&nbsp;window is an example of
+simple table<br><span style="font-weight: bold;">TABLE_DIR</span> -
+bottom-to-top table, i.e.&nbsp;first visible line is on the bottom and
+lines are counted and drawn upstairs. Log window is a bottom-to-top
+table<br><span style="font-weight: bold;">TABLE_COLSEL</span> -&nbsp;table supports column-wide selection. Index of selected column is kept in&nbsp;<span style="font-weight: bold;">colsel</span>. If flag is not set, standard table&nbsp;selects complete row through all available columns<br><span style="font-weight: bold;">TABLE_BYTE</span> - informs that custom table supports bytewise scrolling and should receive <span style="font-weight: bold;">WM_USER_VBYTE</span>
+if up/down arrow keys or arrows on the vertical scrollbar are pressed
+simultaneously with Ctrl key. If flag is not set, table receives <span style="font-weight: bold;">WM_USER_MOVS</span> instead<br><span style="font-weight: bold;">TABLE_FASTSEL</span> - requests instant repainting when when window scrolls or selection changes. If flag is not set, OllyDbg posts <span style="font-weight: bold;">WM_PAINT</span><br><span style="font-weight: bold;">TABLE_RIGHTSEL</span> -if right mouse button is clicked in the window, custom table receives <span style="font-weight: bold;">WM_USER_SETS</span> (request to start new selection). Standard tables allow right button selection by default&nbsp;<br><span style="font-weight: bold;">TABLE_RFOCUS</span> - if right mouse button is clicked in the window, sets focus to the window. Standard windows and custom windows with flag <span style="font-weight: bold;">TABLE_RIGHTSEL</span> allow focus on right click by default<br><span style="font-weight: bold;">TABLE_NOHSCR</span> - table window contains no horizontal scroll<br><span style="font-weight: bold;">TABLE_NOVSCR</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">table window contains no vertical scroll</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_NOBAR</span> - bar is always hidden, dependless on <span style="font-weight: bold;">bar.visible</span><br><span style="font-weight: bold;">TABLE_STATUS</span> - container window gets status bar <span style="font-weight: bold;">hstatus</span> at the bottom. Has no effect if table is part of the <a style="font-weight: bold;" href="i_Frametab.htm">frame</a> window<br><span style="font-weight: bold;">TABLE_MMOVX</span> - contents of custom window is moveable by mouse horizontally. Window with <span style="font-weight: bold;">TABLE_MMOVX</span> or <span style="font-weight: bold;">TABLE_MMOVY</span> receives <span style="font-weight: bold;">WM_USER_MMOV</span> instead of <span style="font-weight: bold;">WM_USER_CNTS</span>. Simple&nbsp;tables (<span style="font-weight: bold;">TABLE_SIMPLE</span>) don't support mouse moving<br><span style="font-weight: bold;">TABLE_MMOVY</span> -&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">contents of custom window is moveable by mouse vertically. Window with <span style="font-weight: bold;">TABLE_MMOVX</span> or <span style="font-weight: bold;">TABLE_MMOVY</span> receives <span style="font-weight: bold;">WM_USER_MMOV</span> instead of <span style="font-weight: bold;">WM_USER_CNTS</span>. Simple&nbsp;tables (<span style="font-weight: bold;">TABLE_SIMPLE</span>) don't support mouse moving</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_WANTCHAR</span> - <span style="font-weight: bold;">WM_CHAR</span> is passed to the <span style="font-weight: bold;">tabfunc</span>&nbsp;(but only when both Ctrl and Alt keys are released)<br><span style="font-weight: bold;">TABLE_SAVEAPP</span> - when table window is destroyed, its appearance (<span style="font-weight: bold;">font</span>,&nbsp;<span style="font-weight: bold;">scheme</span>, <span style="font-weight: bold;">bar.visible</span>, <span style="font-weight: bold;">hscroll</span>, <span style="font-weight: bold;">hilite</span>) is saved to the main initialization&nbsp;file to the section [<span style="font-weight: bold;">name</span>]
+and is automatically restored next time the window is created. If
+different instances of the same table must support different
+appearances, index them by&nbsp;<span style="font-weight: bold;">subtype</span> (no indexing if <span style="font-weight: bold;">subtype</span> is 0)<br><span style="font-weight: bold;">TABLE_SAVEPOS</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">when table window is destroyed, its size and position are saved </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">to the main initialization&nbsp;file (section [<span style="font-weight: bold;">name</span>]) and are automatically restored next time the window is created</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_SAVECOL</span> -</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> when table window is destroyed, width of its columns&nbsp;is saved to the main initialization&nbsp;file (section [<span style="font-weight: bold;">name</span>])
+and is automatically restored next time the window is created. If
+different instances of the same table must support different
+sets of columns, index them by&nbsp;<span style="font-weight: bold;">subtype</span> (no indexing if <span style="font-weight: bold;">subtype</span> is 0)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_SAVESORT</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">
+when table window is destroyed, sorting criterium (index of the column
+used to sort data)&nbsp;is saved to the main initialization&nbsp;file
+(section [<span style="font-weight: bold;">name</span>])
+and is automatically restored next time the window is created. If
+different instances of the same table must support different
+sorting criteriums, index them by&nbsp;<span style="font-weight: bold;">subtype</span> (no indexing if <span style="font-weight: bold;">subtype</span> is 0)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">TABLE_SAVECUST</span> - for custom tables, hints that table-specific data should be saved to the main initialization file (section [<span style="font-weight: bold;">name</span>],&nbsp;keyword "<span style="font-style: italic;">Local</span>"). If several items to be saved, table should use keywords "<span style="font-style: italic;">Local_xxx</span>". Saving of local data is in full responsibility of the table. Best time to save data is when <span style="font-weight: bold;">WM_DESTROY</span> is passed to the table procedure. Standard tables do not use keywords beginning with "<span style="font-style: italic;">Local</span>"<br><span style="font-weight: bold;">TABLE_GRAYTEXT</span> - table is grayed by adding <span style="font-weight: bold;">DRAW_INACTIVE</span> to each displayed line. This reduces color of normal text and graphical symbols to gray<br><span style="font-weight: bold;">TABLE_NOGRAY</span> - when table window is part of the frame and this flag is set, frame doesn't set <span style="font-weight: bold;">TABLE_GRAYTEXT</span> even if table is inactive<br><span style="font-weight: bold;">TABLE_UPDFOCUS</span> - when table window is part of the <a href="i_Frametab.htm"><span style="font-weight: bold;">frame</span></a>, this flag requests it to redraw the&nbsp;window each time&nbsp;it receives or looses focus<br><span style="font-weight: bold;">TABLE_AUTOUPD</span> - table supports periodical autoupdate&nbsp;(activated by <a href="Setautoupdate.htm"><span style="font-weight: bold;">Setautoupdate()</span></a>). Table function must process&nbsp;<span style="font-weight: bold;">WM_USER_UPD</span>. Tables with this flag set do not support delayed redraw<br><span style="font-weight: bold;">TABLE_SYNTAX</span> - table supports syntax highlighting. If this flag is not set, <span style="font-weight: bold;">hilite</span> is ignored<br><span style="font-weight: bold;">TABLE_PROPWID</span> - if flag is set, columns fill the whole width of the window&nbsp;and their widths are proportional to the default widths (<span style="font-weight: bold;">bar.defdx[]</span>)<br><span style="font-weight: bold;">TABLE_INFRAME</span> - table is part of the <a href="i_Frametab.htm"><span style="font-weight: bold;">frame</span></a>&nbsp;window or <a href="i_Frametab.htm"><span style="font-weight: bold;">tab collection</span></a>. Structure <span style="font-weight: bold;">t_table</span> is supplied externally by the frame. Table windows that are parts of the frame must not descroy their <span style="font-weight: bold;">t_table</span> structure (or structure that embraces <span style="font-weight: bold;">t_table</span>) on <span style="font-weight: bold;">WM_DESTROY</span><br><span style="font-weight: bold;">TABLE_BORDER</span> - draws sunken border around the table, useful if table is embedded into the custom window<br><span style="font-weight: bold;">TABLE_KEEPOFFS</span> - don't reset <span style="font-weight: bold;">xshift</span>, <span style="font-weight: bold;">offset</span> and&nbsp;<span style="font-weight: bold;">colsel</span> when creating table window<br></span>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">sorted</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Structure of type <a href="t_sorted.htm"><span style="font-weight: bold;">t_sorted</span></a>, descriptor of <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a> displayed in the table window. User-defined (<span style="font-weight: bold;">TABLE_USERDEF</span>) and simple (<span style="font-weight: bold;">TABLE_SIMPLE</span>) table windows do not have associated sorted data but may use members <span style="font-weight: bold;">sorted.n</span> and <span style="font-weight: bold;">sorted.selected</span> to automate scrolling and selection. </span>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">subtype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Arbitrary
+user-defined integer that distinguishes between different versions of
+the table, like different kinds of search results in Search window.
+When table is requested to save appearance of the table window to the
+initialization file, it uses <span style="font-weight: bold;">subtype</span> as an index</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">bar</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Structure of type <a href="t_bar.htm"><span style="font-weight: bold;">t_bar</span></a>, describes number of columns in the table window, column names, default column widths etc.</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">bottomspace</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Reserves&nbsp;area of the specified height, in pixels, in the parent of the table window, just beneath the table.&nbsp;Use <a href="Createtablechild.htm"><span style="font-weight: bold;">Createtablechild()</span></a> to create controls. Note that OllyDbg automatically moves and/or resizes these controls when table is resized. <br>Standard OllyDbg windows don't use bottom space, it is intended solelly for use by plugins. This feature is not supported by <a href="i_Frametab.htm"><span style="font-weight: bold;">frames</span></a> and <a href="i_Frametab.htm"><span style="font-weight: bold;">tab collections</span></a><br></span>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">minwidth</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Minimal width of the table window, pixels. Set <span style="font-weight: bold;">minwidth</span> to zero if width control is not necessary</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tabfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the callback of type&nbsp;<a href="TABFUNC.htm"><span style="font-weight: bold;">TABFUNC</span></a> that processes messages and notifications sent to the table, or <span style="font-weight: bold;">NULL</span> if default processing is sufficient</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">updatefunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the optional callback of type&nbsp;<a href="UPDATEFUNC.htm"><span style="font-weight: bold;">UPDATEFUNC</span></a> that actualizes contents of the whole table<a href="i_Tables.htm"><span style="font-weight: bold;"></span></a>.
+This may include recalculation of some fields, adding or deletion of
+table entries, or both. OllyDbg may call this function in the following
+cases:<br>&nbsp; - when window is created;<br>&nbsp;&nbsp;- in WM_PAINT when <span style="font-weight: bold;">version</span> of the associated sorted data is changed;<br>&nbsp;
+- when debugged application is paused by the user or due to the debugging
+request, but not when debugging event is continued immediately</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">drawfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the mandatory callback of type&nbsp;<a href="DRAWFUNC.htm"><span style="font-weight: bold;">DRAWFUNC</span></a></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> that prepares contents of table cells displayed on the screen</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"><a href="DRAWFUNC.htm"><span style="font-weight: bold;"></span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tableselfunc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the optional callback of type <a href="TABSELFUNC.htm"><span style="font-weight: bold;">TABSELFUNC</span></a> that is called each time the selection in the table window&nbsp;is changed</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">menu</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Pointer to the array of type <a href="t_menu.htm"><span style="font-weight: bold;">t_menu</span></a> that describes pop-up <a href="i_Menu.html"><span style="font-weight: bold;">menu</span></a> associated with the table, or <span style="font-weight: bold;">NULL</span> if menu is not necessary</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">customode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used by <a href="i_Frametab.htm"><span style="font-weight: bold;">tab collection</span></a>
+to keep tab index. Tables created by plugins which are not parts of the
+tab collection are free to use this variable for any purposes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">customdata</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used by <a href="i_Frametab.htm"><span style="font-weight: bold;">tab collection</span></a>
+to keep internal data. Tables created by plugins which are not parts of the
+tab collection are free to use this variable for any purposes</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hparent</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the window that owns table window (MDI container, overlapped window, tab collection,&nbsp;frame etc.), or <span style="font-weight: bold;">NULL</span> if table is not displayed</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hstatus</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the optional status bar at the bottom of the parent window. Absent if table is part of the frame or tab collection</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hw</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the table window (window that displays table data), or <span style="font-weight: bold;">NULL</span> if table is not displayed</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">htooltip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Handle of the optional&nbsp;window of class <span style="font-weight: bold;">TOOLTIPS_CLASS</span>
+that displays bar tooltips. This window is fully controlled by the
+OllyDbg, Don't tamper with it unless you are really, really sure!</span> <br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">font</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of the font (0..<span style="font-weight: bold;">NFIXFONTS</span>-1) used in the table</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">scheme</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Index of the colour scheme (0..<span style="font-weight: bold;">NSCHEMES</span>-1) used in the table</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hilite</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If table supports highlighting (flag <span style="font-weight: bold;">TABLE_SYNTAX</span> is set), this is the index of the highlighting scheme (1..<span style="font-weight: bold;">NHILITE</span>-1) used in the table, or <span style="font-weight: bold;">NOHILITE</span> if syntax highlighting is turned off</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hscroll</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Flag
+indicating whether horizontal scroll will be displayed in the table
+window if sum of the horizontal column extents exceeds width of the
+client area</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">xshift</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Zero-based index of the leftmost visible table pixel displayed in the table window</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">offset</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Zero-based index of the first line visible in the table window. Note that if flag <span style="font-weight: bold;">TABLE_DIR</span> is set, this line is displayed at the bottom of the window</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">colsel</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Zero-based index of the selected column. Applies only to tables of type <span style="font-weight: bold;">TABLE_COLSEL</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">version</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Version of the associated <a href="i_Sorteddata.htm"><span style="font-weight: bold;">sorted data</span></a> during the last processed <span style="font-weight: bold;">WM_PAINT</span>, allows to determine whether displayed data is changed and should be repainted</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">timerdraw</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Period of automatic redraw in milliseconds, or 0 if this feature is turned off</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">rcprev</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used internally by OllyDbg</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">rtback</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Used internally by OllyDbg</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Tables.htm">Tables</a>, <a href="i_Frametab.htm">Frames and tab collections</a>, <a href="t_bar.htm">t_bar</a>, <a href="t_sorted.htm">t_sorted</a>, <a href="DRAWFUNC.htm">DRAWFUNC</a>, <a href="MENUFUNC.htm">MENUFUNC</a>, <a href="TABFUNC.htm">TABFUNC</a>, <a href="TABSELFUNC.htm">TABSELFUNC</a>, <a href="UPDATEFUNC.htm">UPDATEFUNC</a>, <a href="WM_USER_xxx.htm">WM_USER_xxx messages</a>, <a href="Createottablewindow.htm">Createottablewindow()</a>, <a href="Createtablechild.htm">Createtablechild()</a>, <a href="Createtablewindow.htm">Createtablewindow()</a>, <a href="Setautoupdate.htm">Setautoupdate()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

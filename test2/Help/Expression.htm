@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Expression</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Expression</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+Expression(t_result *result,wchar_t *expression,uchar *data,ulong
+base,ulong size,ulong threadid,ulong a,ulong b,ulong mode);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Evaluates <a href="i_Expressions.htm"><span style="font-weight: bold;">expression</span></a> to numerical and/or text value in one step. In fact, this is a shortcut that calls first <a href="Cexpression.htm"><span style="font-weight: bold;">Cexpression()</span></a> (expression parser) then <a href="Eexpression.htm"><span style="font-weight: bold;">Eexpression()</span></a>
+(expression estimator). Does not support multi-expression strings. If
+value of expression must be calculated several
+times,&nbsp;split&nbsp;this call in two or consider use of </small></span><a href="Fastexpression.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Fastexpression()</span></small></a><span style="font-family: Helvetica,Arial,sans-serif;"><small>.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">result</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Structure of type <a href="t_result.htm"><span style="font-weight: bold;">t_result</span></a> that receives results of the evaluation</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">expression</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the expression, zero-terminated UNICODE string. The syntax of &nbsp;expressions is described <a href="i_Expressions.htm"><span style="font-weight: bold;">here</span></a>. Note that <span style="font-weight: bold;">Expression()</span> is unable to process multi-expression strings in form "<span style="font-style: italic;">&lt;expression1&gt;,&lt;expression2&gt;, ...</span>"</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Pointer to the optional copy of memory contents. If <span style="font-weight: bold;">data</span> is NULL, flag <span style="font-weight: bold;">EMOD_NOMEMORY</span> is not set and expression includes contents of memory, <span style="font-weight: bold;">Expression()</span> reads memory of debugged process. If <span style="font-weight: bold;">data</span> is not NULL and expression accesses memory in the range [<span style="font-weight: bold;">base</span>..<span style="font-weight: bold;">base</span>+<span style="font-weight: bold;">size</span>-1], contents of memory is taken from the <span style="font-weight: bold;">data</span>. In all other cases attempt to access memory will result in the failure</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Base address of the supplied data block, ignored if <span style="font-weight: bold;">data</span> is NULL</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Size&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">of the supplied data block, ignored if <span style="font-weight: bold;">data</span> is NULL</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">threadid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Identifier of the thread containing CPU registers used in the evaluation of the <span style="font-weight: bold;">expression</span>. If <span style="font-weight: bold;">expression</span> specifies register and <span style="font-weight: bold;">threadid</span> is 0, <span style="font-weight: bold;">Expression()</span> will fail</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">a</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) First parameter, determines value of the pseudovariable %A in <span style="font-weight: bold;">expression</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">b</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Second parameter, determines value of the pseudovariable %B in <span style="font-weight: bold;">expression</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Evaluation mode, combination of zero or more of the following flags:<br><span style="font-weight: bold;">EMOD_CHKEXTRA</span> - reports error "Extra characters on line" if the first non-blank symbol </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">after syntactically complete expression of maximal length is neither '\0' nor semicolon (</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">starts comment)<br><span style="font-weight: bold;">EMOD_NOVALUE</span> - requests not&nbsp;to convert the binary value of the expression (<span style="font-weight: bold;">result-&gt;data</span>) to&nbsp;text (<span style="font-weight: bold;">result-&gt;value</span>)<br><span style="font-weight: bold;">EMOD_NOMEMORY</span> - forbids reading of the Debuggee's memory. If <span style="font-weight: bold;">expression</span> includes contents of memory and <span style="font-weight: bold;">data</span> is not supplied, evaluation will fail<br><span style="font-weight: bold;">EMOD_MULTI</span> - not allowed in calls to <span style="font-weight: bold;">Expression()</span><br></span>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Number of processed UNICODE characters in <span style="font-weight: bold;">expression</span>.
+If expression is syntactically invalid, this is roughly the location of
+the syntax error. The inability to estimate the value of the
+syntaxically correct expression is indicated by the type <span style="font-weight: bold;">EXPR_INVALID</span> in <span style="font-weight: bold;">result-&gt;datatype</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>This is the <a href="DRAWFUNC.htm"><span style="font-weight: bold;">drawing function</span></a> of the Watches window:<br><br></small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef struct t_watch {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Watch descriptor<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+addr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// 0-based watch index<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Reserved, always 1<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Service information, TY_xxx<br>&nbsp;
+wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+expr[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Watch
+expression<br>} t_watch;<br><br>// Drawing function of watch window.<br>int Watchdraw(wchar_t *s,uchar *mask,int *select,<br>&nbsp; t_table *pt,t_drawheader *ph,int column,void *cache) {<br>&nbsp; int n=0;<br>&nbsp; t_watch *pwatch=(t_watch *)ph;<br>&nbsp; t_result result;<br>&nbsp; switch (column) {<br>&nbsp;&nbsp;&nbsp;
+case
+DF_CACHESIZE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request for draw cache size<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>&nbsp;&nbsp;&nbsp;
+case
+DF_FILLCACHE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request to fill draw cache<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>&nbsp;&nbsp;&nbsp;
+case
+DF_FREECACHE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request to free cached resources<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>&nbsp;&nbsp;&nbsp;
+case
+DF_NEWROW:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Request to start new row in window<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br>&nbsp;&nbsp;&nbsp;
+case
+0:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Expression<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,pwatch-&gt;expr);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;
+case
+1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Value of expression<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (pwatch-&gt;addr==(ulong)watch.sorted.n-1)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+break; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; // Last expression is always empty<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Expression(&amp;result,pwatch-&gt;expr,NULL,0,0,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Getcputhreadid(),0,0,EMOD_CHKEXTRA);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (result.datatype==EXPR_INVALID)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *select=DRAW_HILITE|DRAW_TEXT;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n=StrcopyW(s,TEXTLEN,result.value);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp; default: break; };<br>&nbsp; return n;<br>}; </span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Expressions.htm">Expressions</a>, <a href="t_result.htm">t_result</a>, <a href="t_watch.htm">t_watch</a>, <a href="Cexpression.htm">Cexpression()</a>, <a href="Eexpression.htm">Eexpression()</a>, <a href="Exprcount.htm">Exprcount()</a>, <a href="Fastexpression.htm">Fastexpression()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

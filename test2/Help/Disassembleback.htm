@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Disassembleback</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Disassembleback</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">ulong
+Disassembleback(uchar *copy,ulong base,ulong size,ulong ip,ulong
+n,uchar *decode);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Calculates address of the <span style="font-weight: bold;">n</span>-th
+command preceding address <span style="font-weight: bold;">ip</span>
+in the code block described by <span style="font-weight: bold;">base</span>
+and <span style="font-weight: bold;">size</span>.
+If <span style="font-weight: bold;">copy</span> of
+executable code is not supplied, function assumes memory and reads it
+by itself. In this case correct functionality is guaranteed only for <span style="font-weight: bold;">n</span>&lt;=256.
+Backstepping of 80x86 code is a&nbsp;nontrivial task. If decoding data
+is unavailable, this function is relatively slow and not
+error-prone&nbsp;(although errors are usually not critical).<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">copy</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the copy of the executable code that starts at address <span style="font-weight: bold;">base</span> and is at least
+<span style="font-weight: bold;">size</span> bytes
+long. If <span style="font-weight: bold;">copy</span>
+is NULL, function assumes that code is in the memory of the debugged
+process and reads it automatically. Due to the limited size of the
+internal buffer, correct answer in this case is guaranteed only if <span style="font-weight: bold;">n</span> does not exceed 256</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">base</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Base
+address of the memory block pointed to by <span style="font-weight: bold;">copy</span><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Size,
+in bytes, of the </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">memory
+block pointed to by <span style="font-weight: bold;">copy</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Address of the initial command</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">n</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Number
+of commands to backstep. For example, <span style="font-weight: bold;">n</span>=1 means command that immediately precedes initial command</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">decode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the <a style="font-weight: bold;" href="i_Analysis.htm">decoding data</a>, <span style="font-weight: bold;">USEDECODE</span> if
+function must get decoding data automatically, or NULL if decoding is
+not necessary or&nbsp;unavailable. If decoding data is supplied, it
+must start at <span style="font-weight: bold;">base</span>
+and be at least <span style="font-weight: bold;">size</span>
+bytes long. Use decoding if you want to treat embedded data recognized
+by Analyser the same way as commands</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On
+success, returns starting address of the <span style="font-weight: bold;">n</span>-th command preceding <span style="font-weight: bold;">ip</span> or <span style="font-weight: bold;">base</span><span style="font-weight: bold;"></span>, whichever is larger. On error, returns <span style="font-weight: bold;">ip</span></small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Analysis.htm">Analysis</a>, <a href="i_Disasm.htm">Assembler and disassembler</a>, <a href="Disassembleforward.htm">Disassembleforward()</a>, <a href="Dumpback.htm">Dumpback()</a>, <a href="Dumpforward.htm">Dumpforward()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

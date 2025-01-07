@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Decodeaddress</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Decodeaddress</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int Decodeaddress(ulong addr,ulong amod,int mode,wchar_t *symb,int nsymb,wchar_t *comment);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Decodes to text and optionally comments memory address that belongs to&nbsp;the debugged application.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Memory
+address in the context of the debugged application</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">amod</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Memory
+address in the context of the debugged application that belongs to the
+reference module, or 0 if reference module is not used. May coincide
+with <span style="font-weight: bold;">addr</span></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mode</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Decoding mode, a combination of zero or more of the following flags:<br>Flags that determine whether to decode and comment address:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_VALID</span> -&nbsp;decode&nbsp;only if memory at address <span style="font-weight: bold;">addr</span> exists</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_INMOD</span> - decode only when <span style="font-weight: bold;">addr</span> belongs to some module</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_SAMEMOD</span> - decode only when <span style="font-weight: bold;">addr</span> belongs to the reference module determined by <span style="font-weight: bold;">amod</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_SYMBOL</span> - decode only when <span style="font-weight: bold;">addr</span> is labelled (has&nbsp;symbolic name)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_NONTRIVIAL</span> - if <span style="font-weight: bold;">DM_RELOFFS</span> is set and <span style="font-weight: bold;">addr</span> points into the procedure, make comment only if <span style="font-weight: bold;">addr</span>
+is not the start address of this procedure. (If this were the case,
+comment would coincide with or be very similar to the decoding)</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">Flags that control text format:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_BINARY</span> - decode <span style="font-weight: bold;">addr</span> to the hexadecimal string even if symbolic name is available</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_DIFBIN</span> - use symbolic name&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">only if <span style="font-weight: bold;">addr</span> belongs to the reference module determined by <span style="font-weight: bold;">amod</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_WIDEFORM</span> - hexadecimal name must be 8 characters long</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_OFFSET</span> - prefix text with&nbsp;'OFFSET' if <span style="font-weight: bold;">addr</span> points to data section</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_JUMPIMP</span> - &nbsp;if <span style="font-weight: bold;">addr</span> points to JMP to import, decode it as "&lt;JMP.importname&gt;"</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_DYNAMIC</span> - if <span style="font-weight: bold;">addr</span> points to indirect JMP whose&nbsp;destination is the export in some DLL,&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">decode it as "&lt;JMP.importname&gt;". Note the difference: in the case of <span style="font-weight: bold;">DM_JUMPIMP</span>, import is static and was resolved by the loader; in the case of <span style="font-weight: bold;">DM_DYNAMIC</span>, exported address was probably returned by GetProcAddress()</span></small><br></div><small><span style="font-family: Helvetica,Arial,sans-serif;">Flags&nbsp;that control whether address will be preceded with the name of the module:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_NOMODNAME</span> - never add module name</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_DIFFMODNAME</span> - add module name only if <span style="font-weight: bold;">addr</span> does not belong to the </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">reference module determined by <span style="font-weight: bold;">amod</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_MODNAME</span> - if <span style="font-weight: bold;">addr</span> belongs to some module, always add module name</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">Flags&nbsp;that control comment:<br></span></small><div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_STRING</span> - check whether <span style="font-weight: bold;">addr</span> points to&nbsp;ASCII or UNICODE string</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_STRPTR</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - check whether <span style="font-weight: bold;">addr</span> points to the pointer to ASCII or UNICODE string</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_FOLLOW</span> - check whether <span style="font-weight: bold;">addr</span>
+points to jump or sequence of jumps to the exported symbol. This is not
+quite the same as jumps to import above, because some entries may be
+redirected to different DLLs</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_ENTRY</span> - check whether <span style="font-weight: bold;">addr</span> points to
+the unnamed entry point of some&nbsp;subroutine. Note that
+the first command in a recognized procedure is not automatically an entry point, it must be&nbsp;called from somewhere</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_EFORCE</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">check whether <span style="font-weight: bold;">addr</span> points to
+the&nbsp;named&nbsp;subroutine</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_DIFFMOD</span> - check whether <span style="font-weight: bold;">addr</span> points to different module</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_RELOFFS</span> - check whether <span style="font-weight: bold;">addr</span> points inside the recognized procedure</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DM_ANALYSED</span> - check whether <span style="font-weight: bold;">addr</span> points&nbsp;to&nbsp;data embedded into the code section</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif;">Standard commenting mode, <span style="font-weight: bold;">DM_COMMENT</span>, is defined as </span></small><small style="font-weight: bold;"><span style="font-family: Helvetica,Arial,sans-serif;">(DM_STRING|DM_STRPTR|DM_FOLLOW|DM_ENTRY|DM_ANALYSED)</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">. Note that&nbsp;<span style="font-weight: bold;">DM_DIFFMOD</span> and <span style="font-weight: bold;">DM_RELOFFS</span> are not included<span style="font-weight: bold;"></span><a href="i_Modules.htm"><span style="font-weight: bold;"></span></a><br>
+</span></small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">symb</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Pointer to the UNICODE buffer of length at least <span style="font-weight: bold;">nsymb</span> wide
+characters that will receive the decoded text. This text &nbsp;is
+always null-terminated</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nsymb</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Length
+of the buffer <span style="font-weight: bold;">symb</span>
+in wide characters. If buffer is shorter than 24 wide characters,
+function will fail. If decoded text is longer than the buffer, it will
+be truncated and its last three significant characters will be replaced
+by synopsis ('...')</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">comment</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out)
+Optional pointer to the UNICODE buffer, TEXTLEN wide characters long,
+that will receive comment, or NULL if comment is not necessary</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>If
+decoding was successful, returns length of the&nbsp;string in the
+wide characters. On error, returns 0</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Decoderange.htm">Decoderange()</a>, <a href="Decoderelativeoffset.htm">Decoderelativeoffset()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

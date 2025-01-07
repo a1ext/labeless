@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>STAT_xxx</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">STAT_xxx</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Enumeration
+of type <span style="font-weight: bold;">t_status</span> that selects the running status of the application. Kept in the <span style="font-weight: bold;">run.status</span>.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="font-weight: bold; width: 130px;"><small>STAT_IDLE</small></td>
+<td><small>OllyDbg is idle, no application to debug</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_LOADING</small></td>
+<td><small>OllyDbg is loading new process</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_ATTACHING</small></td>
+<td><small>OllyDbg is attaching to the running process</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_RUNNING</small></td>
+<td><small>All threads run with full speed (unless suspended by the application or on user request)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_RUNTHR</small></td>
+<td><small>Single thread is running with full speed</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_STEPIN</small></td>
+<td><small>Single stepping into (entering subroutines), single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_STEPOVER</small></td>
+<td><small>Single stepping&nbsp;over the calls, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_ANIMIN</small></td>
+<td><small>Animating&nbsp;into (entering subroutines), single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_ANIMOVER</small></td>
+<td><small>Animating&nbsp;over the calls, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_TRACEIN</small></td>
+<td><small>Tracing&nbsp;into (entering subroutines), single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_TRACEOVER</small></td>
+<td><small>Tracing over the calls, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_SFXRUN</small></td>
+<td><small>OllyDbg&nbsp;searches for the real entry point of the compressed application using run trace, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_SFXHIT</small></td>
+<td><small>OllyDbg&nbsp;searches for the real entry point of the compressed application using hit trace</small><small>, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_SFXKNOWN</small></td>
+<td><small>OllyDbg&nbsp;searches for the known real entry point of the compressed application</small><small>, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_TILLRET</small></td>
+<td><small>Stepping over till return, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_OVERRET</small></td>
+<td><small>Stepping over till return and then over the found return, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_TILLUSER</small></td>
+<td><small>Stepping over till user code, single thread</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_PAUSING</small></td>
+<td><small>Pausing running process</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_PAUSED</small></td>
+<td><small>Process is paused</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_FINISHED</small></td>
+<td><small>Process is terminated but is still in the memory</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>STAT_CLOSING</small></td>
+<td><small>Process is requested to close or detach</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>If state is described as "single thread", it means that only the thread specified in <span style="font-weight: bold;">run.threadid</span> is active.<br><br>Never set <span style="font-weight: bold;">run.status</span> directly. If absolutely necessary, call <a href="Setstatus.htm"><span style="font-weight: bold;">Setstatus()</span></a>.
+In general, plugins are discouraged from changing the running status
+because it may interfere with the internal logic of the debugging
+engine.<br><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_run.htm">t_run</a>,
+<a href="Run.htm">Run()</a>, <a href="Setstatus.htm">Setstatus()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

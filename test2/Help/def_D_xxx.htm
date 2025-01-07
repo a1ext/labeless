@@ -1,0 +1,580 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>D_xxx</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">D_xxx</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Constants
+<span style="font-weight: bold;">D_xxx</span> define
+properties of the disassembled command as a whole, or tell Disassembler
+which mnemonics and arguments must be selected.<br>
+<br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">General
+type of the command, only one is allowed. Use D_CMDTYPE to extract:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="font-weight: bold; width: 110px;"><small>D_CMD</small></td>
+<td><small>Ordinary command,&nbsp;none
+of the listed
+below (DEC, IDIV, MOVSB, UD2, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MOV</small></td>
+<td><small>Move to or from integer register
+(MOV, MOVZX, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MOVC</small></td>
+<td><small>Conditional move to integer register
+(CMOVZ, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_SETC</small></td>
+<td><small>Conditional set integer register
+(SETBE, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_TEST</small></td>
+<td><small>Used to
+test data (CMP, TEST, BT, AND, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_STRING</small></td>
+<td><small>String
+command with REPxxx prefix (REP MOVSB, REP SCASB, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_JMP</small></td>
+<td><small>Unconditional near jump (JMP)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_JMPFAR</small></td>
+<td><small>Unconditional far jump (JMP FAR)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_JMC</small></td>
+<td><small>Conditional jump depending only on
+flags (JNZ, JPE, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_JMCX</small></td>
+<td><small>Conditional jump
+depending&nbsp;on (E)CX&nbsp;and maybe flags (JCXZ, LOOP,
+LOOPNZ, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_PUSH</small></td>
+<td><small>Pushes
+exactly 1 (double)word of data (PUSH, PUSHF)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_POP</small></td>
+<td><small>Pops
+exactly 1 (double)word of data (POP, POPF)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_CALL</small></td>
+<td><small>Plain
+near call (CALL)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_CALLFAR</small></td>
+<td><small>Plain far call (CALL FAR)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_INT</small></td>
+<td><small>Interrupt (INT, INT0, INT3, ICEBP,
+...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_RET</small></td>
+<td><small>Plain
+near return from call (RETN)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_RETFAR</small></td>
+<td><small>Far
+return or IRET (RETF, IRET)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FPU</small></td>
+<td><small>FPU
+command (FABS, FADD, FINCSTP, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MMX</small></td>
+<td><small>MMX
+instruction, including SSE extensions (MOVQ, PACKSSWB, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_3DNOW</small></td>
+<td><small>AMD's 3DNow!
+instruction (PF2ID, PFSUBR, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_SSE</small></td>
+<td><small>SSE instruction (MOVQ, PACKSSWB, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_IO</small></td>
+<td><small>Instruction that accesses I/O ports
+(IN, INSB, REP OUTS, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_SYS</small></td>
+<td><small>Instruction that is legal
+on Ring3 but is useful only in system code (MONITOR, ARPL, RDTSC, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_PRIVILEGED</small></td>
+<td><small>Privileged (non-Ring3) command
+(CLTS, HLT, INVLPG, LGDT, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_DATA</small></td>
+<td><small>Data
+recognized by the Analyser</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_PSEUDO</small></td>
+<td><small>Pseudocommand, used only
+in&nbsp;search models (JCC, CMOVCC, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_PREFIX</small></td>
+<td><small>Standalone prefix (recognized only
+if command contains repeated or contradictory prefixes, like INC
+[ES:FS:EAX])</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_BAD</small></td>
+<td><small>Bad or
+unrecognized command. Note that UD2 is treated as a valid command<br>
+</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Bits
+describing additional parts of the command:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_SIZE01</small></td>
+<td><small>LSB of the last byte of the opcode
+indicates data size (byte or&nbsp;word/doubleword)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_POSTBYTE</small></td>
+<td><small>Instruction contains postbyte
+(extension of the opcode, technically implemented as a 1-byte immediate
+constant)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Bits
+used by Disassembler to determine which mnemonics should be used</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_LONGFORM</small></td>
+<td><small>This is a long form of the string
+command (short form: MOVSB; long form: MOVS [BYTE EDI],[BYTE ESI])</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Required
+data and address size (controlled by prefixes 0x66, 0x67):</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_DATA16</small></td>
+<td><small>Instruction requires 16-bit operand
+size (CBW, CWD)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_DATA32</small></td>
+<td><small>Instruction requires 32-bit data
+size (CDQ, CWDE)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_ADDR16</small></td>
+<td><small>Instruction requires 16-bit address
+size (JCXZ, LOOPW, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_ADDR32</small></td>
+<td><small>Instruction requires 32-bit address
+size (JECXZ, LOOPD, ...)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Prefixes
+that command may, must or must not possess, only one is allowed. Use
+D_MUSTMASK to extract:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_NOMUST</small></td>
+<td><small>No obligatory prefixes (default)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUST66</small></td>
+<td><small>SSE command, requires prefix 0x66,
+but neither 0xF2 nor 0xF3 </small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUSTF2</small></td>
+<td><small>SSE command, requires prefix 0xF2,
+but neither 0x66 nor 0xF3</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUSTF3</small></td>
+<td><small>SSE command, requires prefix 0xF3,
+but neither 0x66 nor 0xF2</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUSTNONE</small></td>
+<td><small>MMX or SSE command, neither 0x66
+nor&nbsp;0xF2 nor 0xF3 are allowed</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_NEEDF2</small></td>
+<td><small>SSE command, requires prefix 0xF2
+but&nbsp;not 0xF3</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_NEEDF3</small></td>
+<td><small>SSE command, requires prefix 0xF3
+but&nbsp;not 0xF2</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_NOREP</small></td>
+<td><small>Must include neither&nbsp;0xF2
+nor 0xF3</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUSTREP</small></td>
+<td><small>Must include prefix 0xF3 (REP)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUSTREPE</small></td>
+<td><small>Must include prefix 0xF3 (REPE)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_MUSTREPNE</small></td>
+<td><small>Must include prefix 0xF2 (REPNE)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Additional
+prefixes that command may possess</span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_LOCKABLE</small></td>
+<td><small>LOCK prefix is allowed, but only if
+this instruction accesses memory</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_BHINT</small></td>
+<td><small>Instruction supports branch hints
+(prefixes 0x2E, 0x3E)&nbsp;</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Bits
+determining whether ModRegRM address byte field must specify register
+or memory</span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_MEMORY</small></td>
+<td><small>Mod field of the ModRegRM byte must
+specify memory location</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_REGISTER</small></td>
+<td><small>Mod field of the ModRegRM byte must
+specify register</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Flags
+modified by command, only one is allowed. Use D_FLAGMASK to extract:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_NOFLAGS</small></td>
+<td><small>Flags S, Z, P, O, C remain unchanged
+(most MOVxx, I/O, FPU, MMX, SSE, 3DNow! command)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_ALLFLAGS</small></td>
+<td><small>Modifies flags S, Z, P, O, C (most
+integer arithmetic commands)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FLAGZ</small></td>
+<td><small>Modifies only flag Z (LAR, ARPL, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FLAGC</small></td>
+<td><small>Modifies only flag C (CLC, CMC, STC)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FLAGSCO</small></td>
+<td><small>Modifies only flags C and O (RCL,
+ROR, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FLAGD</small></td>
+<td><small>Modifies only flag D (CLD, STD)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FLAGSZPC</small></td>
+<td><small>Modifies flags&nbsp;Z, P and C
+(FCOMI, FUCOMI, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_NOCFLAG</small></td>
+<td><small>Modifies flags S, Z, P and O (INC,
+DEC)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Flags
+determining how commands influence FPU stack. Use D_FPUMASK to extract</span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_FPUSAME</small></td>
+<td><small>Does not rotate FPU stack (default)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FPUPOP</small></td>
+<td><small>Pops FPU stack oncer</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FPUPOP2</small></td>
+<td><small>Pops FPU stack twice</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_FPUPUSH</small></td>
+<td><small>Pushes FPU stack oncer</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Flags
+determining how commands influences register ESP</span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_CHGESP</small></td>
+<td><small>Instruction indirectly modifies ESP
+(CALL, ENTER, POP, ...)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Flags
+specifying other command features:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_HLADIR</small></td>
+<td><small>Instruction has non-standard order
+of operands in HLA (Randall Hyde's High Level Assembler) notation</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_WILDCARD</small></td>
+<td><small>Command mnemonics contains wildcard
+which must be replaced by W (word) or D (doubleword data size)
+(ICMPSB/CMPSW)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_COND</small></td>
+<td><small>Conditional
+instruction,&nbsp;its action depends on the CPU flags (CMOVB, JNZ,
+LOOPNE, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_USESCARRY</small></td>
+<td><small>Result of the executions depends on
+the state of C flag (ADC, CMC, JB, RCL, ...)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Flags
+that mark rare or suspicious commands, only one is allowed. Use
+D_USEMASK to extract:</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 35px;"></td>
+<td style="font-family: Helvetica,Arial,sans-serif;">
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="0">
+<tbody>
+<tr>
+<td style="width: 110px; font-weight: bold;"><small>D_RARE</small></td>
+<td><small>Command is rare or obsolete in
+32-bit flat Windows applications (MWAIT, AAA, CLI, OUT, INT3, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_SUSPICIOUS</small></td>
+<td><small>Suspicious command (JMP FAR, SYSEXIT, UD2, ...)</small></td>
+</tr>
+<tr>
+<td style="font-weight: bold;"><small>D_UNDOC</small></td>
+<td><small>Undocumented instruction (SALC, ...)</small></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_bincmd.htm">t_bincmd</a>,&nbsp;<a href="t_cmdinfo.htm">t_cmdinfo</a>, <a href="t_disasm.htm">t_disasm</a>, <a href="Cmdinfo.htm">Cmdinfo()</a>, <a href="Disasm.htm">Disasm()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

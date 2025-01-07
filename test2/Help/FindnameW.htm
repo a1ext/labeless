@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>FindnameW</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">FindnameW</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int FindnameW(ulong addr,int type,wchar_t *name,int nname);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Searches for symbolic&nbsp;name of given <span style="font-weight: bold;">type</span> associated with address <span style="font-weight: bold;">addr</span>. On error, or if there is no associated name, returns 0. If name exists but argument <span style="font-weight: bold;">name</span>
+is NULL, returns 1. On success, copies name to the buffer (truncating
+if buffer is too small) and returns number of copied wide characters,
+not including the terminal null.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">addr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Name address. The meaning of this parameter depends on the <span style="font-weight: bold;">type</span>. For example, for <span style="font-weight: bold;">NM_LABEL</span> this is the address of the labelled memory in the contents of the debugged application. For <span style="font-weight: bold;">NM_LABELSAV</span>, it is the index (0..<span style="font-weight: bold;">NSTRINGS</span>-1) in the list of last entered labels</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">type</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Name type. Use predefined constants <span style="font-weight: bold;">NM_xxx</span> for names created and maintained by OllyDbg. Plugins are free to use custom types that may be reserved by <a href="Plugingetuniquedatatype.htm"><span style="font-weight: bold;">Plugingetuniquedatatype()</span></a></span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">name</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(out) Buffer of size at least <span style="font-weight: bold;">nname</span>
+wide characters that receives the symbolic name, or NULL if name itself
+is not necessary and function is called only to determine whether name
+exists or not</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nname</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Size of <span style="font-weight: bold;">name</span> in wide characters, ignored if <span style="font-weight: bold;">name</span> is NULL</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>On error, or if there is no associated name, returns 0. If name exists but argument <span style="font-weight: bold;">name</span>
+is NULL, returns 1. On success, returns number of copied wide characters,
+not including the terminal null</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Example:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>(as yet none).</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:<br><br></span>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Data.htm">Data functions</a>, <a href="FindaddressW.htm">FindaddressW()</a>, <a href="Findlabel.htm">Findlabel()</a>, <a href="FindnextnameW.htm">FindnextnameW()</a>, <a href="FindnextnamelistW.htm">FindnextnamelistW()</a>, <a href="InsertnameW.htm">InsertnameW()</a>, <a href="Plugingetuniquedatatype.htm">Plugingetuniquedatatype()</a>, <a href="QuickinsertnameW.htm">QuickinsertnameW()</a>, <a href="Startnextnamelist.htm">Startnextnamelist()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

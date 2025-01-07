@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Memalloc</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Memalloc</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void * Memalloc(ulong size,int flags);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>Allocates memory in the context of OllyDbg. Requests are redirected to <span style="font-weight: bold;">GlobalAlloc()</span>. Use it to allocate larger chunks of memory. Call <a href="Memfree.htm"><span style="font-weight: bold;">Memfree()</span></a> to free this memory.<br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Size of the memory to allocate, bytes<br></span>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">flags</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Allocation options, a combination of zero or more of the following flags:<br><span style="font-weight: bold;">REPORT</span> - report memory allocation errors. Incompatible with SILENT<br><span style="font-weight: bold;">SILENT</span> - don't report memory allocation errors<br><span style="font-weight: bold;">ZEROINIT</span> - initialize allocated memory to 0<br></span>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>On success, returns pointer to the allocated memory. Otherwise, returns NULL</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Hidden feature:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>OllyDbg
+implements optional detection of memory leaks and buffer
+overflows. To turn it on, search for the following line in the main
+initialization file (usually <span style="font-style: italic;">ollydbg.ini</span>):<br><br></small></span><span style="font-family: monospace;">&nbsp; [Settings]</span><br style="font-family: monospace;"><span style="font-family: monospace;">&nbsp; Monitor internal memory allocation=0</span><br style="font-family: monospace;"><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>and change the value to 1.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="Memdouble.htm">Memdouble()</a>, <a href="Memfree.htm">Memfree()</a>, <a href="Mempurge.htm">Mempurge()</a>, <a href="Virtalloc.htm">Virtalloc()</a>, <a href="Virtfree.htm">Virtfree()</a></span></small><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

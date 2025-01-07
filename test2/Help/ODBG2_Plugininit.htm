@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>ODBG2_Plugininit</title>
+
+</head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">ODBG2_Plugininit</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+Optional plugin callback function, called once during the initialization, directly after <a href="ODBG2_Pluginquery.htm"><span style="font-weight: bold;">ODBG2_Pluginquery()</span></a>, giving plugin the chance to make one-time initializations. Note that calls to plugin API&nbsp;in <a href="ODBG2_Pluginquery.htm"><span style="font-weight: bold;">ODBG2_Pluginquery()</span></a> may be dangerous due to the possible API changes in the future. The best place to free allocated resources is <a href="ODBG2_Plugindestroy.htm"><span style="font-weight: bold;">ODBG2_Plugindestroy()</span></a>.<br>
+<br>
+</small></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">int ODBG2_Plugininit(void);<br><br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br></span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">None</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>0 on success,&nbsp;-1 if initialization was unsuccessful and plugin must be closed</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Analysis.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Plugins.htm">Plugins</a>, </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="ODBG2_Plugindestroy.htm"><span style="font-weight: bold;">ODBG2_Plugindestroy()</span></a><span style="font-weight: bold;">,&nbsp;</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="ODBG2_Pluginquery.htm"><span style="font-weight: bold;">ODBG2_Pluginquery()</span></a></small></span>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

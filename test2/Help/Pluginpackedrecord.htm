@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Pluginpackedrecord</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Pluginpackedrecord<br>
+</span></big></big><br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">int
+Pluginpackedrecord(t_uddsave *psave,ulong tag,ulong size,void *data);<br>
+</span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+Compresses&nbsp;plugin-specific record and saves it to the .udd
+file. Call this function only from the callback <a href="ODBG2_Pluginsaveudd.htm"><span style="font-weight: bold;">ODBG2_Pluginsaveudd()</span></a>.
+Use when data is large and easily compressible (for example, sparse or
+repeats). Note that OllyDbg uses free compression code that is not very
+effective.<br><br><span style="font-weight: bold;">Pluginpackedrecord()</span> and <a href="Pluginsaverecord.htm"><span style="font-weight: bold;">Pluginsaverecord()</span></a> are interchangeable. The data returned to&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;"><a href="ODBG2_Pluginuddrecord.htm">ODBG2_Pluginuddrecord()</a></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> will be uncompressed to the original state.<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">psave</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to internal OllyDbg structure that identifies plugin in the
+.udd file. Plugin receives this pointer from </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="ODBG2_Pluginsaveudd.htm"><span style="font-weight: bold;">ODBG2_Pluginsaveudd()</span></a></small></span><small><span style="font-family: Helvetica,Arial,sans-serif;">. Plugin is
+not allowed to modify <span style="font-weight: bold;">psave</span>
+directly</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">tag</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Plugin-unique constant in the range 1..65535 that identifies records of
+given type. It is OK to save as many records with the same <span style="font-weight: bold;">tag</span> as necessary.
+When OllyDbg restores .udd file, it reports this <span style="font-weight: bold;">tag</span> to <a href="ODBG2_Pluginuddrecord.htm"><span style="font-weight: bold;">ODBG2_Pluginuddrecord()</span></a><span style="font-weight: bold;"></span>. To avoid
+collisions with other identically named plugins, I recommend to <a href="ODBG2_Pluginsaveudd.htm"><span style="font-weight: bold;">randomize</span></a>
+tags</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in) Record
+size, bytes</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">data</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">(in)
+Pointer to the record</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>Returns
+0 on success and -1 on error</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+<br>
+When OllyDbg restores module-related data from the .udd file, it passes
+records saved by plugin as a sequence of calls to <a href="ODBG2_Pluginuddrecord.htm"><span style="font-weight: bold;">ODBG2_Pluginuddrecord()</span></a>.<br>
+<br>
+If
+data contains address belonging to the processed module, I recommend to
+save it in a relative form, as an offset from the module base. Offsets
+remain valid even if module (DLL) is reallocated.<br>
+<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><a href="i_Plugins.htm"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">Plugins</span></small></a><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;">,&nbsp;</span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="ODBG2_Pluginsaveudd.htm"><span style="font-weight: bold;">ODBG2_Pluginsaveudd()</span></a><span style="font-weight: bold;">, <a href="ODBG2_Pluginuddrecord.htm">ODBG2_Pluginuddrecord()</a>, <a href="Pluginsaverecord.htm">Pluginsaverecord()</a>&nbsp;</span></small></span>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

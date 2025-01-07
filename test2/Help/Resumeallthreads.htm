@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>Resumeallthreads</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Resumeallthreads</span></big></big><br>
+<br>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">void Resumeallthreads(void);<br></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Resumes all threads in the debugged application&nbsp;suspended by call to <a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a>. Calls to </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small> and <span style="font-weight: bold;">Resume</span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">allthreads()</span> must match. If this is the last call and application will continue execution, </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>flushes modifications to memory and invalidates internal copy of registers (sets all <span style="font-weight: bold;"><a href="t_thread.htm">t_thread</a>.regvalid</span> to 0). If there are still unmatched calls to </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>, application remains suspended and call is very fast.</small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>&nbsp;<br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: monospace; font-size: 12px; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Parameters:</span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"><br></span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">None</span><br>
+</small></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Return
+values:</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span>
+<div style="margin-left: 40px;"><span style="font-family: Helvetica,Arial,sans-serif;"><small>None</small></span><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"></span></div>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="i_Debug.htm">Debugging</a>, <a href="t_thread.htm">t_thread</a>, <a href="Flushmemorycache.htm">Flushmemorycache()</a>, <a href="Pauseprocess.htm">Pauseprocess()</a>, </span></small><span style="font-family: Helvetica,Arial,sans-serif;"><small><a href="Suspendallthreads.htm"><span style="font-weight: bold;">Suspendallthreads()</span></a></small></span><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>

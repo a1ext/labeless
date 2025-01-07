@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta name="GENERATOR" content="Microsoft® HTML Help Workshop 4.1"><title>Breakpoints</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">Breakpoints<br>
+</span></big></big><br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>OllyDbg
+supports many different types of breakpoints.<br>
+<br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">INT3 breakpoints</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>To set INT3 breakpoint, OllyDbg replaces first byte of the 80x86
+command by a special code 0xCC (one-byte interrupt with a vector 3,
+also known as a "trap to debugger"). When CPU executes INT3, it
+calls&nbsp;OS interrupt handler which in turn reports it as an
+exception of type <span style="font-weight: bold;">EXCEPTION_BREAKPOINT</span>
+to OllyDbg.<br><br><span style="font-weight: bold;"></span>Number
+of INT3 breakpoints is unlimited. They work only on code. Misplaced
+INT3 breakpoint (set on data or in the middle of the command) may
+easily lead to the crash of debugged application. If OllyDbg is not
+sure whether INT3 breakpoint is allowed, it will ask for confirmation.<br><br>There are four kinds of INT3 breakpoints:<br></small></span><ul><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Manual,
+set by user. They may be programmed to jump only on condition and may
+protocol the call arguments or values defined by the user. Manual
+breakpoints are permanent but may be temporarily disabled. OllyDbg
+keeps them between sessions;</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>One-shot,
+used to pause execution on module entry point,&nbsp;when executing code
+till selection or in similar cases. One-shot breakpoints are
+automatically deleted when hit;</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Temporary,
+used by OllyDbg and plugins to step over the command,&nbsp;to perform
+special actions when system routine is called or to restore manual
+bteakpoint when it is stepped over;</small></span></li><li><span style="font-family: Helvetica,Arial,sans-serif;"><small>Trace breakpoints, used to mark unprocessed or unsure branches during hit trace.</small></span></li></ul><span style="font-family: Helvetica,Arial,sans-serif;"><small>One may set all four breakpoints on the same address, and they will be correctly processed.<br><br>OllyDbg
+frequently uses temporary INT3 breakpoints for internal purposes. In
+the extreme case of hit trace restored from the disk, OllyDbg sets INT3
+breakpoint on every traced command.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Hardware breakpoints</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>80x86 CPUs support 4 hardware breakpoints.&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Hardware breakpoints </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>can be set on memory read, memory&nbsp;read or write, or on instruction execution.&nbsp;</small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>They </small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>
+cover 1, 2 or 4 bytes of memory, and protected memory must be aligned
+on this&nbsp;size. If execution breakpoint is set on data, or read
+breakpoint on command, it will make no harm.<br><br>Like INT3, hardware
+breakpoints may be manual, one-shot and temporary. Manual breakpoints
+may have associated condition and may protocol the values of
+expressions.<br><br>Hardware breakpoints are practically transparent
+for the debugged application, but they are very scarce. They are
+slightly faster than INT3. If OllyDbg is allowed to use hadrware
+breakpoints, it will automatically select INT3 or hardware breakpoint
+when stepping over instructions.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Memory breakpoints</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><br>
+OllyDbg can set memory breakpoints on read,&nbsp;write and/or on
+instruction execution. Number of memory breakpoints is unlimited. Note
+that 80x86 CPU can set memory attributes only on the complete memory
+pages, 4096 bytes long. Therefore memory breakpoints produce many false
+breaks and in some cases may be very slow.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small>Memory breakpoints are user-controlled. They&nbsp;may have associated condition and may protocol the
+values of expressions.<br></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>If
+kernel attempts to access protected memory page, this may result in the
+crash of the debugged application. Memory breakpoint on the stack is an
+absolute no-go.<br><br></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Guarded pages (breaks on access)</span><br>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small>Guarded
+pages&nbsp;are one-shot breakpoints set on access (read, write or
+execution) to memory page. Windows report them as an exception of type
+EXCEPTION_GUARD_PAGE and automatically remove guarding from the touched
+page. Guarded pages seem to be kernel-safe.<br><br>OllyDbg may use guarded pages to pause the debugged application.<br><br><br>
+</small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">API
+functions:<br><br></span>
+<small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"></span></small><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;"></span><span style="font-weight: bold;">int <a href="Setint3breakpoint.htm">Setint3breakpoint</a>(ulong addr,ulong type,int fnindex,</span><span style="font-weight: bold;">int limit,int count,ulong actions,</span><span style="font-weight: bold;">wchar_t *condition,wchar_t *expression,wchar_t *exprtype);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Removeint3breakpoint.htm">Removeint3breakpoint</a>(ulong addr,ulong type);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Enableint3breakpoint.htm">Enableint3breakpoint</a>(ulong addr,int enable);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Confirmint3breakpoint.htm">Confirmint3breakpoint</a>(ulong addr);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Confirmint3breakpointlist.htm">Confirmint3breakpointlist</a>(ulong *addr,int naddr);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">void <a href="Wipebreakpointrange.htm">Wipebreakpointrange</a>(ulong addr0,ulong addr1);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><br><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Sethardbreakpoint.htm">Sethardbreakpoint</a>(int index,ulong size,ulong type,int fnindex,</span><span style="font-weight: bold;">ulong addr,int limit,int count,ulong actions,</span><span style="font-weight: bold;">wchar_t *condition,wchar_t *expression,wchar_t *exprtype);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Removehardbreakpoint.htm">Removehardbreakpoint</a>(int index);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Enablehardbreakpoint.htm">Enablehardbreakpoint</a>(int index,int enable);</span><br style="font-weight: bold;"><span style="font-weight: bold;">int <a href="Findfreehardbreakslot.htm">Findfreehardbreakslot</a>(ulong type);</span><br style="font-weight: bold;"></small></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Confirmhardwarebreakpoint.htm">Confirmhardwarebreakpoint</a>(ulong addr);<br><br>int <a href="Plugintempbreakpoint.htm">Plugintempbreakpoint</a>(ulong addr,ulong type,int forceint3);<br><br style="font-weight: bold;"></span><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span><span style="font-weight: bold;">int <a href="Setmembreakpoint.htm">Setmembreakpoint</a>(ulong addr,ulong size,ulong type,</span><span style="font-weight: bold;">int limit,int count,wchar_t *condition,</span><span style="font-weight: bold;">wchar_t *expression,wchar_t *exprtype);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Removemembreakpoint.htm">Removemembreakpoint</a>(ulong addr);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"><small><span style="font-weight: bold;">int <a href="Enablemembreakpoint.htm">Enablemembreakpoint</a>(ulong addr,int enable);</span><br style="font-weight: bold;"><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span><span style="font-weight: bold;"></span></small></span><span style="font-family: Helvetica,Arial,sans-serif;"></span><br></body></html>

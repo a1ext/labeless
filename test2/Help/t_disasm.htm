@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta content="Microsoft® HTML Help Workshop 4.1" name="GENERATOR"><title>t_disasm</title></head>
+<body>
+<big><big><span style="font-family: Arial; font-weight: bold;">t_disasm</span></big></big><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif;"><small>Keeps information about the&nbsp;command disassembled by&nbsp;<a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>. Which fields of <span style="font-weight: bold;">t_disasm</span> will be filled depends on the parameter <span style="font-weight: bold;">cmdmode</span> (combination of flags <span style="font-weight: bold;">DA_xxx</span>) passed to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>.</small><br>
+<br>
+</span>
+<span style="font-family: monospace; font-size: 12px; font-weight: bold;">typedef
+struct t_disasm&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Disassembled command<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hilitereg;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (in) One of OP_SOMEREG if reg highlighting<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hiregindex;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (in) Index of register to highlight<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+hiliteindex;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+(in) Index of highlighting scheme (0: none)<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ip;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (out) Address of first command byte<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+size;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Full length of command, bytes<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+cmdtype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Type of command, D_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+exttype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// (out) More features, set of DX_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+prefixes;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">List of prefixes, set of PF_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+nprefix;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Number of prefixes, including SSE2<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+memfixup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Offset of first 4-byte fixup or -1<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+immfixup;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Offset of second 4-byte fixup or -1<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+errors;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Set of DAE_xxx<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+warnings;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Set of DAW_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+uses;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">List of used registers<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+modifies;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">List of modified registers<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+condition;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Condition, one of DAF_xxx<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+jmpaddr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Jump/call destination or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+memconst;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Constant in memory address or 0<br>&nbsp;
+ulong&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+stackinc;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Data size in ENTER/RETN/RETF<br>&nbsp; t_operand&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; op[NOPERAND];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Operands<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dump[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Hex dump of the command<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Fully decoded command as text<br>&nbsp; uchar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mask[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Mask to highlight result<br>&nbsp;
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+maskvalid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Mask corresponds to result<br>&nbsp; wchar_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; comment[TEXTLEN];&nbsp;&nbsp;&nbsp;&nbsp; // </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">(out) </span><span style="font-family: monospace; font-size: 12px; font-weight: bold;">Comment that applies to the whole command<br>} t_disasm;<br></span><br><br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">Members:</span><br>
+<br>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hilitereg</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, used only if flags <span style="font-weight: bold;">DA_TEXT</span> and <span style="font-weight: bold;">DA_HILITE </span>in call to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a> are both set. If <span style="font-weight: bold;">hilitereg</span> is one of the <span style="font-weight: bold;">OP_SOMEREG</span> bits and <span style="font-weight: bold;">hiregindex</span> is a valid register index (0..7), corresponding register or its part will be highlighted in the <span style="font-weight: bold;">mask</span>. For example, if <span style="font-weight: bold;">hilitereg</span>=<span style="font-weight: bold;">OP_REGISTER</span> and <span style="font-weight: bold;">hiregindex</span>=<span style="font-weight: bold;">REG_EAX</span>, <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>
+will highlight EAX, AX, AH, AL or any memory address that uses EAX as
+index or base. Register highlighting has higher priority than command
+or operand highlighting, but this can be changed by setting hidden
+initialization option "<span style="font-style: italic;">Remove code hilite on register hilite</span>" to 0</span><br>
+</small></div>
+<small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hiregindex</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, index of register to highlight. If <span style="font-weight: bold;">hilitereg</span> is <span style="font-weight: bold;">OP_REGISTER</span>, use constants <span style="font-weight: bold;">REG_EAX</span>..<span style="font-weight: bold;">REG_EDI</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">hiliteindex</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Input
+parameter, index of command highlighting scheme (<span style="font-weight: bold;">NOHILITE</span>..<span style="font-weight: bold;">HILITE7</span>). Taken into account only&nbsp;</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">if flags <span style="font-weight: bold;">DA_TEXT</span> and <span style="font-weight: bold;">DA_HILITE</span> are set and highlighting is not disabled by <span style="font-weight: bold;">hilitereg</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">ip</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Address of the disassembled command, repeats parameter <span style="font-weight: bold;">cmdip</span> in the call to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">size</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Length of the disassembled command, bytes</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">cmdtype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Type of the disassembled command as a combination of flags <a href="def_D_xxx.htm"><span style="font-weight: bold;">D_xxx</span></a>. If decoding information is supplied and specifies data, <span style="font-weight: bold;">cmdtype</span> is set to <span style="font-weight: bold;">D_DATA</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">exttype</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Continuation of <span style="font-weight: bold;">cmdtype</span> as a combination of flags <span style="font-weight: bold;">DX_xxx</span>. If decoding information is supplied and specifies data,&nbsp;<span style="font-weight: bold;">exttype</span> is set to 0</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">prefixes</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of prefixes in the disassembled command as a combination of flags <span style="font-weight: bold;">PF_xxx</span></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">nprefix</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Number
+of prefixes in the command, including SSE prefixes 0x66, 0xF2 and 0xF3.
+Note that OllyDbg treats code 0x0F as part of the command</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">memfixup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Offset of the first possible 4-byte&nbsp;fixup (memory offset) within the command or 0xFFFFFFFF if none</span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">immfixup</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">Offset of the second possible 4-byte&nbsp;fixup (immediate constant) within the command or 0xFFFFFFFF if none</span></small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">errors</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of errors detected by Disassembler or <span style="font-weight: bold;">DAE_NOERR</span> if no errors were detected. Several&nbsp;flags may be set at once:<br><span style="font-weight: bold;">DAE_BADCMD</span> - unknown or unrecognized command<br><span style="font-weight: bold;">DAE_CROSS</span> - command is longer than memory block passed to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a><br><span style="font-weight: bold;">DAE_MEMORY</span> - command specifies register&nbsp;where only memory is allowed<br><span style="font-weight: bold;">DAE_REGISTER</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"> - command specifies memory where only register is allowed</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DAE_LOCK</span> -&nbsp;LOCK prefix is specified but is not allowed by the command<br><span style="font-weight: bold;">DAE_BADSEG</span> - invalid segment register<br><span style="font-weight: bold;">DAE_SAMEPREF</span> - two explicit prefixes from the same group are specified simultaneously<br><span style="font-weight: bold;">DAE_MANYPREF</span> - command contains more than 4&nbsp;prefixes<br><span style="font-weight: bold;">DAE_BADCR</span> - invalid CR register<br><span style="font-weight: bold;">DAE_INTERN</span> - internal&nbsp;error</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">warnings</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List of warnings detected by Disassembler or 0<span style="font-weight: bold;"> </span>if no warnings were issued. Several&nbsp;flags may be set at once:</span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DAW_DATASIZE</span> - superfluous data size prefix<br><span style="font-weight: bold;">DAW_ADDRSIZE</span> - superfluous address size prefix<br><span style="font-weight: bold;">DAW_SEGPREFIX</span> - superfluous segment override prefix<br><span style="font-weight: bold;">DAW_REPPREFIX</span> - superfluous REPxx prefix<br><span style="font-weight: bold;">DAW_DEFSEG</span> - segment override prefix coincides with default and is therefore unnecessary<br><span style="font-weight: bold;">DAW_JMP16</span> -&nbsp;16-bit jump, call or return, usually won't work in flat 32-bit mode<br><span style="font-weight: bold;">DAW_FARADDR</span> - far jump or call, unnecessary in flat 32-bit mode<br><span style="font-weight: bold;">DAW_SEGMOD</span> - command modifies segment register<br><span style="font-weight: bold;">DAW_PRIV</span> - privileged&nbsp;command<br><span style="font-weight: bold;">DAW_IO</span> -&nbsp;I/O command<br><span style="font-weight: bold;">DAW_SHIFT</span> - shift out of range 1..31<br style="font-weight: bold;"><span style="font-weight: bold;">DAW_LOCK</span> - command with (valid) LOCK prefix<br><span style="font-weight: bold;">DAW_STACK</span> - unaligned stack operation<br><span style="font-weight: bold;">DAW_NOESP</span> - suspicious use of stack pointer<br><span style="font-weight: bold;">DAW_RARE</span> - rare, seldom used command<br><span style="font-weight: bold;">DAW_NONCLASS</span> - non-standard or non-documented code<br><span style="font-weight: bold;">DAW_INTERRUPT</span> - interrupt command</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">uses</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List
+of general purpose registers used by command, i.e. registers which
+contents is necessary to calculate result. For example, MOV
+EAX,[ESI*4+EDX] uses registers EDX and ESI, and ADD EAX,EDX uses EAX
+and EDX</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">modifies</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">List
+of general purpose registers modified by command. For example, CMP
+EAX,[EDX] modifies no registers, whereas POP EAX modifies EAX and ESP</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">condition</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Condition in disassembled command, one of the <span style="font-weight: bold;">DAF_xxx</span>:<br><span style="font-weight: bold;">DAF_NONE</span> - command is unconditional, like CMP EAX,ESI<br><span style="font-weight: bold;">DAF_TRUE</span> - command is conditional, contents of register EFL was passed to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a> in parameter <span style="font-weight: bold;">cmdreg</span> and condition is met (jump will be taken or data will be moved). </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">For example, if command is JC xxx and carry flag is set, <span style="font-weight: bold;">condition</span> is <span style="font-weight: bold;">DAF_TRUE</span>&nbsp; </span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DAF_FALSE</span> - </span></small><small><span style="font-family: Helvetica,Arial,sans-serif;">command is conditional, contents of register EFL was passed to <a href="Disasm.htm"><span style="font-weight: bold;">Disasm()</span></a>
+and condition is not met (jump will not be taken and data will not be
+moved). For example, if command is SETNZ AL and zero flag is set,
+condition is <span style="font-weight: bold;">DAF_FALSE</span></span></small><br><small><span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-weight: bold;">DAF_ANYCOND</span> - command is conditional but contents of register EFL is unknown</span></small><small><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">jmpaddr</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If command is jump or call and its destination is known or can be calculated, <span style="font-weight: bold;">jmpaddr</span>
+is set to the destination address. Otherwise, it's 0. It may be
+necessary to supply registers and/or allow memory access by setting
+flag <span style="font-weight: bold;">DA_MEMORY</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">memconst</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">If command contains memory address,&nbsp;set to the value of the address constant. Otherwise, it's 0</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">stackinc</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Data size, bytes, specified in commands ENTER, RETN and RETF</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">op</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Descriptions of operands, includes implicit operands (pseudooperands) if flag <span style="font-weight: bold;">DA_NOPSEUDO</span> was not specified. See&nbsp;<a href="t_operand.htm"><span style="font-weight: bold;">t_operand</span></a> for details*</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">dump</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Command dump as a zero-terminated UNICODE string, filled only if flag <span style="font-weight: bold;">DA_DUMP</span> was set</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">result</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Disassembled command as a zero-terminated UNICODE string, filled only if flag <span style="font-weight: bold;">DA_TEXT</span> was set. Format of disassembled command is controlled by multiple global options that are not accessible by plugins</span></small><small><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">mask</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Highlighting mask, byte string containing combinations of&nbsp;flags <span style="font-weight: bold;">DRAW_xxx</span>. Filled only if flag <span style="font-weight: bold;">DA_TEXT</span> was set and <span style="font-weight: bold;">maskvalid</span> is not 0. Each byte specifies colour and other attributes of the corresponding wide character in <span style="font-weight: bold;">result</span></span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">maskvalid</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Specifies whether mask contains valid data</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><small><span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">comment</span>
+</small>
+<div style="margin-left: 40px;"><small><span style="font-family: Helvetica,Arial,sans-serif;">Comment
+that applies to the command as a whole. Zero-terminated UNICODE string,
+filled only if flag DA_OPCOMM was set. Note that operands (<span style="font-weight: bold;">op</span>) may contain their own comments</span></small><small><span style="font-family: Helvetica,Arial,sans-serif;"></span><br>
+</small></div><br>
+<br>
+<span style="font-family: Helvetica,Arial,sans-serif; font-weight: bold;">See
+also:</span><br>
+<div style="margin-left: 40px;"><small><span style="font-weight: bold; font-family: Helvetica,Arial,sans-serif;"><a href="t_operand.htm">t_operand</a>, <a href="Disasm.htm">Disasm()</a>, <a href="Comparecommand.htm">Comparecommand()</a>, <a href="Comparesequence.htm">Comparesequence()</a>, <a href="Cmdinfo.htm">Cmdinfo()</a></span></small><br>
+</div>
+<br>
+<font size="-1"><a style="font-family: Helvetica,Arial,sans-serif;" href="t_operand.htm"><span style="font-weight: bold;"></span></a></font>
+</body></html>
