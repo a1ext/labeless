@@ -70,7 +70,7 @@ class InternalMetadata {
     GOOGLE_DCHECK(!is_message_owned || arena != nullptr);
   }
 
-#if defined(NDEBUG) || defined(_MSC_VER)
+#if defined(NDEBUG) || defined(_MSC_VER) || defined(__APPLE__)  // patch for MacOS
   ~InternalMetadata() {
     if (HasMessageOwnedArenaTag()) {
       delete reinterpret_cast<Arena*>(ptr_ - kMessageOwnedArenaTagMask);
