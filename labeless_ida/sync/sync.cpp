@@ -48,7 +48,7 @@ bool ICommand::parseResponse(QPointer<RpcData> rd)
 }
 
 
-template <typename T>
+/*template <typename T>
 std::string ICommand::makeRpcParam(T* pMessage, int requestType) const throw ()
 {
 	rpc::RpcRequest rpcRequest;
@@ -81,7 +81,7 @@ std::string ICommand::makeRpcParam(T* pMessage, int requestType) const throw ()
 	}
 
 	return rpcRequest.SerializeAsString();
-}
+}*/
 
 bool ExecPyScript::serialize(QPointer<RpcData> rd) const
 {

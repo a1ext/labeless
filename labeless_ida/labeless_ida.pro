@@ -16,7 +16,7 @@ CONFIG *= release force_debug_info
 
 # configuration options meaning:
 # - ea64 - bitness of opened targets
-#SCONFIG += ea64
+CONFIG += ea64
 
 
 # `x64` deprecated
@@ -47,6 +47,9 @@ equals(TARGET, "labeless_ida_83") {
 equals(TARGET, "labeless_ida_90") {
     SDK_PATH = $$PWD/../../idasdk90
     IDA_PATH = $$PWD/../../ida-free-pc-9.0
+    mac {
+        IDA_PATH = /Applications/IDA\ Free\ 9.0.app/Contents/MacOS
+    }
 }
 
 # add IDA SDK paths
@@ -74,13 +77,9 @@ linux:LIBS += -z \
 win32 {
     
 }
-else:unix {
+unix {
     #QMAKE_CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
     #QMAKE_CFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
-}
-else:mac {
-    error("mac platform doesn't supported right now")
-    # TODO: https://github.com/google/protobuf/releases/download/v2.6.0/protobuf-2.6.0.tar.gz
 }
 
 
@@ -111,20 +110,15 @@ else:!mac:unix {
     # CFLAGS += -D_FORTIFY_SOURCE=0
 }
 mac { # scope name must be 'mac'
-    TARGET_EXT = .pmc
-    DEFINES += __MAC__
+    TARGET_EXT = .dylib
+    DEFINES += __MAC__ GOOGLE_PROTOBUF_NO_RDTSC
+    # unfortunately `GOOGLE_PROTOBUF_NO_RDTSC` is required due to the issue of `processor_t` redefinition while both IDA SDK and protobuf are included in the same source file :(
     SYSNAME = mac
-    COMPILER_NAME = gcc
-    CONFIG += macx
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.3
-    QMAKE_INFO_PLIST = Info.plist
-
-    # we compile and link a 32-bit application:
-    # !x64 {
-    #   CFLAGS = -m32
-    #   QMAKE_LFLAGS_DEBUG += -m32
-    #   QMAKE_LFLAGS_RELEASE += -m32
-    # }
+    COMPILER_NAME = clang
+    CONFIG += macx-clang
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 15
+    # QMAKE_INFO_PLIST = Info.plist
+    TARGET_PROCESSOR_NAME = arm64
 }
 
 
@@ -162,25 +156,35 @@ OBJDIR = obj/$${SYSDIR}/
 # add library directory
 # LIBDIR = $${SDK_PATH}/lib/$${SYSDIR}/
 # LIBS += -L$${LIBDIR} $${LIBDIR}/pro.a
+# Build protobuf for macos with the following:
+# cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/Users/al/dev/labeless/3rdparty/protobuf-3.20.3/dist -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_INSTALL=ON -Dprotobuf_BUILD_SHARED_LIBS=OFF ../cmake
+
+PROTOBUF_BUILD_DIR = $${PWD}/../3rdparty/protobuf-3.20.3/dist
+ea64:!equals(TARGET, "labeless_ida_90_64") {
+    IDA_LIB = ida64
+}
+else {
+    IDA_LIB = ida
+}
+
 win32 {
     LIBS += -L$${SDK_PATH}/lib/$${SYSDIR}/ -lida
 }
 else:!mac:unix {
-    ea64:!equals(TARGET, "labeless_ida_90_64") {
-        IDA_LIB = ida64
-    }
-    else {
-        IDA_LIB = ida
-    }
-    PROTOBUF_BUILD_DIR = $${PWD}/../3rdparty/protobuf-3.20.3/dist
     #INCLUDEPATH += /usr/include/python2.7
-    INCLUDEPATH += $${PROTOBUF_BUILD_DIR}/include
     #LIBS += -lpython2.7
     !equals(TARGET, "labeless_ida_70_64") {
         # seems like IDA FREE 7.0 has obfuscated exports so link with it will fail, so don't add IDA dir as a lib dir
         LIBS += -L$${IDA_PATH}
     }
     LIBS +=  -l$${IDA_LIB} -L$${SDK_PATH}/lib/$${SYSDIR}/ -L$${PROTOBUF_BUILD_DIR}/lib -lprotobuf
+}
+
+INCLUDEPATH += $${PROTOBUF_BUILD_DIR}/include
++mac {
+    LIBS += $${SDK_PATH}/lib/$${SYSDIR}/lib$${IDA_LIB}.dylib
+    LIBS += $${PROTOBUF_BUILD_DIR}/lib/libprotobuf.a
+    QMAKE_APPLE_DEVICE_ARCHS = arm64
 }
 
 # message($$LIBS)

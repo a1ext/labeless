@@ -41,8 +41,8 @@ struct ICommand
 		, pending(false)
 	{}
 protected:
-	template <typename T>
-	std::string makeRpcParam(T* pMessage, int requestType) const throw ();
+	//template <typename T>
+	//std::string makeRpcParam(T* pMessage, int requestType) const throw ();
 };
 
 struct ExecPyScript : public ICommand

@@ -3,12 +3,12 @@
 #include <memory>
 #include <QApplication>
 
-#if defined(__unix__) || defined(__linux__)
+#if defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 #   include <errno.h>
 #   include <netinet/in.h>
 
 #   define SOCKADDR_IN sockaddr_in
-#endif // defined(__unix__) || defined(__linux__)
+#endif // defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 
 
 #include "labeless_ida.h"
@@ -54,7 +54,7 @@ void PauseNotificationListener::main()
 	sinBCast.sin_port = ntohs(Labeless::instance().pauseNotificationPort());
 #if defined(__NT__)
 	sinBCast.sin_addr.S_un.S_addr = INADDR_ANY;
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 	sinBCast.sin_addr.s_addr = INADDR_ANY;
 #endif
 
@@ -68,9 +68,9 @@ void PauseNotificationListener::main()
 			Q_FUNC_INFO,
 #if defined(__NT__)
 			GetLastError()
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 			(int)errno
-#endif // defined(__unix__) || defined(__linux__)
+#endif // defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 		);
 		moveToThread(qApp->thread());
 		deleteLater();
@@ -91,9 +91,9 @@ void PauseNotificationListener::main()
 	SOCKADDR_IN sin;
 #if defined(__NT__)
     int
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
     socklen_t
-#endif // defined(__unix__) || defined(__linux__)
+#endif // defined(__unix__) || defined(__linux__) || defined(__APPLE__)
         sinLen;
 
 	Labeless& ll = Labeless::instance();
@@ -105,7 +105,7 @@ void PauseNotificationListener::main()
 		if (select(
 #if defined(__NT__)
 			s,
-#elif defined(__GNUC__)
+#elif defined(__GNUC__) || defined(__APPLE__)
 			s + 1,
 #endif // 
 			&readSet, nullptr, nullptr, &timeout) >= 0 &&

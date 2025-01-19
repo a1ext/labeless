@@ -77,11 +77,11 @@
 
 #if defined(__NT__)
 #	include <mstcpip.h>
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 #	include <arpa/inet.h>
 #	include <netdb.h>
 #	include <netinet/tcp.h>
-#endif // defined(__unix__) || defined(__linux__)
+#endif // defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 
 #include "util/util_ida.h"
 #include "util/util_idapython.h"
@@ -666,15 +666,15 @@ bool parseBackendId(const ::qstring& qid, std::string& result)
 #       pragma pack(push, 1)
 #   endif //  defined(_MSC_VER)
 	struct
-#if defined(__GNUC__) || defined(__clang__)
+#if defined(__GNUC__) || defined(__clang__) || defined(__APPLE__)
 		__attribute__((packed))
 #endif
 		GUID
 	{
-		ulong   Data1;
-		ushort  Data2;
-		ushort  Data3;
-		uchar   Data4[8];
+		quint32  Data1;
+		quint16  Data2;
+		quint16  Data3;
+		quint8   Data4[8];
 	};
 #   if defined(_MSC_VER)
 #       pragma pack(pop)
@@ -999,19 +999,17 @@ struct TestHandler_t : public action_handler_t
 	}
 };
 
-/*FirstShownEventFilter::FirstShownEventFilter(QObject* parent)
-	: QObject(parent)
-	, firstShow_{ true }
-{
-
-}*/
-
 bool Labeless::eventFilter(QObject* watched, QEvent* event)
 {
 	static bool firstShown = true;
-	if (firstShown && event->type() == QEvent::Show &&
-		m_MainWindow->menuBar()->findChildren<QMenu*>().size() >= 1) {
-		
+	if (firstShown && event->type() == QEvent::Show) {
+#if !defined(__APPLE__)
+		auto size = m_MainWindow->menuBar()->findChildren<QMenu*>().size();
+		//msg("Labeless: show event, menu size: %d\n", size);
+		if (size < 1) {
+			return QObject::eventFilter(watched, event);
+		}
+#endif // !defined(__APPLE__)
 		firstShown = false; // Ensure this is triggered only once
 		m_MainWindow->removeEventFilter(this);
 
@@ -1357,7 +1355,7 @@ SOCKET Labeless::connectToHost(const std::string& host, uint16_t port, QString& 
 		{
 #ifdef __NT__
 			const quint32 recvTimeout = recvtimeout;
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 			timeval recvTimeout;
 			recvTimeout.tv_usec = 500000;
 			recvTimeout.tv_sec = recvtimeout / 1000;

@@ -99,7 +99,7 @@ setup(
     keywords=['labeless', 'IDA PRO', 'OllyDbg', 'x64dbg', 'dumping', 'tracing', 'strings decryption', 'API resolving'],
     classifiers=[
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Security',
         'Topic :: Software Development :: Debuggers',
         'Topic :: Software Development :: Disassemblers',

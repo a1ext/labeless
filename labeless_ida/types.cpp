@@ -14,7 +14,7 @@ ImportEntry::ImportEntry()
 {
 }
 
-MemoryRegion::MemoryRegion(uint64_t base_, uint64_t size_, uint32 protect_, bool forceProtect_)
+MemoryRegion::MemoryRegion(uint64_t base_, uint64_t size_, quint32 protect_, bool forceProtect_)
 	: base(base_)
 	, size(size_)
 	, protect(protect_)

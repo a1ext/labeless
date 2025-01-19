@@ -248,15 +248,3 @@ private:
 	std::set<std::string>			m_PauseNotificationAllowedClients;
 };
 
-/*
-class FirstShownEventFilter : public QObject {
-	Q_OBJECT
-
-public:
-	explicit FirstShownEventFilter(QObject* parent);
-
-protected:
-
-private:
-	bool firstShow_;
-};*/

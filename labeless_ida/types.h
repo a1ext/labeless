@@ -17,7 +17,7 @@
 #include <WinSock2.h>
 #define FORCE_ENUM_SIZE_INT
 
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 
 #include <stdint.h>
 #include <sys/socket.h>
@@ -138,11 +138,11 @@ struct MemoryRegion
 {
 	uint64_t base;
 	uint64_t size;
-	uint32 protect;
+	quint32 protect;
 	std::string name;
 	bool forceProtect; // not serializable
 
-	MemoryRegion(uint64_t base_, uint64_t size_, uint32 protect_, bool forceProtect_ = false);
+	MemoryRegion(uint64_t base_, uint64_t size_, quint32 protect_, bool forceProtect_ = false);
 
 	inline uint64_t end() const {
 		return base + size;
@@ -264,7 +264,7 @@ typedef std::unordered_map<uint64_t, std::string> ExternRefDataMap;
 	if (!(X)) do {													\
 		msg(__FUNCTION__ ": connect() failed: " #X "\n");			\
 	} while (0)
-#elif defined(__unix__) || defined(__linux__)
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
 // FIXME
 #define CHECKED_CONNECT(X)                                          \
     if (!(X)) do {													\
@@ -288,8 +288,8 @@ typedef std::unordered_map<uint64_t, std::string> ExternRefDataMap;
 #endif // __EA64__
 
 
-#if !defined(__NT__) && !defined(__unix__) && !defined(__unix__)
-#error "WIN32 and Linux/Unix platforms are supported"
+#if !defined(__NT__) && !defined(__unix__) && !defined(__unix__) && !defined(__APPLE__)
+#error "WIN32, Linux/Unix and MacOS platforms are supported"
 #endif
 
 #define PYTHON_EXTLANG_NAME "python"
