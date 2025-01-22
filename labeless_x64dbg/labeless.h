@@ -67,6 +67,9 @@ class Labeless
 	Labeless();
 	Labeless(const Labeless&) = delete;
 	Labeless& operator=(const Labeless&) = delete;
+
+	bool destroy();
+
 public:
 	virtual ~Labeless();
 
@@ -75,7 +78,7 @@ public:
 	inline HINSTANCE hInstance() const { return m_hInst; }
 
 	bool init(PLUG_SETUPSTRUCT*);
-	bool destroy();
+	void onPlugstop();
 
 	void stopServer();
 	bool startServer();
@@ -128,4 +131,5 @@ private:
 	static std::atomic_bool	m_ServerEnabled;
 
 	ClientData				m_Rpc;
+	static std::atomic_bool m_PythonFinalized;
 };

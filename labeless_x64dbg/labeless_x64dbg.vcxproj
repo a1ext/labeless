@@ -61,7 +61,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_X64DBG_EXPORTS;_SCL_SECURE_NO_WARNINGS;ENABLE_PYTHON_PROFILING=0;LABELESS_ADDITIONAL_LOGGING;__X64DBG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_X64DBG_EXPORTS;_SCL_SECURE_NO_WARNINGS;ENABLE_PYTHON_PROFILING=0;__X64DBG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;$(ProjectDir)\pluginsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>
@@ -86,7 +86,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_X64DBG_EXPORTS;_SCL_SECURE_NO_WARNINGS;ENABLE_PYTHON_PROFILING=0;LABELESS_ADDITIONAL_LOGGING;__X64DBG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LABELESS_X64DBG_EXPORTS;_SCL_SECURE_NO_WARNINGS;ENABLE_PYTHON_PROFILING=0;__X64DBG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdparty\Python310x64\include;$(SolutionDir)\3rdparty\protobuf-3.20.3\src;$(ProjectDir)\pluginsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/J %(AdditionalOptions)</AdditionalOptions>

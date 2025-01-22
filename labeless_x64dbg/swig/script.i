@@ -45,5 +45,6 @@
 %array_class(Script::Label::LabelInfo, LabelInfoArray);
 %array_class(Script::Module::ModuleInfo, ModuleInfoArray);
 %array_class(Script::Module::ModuleSectionInfo, ModuleSectionInfoArray);
+%array_class(Script::Module::ModuleExport, ModuleExportArray);
+%array_class(Script::Module::ModuleImport, ModuleImportArray);
 %array_class(Script::Symbol::SymbolInfo, SymbolInfoArray);
-

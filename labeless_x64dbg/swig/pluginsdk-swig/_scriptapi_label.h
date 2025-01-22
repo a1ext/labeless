@@ -15,9 +15,12 @@ namespace Script
             bool manual;
         };
 
-        %rename(Label_Set) Set;
-        extern bool Set(duint addr, const char* text, bool manual = false);
+        // just turned it  out as the following one covers it's functional
+        //extern bool Set(duint addr, const char* text, bool manual = false);
         
+        %rename(Label_Set) Set;
+        extern bool Set(duint addr, const char* text, bool manual = false, bool temporary = false);
+
         %rename(Label_SetByLabelInfo) Set;
         extern bool Set(const LabelInfo* info);
         
@@ -27,6 +30,9 @@ namespace Script
         %rename(Label_Get) Get;
         extern bool Get(duint addr, char* text); //text[MAX_LABEL_SIZE]
         
+        %rename(Label_IsTemporary) IsTemporary;
+        extern bool IsTemporary(duint addr);
+
         %rename(Label_GetInfo) GetInfo;
         extern bool GetInfo(duint addr, LabelInfo* info);
         

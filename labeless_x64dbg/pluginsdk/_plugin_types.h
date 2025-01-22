@@ -5,14 +5,22 @@
 
 #include "_global.h"
 #include "jansson/jansson.h"
+#pragma warning(push)
+#pragma warning(disable:4091)
 #include <dbghelp.h>
+#pragma warning(pop)
 
 #else
+
+#include <Windows.h>
 
 #ifdef __GNUC__
 #include "dbghelp/dbghelp.h"
 #else
-#include <dbghelp.h>
+#pragma warning(push)
+#pragma warning(disable:4091)
+#include <DbgHelp.h>
+#pragma warning(pop)
 #endif // __GNUC__
 
 #ifndef deflen

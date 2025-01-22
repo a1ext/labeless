@@ -24,6 +24,26 @@ namespace Script
             char name[MAX_SECTION_SIZE * 5];
         };
 
+        struct ModuleExport
+        {
+            duint ordinal;
+            duint rva;
+            duint va;
+            bool forwarded;
+            char forwardName[MAX_STRING_SIZE];
+            char name[MAX_STRING_SIZE];
+            char undecoratedName[MAX_STRING_SIZE];
+        };
+
+        struct ModuleImport
+        {
+            duint iatRva;
+            duint iatVa;
+            duint ordinal; //equal to -1 if imported by name
+            char name[MAX_STRING_SIZE];
+            char undecoratedName[MAX_STRING_SIZE];
+        };
+
         %rename(Module_InfoFromAddr) InfoFromAddr;
         extern bool InfoFromAddr(duint addr, ModuleInfo* info);
         
@@ -106,6 +126,12 @@ namespace Script
         
         %rename(Module_GetList) GetList;
         extern bool GetList(ListInfo* list); //caller has the responsibility to free the list
+
+        %rename(Module_GetExports) GetExports;
+        extern bool GetExports(const ModuleInfo* mod, ListOf(ModuleExport) list); //caller has the responsibility to free the list
+
+        %rename(Module_GetImports) GetImports;
+        extern bool GetImports(const ModuleInfo* mod, ListOf(ModuleImport) list); //caller has the responsibility to free the list
     }; //Module
 }; //Script
 

@@ -199,10 +199,10 @@
     duint GetDbgEvents_()
     { return $self->GetDbgEvents(); }
     
-    int ModGetParty_(duint base)
+    MODULEPARTY ModGetParty_(duint base)
     { return $self->ModGetParty(base); }
     
-    void ModSetParty_(duint base, int party)
+    void ModSetParty_(duint base, MODULEPARTY party)
     { return $self->ModSetParty(base, party); }
     
     bool WatchIsWatchdogTriggered_(unsigned int id)
@@ -275,5 +275,31 @@
     duint GetAddrFromLineEx_(duint mod, const char* szSourceFile, int line)
     { return $self->GetAddrFromLineEx(mod, szSourceFile, line); }
 
+    MODULESYMBOLSTATUS ModSymbolStatus_(duint mod) { return $self->ModSymbolStatus(mod); }
+    
+    void GetCallStackByThread_(HANDLE thread, DBGCALLSTACK* callstack)
+    { $self->GetCallStackByThread(thread, callstack); }
+    
+    void EnumStructs_(CBSTRING callback, void* userdata) { $self->EnumStructs(callback, userdata); }
+    
+    BP_REF* BpRefList_(duint* count) { return $self->BpRefList(count); }
+    
+    bool BpRefVa_(BP_REF* ref, BPXTYPE type, duint va) { return $self->BpRefVa(ref, type, va); }
+    
+    bool BpRefRva_(BP_REF* ref, BPXTYPE type, const char* module, duint rva) { return $self->BpRefRva(ref, type, module, rva); }
+    
+    void BpRefDll_(BP_REF* ref, const char* module) { $self->BpRefDll(ref, module); }
+    
+    void BpRefException_(BP_REF* ref, unsigned int code) { $self->BpRefException(ref, code); }
+    
+    bool BpRefExists_(const BP_REF* ref) { return $self->BpRefExists(ref); }
+    
+    bool BpGetFieldNumber_(const BP_REF* ref, BP_FIELD field, duint* value) { return $self->BpGetFieldNumber(ref, field, value); }
+    
+    bool BpSetFieldNumber_(const BP_REF* ref, BP_FIELD field, duint value) { return $self->BpSetFieldNumber(ref, field, value); }
+    
+    bool BpGetFieldText_(const BP_REF* ref, BP_FIELD field, CBSTRING callback, void* userdata) { return $self->BpGetFieldText(ref, field, callback, userdata); }
+    
+    bool BpSetFieldText_(const BP_REF* ref, BP_FIELD field, const char* value) { return $self->BpSetFieldText(ref, field, value); }
 }
 

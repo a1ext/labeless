@@ -22,7 +22,10 @@
 #include "util.h"
 #include "labeless_x64dbg.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4995 4800)
 #include "../common/cpp/rpc.pb.h"
+#pragma warning(pop)
 #include "../common/version.h"
 
 #include "pluginsdk/_scriptapi_gui.h"
@@ -49,6 +52,7 @@ static struct StaticConfig
 	UINT		hlpLogMessageId = 0;
 	UINT		hlpCommandReceived = 0;
 	UINT		hlpPortChanged = 0;
+	UINT		hlpShutdown = 0;
 } gConfig;
 
 static const char kBackendName[] {"labeless.backend.x64dbg"};
@@ -68,7 +72,7 @@ int tracefunc(PyObject *obj, _frame *frame, int what, PyObject *arg)
 
 	if (PyObject* str = PyObject_Str(frame->f_code->co_filename))
 	{
-		const std::string s = PyString_AsString(str);
+		const std::string s = PyUnicode_AsUTF8(str);
 		log_r("PROFILING: %s:%d", s.c_str(), frame->f_lineno);
 		Py_DECREF(str);
 		std::ofstream of("c:\\labeless_trace.log", std::ios_base::app);
@@ -654,6 +658,7 @@ bool ClientData::remove(uint64_t jobId)
 }
 
 std::atomic_bool Labeless::m_ServerEnabled{ false };
+std::atomic_bool Labeless::m_PythonFinalized{ false };
 
 Labeless::Labeless()
 	: m_hInst(nullptr)
@@ -703,7 +708,18 @@ bool Labeless::destroy()
 	stopServer();
 	destroyPython();
 	google::protobuf::ShutdownProtobufLibrary();
+	m_PythonFinalized = true;
 	return true;
+}
+
+void Labeless::onPlugstop()
+{
+	// as plugstop is called from an another thread, the Python3 threading._shutdown() 
+	// will hang on destroyPython() so delegate that to main thread
+	PostMessage(gConfig.helperWnd, gConfig.hlpShutdown, 0, 0);
+	while (!m_PythonFinalized) {
+		SleepEx(1, TRUE);
+	}
 }
 
 bool Labeless::initPython()
@@ -726,20 +742,38 @@ bool Labeless::initPython()
 	PyImport_AppendInittab("_x64dbgapi", &PyInit__x64dbgapi);
 #endif // _WIN64
 
+	PyStatus status;
+	PyConfig config;
+	PyConfig_InitPythonConfig(&config);
 
-	Py_SetProgramName(L"");
-	Py_InitializeEx(0);
+	status = PyConfig_SetBytesString(&config, &config.program_name, "");
+	if (PyStatus_Exception(status)) {
+		log_r("Failed to set program name");
+		PyConfig_Clear(&config);
+		return false;
+	}
 
-#ifdef ENABLE_PYTHON_PROFILING
-	//PyEval_SetTrace(tracefunc, NULL);
-#endif
+	status = Py_InitializeFromConfig(&config);
+	if (PyStatus_Exception(status)) {
+		log_r("Failed Initialize python");
+		PyConfig_Clear(&config);
+		return false;
+	}
+	PyConfig_Clear(&config);
+
+	//Py_SetProgramName(L"");
+	//Py_InitializeEx(0);
+
+#if (ENABLE_PYTHON_PROFILING == 1)
+	PyEval_SetTrace(tracefunc, NULL);
+#endif //  (ENABLE_PYTHON_PROFILING == 1)
 
 	if (!Py_IsInitialized())
 	{
 		log_r("Could not initialize Python");
 		return false;
 	}
-	PyEval_InitThreads();
+	//PyEval_InitThreads();
 
 #ifdef ENABLE_PYTHON_ZIP
 	PyRun_SimpleString("import sys\nsys.path.extend(['.', 'python_dlls', 'python27.zip', 'python27.zip/site-packages'])");
@@ -849,7 +883,10 @@ void Labeless::logInitPythonFail(const std::string& info) const
 
 void Labeless::destroyPython()
 {
-	Py_Finalize();
+	const auto rv = Py_FinalizeEx();
+	if (rv < 0) {
+		log_r("PyFinalyzeEx() failed, code: %d", rv);
+	}
 }
 
 HWND Labeless::createWindow()
@@ -871,6 +908,11 @@ HWND Labeless::createWindow()
 	if (!gConfig.hlpPortChanged && !(gConfig.hlpPortChanged = RegisterWindowMessage(_T("{774A37C9-6398-44AD-8F07-A421B55F0435}"))))
 	{
 		log_r("RegisterWindowMessage(hlpPortChanged) failed. LastError: %08X", GetLastError());
+		return false;
+	}
+	if (!gConfig.hlpShutdown && !(gConfig.hlpShutdown = RegisterWindowMessage(_T("{3C322054-B099-403C-956A-3CB1B402659D}"))))
+	{
+		log_r("RegisterWindowMessage(hlpShutdown) failed. LastError: %08X", GetLastError());
 		return false;
 	}
 
@@ -1152,6 +1194,11 @@ LRESULT CALLBACK Labeless::helperWinProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp
 	if (msg == gConfig.hlpPortChanged)
 	{
 		ll.onPortChanged();
+		return 0;
+	}
+	if (msg == gConfig.hlpShutdown)
+	{
+		Labeless::instance().destroy();
 		return 0;
 	}
 	switch (msg) {

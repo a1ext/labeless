@@ -15,10 +15,12 @@ namespace Script
             bool manual;
         };
 
-        SCRIPT_EXPORT bool Set(duint addr, const char* text, bool manual = false);
+        //SCRIPT_EXPORT bool Set(duint addr, const char* text, bool manual = false);
+        SCRIPT_EXPORT bool Set(duint addr, const char* text, bool manual = false, bool temporary = false);
         SCRIPT_EXPORT bool Set(const LabelInfo* info);
         SCRIPT_EXPORT bool FromString(const char* label, duint* addr);
         SCRIPT_EXPORT bool Get(duint addr, char* text); //text[MAX_LABEL_SIZE]
+        SCRIPT_EXPORT bool IsTemporary(duint addr);
         SCRIPT_EXPORT bool GetInfo(duint addr, LabelInfo* info);
         SCRIPT_EXPORT bool Delete(duint addr);
         SCRIPT_EXPORT void DeleteRange(duint start, duint end);

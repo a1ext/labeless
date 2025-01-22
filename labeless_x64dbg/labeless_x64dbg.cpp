@@ -232,7 +232,7 @@ DLL_EXPORT bool plugstop()
 	_plugin_unregistercallback(g_pluginHandle, CB_CREATEPROCESS);
 	_plugin_menuclear(g_hMenu);
 
-	Labeless::instance().destroy();
+	Labeless::instance().onPlugstop();
 	return true;
 }
 

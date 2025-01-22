@@ -1,11 +1,14 @@
 #ifndef _BRIDGEMAIN_H_
 #define _BRIDGEMAIN_H_
 
-#include <windows.h>
+#include <Windows.h>
 
 #ifndef __cplusplus
 #include <stdbool.h>
-#endif
+#define DEFAULT_PARAM(name, value) name
+#else
+#define DEFAULT_PARAM(name, value) name = value
+#endif // __cplusplus
 
 //default structure alignments forced
 #ifdef _WIN64
@@ -33,7 +36,7 @@ typedef signed long dsint;
 #ifdef __cplusplus
 extern "C"
 {
-#endif
+#endif // __cplusplus
 
 //Bridge defines
 #define MAX_SETTING_SIZE 65536
@@ -46,6 +49,10 @@ extern "C"
 /// </summary>
 /// <returns>On error it returns a non-null error message.</returns>
 extern const wchar_t* BridgeInit();
+
+extern HMODULE WINAPI BridgeLoadLibraryCheckedW(const wchar_t* szDll, bool allowFailure);
+
+extern HMODULE WINAPI BridgeLoadLibraryCheckedA(const char* szDll, bool allowFailure);
 
 /// <summary>
 /// Start the bridge.
@@ -127,9 +134,20 @@ extern int BridgeGetDbgVersion();
 /// <returns>true if the process is elevated, false otherwise.</returns>
 extern bool BridgeIsProcessElevated();
 
+/// <summary>
+/// Gets the NT build number from the operating system.
+/// </summary>
+/// <returns>NtBuildNumber</returns>
+extern unsigned int BridgeGetNtBuildNumber();
+
+/// <summary>
+/// Returns the user directory (without trailing backslash).
+/// </summary>
+extern const wchar_t* BridgeUserDirectory();
+
 #ifdef __cplusplus
 }
-#endif
+#endif // __cplusplus
 
 //list structure (and C++ wrapper)
 #include "bridgelist.h"
@@ -139,7 +157,7 @@ extern bool BridgeIsProcessElevated();
 #ifdef __cplusplus
 extern "C"
 {
-#endif
+#endif // __cplusplus
 
 //Debugger defines
 #define MAX_LABEL_SIZE 256
@@ -154,11 +172,14 @@ extern "C"
 #define MAX_WATCH_NAME_SIZE 256
 #define MAX_STRING_SIZE 512
 #define MAX_ERROR_SIZE 512
-#define RIGHTS_STRING_SIZE (sizeof("ERWCG") + 1)
+#define RIGHTS_STRING_SIZE (sizeof("ERWCG"))
 #define MAX_SECTION_SIZE 10
 #define MAX_COMMAND_LINE_SIZE 256
 #define MAX_MNEMONIC_SIZE 64
+
+#ifndef PAGE_SIZE
 #define PAGE_SIZE 0x1000
+#endif // PAGE_SIZE
 
 //Debugger enums
 typedef enum
@@ -316,6 +337,9 @@ typedef enum
     DBG_ANALYZE_FUNCTION,           // param1=BridgeCFGraphList* graph,  param2=duint entry
     DBG_MENU_PREPARE,               // param1=int hMenu,                 param2=unused
     DBG_GET_SYMBOL_INFO,            // param1=void* symbol,              param2=SYMBOLINFO* info
+    DBG_GET_DEBUG_ENGINE,           // param1=unused,                    param2-unused
+    DBG_GET_SYMBOL_INFO_AT,         // param1=duint addr,                param2=SYMBOLINFO* info
+    DBG_XREF_ADD_MULTI,             // param1=const XREF_EDGE* edges,    param2=duint count
 } DBGMSG;
 
 typedef enum
@@ -418,7 +442,9 @@ typedef enum
     size_byte = 1,
     size_word = 2,
     size_dword = 4,
-    size_qword = 8
+    size_qword = 8,
+    size_xmmword = 16,
+    size_ymmword = 32
 } MEMORY_SIZE;
 
 typedef enum
@@ -508,15 +534,43 @@ typedef enum
     sym_symbol
 } SYMBOLTYPE;
 
+#define SYMBOL_MASK_IMPORT (1u << sym_import)
+#define SYMBOL_MASK_EXPORT (1u << sym_export)
+#define SYMBOL_MASK_SYMBOL (1u << sym_symbol)
+#define SYMBOL_MASK_ALL (SYMBOL_MASK_IMPORT | SYMBOL_MASK_EXPORT | SYMBOL_MASK_SYMBOL)
+
+typedef enum
+{
+    mod_user,
+    mod_system
+} MODULEPARTY;
+
+typedef enum
+{
+    DebugEngineTitanEngine,
+    DebugEngineGleeBug,
+    DebugEngineStaticEngine,
+} DEBUG_ENGINE;
+
 //Debugger typedefs
 typedef MEMORY_SIZE VALUE_SIZE;
+
+typedef struct DBGFUNCTIONS_ DBGFUNCTIONS;
+
+// Callback declaration:
+// bool cbSymbolEnum(const SYMBOLPTR* symbol, void* user);
+// To get the data from the opaque pointer:
+// SYMBOLINFO info;
+// DbgGetSymbolInfo(symbol, &info);
+// The SYMBOLPTR* becomes invalid when the module is unloaded
+// DO NOT STORE unless you are absolutely certain you handle it correctly
 //typedef struct SYMBOLINFO_ SYMBOLINFO;
-struct SYMBOLPTR_; // fwd
-#include "_dbgfunctions.h" // typedef struct DBGFUNCTIONS_ DBGFUNCTIONS;
+//struct SYMBOLPTR_; // fwd
+//#include "_dbgfunctions.h" // typedef struct DBGFUNCTIONS_ DBGFUNCTIONS;
 
 typedef bool (*CBSYMBOLENUM)(const struct SYMBOLPTR_* symbol, void* user);
 
-typedef struct _MEMORY_BASIC_INFORMATION {
+/*typedef struct _MEMORY_BASIC_INFORMATION {
     PVOID BaseAddress;
     PVOID AllocationBase;
     DWORD AllocationProtect;
@@ -524,7 +578,7 @@ typedef struct _MEMORY_BASIC_INFORMATION {
     DWORD State;
     DWORD Protect;
     DWORD Type;
-} MEMORY_BASIC_INFORMATION, *PMEMORY_BASIC_INFORMATION;
+} MEMORY_BASIC_INFORMATION, *PMEMORY_BASIC_INFORMATION;*/
 //Debugger structs
 typedef struct
 {
@@ -612,10 +666,40 @@ typedef struct SYMBOLINFO_
     char* decoratedSymbol;
     char* undecoratedSymbol;
     SYMBOLTYPE type;
+
+    // If true: Use BridgeFree(decoratedSymbol) to deallocate
+    // Else: The decoratedSymbol pointer is valid until the module unloads
     bool freeDecorated;
+
+    // If true: Use BridgeFree(undecoratedSymbol) to deallcoate
+    // Else: The undecoratedSymbol pointer is valid until the module unloads
     bool freeUndecorated;
+
+    // The entry point pseudo-export has ordinal == 0 (invalid ordinal value)
     DWORD ordinal;
 } SYMBOLINFO;
+
+#ifdef __cplusplus
+struct SYMBOLINFOCPP : SYMBOLINFO
+{
+    SYMBOLINFOCPP(const SYMBOLINFOCPP &) = delete;
+    SYMBOLINFOCPP(SYMBOLINFOCPP &&) = delete;
+
+    SYMBOLINFOCPP()
+    {
+        memset(this, 0, sizeof(SYMBOLINFO));
+    }
+
+    ~SYMBOLINFOCPP()
+    {
+        if(freeDecorated)
+            BridgeFree(decoratedSymbol);
+        if(freeUndecorated)
+            BridgeFree(undecoratedSymbol);
+    }
+};
+//static_assert(sizeof(SYMBOLINFOCPP) == sizeof(SYMBOLINFO), "");
+#endif // __cplusplus
 
 typedef struct
 {
@@ -628,6 +712,9 @@ typedef struct
     duint base;
     CBSYMBOLENUM cbSymbolEnum;
     void* user;
+    duint start;
+    duint end;
+    unsigned int symbolMask;
 } SYMBOLCBINFO;
 
 typedef struct
@@ -915,6 +1002,12 @@ typedef struct
     XREF_RECORD* references;
 } XREF_INFO;
 
+typedef struct
+{
+    duint address;
+    duint from;
+} XREF_EDGE;
+
 typedef struct SYMBOLPTR_
 {
     duint modbase;
@@ -998,8 +1091,9 @@ extern void DbgScriptAbort();
 extern SCRIPTLINETYPE DbgScriptGetLineType(int line);
 extern void DbgScriptSetIp(int line);
 extern bool DbgScriptGetBranchInfo(int line, SCRIPTBRANCH* info);
-extern void DbgSymbolEnum(duint base, CBSYMBOLENUM cbSymbolEnum, void* user);
-extern void DbgSymbolEnumFromCache(duint base, CBSYMBOLENUM cbSymbolEnum, void* user);
+extern bool DbgSymbolEnum(duint base, CBSYMBOLENUM cbSymbolEnum, void* user);
+extern bool DbgSymbolEnumFromCache(duint base, CBSYMBOLENUM cbSymbolEnum, void* user);
+extern bool DbgSymbolEnumRange(duint start, duint end, unsigned int symbolMask, CBSYMBOLENUM cbSymbolEnum, void* user);
 extern bool DbgAssembleAt(duint addr, const char* instruction);
 extern duint DbgModBaseFromName(const char* name);
 extern void DbgDisasmAt(duint addr, DISASM_INSTR* instr);
@@ -1059,22 +1153,36 @@ extern DWORD DbgGetThreadId();
 extern duint DbgGetPebAddress(DWORD ProcessId);
 extern duint DbgGetTebAddress(DWORD ThreadId);
 extern bool DbgAnalyzeFunction(duint entry, BridgeCFGraphList* graph);
-extern duint DbgEval(const char* expression, bool* success = 0);
-extern void DbgMenuPrepare(int hMenu);
+extern duint DbgEval(const char* expression, bool* DEFAULT_PARAM(success, nullptr));
 extern void DbgGetSymbolInfo(const SYMBOLPTR* symbolptr, SYMBOLINFO* info);
+extern DEBUG_ENGINE DbgGetDebugEngine();
+extern bool DbgGetSymbolInfoAt(duint addr, SYMBOLINFO* info);
+extern duint DbgXrefAddMulti(const XREF_EDGE* edges, duint count);
 
 //Gui defines
-#define GUI_PLUGIN_MENU 0
-#define GUI_DISASM_MENU 1
-#define GUI_DUMP_MENU 2
-#define GUI_STACK_MENU 3
+typedef enum
+{
+    GUI_PLUGIN_MENU,
+    GUI_DISASM_MENU,
+    GUI_DUMP_MENU,
+    GUI_STACK_MENU,
+    GUI_GRAPH_MENU,
+    GUI_MEMMAP_MENU,
+    GUI_SYMMOD_MENU,
+} GUIMENUTYPE;
 
-#define GUI_DISASSEMBLY 0
-#define GUI_DUMP 1
-#define GUI_STACK 2
-#define GUI_GRAPH 3
-#define GUI_MEMMAP 4
-#define GUI_SYMMOD 5
+extern void DbgMenuPrepare(GUIMENUTYPE hMenu);
+
+typedef enum
+{
+    GUI_DISASSEMBLY,
+    GUI_DUMP,
+    GUI_STACK,
+    GUI_GRAPH,
+    GUI_MEMMAP,
+    GUI_SYMMOD,
+    GUI_THREADS,
+} GUISELECTIONTYPE;
 
 #define GUI_MAX_LINE_SIZE 65536
 #define GUI_MAX_DISASSEMBLY_SIZE 2048
@@ -1125,8 +1233,8 @@ typedef enum
     GUI_MENU_ADD_ENTRY,             // param1=int hMenu,            param2=const char* title
     GUI_MENU_ADD_SEPARATOR,         // param1=int hMenu,            param2=unused
     GUI_MENU_CLEAR,                 // param1=int hMenu,            param2=unused
-    GUI_SELECTION_GET,              // param1=int hWindow,          param2=SELECTIONDATA* selection
-    GUI_SELECTION_SET,              // param1=int hWindow,          param2=const SELECTIONDATA* selection
+    GUI_SELECTION_GET,              // param1=GUISELECTIONTYPE,     param2=SELECTIONDATA* selection
+    GUI_SELECTION_SET,              // param1=GUISELECTIONTYPE,     param2=const SELECTIONDATA* selection
     GUI_GETLINE_WINDOW,             // param1=const char* title,    param2=char* text
     GUI_AUTOCOMPLETE_ADDCMD,        // param1=const char* cmd,      param2=ununsed
     GUI_AUTOCOMPLETE_DELCMD,        // param1=const char* cmd,      param2=ununsed
@@ -1148,7 +1256,7 @@ typedef enum
     GUI_ADD_QWIDGET_TAB,            // param1=QWidget*,             param2=unused
     GUI_SHOW_QWIDGET_TAB,           // param1=QWidget*,             param2=unused
     GUI_CLOSE_QWIDGET_TAB,          // param1=QWidget*,             param2=unused
-    GUI_EXECUTE_ON_GUI_THREAD,      // param1=GUICALLBACK,          param2=unused
+    GUI_EXECUTE_ON_GUI_THREAD,      // param1=GUICALLBACKEX cb,     param2=void* userdata
     GUI_UPDATE_TIME_WASTED_COUNTER, // param1=unused,               param2=unused
     GUI_SET_GLOBAL_NOTES,           // param1=const char* text,     param2=unused
     GUI_GET_GLOBAL_NOTES,           // param1=char** text,          param2=unused
@@ -1191,12 +1299,26 @@ typedef enum
     GUI_OPEN_TRACE_FILE,            // param1=const char* file name,param2=unused
     GUI_UPDATE_TRACE_BROWSER,       // param1=unused,               param2=unused
     GUI_INVALIDATE_SYMBOL_SOURCE,   // param1=duint base,           param2=unused
+    GUI_GET_CURRENT_GRAPH,          // param1=BridgeCFGraphList*,   param2=unused
+    GUI_SHOW_REF,                   // param1=unused,               param2=unused
+    GUI_SELECT_IN_SYMBOLS_TAB,      // param1=duint addr,           param2=unused
+    GUI_GOTO_TRACE,                 // param1=duint index,          param2=unused
+    GUI_SHOW_TRACE,                 // param1=unused,               param2=unused
+    GUI_GET_MAIN_THREAD_ID,         // param1=unused,               param2=unused
+    GUI_ADD_MSG_TO_LOG_HTML,        // param1=(const char*)msg,     param2=unused
+    GUI_IS_LOG_ENABLED,             // param1=unused,               param2=unused
+    GUI_IS_DEBUGGER_FOCUSED_UNUSED,        // This message is removed, could be used for future purposes
+    GUI_SAVE_LOG,                   // param1=const char* file name,param2=unused
+    GUI_REDIRECT_LOG,               // param1=const char* file name,param2=unused
+    GUI_STOP_REDIRECT_LOG,          // param1=unused,               param2=unused
+    GUI_SHOW_THREADS,               // param1=unused,               param2=unused
 } GUIMSG;
 
 //GUI Typedefs
 struct _TYPEDESCRIPTOR;
 
 typedef void (*GUICALLBACK)();
+typedef void (*GUICALLBACKEX)(void*);
 typedef bool (*GUISCRIPTEXECUTE)(const char* text);
 typedef void (*GUISCRIPTCOMPLETER)(const char* text, char** entries, int* entryCount);
 typedef bool (*TYPETOSTRING)(const struct _TYPEDESCRIPTOR* type, char* dest, size_t* destCount); //don't change destCount for final failure
@@ -1257,7 +1379,11 @@ extern void GuiDisasmAt(duint addr, duint cip);
 extern void GuiSetDebugState(DBGSTATE state);
 extern void GuiSetDebugStateFast(DBGSTATE state);
 extern void GuiAddLogMessage(const char* msg);
+extern void GuiAddLogMessageHtml(const char* msg);
 extern void GuiLogClear();
+extern void GuiLogSave(const char* filename);
+extern void GuiLogRedirect(const char* filename);
+extern void GuiLogRedirectStop();
 extern void GuiUpdateAllViews();
 extern void GuiUpdateRegisterView();
 extern void GuiUpdateDisassemblyView();
@@ -1286,8 +1412,8 @@ extern int GuiReferenceSearchGetRowCount();
 extern void GuiReferenceDeleteAllColumns();
 extern void GuiReferenceInitialize(const char* name);
 extern void GuiReferenceSetCellContent(int row, int col, const char* str);
-extern const char* GuiReferenceGetCellContent(int row, int col);
-extern const char* GuiReferenceSearchGetCellContent(int row, int col);
+extern char* GuiReferenceGetCellContent(int row, int col);
+extern char* GuiReferenceSearchGetCellContent(int row, int col);
 extern void GuiReferenceReloadData();
 extern void GuiReferenceSetSingleSelection(int index, bool scroll);
 extern void GuiReferenceSetProgress(int progress);
@@ -1308,8 +1434,8 @@ extern int GuiMenuAddEntry(int hMenu, const char* title);
 extern void GuiMenuAddSeparator(int hMenu);
 extern void GuiMenuClear(int hMenu);
 extern void GuiMenuRemove(int hEntryMenu);
-extern bool GuiSelectionGet(int hWindow, SELECTIONDATA* selection);
-extern bool GuiSelectionSet(int hWindow, const SELECTIONDATA* selection);
+extern bool GuiSelectionGet(GUISELECTIONTYPE hWindow, SELECTIONDATA* selection);
+extern bool GuiSelectionSet(GUISELECTIONTYPE hWindow, const SELECTIONDATA* selection);
 
 %pybuffer_string(char* text);
 extern bool GuiGetLineWindow(const char* title, char* text);
@@ -1333,6 +1459,7 @@ extern void GuiMenuSetName(int hMenu, const char* name);
 extern void GuiMenuSetEntryName(int hEntry, const char* name);
 extern void GuiMenuSetEntryHotkey(int hEntry, const char* hack);
 extern void GuiShowCpu();
+extern void GuiShowThreads();
 extern void GuiAddQWidgetTab(void* qWidget);
 extern void GuiShowQWidgetTab(void* qWidget);
 extern void GuiCloseQWidgetTab(void* qWidget);
@@ -1356,6 +1483,7 @@ extern duint GuiGraphAt(duint addr);
 extern void GuiUpdateGraphView();
 extern void GuiDisableLog();
 extern void GuiEnableLog();
+extern bool GuiIsLogEnabled();
 extern void GuiAddFavouriteTool(const char* name, const char* description);
 extern void GuiAddFavouriteCommand(const char* name, const char* shortcut);
 extern void GuiSetFavouriteToolShortcut(const char* name, const char* shortcut);
@@ -1373,10 +1501,68 @@ extern void GuiReferenceAddCommand(const char* title, const char* command);
 extern void GuiUpdateTraceBrowser();
 extern void GuiOpenTraceFile(const char* fileName);
 extern void GuiInvalidateSymbolSource(duint base);
+extern void GuiExecuteOnGuiThreadEx(GUICALLBACKEX cbGuiThread, void* userdata);
+extern void GuiGetCurrentGraph(BridgeCFGraphList* graphList);
+extern void GuiShowReferences();
+extern void GuiSelectInSymbolsTab(duint addr);
+extern void GuiGotoTrace(duint index);
+extern void GuiShowTrace();
+extern DWORD GuiGetMainThreadId();
 
 #ifdef __cplusplus
 }
-#endif
+#endif // __cplusplus
+
+// Some useful C++ wrapper classes
+#ifdef __cplusplus
+
+class GuiDisableLogScope
+{
+    bool wasEnabled;
+
+public:
+    GuiDisableLogScope(const GuiDisableLogScope &) = delete;
+
+    GuiDisableLogScope()
+    {
+        wasEnabled = GuiIsLogEnabled();
+        if(wasEnabled)
+            GuiDisableLog();
+    }
+
+    ~GuiDisableLogScope()
+    {
+        if(wasEnabled)
+            GuiEnableLog();
+    }
+};
+
+class GuiDisableUpdateScope
+{
+    bool updateAfter;
+    bool wasEnabled;
+
+public:
+    GuiDisableUpdateScope(const GuiDisableUpdateScope &) = delete;
+
+    explicit GuiDisableUpdateScope(bool updateAfter = true)
+        : updateAfter(updateAfter)
+    {
+        wasEnabled = !GuiIsUpdateDisabled();
+        if(wasEnabled)
+            GuiUpdateDisable();
+    }
+
+    ~GuiDisableUpdateScope()
+    {
+        if(wasEnabled)
+            GuiUpdateEnable(updateAfter);
+    }
+};
+
+class GuiDisableScope : GuiDisableUpdateScope, GuiDisableLogScope { };
+
+#endif // __cplusplus
 
 #pragma pack(pop)
 

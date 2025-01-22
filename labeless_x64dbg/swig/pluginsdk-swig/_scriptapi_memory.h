@@ -25,7 +25,10 @@ namespace Script
         
         %rename(Memory_GetProtect) GetProtect;
         extern unsigned int GetProtect(duint addr, bool reserved = false, bool cache = true);
-        
+
+        %rename(Memory_SetProtect) SetProtect;
+        extern bool SetProtect(duint addr, unsigned int protect, duint size);
+
         %rename(Memory_GetBase) GetBase;
         extern duint GetBase(duint addr, bool reserved = false, bool cache = true);
         
