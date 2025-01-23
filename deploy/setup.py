@@ -73,12 +73,14 @@ def _get_backends():
 def _get_long_description():
     if not path.isfile('README.rst'):
         import pypandoc
-        rst = pypandoc.convert(path.join('..', 'README.md'), 'rst')
+        rst = pypandoc.convert(path.join('..', 'README.MD'), 'rst')
         with open('README.rst', 'wb') as f:
             f.write(rst)
 
     with open(r'README.rst', 'r') as f:
         return f.read()
+
+readme = open('README.MD').read()
 
 
 setup(
@@ -87,6 +89,8 @@ setup(
     description='Labels/Comments synchronization between IDA PRO and dbg backend (OllyDbg1.10, OllyDbg 2.01, x64dbg)'
                 ' , Remote memory dumping tool (including x64-bit), Python scripting tool',
     # long_description=_get_long_description(),
+    long_description=readme,
+    long_description_content_type="text/markdown",
     author="Aliaksandr Trafimchuk",
     author_email='a13x4nd3r.t@gmail.com',
     url='https://github.com/a1ext/labeless',

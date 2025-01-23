@@ -65,30 +65,29 @@ As a result we have a lot of memory regions that may represent even different mo
 
 Installation
 ============
-## Usage of precompiled binaries (release version) 
+## Use of precompiled binaries (release version)
 ### Debug-backend setup:
 If you want to use both x86 and x86_64 targets, then you should do the following steps for each python distro.
 
 * Set up Python 3.10 (x86/x86_64) into separate folders like `c:\Python310` and `c:\Python310x64` for 32 and 64 bit accordingly
-* do `pip install labeless` and that's it (if your machine has Internet)
-* otherwise Copy `deploy` directory to target machine, where you want to use a debugger backend
-* Set up `protobuf 2.6.1` using the following commands:
+The current build's debugger plugins are linked with **Python 3.10**! To make it work for you, it requires to install same version at least Major one to allow debugger plugins to load properly. When installing you can choose the following options I usually chose for myself:
+- [x] install python for all users
+- simple folder naming in the C: drive root, like `C:\Python310`
+- [x] add python home to `%PATH%` (checkbox during its setup), yes you can add both 32 and 64-bit of python's to `%PATH%`,
+if you want the 32-bit one to be the main one, just change the order of path entries in the `%PATH%` in system setttings.
 
+Sidenote:
+I'm trying to keep it as fresh as possible, but it takes my time to maintain.
+In case you want to use your version of python other than Python 3.10, you might copy your Python X's `includes` and `libs` to corresponding
+folder in `3rdparty\Python310\` / `3rdparty\Python310x64\` (take a look at existing files to understand how to update)
+and re-build all needed plugins.
+
+* do `pip install -U labeless` and that's it (if your machine has Internet). Pay attention, to the python you are invoking, to install it to proper location.
+* otherwise (if you don't have Internet there) Copy the release bundle or just a `deploy` folder to target machine, where you want to use a debugger backend and do:
 ```bat
-cd c:\deploy
-c:\Python27\python.exe setup_protobuf.py
-```
-* Install `labeless` python module, there are two ways to archive that, the first one is to use PyPI in case you have an Internet connection on the debug machine:
-
-```bat
-pip install --upgrade labeless
-```
-
-In case you don't have an Internet connection, you could install prebuilt module from release archive:
-
-```bat
-cd c:\deploy
-c:\Python27\Scripts\pip.exe install labeless-1.1.2.65-py2.py3-none-any.whl
+cd labeless_release_full_1.1.7.0\deploy
+c:\Python310\python.exe -m pip install .\protobuf-3.20.3-py2.py3-none-any.whl
+c:\Python310\python.exe -m pip install .\labeless-1.1.7.0-py2.py3-none-any.whl
 ```
 
 **Note**: If you have already used Labeless before and you want to update it, don't forget to reinstall python module each time you have new release
@@ -96,21 +95,16 @@ c:\Python27\Scripts\pip.exe install labeless-1.1.2.65-py2.py3-none-any.whl
 * Configure your debugger backend: set up `plugins` directory
 
 ## Configuring of your IDA PRO:
-Labeless supports **Windows** and **Linux** (starting from 6.9.5 version of) IDA PRO. Labeless handles only PE/AMD64 binaries. Labeless requires **IDAPython** plugin `python.[plw|p64|plx|plx64]` (it ships with IDA PRO, but make sure it works well).
+Labeless supports **Windows**,  **Linux** and **MacOS Arm64** IDA PRO. Labeless handles only PE/AMD64 binaries. Labeless requires **IDAPython** plugin `idapython3.{dll,so,dylib}` (it ships with IDA PRO, but make sure it works well).
 
 There are plugins:
 ```
-IDA[XX]\plugins\labeless_ida.plw - for IDA for Windows, handles 32-bit binaries (used with idaq)
-IDA[XX]\plugins\labeless_ida.p64 - for IDA for Windows, handles 64-bit binaries (used with idaq64)
-IDA[XX]\plugins\labeless_ida.plx - for IDA for Linux, handles 32-bit binaries (used with idaq)
-IDA[XX]\plugins\labeless_ida.plx64 - for IDA for Linux, handles 64-bit binaries (used with idaq64)
+IDA[XX]\plugins\labeless_ida_xx.{dll,so} - for IDA for Windows, 32-bit targets
+IDA[XX]\plugins\labeless_ida_xx_64.{dll,so,dylib} - for IDA for Windows (dll), Linux (so) and MacOS (dylib), 64-bit targets, starting from IDA 9 this will be the only needed to handle both 32 and 64 bit targets
 ```
 
-Copy Labeless plugins to your IDA's `plugins` directory, for example `c:\IDA68\plugins`
+Copy Labeless plugins to your IDA's `plugins` directory, for example `c:\IDA90rc1\plugins`
 
-* In case you have IDA for Windows, please, use `.plw`/`.p64` plugins.
-
-* If you have IDA for Linux, please, use `.plx`/`.plx64` plugins. Also, copy `IDA[XX]/libprotobuf.so.9` to your IDA home directory (for example `/home/alex/ida695/`), it's an important library.
 
 ## Configuring of debug backends
 
@@ -125,6 +119,7 @@ You may find prepared debugger in the following directory `OllyDbg201`. (Note!: 
 
 ### 4. x64dbg (x32,x64)
 You may find prepared debugger in the following directory `x64dbg`.
+
 
 # Checking if everything works
  * Start debug backend (debugger) and check for _Labeless_ item presence in the _Plugins_ menu. If there is any problem, then check Olly's log window for details. Open the log window and check for `LL: ok, binded at <IP>:<PORT>` message, its presence means that debug backend-side plugin is initialized successfully. Note: if you start many debuggers, you may see that the following message appears
@@ -148,12 +143,8 @@ If you want to access the debug backend from another computer, you should allow 
 
 ## Development
 
-* Set up Python 2.7 (x86/x86_64)
-* protobuf 2.6.1
-* Visual Studio 2010 + Qt 4.8.4 (built with "QT" namespace) - required by **IDA's 6.8** plugin (to proper use IDA's Qt). You can configure Qt by yourself with the following command:
-
-`configure -platform win32-msvc2010 -shared -release -no-webkit -opensource -no-qt3support -no-phonon -no-phonon-backend -opengl desktop  -nomake demos -nomake examples -nomake tools -no-script -no-scripttools -no-declarative -qtnamespace QT`
-
+* Set up Python 3.10 (x86/x86_64)
+* protobuf 3.20.3 (already shipped, but if you want to build for Linix or MacOS you need to compile it, see `./3rdparty/protobuf-3.20.3`)
 * Visual Studio 2015 + Qt 5.4.1 to build IDA's 6.9 and debug backend plugins. You should build Qt 5.4.1 from sources. Do the following steps to do that:
     * Download sources of Qt 5.4.1 from  [http://download.qt.io/official_releases/qt/5.4/5.4.1/single/](http://download.qt.io/official_releases/qt/5.4/5.4.1/single/qt-everywhere-opensource-src-5.4.1.7z)
     * Check [this article](http://doc.qt.io/qt-5/windows-requirements.html) out to set up Qt 5 requirements
@@ -180,18 +171,14 @@ Repeatable - are comments, which IDA shows in any referenced place.
 # Things automatically performed in the background
  * If you enabled '_Enable labels & comments sync_' option, then Labeless will automatically synchronize all the data on any rename operation in IDA
 
-# Troubleshooting
-Issue with Python 2.7.11 is described [here](http://bugs.python.org/issue26998?), so avoid usage of this version. The latest stable supported version is 2.7.10.
-
 * Q: Labeless for x64dbg x32 is works, but x64 doesn't. Why?
 * A: Please, recheck that you have installed protobuf and 'labeless' module for Python x64
 
 # Download
 * [Download latest release of Labeless](https://github.com/a1ext/labeless/releases/latest)
-* (old) [Download Labeless 1.0.0.7 (include IDA 6.6 build)](https://github.com/a1ext/labeless/releases/download/v_1_0_0_7/Labeless.v.1.0.0.7_with_IDA66_build.zip)
 
 # Credits
 * **Axel Souchet** aka [0vercl0k](https://github.com/0vercl0k)
 * **Duncan Ogilvie** aka [mrexodia](https://github.com/mrexodia)
 * **Alexey Bukhteyev**
-* **Bohdan Melnykov** 
+* [**Bohdan Melnykov**](https://github.com/mbv06)
