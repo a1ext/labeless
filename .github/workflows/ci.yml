@@ -38,42 +38,11 @@ jobs:
     #     path: C:\Program Files (x86)\Microsoft Visual Studio
     #     key: vs-toolset-v140
 
-    # - name: Check if v140 Toolset is Installed
-    #   id: check-toolset
-    #   if: runner.os == 'Windows'
-    #   run: |
-    #     if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.0") {
-    #       echo "::set-output name=installed::true"
-    #     } else {
-    #       echo "::set-output name=installed::false"
-    #     }
-    #     if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools") {
-    #       echo "::set-output name=buildtools::true"
-    #     } else {
-    #       echo "::set-output name=buildtools::false"
-    #     }
-    #   shell: pwsh
 
     - name: Set up environment
       if: runner.os == 'Linux'
       run: sudo apt-get install -y build-essential
 
-    # - name: Install Win BuildTools 2019
-    #   if: runner.os == 'Windows' && steps.check-toolset.outputs.buildtools == 'false' && !steps.cache.outputs.cache-hit
-    #   run: choco install visualstudio2019buildtools --no-progress -y
-
-    # - name: Install Visual Studio 2015 Toolset (v140)
-    #   if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
-    #   shell: pwsh
-    #   run: |
-    #     ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
-    #     ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\"
-    #     curl https://aka.ms/vs/16/release/vs_buildtools.exe -o c:\TEMP\vs_buildtools.exe
-    #     curl https://aka.ms/vs/16/release/channel -o C:\TEMP\VisualStudio.chman
-    #     ls c:\TEMP\vs_buildtools.exe
-    #     C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache --channelUri C:\TEMP\VisualStudio.chman --installChannelUri C:\TEMP\VisualStudio.chman --add Microsoft.VisualStudio.Component.VC.140 --installPath C:\BuildTools
-    #     ls C:\BuildTools
-    #"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --wait --norestart --nocache --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
 
     - name: Build OllyDBG 1.10 plugin
       if: runner.os == 'Windows'
@@ -110,10 +79,34 @@ jobs:
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
 
+    - name: Set Up Windows Dependencies
+      env:
+        LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
+      run: |
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -o C:\depz.7z
+        7z x -oc:\ -p$env::LL_DEPS_P c:\depz.7z
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk70\plugins
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk_pro83\plugins
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk90sp1\plugins
+ 
+
+    - name: Build IDA 7 plugins
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
+
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
+        
+        
+
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: labeless_olly.dll
+        name: labeless_build_${{ github.sha }}
         path: |
           bin/labeless_olly.dll
           bin/labeless_olly-x86.pdb
@@ -125,3 +118,5 @@ jobs:
           bin/labeless_x64dbg-x86.pdb
           bin/labeless_x64dbg.dp64
           bin/labeless_x64dbg-x64.pdb
+          bin/labeless_ida_*.dll
+          bin/labeless_ida_*.pdb
