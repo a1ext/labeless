@@ -47,17 +47,25 @@ jobs:
         } else {
           echo "::set-output name=installed::false"
         }
+        if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools") {
+          echo "::set-output name=buildtools::true"
+        } else {
+          echo "::set-output name=buildtools::false"
+        }
       shell: pwsh
 
     - name: Set up environment
       if: runner.os == 'Linux'
       run: sudo apt-get install -y build-essential
 
+    - name: Install Win BuildTools 2019
+      if: runner.os == 'Windows' && steps.check-toolset.outputs.buildtools == 'false' && !steps.cache.outputs.cache-hit
+      run: choco install visualstudio2019buildtools --no-progress -y
+
     - name: Install Visual Studio 2015 Toolset (v140)
       if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
       shell: cmd
-      run: |
-        choco install visualstudio2019buildtools --no-progress -y
+      run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --norestart
 
     - name: Build OllyDBG 1.10 plugin
