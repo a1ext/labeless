@@ -83,7 +83,7 @@ jobs:
       env:
         LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
       run: |
-        curl https://github.com/a1ext/depz/raw/master/depz.7z -o C:\depz.7z
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o C:\depz.7z
         7z x -oc:\ -p$env::LL_DEPS_P c:\depz.7z
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk70\plugins
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk_pro83\plugins
