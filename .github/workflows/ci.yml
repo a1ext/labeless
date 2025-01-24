@@ -88,6 +88,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk70\plugins
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk_pro83\plugins
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk90sp1\plugins
+        Rename-Item -Path "labeless_ida\labeless_ida.vcxproj.user" -NewName "labeless_ida\labeless_ida.vcxproj.user_" -Force
  
 
     - name: Build IDA 7 plugins
@@ -100,8 +101,30 @@ jobs:
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
         
-        
+    - name: Build IDA 8 plugins
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
+
+    - name: Build IDA 9 plugins
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk90sp1 /p:SDK_DIR=c:\depz\idasdk90sp1
+
+    - name: Build Python module sdist
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        cd deploy
+        python.exe -m pip install wheel
+        python.exe setup.py bdist_wheel
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
@@ -119,4 +142,5 @@ jobs:
           bin/labeless_x64dbg.dp64
           bin/labeless_x64dbg-x64.pdb
           bin/labeless_ida_*.dll
+          dist/*.whl
           bin/labeless_ida_*.pdb
