@@ -20,12 +20,12 @@ jobs:
         # os: [ubuntu-20.04, windows-2022, macos-14]
         os: [windows-2022]
         include:
-          - os: ubuntu-20.04
-            build_cmd: make
+          #- os: ubuntu-20.04
+          #  build_cmd: make
           - os: windows-2022
             build_cmd: build.bat
-          - os: macos-14
-            build_cmd: ./build_macos.sh
+          #- os: macos-14
+          #  build_cmd: ./build_macos.sh
 
     steps:
     - name: Checkout code
@@ -37,6 +37,7 @@ jobs:
 
     - name: Install Visual Studio 2015 Toolset (v140)
       if: runner.os == 'Windows'
+      shell: cmd
       run: |
         choco install visualstudio2019buildtools --no-progress -y
         "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --norestart
