@@ -91,7 +91,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk90sp1\plugins
         Rename-Item -Path "labeless_ida\labeless_ida.vcxproj.user" -NewName "labeless_ida.vcxproj.user_" -Force
         curl -L "https://go.microsoft.com/fwlink/p/?LinkId=323507" -o .\sdksetup.exe
-        .\sdksetup.exe /features OptionId.WindowsDesktopSoftwareDevelopmentKit OptionId.NetFxSoftwareDevelopmentKit /quiet
+        Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
  
 
     - name: Build IDA 7 plugins
