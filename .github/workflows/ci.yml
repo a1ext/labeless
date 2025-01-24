@@ -1,0 +1,56 @@
+name: Build Labeless
+
+on:
+  push:
+    branches:
+      - actions_ci
+  pull_request:
+    branches:
+      - actions_ci
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
+        # macos-13: Supports both ARM64 and x86_64.
+        # os: [ubuntu-20.04, windows-2022, macos-14]
+        os: [windows-2022]
+        include:
+          - os: ubuntu-20.04
+            build_cmd: make
+          - os: windows-2022
+            build_cmd: build.bat
+          - os: macos-14
+            build_cmd: ./build_macos.sh
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up environment
+      if: runner.os == 'Linux'
+      run: sudo apt-get install -y build-essential
+
+    - name: Install Visual Studio 2015 Toolset (v140)
+      if: runner.os == 'Windows'
+      run: |
+        choco install visualstudio2019buildtools --no-progress -y
+        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify \
+          --add Microsoft.VisualStudio.Component.VC.140 \
+          --quiet --norestart
+
+    - name: Build OllyDBG 1.10 plugin
+      if: runner.os == 'Windows'
+      run: |
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build-Artifacts-${{ matrix.os }}
+        path: bin/labeless_olly.dll
