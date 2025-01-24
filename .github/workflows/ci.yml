@@ -64,11 +64,15 @@ jobs:
 
     - name: Install Visual Studio 2015 Toolset (v140)
       if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
-      shell: cmd
+      shell: pwsh
       run: |
-        dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
-        dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\"
-        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --wait --norestart --nocache --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
+        ls -la "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
+        ls -la "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\"
+        curl https://aka.ms/vs/16/release/vs_buildtools.exe -o c:\TEMP\vs_buildtools.exe
+        curl https://aka.ms/vs/16/release/channel -o C:\TEMP\VisualStudio.chman
+        C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache --channelUri C:\TEMP\VisualStudio.chman --installChannelUri C:\TEMP\VisualStudio.chman --add Microsoft.VisualStudio.Component.VC.140 --installPath C:\BuildTools
+        ls -la C:\BuildTools
+    #"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --wait --norestart --nocache --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
 
     #- name: Build OllyDBG 1.10 plugin
     #  if: runner.os == 'Windows'
