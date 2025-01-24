@@ -86,7 +86,6 @@
     <ProjectGuid>{ADCF29E6-8039-4ABF-B6CD-28BAEF0793C3}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
     <RootNamespace>labeless_ida</RootNamespace>
-    <WindowsTargetPlatformVersion>10.16299</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA68_vc120|Win32'" Label="Configuration">
