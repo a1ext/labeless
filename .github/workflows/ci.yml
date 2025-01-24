@@ -40,11 +40,27 @@ jobs:
 
     - name: Set outputs Non-Windows
       if: runner.os != 'Windows'
-      run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      run: |
+        echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        VERSION_MAJOR=$(grep -E '\#define\s+VERSION_MAJOR\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        VERSION_MINOR=$(grep -E '\#define\s+VERSION_MINOR\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        VERSION_REVISION=$(grep -E '\#define\s+VERSION_REVISION\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        VERSION_BUILD=$(grep -E '\#define\s+VERSION_BUILD\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        echo "VER==$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $GITHUB_ENV
 
     - name: Set outputs Windows
       if: runner.os == 'Windows'
-      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+      run: |
+        echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+        $M_MAJ = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_MAJOR\s+(\d+)\s*'
+        $M_MIN = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_MINOR\s+(\d+)\s*'
+        $M_REV = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_REVISION\s+(\d+)\s*'
+        $M_BUILD = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_BUILD\s+(\d+)\s*'
+        $VERSION_MAJOR = $M_MAJ.Matches.Groups[1].Value
+        $VERSION_MINOR = $M_MIN.Matches.Groups[1].Value
+        $VERSION_REVISION = $M_REV.Matches.Groups[1].Value
+        $VERSION_BUILD = $M_BUILD.Matches.Groups[1].Value
+        echo "VER=$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $env:GITHUB_ENV
 
 
     - name: Set up environment
@@ -140,7 +156,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: labeless_build_${{ env.SHORT_SHA }}
+        name: labeless_build_${{ env.VER }}_${{ env.SHORT_SHA }}
         path: |
           bin/labeless_olly.dll
           bin/labeless_olly-x86.pdb
