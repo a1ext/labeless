@@ -118,25 +118,25 @@ jobs:
         Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
  
 
-    - name: Build IDA 7 plugins
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
+    # - name: Build IDA 7 plugins
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
 
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
         
-    - name: Build IDA 8 plugins
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
+    # - name: Build IDA 8 plugins
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
     - name: Build IDA 9 plugins
       if: runner.os == 'Windows'
