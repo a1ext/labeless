@@ -31,12 +31,30 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Restore VS Toolset Cache
+      if: runner.os == 'Windows'
+      uses: actions/cache@v3
+      with:
+        path: C:\Program Files (x86)\Microsoft Visual Studio
+        key: vs-toolset-v140
+
+    - name: Check if v140 Toolset is Installed
+      id: check-toolset
+      if: runner.os == 'Windows'
+      run: |
+        if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.0") {
+          echo "::set-output name=installed::true"
+        } else {
+          echo "::set-output name=installed::false"
+        }
+      shell: pwsh
+
     - name: Set up environment
       if: runner.os == 'Linux'
       run: sudo apt-get install -y build-essential
 
     - name: Install Visual Studio 2015 Toolset (v140)
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
       shell: cmd
       run: |
         choco install visualstudio2019buildtools --no-progress -y
