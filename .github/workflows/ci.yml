@@ -39,9 +39,7 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         choco install visualstudio2019buildtools --no-progress -y
-        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify \
-          --add Microsoft.VisualStudio.Component.VC.140 \
-          --quiet --norestart
+        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --norestart
 
     - name: Build OllyDBG 1.10 plugin
       if: runner.os == 'Windows'
