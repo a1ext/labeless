@@ -438,6 +438,27 @@ mod_system = _x64dbgapi.mod_system
 DebugEngineTitanEngine = _x64dbgapi.DebugEngineTitanEngine
 DebugEngineGleeBug = _x64dbgapi.DebugEngineGleeBug
 DebugEngineStaticEngine = _x64dbgapi.DebugEngineStaticEngine
+class MEMORY_BASIC_INFORMATION(object):
+    """Proxy of C++ _MEMORY_BASIC_INFORMATION class"""
+    thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')
+    __repr__ = _swig_repr
+    BaseAddress = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_BaseAddress_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_BaseAddress_set)
+    AllocationBase = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_AllocationBase_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_AllocationBase_set)
+    AllocationProtect = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_AllocationProtect_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_AllocationProtect_set)
+    RegionSize = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_RegionSize_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_RegionSize_set)
+    State = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_State_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_State_set)
+    Protect = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_Protect_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_Protect_set)
+    Type = _swig_property(_x64dbgapi.MEMORY_BASIC_INFORMATION_Type_get, _x64dbgapi.MEMORY_BASIC_INFORMATION_Type_set)
+    def __init__(self): 
+        """__init__(_MEMORY_BASIC_INFORMATION self) -> MEMORY_BASIC_INFORMATION"""
+        this = _x64dbgapi.new_MEMORY_BASIC_INFORMATION()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _x64dbgapi.delete_MEMORY_BASIC_INFORMATION
+    __del__ = lambda self : None;
+MEMORY_BASIC_INFORMATION_swigregister = _x64dbgapi.MEMORY_BASIC_INFORMATION_swigregister
+MEMORY_BASIC_INFORMATION_swigregister(MEMORY_BASIC_INFORMATION)
+
 class MEMPAGE(object):
     """Proxy of C++ MEMPAGE class"""
     thisown = _swig_property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc='The membership flag')

@@ -570,7 +570,7 @@ typedef struct DBGFUNCTIONS_ DBGFUNCTIONS;
 
 typedef bool (*CBSYMBOLENUM)(const struct SYMBOLPTR_* symbol, void* user);
 
-/*typedef struct _MEMORY_BASIC_INFORMATION {
+typedef struct _MEMORY_BASIC_INFORMATION {
     PVOID BaseAddress;
     PVOID AllocationBase;
     DWORD AllocationProtect;
@@ -578,7 +578,7 @@ typedef bool (*CBSYMBOLENUM)(const struct SYMBOLPTR_* symbol, void* user);
     DWORD State;
     DWORD Protect;
     DWORD Type;
-} MEMORY_BASIC_INFORMATION, *PMEMORY_BASIC_INFORMATION;*/
+} MEMORY_BASIC_INFORMATION, *PMEMORY_BASIC_INFORMATION;
 //Debugger structs
 typedef struct
 {

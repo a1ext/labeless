@@ -2994,69 +2994,69 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_LabelInfoArray swig_types[57]
 #define SWIGTYPE_p_ListInfo swig_types[58]
 #define SWIGTYPE_p_MEMMAP swig_types[59]
-#define SWIGTYPE_p_MEMORY_BASIC_INFORMATION swig_types[60]
-#define SWIGTYPE_p_MEMORY_INFO swig_types[61]
-#define SWIGTYPE_p_MEMORY_SIZE swig_types[62]
-#define SWIGTYPE_p_MEMPAGE swig_types[63]
-#define SWIGTYPE_p_MEMPAGEArray swig_types[64]
-#define SWIGTYPE_p_MODULEPARTY swig_types[65]
-#define SWIGTYPE_p_MODULESYMBOLSTATUS swig_types[66]
-#define SWIGTYPE_p_MSG swig_types[67]
-#define SWIGTYPE_p_MXCSRFIELDS swig_types[68]
-#define SWIGTYPE_p_ModuleExportArray swig_types[69]
-#define SWIGTYPE_p_ModuleImportArray swig_types[70]
-#define SWIGTYPE_p_ModuleInfoArray swig_types[71]
-#define SWIGTYPE_p_ModuleSectionInfoArray swig_types[72]
-#define SWIGTYPE_p_RECT swig_types[73]
-#define SWIGTYPE_p_REGDUMP swig_types[74]
-#define SWIGTYPE_p_REGISTERCONTEXT swig_types[75]
-#define SWIGTYPE_p_SCRIPTBRANCH swig_types[76]
-#define SWIGTYPE_p_SCRIPTBRANCHTYPE swig_types[77]
-#define SWIGTYPE_p_SCRIPTLINETYPE swig_types[78]
-#define SWIGTYPE_p_SCRIPTTYPEINFO swig_types[79]
-#define SWIGTYPE_p_SEGMENTREG swig_types[80]
-#define SWIGTYPE_p_SELECTIONDATA swig_types[81]
-#define SWIGTYPE_p_STACK_COMMENT swig_types[82]
-#define SWIGTYPE_p_STRING_TYPE swig_types[83]
-#define SWIGTYPE_p_SYMBOLCBINFO swig_types[84]
-#define SWIGTYPE_p_SYMBOLINFOCPP swig_types[85]
-#define SWIGTYPE_p_SYMBOLINFO_ swig_types[86]
-#define SWIGTYPE_p_SYMBOLMODULEINFO swig_types[87]
-#define SWIGTYPE_p_SYMBOLPTR_ swig_types[88]
-#define SWIGTYPE_p_SYMBOLTYPE swig_types[89]
-#define SWIGTYPE_p_Script__Argument__ArgumentInfo swig_types[90]
-#define SWIGTYPE_p_Script__Bookmark__BookmarkInfo swig_types[91]
-#define SWIGTYPE_p_Script__Comment__CommentInfo swig_types[92]
-#define SWIGTYPE_p_Script__Function__FunctionInfo swig_types[93]
-#define SWIGTYPE_p_Script__Label__LabelInfo swig_types[94]
-#define SWIGTYPE_p_Script__Module__ModuleExport swig_types[95]
-#define SWIGTYPE_p_Script__Module__ModuleImport swig_types[96]
-#define SWIGTYPE_p_Script__Module__ModuleInfo swig_types[97]
-#define SWIGTYPE_p_Script__Module__ModuleSectionInfo swig_types[98]
-#define SWIGTYPE_p_Script__Symbol__SymbolInfo swig_types[99]
-#define SWIGTYPE_p_SymbolInfoArray swig_types[100]
-#define SWIGTYPE_p_TCPCONNECTIONINFO swig_types[101]
-#define SWIGTYPE_p_THREADALLINFO swig_types[102]
-#define SWIGTYPE_p_THREADINFO swig_types[103]
-#define SWIGTYPE_p_THREADLIST swig_types[104]
-#define SWIGTYPE_p_THREADPRIORITY swig_types[105]
-#define SWIGTYPE_p_THREADWAITREASON swig_types[106]
-#define SWIGTYPE_p_TRACERECORDBYTETYPE swig_types[107]
-#define SWIGTYPE_p_TRACERECORDTYPE swig_types[108]
-#define SWIGTYPE_p_VALUE_INFO swig_types[109]
-#define SWIGTYPE_p_WATCHDOGMODE swig_types[110]
-#define SWIGTYPE_p_WATCHINFO swig_types[111]
-#define SWIGTYPE_p_WATCHVARTYPE swig_types[112]
-#define SWIGTYPE_p_WINDOW_INFO swig_types[113]
-#define SWIGTYPE_p_X87CONTROLWORDFIELDS swig_types[114]
-#define SWIGTYPE_p_X87FPU swig_types[115]
-#define SWIGTYPE_p_X87FPUREGISTER swig_types[116]
-#define SWIGTYPE_p_X87STATUSWORDFIELDS swig_types[117]
-#define SWIGTYPE_p_XREFTYPE swig_types[118]
-#define SWIGTYPE_p_XREF_EDGE swig_types[119]
-#define SWIGTYPE_p_XREF_INFO swig_types[120]
-#define SWIGTYPE_p_XREF_RECORD swig_types[121]
-#define SWIGTYPE_p_YMMREGISTER swig_types[122]
+#define SWIGTYPE_p_MEMORY_INFO swig_types[60]
+#define SWIGTYPE_p_MEMORY_SIZE swig_types[61]
+#define SWIGTYPE_p_MEMPAGE swig_types[62]
+#define SWIGTYPE_p_MEMPAGEArray swig_types[63]
+#define SWIGTYPE_p_MODULEPARTY swig_types[64]
+#define SWIGTYPE_p_MODULESYMBOLSTATUS swig_types[65]
+#define SWIGTYPE_p_MSG swig_types[66]
+#define SWIGTYPE_p_MXCSRFIELDS swig_types[67]
+#define SWIGTYPE_p_ModuleExportArray swig_types[68]
+#define SWIGTYPE_p_ModuleImportArray swig_types[69]
+#define SWIGTYPE_p_ModuleInfoArray swig_types[70]
+#define SWIGTYPE_p_ModuleSectionInfoArray swig_types[71]
+#define SWIGTYPE_p_RECT swig_types[72]
+#define SWIGTYPE_p_REGDUMP swig_types[73]
+#define SWIGTYPE_p_REGISTERCONTEXT swig_types[74]
+#define SWIGTYPE_p_SCRIPTBRANCH swig_types[75]
+#define SWIGTYPE_p_SCRIPTBRANCHTYPE swig_types[76]
+#define SWIGTYPE_p_SCRIPTLINETYPE swig_types[77]
+#define SWIGTYPE_p_SCRIPTTYPEINFO swig_types[78]
+#define SWIGTYPE_p_SEGMENTREG swig_types[79]
+#define SWIGTYPE_p_SELECTIONDATA swig_types[80]
+#define SWIGTYPE_p_STACK_COMMENT swig_types[81]
+#define SWIGTYPE_p_STRING_TYPE swig_types[82]
+#define SWIGTYPE_p_SYMBOLCBINFO swig_types[83]
+#define SWIGTYPE_p_SYMBOLINFOCPP swig_types[84]
+#define SWIGTYPE_p_SYMBOLINFO_ swig_types[85]
+#define SWIGTYPE_p_SYMBOLMODULEINFO swig_types[86]
+#define SWIGTYPE_p_SYMBOLPTR_ swig_types[87]
+#define SWIGTYPE_p_SYMBOLTYPE swig_types[88]
+#define SWIGTYPE_p_Script__Argument__ArgumentInfo swig_types[89]
+#define SWIGTYPE_p_Script__Bookmark__BookmarkInfo swig_types[90]
+#define SWIGTYPE_p_Script__Comment__CommentInfo swig_types[91]
+#define SWIGTYPE_p_Script__Function__FunctionInfo swig_types[92]
+#define SWIGTYPE_p_Script__Label__LabelInfo swig_types[93]
+#define SWIGTYPE_p_Script__Module__ModuleExport swig_types[94]
+#define SWIGTYPE_p_Script__Module__ModuleImport swig_types[95]
+#define SWIGTYPE_p_Script__Module__ModuleInfo swig_types[96]
+#define SWIGTYPE_p_Script__Module__ModuleSectionInfo swig_types[97]
+#define SWIGTYPE_p_Script__Symbol__SymbolInfo swig_types[98]
+#define SWIGTYPE_p_SymbolInfoArray swig_types[99]
+#define SWIGTYPE_p_TCPCONNECTIONINFO swig_types[100]
+#define SWIGTYPE_p_THREADALLINFO swig_types[101]
+#define SWIGTYPE_p_THREADINFO swig_types[102]
+#define SWIGTYPE_p_THREADLIST swig_types[103]
+#define SWIGTYPE_p_THREADPRIORITY swig_types[104]
+#define SWIGTYPE_p_THREADWAITREASON swig_types[105]
+#define SWIGTYPE_p_TRACERECORDBYTETYPE swig_types[106]
+#define SWIGTYPE_p_TRACERECORDTYPE swig_types[107]
+#define SWIGTYPE_p_VALUE_INFO swig_types[108]
+#define SWIGTYPE_p_WATCHDOGMODE swig_types[109]
+#define SWIGTYPE_p_WATCHINFO swig_types[110]
+#define SWIGTYPE_p_WATCHVARTYPE swig_types[111]
+#define SWIGTYPE_p_WINDOW_INFO swig_types[112]
+#define SWIGTYPE_p_X87CONTROLWORDFIELDS swig_types[113]
+#define SWIGTYPE_p_X87FPU swig_types[114]
+#define SWIGTYPE_p_X87FPUREGISTER swig_types[115]
+#define SWIGTYPE_p_X87STATUSWORDFIELDS swig_types[116]
+#define SWIGTYPE_p_XREFTYPE swig_types[117]
+#define SWIGTYPE_p_XREF_EDGE swig_types[118]
+#define SWIGTYPE_p_XREF_INFO swig_types[119]
+#define SWIGTYPE_p_XREF_RECORD swig_types[120]
+#define SWIGTYPE_p_YMMREGISTER swig_types[121]
+#define SWIGTYPE_p__MEMORY_BASIC_INFORMATION swig_types[122]
 #define SWIGTYPE_p__TYPEDESCRIPTOR swig_types[123]
 #define SWIGTYPE_p__XMMREGISTER swig_types[124]
 #define SWIGTYPE_p___int64 swig_types[125]
@@ -3807,6 +3807,22 @@ SWIGINTERNINLINE PyObject*
 }
 
 
+SWIGINTERNINLINE PyObject* 
+SWIG_From_long_SS_long  (long long value)
+{
+  return ((value < LONG_MIN) || (value > LONG_MAX)) ?
+    PyLong_FromLongLong(value) : PyLong_FromLong(static_cast< long >(value)); 
+}
+
+
+SWIGINTERNINLINE PyObject* 
+SWIG_From_unsigned_SS_long_SS_long  (unsigned long long value)
+{
+  return (value > LONG_MAX) ?
+    PyLong_FromUnsignedLongLong(value) : PyLong_FromLong(static_cast< long >(value)); 
+}
+
+
 SWIGINTERN int
 SWIG_AsCharArray(PyObject * obj, char *val, size_t size)
 { 
@@ -3839,22 +3855,6 @@ SWIG_strnlen(const char* s, size_t maxlen)
   for (p = s; maxlen-- && *p; p++)
     ;
   return p - s;
-}
-
-
-SWIGINTERNINLINE PyObject* 
-SWIG_From_long_SS_long  (long long value)
-{
-  return ((value < LONG_MIN) || (value > LONG_MAX)) ?
-    PyLong_FromLongLong(value) : PyLong_FromLong(static_cast< long >(value)); 
-}
-
-
-SWIGINTERNINLINE PyObject* 
-SWIG_From_unsigned_SS_long_SS_long  (unsigned long long value)
-{
-  return (value > LONG_MAX) ?
-    PyLong_FromUnsignedLongLong(value) : PyLong_FromLong(static_cast< long >(value)); 
 }
 
 
@@ -5042,13 +5042,414 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_BaseAddress_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  PVOID arg2 = (PVOID) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_BaseAddress_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_BaseAddress_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1,SWIG_as_voidptrptr(&arg2), 0, SWIG_POINTER_DISOWN);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MEMORY_BASIC_INFORMATION_BaseAddress_set" "', argument " "2"" of type '" "PVOID""'"); 
+  }
+  if (arg1) (arg1)->BaseAddress = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_BaseAddress_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PVOID result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_BaseAddress_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_BaseAddress_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (PVOID) ((arg1)->BaseAddress);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_AllocationBase_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  PVOID arg2 = (PVOID) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_AllocationBase_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_AllocationBase_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  res2 = SWIG_ConvertPtr(obj1,SWIG_as_voidptrptr(&arg2), 0, SWIG_POINTER_DISOWN);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MEMORY_BASIC_INFORMATION_AllocationBase_set" "', argument " "2"" of type '" "PVOID""'"); 
+  }
+  if (arg1) (arg1)->AllocationBase = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_AllocationBase_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  PVOID result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_AllocationBase_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_AllocationBase_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (PVOID) ((arg1)->AllocationBase);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_AllocationProtect_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  DWORD arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_AllocationProtect_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_AllocationProtect_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MEMORY_BASIC_INFORMATION_AllocationProtect_set" "', argument " "2"" of type '" "DWORD""'");
+  } 
+  arg2 = static_cast< DWORD >(val2);
+  if (arg1) (arg1)->AllocationProtect = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_AllocationProtect_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  DWORD result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_AllocationProtect_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_AllocationProtect_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (DWORD) ((arg1)->AllocationProtect);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_RegionSize_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  duint arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_RegionSize_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_RegionSize_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MEMORY_BASIC_INFORMATION_RegionSize_set" "', argument " "2"" of type '" "duint""'");
+  } 
+  arg2 = static_cast< duint >(val2);
+  if (arg1) (arg1)->RegionSize = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_RegionSize_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  duint result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_RegionSize_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_RegionSize_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (duint) ((arg1)->RegionSize);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long(static_cast< unsigned long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_State_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  DWORD arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_State_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_State_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MEMORY_BASIC_INFORMATION_State_set" "', argument " "2"" of type '" "DWORD""'");
+  } 
+  arg2 = static_cast< DWORD >(val2);
+  if (arg1) (arg1)->State = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_State_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  DWORD result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_State_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_State_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (DWORD) ((arg1)->State);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_Protect_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  DWORD arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_Protect_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_Protect_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MEMORY_BASIC_INFORMATION_Protect_set" "', argument " "2"" of type '" "DWORD""'");
+  } 
+  arg2 = static_cast< DWORD >(val2);
+  if (arg1) (arg1)->Protect = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_Protect_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  DWORD result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_Protect_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_Protect_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (DWORD) ((arg1)->Protect);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_Type_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  DWORD arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_Type_set",2,2,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_Type_set" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MEMORY_BASIC_INFORMATION_Type_set" "', argument " "2"" of type '" "DWORD""'");
+  } 
+  arg2 = static_cast< DWORD >(val2);
+  if (arg1) (arg1)->Type = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_MEMORY_BASIC_INFORMATION_Type_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  DWORD result;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"MEMORY_BASIC_INFORMATION_Type_get",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMORY_BASIC_INFORMATION_Type_get" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  result = (DWORD) ((arg1)->Type);
+  resultobj = SWIG_From_unsigned_SS_long(static_cast< unsigned long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_MEMORY_BASIC_INFORMATION(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *result = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"new_MEMORY_BASIC_INFORMATION",0,0)) SWIG_fail;
+  result = (_MEMORY_BASIC_INFORMATION *)new _MEMORY_BASIC_INFORMATION();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p__MEMORY_BASIC_INFORMATION, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_MEMORY_BASIC_INFORMATION(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  _MEMORY_BASIC_INFORMATION *arg1 = (_MEMORY_BASIC_INFORMATION *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if(!PyArg_UnpackTuple(args,(char *)"delete_MEMORY_BASIC_INFORMATION",1,1,&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_MEMORY_BASIC_INFORMATION" "', argument " "1"" of type '" "_MEMORY_BASIC_INFORMATION *""'"); 
+  }
+  arg1 = reinterpret_cast< _MEMORY_BASIC_INFORMATION * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *MEMORY_BASIC_INFORMATION_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_UnpackTuple(args,(char*)"swigregister", 1, 1,&obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p__MEMORY_BASIC_INFORMATION, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_MEMPAGE_mbi_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   MEMPAGE *arg1 = (MEMPAGE *) 0 ;
-  MEMORY_BASIC_INFORMATION arg2 ;
+  MEMORY_BASIC_INFORMATION *arg2 = (MEMORY_BASIC_INFORMATION *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 ;
+  void *argp2 = 0 ;
   int res2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5059,20 +5460,12 @@ SWIGINTERN PyObject *_wrap_MEMPAGE_mbi_set(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMPAGE_mbi_set" "', argument " "1"" of type '" "MEMPAGE *""'"); 
   }
   arg1 = reinterpret_cast< MEMPAGE * >(argp1);
-  {
-    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_MEMORY_BASIC_INFORMATION,  0  | 0);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MEMPAGE_mbi_set" "', argument " "2"" of type '" "MEMORY_BASIC_INFORMATION""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "MEMPAGE_mbi_set" "', argument " "2"" of type '" "MEMORY_BASIC_INFORMATION""'");
-    } else {
-      MEMORY_BASIC_INFORMATION * temp = reinterpret_cast< MEMORY_BASIC_INFORMATION * >(argp2);
-      arg2 = *temp;
-      if (SWIG_IsNewObj(res2)) delete temp;
-    }
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "MEMPAGE_mbi_set" "', argument " "2"" of type '" "MEMORY_BASIC_INFORMATION *""'"); 
   }
-  if (arg1) (arg1)->mbi = arg2;
+  arg2 = reinterpret_cast< MEMORY_BASIC_INFORMATION * >(argp2);
+  if (arg1) (arg1)->mbi = *arg2;
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -5086,7 +5479,7 @@ SWIGINTERN PyObject *_wrap_MEMPAGE_mbi_get(PyObject *SWIGUNUSEDPARM(self), PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  MEMORY_BASIC_INFORMATION result;
+  MEMORY_BASIC_INFORMATION *result = 0 ;
   
   if(!PyArg_UnpackTuple(args,(char *)"MEMPAGE_mbi_get",1,1,&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_MEMPAGE, 0 |  0 );
@@ -5094,8 +5487,8 @@ SWIGINTERN PyObject *_wrap_MEMPAGE_mbi_get(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "MEMPAGE_mbi_get" "', argument " "1"" of type '" "MEMPAGE *""'"); 
   }
   arg1 = reinterpret_cast< MEMPAGE * >(argp1);
-  result =  ((arg1)->mbi);
-  resultobj = SWIG_NewPointerObj((new MEMORY_BASIC_INFORMATION(static_cast< const MEMORY_BASIC_INFORMATION& >(result))), SWIGTYPE_p_MEMORY_BASIC_INFORMATION, SWIG_POINTER_OWN |  0 );
+  result = (MEMORY_BASIC_INFORMATION *)& ((arg1)->mbi);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p__MEMORY_BASIC_INFORMATION, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -52030,6 +52423,23 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"BridgeIsProcessElevated", _wrap_BridgeIsProcessElevated, METH_VARARGS, (char *)"BridgeIsProcessElevated() -> bool"},
 	 { (char *)"BridgeGetNtBuildNumber", _wrap_BridgeGetNtBuildNumber, METH_VARARGS, (char *)"BridgeGetNtBuildNumber() -> unsigned int"},
 	 { (char *)"BridgeUserDirectory", _wrap_BridgeUserDirectory, METH_VARARGS, (char *)"BridgeUserDirectory() -> wchar_t const *"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_BaseAddress_set", _wrap_MEMORY_BASIC_INFORMATION_BaseAddress_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_BaseAddress_set(MEMORY_BASIC_INFORMATION self, PVOID BaseAddress)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_BaseAddress_get", _wrap_MEMORY_BASIC_INFORMATION_BaseAddress_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_BaseAddress_get(MEMORY_BASIC_INFORMATION self) -> PVOID"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_AllocationBase_set", _wrap_MEMORY_BASIC_INFORMATION_AllocationBase_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_AllocationBase_set(MEMORY_BASIC_INFORMATION self, PVOID AllocationBase)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_AllocationBase_get", _wrap_MEMORY_BASIC_INFORMATION_AllocationBase_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_AllocationBase_get(MEMORY_BASIC_INFORMATION self) -> PVOID"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_AllocationProtect_set", _wrap_MEMORY_BASIC_INFORMATION_AllocationProtect_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_AllocationProtect_set(MEMORY_BASIC_INFORMATION self, DWORD AllocationProtect)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_AllocationProtect_get", _wrap_MEMORY_BASIC_INFORMATION_AllocationProtect_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_AllocationProtect_get(MEMORY_BASIC_INFORMATION self) -> DWORD"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_RegionSize_set", _wrap_MEMORY_BASIC_INFORMATION_RegionSize_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_RegionSize_set(MEMORY_BASIC_INFORMATION self, duint RegionSize)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_RegionSize_get", _wrap_MEMORY_BASIC_INFORMATION_RegionSize_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_RegionSize_get(MEMORY_BASIC_INFORMATION self) -> duint"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_State_set", _wrap_MEMORY_BASIC_INFORMATION_State_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_State_set(MEMORY_BASIC_INFORMATION self, DWORD State)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_State_get", _wrap_MEMORY_BASIC_INFORMATION_State_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_State_get(MEMORY_BASIC_INFORMATION self) -> DWORD"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_Protect_set", _wrap_MEMORY_BASIC_INFORMATION_Protect_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_Protect_set(MEMORY_BASIC_INFORMATION self, DWORD Protect)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_Protect_get", _wrap_MEMORY_BASIC_INFORMATION_Protect_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_Protect_get(MEMORY_BASIC_INFORMATION self) -> DWORD"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_Type_set", _wrap_MEMORY_BASIC_INFORMATION_Type_set, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_Type_set(MEMORY_BASIC_INFORMATION self, DWORD Type)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_Type_get", _wrap_MEMORY_BASIC_INFORMATION_Type_get, METH_VARARGS, (char *)"MEMORY_BASIC_INFORMATION_Type_get(MEMORY_BASIC_INFORMATION self) -> DWORD"},
+	 { (char *)"new_MEMORY_BASIC_INFORMATION", _wrap_new_MEMORY_BASIC_INFORMATION, METH_VARARGS, (char *)"new_MEMORY_BASIC_INFORMATION() -> MEMORY_BASIC_INFORMATION"},
+	 { (char *)"delete_MEMORY_BASIC_INFORMATION", _wrap_delete_MEMORY_BASIC_INFORMATION, METH_VARARGS, (char *)"delete_MEMORY_BASIC_INFORMATION(MEMORY_BASIC_INFORMATION self)"},
+	 { (char *)"MEMORY_BASIC_INFORMATION_swigregister", MEMORY_BASIC_INFORMATION_swigregister, METH_VARARGS, NULL},
 	 { (char *)"MEMPAGE_mbi_set", _wrap_MEMPAGE_mbi_set, METH_VARARGS, (char *)"MEMPAGE_mbi_set(MEMPAGE self, MEMORY_BASIC_INFORMATION mbi)"},
 	 { (char *)"MEMPAGE_mbi_get", _wrap_MEMPAGE_mbi_get, METH_VARARGS, (char *)"MEMPAGE_mbi_get(MEMPAGE self) -> MEMORY_BASIC_INFORMATION"},
 	 { (char *)"MEMPAGE_info_set", _wrap_MEMPAGE_info_set, METH_VARARGS, (char *)"MEMPAGE_info_set(MEMPAGE self, char [256] info)"},
@@ -54053,7 +54463,6 @@ static swig_type_info _swigt__p_LOOPTYPE = {"_p_LOOPTYPE", "enum LOOPTYPE *|LOOP
 static swig_type_info _swigt__p_LabelInfoArray = {"_p_LabelInfoArray", "LabelInfoArray *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ListInfo = {"_p_ListInfo", "ListInfo *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MEMMAP = {"_p_MEMMAP", "MEMMAP *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_MEMORY_BASIC_INFORMATION = {"_p_MEMORY_BASIC_INFORMATION", "MEMORY_BASIC_INFORMATION *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MEMORY_INFO = {"_p_MEMORY_INFO", "MEMORY_INFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MEMORY_SIZE = {"_p_MEMORY_SIZE", "enum MEMORY_SIZE *|MEMORY_SIZE *|VALUE_SIZE *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_MEMPAGE = {"_p_MEMPAGE", "MEMPAGE *", 0, 0, (void*)0, 0};
@@ -54116,6 +54525,7 @@ static swig_type_info _swigt__p_XREF_EDGE = {"_p_XREF_EDGE", "XREF_EDGE *", 0, 0
 static swig_type_info _swigt__p_XREF_INFO = {"_p_XREF_INFO", "XREF_INFO *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_XREF_RECORD = {"_p_XREF_RECORD", "XREF_RECORD *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_YMMREGISTER = {"_p_YMMREGISTER", "YMMREGISTER *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p__MEMORY_BASIC_INFORMATION = {"_p__MEMORY_BASIC_INFORMATION", "_MEMORY_BASIC_INFORMATION *|MEMORY_BASIC_INFORMATION *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p__TYPEDESCRIPTOR = {"_p__TYPEDESCRIPTOR", "_TYPEDESCRIPTOR *|TYPEDESCRIPTOR *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p__XMMREGISTER = {"_p__XMMREGISTER", "_XMMREGISTER *|XMMREGISTER *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p___int64 = {"_p___int64", "__int64 *|LONGLONG *|LONG64 *", 0, 0, (void*)0, 0};
@@ -54212,7 +54622,7 @@ static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "UINT32 *|DWO
 static swig_type_info _swigt__p_unsigned_long = {"_p_unsigned_long", "HANDLE_PTR *|DWORD *|ULONG_PTR *|DWORD_PTR *|FLONG *|unsigned long *|ULONG *|SIZE_T *|LCID *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_long_long = {"_p_unsigned_long_long", "duint *|unsigned long long *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "WORD *|UHALF_PTR *|unsigned short *|USHORT *|FSHORT *|LANGID *|UINT16 *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_void = {"_p_void", "HANDLE|void *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_void = {"_p_void", "PVOID|HANDLE|void *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_wchar_t = {"_p_wchar_t", "wchar_t *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
@@ -54276,7 +54686,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_LabelInfoArray,
   &_swigt__p_ListInfo,
   &_swigt__p_MEMMAP,
-  &_swigt__p_MEMORY_BASIC_INFORMATION,
   &_swigt__p_MEMORY_INFO,
   &_swigt__p_MEMORY_SIZE,
   &_swigt__p_MEMPAGE,
@@ -54339,6 +54748,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_XREF_INFO,
   &_swigt__p_XREF_RECORD,
   &_swigt__p_YMMREGISTER,
+  &_swigt__p__MEMORY_BASIC_INFORMATION,
   &_swigt__p__TYPEDESCRIPTOR,
   &_swigt__p__XMMREGISTER,
   &_swigt__p___int64,
@@ -54499,7 +54909,6 @@ static swig_cast_info _swigc__p_LOOPTYPE[] = {  {&_swigt__p_LOOPTYPE, 0, 0, 0},{
 static swig_cast_info _swigc__p_LabelInfoArray[] = {  {&_swigt__p_LabelInfoArray, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ListInfo[] = {  {&_swigt__p_ListInfo, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MEMMAP[] = {  {&_swigt__p_MEMMAP, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_MEMORY_BASIC_INFORMATION[] = {  {&_swigt__p_MEMORY_BASIC_INFORMATION, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MEMORY_INFO[] = {  {&_swigt__p_MEMORY_INFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MEMORY_SIZE[] = {  {&_swigt__p_MEMORY_SIZE, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_MEMPAGE[] = {  {&_swigt__p_MEMPAGE, 0, 0, 0},  {&_swigt__p_MEMPAGEArray, _p_MEMPAGEArrayTo_p_MEMPAGE, 0, 0},{0, 0, 0, 0}};
@@ -54562,6 +54971,7 @@ static swig_cast_info _swigc__p_XREF_EDGE[] = {  {&_swigt__p_XREF_EDGE, 0, 0, 0}
 static swig_cast_info _swigc__p_XREF_INFO[] = {  {&_swigt__p_XREF_INFO, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_XREF_RECORD[] = {  {&_swigt__p_XREF_RECORD, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_YMMREGISTER[] = {  {&_swigt__p_YMMREGISTER, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p__MEMORY_BASIC_INFORMATION[] = {  {&_swigt__p__MEMORY_BASIC_INFORMATION, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p__TYPEDESCRIPTOR[] = {  {&_swigt__p__TYPEDESCRIPTOR, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p__XMMREGISTER[] = {  {&_swigt__p__XMMREGISTER, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p___int64[] = {  {&_swigt__p___int64, 0, 0, 0},{0, 0, 0, 0}};
@@ -54722,7 +55132,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_LabelInfoArray,
   _swigc__p_ListInfo,
   _swigc__p_MEMMAP,
-  _swigc__p_MEMORY_BASIC_INFORMATION,
   _swigc__p_MEMORY_INFO,
   _swigc__p_MEMORY_SIZE,
   _swigc__p_MEMPAGE,
@@ -54785,6 +55194,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_XREF_INFO,
   _swigc__p_XREF_RECORD,
   _swigc__p_YMMREGISTER,
+  _swigc__p__MEMORY_BASIC_INFORMATION,
   _swigc__p__TYPEDESCRIPTOR,
   _swigc__p__XMMREGISTER,
   _swigc__p___int64,

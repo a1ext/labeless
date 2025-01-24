@@ -4,7 +4,7 @@ Contributed By Check Point Software Technologies LTD.
 [![Build status](https://ci.appveyor.com/api/projects/status/044s4pxyk250233y?svg=true)](https://ci.appveyor.com/project/a1ext/labeless)
 [![Total Downloads](https://img.shields.io/github/downloads/a1ext/labeless/total.svg)](https://github.com/a1ext/labeless/releases)
 [![Telegram Channel](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/labe1ess)
-[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=plastic)](https://twitter.com/a14xt)
+[![X (formerly Twitter) URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=plastic)](https://x.com/a14xt)
 [![Donate to this project using Patreon](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/a1ext)
 
 
