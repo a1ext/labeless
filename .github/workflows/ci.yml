@@ -18,7 +18,7 @@ jobs:
         # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
         # macos-13: Supports both ARM64 and x86_64.
         # os: [ubuntu-20.04, windows-2022, macos-14]
-        os: [windows-2022]
+        os: [windows-2019]
         include:
           #- os: ubuntu-20.04
           #  build_cmd: make
@@ -31,53 +31,54 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Restore VS Toolset Cache
-      if: runner.os == 'Windows'
-      uses: actions/cache@v3
-      with:
-        path: C:\Program Files (x86)\Microsoft Visual Studio
-        key: vs-toolset-v140
+    # - name: Restore VS Toolset Cache
+    #   if: runner.os == 'Windows'
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: C:\Program Files (x86)\Microsoft Visual Studio
+    #     key: vs-toolset-v140
 
-    - name: Check if v140 Toolset is Installed
-      id: check-toolset
-      if: runner.os == 'Windows'
-      run: |
-        if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.0") {
-          echo "::set-output name=installed::true"
-        } else {
-          echo "::set-output name=installed::false"
-        }
-        if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools") {
-          echo "::set-output name=buildtools::true"
-        } else {
-          echo "::set-output name=buildtools::false"
-        }
-      shell: pwsh
+    # - name: Check if v140 Toolset is Installed
+    #   id: check-toolset
+    #   if: runner.os == 'Windows'
+    #   run: |
+    #     if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.0") {
+    #       echo "::set-output name=installed::true"
+    #     } else {
+    #       echo "::set-output name=installed::false"
+    #     }
+    #     if (Test-Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools") {
+    #       echo "::set-output name=buildtools::true"
+    #     } else {
+    #       echo "::set-output name=buildtools::false"
+    #     }
+    #   shell: pwsh
 
     - name: Set up environment
       if: runner.os == 'Linux'
       run: sudo apt-get install -y build-essential
 
-    - name: Install Win BuildTools 2019
-      if: runner.os == 'Windows' && steps.check-toolset.outputs.buildtools == 'false' && !steps.cache.outputs.cache-hit
-      run: choco install visualstudio2019buildtools --no-progress -y
+    # - name: Install Win BuildTools 2019
+    #   if: runner.os == 'Windows' && steps.check-toolset.outputs.buildtools == 'false' && !steps.cache.outputs.cache-hit
+    #   run: choco install visualstudio2019buildtools --no-progress -y
 
-    - name: Install Visual Studio 2015 Toolset (v140)
-      if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
-      shell: pwsh
-      run: |
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\"
-        curl https://aka.ms/vs/16/release/vs_buildtools.exe -o c:\TEMP\vs_buildtools.exe
-        curl https://aka.ms/vs/16/release/channel -o C:\TEMP\VisualStudio.chman
-        C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache --channelUri C:\TEMP\VisualStudio.chman --installChannelUri C:\TEMP\VisualStudio.chman --add Microsoft.VisualStudio.Component.VC.140 --installPath C:\BuildTools
-        ls C:\BuildTools
+    # - name: Install Visual Studio 2015 Toolset (v140)
+    #   if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
+    #   shell: pwsh
+    #   run: |
+    #     ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\"
+    #     ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\"
+    #     curl https://aka.ms/vs/16/release/vs_buildtools.exe -o c:\TEMP\vs_buildtools.exe
+    #     curl https://aka.ms/vs/16/release/channel -o C:\TEMP\VisualStudio.chman
+    #     ls c:\TEMP\vs_buildtools.exe
+    #     C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache --channelUri C:\TEMP\VisualStudio.chman --installChannelUri C:\TEMP\VisualStudio.chman --add Microsoft.VisualStudio.Component.VC.140 --installPath C:\BuildTools
+    #     ls C:\BuildTools
     #"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --wait --norestart --nocache --installPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
 
-    #- name: Build OllyDBG 1.10 plugin
-    #  if: runner.os == 'Windows'
-    #  run: |
-    #    "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+    - name: Build OllyDBG 1.10 plugin
+      if: runner.os == 'Windows'
+      run: |
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
 
     #- name: Upload build artifacts
