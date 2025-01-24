@@ -78,7 +78,7 @@ jobs:
     - name: Build OllyDBG 1.10 plugin
       if: runner.os == 'Windows'
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" .\labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
 
     #- name: Upload build artifacts
