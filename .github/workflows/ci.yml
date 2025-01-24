@@ -38,6 +38,14 @@ jobs:
     #     path: C:\Program Files (x86)\Microsoft Visual Studio
     #     key: vs-toolset-v140
 
+    - name: Set outputs Non-Windows
+      if: runner.os != 'Windows'
+      run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+    - name: Set outputs Windows
+      if: runner.os == 'Windows'
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+
 
     - name: Set up environment
       if: runner.os == 'Linux'
@@ -132,7 +140,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: labeless_build_${{ github.sha }}
+        name: labeless_build_${{ env.SHORT_SHA }}
         path: |
           bin/labeless_olly.dll
           bin/labeless_olly-x86.pdb
@@ -145,5 +153,5 @@ jobs:
           bin/labeless_x64dbg.dp64
           bin/labeless_x64dbg-x64.pdb
           bin/labeless_ida_*.dll
-          dist/*.whl
+          deploy/dist/*.whl
           bin/labeless_ida_*.pdb
