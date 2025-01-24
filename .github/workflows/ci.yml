@@ -22,7 +22,7 @@ jobs:
         include:
           #- os: ubuntu-20.04
           #  build_cmd: make
-          - os: windows-2022
+          - os: windows-2019
             build_cmd: build.bat
           #- os: macos-14
           #  build_cmd: ./build_macos.sh
