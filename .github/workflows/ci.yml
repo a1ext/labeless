@@ -44,40 +44,40 @@ jobs:
       run: sudo apt-get install -y build-essential
 
 
-    - name: Build OllyDBG 1.10 plugin
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+    # - name: Build OllyDBG 1.10 plugin
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
-    - name: Build OllyDBG FOFF plugin
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /v:m
+    # - name: Build OllyDBG FOFF plugin
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /v:m
 
-    - name: Build OllyDBG 2.0 plugin
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+    # - name: Build OllyDBG 2.0 plugin
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
-    - name: Build x64dbg 32-bit plugin
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+    # - name: Build x64dbg 32-bit plugin
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
-    - name: Build x64dbg 64-bit plugin
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
+    # - name: Build x64dbg 64-bit plugin
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
 
     - name: Set Up Windows Dependencies
       env:
