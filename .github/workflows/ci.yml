@@ -65,17 +65,20 @@ jobs:
     - name: Install Visual Studio 2015 Toolset (v140)
       if: runner.os == 'Windows' && steps.check-toolset.outputs.installed == 'false' && !steps.cache.outputs.cache-hit
       shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --norestart
-
-    - name: Build OllyDBG 1.10 plugin
-      if: runner.os == 'Windows'
       run: |
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+        dir "C:\Program Files (x86)\Microsoft Visual Studio\"
+        dir "C:\Program Files (x86)\Microsoft Visual Studio\Installer\"
+        
+      #"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe" modify --add Microsoft.VisualStudio.Component.VC.140 --quiet --norestart
+
+    #- name: Build OllyDBG 1.10 plugin
+    #  if: runner.os == 'Windows'
+    #  run: |
+    #    "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: Build-Artifacts-${{ matrix.os }}
-        path: bin/labeless_olly.dll
+    #- name: Upload build artifacts
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: labeless_olly.dll
+    #    path: bin/labeless_olly.dll
