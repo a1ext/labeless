@@ -78,13 +78,50 @@ jobs:
     - name: Build OllyDBG 1.10 plugin
       if: runner.os == 'Windows'
       shell: cmd
-      run: |
-        dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
+    - name: Build OllyDBG FOFF plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /v:m
 
-    #- name: Upload build artifacts
-    #  uses: actions/upload-artifact@v3
-    #  with:
-    #    name: labeless_olly.dll
-    #    path: bin/labeless_olly.dll
+    - name: Build OllyDBG 2.0 plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+
+    - name: Build x64dbg 32-bit plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+
+    - name: Build x64dbg 64-bit plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: labeless_olly.dll
+        path: |
+          bin/labeless_olly.dll
+          bin/labeless_olly-x86.pdb
+          bin/labeless_olly_foff.dll
+          bin/labeless_olly_foff-x86.pdb
+          bin/labeless_olly2.dll
+          bin/labeless_olly2-x86.pdb
+          bin/labeless_x64dbg.dp32
+          bin/labeless_x64dbg-x86.pdb
+          bin/labeless_x64dbg.dp64
+          bin/labeless_x64dbg-x64.pdb
