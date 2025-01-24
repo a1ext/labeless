@@ -23,7 +23,10 @@
 
 #include "util.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4995 4800)
 #include "../common/cpp/rpc.pb.h"
+#pragma warning(pop)
 #include "../common/version.h"
 
 extern "C" {
@@ -775,7 +778,7 @@ bool Labeless::initPython()
 		Addtolist(0, RED, _T("  Could not initialize Python"));
 		return false;
 	}
-	PyEval_InitThreads();
+	//PyEval_InitThreads();
 
 #ifdef ENABLE_PYTHON_ZIP
 	PyRun_SimpleString("import sys\nsys.path.extend(['.', 'python_dlls', 'python27.zip', 'python27.zip/site-packages'])");

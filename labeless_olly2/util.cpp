@@ -13,7 +13,11 @@
 #include <vector>
 #include <WinSock2.h>
 #include <IPHlpApi.h>
+#pragma warning(push)
+#pragma warning(disable: 4800)
 #include "../common/cpp/rpc.pb.h"
+#pragma warning(pop)
+
 
 namespace util {
 
