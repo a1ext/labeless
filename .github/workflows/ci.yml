@@ -80,6 +80,7 @@ jobs:
     #     labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
 
     - name: Set Up Windows Dependencies
+      if: runner.os == 'Windows'
       env:
         LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
       run: |
@@ -89,6 +90,8 @@ jobs:
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk_pro83\plugins
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk90sp1\plugins
         Rename-Item -Path "labeless_ida\labeless_ida.vcxproj.user" -NewName "labeless_ida.vcxproj.user_" -Force
+        curl -L "https://go.microsoft.com/fwlink/p/?LinkId=323507" -o .\sdksetup.exe
+        .\sdksetup.exe /features OptionId.WindowsDesktopSoftwareDevelopmentKit OptionId.NetFxSoftwareDevelopmentKit /quiet
  
 
     - name: Build IDA 7 plugins
