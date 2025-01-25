@@ -67,7 +67,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
-        echo "QT_DIR=${ROOT_DIR}/qt-5.6.0-patched/build/qtbase" >> $GITHUB_ENV
+        echo "QT_DIR=${{ runner.temp }}/qt-5.6.3-patched/build/qtbase" >> $GITHUB_ENV
         echo "QMAKE=${QT_DIR}/bin/qmake" >> $GITHUB_ENV
         sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
           libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
@@ -80,21 +80,21 @@ jobs:
       id: linux_qt_cache
       with:
         # maybe we should use some env var for root path?
-        path: /home/runner/work/labeless/qt-5.6.0-patched-qt-ns
+        path: ${{ runner.temp }}/qt-5.6.3-patched-qt-ns
         key: linux-qt-patched
     
     - name: Linux, build Qt
       if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
       run: |
-        pushd "$ROOT_DIR"
-        curl -L 'https://drive.usercontent.google.com/download?id=1ZThbiAOguu9elcTvivNwD1OSSkqjWd5B&export=download&authuser=0&confirm=t&uuid=bd0d7e5e-3c09-41c0-b723-7f3d2ecd1866&at=AIrpjvOavWego-p2aZDmIbkHOFyN%3A1737764729301' -o qt-5.6.0-patched.tar.gz
-        mkdir qt-5.6.0-patched && cd qt-5.6.0-patched
-        tar xf ../qt-5.6.0-patched.tar.gz && rm -f ../qt-5.6.0-patched.tar.gz
+        pushd "${{ runner.temp }}"
+        curl -L 'https://drive.usercontent.google.com/download?id=1r0BO_prsZXWdmbTMnYDkF3B8zha4L5Ae&export=download&authuser=0&confirm=t&uuid=f6a9b43d-2710-4ea7-a86b-ebc68145ca1b&at=AIrpjvNU3fGsHcjHHGADa0Q2tXUq:1737770748041' -o qt-5.6.3-patched.tar.gz
+        mkdir qt-5.6.3-patched && cd qt-5.6.3-patched
+        tar xf ../qt-5.6.3-patched.tar.gz && rm -f ../qt-5.6.3-patched.tar.gz
         ls -la 
         cd build
         CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" \
         ../configure "-nomake" "tests" "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" \
-        "-developer-build" "-fontconfig" "-qt-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite" "-gtkstyle" "-prefix" "${ROOT_DIR}/qt-5.6.0-patched-qt-ns" -continue -v
+        "-developer-build" "-fontconfig" "-qt-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite" "-gtkstyle" "-prefix" "${{ runner.temp }}/qt-5.6.3-patched-qt-ns" -continue -v
         make -j$(nproc)
         make install
         popd
