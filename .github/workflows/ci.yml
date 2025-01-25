@@ -77,14 +77,14 @@ jobs:
     - name: Linux Qt Cache
       if: runner.os == 'Linux'
       uses: actions/cache@v3
-      id: linux_qt_cache2
+      id: linux_qt_cache
       with:
         # maybe we should use some env var for root path?
         path: ${{ runner.temp }}/qt-5.6.3-qt-ns-shinked
-        key: linux-qt-patched
+        key: linux-qt-patched2
     
     - name: Linux, build Qt
-      if: runner.os == 'Linux' && steps.linux_qt_cache2.outputs.cache-hit != 'true'
+      if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
       run: |
         pushd "${{ runner.temp }}"
         # curl -L 'https://drive.usercontent.google.com/download?id=1r0BO_prsZXWdmbTMnYDkF3B8zha4L5Ae&export=download&authuser=0&confirm=t&uuid=f6a9b43d-2710-4ea7-a86b-ebc68145ca1b&at=AIrpjvNU3fGsHcjHHGADa0Q2tXUq:1737770748041' -o qt-5.6.3-patched.tar.gz
