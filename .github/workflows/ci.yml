@@ -123,7 +123,7 @@ jobs:
       env:
         LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
       run: |
-        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ..\depz.7z
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ../depz.7z
         pushd ../
         7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
         popd
