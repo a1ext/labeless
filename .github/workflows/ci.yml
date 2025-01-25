@@ -68,7 +68,7 @@ jobs:
       run: |
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
         echo "QT_DIR=${{ runner.temp }}/qt-5.6.3-qt-ns-shinked" >> $GITHUB_ENV
-        echo "QMAKE=${QT_DIR}/bin/qmake" >> $GITHUB_ENV
+        echo "QMAKE=${{ env.QT_DIR }}/bin/qmake" >> $GITHUB_ENV
         sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
           libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
           libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
@@ -99,7 +99,7 @@ jobs:
         #make -j$(nproc)
         #make install
         popd
-        ${{ env.QMAKE }} -query
+        "${{ env.QMAKE }}" -query
 
     - name: Linux, protobuf cache
       if: runner.os == 'Linux'
