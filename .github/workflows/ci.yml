@@ -18,7 +18,7 @@ jobs:
         # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
         # macos-13: Supports both ARM64 and x86_64.
         # os: [ubuntu-20.04, windows-2022, macos-14]
-        os: [windows-2019]
+        os: [ubuntu-20.04, windows-2019]
         include:
           #- os: ubuntu-20.04
           #  build_cmd: make
@@ -63,10 +63,20 @@ jobs:
         echo "VER=$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $env:GITHUB_ENV
 
 
-    - name: Set up environment
+    - name: Set up Linux environment
       if: runner.os == 'Linux'
-      run: sudo apt-get install -y build-essential
+      run: |
+        sudo apt-get install -y build-essential curl
 
+
+    
+    - name: Linux, build Qt
+      if: runner.os == 'Linux'
+      run: |
+        pwd
+        ls -la ../
+        curl -L 'https://drive.usercontent.google.com/download?id=1ZThbiAOguu9elcTvivNwD1OSSkqjWd5B&export=download&authuser=0&confirm=t&uuid=bd0d7e5e-3c09-41c0-b723-7f3d2ecd1866&at=AIrpjvOavWego-p2aZDmIbkHOFyN%3A1737764729301' -o qt-5.6.0-patched.tar.gz
+        ls -la 
 
     # - name: Build OllyDBG 1.10 plugin
     #   if: runner.os == 'Windows'
