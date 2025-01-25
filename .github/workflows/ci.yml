@@ -77,7 +77,7 @@ jobs:
       id: linux_qt_cache
       with:
         # maybe we should use some env var for root path?
-        path: /home/runner/work/labeless/qt-5.6.0-patched
+        path: /home/runner/work/labeless/qt-5.6.0-patched-qt-ns
         key: linux-qt-patched
     
     - name: Linux, build Qt
@@ -88,8 +88,14 @@ jobs:
         mkdir qt-5.6.0-patched && cd qt-5.6.0-patched
         tar xf ../qt-5.6.0-patched.tar.gz && rm -f ../qt-5.6.0-patched.tar.gz
         ls -la 
-        
+        cd build
+        CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" \
+        ../configure "-nomake" "tests" "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" \
+        "-developer-build" "-fontconfig" "-qt-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite" "-gtkstyle" "-prefix" "${ROOT_DIR}/qt-5.6.0-patched-qt-ns" -continue -v
+        make -j4
+        make install
         popd
+        ${QMAKE} -query
 
     - name: Linux, protobuf cache
       if: runner.os == 'Linux'
@@ -109,26 +115,26 @@ jobs:
         ls -la
         popd
 
-    - name: Linux, Set Up Deps
-      if: runner.os == 'Linux'
-      env:
-        LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
-      run: |
-        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ..\depz.7z
-        pushd ../
-        7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
-        popd
-        ln -s "${ROOT_DIR}/depz/idasdk90" "${ROOT_DIR}/idasdk90"
-        ln -s "${ROOT_DIR}/depz/idasdk_pro83" "${ROOT_DIR}/idasdk_pro83"
-        ln -s "${ROOT_DIR}/depz/idasdk70" "${ROOT_DIR}/idasdk70"
-        mkdir -p build
+    # - name: Linux, Set Up Deps
+    #   if: runner.os == 'Linux'
+    #   env:
+    #     LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
+    #   run: |
+    #     curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ..\depz.7z
+    #     pushd ../
+    #     7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
+    #     popd
+    #     ln -s "${ROOT_DIR}/depz/idasdk90" "${ROOT_DIR}/idasdk90"
+    #     ln -s "${ROOT_DIR}/depz/idasdk_pro83" "${ROOT_DIR}/idasdk_pro83"
+    #     ln -s "${ROOT_DIR}/depz/idasdk70" "${ROOT_DIR}/idasdk70"
+    #     mkdir -p build
 
-    - name: Linux, build IDA 9 plugin
-      if: runner.os == 'Linux'
-      run: |
-        cd ./build
-        ${QMAKE} labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release TARGET=labeless_ida_90
-        /bin/make qmake_all
+    # - name: Linux, build IDA 9 plugin
+    #   if: runner.os == 'Linux'
+    #   run: |
+    #     cd ./build
+    #     ${QMAKE} labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release TARGET=labeless_ida_90
+    #     /bin/make qmake_all
         
     # - name: Build OllyDBG 1.10 plugin
     #   if: runner.os == 'Windows'
@@ -200,20 +206,20 @@ jobs:
     #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
     #     labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
-    - name: Build IDA 9 plugins
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |        
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk90sp1 /p:SDK_DIR=c:\depz\idasdk90sp1
+    # - name: Build IDA 9 plugins
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |        
+    #     "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+    #     labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk90sp1 /p:SDK_DIR=c:\depz\idasdk90sp1
 
-    - name: Build Python module sdist
-      if: runner.os == 'Windows'
-      shell: cmd
-      run: |
-        cd deploy
-        python.exe -m pip install wheel
-        python.exe setup.py bdist_wheel
+    # - name: Build Python module sdist
+    #   if: runner.os == 'Windows'
+    #   shell: cmd
+    #   run: |
+    #     cd deploy
+    #     python.exe -m pip install wheel
+    #     python.exe setup.py bdist_wheel
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
