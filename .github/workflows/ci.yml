@@ -99,7 +99,7 @@ jobs:
         #make -j$(nproc)
         #make install
         popd
-        ${QMAKE} -query
+        ${{ env.QMAKE }} -query
 
     - name: Linux, protobuf cache
       if: runner.os == 'Linux'
