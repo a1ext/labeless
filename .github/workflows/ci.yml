@@ -87,8 +87,6 @@ jobs:
       if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
       run: |
         pushd "${{ runner.temp }}"
-        echo "QT_DIR: ${{ env.QT_DIR }}"
-        echo "QMAKE: ${{ env.QMAKE }}"
         # curl -L 'https://drive.usercontent.google.com/download?id=1r0BO_prsZXWdmbTMnYDkF3B8zha4L5Ae&export=download&authuser=0&confirm=t&uuid=f6a9b43d-2710-4ea7-a86b-ebc68145ca1b&at=AIrpjvNU3fGsHcjHHGADa0Q2tXUq:1737770748041' -o qt-5.6.3-patched.tar.gz
         curl -L 'https://drive.usercontent.google.com/download?id=14zSGdgn2dQPTYzQO-ukXx9WkDODF-lpK&export=download&authuser=0&confirm=t&uuid=6beaa81f-6cd6-45b0-a269-295dc5f94ee5&at=AIrpjvPNuWytlqeAkSc9hurI3Wez%3A1737807487068' -o qt-5.6.3-qt-ns-shinked.tar.gz
         mkdir qt-5.6.3-qt-ns-shinked && cd qt-5.6.3-qt-ns-shinked
@@ -119,29 +117,27 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -Dprotobuf_WITH_ZLIB=NO -Dprotobuf_BUILD_TESTS=NO -Dprotobuf_BUILD_SHARED_LIBS=NO "-DCMAKE_INSTALL_PREFIX=${{ env.ROOT_DIR }}/3rdparty/protobuf-3.20.3/dist" ../cmake
         make -j$(nproc)
         make install
-        ls -la
+
+    - name: Linux, Set Up Deps
+      if: runner.os == 'Linux'
+      env:
+        LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
+      run: |
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ..\depz.7z
+        pushd ../
+        7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
         popd
+        ln -s "${{ env.ROOT_DIR }}/depz/idasdk90" "${{ env.ROOT_DIR }}/idasdk90"
+        ln -s "${{ env.ROOT_DIR }}/depz/idasdk_pro83" "${{ env.ROOT_DIR }}/idasdk_pro83"
+        ln -s "${{ env.ROOT_DIR }}/depz/idasdk70" "${{ env.ROOT_DIR }}/idasdk70"
+        mkdir -p build
 
-    # - name: Linux, Set Up Deps
-    #   if: runner.os == 'Linux'
-    #   env:
-    #     LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
-    #   run: |
-    #     curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ..\depz.7z
-    #     pushd ../
-    #     7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
-    #     popd
-    #     ln -s "${ROOT_DIR}/depz/idasdk90" "${ROOT_DIR}/idasdk90"
-    #     ln -s "${ROOT_DIR}/depz/idasdk_pro83" "${ROOT_DIR}/idasdk_pro83"
-    #     ln -s "${ROOT_DIR}/depz/idasdk70" "${ROOT_DIR}/idasdk70"
-    #     mkdir -p build
-
-    # - name: Linux, build IDA 9 plugin
-    #   if: runner.os == 'Linux'
-    #   run: |
-    #     cd ./build
-    #     ${QMAKE} labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release TARGET=labeless_ida_90
-    #     /bin/make qmake_all
+    - name: Linux, build IDA 9 plugin
+      if: runner.os == 'Linux'
+      run: |
+        cd ./build
+        "${{ env.QMAKE }}" labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release TARGET=labeless_ida_90
+        /bin/make qmake_all
         
     # - name: Build OllyDBG 1.10 plugin
     #   if: runner.os == 'Windows'
