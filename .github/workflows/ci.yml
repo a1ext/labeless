@@ -68,9 +68,7 @@ jobs:
       run: |
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
         echo "QT_DIR=${{ runner.temp }}/qt-5.6.3-qt-ns-shinked" >> $GITHUB_ENV
-        echo "QMAKE=${{ env.QT_DIR }}/bin/qmake" >> $GITHUB_ENV
-        echo "QT_DIR: ${{ env.QT_DIR }}"
-        echo "QMAKE: ${{ env.QMAKE }}"
+        echo "QMAKE=${{ runner.temp }}/qt-5.6.3-qt-ns-shinked" >> $GITHUB_ENV
         sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
           libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
           libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
@@ -89,7 +87,8 @@ jobs:
       if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
       run: |
         pushd "${{ runner.temp }}"
-
+        echo "QT_DIR: ${{ env.QT_DIR }}"
+        echo "QMAKE: ${{ env.QMAKE }}"
         # curl -L 'https://drive.usercontent.google.com/download?id=1r0BO_prsZXWdmbTMnYDkF3B8zha4L5Ae&export=download&authuser=0&confirm=t&uuid=f6a9b43d-2710-4ea7-a86b-ebc68145ca1b&at=AIrpjvNU3fGsHcjHHGADa0Q2tXUq:1737770748041' -o qt-5.6.3-patched.tar.gz
         curl -L 'https://drive.usercontent.google.com/download?id=14zSGdgn2dQPTYzQO-ukXx9WkDODF-lpK&export=download&authuser=0&confirm=t&uuid=6beaa81f-6cd6-45b0-a269-295dc5f94ee5&at=AIrpjvPNuWytlqeAkSc9hurI3Wez%3A1737807487068' -o qt-5.6.3-qt-ns-shinked.tar.gz
         mkdir qt-5.6.3-qt-ns-shinked && cd qt-5.6.3-qt-ns-shinked
