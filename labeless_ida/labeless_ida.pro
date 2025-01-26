@@ -6,7 +6,7 @@
 
 QT       += widgets
 
- TARGET = labeless_ida_70
+# TARGET = labeless_ida_70
 # TARGET = labeless_ida_83
 # TARGET = labeless_ida_90
 TEMPLATE = lib
@@ -16,8 +16,17 @@ CONFIG *= release force_debug_info
 
 # configuration options meaning:
 # - ea64 - bitness of opened targets
-CONFIG += ea64
+# CONFIG += ea64
 
+contains(CONFIG, labeless_ida_70) {
+    TARGET = labeless_ida_70
+} else: contains(CONFIG, labeless_ida_83) {
+    TARGET = labeless_ida_83
+} else: contains(CONFIG, labeless_ida_90) {
+    TARGET = labeless_ida_90
+} else {
+    error("No target specified, add to CONFIG one of the following: labeless_ida_70|labeless_ida_83|labeless_ida_90")
+}
 
 # `x64` deprecated
 #CONFIG += x64
