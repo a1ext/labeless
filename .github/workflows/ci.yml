@@ -8,9 +8,8 @@ on:
     branches:
       - actions_ci
 
-#env:
-  #QMAKE_EXECUTABLE: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake
-  #QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
+env:
+  LINUX_QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
 
 jobs:
   build:
@@ -71,13 +70,13 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
-        echo "QT_DIR=/home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns" >> $GITHUB_ENV
-        echo "QMAKE=/home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake" >> $GITHUB_ENV
+        echo "QT_DIR=${LINUX_QTDIR}" >> $GITHUB_ENV
+        echo "QMAKE=${LINUX_QTDIR}/bin/qmake" >> $GITHUB_ENV
         sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
           libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
           libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
           libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev
-        mkdir -p "$(dirname ${{ env.QT_DIR }})"
+        mkdir -p "$(dirname ${LINUX_QTDIR})"
 
     - name: Linux Qt Cache
       if: runner.os == 'Linux'
