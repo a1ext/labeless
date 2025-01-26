@@ -146,7 +146,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         cd ./build
-        "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
+        strace "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
         /bin/make qmake_all
         
     # - name: Build OllyDBG 1.10 plugin
