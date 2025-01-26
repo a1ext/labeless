@@ -147,7 +147,7 @@ jobs:
       if: runner.os == 'Linux'
       env:
         SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
-        IDA_PATH: ${{ github.workspace }}/build/plugins
+        IDA_PATH: ${{ github.workspace }}/build
       run: |
         cd ./build
         mkdir plugins
