@@ -8,6 +8,9 @@ on:
     branches:
       - actions_ci
 
+env:
+  QMAKE_EXECUTABLE: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake
+
 jobs:
   build:
     name: Build on ${{ matrix.os }}
@@ -81,7 +84,7 @@ jobs:
       with:
         # maybe we should use some env var for root path?
         path: ${{ env.QT_DIR }}
-        key: linux-qt-patched2
+        key: linux-qt-patched3
     
     - name: Linux, build Qt
       if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
