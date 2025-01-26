@@ -67,8 +67,8 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
-        echo "QT_DIR=/home/alex/work/qt-5.6.0-patched-qt-ns" >> $GITHUB_ENV
-        echo "QMAKE=/home/alex/work/qt-5.6.0-patched-qt-ns/bin/qmake" >> $GITHUB_ENV
+        echo "QT_DIR=/home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns" >> $GITHUB_ENV
+        echo "QMAKE=/home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake" >> $GITHUB_ENV
         sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
           libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
           libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
@@ -90,12 +90,15 @@ jobs:
         sudo chmod a+w "${{ env.QT_DIR }}"
         pushd "${{ env.QT_DIR }}"        
         # curl -L 'https://drive.usercontent.google.com/download?id=1r0BO_prsZXWdmbTMnYDkF3B8zha4L5Ae&export=download&authuser=0&confirm=t&uuid=f6a9b43d-2710-4ea7-a86b-ebc68145ca1b&at=AIrpjvNU3fGsHcjHHGADa0Q2tXUq:1737770748041' -o qt-5.6.3-patched.tar.gz
-        curl -L 'https://drive.usercontent.google.com/download?id=14zSGdgn2dQPTYzQO-ukXx9WkDODF-lpK&export=download&authuser=0&confirm=t&uuid=6beaa81f-6cd6-45b0-a269-295dc5f94ee5&at=AIrpjvPNuWytlqeAkSc9hurI3Wez%3A1737807487068' -o qt-5.6.3-qt-ns-shinked.tar.gz
+        curl -L 'https://drive.usercontent.google.com/download?id=1zqVNXWqBG0UYexTq7W7lm_z1Gh1j1qCl&export=download&authuser=0&confirm=t&uuid=2f370d48-f24b-4e87-b5be-8b9893444904&at=AIrpjvM-mGQgA__InWHAiYfNPVOy%3A1737856197977' -o qt-5.12.2-patched-qt-ns.tar.gz
         #mkdir qt-5.6.3-qt-ns-shinked && cd qt-5.6.3-qt-ns-shinked
-        tar xf qt-5.6.3-qt-ns-shinked.tar.gz && rm -f qt-5.6.3-qt-ns-shinked.tar.gz
+        tar xf qt-5.12.2-patched-qt-ns.tar.gz && rm -f qt-5.12.2-patched-qt-ns.tar.gz
         ls -la 
         # sed -i "s#^prefix=.*\$*#prefix=${{ env.QT_DIR }}#g" $(find . -type f \( -name "*.pc" -o -name "*.cmake" \))
         #cd build
+        # build Qt with following cmdline
+        # CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" ../configure "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" "-developer-build" "-fontconfig" "-system-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite"   "-sql-sqlite" "-qt-harfbuzz" -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtdeclarative -skip qtquickcontrols -skip qtcharts -skip qtdatavis3d -skip qtactiveqt -skip qtandroidextras -skip qtconnectivity -skip qtdoc  -skip qtgraphicaleffects -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtnetworkauth -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialport -skip qtsvg -skip qttools -skip qttranslations -skip qtwayland -skip qtwebchannel -skip qtwebsockets -skip qtwinextras  "-prefix" "${pwd}/qt-5.12.2-patched-qt-ns" -continue -v 
+        
         #CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" \
         #../configure "-nomake" "tests" "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" \
         #"-developer-build" "-fontconfig" "-qt-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite" "-gtkstyle" "-prefix" "${{ runner.temp }}/qt-5.6.3-patched-qt-ns" -continue -v
@@ -139,7 +142,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         cd ./build
-        "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release TARGET=labeless_ida_90
+        "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
         /bin/make qmake_all
         
     # - name: Build OllyDBG 1.10 plugin
