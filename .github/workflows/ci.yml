@@ -120,14 +120,15 @@ jobs:
       with:
         # maybe we should use some env var for root path?
         path: ${{ env.PROTOBUF_PREFIX }}
-        key: linux-protobuf-cache2
+        key: linux-protobuf-cache3
 
     - name: Linux, build protobuf
       if: runner.os == 'Linux' && !steps.linux_protobuf_cache.outputs.cache-hit
       run: |
         pushd 3rdparty/protobuf-3.20.3 && mkdir build && cd build
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -Dprotobuf_WITH_ZLIB=NO -Dprotobuf_BUILD_TESTS=NO -Dprotobuf_BUILD_SHARED_LIBS=NO \
-          "-DCMAKE_INSTALL_PREFIX=${{ env.PROTOBUF_PREFIX }}" -Dprotobuf_BUILD_PROTOC_BINARIES=NO ../cmake
+          "-DCMAKE_INSTALL_PREFIX=${{ env.PROTOBUF_PREFIX }}" -Dprotobuf_BUILD_PROTOC_BINARIES=NO \
+          -DCMAKE_CXX_FLAGS=-fPIC ../cmake
         make -j$(nproc)
         make install
 
