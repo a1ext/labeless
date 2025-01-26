@@ -207,7 +207,7 @@ jobs:
         cd ./build
         mkdir -p plugins
         SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_70
-        /bin/make qmake_all
+        make qmake_all
         make clean
         make -j$(nproc)
 
@@ -220,7 +220,7 @@ jobs:
         cd ./build
         mkdir -p plugins
         SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_70 CONFIG+=ea64
-        /bin/make qmake_all
+        make qmake_all
         make clean
         make -j$(nproc)    
 
@@ -233,7 +233,7 @@ jobs:
         cd ./build
         mkdir -p plugins
         SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_83
-        /bin/make qmake_all
+        make qmake_all
         make clean
         make -j$(nproc)
 
@@ -246,7 +246,7 @@ jobs:
         cd ./build
         mkdir -p plugins
         SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_83 CONFIG+=ea64
-        /bin/make qmake_all
+        make qmake_all
         make clean
         make -j$(nproc)
 
@@ -259,7 +259,7 @@ jobs:
         cd ./build
         mkdir -p plugins
         SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
-        /bin/make qmake_all
+        make qmake_all
         make clean
         make -j$(nproc)
 
@@ -272,7 +272,7 @@ jobs:
         cd ./build
         mkdir -p plugins
         SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec macx-clang CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
-        /bin/make qmake_all
+        make qmake_all
         make clean
         make -j$(nproc)
         
