@@ -35,27 +35,18 @@ contains(CONFIG, labeless_ida_70) {
 #CONFIG += is_ida7
 QT_NAMESPACE = QT
 
-equals(TARGET, "labeless_ida_695") {
-    error("not supported")
-    win32 {
-        error("Don't use .pro file for windows build. Use Visual Studio project instead.")
-        SDK_PATH = $$PWD/sdk/
-        IDA_PATH = $$PWD/../../IDA695/
-        INCLUDEPATH += $$PWD/../3rdparty/protobuf-3.20.3/dist/include
-        LIBS += -L$${SDK_PATH}/lib/x86_win_qt
-    }
-}
+
 equals(TARGET, "labeless_ida_70") {
-    SDK_PATH = $$PWD/../../idasdk70
-    IDA_PATH = $$PWD/../../idafree-7.0
-}
+#    SDK_PATH = $$PWD/../../idasdk70
+#    IDA_PATH = $$PWD/../../idafree-7.0
+} 
 equals(TARGET, "labeless_ida_83") {
-    SDK_PATH = $$PWD/../../idasdk_pro83
-    IDA_PATH = $$PWD/../../idafree-8.4
+#    SDK_PATH = $$PWD/../../idasdk_pro83
+#    IDA_PATH = $$PWD/../../idafree-8.4
 }
 equals(TARGET, "labeless_ida_90") {
-    SDK_PATH = $$PWD/../../idasdk90sp1
-    IDA_PATH = $$PWD/../../ida-free-pc-9.0
+#    SDK_PATH = $$PWD/../../idasdk90sp1
+#    IDA_PATH = $$PWD/../../ida-free-pc-9.0
     mac {
         IDA_PATH = /Applications/IDA\ Free\ 9.0.app/Contents/MacOS
     }
