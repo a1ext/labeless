@@ -10,6 +10,7 @@ on:
 
 env:
   QMAKE_EXECUTABLE: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake
+  QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
 
 jobs:
   build:
