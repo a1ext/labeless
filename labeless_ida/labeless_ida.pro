@@ -54,7 +54,7 @@ equals(TARGET, "labeless_ida_83") {
     IDA_PATH = $$PWD/../../idafree-8.4
 }
 equals(TARGET, "labeless_ida_90") {
-    SDK_PATH = $$PWD/../../idasdk90
+    SDK_PATH = $$PWD/../../idasdk90sp1
     IDA_PATH = $$PWD/../../ida-free-pc-9.0
     mac {
         IDA_PATH = /Applications/IDA\ Free\ 9.0.app/Contents/MacOS
