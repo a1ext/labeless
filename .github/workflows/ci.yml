@@ -151,7 +151,7 @@ jobs:
       run: |
         cd ./build
         mkdir plugins
-        "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
+        SDK_PATH="${SDK_PATH}" IDA_PATH="${IDA_PATH}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
         /bin/make qmake_all
         make -j$(nproc)
         
