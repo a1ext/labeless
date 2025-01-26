@@ -251,7 +251,7 @@ jobs:
         make -j$(nproc)
 
     - name: Linux, build IDA 9 plugin
-      if: runner.os == 'Linux' || runner.os == 'macOS'
+      if: runner.os == 'Linux'
       env:
         SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
         IDA_PATH: ${{ github.workspace }}/build
