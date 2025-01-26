@@ -51,7 +51,7 @@ equals(TARGET, "labeless_ida_90") {
         IDA_PATH = /Applications/IDA\ Free\ 9.0.app/Contents/MacOS
     }
 }
-
+message("SDK_PATH: $$SDK_PATH, IDA_PATH: $$IDA_PATH")
 # add IDA SDK paths
 INCLUDEPATH += $${SDK_PATH}/include
 DEFINES += __IDP__ \
