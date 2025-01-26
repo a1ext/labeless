@@ -152,7 +152,7 @@ else {
 }
 
 SYSDIR = $${TARGET_PROCESSOR_NAME}_$${SYSNAME}_$${COMPILER_NAME}_$${ADRSIZE}
-equals(TARGET, "labeless_ida_83") {
+equals(TARGET, "labeless_ida_83")|equals(TARGET, "labeless_ida_83_64") {
     # sh1tf*ck
     SYSDIR = $${SYSDIR}_pro
 }
