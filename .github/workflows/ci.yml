@@ -146,8 +146,8 @@ jobs:
     - name: Linux, build IDA 9 plugin
       if: runner.os == 'Linux'
       env:
-        SDK_PATH: $(pwd)/../idasdk90sp1
-        IDA_PATH: $(pwd)/build/plugins
+        SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
+        IDA_PATH: ${{ github.workspace }}/build/plugins
       run: |
         cd ./build
         mkdir plugins
