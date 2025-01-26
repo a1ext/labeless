@@ -175,7 +175,7 @@ jobs:
     - name: MacOS, build protobuf
       if: runner.os == 'macOS' && !steps.macos_arm64_protobuf_cache.outputs.cache-hit
       run: |
-        pushd 3rdparty/protobuf-3.20.3 && mkdir build && cd build
+        pushd 3rdparty/protobuf-3.20.3 && mkdir build1 && cd build1
         cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
           "-DCMAKE_INSTALL_PREFIX=${{ env.PROTOBUF_PREFIX }}" \
           -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_INSTALL=ON \
