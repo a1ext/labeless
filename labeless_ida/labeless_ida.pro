@@ -36,6 +36,9 @@ contains(CONFIG, labeless_ida_70) {
 #CONFIG += is_ida7
 QT_NAMESPACE = QT
 
+SDK_PATH = $$(SDK_PATH)
+IDA_PATH = $$(IDA_PATH)
+
 isEmpty(SDK_PATH) | isEmpty(IDA_PATH) {
     error("both SDK_PATH and IDA_PATH env variables should be set")
 }
