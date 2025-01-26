@@ -140,6 +140,8 @@ jobs:
         ln -s "$(pwd)/depz/idasdk_pro83" "$(pwd)/idasdk_pro83"
         ln -s "$(pwd)/depz/idasdk70" "$(pwd)/idasdk70"
         mkdir -p build
+        pwd
+        ls -la
 
     - name: Linux, build IDA 9 plugin
       if: runner.os == 'Linux'
