@@ -93,14 +93,11 @@ jobs:
       if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
       run: |
         sudo mkdir -p "${{ env.QT_DIR }}"
-        sudo chmod a+w "${{ env.QT_DIR }}"
+        sudo chown $USER: "${{ env.QT_DIR }}"
         pushd "${{ env.QT_DIR }}"        
-        # curl -L 'https://drive.usercontent.google.com/download?id=1r0BO_prsZXWdmbTMnYDkF3B8zha4L5Ae&export=download&authuser=0&confirm=t&uuid=f6a9b43d-2710-4ea7-a86b-ebc68145ca1b&at=AIrpjvNU3fGsHcjHHGADa0Q2tXUq:1737770748041' -o qt-5.6.3-patched.tar.gz
         curl -L 'https://drive.usercontent.google.com/download?id=1zqVNXWqBG0UYexTq7W7lm_z1Gh1j1qCl&export=download&authuser=0&confirm=t&uuid=2f370d48-f24b-4e87-b5be-8b9893444904&at=AIrpjvM-mGQgA__InWHAiYfNPVOy%3A1737856197977' -o qt-5.12.2-patched-qt-ns.tar.gz
-        #mkdir qt-5.6.3-qt-ns-shinked && cd qt-5.6.3-qt-ns-shinked
         tar xf qt-5.12.2-patched-qt-ns.tar.gz && rm -f qt-5.12.2-patched-qt-ns.tar.gz
         ls -la 
-        # sed -i "s#^prefix=.*\$*#prefix=${{ env.QT_DIR }}#g" $(find . -type f \( -name "*.pc" -o -name "*.cmake" \))
         #cd build
         # build Qt with following cmdline
         # CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" ../configure "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" "-developer-build" "-fontconfig" "-system-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite"   "-sql-sqlite" "-qt-harfbuzz" -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtdeclarative -skip qtquickcontrols -skip qtcharts -skip qtdatavis3d -skip qtactiveqt -skip qtandroidextras -skip qtconnectivity -skip qtdoc  -skip qtgraphicaleffects -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtnetworkauth -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialport -skip qtsvg -skip qttools -skip qttranslations -skip qtwayland -skip qtwebchannel -skip qtwebsockets -skip qtwinextras  "-prefix" "${pwd}/qt-5.12.2-patched-qt-ns" -continue -v 
@@ -148,8 +145,12 @@ jobs:
 
     - name: Linux, build IDA 9 plugin
       if: runner.os == 'Linux'
+      env:
+        SDK_PATH: $(pwd)/../idasdk90sp1
+        IDA_PATH: $(pwd)/build/plugins
       run: |
         cd ./build
+        mkdir plugins
         "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
         /bin/make qmake_all
         make -j$(nproc)
