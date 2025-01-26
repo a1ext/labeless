@@ -134,13 +134,11 @@ jobs:
       env:
         LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
       run: |
-        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ../depz.7z
-        pushd ../
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ./depz.7z
         7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
-        popd
-        ln -s "${{ env.ROOT_DIR }}/depz/idasdk90" "${{ env.ROOT_DIR }}/idasdk90"
-        ln -s "${{ env.ROOT_DIR }}/depz/idasdk_pro83" "${{ env.ROOT_DIR }}/idasdk_pro83"
-        ln -s "${{ env.ROOT_DIR }}/depz/idasdk70" "${{ env.ROOT_DIR }}/idasdk70"
+        ln -s "${{ env.ROOT_DIR }}/depz/idasdk90" "$(pwd)/idasdk90"
+        ln -s "${{ env.ROOT_DIR }}/depz/idasdk_pro83" "$(pwd)/idasdk_pro83"
+        ln -s "${{ env.ROOT_DIR }}/depz/idasdk70" "$(pwd)/idasdk70"
         mkdir -p build
 
     - name: Linux, build IDA 9 plugin
