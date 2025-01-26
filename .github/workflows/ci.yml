@@ -136,7 +136,7 @@ jobs:
       run: |
         curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ./depz.7z
         7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
-        ln -s "$(pwd)/depz/idasdk90" "$(dirname `pwd`)/idasdk90"
+        ln -s "$(pwd)/depz/idasdk90sp1" "$(dirname `pwd`)/idasdk90sp1"
         ln -s "$(pwd)/depz/idasdk_pro83" "$(dirname `pwd`)/idasdk_pro83"
         ln -s "$(pwd)/depz/idasdk70" "$(dirname `pwd`)/idasdk70"
         mkdir -p build
