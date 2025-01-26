@@ -18,6 +18,7 @@ CONFIG *= release force_debug_info
 # - ea64 - bitness of opened targets
 # CONFIG += ea64
 
+
 contains(CONFIG, labeless_ida_70) {
     TARGET = labeless_ida_70
 } else: contains(CONFIG, labeless_ida_83) {
@@ -35,6 +36,9 @@ contains(CONFIG, labeless_ida_70) {
 #CONFIG += is_ida7
 QT_NAMESPACE = QT
 
+isEmpty(SDK_PATH) | isEmpty(IDA_PATH) {
+    error("both SDK_PATH and IDA_PATH env variables should be set")
+}
 
 equals(TARGET, "labeless_ida_70") {
 #    SDK_PATH = $$PWD/../../idasdk70
