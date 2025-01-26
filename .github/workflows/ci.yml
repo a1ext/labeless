@@ -9,8 +9,8 @@ on:
       - actions_ci
 
 env:
-  QMAKE_EXECUTABLE: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake
-  QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
+  #QMAKE_EXECUTABLE: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns/bin/qmake
+  #QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
 
 jobs:
   build:
@@ -146,8 +146,9 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         cd ./build
-        strace "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
+        "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
         /bin/make qmake_all
+        make -j$(nproc)
         
     # - name: Build OllyDBG 1.10 plugin
     #   if: runner.os == 'Windows'
