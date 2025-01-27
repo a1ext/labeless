@@ -12,7 +12,7 @@ QT       += widgets
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG -= debug
-CONFIG *= release force_debug_info
+CONFIG *= release #force_debug_info
 
 # configuration options meaning:
 # - ea64 - bitness of opened targets
