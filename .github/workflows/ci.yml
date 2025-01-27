@@ -364,7 +364,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: labeless_build_${{ env.VER }}_${{ env.SHORT_SHA }}
+        name: labeless_build_${{ env.VER }}_${{ env.SHORT_SHA }}_${{ runner.os }}
         path: |
           bin/labeless_olly.dll
           bin/labeless_olly-x86.pdb
