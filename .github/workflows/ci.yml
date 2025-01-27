@@ -117,7 +117,7 @@ jobs:
         sudo mkdir -p "${{ env.QT_DIR }}"
         sudo chown $USER: "${{ env.QT_DIR }}"
         pushd "${{ env.QT_DIR }}"        
-        curl -L 'https://drive.usercontent.google.com/download?id=1zqVNXWqBG0UYexTq7W7lm_z1Gh1j1qCl&export=download&authuser=0&confirm=t&uuid=2f370d48-f24b-4e87-b5be-8b9893444904&at=AIrpjvM-mGQgA__InWHAiYfNPVOy%3A1737856197977' -o qt-5.12.2-patched-qt-ns.tar.gz
+        curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/qt-5.12.2-patched-qt-ns.tar.gz?download=' -o qt-5.12.2-patched-qt-ns.tar.gz
         tar xf qt-5.12.2-patched-qt-ns.tar.gz && rm -f qt-5.12.2-patched-qt-ns.tar.gz
         ls -la 
         #cd build
@@ -138,7 +138,7 @@ jobs:
         sudo mkdir -p "${{ env.QT_DIR }}"
         sudo chown $USER: "${{ env.QT_DIR }}"
         pushd "${{ env.QT_DIR }}" 
-        curl -L 'https://drive.usercontent.google.com/download?id=1PNUPQcJyvYz9JMUd4C86eIgi63hVqTXu&export=download&authuser=0&confirm=t&uuid=9fc07a68-dbba-4e82-b709-a628fa8b0686&at=AIrpjvPaAY5GsZTALyHRDnIYp0Vp%3A1737911925679' -o Qt-5.15.2-arm64.tar.gz
+        curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/Qt-5.15.2-arm64.tar.gz?download=' -o Qt-5.15.2-arm64.tar.gz
         tar xf Qt-5.15.2-arm64.tar.gz && rm -f Qt-5.15.2-arm64.tar.gz
         ls -la 
         popd
