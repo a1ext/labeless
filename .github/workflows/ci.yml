@@ -52,6 +52,7 @@ jobs:
         VERSION_REVISION=$(grep -E '\#define\s+VERSION_REVISION\s+([0-9]+)' ./common/version.h | awk '{print $3}')
         VERSION_BUILD=$(grep -E '\#define\s+VERSION_BUILD\s+([0-9]+)' ./common/version.h | awk '{print $3}')
         echo "VER=$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $GITHUB_ENV
+        echo "github.ref: ${{ github.ref }}"
 
     - name: Set outputs Windows
       if: runner.os == 'Windows'
