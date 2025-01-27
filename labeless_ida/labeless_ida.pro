@@ -188,7 +188,7 @@ else:!mac:unix {
 }
 
 INCLUDEPATH += $${PROTOBUF_BUILD_DIR}/include
-+mac {
+mac {
     LIBS += $${SDK_PATH}/lib/$${SYSDIR}/lib$${IDA_LIB}.dylib
     LIBS += $${PROTOBUF_BUILD_DIR}/lib/libprotobuf.a
     QMAKE_APPLE_DEVICE_ARCHS = arm64
