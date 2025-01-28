@@ -3,10 +3,10 @@ name: Build Labeless
 on:
   push:
     branches:
-      - actions_ci
+      - devel
   pull_request:
     branches:
-      - actions_ci
+      - devel
 
 env:
   LINUX_QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
