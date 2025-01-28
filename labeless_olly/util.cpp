@@ -11,7 +11,10 @@
 #include <WinSock2.h>
 #include <IPHlpApi.h>
 #include <cstdlib>
+#pragma warning(push)
+#pragma warning(disable: 4091)
 #include <ShlObj.h>
+#pragma warning(pop)
 #include <regex>
 #include <vector>
 

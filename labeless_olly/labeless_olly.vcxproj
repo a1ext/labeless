@@ -113,10 +113,16 @@
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\cpp\rpc.pb.cc" />
+    <ClCompile Include="..\common\cpp\rpc.pb.cc">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4800</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">4800</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="labeless.cpp" />
     <ClCompile Include="labeless_olly.cpp" />
-    <ClCompile Include="swig\ollyapi_wrap.c" />
+    <ClCompile Include="swig\ollyapi_wrap.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release_DeFixed|Win32'">4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4996</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,432 @@
+name: Build Labeless
+
+on:
+  push:
+    branches:
+      - devel
+  pull_request:
+    branches:
+      - devel
+
+env:
+  LINUX_QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
+  MACOS_QTDIR: /Users/Shared/Qt/5.15.2-arm64
+
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
+        # macos-13: Supports both ARM64 and x86_64.
+        # os: [ubuntu-20.04, windows-2022, macos-14]
+        os: [ubuntu-20.04, windows-2019, macos-14]
+        include:
+          #- os: ubuntu-20.04
+          #  build_cmd: make
+          - os: windows-2019
+            build_cmd: build.bat
+          #- os: macos-14
+          #  build_cmd: ./build_macos.sh
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # - name: Restore VS Toolset Cache
+    #   if: runner.os == 'Windows'
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: C:\Program Files (x86)\Microsoft Visual Studio
+    #     key: vs-toolset-v140
+
+    - name: Set outputs Non-Windows
+      if: runner.os != 'Windows'
+      run: |
+        echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        VERSION_MAJOR=$(grep -E '\#define\s+VERSION_MAJOR\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        VERSION_MINOR=$(grep -E '\#define\s+VERSION_MINOR\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        VERSION_REVISION=$(grep -E '\#define\s+VERSION_REVISION\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        VERSION_BUILD=$(grep -E '\#define\s+VERSION_BUILD\s+([0-9]+)' ./common/version.h | awk '{print $3}')
+        echo "VER=$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $GITHUB_ENV
+
+
+    - name: Set outputs Windows
+      if: runner.os == 'Windows'
+      run: |
+        echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+        $M_MAJ = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_MAJOR\s+(\d+)\s*'
+        $M_MIN = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_MINOR\s+(\d+)\s*'
+        $M_REV = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_REVISION\s+(\d+)\s*'
+        $M_BUILD = Select-String -Path ".\common\version.h" -Pattern '#define\s+VERSION_BUILD\s+(\d+)\s*'
+        $VERSION_MAJOR = $M_MAJ.Matches.Groups[1].Value
+        $VERSION_MINOR = $M_MIN.Matches.Groups[1].Value
+        $VERSION_REVISION = $M_REV.Matches.Groups[1].Value
+        $VERSION_BUILD = $M_BUILD.Matches.Groups[1].Value
+        echo "VER=$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $env:GITHUB_ENV
+
+
+    - name: Set up Linux environment
+      if: runner.os == 'Linux'
+      run: |
+        echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
+        echo "QT_DIR=${LINUX_QTDIR}" >> $GITHUB_ENV
+        echo "QMAKE=${LINUX_QTDIR}/bin/qmake" >> $GITHUB_ENV
+        echo "PROTOBUF_PREFIX=$(pwd)/3rdparty/protobuf-3.20.3/dist" >> $GITHUB_ENV
+        sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
+          libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
+          libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
+          libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev
+        sudo mkdir -p "$(dirname ${LINUX_QTDIR})"
+        sudo chown $USER: "$(dirname ${LINUX_QTDIR})"
+
+    - name: Set up MacOS environment
+      if: runner.os == 'macOS'
+      run: |
+        echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
+        echo "QT_DIR=${MACOS_QTDIR}" >> $GITHUB_ENV
+        echo "QMAKE=${MACOS_QTDIR}/bin/qmake" >> $GITHUB_ENV
+        echo "PROTOBUF_PREFIX=$(pwd)/3rdparty/protobuf-3.20.3/dist" >> $GITHUB_ENV
+        sudo mkdir -p "$(dirname ${MACOS_QTDIR})"
+        sudo chown $USER: "$(dirname ${MACOS_QTDIR})"
+
+    - name: Linux Qt Cache
+      if: runner.os == 'Linux'
+      uses: actions/cache@v3
+      id: linux_qt_cache
+      with:
+        # maybe we should use some env var for root path?
+        path: ${{ env.QT_DIR }}
+        key: linux-qt-patched3
+
+    - name: MacOS Qt Cache
+      if: runner.os == 'Linux'
+      uses: actions/cache@v3
+      id: macos_arm64_qt_cache
+      with:
+        # maybe we should use some env var for root path?
+        path: ${{ env.QT_DIR }}
+        key: macos-qt-patched
+    
+    - name: Linux, Set up Qt
+      if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
+      run: |
+        sudo mkdir -p "${{ env.QT_DIR }}"
+        sudo chown $USER: "${{ env.QT_DIR }}"
+        pushd "${{ env.QT_DIR }}"        
+        curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/qt-5.12.2-patched-qt-ns.tar.gz?download=' -o qt-5.12.2-patched-qt-ns.tar.gz
+        tar xf qt-5.12.2-patched-qt-ns.tar.gz && rm -f qt-5.12.2-patched-qt-ns.tar.gz
+        ls -la 
+        #cd build
+        # build Qt with following cmdline
+        # CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" ../configure "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" "-developer-build" "-fontconfig" "-system-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite"   "-sql-sqlite" "-qt-harfbuzz" -nomake examples -nomake tests -skip qtwebengine -skip qtmultimedia -skip qtdeclarative -skip qtquickcontrols -skip qtcharts -skip qtdatavis3d -skip qtactiveqt -skip qtandroidextras -skip qtconnectivity -skip qtdoc  -skip qtgraphicaleffects -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtnetworkauth -skip qtremoteobjects -skip qtscxml -skip qtsensors -skip qtserialport -skip qtsvg -skip qttools -skip qttranslations -skip qtwayland -skip qtwebchannel -skip qtwebsockets -skip qtwinextras  "-prefix" "${pwd}/qt-5.12.2-patched-qt-ns" -continue -v 
+        
+        #CXXFLAGS="-Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error" \
+        #../configure "-nomake" "tests" "-qtnamespace" "QT" "-confirm-license" "-accessibility" "-opensource" "-force-debug-info" "-platform" "linux-g++-64" \
+        #"-developer-build" "-fontconfig" "-qt-freetype" "-qt-libpng" "-glib" "-qt-xcb" "-dbus" "-qt-sql-sqlite" "-gtkstyle" "-prefix" "${{ runner.temp }}/qt-5.6.3-patched-qt-ns" -continue -v
+        #make -j$(nproc)
+        #make install
+        popd
+        "${{ env.QMAKE }}" -query
+
+    - name: MacOS, Set up Qt
+      if: runner.os == 'macOS' && steps.macos_arm64_qt_cache.outputs.cache-hit != 'true'
+      run: |
+        sudo mkdir -p "${{ env.QT_DIR }}"
+        sudo chown $USER: "${{ env.QT_DIR }}"
+        pushd "${{ env.QT_DIR }}" 
+        curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/Qt-5.15.2-arm64.tar.gz?download=' -o Qt-5.15.2-arm64.tar.gz
+        tar xf Qt-5.15.2-arm64.tar.gz && rm -f Qt-5.15.2-arm64.tar.gz
+        ls -la 
+        popd
+        "${{ env.QMAKE }}" -query
+        
+    - name: Linux, protobuf cache
+      if: runner.os == 'Linux'
+      uses: actions/cache@v3
+      id: linux_protobuf_cache
+      with:
+        # maybe we should use some env var for root path?
+        path: ${{ env.PROTOBUF_PREFIX }}
+        key: linux-protobuf-cache3
+
+
+    - name: MacOS, protobuf cache
+      if: runner.os == 'macOS'
+      uses: actions/cache@v3
+      id: macos_arm64_protobuf_cache
+      with:
+        # maybe we should use some env var for root path?
+        path: ${{ env.PROTOBUF_PREFIX }}
+        key: macos-protobuf-cache
+        
+    - name: Linux, build protobuf
+      if: runner.os == 'Linux' && !steps.linux_protobuf_cache.outputs.cache-hit
+      run: |
+        pushd 3rdparty/protobuf-3.20.3 && mkdir build && cd build
+        cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -Dprotobuf_WITH_ZLIB=NO -Dprotobuf_BUILD_TESTS=NO -Dprotobuf_BUILD_SHARED_LIBS=NO \
+          "-DCMAKE_INSTALL_PREFIX=${{ env.PROTOBUF_PREFIX }}" -Dprotobuf_BUILD_PROTOC_BINARIES=NO \
+          -DCMAKE_CXX_FLAGS=-fPIC ../cmake
+        make -j$(nproc)
+        make install
+
+    - name: MacOS, build protobuf
+      if: runner.os == 'macOS' && !steps.macos_arm64_protobuf_cache.outputs.cache-hit
+      run: |
+        pushd 3rdparty/protobuf-3.20.3 && mkdir build1 && cd build1
+        cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+          "-DCMAKE_INSTALL_PREFIX=${{ env.PROTOBUF_PREFIX }}" \
+          -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_INSTALL=ON \
+          -Dprotobuf_BUILD_SHARED_LIBS=OFF ../cmake
+        make -j$(nproc)
+        make install
+
+    - name: Linux|MacOS, Set Up Deps
+      if: runner.os == 'Linux' || runner.os == 'macOS'
+      env:
+        LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
+      run: |
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ./depz.7z
+        7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
+        ln -s "$(pwd)/depz/idasdk90sp1" "$(dirname `pwd`)/idasdk90sp1"
+        ln -s "$(pwd)/depz/idasdk_pro83" "$(dirname `pwd`)/idasdk_pro83"
+        ln -s "$(pwd)/depz/idasdk70" "$(dirname `pwd`)/idasdk70"
+        mkdir -p build
+        pwd
+        ls -la ../
+
+
+    - name: Linux, build IDA 7 plugin 32/64-bit target 
+      if: runner.os == 'Linux'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk70
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        # 32-bit
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_70
+        make qmake_all
+        make clean
+        make -j$(nproc)
+
+        # 64-bit
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_70 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)   
+
+
+    - name: Linux, build IDA 8 plugin 32/64-bit target 
+      if: runner.os == 'Linux'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk_pro83
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        # 32-bit
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_83
+        make qmake_all
+        make clean
+        make -j$(nproc)
+
+        # 64-bit
+        make clean
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_83 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)
+
+
+    - name: Linux, build IDA 9 plugin
+      if: runner.os == 'Linux'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)
+
+    - name: MacOS, build IDA 8 plugin
+      if: runner.os == 'macOS'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk_pro83
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        # 32-bit
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec macx-clang CONFIG+=release CONFIG+=labeless_ida_83
+        make qmake_all
+        make clean
+        make -j$(nproc)
+        # 64-bit
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec macx-clang CONFIG+=release CONFIG+=labeless_ida_83 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)
+
+    - name: MacOS, build IDA 9 plugin
+      if: runner.os == 'macOS'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec macx-clang CONFIG+=release CONFIG+=labeless_ida_90 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)
+        
+    - name: Build OllyDBG 1.10 plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+
+    - name: Windows, Build OllyDBG FOFF plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /v:m
+
+    - name: Windows, Build OllyDBG 2.0 plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+
+    - name: Windows, Build x64dbg 32-bit plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+
+    - name: Windows, Build x64dbg 64-bit plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
+
+    - name: Set Up Windows Dependencies
+      if: runner.os == 'Windows'
+      env:
+        LL_DEPS_P: ${{ secrets.LL_DEPS_P }}
+      run: |
+        curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o C:\depz.7z
+        7z x -oc:\ "-p$env:LL_DEPS_P" c:\depz.7z
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk70\plugins
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk_pro83\plugins
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk90sp1\plugins
+        Rename-Item -Path "labeless_ida\labeless_ida.vcxproj.user" -NewName "labeless_ida.vcxproj.user_" -Force
+        curl -L "https://go.microsoft.com/fwlink/p/?LinkId=323507" -o .\sdksetup.exe
+        Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
+ 
+    - name: Windows, Build IDA 7 plugins
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
+
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
+        
+    - name: Windows, Build IDA 8 plugins
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
+
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
+
+    - name: Windows, Build IDA 9 plugins
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk90sp1 /p:SDK_DIR=c:\depz\idasdk90sp1
+
+    - name: Build Python module sdist
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |
+        cd deploy
+        python.exe -m pip install wheel
+        python.exe setup.py bdist_wheel
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: labeless_build_${{ env.VER }}_${{ env.SHORT_SHA }}_${{ runner.os }}
+        path: |
+          bin/labeless_olly.dll
+          bin/labeless_olly-x86.pdb
+          bin/labeless_olly_foff.dll
+          bin/labeless_olly_foff-x86.pdb
+          bin/labeless_olly2.dll
+          bin/labeless_olly2-x86.pdb
+          bin/labeless_x64dbg.dp32
+          bin/labeless_x64dbg-x86.pdb
+          bin/labeless_x64dbg.dp64
+          bin/labeless_x64dbg-x64.pdb
+          bin/labeless_ida_*.dll
+          deploy/dist/*.whl
+          bin/labeless_ida_*.pdb
+          build/labeless_*.so
+          build/labeless_*.dylib
+
+  release:
+    name: Draft Release and Upload Artifacts
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+      with:
+        path: release_artifacts/
+
+    # TODO: organize release bundle
+
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ github.ref_name }} # The tag name that triggered the workflow
+        release_name: Release ${{ github.ref_name }}
+        body: |
+          ## Release Notes
+          This is an automated draft release for tag `${{ github.ref_name }}`.
+        draft: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Artifacts to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: release_artifacts/
+        asset_name: "build_artifacts_${{ github.ref_name }}.zip"
+        asset_content_type: application/zip
+    

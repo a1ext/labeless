@@ -28,31 +28,8 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Generated Files\Release_vc140_x64">
-      <UniqueIdentifier>{a93eb3af-d21b-400c-8577-4e499ad00eb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="util">
       <UniqueIdentifier>{3a299ee3-a64e-4c0b-89b3-c97a3219c3b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Generated Files\IDA69X">
-      <UniqueIdentifier>{fb0dbf03-063e-40a4-9585-4e838bdbb272}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\IDA68_vc120">
-      <UniqueIdentifier>{45b9584b-bb01-4866-bc58-721176635f5e}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\IDA68_vc120_x64">
-      <UniqueIdentifier>{04a6564d-f6fa-431a-8927-c0ed65e01116}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\IDA69X_x64">
-      <UniqueIdentifier>{74145733-4339-4df6-9704-d7e251fbdf45}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\IDA7_x64">
       <UniqueIdentifier>{a8b136c0-290d-45f4-836c-1a9c3ef8233c}</UniqueIdentifier>
@@ -79,17 +56,8 @@
     <ClInclude Include="pythonpalettemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\bin\src\GeneratedFiles\Release\ui_pyollyview.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_settingsdialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="res\resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\ui_choosememorydialog.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="externsegdata.h">
       <Filter>Header Files</Filter>
@@ -116,6 +84,15 @@
       <Filter>util</Filter>
     </ClInclude>
     <ClInclude Include="compat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFiles\ui_choosememorydialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFiles\ui_settingsdialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFiles\ui_pyollyview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -149,9 +126,6 @@
     </ClCompile>
     <ClCompile Include="pythonpalettemanager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\$(ConfigurationName)\qrc_res.cpp">
-      <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="settingsdialog.cpp">
       <Filter>Source Files</Filter>
@@ -198,221 +172,41 @@
     <ClCompile Include="pausenotificationlistener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_textedit.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_textedit.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_textedit.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_textedit.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_textedit.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_settingsdialog.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_settingsdialog.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_settingsdialog.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_settingsdialog.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_settingsdialog.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_rpcthreadworker.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_rpcdata.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_rpcdata.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_rpcdata.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_rpcdata.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_rpcdata.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_pysignaturetooltip.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_pysignaturetooltip.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pysignaturetooltip.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_pysignaturetooltip.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_pysignaturetooltip.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_pyollyview.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_pyollyview.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pyollyview.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_pyollyview.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_pyollyview.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_pausenotificationlistener.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_pausenotificationlistener.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_pausenotificationlistener.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_pausenotificationlistener.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_pausenotificationlistener.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_labeless_ida.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_labeless_ida.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_labeless_ida.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_labeless_ida.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_labeless_ida.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_jedicompletionworker.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_jedicompletionworker.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_jedicompletionworker.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_jedicompletionworker.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_jedicompletionworker.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_highlighter.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_highlighter.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_highlighter.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_highlighter.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_highlighter.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_globalsettingsmanager.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_globalsettingsmanager.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_globalsettingsmanager.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_globalsettingsmanager.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
     </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_globalsettingsmanager.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X_x64\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\IDA69X_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA69X\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\IDA69X</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\Release_vc140_x64\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\Release_vc140_x64</Filter>
-    </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7_x64\moc_choosememorydialog.cpp">
       <Filter>Generated Files\IDA7_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\IDA68_vc120</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_choosememorydialog.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_globalsettingsmanager.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_highlighter.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_jedicompletionworker.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_labeless_ida.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_pausenotificationlistener.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_pyollyview.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_pysignaturetooltip.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_rpcdata.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_rpcthreadworker.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_settingsdialog.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\bin\src\GeneratedFiles\IDA68_vc120_x64\moc_textedit.cpp">
-      <Filter>Generated Files\IDA68_vc120_x64</Filter>
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7\moc_choosememorydialog.cpp">
       <Filter>Generated Files\IDA7</Filter>
@@ -449,6 +243,9 @@
     </ClCompile>
     <ClCompile Include="..\bin\src\GeneratedFiles\IDA7\moc_labeless_ida.cpp">
       <Filter>Generated Files\IDA7</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bin\src\GeneratedFiles\qrc_res.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

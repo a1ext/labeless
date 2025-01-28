@@ -6,18 +6,28 @@
 
 QT       += widgets
 
- TARGET = labeless_ida_70
+# TARGET = labeless_ida_70
 # TARGET = labeless_ida_83
 # TARGET = labeless_ida_90
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG -= debug
-CONFIG *= release force_debug_info
+CONFIG *= release #force_debug_info
 
 # configuration options meaning:
 # - ea64 - bitness of opened targets
-CONFIG += ea64
+# CONFIG += ea64
 
+
+contains(CONFIG, labeless_ida_70) {
+    TARGET = labeless_ida_70
+} else: contains(CONFIG, labeless_ida_83) {
+    TARGET = labeless_ida_83
+} else: contains(CONFIG, labeless_ida_90) {
+    TARGET = labeless_ida_90
+} else {
+    error("No target specified, add to CONFIG one of the following: labeless_ida_70|labeless_ida_83|labeless_ida_90")
+}
 
 # `x64` deprecated
 #CONFIG += x64
@@ -26,32 +36,29 @@ CONFIG += ea64
 #CONFIG += is_ida7
 QT_NAMESPACE = QT
 
-equals(TARGET, "labeless_ida_695") {
-    error("not supported")
-    win32 {
-        error("Don't use .pro file for windows build. Use Visual Studio project instead.")
-        SDK_PATH = $$PWD/sdk/
-        IDA_PATH = $$PWD/../../IDA695/
-        INCLUDEPATH += $$PWD/../3rdparty/protobuf-3.20.3/dist/include
-        LIBS += -L$${SDK_PATH}/lib/x86_win_qt
-    }
+SDK_PATH = $$(SDK_PATH)
+IDA_PATH = $$(IDA_PATH)
+
+isEmpty(SDK_PATH) | isEmpty(IDA_PATH) {
+    error("both SDK_PATH and IDA_PATH env variables should be set")
 }
+
 equals(TARGET, "labeless_ida_70") {
-    SDK_PATH = $$PWD/../../idasdk70
-    IDA_PATH = $$PWD/../../idafree-7.0
-}
+#    SDK_PATH = $$PWD/../../idasdk70
+#    IDA_PATH = $$PWD/../../idafree-7.0
+} 
 equals(TARGET, "labeless_ida_83") {
-    SDK_PATH = $$PWD/../../idasdk_pro83
-    IDA_PATH = $$PWD/../../idafree-8.4
+#    SDK_PATH = $$PWD/../../idasdk_pro83
+#    IDA_PATH = $$PWD/../../idafree-8.4
 }
 equals(TARGET, "labeless_ida_90") {
-    SDK_PATH = $$PWD/../../idasdk90
-    IDA_PATH = $$PWD/../../ida-free-pc-9.0
-    mac {
+#    SDK_PATH = $$PWD/../../idasdk90sp1
+#    IDA_PATH = $$PWD/../../ida-free-pc-9.0
+    mac:isEmpty(IDA_PATH) {
         IDA_PATH = /Applications/IDA\ Free\ 9.0.app/Contents/MacOS
     }
 }
-
+message("SDK_PATH: $$SDK_PATH, IDA_PATH: $$IDA_PATH")
 # add IDA SDK paths
 INCLUDEPATH += $${SDK_PATH}/include
 DEFINES += __IDP__ \
@@ -145,7 +152,7 @@ else {
 }
 
 SYSDIR = $${TARGET_PROCESSOR_NAME}_$${SYSNAME}_$${COMPILER_NAME}_$${ADRSIZE}
-equals(TARGET, "labeless_ida_83") {
+equals(TARGET, "labeless_ida_83")|equals(TARGET, "labeless_ida_83_64") {
     # sh1tf*ck
     SYSDIR = $${SYSDIR}_pro
 }
@@ -181,7 +188,7 @@ else:!mac:unix {
 }
 
 INCLUDEPATH += $${PROTOBUF_BUILD_DIR}/include
-+mac {
+mac {
     LIBS += $${SDK_PATH}/lib/$${SYSDIR}/lib$${IDA_LIB}.dylib
     LIBS += $${PROTOBUF_BUILD_DIR}/lib/libprotobuf.a
     QMAKE_APPLE_DEVICE_ARCHS = arm64

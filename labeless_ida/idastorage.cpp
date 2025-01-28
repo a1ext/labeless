@@ -219,7 +219,7 @@ bool storeExternSegData(const ExternSegData& value)
 	/*n.altset(ESDNAT_LowStart, value.start);
 	n.altset(ESDNAT_LowLen, value.len);
 	n.altset(ESDNAT_LowUsed, value.imports.size());*/
-	n.altset(ESDNAT_ImpCount, value.imports.size());
+	n.altset(ESDNAT_ImpCount, static_cast<nodeidx_t>(value.imports.size()));
 
 	// { v1
 	/*n.altset(ESDNAT_HighStart, value.startHigh);

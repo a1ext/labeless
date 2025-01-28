@@ -253,18 +253,32 @@ static PyObject* setBinaryResult(PyObject*, PyObject* arg)
 		Py_RETURN_NONE;
 	}
 
-	Py_ssize_t size = 0;
-	const char* buff = nullptr;
-
-	if (PyObject_AsCharBuffer(pyBuff, &buff, &size) >= 0 && buff)
-	{
+	Py_buffer data = { nullptr, nullptr };
+	if (PyObject_GetBuffer(pyBuff, &data, PyBUF_SIMPLE) != 0) {
+		Py_RETURN_NONE;
+	}
+	do {
+		if (!PyBuffer_IsContiguous(&data, 'C')) {
+			log_r("Unable to set binary result, buffer is not contiguos jobId: %llu", jobId);
+			break;
+		}
+		const char* buff = reinterpret_cast<const char*>(data.buf);
+		if (!buff) {
+			log_r("Unable to set binary result, buffer.buf is null, jobId: %llu", jobId);
+			break;
+		}
 		auto& cd = Labeless::instance().clientData();
 		recursive_lock_guard lock(cd.commandsLock);
 		Request* r = cd.find(jobId);
-		if (r)
-			r->binaryResult = std::string(buff, size);
-		else
+		if (r) {
+			r->binaryResult = std::string(buff, data.len);
+		} 
+		else {
 			log_r("Unable to set binary result, no commands found for jobId: %llu", jobId);
+		}
+	} while (0);
+	if (data.obj) {
+		PyBuffer_Release(&data);
 	}
 	Py_RETURN_NONE;
 }
