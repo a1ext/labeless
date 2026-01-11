@@ -10,7 +10,11 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QDesktopWidget>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	include <QScreen>
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	include <QDesktopWidget>
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QStyle>
 #include <QStyleOptionFrame>
 #include <QStylePainter>
@@ -20,9 +24,16 @@ namespace {
 
 int getTipScreen(const QPoint &pos, QWidget *w)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QScreen *screen = QApplication::screenAt(pos);
+    if (screen)
+        return QApplication::screens().indexOf(screen);
+    return 0;
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     if (QApplication::desktop()->isVirtualDesktop())
         return QApplication::desktop()->screenNumber(pos);
     return QApplication::desktop()->screenNumber(w);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 }
 
 enum
@@ -70,6 +81,9 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 	resize(sizeHint() + extra);
 
 #ifdef Q_WS_MAC
+#	if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#		error TODO
+#	else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	// When in full screen mode, there is no Dock nor Menu so we can use
 	// the whole screen for displaying the tooltip. However when not in
 	// full screen mode we need to save space for the dock, so we use
@@ -80,9 +94,17 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 		screen = QApplication::desktop()->screenGeometry(getTipScreen(pos, w));
 	else
 		screen = QApplication::desktop()->availableGeometry(getTipScreen(pos, w));
-#else
+#	endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // Q_WS_MAC
+#	if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	QScreen *screen = QApplication::screenAt(pos);
+	if (!screen)
+		screen = QApplication::primaryScreen();
+	QRect screenGeometry = screen->geometry();
+#	else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	QRect screen = QApplication::desktop()->screenGeometry(getTipScreen(pos, parentWidget()));
-#endif
+#	endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // Q_WS_MAC
 
 	QPoint p = pos - QPoint(0, 3);
 	p += QPoint(2,
@@ -92,6 +114,12 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 		16
 #endif
 	);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	define screen screenGeometry
+#	define init initFrom
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+
 	if (p.x() + this->width() > screen.x() + screen.width())
 		p.rx() -= 4 + this->width();
 	if (p.y() + this->height() > screen.y() + screen.height())

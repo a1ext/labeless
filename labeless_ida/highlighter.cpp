@@ -10,11 +10,19 @@
 #include "pythonpalettemanager.h"
 
 #include <QList>
-#include <QRegExp>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	include <QRegularExpression>
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	include <QRegExp>
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QTextCursor>
 #include <QTextDocument>
 #include <QTextDocumentFragment>
 #include <QTextLayout>
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	define QRegExp QRegularExpression
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 struct HighlightingRule
 {
@@ -22,7 +30,11 @@ struct HighlightingRule
 	int index;
 	PythonPaletteEntryType t;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	HighlightingRule(const QString& p = QString(), int idx = 0, PythonPaletteEntryType t_ = PPET_Unknown)
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	HighlightingRule(const QString& p = QString::null, int idx = 0, PythonPaletteEntryType t_ = PPET_Unknown)
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		: pattern(QRegExp(p))
 		, index(idx)
 		, t(t_)
@@ -107,18 +119,30 @@ void Highlighter::highlightBlock(const QString &text)
 
 	foreach(const ::HighlightingRule& rule, kHighlightingRules.rules)
 	{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
+		while (matchIterator.hasNext())
+		{
+			QRegularExpressionMatch match = matchIterator.next();
+			int index = match.capturedStart(rule.index);
+			int length = match.capturedLength(rule.index);
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		QRegExp expression(rule.pattern);
 		int index = expression.indexIn(text);
 		while (index >= 0)
 		{
 			index = expression.pos(rule.index);
 			int length = expression.cap(rule.index).length();
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			if (m_Formats.contains(rule.t))
 			{
 				fmt = m_Formats[rule.t];
 				setFormat(index, length, fmt);
 			}
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			index = expression.indexIn(text, index + length);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		}
 	}
 
@@ -136,18 +160,36 @@ bool Highlighter::matchMultiline(const QString& text, const ::HighlightingRule& 
 	int add = 0;
 	int end = 0;
 	int length = 0;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	QRegularExpressionMatch match;
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	if (previousBlockState() != rule.index)
 	{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		match = delimiter.match(text);
+		start = match.hasMatch() ? match.capturedStart() : -1;
+		add = match.hasMatch() ? match.capturedLength() : 0;
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		start = delimiter.indexIn(text);
 		add = delimiter.matchedLength();
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	}
 
 	while (start >= 0)
 	{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		match = delimiter.match(text, start + add);
+		end = match.hasMatch() ? match.capturedStart() : -1;
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		end = delimiter.indexIn(text, start + add);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		if (end >= add)
 		{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+			length = end - start + add + match.capturedLength();
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			length = end - start + add + delimiter.matchedLength();
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			setCurrentBlockState(0);
 		}
 		else
@@ -159,7 +201,12 @@ bool Highlighter::matchMultiline(const QString& text, const ::HighlightingRule& 
 		if (m_Formats.contains(rule.t))
 			fmt = m_Formats[rule.t];
 		setFormat(start, length, fmt);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		match = delimiter.match(text, start + length);
+		start = match.hasMatch() ? match.capturedStart() : -1;
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		start = delimiter.indexIn(text, start + length);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	}
 	return currentBlockState() == rule.index;
 }
@@ -205,7 +252,11 @@ bool Highlighter::asHtml(QString& result)
 	for (QTextBlock current = start; current.isValid() && current != end; current = current.next()) {
 		const QTextLayout* layout(current.layout());
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		foreach(const QTextLayout::FormatRange &range, layout->formats()) {
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		foreach(const QTextLayout::FormatRange &range, layout->additionalFormats()) {
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			const int start = current.position() + range.start - selectionStart;
 			const int end = start + range.length;
 			if (end <= 0 || start >= endOfDocument)

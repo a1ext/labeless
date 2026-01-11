@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="IDA9_Qt6_x64|x64">
+      <Configuration>IDA9_Qt6_x64</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ADCF29E6-8039-4ABF-B6CD-28BAEF079355}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <RootNamespace>labeless_ida</RootNamespace>
+    <WindowsTargetPlatformVersion>$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'" Label="QtSettings">
+    <QtInstall>C:\ida-sdk_cmake\src\build\qt-install</QtInstall>
+    <QtModules>core;gui;widgets</QtModules>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="ida90_qt6_x86_64.props" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">
+    <TargetExt>.dll</TargetExt>
+    <IncludePath>$(QTDIR)\..\msvc2015_32\qtbase\include\QtCore;$(QTDIR)\..\msvc2015_32\qtbase\include\QtGui;$(QTDIR)\..\msvc2015_32\qtbase\include\QtWidgets;$(QTDIR)\..\msvc2015_32\qtbase\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;$(QTDIR)\include;.\..\bin\src\GeneratedFilesQt6;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SDK_DIR)\lib\x64_win_qt;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_$(IDA_SUFFIX)_64</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)bin\obj\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;LABELESS_IDA_EXPORTS;__NT__;__IDP__;__QT__;__VC__;__X64__;__EA64__;_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NO_OBSOLETE_FUNCS;QT_NAMESPACE=QT;QT_THREAD_SUPPORT;QT_NO_UNICODE_LITERAL;HAVE_SNPRINTF;LABELESS_ADDITIONAL_LOGGING;UNICODE;WIN32;WIN64;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;__DEFINE_PLUGIN_RETURN_CODES__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>GeneratedFilesQt6\$(ConfigurationName);GeneratedFilesQt6;$(SDK_DIR)\include;$(SolutionDir)3rdparty\protobuf-3.20.3\src;.\..\bin\src\GeneratedFilesQt6\IDA9_x64;$(ProjectDir);C:\ida-sdk_cmake\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SDK_DIR)\lib\x64_win_vc_64;$(SDK_DIR)\lib\x64_win_qt;$(SolutionDir)\bin;$(SolutionDir)\3rdparty\libs;C:\ida-sdk_cmake\src\lib\x64_win_vc_64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ida.lib;ws2_32.lib;libprotobuf_v140_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/SUBSYSTEM:WINDOWS %(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y "$(SolutionDir)bin\$(TargetFileName)" "$(IDA_DIR)\plugins\$(TargetFileName)"</Command>
+    </PostBuildEvent>
+    <QtMoc>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <DynamicSource>output</DynamicSource>
+      <QtMocDir>.\..\bin\src\GeneratedFilesQt6\IDA9_$(Platform)</QtMocDir>
+      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
+    </QtMoc>
+    <QtRcc>
+      <InitFuncName>%(Filename)</InitFuncName>
+      <Compression>default</Compression>
+      <NoCompression>true</NoCompression>
+      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
+      <QtRccDir>.\..\bin\src\GeneratedFilesQt6</QtRccDir>
+      <QtRccFileName>qrc_%(Filename).cpp</QtRccFileName>
+    </QtRcc>
+    <QtUic>
+      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
+      <QtUicDir>.\..\bin\src\GeneratedFilesQt6</QtUicDir>
+      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
+    </QtUic>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="choosememorydialog.cpp" />
+    <ClCompile Include="externsegdata.cpp" />
+    <ClCompile Include="globalsettingsmanager.cpp" />
+    <ClCompile Include="highlighter.cpp" />
+    <ClCompile Include="idadump.cpp" />
+    <ClCompile Include="idastorage.cpp" />
+    <ClCompile Include="jedi.cpp" />
+    <ClCompile Include="jedicompletionworker.cpp" />
+    <ClCompile Include="pausenotificationlistener.cpp" />
+    <ClCompile Include="pysignaturetooltip.cpp" />
+    <ClCompile Include="pythonpalettemanager.cpp" />
+    <ClCompile Include="settingsdialog.cpp" />
+    <ClCompile Include="textedit.cpp" />
+    <ClCompile Include="types.cpp" />
+    <ClCompile Include="util\util_ida.cpp" />
+    <ClCompile Include="util\util_idapython.cpp" />
+    <ClCompile Include="util\util_net.cpp" />
+    <ClCompile Include="util\util_protobuf.cpp" />
+    <ClInclude Include="..\bin\src\GeneratedFilesQt6\ui_pyollyview.h" />
+    <ClInclude Include="..\common\cpp\rpc.pb.h" />
+    <QtMoc Include="jedicompletionworker.h" />
+    <QtMoc Include="pysignaturetooltip.h" />
+    <ClInclude Include="compat.h" />
+    <QtMoc Include="pausenotificationlistener.h" />
+    <ClInclude Include="util\util_ida.h" />
+    <ClInclude Include="util\util_idapython.h" />
+    <ClInclude Include="util\util_net.h" />
+    <ClInclude Include="util\util_protobuf.h" />
+    <QtMoc Include="highlighter.h" />
+    <QtMoc Include="choosememorydialog.h" />
+    <QtMoc Include="globalsettingsmanager.h" />
+    <ClInclude Include="externsegdata.h" />
+    <QtMoc Include="labeless_ida.h" />
+    <QtMoc Include="rpcdata.h" />
+    <QtMoc Include="rpcthreadworker.h" />
+    <QtMoc Include="pyollyview.h" />
+    <CustomBuild Include="idadump.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">
+      </Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">
+      </Message>
+    </CustomBuild>
+    <ClInclude Include="idastorage.h" />
+    <ClInclude Include="jedi.h" />
+    <ClInclude Include="palette.h" />
+    <ClInclude Include="pythonpalettemanager.h" />
+    <QtMoc Include="settingsdialog.h" />
+    <ClInclude Include="res\resource.h" />
+    <ClInclude Include="sync\sync.h" />
+    <QtMoc Include="textedit.h" />
+    <ClInclude Include="types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common\cpp\rpc.pb.cc">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">4800</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="entry.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="labeless_ida.cpp" />
+    <ClCompile Include="pyollyview.cpp" />
+    <ClCompile Include="rpcdata.cpp" />
+    <ClCompile Include="rpcthreadworker.cpp" />
+    <ClCompile Include="sync\sync.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\pyollyview.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="res\res.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\common\rpc.proto" />
+    <None Include="res\clear.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="res\dump.png" />
+    <None Include="res\run.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="res\settings.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='IDA9_Qt6_x64|x64'">true</ExcludedFromBuild>
+    </None>
+    <QtUic Include="ui\settingsdialog.ui" />
+    <QtUic Include="ui\choosememorydialog.ui" />
+    <None Include="res\stub.exe.bin" />
+    <None Include="res\stub64.exe.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="qt5_qt_namespace.natvis" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

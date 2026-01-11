@@ -13,6 +13,9 @@
 #include <QGraphicsDropShadowEffect>
 #include <QMainWindow>
 #include <QMessageBox>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	include <QRegularExpression>
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QTableWidgetItem>
 #include <QTextCharFormat>
 
@@ -254,11 +257,20 @@ void SettingsDialog::accept()
 
 bool SettingsDialog::validate() const
 {
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	define QRegExp QRegularExpression
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+
 	static const QRegExp kRxHostname("^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$");
 	static const QRegExp kRxIpAddress("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$");
 
 	const QString hostOrIP = m_UI->cbOllyIP->currentText();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	if (!kRxIpAddress.match(hostOrIP).hasMatch() && !kRxHostname.match(hostOrIP).hasMatch())
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	if (!kRxIpAddress.exactMatch(hostOrIP) && !kRxHostname.exactMatch(hostOrIP))
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	{
 		info("%s", tr("Invalid debugger's hostname/IP address entered").toStdString().c_str());
 		return false;

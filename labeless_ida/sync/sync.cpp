@@ -547,7 +547,11 @@ bool AutoCompleteCode::parseResponse(QPointer<RpcData> rd)
 				sm.rawDoc = QString::fromStdString(cs.raw_doc());
 
 			const auto& params = cs.params();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+			for (const auto & param : params)
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			foreach (const auto param, params)
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			{
 				jedi::FuncArg arg;
 				arg.name = QString::fromStdString(param.name());

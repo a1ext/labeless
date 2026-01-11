@@ -150,6 +150,10 @@ If you want to access the debug backend from another computer, you should allow 
     * Check [this article](http://doc.qt.io/qt-5/windows-requirements.html) out to set up Qt 5 requirements
     * Check the [Hex blog](http://www.hexblog.com/?p=969) about compiling Qt 5.4.1, grab the patch and apply it on Qt5 root dir. Then compile Qt 5
     * Set up [Qt VS-Addin](http://download.qt.io/official_releases/vsaddin/qt-vs-addin-1.2.5.exe)
+* Visual Studio 2022 + [IDA SDK](https://github.com/HexRaysSA/ida-sdk) to build IDA's 9.2+ plugin. Do the following steps to do that:
+    * Build IDA SDK [with CMake and Qt6 support](https://github.com/HexRaysSA/ida-sdk?tab=readme-ov-file#building-with-cmake). No separte Qt patches are required for this SDK version.
+    * Set up more recent version of [Qt VS-Addin](https://download.qt.io/official_releases/vsaddin/3.4.1/).
+    * Direct plugin project to use Qt6 from the IDA SDK ```src\build\qt-install``` folder.
 
 
 # How to use

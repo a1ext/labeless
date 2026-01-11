@@ -25,6 +25,9 @@
 #include <QFocusEvent>
 #include <QKeyEvent>
 #include <QPainter>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#	include <QRegularExpression>
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QScrollBar>
 #include <QStringListModel>
 #include <QTimer>
@@ -273,7 +276,11 @@ void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
 				QString qsig = QString("%1(%2)").arg(sigMatch.name).arg(argList.join(", "));
 				if (!sigMatch.rawDoc.isEmpty())
 				{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+					QStringList items = sigMatch.rawDoc.split(QRegularExpression("\\r|\\n"), Qt::SkipEmptyParts);
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 					QStringList items = sigMatch.rawDoc.split(QRegExp("\\r|\\n"), QString::SkipEmptyParts);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 					qsig += "<br><br>" + items.join("<br>");
 				}
 				//const std::string sig = qsig.toStdString();
@@ -312,8 +319,13 @@ void TextEdit::setPalette(const PythonPalette& p)
 	QFont fnt(p.mainFont, p.mainFontPointSize);
 	setFont(fnt);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	auto w = p.tabWidth * fontMetrics().horizontalAdvance(' ');
+	setTabStopDistance(w);
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	auto w = p.tabWidth * fontMetrics().width(' ');
 	setTabStopWidth(w);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 	if (m_Highlighter)
 		m_Highlighter->setPalette(p);
@@ -345,7 +357,11 @@ int TextEdit::lineNumberAreaWidth()
 		++digits;
 	}
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	int space = 3 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits; // workaround
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	int space = 3 + fontMetrics().width(QLatin1Char('9')) * digits; // workaround
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 	return space;
 }
@@ -413,8 +429,14 @@ void TextEdit::highlightAllWords(const QString& what)
 	}
 	
 	const QString& text = toPlainText();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	const QRegularExpression rWhat(QString("\\b%1\\b").arg(QRegularExpression::escape(what)));
+	QRegularExpressionMatch match = rWhat.match(text);
+	int index = match.hasMatch() ? match.capturedStart() : -1;
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	const QRegExp& rWhat = QRegExp(QString("\\b%1\\b").arg(QRegExp::escape(what)));
 	int index = text.indexOf(rWhat);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	if (index < 0)
 	{
 		setExtraSelections(extraSel);
@@ -427,11 +449,19 @@ void TextEdit::highlightAllWords(const QString& what)
 		: PythonPaletteManager::instance().palette().palette[PPET_Highlight].color;
 	extra.format.setBackground(highlightColor);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	for (;index >= 0;)
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	for (;index >= 0; index = text.indexOf(rWhat, index + what.length()))
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	{
 		extra.cursor.setPosition(index);
 		extra.cursor.setPosition(index + what.length(), QTextCursor::KeepAnchor);
 		extraSel.append(extra);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		match = rWhat.match(text, index + what.length());
+		index = match.hasMatch() ? match.capturedStart() : -1;
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	}
 	setExtraSelections(extraSel);
 }
@@ -442,8 +472,13 @@ void TextEdit::onCursorPositionChanged()
 	if (p.hasSelection())
 	{
 		QString selected = p.selectedText();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		static QRegularExpression kReWord("[\\w\\d]", QRegularExpression::CaseInsensitiveOption);
+		if (kReWord.match(selected).hasMatch())
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		static QRegExp kReWord("[\\w\\d]", Qt::CaseInsensitive);
 		if (selected.indexOf(kReWord) != -1)
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		{
 			highlightAllWords(selected);
 			return;

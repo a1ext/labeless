@@ -61,8 +61,13 @@ public:
 
 	std::shared_ptr<ScopedSettings> get();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	QVariant value(GlobalSettingsKey key, const QVariant& defaultValue = QVariant(), const QString& group = QString());
+	bool setValue(GlobalSettingsKey key, const QVariant& value, const QString& group = QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	QVariant value(GlobalSettingsKey key, const QVariant& defaultValue = QVariant(), const QString& group = QString::null);
 	bool setValue(GlobalSettingsKey key, const QVariant& value, const QString& group = QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 	void detach();
 

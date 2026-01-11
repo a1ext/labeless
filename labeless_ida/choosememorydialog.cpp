@@ -220,11 +220,20 @@ void ChooseMemoryDialog::on_leManualVaFrom_textChanged(const QString& v)
 		if (!ok || !size)
 			return;
 		leSecondary->setText(ollyStyleFormatHex(from + size));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		leSecondary->setStyleSheet(QString());
+		lePrimary->setStyleSheet(QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		leSecondary->setStyleSheet(QString::null);
 		lePrimary->setStyleSheet(QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	}
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	le->setStyleSheet(!fromOk || from > BADADDR ? kRedBorderStyleSheet : QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	le->setStyleSheet(!fromOk || from > BADADDR ? kRedBorderStyleSheet : QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 }
 
 void ChooseMemoryDialog::on_leManualVaTo_textChanged(const QString& v)
@@ -253,9 +262,17 @@ void ChooseMemoryDialog::on_leManualVaTo_textChanged(const QString& v)
 	if (!ok || !from)
 		return;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	le->setStyleSheet(from >= ea_end || ea_end > BADADDR ? kRedBorderStyleSheet : QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	le->setStyleSheet(from >= ea_end || ea_end > BADADDR ? kRedBorderStyleSheet : QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	m_UI->leManualSize->setText(ollyStyleFormatHex(ea_end - from));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	m_UI->leManualSize->setStyleSheet(QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	m_UI->leManualSize->setStyleSheet(QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 }
 
 void ChooseMemoryDialog::on_leManualSize_textChanged(const QString& v)
@@ -285,9 +302,17 @@ void ChooseMemoryDialog::on_leManualSize_textChanged(const QString& v)
 	if (!ok || !from)
 		return;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	le->setStyleSheet(size > BADADDR || from + size > BADADDR ? kRedBorderStyleSheet : QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	le->setStyleSheet(size > BADADDR || from + size > BADADDR ? kRedBorderStyleSheet : QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	m_UI->leManualVaTo->setText(ollyStyleFormatHex(from + size));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	m_UI->leManualVaTo->setStyleSheet(QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	m_UI->leManualVaTo->setStyleSheet(QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 }
 
 void ChooseMemoryDialog::onManualMeasureTypeChanged(int t)
