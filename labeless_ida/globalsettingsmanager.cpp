@@ -129,7 +129,11 @@ QString GlobalSettingsManger::keyToString(GlobalSettingsKey key)
 			names[kNames[i].k] = kNames[i].name;
 	}
 	
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	return names.value(key, QString());
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	return names.value(key, QString::null);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 }
 
 void GlobalSettingsManger::detach()

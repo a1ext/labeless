@@ -131,11 +131,20 @@ void PyOllyView::setUpGUI()
 	f.setFamily("Courier");
 	f.setFixedPitch(true);
 	f.setPointSize(9);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	const int w = QFontMetrics(f).horizontalAdvance(' ') * 4;
+	m_UI->teLog->setFont(f);
+	m_UI->teLog->setTabStopDistance(w);
+	m_UI->teLogErr->setFont(f);
+	m_UI->teLogErr->setTabStopDistance(w);
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	const int w = QFontMetrics(f).width(' ') * 4;
 	m_UI->teLog->setFont(f);
 	m_UI->teLog->setTabStopWidth(w);
 	m_UI->teLogErr->setFont(f);
 	m_UI->teLogErr->setTabStopWidth(w);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 	m_UI->teLog->viewport()->installEventFilter(this);
 	m_UI->teLogErr->viewport()->installEventFilter(this);

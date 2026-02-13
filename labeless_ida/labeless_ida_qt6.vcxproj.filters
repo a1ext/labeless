@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{64bd8c6b-3ec8-4aab-afd5-3c30cdf467e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{3a299ee3-a64e-4c0b-89b3-c97a3219c3b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated Files\IDA7_x64">
+      <UniqueIdentifier>{a8b136c0-290d-45f4-836c-1a9c3ef8233c}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\IDA7">
+      <UniqueIdentifier>{c7b838ae-ed57-4140-855e-e42e113bc13c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="other">
+      <UniqueIdentifier>{890273d1-fd63-497a-a6b6-b2994e73c98c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sync\sync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\cpp\rpc.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="pythonpalettemanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="externsegdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="idastorage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="palette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jedi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_idapython.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_net.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_ida.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\util_protobuf.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="compat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\bin\src\GeneratedFilesQt6\ui_pyollyview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="labeless_ida.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sync\sync.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\cpp\rpc.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="rpcdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rpcthreadworker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pyollyview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="textedit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="highlighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pythonpalettemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="settingsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globalsettingsmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="idadump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="choosememorydialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="externsegdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="idastorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jedi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_idapython.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_net.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_ida.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util_protobuf.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="jedicompletionworker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pysignaturetooltip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pausenotificationlistener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="labeless_ida.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="rpcdata.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="rpcthreadworker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtUic Include="ui\pyollyview.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="pyollyview.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="textedit.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="highlighter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtRcc Include="res\res.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="ui\settingsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="settingsdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <CustomBuild Include="idadump.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <QtMoc Include="choosememorydialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtUic Include="ui\choosememorydialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtMoc Include="globalsettingsmanager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="jedicompletionworker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="pysignaturetooltip.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="pausenotificationlistener.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\run.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\clear.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\settings.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\dump.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\stub.exe.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\stub64.exe.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\common\rpc.proto">
+      <Filter>proto</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="qt5_qt_namespace.natvis">
+      <Filter>other</Filter>
+    </Natvis>
+  </ItemGroup>
+</Project>

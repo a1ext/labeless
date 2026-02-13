@@ -52,7 +52,7 @@
 
 #if defined(__NT__)
 #	pragma warning(push)
-#	pragma warning(disable:4309 4244 4267 4146)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
+#	pragma warning(disable:4018 4309 4244 4267 4146)           // disable "truncation of constant value" warning from IDA SDK, conversion from 'ssize_t' to 'int', possible loss of data
 #elif defined(__GNUC__)
 #	pragma GCC diagnostic push
 #	pragma GCC diagnostic ignored "-Wdeprecated-copy"

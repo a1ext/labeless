@@ -29,7 +29,11 @@ class ChooseMemoryDialog : public QDialog
 	Q_OBJECT
 
 public:
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	explicit ChooseMemoryDialog(const MemoryRegionList& memMap, const QString& title = QString(), QWidget* parent = nullptr);
+#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	explicit ChooseMemoryDialog(const MemoryRegionList& memMap, const QString& title = QString::null, QWidget* parent = nullptr);
+#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	~ChooseMemoryDialog();
 
 	bool getSelectedMemory(MemoryRegionList& selected) const;
