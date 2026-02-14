@@ -18,8 +18,11 @@
 #include <QSharedPointer>
 #include <QThread>
 #include <QWaitCondition>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 #	include <QRecursiveMutex>
+typedef QRecursiveMutex TMutex;
+#else // (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+typedef QMutex TMutex;
 #endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 
 #include "compat.h"
@@ -204,22 +207,14 @@ private:
 	friend class JediCompletionWorker;
 
 	// settings
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	mutable QRecursiveMutex				m_ConfigLock;
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	mutable QMutex					m_ConfigLock;
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	mutable TMutex					m_ConfigLock;
 	Settings						m_Settings;
 	bool							m_SynchronizeAllNow;
 	size_t							m_LabelSyncOnRenameIfZero;
 	bool							m_ShowAllResponsesInLog;
 
 	// RPC network worker vars
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	QRecursiveMutex						m_ThreadLock;
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	QMutex							m_ThreadLock;
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	TMutex							m_ThreadLock;
 	QPointer<QThread>				m_Thread;
 	QMutex							m_QueueLock;
 	qlist<RpcDataPtr>				m_Queue;
@@ -243,11 +238,7 @@ private:
 
 	// auto-completion vars
 	mutable QMutex					m_AutoCompletionLock;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	QRecursiveMutex						m_AutoCompletionThreadLock;
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	QMutex							m_AutoCompletionThreadLock;
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	TMutex							m_AutoCompletionThreadLock;
 	QPointer<QThread>				m_AutoCompletionThread;
 	QSharedPointer<jedi::Request>	m_AutoCompletionRequest;
 	QSharedPointer<jedi::Result>	m_AutoCompletionResult;

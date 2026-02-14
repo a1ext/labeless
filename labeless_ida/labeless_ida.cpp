@@ -65,17 +65,12 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QProcess>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#	include <QRegularExpression>
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#	include <QRegExp>
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#include <QSettings>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QRegularExpression>
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 #	include <QStringDecoder>
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 #	include <QTextCodec>
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 #include <QThread>
 #include <QToolBar>
 #include <QUuid>
@@ -116,9 +111,7 @@
 #include "pausenotificationlistener.h"
 #include "textedit.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#	define QRegExp QRegularExpression
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+
 
 struct plugin_ctx_t;
 extern plugin_t PLUGIN;
@@ -238,16 +231,14 @@ typedef QHash<ea_t, std::string> EA2CommentHash;
 
 bool isUtf8StringValid(const char* const s, size_t len)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	if (!s)
-		return false;
-	if (!len)
-		return true;
+	if (!s) return false;
+	if (!len) return true;
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 	QStringDecoder dec(QStringDecoder::Utf8);
 	dec.decode(QByteArrayView(s, static_cast<qsizetype>(len)));
 	return !dec.hasError();
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 	static const std::string kUTF8 = "UTF-8";
 	QTextCodec* codec = QTextCodec::codecForName(kUTF8.c_str()); // TODO: may be cached?
 	if (!codec)
@@ -257,7 +248,7 @@ bool isUtf8StringValid(const char* const s, size_t len)
 	codec->toUnicode(s, static_cast<int>(len), &state);
 
 	return state.invalidChars == 0;
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 }
 
 void addComment(EA2CommentHash& ea2commentHash, ea_t ea, const std::string& cmt)
@@ -280,13 +271,13 @@ bool substituteTemplateLabelName(std::string& name)
 {
 	static const struct
 	{
-		QRegExp reg;
+		QRegularExpression reg;
 		QString repl;
 	} kPatternsToReplace[] = {
-		{QRegExp("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>\\s*>"), "\\1\\2"},
-		{QRegExp("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>,\\s*(?:class\\s+)?std::allocator<char>\\s*>") , "\\1\\2"},
-		{QRegExp("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>\\s*>") , "\\1w\\2"},
-		{QRegExp("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>,\\s*(?:class\\s+)?std::allocator<wchar_t>\\s*>"), "\\1w\\2"},
+		{QRegularExpression("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>\\s*>"), "\\1\\2"},
+		{QRegularExpression("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<char,\\s*(?:struct\\s+)?std::char_traits<char>,\\s*(?:class\\s+)?std::allocator<char>\\s*>") , "\\1\\2"},
+		{QRegularExpression("(std::)?basic_(streambuf|iostream|ostream|ios|istream|filebuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>\\s*>") , "\\1w\\2"},
+		{QRegularExpression("(std::)?basic_(string|istringstream|ostringstream|stringstream|stringbuf)<wchar_t,\\s*(?:struct\\s+)?std::char_traits<wchar_t>,\\s*(?:class\\s+)?std::allocator<wchar_t>\\s*>"), "\\1w\\2"},
 	};
 	// TODO: make this configurable in settings view
 
@@ -720,23 +711,17 @@ bool parseBackendId(const ::qstring& qid, std::string& result)
 QString supplyStdErrWithNavigationLinks(const LogItem& logItem)
 {
 	static const QString kErrorNavigatorFmt = QObject::tr("<a href=\"%1/%2/%3\" title=\"Click to navigate\">%4</a>");
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	const QRegularExpression reTracebackFilePosition("^\\s*File \"<string>\", line (\\d+), in (.+)$", QRegularExpression::CaseInsensitiveOption);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	const QRegExp reTracebackFilePosition = QRegExp("^\\s*File \"<string>\", line (\\d+), in (.+)$", Qt::CaseInsensitive);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	const QRegularExpression reTracebackFilePosition = QRegularExpression("^\\s*File \"<string>\", line (\\d+), in (.+)$", 
+		QRegularExpression::CaseInsensitiveOption);
 
 	auto items = logItem.textStdErr.split("\n");
 	QStringList rvList;
 	foreach (QString line, items)
 	{
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		QRegularExpressionMatch match = reTracebackFilePosition.match(line);
 		const bool matches = match.hasMatch();
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-		const bool matches = reTracebackFilePosition.exactMatch(line);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-		line = line.replace("\r", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace(QRegExp("\\s"), "&nbsp;"); // kludge
+		line = line.replace("\r", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").
+			replace(QRegularExpression("\\s"), "&nbsp;"); // kludge
 		if (!matches)
 		{
 			rvList << line;
@@ -746,11 +731,7 @@ QString supplyStdErrWithNavigationLinks(const LogItem& logItem)
 			rvList << kErrorNavigatorFmt
 				.arg(kLogItemActionNavigate)
 				.arg(logItem.number)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 				.arg(match.captured(1))
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-				.arg(reTracebackFilePosition.cap(1))
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 				.arg(line);
 		}
 	}
@@ -764,26 +745,20 @@ compat::TWidget* Labeless::m_EditorTForm;
 
 Labeless::Labeless()
 	: m_Initialized(false)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	, m_ConfigLock()
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	, m_ConfigLock(QMutex::Recursive)
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	, m_Settings(kDefaultSettings)
 	, m_SynchronizeAllNow(false)
 	, m_LabelSyncOnRenameIfZero(0)
 	, m_ShowAllResponsesInLog(true)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	, m_ThreadLock()
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	, m_ThreadLock(QMutex::Recursive)
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	, m_PauseNotificationMenuAction(nullptr)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	, m_AutoCompletionThreadLock()
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	, m_AutoCompletionThreadLock(QMutex::Recursive)
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	, m_AutoCompletionState(new jedi::State)
 	, m_PauseNotificationCursor(BADADDR)
 	, m_PauseNotificationPort(kDefaultPauseNotificationPort)
@@ -904,8 +879,8 @@ void Labeless::onSyncronizeAllRequested()
 
 	msg("Labels: %d, comments: %d\n", labelPoints.count(), commentPoints.count());
 	m_SynchronizeAllNow = false;
-
-	//QRegExp reExtractFuncName("^[\\?]*([\\w\\d_]+)", Qt::CaseInsensitive);
+	
+	// QRegularExpression reExtractFuncName("^[\\?]*([\\w\\d_]+)", QRegularExpression::CaseInsensitiveOption);
 	// TODO: handle option "remove func args"
 }
 
@@ -987,13 +962,8 @@ void Labeless::onAutoanalysisFinished()
 
 	//char disasm[MAXSTR] = {};
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	const QRegularExpression reOpnd("\\s*(dword|near|far)\\s+ptr\\s+([\\w]+)\\+([a-f0-9]+)h?\\s*", QRegularExpression::CaseInsensitiveOption);
 	const QRegularExpression reShortOpnd("\\s*\\$\\+([a-f0-9]+)h?\\s*", QRegularExpression::CaseInsensitiveOption);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-	const QRegExp reOpnd("\\s*(dword|near|far)\\s+ptr\\s+([\\w]+)\\+([a-f0-9]+)h?\\s*", Qt::CaseInsensitive);
-	const QRegExp reShortOpnd("\\s*\\$\\+([a-f0-9]+)h?\\s*", Qt::CaseInsensitive);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	foreach(ReadMemoryRegions::t_memory m, dump.readMemRegions->data)
 	{
 		for (unsigned i = 0; i < m.size; ++i)
@@ -1019,37 +989,25 @@ void Labeless::onAutoanalysisFinished()
 				continue;
 
 			const QString sDisasm = QString::fromLatin1(qoperand.c_str());
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-			const QRegularExpressionMatch matchOpnd = reOpnd.match(sDisasm);
+			const QRegularExpressionMatch matchOpnd = reOpnd.match("^"+ sDisasm + "$");
 			if (matchOpnd.hasMatch())
 			{
 				const QString name = matchOpnd.captured(2);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-			if (reOpnd.exactMatch(sDisasm))
-			{
-				const QString name = reOpnd.cap(2);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+
 				if (is_uname(name.toStdString().c_str()))
 					continue;
 				msg("%s: found TODO for fix at: 0x%08" LL_FMT_EA_T ", opnd:%s\n", __FUNCTION__, ea, qoperand.c_str());
 				if (compat::do_unknown(target, 0) && create_insn(target))
 					msg("%s: ea: 0x%08" LL_FMT_EA_T " fixed\n", __FUNCTION__, ea);
 			}
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			else
 			{
-				const QRegularExpressionMatch matchShort = reShortOpnd.match(sDisasm);
+				const QRegularExpressionMatch matchShort = reShortOpnd.match("^" + sDisasm + "$");
 				if (matchShort.hasMatch())
 				{
 					msg("%s: found TODO for fix 2 at: 0x%08" LL_FMT_EA_T ", opnd: %s\n", __FUNCTION__, ea, qoperand.c_str());
 				}
 			}
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-			else if (reShortOpnd.exactMatch(sDisasm))
-			{
-				msg("%s: found TODO for fix 2 at: 0x%08" LL_FMT_EA_T ", opnd: %s\n", __FUNCTION__, ea, qoperand.c_str());
-			}
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		}
 	}
 
@@ -3524,11 +3482,7 @@ void Labeless::addLogItem(LogItem& logItem)
 		.arg(kLogItemActionLoad)
 		.arg(logItem.number)
 		.arg(logItem.number)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		.arg(logItem.textStdErr.isEmpty() ? QString() : tr("(has std_err |&gt;)")), true);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-		.arg(logItem.textStdErr.isEmpty() ? QString::null : tr("(has std_err |&gt;)")), true);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	if (!logItem.textStdOut.isEmpty())
 	{
 		m_PyOllyView->prependStdoutLog("<br>", true);
@@ -3540,11 +3494,7 @@ void Labeless::addLogItem(LogItem& logItem)
 		.arg(kLogItemActionLoad)
 		.arg(logItem.number)
 		.arg(logItem.number)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 		.arg(logItem.textStdOut.isEmpty() ? QString() : tr("(has std_out &lt;|)")), true);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-		.arg(logItem.textStdOut.isEmpty() ? QString::null : tr("(has std_out &lt;|)")), true);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	if (!logItem.textStdErr.isEmpty())
 	{
 		m_PyOllyView->prependStderrLog("<br>", true);

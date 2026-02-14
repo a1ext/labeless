@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - devel
+      - ida9_2
   pull_request:
     branches:
       - devel
@@ -191,6 +192,7 @@ jobs:
       run: |
         curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ./depz.7z
         7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
+        ln -s "$(pwd)/depz/idasdk90sp1" "$(dirname `pwd`)/idasdk92"
         ln -s "$(pwd)/depz/idasdk90sp1" "$(dirname `pwd`)/idasdk90sp1"
         ln -s "$(pwd)/depz/idasdk_pro83" "$(dirname `pwd`)/idasdk_pro83"
         ln -s "$(pwd)/depz/idasdk70" "$(dirname `pwd`)/idasdk70"
@@ -332,6 +334,8 @@ jobs:
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk70\plugins
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk_pro83\plugins
         New-Item -ItemType Directory -Force -Path c:\depz\idasdk90sp1\plugins
+        New-Item -ItemType Directory -Force -Path c:\depz\idasdk92\plugins
+        curl 
         Rename-Item -Path "labeless_ida\labeless_ida.vcxproj.user" -NewName "labeless_ida.vcxproj.user_" -Force
         curl -L "https://go.microsoft.com/fwlink/p/?LinkId=323507" -o .\sdksetup.exe
         Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
@@ -356,12 +360,20 @@ jobs:
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
-    - name: Windows, Build IDA 9 plugins
+    - name: Windows, Build IDA 9.0 plugin
       if: runner.os == 'Windows'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk90sp1 /p:SDK_DIR=c:\depz\idasdk90sp1
+
+    - name: Windows, Build IDA 9.2 plugin
+      if: runner.os == 'Windows'
+      shell: cmd
+      run: |        
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64 /p:IDA_DIR=c:\depz\idasdk92 /p:SDK_DIR=c:\depz\idasdk92
+
 
     - name: Build Python module sdist
       if: runner.os == 'Windows'

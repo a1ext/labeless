@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <IDA_DIR>m:\!re\IDA Free 9.0sp1\</IDA_DIR>
-    <SDK_DIR>m:\!re\idasdk90sp1\</SDK_DIR>
+    <IDA_DIR>m:\!re\IDA92_x64\</IDA_DIR>
+    <SDK_DIR>m:\!re\idasdk92\</SDK_DIR>
     <IDA_SUFFIX>92</IDA_SUFFIX>
-    <QTDIR>C:\ida-sdk_cmake\src\build\qt-install</QTDIR>
+    <QTDIR>m:\!re\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64\</QTDIR>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
@@ -38,6 +39,7 @@ protected:
 
 private:
 	bool matchMultiline(const QString& text, const ::HighlightingRule& rule);
+	void applyCbOnMatchOf(const ::HighlightingRule& rule, const QString& text, std::function<void(int, int, const QT::QTextCharFormat&)> cb);
 
 private:
 	QMap<int, QTextCharFormat>		m_Formats;

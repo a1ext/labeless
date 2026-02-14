@@ -1,11 +1,14 @@
 ::@goto skip_vcvars
+@set SLN=labeless.sln
+
+
 @call "c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
 :skip_vcvars
 ::@set MSB="c:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
 @set MSB="c:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"
-@set SLN=labeless.sln
 
 ::@goto ida
+@goto  ida
 @echo building labeless for OllyDbg [1.1 + DeFixed, 2.01]...
 @call %MSB% %SLN% /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err
@@ -49,6 +52,15 @@
 
 @echo building labeless for IDA 9.0 x64...
 @call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m
+@IF /I "%ERRORLEVEL%" neq "0" goto err
+
+:ida92
+@echo building labeless for IDA 9.2 x64...
+
+@set MSB="c:\Program Files\Microsoft Visual Studio\2022\Professional\Msbuild\Current\Bin\MSBuild.exe"
+
+@call "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvars64.bat"
+@call %MSB% %SLN% /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err
 
 @cd deploy

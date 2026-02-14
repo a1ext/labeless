@@ -8,9 +8,7 @@
 
 #include "types.h"
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-#	include <QObject>
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QObject>
 
 ImportEntry::ImportEntry()
 	: ordinal(0)
