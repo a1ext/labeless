@@ -12,6 +12,7 @@ on:
 env:
   LINUX_QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
   MACOS_QTDIR: /Users/Shared/Qt/5.15.2-arm64
+  MACOS_QTDIR_QT6: /Users/Shared/Qt/6.8.2-arm64-qt-ns
 
 
 jobs:
@@ -90,6 +91,7 @@ jobs:
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
         echo "QT_DIR=${MACOS_QTDIR}" >> $GITHUB_ENV
         echo "QMAKE=${MACOS_QTDIR}/bin/qmake" >> $GITHUB_ENV
+        echo "QMAKE_QT6=${MACOS_QTDIR_QT6}/bin/qmake" >> $GITHUB_ENV
         echo "PROTOBUF_PREFIX=$(pwd)/3rdparty/protobuf-3.20.3/dist" >> $GITHUB_ENV
         sudo mkdir -p "$(dirname ${MACOS_QTDIR})"
         sudo chown $USER: "$(dirname ${MACOS_QTDIR})"
@@ -136,14 +138,21 @@ jobs:
     - name: MacOS, Set up Qt
       if: runner.os == 'macOS' && steps.macos_arm64_qt_cache.outputs.cache-hit != 'true'
       run: |
-        sudo mkdir -p "${{ env.QT_DIR }}"
-        sudo chown $USER: "${{ env.QT_DIR }}"
+        sudo mkdir -p "${{ env.QT_DIR }}" "${{ env.MACOS_QTDIR_QT6 }}"
+        sudo chown $USER: "${{ env.QT_DIR }}" "${{ env.MACOS_QTDIR_QT6 }}"
+        
         pushd "${{ env.QT_DIR }}" 
         curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/Qt-5.15.2-arm64.tar.gz?download=' -o Qt-5.15.2-arm64.tar.gz
         tar xf Qt-5.15.2-arm64.tar.gz && rm -f Qt-5.15.2-arm64.tar.gz
         ls -la 
         popd
+        pushd "${{ env.MACOS_QTDIR_QT6 }}"
+        curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/Qt-6.8.2-arm64-qt-ns.tar.gz?download=' -o Qt-6.8.2-arm64-qt-ns.tar.gz
+        tar xf Qt-6.8.2-arm64-qt-ns.tar.gz && rm -f Qt-6.8.2-arm64-qt-ns.tar.gz
+        ls -la
+        popd
         "${{ env.QMAKE }}" -query
+        "${{ env.QMAKE_QT6 }}" -query
         
     - name: Linux, protobuf cache
       if: runner.os == 'Linux'
@@ -276,7 +285,7 @@ jobs:
         make clean
         make -j$(nproc)
 
-    - name: MacOS, build IDA 9 plugin
+    - name: MacOS, build IDA 9.0 plugin
       if: runner.os == 'macOS'
       env:
         SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
@@ -288,7 +297,20 @@ jobs:
         make qmake_all
         make clean
         make -j$(nproc)
-        
+    
+    - name: MacOS, build IDA 9.2 plugin
+      if: runner.os == 'macOS'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk92
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE_QT6 }}" ../labeless_ida/labeless_ida.pro -spec macx-clang CONFIG+=release CONFIG+=labeless_ida_92 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)
+    
     - name: Build OllyDBG 1.10 plugin
       if: matrix.os == 'windows-2019'
       shell: cmd

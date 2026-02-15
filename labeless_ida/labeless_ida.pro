@@ -9,6 +9,7 @@ QT       += widgets
 # TARGET = labeless_ida_70
 # TARGET = labeless_ida_83
 # TARGET = labeless_ida_90
+# TARGET = labeless_ida_92
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG -= debug
@@ -25,8 +26,10 @@ contains(CONFIG, labeless_ida_70) {
     TARGET = labeless_ida_83
 } else: contains(CONFIG, labeless_ida_90) {
     TARGET = labeless_ida_90
+} else: contains(CONFIG, labeless_ida_92) {
+    TARGET = labeless_ida_92
 } else {
-    error("No target specified, add to CONFIG one of the following: labeless_ida_70|labeless_ida_83|labeless_ida_90")
+    error("No target specified, add to CONFIG one of the following: labeless_ida_70|labeless_ida_83|labeless_ida_90|labeless_ida_92")
 }
 
 # `x64` deprecated
@@ -51,7 +54,7 @@ equals(TARGET, "labeless_ida_83") {
 #    SDK_PATH = $$PWD/../../idasdk_pro83
 #    IDA_PATH = $$PWD/../../idafree-8.4
 }
-equals(TARGET, "labeless_ida_90") {
+equals(TARGET, "labeless_ida_90") | equals(TARGET, "labeless_ida_92") {
 #    SDK_PATH = $$PWD/../../idasdk90sp1
 #    IDA_PATH = $$PWD/../../ida-free-pc-9.0
     mac:isEmpty(IDA_PATH) {
