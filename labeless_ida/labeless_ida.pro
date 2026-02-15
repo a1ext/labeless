@@ -170,7 +170,7 @@ OBJDIR = obj/$${SYSDIR}/
 # cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/Users/al/dev/labeless/3rdparty/protobuf-3.20.3/dist -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_INSTALL=ON -Dprotobuf_BUILD_SHARED_LIBS=OFF ../cmake
 
 PROTOBUF_BUILD_DIR = $${PWD}/../3rdparty/protobuf-3.20.3/dist
-ea64:!equals(TARGET, "labeless_ida_90_64") {
+ea64:!equals(TARGET, "labeless_ida_90_64"):!equals(TARGET, "labeless_ida_92_64") {
     IDA_LIB = ida64
 }
 else {

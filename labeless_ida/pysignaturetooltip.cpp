@@ -83,15 +83,7 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 	resize(sizeHint() + extra);
 	QRect screen;
 
-#if defined(Q_OS_MACOS) && (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-	QScreen* scr = QGuiApplication::screenAt(pos);
-	if (!scr && w)
-		scr = w->screen();
-	if (!scr)
-		scr = QGuiApplication::primaryScreen();
-	if (scr)
-		screen = scr->availableGeometry();
-#elif defined(Q_OS_MACOS) || defined(Q_WS_MAC)
+#if defined(Q_OS_MACOS) || defined(Q_WS_MAC)
 	QScreen* scr = QGuiApplication::screenAt(pos);
 	if (!scr) {
 		auto pw = parentWidget();
