@@ -78,7 +78,7 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 	// Make it look good with the default ToolTip font on Mac, which has a small descent.
 	if (fm.descent() == 2 && fm.ascent() >= 11)
 		++extra.rheight();
-	
+
 	resize(sizeHint() + extra);
 	QRect screen;
 
@@ -91,15 +91,18 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 	if (scr)
 		screen = scr->availableGeometry();
 #elif defined(Q_OS_MACOS) || defined(Q_WS_MAC)
-	// When in full screen mode, there is no Dock nor Menu so we can use
-	// the whole screen for displaying the tooltip. However when not in
-	// full screen mode we need to save space for the dock, so we use
-	// availableGeometry instead.
-	extern bool qt_mac_app_fullscreen; //qapplication_mac.mm
-	if (qt_mac_app_fullscreen)
-		screen = QApplication::desktop()->screenGeometry(getTipScreen(pos, parentWidget()));
-	else
-		screen = QApplication::desktop()->availableGeometry(getTipScreen(pos, parentWidget()));
+	QScreen* scr = QGuiApplication::screenAt(pos);
+	if (!scr)
+		if (auto window = parentWidget()->window()->windowHandle()) {
+			scr = window->screen();
+		}
+		else 
+		{
+			scr = QGuiApplication::primaryScreen();
+		}
+	}
+	if (scr)
+		screen = scr->availableGeometry();
 #elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 	QScreen *scr = QApplication::screenAt(pos);
 	if (!scr)

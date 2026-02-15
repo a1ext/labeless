@@ -376,7 +376,7 @@ jobs:
 
 
     - name: Build Python module sdist
-      if: matrix.os == 'windows-2022'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |
         cd deploy
