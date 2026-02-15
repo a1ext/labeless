@@ -11,6 +11,7 @@ on:
 
 env:
   LINUX_QTDIR: /home/alex/tmp/investigate/5.15.2/build/qt-5.12.2-patched-qt-ns
+  LINUX_QTDIR_QT6: /home/alex/tmp/6.8.2-ubuntu2004_amd64-qt-ns
   MACOS_QTDIR: /Users/Shared/Qt/5.15.2-arm64
   MACOS_QTDIR_QT6: /Users/Shared/Qt/6.8.2-arm64-qt-ns
 
@@ -38,12 +39,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # - name: Restore VS Toolset Cache
-    #   if: runner.os == 'Windows'
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: C:\Program Files (x86)\Microsoft Visual Studio
-    #     key: vs-toolset-v140
 
     - name: Set outputs Non-Windows
       if: runner.os != 'Windows'
@@ -77,13 +72,14 @@ jobs:
         echo "ROOT_DIR=$(dirname `pwd`)" >> $GITHUB_ENV
         echo "QT_DIR=${LINUX_QTDIR}" >> $GITHUB_ENV
         echo "QMAKE=${LINUX_QTDIR}/bin/qmake" >> $GITHUB_ENV
+        echo "QMAKE_QT6=${LINUX_QTDIR_QT6}/bin/qmake" >> $GITHUB_ENV
         echo "PROTOBUF_PREFIX=$(pwd)/3rdparty/protobuf-3.20.3/dist" >> $GITHUB_ENV
         sudo apt-get install -y build-essential curl cmake libgl1-mesa-dev libfontconfig1-dev libdbus-1-dev \
           libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev \
           libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
           libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev
-        sudo mkdir -p "$(dirname ${LINUX_QTDIR})"
-        sudo chown $USER: "$(dirname ${LINUX_QTDIR})"
+        sudo mkdir -p "$(dirname ${LINUX_QTDIR})" "${{ env.LINUX_QTDIR_QT6 }}"
+        sudo chown $USER: "$(dirname ${LINUX_QTDIR})" "${{ env.LINUX_QTDIR_QT6 }}"
 
     - name: Set up MacOS environment
       if: runner.os == 'macOS'
@@ -96,26 +92,44 @@ jobs:
         sudo mkdir -p "$(dirname ${MACOS_QTDIR})"
         sudo chown $USER: "$(dirname ${MACOS_QTDIR})"
 
-    - name: Linux Qt Cache
+    - name: Linux Qt5 Cache
       if: runner.os == 'Linux'
       uses: actions/cache@v3
-      id: linux_qt_cache
+      id: linux_qt5_cache
       with:
         # maybe we should use some env var for root path?
-        path: ${{ env.QT_DIR }}
-        key: linux-qt-patched3
+        path: ${{ env.LINUX_QTDIR }}
+        key: linux-qt-patched-5
+        
+    - name: Linux Qt6 Cache
+      if: runner.os == 'Linux'
+      uses: actions/cache@v3
+      id: linux_qt6_cache
+      with:
+        # maybe we should use some env var for root path?
+        path: ${{ env.LINUX_QTDIR_QT6 }}
+        key: linux-qt-patched-6
 
     - name: MacOS Qt Cache
       if: runner.os == 'Linux'
       uses: actions/cache@v3
-      id: macos_arm64_qt_cache
+      id: macos_arm64_qt5_cache
       with:
         # maybe we should use some env var for root path?
-        path: ${{ env.QT_DIR }}
-        key: macos-qt-patched
-    
-    - name: Linux, Set up Qt
-      if: runner.os == 'Linux' && steps.linux_qt_cache.outputs.cache-hit != 'true'
+        path: ${{ env.MACOS_QTDIR }}
+        key: macos-qt-patched-5
+        
+    - name: MacOS Qt Cache
+      if: runner.os == 'Linux'
+      uses: actions/cache@v3
+      id: macos_arm64_qt6_cache
+      with:
+        # maybe we should use some env var for root path?
+        path: ${{ env.MACOS_QTDIR_QT6 }}
+        key: macos-qt-patched-6
+
+    - name: Linux, Set up Qt5
+      if: runner.os == 'Linux' && steps.linux_qt5_cache.outputs.cache-hit != 'true'
       run: |
         sudo mkdir -p "${{ env.QT_DIR }}"
         sudo chown $USER: "${{ env.QT_DIR }}"
@@ -134,24 +148,45 @@ jobs:
         #make install
         popd
         "${{ env.QMAKE }}" -query
-
-    - name: MacOS, Set up Qt
-      if: runner.os == 'macOS' && steps.macos_arm64_qt_cache.outputs.cache-hit != 'true'
+        
+    - name: Linux, Set up Qt6
+      if: runner.os == 'Linux' && steps.linux_qt6_cache.outputs.cache-hit != 'true'
       run: |
-        sudo mkdir -p "${{ env.QT_DIR }}" "${{ env.MACOS_QTDIR_QT6 }}"
-        sudo chown $USER: "${{ env.QT_DIR }}" "${{ env.MACOS_QTDIR_QT6 }}"
+        # build command line: 
+        sudo mkdir -p "${{ env.QT_DIR }}"
+        sudo chown $USER: "${{ env.QT_DIR }}"
+        pushd "${{ env.LINUX_QTDIR_QT6 }}"
+        curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/6.8.2-ubuntu2004_amd64-qt-ns.tar.gz?download=' -o 6.8.2-ubuntu2004_amd64-qt-ns.tar.gz
+        tar xf 6.8.2-ubuntu2004_amd64-qt-ns.tar.gz && rm -f 6.8.2-ubuntu2004_amd64-qt-ns.tar.gz
+        ls -la
+        popd
+        "${{ env.QMAKE_QT6 }}" -query
+
+    - name: MacOS, Set up Qt5
+      if: runner.os == 'macOS' && steps.macos_arm64_qt5_cache.outputs.cache-hit != 'true'
+      run: |
+        sudo mkdir -p "${{ env.QT_DIR }}"
+        sudo chown $USER: "${{ env.QT_DIR }}"
         
         pushd "${{ env.QT_DIR }}" 
         curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/Qt-5.15.2-arm64.tar.gz?download=' -o Qt-5.15.2-arm64.tar.gz
         tar xf Qt-5.15.2-arm64.tar.gz && rm -f Qt-5.15.2-arm64.tar.gz
         ls -la 
         popd
+        
+        "${{ env.QMAKE }}" -query
+        
+    - name: MacOS, Set up Qt6
+      if: runner.os == 'macOS' && steps.macos_arm64_qt6_cache.outputs.cache-hit != 'true'
+      run: |
+        sudo mkdir -p "${{ env.MACOS_QTDIR_QT6 }}"
+        sudo chown $USER: "${{ env.MACOS_QTDIR_QT6 }}"
+        
         pushd "${{ env.MACOS_QTDIR_QT6 }}"
         curl -L 'https://github.com/a1ext/depz/raw/refs/heads/master/Qt-6.8.2-arm64-qt-ns.tar.gz?download=' -o Qt-6.8.2-arm64-qt-ns.tar.gz
         tar xf Qt-6.8.2-arm64-qt-ns.tar.gz && rm -f Qt-6.8.2-arm64-qt-ns.tar.gz
         ls -la
         popd
-        "${{ env.QMAKE }}" -query
         "${{ env.QMAKE_QT6 }}" -query
         
     - name: Linux, protobuf cache
@@ -201,7 +236,7 @@ jobs:
       run: |
         curl https://github.com/a1ext/depz/raw/master/depz.7z -L -o ./depz.7z
         7z x "-p${{ env.LL_DEPS_P }}" ./depz.7z
-        ln -s "$(pwd)/depz/idasdk90sp1" "$(dirname `pwd`)/idasdk92"
+        ln -s "$(pwd)/depz/idasdk92" "$(dirname `pwd`)/idasdk92"
         ln -s "$(pwd)/depz/idasdk90sp1" "$(dirname `pwd`)/idasdk90sp1"
         ln -s "$(pwd)/depz/idasdk_pro83" "$(dirname `pwd`)/idasdk_pro83"
         ln -s "$(pwd)/depz/idasdk70" "$(dirname `pwd`)/idasdk70"
@@ -253,7 +288,7 @@ jobs:
         make -j$(nproc)
 
 
-    - name: Linux, build IDA 9 plugin
+    - name: Linux, build IDA 9.0 plugin
       if: runner.os == 'Linux'
       env:
         SDK_PATH: ${{ github.workspace }}/../idasdk90sp1
@@ -265,6 +300,19 @@ jobs:
         make qmake_all
         make clean
         make -j$(nproc)
+        
+    - name: Linux, build IDA 9.2 plugin
+      if: runner.os == 'Linux'
+      env:
+        SDK_PATH: ${{ github.workspace }}/../idasdk92
+        IDA_PATH: ${{ github.workspace }}/build
+      run: |
+        cd ./build
+        mkdir -p plugins
+        SDK_PATH="${{ env.SDK_PATH }}" IDA_PATH="${{ env.IDA_PATH }}" "${{ env.QMAKE }}" ../labeless_ida/labeless_ida.pro -spec linux-g++-64 CONFIG+=release CONFIG+=labeless_ida_92 CONFIG+=ea64
+        make qmake_all
+        make clean
+        make -j$(nproc)        
 
     - name: MacOS, build IDA 8 plugin
       if: runner.os == 'macOS'
