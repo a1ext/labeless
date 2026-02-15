@@ -94,8 +94,9 @@ void PySignatureToolTip::showText(const QString& text, const QPoint& pos)
 #elif defined(Q_OS_MACOS) || defined(Q_WS_MAC)
 	QScreen* scr = QGuiApplication::screenAt(pos);
 	if (!scr) {
-		if (auto window = parentWidget()->window()) {
-			scr = window->screen();
+		auto pw = parentWidget();
+		if (pw && pw->window()) {
+			scr = pw->window()->screen();
 		}
 		else 
 		{
