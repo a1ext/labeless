@@ -8,7 +8,7 @@
 @set MSB="c:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"
 
 ::@goto ida
-@goto  ida
+
 @echo building labeless for OllyDbg [1.1 + DeFixed, 2.01]...
 @call %MSB% %SLN% /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 @IF /I "%ERRORLEVEL%" neq "0" goto err

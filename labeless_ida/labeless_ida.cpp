@@ -745,20 +745,20 @@ compat::TWidget* Labeless::m_EditorTForm;
 
 Labeless::Labeless()
 	: m_Initialized(false)
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 	, m_ConfigLock(QMutex::Recursive)
-#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 	, m_Settings(kDefaultSettings)
 	, m_SynchronizeAllNow(false)
 	, m_LabelSyncOnRenameIfZero(0)
 	, m_ShowAllResponsesInLog(true)
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 	, m_ThreadLock(QMutex::Recursive)
-#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 	, m_PauseNotificationMenuAction(nullptr)
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 	, m_AutoCompletionThreadLock(QMutex::Recursive)
-#endif // QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 	, m_AutoCompletionState(new jedi::State)
 	, m_PauseNotificationCursor(BADADDR)
 	, m_PauseNotificationPort(kDefaultPauseNotificationPort)
@@ -1105,7 +1105,7 @@ bool Labeless::firstInit()
 		}
 #endif // 0
 
-		if (m_LMenu = m_MainWindow->menuBar()->addMenu("Labeless"))
+		if ((m_LMenu = m_MainWindow->menuBar()->addMenu("Labeless")))
 		{
 			m_LMenu->setObjectName(kLabelessMenuObjectName);
 			
@@ -2201,7 +2201,7 @@ bool Labeless::createSegment(const compat::IDARange& area, uchar perm, uchar typ
 	result.update();
 
 	qstring name;
-	name.sprnt("SEG%03u", m_CreatedSegments.size() - 1);
+	name.sprnt("SEG%03u", (unsigned)m_CreatedSegments.size() - 1);
 	const bool ok = add_segm_ex(&result, name.c_str(), type == SEG_CODE ? "CODE" : "DATA", ADDSEG_QUIET | ADDSEG_NOSREG);
 	if (!ok)
 	{
@@ -2558,11 +2558,11 @@ void Labeless::onPauseNotificationReceived(void* pausedNotification)
 	qstring cmt;
 	compat::get_cmt(&cmt, jmpEA, false);
 	QString scmt = cmt.c_str();
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 	auto chunks = scmt.split("\n", Qt::SkipEmptyParts);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 	auto chunks = scmt.split("\n", QString::SkipEmptyParts);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 	QString operandsStr;
 	// compare bytes from request and form db
 	//get_bytes()
@@ -2949,7 +2949,6 @@ void Labeless::updateImportsNode()
 
 	char modname[MAXSTR + 4] = {};
 	char funcName[MAXSTR];
-	uint64_t modulesCount = 0;
 
 #if (IDA_SDK_VERSION >= 700)
 	netnode import_node;
@@ -2958,7 +2957,6 @@ void Labeless::updateImportsNode()
 
 	for (nodeidx_t idx = NETNODE_ALT_FIRST(&import_node); idx != BADNODE; idx = NETNODE_ALT_NEXT(&import_node))
 	{
-		modulesCount++;
 		if (import_node.supstr(idx, modname, sizeof(modname)) <= 0)
 			continue;
 
@@ -3015,7 +3013,6 @@ void Labeless::updateImportsNode()
 			import_node.supset(lastFreeImpNode, ie.module.c_str());
 			import_node.supstr(lastFreeImpNode, modname, sizeof(modname));
 			module2Index[ie.module] = lastFreeImpNode;
-			modulesCount++;
 
 			import_module(ie.module.c_str(), nullptr, nModule, nullptr, "win");
 			import_node.supstr(lastFreeImpNode, modname, sizeof(modname));
@@ -3023,7 +3020,7 @@ void Labeless::updateImportsNode()
 		existingAPIs.insert(ie.proc);
 	}
 	storeImportTable();
-	msg("import mods after update: %llu\n", import_node.altval(-1));
+	msg("import mods after update: %llu\n", (uint64_t)import_node.altval(-1));
 }
 
 qstring Labeless::getNewNameOfEntry() const
@@ -3508,11 +3505,11 @@ void Labeless::onLogAnchorClicked(const QString& value)
 		return;
 
 	bool ok = false;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 	QStringList items = value.split("/", Qt::SkipEmptyParts);
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 	QStringList items = value.split("/", QString::SkipEmptyParts);
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 	if (items.length() < 2)
 		return;
 

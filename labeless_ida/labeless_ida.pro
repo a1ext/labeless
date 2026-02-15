@@ -192,6 +192,8 @@ mac {
     LIBS += $${SDK_PATH}/lib/$${SYSDIR}/lib$${IDA_LIB}.dylib
     LIBS += $${PROTOBUF_BUILD_DIR}/lib/libprotobuf.a
     QMAKE_APPLE_DEVICE_ARCHS = arm64
+    QMAKE_CXXFLAGS -= -Werror
+    QMAKE_CXXFLAGS += -Wno-delete-non-abstract-non-virtual-dtor -Wno-unused-private-field -Wno-nullability-completeness
 }
 
 # message($$LIBS)

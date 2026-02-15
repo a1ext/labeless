@@ -74,7 +74,7 @@ signals:
 
 protected:
 	virtual void changeEvent(QEvent* e) override;
-	virtual bool eventFilter(QObject* obj, QEvent* event);
+	virtual bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
 	Ui::PyOllyView* m_UI;

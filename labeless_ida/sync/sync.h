@@ -31,6 +31,7 @@ struct ICommand
 	std::string stdErr;
 	std::string error;
 
+	virtual ~ICommand() = default;
 	virtual bool serialize(QPointer<RpcData> rd) const = 0;
 	virtual bool parseResponse(QPointer<RpcData> rd);
 
@@ -61,6 +62,7 @@ struct ExecPyScript : public ICommand
 	};
 	Data d;
 
+	virtual ~ExecPyScript() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -80,6 +82,7 @@ struct LabelsSync : public ICommand
 
 	DataList data;
 
+	virtual ~LabelsSync() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -99,6 +102,7 @@ struct CommentsSync : public ICommand
 
 	DataList data;
 
+	virtual ~CommentsSync() = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -107,6 +111,7 @@ struct GetMemoryMapReq : public ICommand
 {
 	MemoryRegionList data;
 
+	virtual ~GetMemoryMapReq() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -125,6 +130,7 @@ struct ReadMemoryRegions : public ICommand
 
 	DataList data;
 
+	virtual ~ReadMemoryRegions() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -195,6 +201,7 @@ struct AnalyzeExternalRefs : public ICommand
 		: rip(0)
 	{}
 
+	virtual ~AnalyzeExternalRefs() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -214,6 +221,7 @@ struct CheckPEHeaders : public ICommand
 		, peValid(false)
 	{}
 
+	virtual ~CheckPEHeaders() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -229,7 +237,7 @@ struct GetBackendInfo : public ICommand
 	std::string dbg_ver;
 	std::string labeless_ver;
 
-
+	virtual ~GetBackendInfo() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -252,6 +260,7 @@ struct AutoCompleteCode : public ICommand
 	// result
 	QSharedPointer<jedi::Result> jresult;
 
+	virtual ~AutoCompleteCode() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };
@@ -271,6 +280,7 @@ struct JumpToFrom : public ICommand
 	bool wasOk;
 	uint64_t va;
 
+	virtual ~JumpToFrom() override = default;
 	virtual bool serialize(QPointer<RpcData> rd) const override;
 	virtual bool parseResponse(QPointer<RpcData> rd) override;
 };

@@ -275,11 +275,11 @@ void TextEdit::onAutoCompleteFinished(QSharedPointer<jedi::Result> r)
 				if (!sigMatch.rawDoc.isEmpty())
 				{
 					QStringList items = sigMatch.rawDoc.split(QRegularExpression("\\r|\\n"), 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 						Qt::SkipEmptyParts
-#else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#else // (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 						QString::SkipEmptyParts
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 					);
 					qsig += "<br><br>" + items.join("<br>");
 				}

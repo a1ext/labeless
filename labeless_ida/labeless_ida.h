@@ -18,12 +18,12 @@
 #include <QSharedPointer>
 #include <QThread>
 #include <QWaitCondition>
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 #	include <QRecursiveMutex>
 typedef QRecursiveMutex TMutex;
-#else // (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+#else // (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 typedef QMutex TMutex;
-#endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#endif // QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 
 #include "compat.h"
 #include "externsegdata.h"
