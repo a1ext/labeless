@@ -377,6 +377,7 @@ bool get_completions(const QString& script,
 	if (!elng)
 	{
 		msg("%s: Python extlang not found\n", __FUNCTION__);
+		error = "Python extlang not found";
 		return false;
 	}
 	::qstring qerrbuff;
@@ -425,6 +426,7 @@ else:
 
 	if (!elng->eval_snippet(snip.toUtf8().data(), &qerrbuff)) {
 		msg("%s: failed to eval jedi: %s\n", __FUNCTION__, qerrbuff.c_str());
+		error = "failed to eval jedi";
 		return false;
 	}
 		
@@ -513,6 +515,7 @@ else:
 	
 	default:
 		msg("%s: completion type is not supported: %d\n", __FUNCTION__, (int)ct);
+		error = "completion type is not supported";
 	}
 
 	return false;

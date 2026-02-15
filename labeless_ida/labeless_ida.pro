@@ -193,7 +193,7 @@ mac {
     LIBS += $${PROTOBUF_BUILD_DIR}/lib/libprotobuf.a
     QMAKE_APPLE_DEVICE_ARCHS = arm64
     QMAKE_CXXFLAGS -= -Werror
-    QMAKE_CXXFLAGS += -Wno-delete-non-abstract-non-virtual-dtor -Wno-unused-private-field -Wno-nullability-completeness
+    QMAKE_CXXFLAGS += -Wno-delete-non-abstract-non-virtual-dtor -Wno-unused-private-field -Wno-nullability-completeness -Wno-varargs
 }
 
 # message($$LIBS)
@@ -218,7 +218,9 @@ unix {
     COPY_TARGET2 = $(COPY_FILE) $$MY_TARGET $${IDA_PATH}/plugins/;
     QMAKE_POST_LINK += $$COPY_TARGET
     QMAKE_POST_LINK += $$COPY_TARGET2
-    QMAKE_CXXFLAGS += -Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error
+    contains(QMAKE_COMPILER, gcc) {
+        QMAKE_CXXFLAGS += -Wno-deprecated-copy -Wno-int-in-bool-context -Wno-ignored-qualifiers -Wno-class-memaccess -Wno-cast-function-type -Wno-error
+    }
 }
 
 SOURCES += \
