@@ -12,10 +12,10 @@
 #include <QDebug>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #	include <QGuiApplication>
-#	include <QScreen>
 #else // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #	include <QDesktopWidget>
 #endif // QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QScreen>
 #include <QStyle>
 #include <QStyleOptionFrame>
 #include <QStylePainter>
