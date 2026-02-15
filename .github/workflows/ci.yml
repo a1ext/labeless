@@ -24,7 +24,7 @@ jobs:
         # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
         # macos-13: Supports both ARM64 and x86_64.
         # os: [ubuntu-20.04, windows-2022, macos-14]
-        os: [ubuntu-20.04, windows-2022, macos-14]
+        os: [ubuntu-20.04, windows-2022, windows-2019, macos-14]
         include:
           #- os: ubuntu-20.04
           #  build_cmd: make
@@ -290,38 +290,38 @@ jobs:
         make -j$(nproc)
         
     - name: Build OllyDBG 1.10 plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
     - name: Windows, Build OllyDBG FOFF plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /v:m
 
     - name: Windows, Build OllyDBG 2.0 plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
     - name: Windows, Build x64dbg 32-bit plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
 
     - name: Windows, Build x64dbg 64-bit plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
 
     - name: Set Up Windows Dependencies
@@ -341,34 +341,34 @@ jobs:
         Start-Process -Wait sdksetup.exe -ArgumentList "/q", "/norestart", "/features", "OptionId.WindowsDesktopSoftwareDevelopmentKit", "OptionId.NetFxSoftwareDevelopmentKit"
  
     - name: Windows, Build IDA 7 plugins
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
 
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA7_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk70 /p:SDK_DIR=c:\depz\idasdk70
         
     - name: Windows, Build IDA 8 plugins
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA8_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk_pro83 /p:SDK_DIR=c:\depz\idasdk_pro83
 
     - name: Windows, Build IDA 9.0 plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2019'
       shell: cmd
       run: |        
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
+        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt5.6.0_msvc2015_x64_qt_namespace\qtbase /p:IDA_DIR=c:\depz\idasdk90sp1 /p:SDK_DIR=c:\depz\idasdk90sp1
 
     - name: Windows, Build IDA 9.2 plugin
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
@@ -376,7 +376,7 @@ jobs:
 
 
     - name: Build Python module sdist
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |
         cd deploy
