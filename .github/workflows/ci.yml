@@ -16,7 +16,7 @@ env:
   MACOS_QTDIR_QT6: /Users/Shared/Qt/6.8.2-arm64-qt-ns
   IDASDK_GITHUB: https://github.com/HexRaysSA/ida-sdk
   IDASDK_GITHUB_V93_BRANCH: v9.3
-  IDASDK_GITHUB_V93_FOLDER: "${{ github.workspace }}/idasdk_github${{ env.IDASDK_GITHUB_V93_BRANCH }}"
+  IDASDK_GITHUB_V93_FOLDER: "${{ github.workspace }}/idasdk_github_93"
 
 
 jobs:
