@@ -2341,7 +2341,11 @@ void Labeless::onAnalyzeExternalRefsFinished()
 	//m_LabelSyncOnRenameIfZero -= 1;
 
 	updateImportsNode();
+#if (IDA_SDK_VERSION < 930)
 	request_refresh(IWID_IMPORTS);
+#else // (IDA_SDK_VERSION < 930)
+	mark_builtin_widgets(IWID_IMPORTS);
+#endif // (IDA_SDK_VERSION < 930)
 	for (int i = 0; i < get_segm_qty(); ++i)
 	{
 		segment_t* seg = getnseg(i);
