@@ -6,10 +6,9 @@
 
 QT       += widgets
 
-# TARGET = labeless_ida_70
-# TARGET = labeless_ida_83
 # TARGET = labeless_ida_90
 # TARGET = labeless_ida_92
+# TARGET = labeless_ida_93
 TEMPLATE = lib
 CONFIG += plugin c++11
 CONFIG -= debug
@@ -20,16 +19,14 @@ CONFIG *= release #force_debug_info
 # CONFIG += ea64
 
 
-contains(CONFIG, labeless_ida_70) {
-    TARGET = labeless_ida_70
-} else: contains(CONFIG, labeless_ida_83) {
-    TARGET = labeless_ida_83
-} else: contains(CONFIG, labeless_ida_90) {
+contains(CONFIG, labeless_ida_90) {
     TARGET = labeless_ida_90
 } else: contains(CONFIG, labeless_ida_92) {
     TARGET = labeless_ida_92
+} else: contains(CONFIG, labeless_ida_93) {
+    TARGET = labeless_ida_93
 } else {
-    error("No target specified, add to CONFIG one of the following: labeless_ida_70|labeless_ida_83|labeless_ida_90|labeless_ida_92")
+    error("No target specified, add to CONFIG one of the following: labeless_ida_90|labeless_ida_92|labeless_ida_93")
 }
 
 # `x64` deprecated
@@ -46,14 +43,7 @@ isEmpty(SDK_PATH) | isEmpty(IDA_PATH) {
     error("both SDK_PATH and IDA_PATH env variables should be set")
 }
 
-equals(TARGET, "labeless_ida_70") {
-#    SDK_PATH = $$PWD/../../idasdk70
-#    IDA_PATH = $$PWD/../../idafree-7.0
-} 
-equals(TARGET, "labeless_ida_83") {
-#    SDK_PATH = $$PWD/../../idasdk_pro83
-#    IDA_PATH = $$PWD/../../idafree-8.4
-}
+
 equals(TARGET, "labeless_ida_90") | equals(TARGET, "labeless_ida_92") {
 #    SDK_PATH = $$PWD/../../idasdk90sp1
 #    IDA_PATH = $$PWD/../../ida-free-pc-9.0
@@ -97,8 +87,8 @@ ea64 {
     TARGET = $${TARGET}_64
 }
 
-!ea64:equals(TARGET, "labeless_ida_90") {
-    error("IDA 9 should have ea64 config set for both 32 and 64-bit targets")
+!ea64:contains(TARGET, "labeless_ida_9") {
+    error("IDA 9.x should have ea64 config set for both 32 and 64-bit targets")
 }
 
 
@@ -155,10 +145,6 @@ else {
 }
 
 SYSDIR = $${TARGET_PROCESSOR_NAME}_$${SYSNAME}_$${COMPILER_NAME}_$${ADRSIZE}
-equals(TARGET, "labeless_ida_83")|equals(TARGET, "labeless_ida_83_64") {
-    # sh1tf*ck
-    SYSDIR = $${SYSDIR}_pro
-}
 OBJDIR = obj/$${SYSDIR}/
 # message($$SYSDIR)
 
@@ -170,12 +156,13 @@ OBJDIR = obj/$${SYSDIR}/
 # cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/Users/al/dev/labeless/3rdparty/protobuf-3.20.3/dist -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -Dprotobuf_INSTALL=ON -Dprotobuf_BUILD_SHARED_LIBS=OFF ../cmake
 
 PROTOBUF_BUILD_DIR = $${PWD}/../3rdparty/protobuf-3.20.3/dist
-ea64:!equals(TARGET, "labeless_ida_90_64"):!equals(TARGET, "labeless_ida_92_64") {
-    IDA_LIB = ida64
-}
-else {
-    IDA_LIB = ida
-}
+# cleanup this next release
+#ea64:!equals(TARGET, "labeless_ida_90_64"):!equals(TARGET, "labeless_ida_92_64") {
+#    IDA_LIB = ida64
+#}
+#else {
+IDA_LIB = ida
+#}
 
 win32 {
     LIBS += -L$${SDK_PATH}/lib/$${SYSDIR}/ -lida
