@@ -94,3 +94,13 @@ ScopedWaitBox::~ScopedWaitBox()
 {
 	hide_wait_box();
 }
+
+#if (IDA_SDK_VERSION >= 930)
+// fix of broken 9.3 sdk
+uint128 operator<<(const uint128& x, int cnt)
+{
+	uint64 l = x.l << cnt;
+	uint64 h = (x.h << cnt) | (x.l >> (64 - cnt));
+	return uint128(l, h);
+}
+#endif // (IDA_SDK_VERSION >= 930)
