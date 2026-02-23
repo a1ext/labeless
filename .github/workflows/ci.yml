@@ -401,7 +401,7 @@ jobs:
       shell: cmd
       # reuse IDA9_Qt6_x64 target but specify 9.3 sdk
       env:
-        LINK: "${{ env.IDASDK_GITHUB_V93_FOLDER }}\src\lib\x64_win_vc_64_s\int128.lib"
+        LINK: "${{ env.IDASDK_GITHUB_V93_FOLDER }}\\src\\lib\\x64_win_vc_64_s\\int128.lib"
       run: |        
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64 "/p:IDA_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}/srs" "/p:SDK_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}/src"
