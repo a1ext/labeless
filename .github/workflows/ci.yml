@@ -336,8 +336,8 @@ jobs:
         $VSInstallerPath = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe"
         $InstallPath = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"
        
-        $process = Start-Process -FilePath "$VSInstallerPath" -ArgumentList 'modify', '--quiet', '--norestart', '--nocache', '--wait', `
-          "--installPath=$InstallPath", '--add', "Microsoft.VisualStudio.Component.VC.v141.x86.x64", '--add', "Microsoft.VisualStudio.Component.WinXP" -Wait -PassThru -NoNewWindow
+        $process = Start-Process -FilePath "$VSInstallerPath" -ArgumentList 'modify', '--installPath', "$InstallPath", '--quiet', '--norestart', '--nocache', '--wait', `
+          '--add', "Microsoft.VisualStudio.Component.VC.v141.x86.x64", '--add', "Microsoft.VisualStudio.Component.WinXP" -Wait -PassThru -NoNewWindow
         if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 3010) {
           Write-Host "Installation successful (Exit Code: $($process.ExitCode))"
         } else {
