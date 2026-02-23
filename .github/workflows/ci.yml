@@ -29,7 +29,7 @@ jobs:
         # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
         # macos-13: Supports both ARM64 and x86_64.
         # os: [ubuntu-20.04, windows-2022, macos-14]
-        os: [ubuntu-20.04, windows-2022, windows-2019, macos-14]
+        os: [ubuntu-22.04, windows-2022, windows-2019, macos-14]
         include:
           #- os: ubuntu-20.04
           #  build_cmd: make
