@@ -394,7 +394,7 @@ jobs:
       run: |        
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64 /p:IDA_DIR=c:\depz\idasdk92 /p:SDK_DIR=c:\depz\idasdk92
-        ren ".\bin\labeless_ida_92_64.dll" ".\bin\labeless_ida_92_64_.dll"
+        ren ".\bin\labeless_ida_92_64.dll" "labeless_ida_92_64_.dll"
 
     - name: Windows, Build IDA 9.3 plugin
       if: matrix.os == 'windows-2022'
@@ -403,8 +403,8 @@ jobs:
       run: |        
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
         labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64 "/p:IDA_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}/srs" "/p:SDK_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}/src"
-        ren ".\bin\labeless_ida_92_64.dll" ".\bin\labeless_ida_93_64.dll"
-        ren ".\bin\labeless_ida_92_64_.dll" ".\bin\labeless_ida_92_64.dll"
+        ren ".\bin\labeless_ida_92_64.dll" "labeless_ida_93_64.dll"
+        ren ".\bin\labeless_ida_92_64_.dll" "labeless_ida_92_64.dll"
 
 
     - name: Build Python module sdist
