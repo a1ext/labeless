@@ -29,7 +29,7 @@ jobs:
         # macos-14 - Apple Silicon ARM64, macOS Sonoma, ARM64 only.
         # macos-13: Supports both ARM64 and x86_64.
         # os: [ubuntu-20.04, windows-2022, macos-14]
-        os: [ubuntu-22.04, windows-2022, windows-2019, macos-14]
+        os: [ubuntu-22.04, windows-2022, macos-14]
         include:
           #- os: ubuntu-20.04
           #  build_cmd: make
@@ -67,6 +67,8 @@ jobs:
         $VERSION_REVISION = $M_REV.Matches.Groups[1].Value
         $VERSION_BUILD = $M_BUILD.Matches.Groups[1].Value
         echo "VER=$VERSION_MAJOR.$VERSION_MAJOR.$VERSION_REVISION.$VERSION_BUILD" >> $env:GITHUB_ENV
+        $normalized_idasdk_github_folder = "${{ env.IDASDK_GITHUB_V93_FOLDER }}" -replace '/', '\'
+        echo "IDASDK_GITHUB_V93_FOLDER=$normalized_idasdk_github_folder" >> $env:GITHUB_ENV
 
 
     - name: Set up Linux environment
@@ -328,40 +330,66 @@ jobs:
         make clean
         make -j$(nproc)
     
+    - name: Install v141 build tools and Windows SDK
+      shell: pwsh
+      run: |
+        $VSInstallerPath = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer.exe"
+        $InstallPath = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"
+
+        $componentsToAdd = @(
+          "Microsoft.VisualStudio.Component.VC.v141.x86.x64"
+          "Microsoft.VisualStudio.Component.WinXP"
+        )
+
+        # Create "--add <component>"
+        $workloadArgs = $componentsToAdd | ForEach-Object { "--add", $_ }
+
+        $Arguments = @(
+          'modify',
+          "--installPath=$InstallPath",
+          $workloadArgs,
+          '--quiet', '--norestart', '--nocache'
+        )
+
+        # retry 2 times
+        1..2 | ForEach-Object {
+          & "$VSInstallerPath" @Arguments
+        }
+    
     - name: Build OllyDBG 1.10 plugin
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v141_xp /v:m
 
     - name: Windows, Build OllyDBG FOFF plugin
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /v:m
+        labeless.sln /t:labeless_olly:Rebuild /p:Configuration=Release_DeFixed /p:Platform=Win32 /p:PlatformToolset=v141_xp /v:m
 
     - name: Windows, Build OllyDBG 2.0 plugin
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+        labeless.sln /t:labeless_olly2:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v141_xp /v:m
 
     - name: Windows, Build x64dbg 32-bit plugin
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /v:m
+        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v141_xp /v:m
 
     - name: Windows, Build x64dbg 64-bit plugin
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /v:m
+        labeless.sln /t:labeless_x64dbg:Rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v141_xp /v:m
 
     - name: Set Up Windows Dependencies
       if: runner.os == 'Windows'
@@ -382,7 +410,7 @@ jobs:
  
  
     - name: Windows, Build IDA 9.0 plugin
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |        
         "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
@@ -402,13 +430,13 @@ jobs:
       # reuse IDA9_Qt6_x64 target but specify 9.3 sdk
       run: |        
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ^
-        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64 "/p:IDA_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}/srs" "/p:SDK_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}/src"
+        labeless.sln /t:labeless_ida:Rebuild /p:Configuration=IDA9_Qt6_x64 /p:Platform=x64 /v:m /property:QTDIR=c:\depz\qt6.8.2_msvc2015_x64_qt_namespace\build6.8.2-x64 "/p:IDA_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}\\srs" "/p:SDK_DIR=${{ env.IDASDK_GITHUB_V93_FOLDER }}\\src"
         ren ".\bin\labeless_ida_92_64.dll" "labeless_ida_93_64.dll"
         ren ".\bin\labeless_ida_92_64_.dll" "labeless_ida_92_64.dll"
 
 
     - name: Build Python module sdist
-      if: matrix.os == 'windows-2019'
+      if: matrix.os == 'windows-2022'
       shell: cmd
       run: |
         cd deploy
