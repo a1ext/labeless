@@ -348,12 +348,13 @@ jobs:
           'modify',
           "--installPath=$InstallPath",
           $workloadArgs,
-          '--quiet', '--norestart', '--nocache'
+          '--quiet', '--norestart', '--nocache', '--wait'
         )
 
         # retry 2 times
         1..2 | ForEach-Object {
-          & "$VSInstallerPath" @Arguments
+          Start-Process -FilePath "$VSInstallerPath" -ArgumentList '--quiet', '--norestart', '--nocache', '--wait' `
+          'modify', "--installPath=$InstallPath", $workloadArgs -Wait
         }
     
     - name: Build OllyDBG 1.10 plugin
